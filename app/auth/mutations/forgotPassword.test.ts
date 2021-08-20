@@ -11,7 +11,6 @@ jest.mock("blitz", () => ({
   ...jest.requireActual<object>("blitz")!,
   generateToken: () => generatedToken,
 }))
-jest.mock("preview-email", () => jest.fn())
 
 describe("forgotPassword mutation", () => {
   it("does not throw error if user doesn't exist", async () => {
