@@ -26,13 +26,13 @@
   },
   "dependencies": {
     "@prisma/client": "2.29.1",
-    "prisma": "2.29.1",
     "autoprefixer": "10.3.1",
     "blitz": "0.39.0",
     "formik": "2.2.9",
     "postcss": "8.3.6",
-    "react": "alpha",
-    "react-dom": "alpha",
+    "prisma": "2.29.1",
+    "react": "18.0.0-alpha-64f83a6fd-20210819",
+    "react-dom": "18.0.0-alpha-64f83a6fd-20210819",
     "tailwindcss": "2.1.2",
     "zod": "3.7.3"
   },
