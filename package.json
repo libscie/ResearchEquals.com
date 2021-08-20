@@ -5,6 +5,7 @@
     "dev": "blitz dev",
     "build": "blitz build",
     "start": "blitz start",
+    "start:production": "blitz start --port $PORT",
     "studio": "blitz prisma studio",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
     "test": "jest",
