@@ -38,7 +38,6 @@
     "zod": "3.7.3"
   },
   "devDependencies": {
-    "@types/preview-email": "2.0.1",
     "@types/react": "17.0.19",
     "eslint": "7.32.0",
     "husky": "6.0.0",
