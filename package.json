@@ -30,6 +30,7 @@
     "blitz": "0.39.0",
     "formik": "2.2.9",
     "postcss": "8.3.6",
+    "postmark": "2.7.7",
     "prisma": "2.29.1",
     "react": "18.0.0-alpha-64f83a6fd-20210819",
     "react-dom": "18.0.0-alpha-64f83a6fd-20210819",
@@ -37,15 +38,13 @@
     "zod": "3.7.3"
   },
   "devDependencies": {
-    "@types/preview-email": "2.0.1",
     "@types/react": "17.0.19",
     "eslint": "7.32.0",
     "husky": "6.0.0",
     "lint-staged": "10.5.4",
-    "prettier-plugin-prisma": "0.15.0",
     "prettier": "2.3.2",
+    "prettier-plugin-prisma": "0.15.0",
     "pretty-quick": "3.1.1",
-    "preview-email": "3.0.5",
     "typescript": "~4.3"
   },
   "private": true

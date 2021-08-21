@@ -1,7 +1,6 @@
 import { hash256, Ctx } from "blitz"
 import forgotPassword from "./forgotPassword"
 import db from "db"
-import previewEmail from "preview-email"
 
 beforeEach(async () => {
   await db.$reset()
@@ -12,7 +11,6 @@ jest.mock("blitz", () => ({
   ...jest.requireActual<object>("blitz")!,
   generateToken: () => generatedToken,
 }))
-jest.mock("preview-email", () => jest.fn())
 
 describe("forgotPassword mutation", () => {
   it("does not throw error if user doesn't exist", async () => {
@@ -53,6 +51,5 @@ describe("forgotPassword mutation", () => {
     expect(token.sentTo).toBe(user.email)
     expect(token.hashedToken).toBe(hash256(generatedToken))
     expect(token.expiresAt > new Date()).toBe(true)
-    expect(previewEmail).toBeCalled()
   })
 })
