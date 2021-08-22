@@ -25,6 +25,8 @@
     ]
   },
   "dependencies": {
+    "@headlessui/react": "1.4.0",
+    "@heroicons/react": "1.0.4",
     "@prisma/client": "2.29.1",
     "autoprefixer": "10.3.1",
     "blitz": "0.39.0",
