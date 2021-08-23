@@ -4,7 +4,7 @@ import db from "db"
 export const hashPassword = async (password: string) => {
   return await SecurePassword.hash(password)
 }
-export const verifyPassword = async (hashedPassword: string, password: string) => {
+export const verifyPassword = async (hashedPassword: string | null, password: string | null) => {
   return await SecurePassword.verify(hashedPassword, password)
 }
 
