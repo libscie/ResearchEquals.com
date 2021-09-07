@@ -16,10 +16,11 @@ import {
   XIcon,
 } from "@heroicons/react/outline"
 import { ChevronDownIcon } from "@heroicons/react/solid"
-import { Link, Routes, useMutation } from "blitz"
+import { Link, Routes, useMutation, useRouter } from "blitz"
 import { Suspense } from "react"
 import { useCurrentUser } from "../hooks/useCurrentUser"
 import logout from "../../auth/mutations/logout"
+import { Router } from "next/router"
 
 const features = [
   {
@@ -366,6 +367,7 @@ export default function Example() {
 const UserInfo = () => {
   const currentUser = useCurrentUser()
   const [logoutMutation] = useMutation(logout)
+  const router = useRouter()
 
   if (currentUser) {
     return (
@@ -374,6 +376,7 @@ const UserInfo = () => {
           className="button small"
           onClick={async () => {
             await logoutMutation()
+            router.push("/")
           }}
         >
           Logout
