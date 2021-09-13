@@ -14,7 +14,7 @@ generator client {
 
 model Workspace {
   id     Int    @id @default(autoincrement())
-  handle String
+  handle String @unique
 
   membership Membership[]
 }
