@@ -24,7 +24,7 @@ export default resolver.pipe(resolver.zod(Signup), async ({ email, password, han
         },
       },
     },
-    select: { id: true, name: true, email: true, role: true },
+    select: { id: true, name: true, email: true, role: true, memberships: true },
   })
 
   const emailCode = await verifyEmail.generateCode(hashedPassword)
@@ -33,7 +33,11 @@ export default resolver.pipe(resolver.zod(Signup), async ({ email, password, han
     sendEmailWithTemplate(email, "welcome", {
       verify_email_url: url`/verifyEmail/${emailCode}`,
     }),
-    ctx.session.$create({ userId: user.id, role: user.role as Role }),
+    ctx.session.$create({
+      userId: user.id,
+      roles: [user.role, user.memberships[0].role],
+      workspaceId: user.memberships[0].workspaceId,
+    }),
   ])
 
   return user
