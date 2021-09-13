@@ -12,18 +12,53 @@ generator client {
 
 // --------------------------------------
 
-model User {
-  id              Int      @id @default(autoincrement())
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  name            String?
-  email           String   @unique
-  emailIsVerified Boolean  @default(false)
-  hashedPassword  String?
-  role            String   @default("USER")
+model Workspace {
+  id   Int    @id @default(autoincrement())
+  name String
 
-  tokens   Token[]
-  sessions Session[]
+  membership Membership[]
+}
+
+model Membership {
+  id   Int            @id @default(autoincrement())
+  role MembershipRole
+
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId Int
+
+  user   User? @relation(fields: [userId], references: [id])
+  userId Int?
+
+  invitedName  String?
+  invitedEmail String?
+
+  @@unique([workspaceId, invitedEmail])
+}
+
+enum MembershipRole {
+  OWNER
+  ADMIN
+  USER
+}
+
+enum GlobalRole {
+  SUPERADMIN
+  CUSTOMER
+}
+
+model User {
+  id              Int        @id @default(autoincrement())
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  name            String?
+  email           String     @unique
+  emailIsVerified Boolean    @default(false)
+  hashedPassword  String?
+  role            GlobalRole
+
+  tokens      Token[]
+  sessions    Session[]
+  memberships Membership[]
 }
 
 model Session {
