@@ -13,8 +13,8 @@ generator client {
 // --------------------------------------
 
 model Workspace {
-  id   Int    @id @default(autoincrement())
-  name String
+  id     Int    @id @default(autoincrement())
+  handle String
 
   membership Membership[]
 }
