@@ -1,7 +1,6 @@
 import { resolver, SecurePassword, AuthenticationError } from "blitz"
 import db from "db"
 import { Login } from "../validations"
-import { Role } from "types"
 
 export const authenticateUser = async (rawEmail: string, rawPassword: string) => {
   const email = rawEmail.toLowerCase().trim()
@@ -22,8 +21,13 @@ export const authenticateUser = async (rawEmail: string, rawPassword: string) =>
 }
 
 export default resolver.pipe(resolver.zod(Login), async ({ email, password }, ctx) => {
-  // This throws an error if credentials are invalid
-  const user = await authenticateUser(email, password)
+  // const user = await authenticateUser(email, password)
+  await authenticateUser(email, password)
+
+  const user = await db.user.findFirst({
+    where: { email },
+    select: { id: true, name: true, email: true, role: true, memberships: true },
+  })
 
   await ctx.session.$create({
     userId: user.id,
