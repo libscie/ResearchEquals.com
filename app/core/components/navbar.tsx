@@ -20,7 +20,7 @@ import { Link, Routes, useMutation, useRouter } from "blitz"
 import { Suspense } from "react"
 import { useCurrentUser } from "../hooks/useCurrentUser"
 import logout from "../../auth/mutations/logout"
-import { Router } from "next/router"
+import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
 
 const features = [
   {
@@ -366,10 +366,12 @@ export default function Example() {
 
 const UserInfo = () => {
   const currentUser = useCurrentUser()
+  const currentWorkspace = useCurrentWorkspace()
   const [logoutMutation] = useMutation(logout)
   const router = useRouter()
+  console.log(currentWorkspace)
 
-  if (currentUser) {
+  if (currentUser && currentWorkspace) {
     return (
       <>
         <button
@@ -385,7 +387,7 @@ const UserInfo = () => {
           {/* User id: <code>{currentUser.id}</code>
           <br />
           User role: <code>{currentUser.role}</code> */}
-          <a>Go to dashboard</a>
+          <a>Go to @{currentWorkspace.handle}</a>
         </Link>
       </>
     )
