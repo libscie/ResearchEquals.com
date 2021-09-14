@@ -6,11 +6,25 @@ import { sendEmailWithTemplate } from "app/postmark"
 import { url } from "app/url"
 import * as verifyEmail from "../verify-email"
 
-export default resolver.pipe(resolver.zod(Signup), async ({ email, password }, ctx) => {
+export default resolver.pipe(resolver.zod(Signup), async ({ email, password, handle }, ctx) => {
   const hashedPassword = await SecurePassword.hash(password.trim())
   const user = await db.user.create({
-    data: { email: email.toLowerCase().trim(), hashedPassword, role: "USER" },
-    select: { id: true, name: true, email: true, role: true },
+    data: {
+      email: email.toLowerCase().trim(),
+      hashedPassword,
+      role: "CUSTOMER",
+      memberships: {
+        create: {
+          role: "OWNER",
+          workspace: {
+            create: {
+              handle,
+            },
+          },
+        },
+      },
+    },
+    select: { id: true, name: true, email: true, role: true, memberships: true },
   })
 
   const emailCode = await verifyEmail.generateCode(hashedPassword)
@@ -19,7 +33,11 @@ export default resolver.pipe(resolver.zod(Signup), async ({ email, password }, c
     sendEmailWithTemplate(email, "welcome", {
       verify_email_url: url`/verifyEmail/${emailCode}`,
     }),
-    ctx.session.$create({ userId: user.id, role: user.role as Role }),
+    ctx.session.$create({
+      userId: user.id,
+      roles: [user.role, user.memberships[0]!.role],
+      workspaceId: user.memberships[0]!.workspaceId,
+    }),
   ])
 
   return user
