@@ -30,7 +30,6 @@ export const LoginForm = (props: LoginFormProps) => {
           schema={Login}
           initialValues={{ email: "", password: "" }}
           onSubmit={async (values) => {
-            console.log(values)
             try {
               await loginMutation(values)
               props.onSuccess?.()

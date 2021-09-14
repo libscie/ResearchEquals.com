@@ -35,8 +35,8 @@ export default resolver.pipe(resolver.zod(Signup), async ({ email, password, han
     }),
     ctx.session.$create({
       userId: user.id,
-      roles: [user.role, user.memberships[0].role],
-      workspaceId: user.memberships[0].workspaceId,
+      roles: [user.role, user.memberships[0]!.role],
+      workspaceId: user.memberships[0]!.workspaceId,
     }),
   ])
 
