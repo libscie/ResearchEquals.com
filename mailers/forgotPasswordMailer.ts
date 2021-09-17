@@ -15,8 +15,7 @@ export function forgotPasswordMailer({ to, validDuration, token }: ResetPassword
     async send() {
       await sendEmailWithTemplate(to, "password-reset", {
         valid_duration: validDuration,
-        product_name: "PLACEHOLDER",
-        support_url: "info@libscie.org",
+        support_url: "support@libscie.org",
         action_url: resetUrl,
       })
     },
