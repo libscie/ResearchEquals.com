@@ -1,7 +1,6 @@
 import { resolver, SecurePassword } from "blitz"
 import db from "db"
 import { Signup } from "app/auth/validations"
-import { Role } from "types"
 import { sendEmailWithTemplate } from "app/postmark"
 import { url } from "app/url"
 import * as verifyEmail from "../verify-email"
@@ -31,6 +30,8 @@ export default resolver.pipe(resolver.zod(Signup), async ({ email, password, han
 
   await Promise.all([
     sendEmailWithTemplate(email, "welcome", {
+      handle: handle,
+      days: 14,
       verify_email_url: url`/verifyEmail/${emailCode}`,
     }),
     ctx.session.$create({
