@@ -101,8 +101,13 @@ const SettingsPage = ({ user }: InferGetServerSidePropsType<typeof getServerSide
                 className="m-0"
                 submitText="Change password"
                 schema={ChangePassword}
-                initialValues={{ currentPassword: "", newPassword: "" }}
+                initialValues={{ currentPassword: "", newPassword: "", newRepeat: "" }}
                 onSubmit={async (values) => {
+                  if (values.newPassword !== values.newRepeat) {
+                    return {
+                      [FORM_ERROR]: "Please check the new password for typo's",
+                    }
+                  }
                   try {
                     await changePasswordMutation(values)
                   } catch (error) {
@@ -131,6 +136,13 @@ const SettingsPage = ({ user }: InferGetServerSidePropsType<typeof getServerSide
                   placeholder="Password"
                   type="password"
                   label="New password"
+                />
+                <LabeledTextField
+                  className="w-full border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  name="newRepeat"
+                  placeholder="Password"
+                  type="password"
+                  label="Repeat new password"
                 />
               </Form>
             )}

@@ -15,6 +15,7 @@ export default resolver.pipe(resolver.authorize(), async ({ email }, ctx) => {
 
   const emailCode = await verifyEmail.generateCode(user.hashedPassword!)
 
+  // TODO Update template
   await Promise.all([
     sendEmailWithTemplate(email, "welcome", {
       handle: "test",
