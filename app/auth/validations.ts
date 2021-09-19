@@ -29,6 +29,6 @@ export const ResetPassword = z
   })
 
 export const ChangePassword = z.object({
-  currentPassword: z.string(),
+  currentPassword: password,
   newPassword: password,
 })
