@@ -1,4 +1,4 @@
-import { BlitzPage, useMutation } from "blitz"
+import { BlitzPage, useMutation, invokeWithMiddleware, InferGetServerSidePropsType } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import { LabeledTextField } from "app/core/components/LabeledTextField"
 import { ChangePassword, ChangeEmail, ChangeName } from "app/auth/validations"
@@ -8,8 +8,14 @@ import { Form, FORM_ERROR } from "../core/components/Form"
 import changePassword from "app/auth/mutations/changePassword"
 import changeEmail from "../users/mutations/changeEmail"
 import changeName from "../users/mutations/changeName"
+import getCurrentUser from "app/users/queries/getCurrentUser"
 
-const SettingsPage: BlitzPage = () => {
+export const getServerSideProps = async ({ req, res }) => {
+  const user = await invokeWithMiddleware(getCurrentUser, null, { req, res })
+  return { props: { user } }
+}
+
+const SettingsPage = ({ user }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [changePasswordMutation, { isSuccess: passwordChanged }] = useMutation(changePassword)
   const [changeEmailMutation, { isSuccess: emailChanged }] = useMutation(changeEmail)
   const [changeNameMutation, { isSuccess: nameChanged }] = useMutation(changeName)
@@ -32,7 +38,7 @@ const SettingsPage: BlitzPage = () => {
                 className="m-0"
                 submitText="Change name"
                 schema={ChangeName}
-                initialValues={{ name: "" }}
+                initialValues={{ name: user!.name! }}
                 onSubmit={async (values) => {
                   try {
                     await changeNameMutation(values)
@@ -63,7 +69,7 @@ const SettingsPage: BlitzPage = () => {
                 className="m-0"
                 submitText="Change email"
                 schema={ChangeEmail}
-                initialValues={{ email: "" }}
+                initialValues={{ email: user!.email! }}
                 onSubmit={async (values) => {
                   try {
                     await changeEmailMutation(values)
