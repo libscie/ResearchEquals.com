@@ -32,3 +32,7 @@ export const ChangePassword = z.object({
   currentPassword: password,
   newPassword: password,
 })
+
+export const ChangeEmail = z.object({
+  email: z.string().email(),
+})
