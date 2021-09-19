@@ -1,16 +1,18 @@
 import { BlitzPage, useMutation } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import { LabeledTextField } from "app/core/components/LabeledTextField"
-import { ChangePassword, ChangeEmail } from "app/auth/validations"
+import { ChangePassword, ChangeEmail, ChangeName } from "app/auth/validations"
 
 import Navbar from "../core/components/navbar"
 import { Form, FORM_ERROR } from "../core/components/Form"
 import changePassword from "app/auth/mutations/changePassword"
 import changeEmail from "../users/mutations/changeEmail"
+import changeName from "../users/mutations/changeName"
 
 const SettingsPage: BlitzPage = () => {
   const [changePasswordMutation, { isSuccess: passwordChanged }] = useMutation(changePassword)
   const [changeEmailMutation, { isSuccess: emailChanged }] = useMutation(changeEmail)
+  const [changeNameMutation, { isSuccess: nameChanged }] = useMutation(changeName)
 
   return (
     <>
@@ -19,6 +21,37 @@ const SettingsPage: BlitzPage = () => {
         <div className="">
           <h1 className="font-bold text-6xl">Settings</h1>
           <h2 className="font-bold text-4xl">User</h2>
+          <div>
+            <h3 className="font-bold text-2xl">Name</h3>
+            {nameChanged ? (
+              <div>
+                <h2>Name changed successfully</h2>
+              </div>
+            ) : (
+              <Form
+                className="m-0"
+                submitText="Change name"
+                schema={ChangeName}
+                initialValues={{ name: "" }}
+                onSubmit={async (values) => {
+                  try {
+                    await changeNameMutation(values)
+                  } catch (error) {
+                    return {
+                      [FORM_ERROR]: "Sorry, we had an unexpected error. Please try again.",
+                    }
+                  }
+                }}
+              >
+                <LabeledTextField
+                  className="w-full border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  name="name"
+                  placeholder="Name"
+                  label="Name"
+                />
+              </Form>
+            )}
+          </div>
           <div>
             <h3 className="font-bold text-2xl">Email</h3>
             {emailChanged ? (
