@@ -31,6 +31,7 @@ export const ResetPassword = z
 export const ChangePassword = z.object({
   currentPassword: password,
   newPassword: password,
+  newRepeat: password,
 })
 
 export const ChangeEmail = z.object({
