@@ -1,7 +1,8 @@
-import { BlitzPage, useMutation, invokeWithMiddleware, InferGetServerSidePropsType } from "blitz"
+import { useMutation, invokeWithMiddleware, InferGetServerSidePropsType } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import { LabeledTextField } from "app/core/components/LabeledTextField"
 import { ChangePassword, ChangeEmail, ChangeName } from "app/auth/validations"
+import { Widget } from "@uploadcare/react-widget"
 
 import Navbar from "../core/components/navbar"
 import { Form, FORM_ERROR } from "../core/components/Form"
@@ -9,16 +10,24 @@ import changePassword from "app/auth/mutations/changePassword"
 import changeEmail from "../users/mutations/changeEmail"
 import changeName from "../users/mutations/changeName"
 import getCurrentUser from "app/users/queries/getCurrentUser"
+import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
+import changeAvatar from "app/workspaces/mutations/changeAvatar"
 
 export const getServerSideProps = async ({ req, res }) => {
   const user = await invokeWithMiddleware(getCurrentUser, null, { req, res })
-  return { props: { user } }
+  const workspace = await invokeWithMiddleware(getCurrentWorkspace, null, { req, res })
+
+  return { props: { user, workspace } }
 }
 
-const SettingsPage = ({ user }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const SettingsPage = ({
+  user,
+  workspace,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [changePasswordMutation, { isSuccess: passwordChanged }] = useMutation(changePassword)
   const [changeEmailMutation, { isSuccess: emailChanged }] = useMutation(changeEmail)
   const [changeNameMutation, { isSuccess: nameChanged }] = useMutation(changeName)
+  const [changeAvatarMutation, { isSuccess: avatarChanged }] = useMutation(changeAvatar)
 
   return (
     <>
@@ -38,7 +47,7 @@ const SettingsPage = ({ user }: InferGetServerSidePropsType<typeof getServerSide
                 className="m-0"
                 submitText="Change name"
                 schema={ChangeName}
-                initialValues={{ name: user!.name! }}
+                initialValues={{ name: user!.name! ?? "" }}
                 onSubmit={async (values) => {
                   try {
                     await changeNameMutation(values)
@@ -147,7 +156,45 @@ const SettingsPage = ({ user }: InferGetServerSidePropsType<typeof getServerSide
               </Form>
             )}
           </div>
-          <h2>Workspace</h2>
+          <h2 className="font-bold text-4xl">Workspace</h2>
+          <div>
+            <h3 className="font-bold text-2xl">Avatar</h3>
+            {avatarChanged ? (
+              <div>
+                <h2>Avatar changed successfully</h2>
+              </div>
+            ) : (
+              <Widget
+                publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
+                crop="1:1"
+                imageShrink="480x480"
+                imagesOnly
+                previewStep
+                clearable
+                onChange={async (info) => {
+                  try {
+                    // TODO: Remove old avatar from uploadcare after successfully updating
+                    await changeAvatarMutation({
+                      handle: workspace!.handle,
+                      avatar: info.cdnUrl ?? "",
+                    })
+                  } catch (err) {
+                    alert(err)
+                  }
+                  console.log("Upload completed:", info)
+                }}
+              />
+            )}
+          </div>
+          <div>
+            <h3 className="font-bold text-2xl">Bio</h3>
+          </div>
+          <div>
+            <h3 className="font-bold text-2xl">Pronouns</h3>
+          </div>
+          <div>
+            <h3 className="font-bold text-2xl">Affiliation</h3>
+          </div>
         </div>
       </main>
     </>
