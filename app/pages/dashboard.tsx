@@ -11,6 +11,7 @@ const Dashboard: BlitzPage = () => {
   )
 }
 
+Dashboard.authenticate = true
 Dashboard.suppressFirstRenderFlicker = true
 Dashboard.getLayout = (page) => <Layout title="Dashboard">{page}</Layout>
 
