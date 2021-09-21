@@ -12,6 +12,8 @@ import changeName from "../users/mutations/changeName"
 import getCurrentUser from "app/users/queries/getCurrentUser"
 import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
 import changeAvatar from "app/workspaces/mutations/changeAvatar"
+import changeBio from "../workspaces/mutations/changeBio"
+import changePronouns from "app/workspaces/mutations/changePronouns"
 
 export const getServerSideProps = async ({ req, res }) => {
   const user = await invokeWithMiddleware(getCurrentUser, null, { req, res })
@@ -28,6 +30,8 @@ const SettingsPage = ({
   const [changeEmailMutation, { isSuccess: emailChanged }] = useMutation(changeEmail)
   const [changeNameMutation, { isSuccess: nameChanged }] = useMutation(changeName)
   const [changeAvatarMutation, { isSuccess: avatarChanged }] = useMutation(changeAvatar)
+  const [changeBioMutation, { isSuccess: bioChanged }] = useMutation(changeBio)
+  const [changePronounsMutation, { isSuccess: pronounsChanged }] = useMutation(changePronouns)
 
   return (
     <>
@@ -174,6 +178,8 @@ const SettingsPage = ({
                 onChange={async (info) => {
                   try {
                     // TODO: Remove old avatar from uploadcare after successfully updating
+                    // TODO: Secure uploading
+                    // https://uploadcare.com/docs/security/secure-uploads/
                     await changeAvatarMutation({
                       handle: workspace!.handle,
                       avatar: info.cdnUrl ?? "",
@@ -188,12 +194,77 @@ const SettingsPage = ({
           </div>
           <div>
             <h3 className="font-bold text-2xl">Bio</h3>
+            {bioChanged ? (
+              <div>
+                <h2>Bio changed successfully</h2>
+              </div>
+            ) : (
+              <Form
+                className="m-0"
+                submitText="Change bio"
+                initialValues={{ bio: workspace!.bio }}
+                onSubmit={async (values) => {
+                  try {
+                    await changeBioMutation({
+                      handle: workspace!.handle,
+                      bio: values.bio,
+                    })
+                  } catch (error) {
+                    return {
+                      [FORM_ERROR]: "Sorry, we had an unexpected error. Please try again.",
+                    }
+                  }
+                }}
+              >
+                <LabeledTextField
+                  className="w-full border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  name="bio"
+                  placeholder="Bio"
+                  type="text"
+                  label="Current Bio"
+                />
+              </Form>
+            )}
           </div>
           <div>
             <h3 className="font-bold text-2xl">Pronouns</h3>
+            {pronounsChanged ? (
+              <div>
+                <h2>Pronouns changed successfully</h2>
+              </div>
+            ) : (
+              <Form
+                className="m-0"
+                submitText="Change pronouns"
+                initialValues={{ pronouns: workspace!.pronouns }}
+                onSubmit={async (values) => {
+                  try {
+                    await changePronounsMutation({
+                      handle: workspace!.handle,
+                      pronouns: values.pronouns,
+                    })
+                  } catch (error) {
+                    return {
+                      [FORM_ERROR]: "Sorry, we had an unexpected error. Please try again.",
+                    }
+                  }
+                }}
+              >
+                <LabeledTextField
+                  className="w-full border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  name="pronouns"
+                  placeholder="Pronouns"
+                  type="text"
+                  label="Current pronouns"
+                />
+              </Form>
+            )}
           </div>
           <div>
             <h3 className="font-bold text-2xl">Affiliation</h3>
+          </div>
+          <div>
+            <h3 className="font-bold text-2xl">ORCID</h3>
           </div>
         </div>
       </main>
