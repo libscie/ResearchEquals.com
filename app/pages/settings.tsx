@@ -1,4 +1,4 @@
-import { useMutation, invokeWithMiddleware, InferGetServerSidePropsType } from "blitz"
+import { useMutation, invokeWithMiddleware, InferGetServerSidePropsType, Link } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import { LabeledTextField } from "app/core/components/LabeledTextField"
 import { ChangePassword, ChangeEmail, ChangeName } from "app/auth/validations"
@@ -265,6 +265,13 @@ const SettingsPage = ({
           </div>
           <div>
             <h3 className="font-bold text-2xl">ORCID</h3>
+            {!workspace!.orcid ? (
+              <Link href="/api/auth/orcid">
+                <a>Add ORCID</a>
+              </Link>
+            ) : (
+              <p>{workspace!.orcid}</p>
+            )}
           </div>
         </div>
       </main>
