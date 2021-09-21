@@ -19,7 +19,7 @@ model Workspace {
   name     String?
   bio      String?
   pronouns String? @db.VarChar(20)
-  orcid    String?
+  orcid    String? @unique
 
   membership Membership[]
 }
