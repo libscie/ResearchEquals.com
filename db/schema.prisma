@@ -16,6 +16,8 @@ model Workspace {
   id     Int     @id @default(autoincrement())
   handle String  @unique
   avatar String?
+  name   String?
+  bio    String?
 
   membership Membership[]
 }
