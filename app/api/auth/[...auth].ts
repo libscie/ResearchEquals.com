@@ -14,8 +14,7 @@ export default passportAuth(({ ctx, req, res }) => ({
           sandbox: true,
           clientID: process.env.ORCID_CLIENT_ID,
           clientSecret: process.env.ORCID_CLIENT_SECRET,
-          // TODO update for production
-          callbackURL: "http://localhost:3000/api/auth/orcid/callback",
+          callbackURL: `${process.env.APP_ORIGIN}/api/auth/orcid/callback`,
         },
         async function (accessToken, refreshToken, params, profile, done) {
           // TODO add a way for the user to know when this fails
