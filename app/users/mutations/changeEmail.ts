@@ -23,6 +23,7 @@ export default resolver.pipe(resolver.authorize(), async ({ email }, ctx) => {
       verify_email_url: url`/verifyEmail/${emailCode}`,
     }),
   ])
+  // TODO? Add security email to old email
 
   return true
 })
