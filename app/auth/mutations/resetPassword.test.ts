@@ -35,6 +35,7 @@ describe("resetPassword mutation", () => {
               workspace: {
                 create: {
                   handle: "testing",
+                  avatar: "https://media.giphy.com/media/Ju7l5y9osyymQ/giphy.gif",
                 },
               },
             },

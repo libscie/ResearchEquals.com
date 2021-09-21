@@ -13,8 +13,13 @@ generator client {
 // --------------------------------------
 
 model Workspace {
-  id     Int    @id @default(autoincrement())
-  handle String @unique
+  id       Int     @id @default(autoincrement())
+  handle   String  @unique
+  avatar   String?
+  name     String?
+  bio      String?
+  pronouns String? @db.VarChar(20)
+  orcid    String? @unique
 
   membership Membership[]
 }
