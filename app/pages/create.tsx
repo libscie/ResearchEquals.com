@@ -1,12 +1,22 @@
-import { BlitzPage } from "blitz"
+import { BlitzPage, useRouter } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import Navbar from "../core/components/navbar"
+import CreateModuleForm from "../modules/components/CreateModuleForm"
 
 const CreatePage: BlitzPage = () => {
+  const router = useRouter()
+
   return (
     <>
       <Navbar />
-      <main className="lg:relative">TEST</main>
+      <main className="lg:relative">
+        <CreateModuleForm
+          onSuccess={(items) => {
+            console.log(items)
+            router.push("/dashboard")
+          }}
+        />
+      </main>
     </>
   )
 }

@@ -7,9 +7,16 @@ const Dashboard: BlitzPage = () => {
     <>
       <Navbar />
       <main className="lg:relative">
-        <Link href={Routes.SettingsPage()}>
-          <a>Go to settings</a>
-        </Link>
+        <p>
+          <Link href={Routes.CreatePage()}>
+            <a>Lets create some shit</a>
+          </Link>
+        </p>
+        <p>
+          <Link href={Routes.SettingsPage()}>
+            <a>Go to settings</a>
+          </Link>
+        </p>
       </main>
     </>
   )
