@@ -6,7 +6,7 @@ export default resolver.pipe(resolver.authorize(), async ({ title, type, main },
   // Create module
   const module = await db.module.create({
     data: {
-      suffix: await generateSuffix(),
+      suffix: await generateSuffix(undefined),
       title,
       type,
       main,

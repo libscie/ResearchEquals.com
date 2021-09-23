@@ -37,7 +37,7 @@ const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min
 }
 
-const generateSuffix = async () => {
+const generateSuffix = async (undefined) => {
   let generatorValue = getRandomInt(17179869184, 34359738367)
   let generatorOutput = ""
 
