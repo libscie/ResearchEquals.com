@@ -12,6 +12,20 @@ generator client {
 
 // --------------------------------------
 
+model Module {
+  id          Int         @id @default(autoincrement())
+  suffix      String      @unique
+  title       String      @db.VarChar(300)
+  description String?
+  license     String?
+  type        String
+  main        String
+  authors     Workspace[]
+  parents     Module[]    @relation("ModuleToModule")
+  Module      Module?     @relation("ModuleToModule", fields: [moduleId], references: [id])
+  moduleId    Int?
+}
+
 model Workspace {
   id       Int     @id @default(autoincrement())
   handle   String  @unique
@@ -22,6 +36,7 @@ model Workspace {
   orcid    String? @unique
 
   membership Membership[]
+  modules    Module[]
 }
 
 model Membership {
