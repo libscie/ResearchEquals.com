@@ -50,7 +50,7 @@ const generateSuffix = async () => {
       }
       generatorOutput += ENCODE_CHARS[parseInt(item, 2)]
     })
-  generatorOutput += ENCODE_CHARS[generatorValue % 32]
+  generatorOutput += ENCODE_CHARS[generatorValue % 31]
 
   return generatorOutput
 }

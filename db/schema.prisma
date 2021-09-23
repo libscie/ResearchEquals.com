@@ -21,6 +21,8 @@ model Module {
   type        String
   main        String
   authors     Workspace[]
+  // TODO: This relation is now exclusive - one to many
+  // Needs to be many-many
   parents     Module[]    @relation("ModuleToModule")
   Module      Module?     @relation("ModuleToModule", fields: [moduleId], references: [id])
   moduleId    Int?
