@@ -37,7 +37,7 @@ const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min
 }
 
-const generateSuffix = async () => {
+const generateSuffix = () => {
   let generatorValue = getRandomInt(17179869184, 34359738367)
   let generatorOutput = ""
 
@@ -50,7 +50,7 @@ const generateSuffix = async () => {
       }
       generatorOutput += ENCODE_CHARS[parseInt(item, 2)]
     })
-  generatorOutput += ENCODE_CHARS[generatorValue % 32]
+  generatorOutput += ENCODE_CHARS[generatorValue % 31]
 
   return generatorOutput
 }
