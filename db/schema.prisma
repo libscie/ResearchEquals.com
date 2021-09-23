@@ -20,7 +20,7 @@ model Module {
   license     String?
   type        String
   main        String
-  authors     Workspace[]
+  authors     Workspace[] @relation("ModuleToAuthor")
   parents     Module[]    @relation("ModuleToModule")
   children    Module[]    @relation("ModuleToModule", references: [id])
 }
@@ -35,7 +35,7 @@ model Workspace {
   orcid    String? @unique
 
   membership Membership[]
-  modules    Module[]
+  modules    Module[]     @relation("ModuleToAuthor")
 }
 
 model Membership {

@@ -10,6 +10,13 @@ export default resolver.pipe(resolver.authorize(), async ({ title, type, main },
       title,
       type,
       main,
+      authors: {
+        connect: [
+          {
+            id: ctx.session.$publicData.workspaceId,
+          },
+        ],
+      },
     },
   })
 
