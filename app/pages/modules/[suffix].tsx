@@ -1,17 +1,28 @@
-import { BlitzPage, useParam } from "blitz"
 import Layout from "../../core/layouts/Layout"
+import db from "db"
 
-// TODO
-// Check whether suffix exists -> module doesn't exist page
-// getModuleData
-// show view
+export const getServerSideProps = async ({ params }) => {
+  const suffix = params!.suffix
+  const module = await db.module.findFirst({
+    where: { suffix },
+  })
 
-const ModulePage: BlitzPage = () => {
-  const suffix = useParam("suffix", "string")
+  if (!module) {
+    return {
+      notFound: true,
+    }
+  }
 
+  return { props: { module } }
+}
+
+const ModulePage = ({ module }) => {
   return (
-    <Layout title={suffix}>
-      <div className="flex justify-center items-center">{suffix}</div>
+    <Layout title={module.title}>
+      <div className="flex justify-center items-center">
+        <h1>{module.title}</h1>
+        <p>{module.description}</p>
+      </div>
     </Layout>
   )
 }
