@@ -369,7 +369,6 @@ const UserInfo = () => {
   const currentWorkspace = useCurrentWorkspace()
   const [logoutMutation] = useMutation(logout)
   const router = useRouter()
-  console.log(currentWorkspace)
 
   if (currentUser && currentWorkspace) {
     return (
