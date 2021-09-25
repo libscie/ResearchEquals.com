@@ -14,6 +14,8 @@ generator client {
 
 model Module {
   id          Int         @id @default(autoincrement())
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
   suffix      String      @unique
   title       String      @db.VarChar(300)
   description String?
@@ -26,13 +28,15 @@ model Module {
 }
 
 model Workspace {
-  id       Int     @id @default(autoincrement())
-  handle   String  @unique
-  avatar   String?
-  name     String?
-  bio      String?
-  pronouns String? @db.VarChar(20)
-  orcid    String? @unique
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  handle    String   @unique
+  avatar    String?
+  name      String?
+  bio       String?
+  pronouns  String?  @db.VarChar(20)
+  orcid     String?  @unique
 
   membership Membership[]
   modules    Module[]     @relation("ModuleToAuthor")
