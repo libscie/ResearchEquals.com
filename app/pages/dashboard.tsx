@@ -1,12 +1,42 @@
-import { BlitzPage, Link, Routes } from "blitz"
+import { getSession, Link, Routes } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import moment from "moment"
 
 import Navbar from "../core/components/navbar"
 import db from "db"
 
-export const getServerSideProps = async () => {
-  const modules = await db.module.findMany()
+export const getServerSideProps = async ({ req, res }) => {
+  const session = await getSession(req, res)
+  const draftModules = await db.module.findMany({
+    where: {
+      published: false,
+      authors: {
+        some: {
+          id: session.$publicData.workspaceId,
+        },
+      },
+    },
+    orderBy: [
+      {
+        updatedAt: "asc",
+      },
+    ],
+  })
+
+  const modules = await db.module.findMany({
+    where: {
+      published: true,
+    },
+    orderBy: [
+      {
+        publishedAt: "desc",
+      },
+    ],
+    include: {
+      authors: true,
+    },
+  })
+
   const workspaces = await db.workspace.findMany({
     orderBy: [
       {
@@ -15,10 +45,10 @@ export const getServerSideProps = async () => {
     ],
   })
 
-  return { props: { modules, workspaces } }
+  return { props: { draftModules, modules, workspaces } }
 }
 
-const Dashboard = ({ modules, workspaces }) => {
+const Dashboard = ({ draftModules, modules, workspaces }) => {
   return (
     <>
       <Navbar />
@@ -30,11 +60,6 @@ const Dashboard = ({ modules, workspaces }) => {
             </Link>
           </p>
           <p>
-            <Link href={Routes.DraftsPage()}>
-              <a>Check yo drafts</a>
-            </Link>
-          </p>
-          <p>
             <Link href={Routes.SettingsPage()}>
               <a>Go to settings</a>
             </Link>
@@ -42,13 +67,34 @@ const Dashboard = ({ modules, workspaces }) => {
         </div>
         <div className="flex">
           <div className="w-full">
+            <h2 className="font-bold text-4xl">
+              <Link href={Routes.DraftsPage()}>
+                <a>
+                  {draftModules.length} draft{draftModules.length !== 1 ? "s" : ""}
+                </a>
+              </Link>
+            </h2>
+            {draftModules.map((draft) => {
+              return (
+                <p key={draft.suffix}>
+                  Last edited: {moment(draft.updatedAt).fromNow()}
+                  <Link href={Routes.ModulePage({ suffix: draft.suffix })}>
+                    <a>
+                      10.53962/{draft.suffix} {draft.title}
+                    </a>
+                  </Link>
+                </p>
+              )
+            })}
+          </div>
+          <div className="w-full">
             <h2 className="font-bold text-4xl">Feed</h2>
             {modules.map((module) => {
               return (
                 <p key={module.suffix}>
                   <Link href={Routes.ModulePage({ suffix: module.suffix })}>
                     <a>
-                      {module.suffix} {module.title}
+                      {moment(module.publishedAt).fromNow()} 10.53962/{module.suffix} {module.title}
                     </a>
                   </Link>
                 </p>
