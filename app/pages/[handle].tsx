@@ -1,16 +1,28 @@
-import { BlitzPage, useParam } from "blitz"
 import Layout from "app/core/layouts/Layout"
+import db from "db"
 
-// TODO
-// Check whether handle exists -> profile doesnt exist page
-// getHandleData
-// Check whether own profile is handle
-// show view
+export const getServerSideProps = async ({ params }) => {
+  const handle = params!.handle
+  const workspace = await db.workspace.findFirst({
+    where: { handle },
+  })
 
-const HandlePage: BlitzPage = () => {
-  const handle = useParam("handle", "string")
+  if (!workspace) {
+    return {
+      notFound: true,
+    }
+  }
 
-  return <div className="flex justify-center items-center">{handle}</div>
+  return { props: { workspace } }
+}
+
+const HandlePage = ({ workspace }) => {
+  return (
+    <>
+      <div className="flex justify-center items-center">{workspace.handle}</div>
+      <div>{JSON.stringify(workspace)}</div>
+    </>
+  )
 }
 
 HandlePage.getLayout = (page) => <Layout title="Handle">{page}</Layout>
