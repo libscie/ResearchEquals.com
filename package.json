@@ -32,6 +32,7 @@
     "autoprefixer": "10.3.1",
     "blitz": "0.39.0",
     "formik": "2.2.9",
+    "moment": "2.29.1",
     "passport-orcid": "0.0.4",
     "postcss": "8.3.6",
     "postmark": "2.7.7",
