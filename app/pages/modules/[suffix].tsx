@@ -23,6 +23,7 @@ const ModulePage = ({ module }) => {
         <h1>{module.title}</h1>
         <p>{module.description}</p>
       </div>
+      <div>{JSON.stringify(module)}</div>
     </Layout>
   )
 }
