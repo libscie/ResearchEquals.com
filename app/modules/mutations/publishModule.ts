@@ -24,10 +24,10 @@ export default resolver.pipe(resolver.authorize(), async ({ id }, ctx) => {
   form.append("fname", xmlStream, {
     filename: "axios-test.xml",
     contentType: "text/xml",
-    knownLength: xmlStream._readableState.length,
+    knownLength: (xmlStream as any)._readableState!.length,
   })
 
-  await axios.post(process.env.CROSSREF_URL, form, { headers: form.getHeaders() })
+  await axios.post(process.env.CROSSREF_URL!, form, { headers: form.getHeaders() })
   await db.module.update({
     where: {
       id,
