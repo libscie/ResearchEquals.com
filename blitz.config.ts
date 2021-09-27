@@ -11,6 +11,7 @@ const config: BlitzConfig = {
     UPLOADCARE_PUBLIC_KEY: process.env.UPLOADCARE_PUBLIC_KEY,
     ORCID_CLIENT_ID: process.env.ORCID_CLIENT_ID,
     ORCID_CLIENT_SECRET: process.env.ORCID_CLIENT_SECRET,
+    ORCID_CLIENT_SANDBOX: process.env.ORCID_CLIENT_SANDBOX,
   },
   /* Uncomment this to customize the webpack config
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {

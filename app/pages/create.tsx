@@ -1,6 +1,6 @@
 import { BlitzPage, useRouter } from "blitz"
 import Layout from "app/core/layouts/Layout"
-import Navbar from "../core/components/navbar"
+import Navbar from "../core/components/navbarMarketing"
 import CreateModuleForm from "../modules/components/CreateModuleForm"
 
 const CreatePage: BlitzPage = () => {
