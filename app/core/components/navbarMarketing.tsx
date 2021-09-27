@@ -373,20 +373,11 @@ const UserInfo = () => {
   if (currentUser && currentWorkspace) {
     return (
       <>
-        <button
-          className="button small"
-          onClick={async () => {
-            await logoutMutation()
-            router.push("/")
-          }}
-        >
-          Logout
-        </button>
         <Link href={Routes.Dashboard()}>
           {/* User id: <code>{currentUser.id}</code>
           <br />
           User role: <code>{currentUser.role}</code> */}
-          <a>Go to @{currentWorkspace.handle}</a>
+          <a className="px-4 py-2 bg-black text-white rounded hover:bg-gray-800">Dashboard</a>
         </Link>
       </>
     )

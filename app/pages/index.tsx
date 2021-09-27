@@ -2,7 +2,7 @@ import { BlitzPage } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import Countdown from "react-countdown"
 
-import Navbar from "../core/components/navbar"
+import Navbar from "../core/components/navbarMarketing"
 
 const Completionist = () => <span>You are good to go!</span>
 

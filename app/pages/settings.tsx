@@ -4,7 +4,7 @@ import { LabeledTextField } from "app/core/components/LabeledTextField"
 import { ChangePassword, ChangeEmail, ChangeName } from "app/auth/validations"
 import { Widget } from "@uploadcare/react-widget"
 
-import Navbar from "../core/components/navbar"
+import Navbar from "../core/components/navbarMarketing"
 import { Form, FORM_ERROR } from "../core/components/Form"
 import changePassword from "app/auth/mutations/changePassword"
 import changeEmail from "../users/mutations/changeEmail"

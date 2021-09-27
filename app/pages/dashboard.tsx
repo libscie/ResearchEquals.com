@@ -2,7 +2,7 @@ import { getSession, Link, Routes } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import moment from "moment"
 
-import Navbar from "../core/components/navbar"
+import Navbar from "../core/components/navbarApp"
 import db from "db"
 
 export const getServerSideProps = async ({ req, res }) => {
