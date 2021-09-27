@@ -49,7 +49,7 @@ const ModulePage = ({ module, isAuthor }) => {
         <button
           className="px-4 py-2 bg-indigo-500 text-white hover:bg-indigo-300"
           onClick={async () => {
-            await publishMutation({ id: module.id })
+            await publishMutation({ id: module.id, suffix: module.suffix })
             router.reload()
           }}
         >
