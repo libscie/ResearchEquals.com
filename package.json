@@ -39,6 +39,7 @@
     "prisma": "2.29.1",
     "react": "18.0.0-alpha-64f83a6fd-20210819",
     "react-cookie-consent": "6.3.0",
+    "react-countdown": "2.3.2",
     "react-dom": "18.0.0-alpha-64f83a6fd-20210819",
     "tailwindcss": "2.1.2",
     "zod": "3.7.3"
