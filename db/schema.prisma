@@ -13,20 +13,34 @@ generator client {
 // --------------------------------------
 
 model Module {
-  id          Int         @id @default(autoincrement())
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  published   Boolean     @default(false)
+  id          Int          @id @default(autoincrement())
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  published   Boolean      @default(false)
   publishedAt DateTime?
-  suffix      String      @unique
-  title       String      @db.VarChar(300)
+  suffix      String       @unique
+  title       String       @db.VarChar(300)
   description String?
   license     String?
   type        String
   main        String
-  authors     Workspace[] @relation("ModuleToAuthor")
-  parents     Module[]    @relation("ModuleToModule")
-  children    Module[]    @relation("ModuleToModule", references: [id])
+  authors     Authorship[]
+  parents     Module[]     @relation("ModuleToModule")
+  children    Module[]     @relation("ModuleToModule", references: [id])
+}
+
+model Authorship {
+  id Int @id @default(autoincrement())
+
+  module   Module @relation(fields: [moduleId], references: [id])
+  moduleId Int
+
+  workspace   Workspace? @relation(fields: [workspaceId], references: [id])
+  workspaceId Int?
+
+  invitedWorkspaceId Int?
+
+  @@unique([moduleId, invitedWorkspaceId])
 }
 
 model Workspace {
@@ -40,8 +54,8 @@ model Workspace {
   pronouns  String?  @db.VarChar(20)
   orcid     String?  @unique
 
-  membership Membership[]
-  modules    Module[]     @relation("ModuleToAuthor")
+  members     Membership[]
+  authorships Authorship[]
 }
 
 model Membership {
