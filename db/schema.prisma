@@ -30,7 +30,9 @@ model Module {
 }
 
 model Authorship {
-  id Int @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   module   Module @relation(fields: [moduleId], references: [id])
   moduleId Int
@@ -38,9 +40,10 @@ model Authorship {
   workspace   Workspace? @relation(fields: [workspaceId], references: [id])
   workspaceId Int?
 
-  invitedWorkspaceId Int?
+  acceptedInvitation Boolean @default(false)
+  readyToPublish     Boolean @default(false)
 
-  @@unique([moduleId, invitedWorkspaceId])
+  @@unique([moduleId, workspaceId])
 }
 
 model Workspace {
@@ -120,7 +123,6 @@ model Token {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   hashedToken String
-  // See note below about TokenType enum
   type        TokenType
   expiresAt   DateTime
   sentTo      String
@@ -131,9 +133,6 @@ model Token {
   @@unique([hashedToken, type])
 }
 
-// NOTE: It's highly recommended to use an enum for the token type
-//       but enums only work in Postgres.
-//       See: https://blitzjs.com/docs/database-overview#switch-to-postgresql
 enum TokenType {
   RESET_PASSWORD
 }
