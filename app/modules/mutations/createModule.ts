@@ -8,6 +8,7 @@ export default resolver.pipe(
     const authorInvitations = authors.map((author) => {
       return {
         workspaceId: author,
+        acceptedInvitation: undefined,
       }
     })
 
