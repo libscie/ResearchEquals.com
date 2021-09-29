@@ -40,8 +40,8 @@ model Authorship {
   workspace   Workspace? @relation(fields: [workspaceId], references: [id])
   workspaceId Int?
 
-  acceptedInvitation Boolean @default(false)
-  readyToPublish     Boolean @default(false)
+  acceptedInvitation Boolean?
+  readyToPublish     Boolean  @default(false)
 
   @@unique([moduleId, workspaceId])
 }
