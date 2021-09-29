@@ -12,7 +12,7 @@ export const getServerSideProps = async ({ req, res }) => {
       published: false,
       authors: {
         some: {
-          id: session.$publicData.workspaceId,
+          workspaceId: session.$publicData.workspaceId,
         },
       },
     },

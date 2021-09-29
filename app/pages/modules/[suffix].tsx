@@ -4,6 +4,7 @@ import { Fragment, useState } from "react"
 import Layout from "../../core/layouts/Layout"
 import db from "db"
 import publishModule from "app/modules/mutations/publishModule"
+import NavbarApp from "../../core/components/navbarApp"
 
 export const getServerSideProps = async ({ params, req, res }) => {
   const session = await getSession(req, res)
@@ -22,7 +23,7 @@ export const getServerSideProps = async ({ params, req, res }) => {
   if (
     !module ||
     (module.published === false &&
-      !(module.authors.filter((e) => e.id === session.$publicData.workspaceId).length > 0))
+      !(module.authors.filter((e) => e.workspaceId === session.$publicData.workspaceId).length > 0))
   ) {
     return {
       notFound: true,
@@ -32,7 +33,8 @@ export const getServerSideProps = async ({ params, req, res }) => {
   return {
     props: {
       module,
-      isAuthor: module.authors.filter((e) => e.id === session.$publicData.workspaceId).length,
+      isAuthor: module.authors.filter((e) => e.workspaceId === session.$publicData.workspaceId)
+        .length,
     },
   }
 }
@@ -52,6 +54,7 @@ const ModulePage = ({ module, isAuthor }) => {
 
   return (
     <Layout title={`R= ${module.title}`}>
+      <NavbarApp />
       <div className="flex justify-center items-center">
         <h1>{module.title}</h1>
         <p>{module.description}</p>
