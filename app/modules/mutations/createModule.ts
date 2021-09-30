@@ -4,7 +4,19 @@ import generateSuffix from "./generateSuffix"
 
 export default resolver.pipe(
   resolver.authorize(),
-  async ({ title, description, type, main }, ctx) => {
+  async ({ title, description, type, main, authors }, ctx) => {
+    const authorInvitations = authors.map((author) => {
+      return {
+        workspaceId: author,
+        acceptedInvitation: undefined,
+      }
+    })
+
+    authorInvitations.push({
+      workspaceId: ctx.session.$publicData.workspaceId,
+      acceptedInvitation: true,
+    })
+
     const module = await db.module.create({
       data: {
         suffix: await generateSuffix(undefined),
@@ -13,11 +25,7 @@ export default resolver.pipe(
         type,
         main,
         authors: {
-          connect: [
-            {
-              id: ctx.session.$publicData.workspaceId,
-            },
-          ],
+          create: authorInvitations,
         },
       },
     })

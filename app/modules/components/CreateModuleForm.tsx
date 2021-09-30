@@ -25,6 +25,13 @@ export const CreateModuleForm = (props: CreateModuleFormProps) => {
           parents: "",
         }}
         onSubmit={async (values) => {
+          // Ensure the authors is an array of integers identifying the workspaces
+          // TODO: Need to update this when the selection is improved
+          if (values.authors !== "") {
+            values.authors = [parseInt(values.authors)]
+          } else {
+            values.authors = []
+          }
           try {
             await createModuleMutation(values)
             props.onSuccess?.(values)

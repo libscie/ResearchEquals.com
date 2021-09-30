@@ -1,9 +1,10 @@
-import { getSession, Link, Routes } from "blitz"
+import { getSession, Link, Routes, useMutation } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import moment from "moment"
 
 import Navbar from "../core/components/navbarApp"
 import db from "db"
+import updateInvitation from "../authorship/mutations/updateInvitation"
 
 export const getServerSideProps = async ({ req, res }) => {
   const session = await getSession(req, res)
@@ -12,7 +13,8 @@ export const getServerSideProps = async ({ req, res }) => {
       published: false,
       authors: {
         some: {
-          id: session.$publicData.workspaceId,
+          workspaceId: session.$publicData.workspaceId,
+          acceptedInvitation: true,
         },
       },
     },
@@ -21,6 +23,31 @@ export const getServerSideProps = async ({ req, res }) => {
         updatedAt: "asc",
       },
     ],
+  })
+
+  const invitedModules = await db.module.findMany({
+    where: {
+      published: false,
+      authors: {
+        some: {
+          workspaceId: session.$publicData.workspaceId,
+          acceptedInvitation: null,
+        },
+      },
+    },
+    orderBy: [
+      {
+        updatedAt: "desc",
+      },
+    ],
+    include: {
+      authors: {
+        where: {
+          workspaceId: session.$publicData.workspaceId,
+          acceptedInvitation: null,
+        },
+      },
+    },
   })
 
   const modules = await db.module.findMany({
@@ -45,10 +72,12 @@ export const getServerSideProps = async ({ req, res }) => {
     ],
   })
 
-  return { props: { draftModules, modules, workspaces } }
+  return { props: { draftModules, invitedModules, modules, workspaces } }
 }
 
-const Dashboard = ({ draftModules, modules, workspaces }) => {
+const Dashboard = ({ draftModules, invitedModules, modules, workspaces }) => {
+  const [updateInvitationMutation, { isSuccess: invitationUpdated }] = useMutation(updateInvitation)
+
   return (
     <>
       <Navbar />
@@ -112,6 +141,51 @@ const Dashboard = ({ draftModules, modules, workspaces }) => {
                     {moment(workspace.createdAt).fromNow()} @{workspace.handle}
                   </a>
                 </Link>
+              </p>
+            )
+          })}
+        </div>
+        <div>
+          <h2 className="font-bold text-4xl">Invitations</h2>
+          {invitedModules.map((invitation) => {
+            return (
+              <p key={invitation.suffix}>
+                {invitationUpdated ? (
+                  <span>Thanks for responding to this invitation</span>
+                ) : (
+                  <>
+                    <Link href={Routes.ModulePage({ suffix: invitation.suffix })}>
+                      <a>
+                        {moment(invitation.createdAt).fromNow()} 10.53962/{invitation.suffix}{" "}
+                        {invitation.title}
+                      </a>
+                    </Link>
+                    <div>
+                      <button
+                        onClick={async () => {
+                          await updateInvitationMutation({
+                            id: invitation.authors[0].id,
+                            accept: true,
+                          })
+                        }}
+                      >
+                        Accept
+                      </button>
+                    </div>
+                    <div>
+                      <button
+                        onClick={async () => {
+                          await updateInvitationMutation({
+                            id: invitation.authors[0].id,
+                            accept: false,
+                          })
+                        }}
+                      >
+                        Decline
+                      </button>
+                    </div>
+                  </>
+                )}
               </p>
             )
           })}
