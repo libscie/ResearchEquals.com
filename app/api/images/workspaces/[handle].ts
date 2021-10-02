@@ -3,11 +3,9 @@ import db from "db"
 import htmlToImage from "../../../htmlToImage"
 
 const handler = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
-  const {
-    query: { handle },
-  } = req
+  const handle = req.query.handle?.toString()
 
-  const module = await db.workspace.findFirst({ where: { handle } })
+  const workspace = await db.workspace.findFirst({ where: { handle } })
   const imageBuffer = await htmlToImage(
     `
       <html>
@@ -53,7 +51,7 @@ const handler = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
         <body>
           <div>
             <h1>${handle}</h1>
-            <p>${handle.name}</p>
+            <p>${workspace!.name}</p>
           </div>
         </body>
       </html>

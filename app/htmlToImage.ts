@@ -7,7 +7,7 @@ const htmlToImage = async (html = "") => {
   await page.setContent(html)
 
   const content = await page.$("body")
-  const imageBuffer = await content.screenshot({ omitBackground: true })
+  const imageBuffer = await content!.screenshot({ omitBackground: true })
 
   await page.close()
   await browser.close()

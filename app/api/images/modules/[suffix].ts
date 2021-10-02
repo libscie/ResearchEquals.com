@@ -3,9 +3,7 @@ import db from "db"
 import htmlToImage from "../../../htmlToImage"
 
 const handler = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
-  const {
-    query: { suffix },
-  } = req
+  const suffix = req.query.suffix?.toString()
 
   const module = await db.module.findFirst({ where: { suffix } })
   const imageBuffer = await htmlToImage(
@@ -53,7 +51,7 @@ const handler = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
         <body>
           <div>
             <h1>${suffix}</h1>
-            <p>${module.title}</p>
+            <p>${module!.title}</p>
           </div>
         </body>
       </html>
