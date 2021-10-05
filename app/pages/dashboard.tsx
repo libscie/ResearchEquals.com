@@ -5,9 +5,19 @@ import moment from "moment"
 import Navbar from "../core/components/navbarApp"
 import db from "db"
 import updateInvitation from "../authorship/mutations/updateInvitation"
+import Banner from "../core/components/Banner"
 
 export const getServerSideProps = async ({ req, res }) => {
   const session = await getSession(req, res)
+  const user = await db.user.findFirst({
+    where: {
+      id: session.$publicData.userId!,
+    },
+    select: {
+      emailIsVerified: true,
+    },
+  })
+
   const draftModules = await db.module.findMany({
     where: {
       published: false,
@@ -72,14 +82,23 @@ export const getServerSideProps = async ({ req, res }) => {
     ],
   })
 
-  return { props: { draftModules, invitedModules, modules, workspaces } }
+  return { props: { user, draftModules, invitedModules, modules, workspaces } }
 }
 
-const Dashboard = ({ draftModules, invitedModules, modules, workspaces }) => {
+const Dashboard = ({ user, draftModules, invitedModules, modules, workspaces }) => {
   const [updateInvitationMutation, { isSuccess: invitationUpdated }] = useMutation(updateInvitation)
 
   return (
     <>
+      {!user.emailIsVerified ? (
+        <Banner
+          message="You can only start publishing once your email is verified. Please check your inbox."
+          action="Resend verification"
+          url="api/routes/verifiy"
+        />
+      ) : (
+        ""
+      )}
       <Navbar />
       <main className="max-w-4xl mx-auto">
         <div>
