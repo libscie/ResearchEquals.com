@@ -91,11 +91,7 @@ const Dashboard = ({ user, draftModules, invitedModules, modules, workspaces }) 
   return (
     <>
       {!user.emailIsVerified ? (
-        <Banner
-          message="You can only start publishing once your email is verified. Please check your inbox."
-          action="Resend verification"
-          url="api/routes/verifiy"
-        />
+        <Banner message="You can only start publishing once your email is verified. Please check your inbox." />
       ) : (
         ""
       )}
