@@ -1,18 +1,33 @@
-import { Link, LinkProps } from "@blitzjs/core"
+import { useMutation } from "next/data-client"
+import { Formik, Form } from "formik"
 
-type BannerProps = {
-  message?: string
-  action?: string
-  url?: LinkProps
-}
+import resendVerification from "../../auth/mutations/resendVerification"
 
-const Banner = ({ message, action, url }: BannerProps) => {
+const Banner = ({ message }) => {
+  const [resendVerificationMutation, { isSuccess }] = useMutation(resendVerification)
   return (
-    <div className="absolute top-0 w-screen bg-yellow-400 inset-x-0 pb-2 sm:pb-5 z-100">
-      <p>{message}</p>
-      <Link href={url}>
-        <a>{action}</a>
-      </Link>
+    <div className="absolute flex bottom-0 w-screen bg-yellow-400 inset-x-0 p-2 sm:p-5 z-100">
+      <p className="w-11/12">{message}</p>
+      {isSuccess ? (
+        <p>Email sent!</p>
+      ) : (
+        <Formik
+          initialValues={{}}
+          onSubmit={async () => {
+            try {
+              await resendVerificationMutation()
+            } catch (error) {
+              alert("Error saving product")
+            }
+          }}
+        >
+          <Form>
+            <button className="bg-indigo-300 p-1 rounded" type="submit">
+              Send verification
+            </button>
+          </Form>
+        </Formik>
+      )}
     </div>
   )
 }
