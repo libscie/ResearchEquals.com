@@ -1,5 +1,5 @@
-import { useMutation } from "next/data-client"
 import { Formik, Form } from "formik"
+import { useMutation } from "blitz"
 
 import resendVerification from "../../auth/mutations/resendVerification"
 
