@@ -1,4 +1,4 @@
-import { useMutation, useRouter, Link } from "blitz"
+import { useMutation, useRouter, Link, useQuery } from "blitz"
 import { Dialog, Transition } from "@headlessui/react"
 import { Fragment, useState } from "react"
 import { Widget } from "@uploadcare/react-widget"
@@ -13,6 +13,7 @@ import { Form, FORM_ERROR } from "../components/Form"
 import { LabeledTextField } from "app/core/components/LabeledTextField"
 import { ChangePassword, ChangeEmail, ChangeName } from "app/auth/validations"
 import DeleteModal from "./delete"
+import getSignature from "../queries/getSignature"
 
 export default function SettingsModal({ user, workspace }) {
   let [isOpen, setIsOpen] = useState(false)
@@ -24,6 +25,7 @@ export default function SettingsModal({ user, workspace }) {
   const [changePronounsMutation, { isSuccess: pronounsChanged }] = useMutation(changePronouns)
   const [deleteUserMutation] = useMutation(deleteUser)
   const router = useRouter()
+  const [uploadSecret] = useQuery(getSignature)
 
   return (
     <>
@@ -209,6 +211,8 @@ export default function SettingsModal({ user, workspace }) {
                   ) : (
                     <Widget
                       publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
+                      secureSignature={uploadSecret.signature}
+                      secureExpire={uploadSecret.expire}
                       crop="1:1"
                       imageShrink="480x480"
                       imagesOnly
