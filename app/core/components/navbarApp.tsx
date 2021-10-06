@@ -391,7 +391,7 @@ const UserInfo = () => {
           User role: <code>{currentUser.role}</code> */}
           <a className="px-4 py-2 bg-black text-white rounded hover:bg-gray-800">Dashboard</a>
         </Link>
-        <SettingsModal />
+        <SettingsModal user={currentUser} workspace={currentWorkspace} />
       </>
     )
   } else {
