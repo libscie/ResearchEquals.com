@@ -214,6 +214,7 @@ export default function SettingsModal({ user, workspace }) {
                       imagesOnly
                       previewStep
                       clearable
+                      systemDialog
                       onChange={async (info) => {
                         try {
                           // TODO: Remove old avatar from uploadcare after successfully updating
