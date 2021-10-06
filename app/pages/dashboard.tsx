@@ -103,11 +103,6 @@ const Dashboard = ({ user, draftModules, invitedModules, modules, workspaces }) 
               <a>Lets create some shit</a>
             </Link>
           </p>
-          <p>
-            <Link href={Routes.SettingsPage()}>
-              <a>Go to settings</a>
-            </Link>
-          </p>
         </div>
         <div className="flex">
           <div className="w-full">
