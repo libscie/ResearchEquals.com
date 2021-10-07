@@ -25,7 +25,7 @@ export default function SettingsModal({ user, workspace }) {
   const [changePronounsMutation, { isSuccess: pronounsChanged }] = useMutation(changePronouns)
   const [deleteUserMutation] = useMutation(deleteUser)
   const router = useRouter()
-  const [uploadSecret] = useQuery(getSignature)
+  const [uploadSecret] = useQuery(getSignature, undefined)
 
   return (
     <>
