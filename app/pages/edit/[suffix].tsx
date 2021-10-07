@@ -1,5 +1,5 @@
 import { getSession, useMutation, useRouter } from "blitz"
-import { useState } from "react"
+import { useState, Suspense } from "react"
 import Layout from "../../core/layouts/Layout"
 import db from "db"
 import publishModule from "app/modules/mutations/publishModule"
@@ -63,7 +63,9 @@ const ModuleEditPage = ({ user, module, isAuthor }) => {
         ""
       )}
       <NavbarApp />
-      <ModuleEdit user={user} module={module} isAuthor={isAuthor} />
+      <Suspense fallback="Loading...">
+        <ModuleEdit user={user} module={module} isAuthor={isAuthor} />
+      </Suspense>
     </Layout>
   )
 }
