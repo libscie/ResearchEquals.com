@@ -117,7 +117,7 @@ const Dashboard = ({ user, draftModules, invitedModules, modules, workspaces }) 
               return (
                 <p key={draft.suffix}>
                   Last edited: {moment(draft.updatedAt).fromNow()}
-                  <Link href={Routes.ModulePage({ suffix: draft.suffix })}>
+                  <Link href={Routes.ModuleEditPage({ suffix: draft.suffix })}>
                     <a>
                       10.53962/{draft.suffix} {draft.title}
                     </a>

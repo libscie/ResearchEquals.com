@@ -11,8 +11,6 @@ import DeleteModuleModal from "../../core/modals/DeleteModuleModal"
 export const getServerSideProps = async ({ params, req, res }) => {
   const session = await getSession(req, res)
 
-  console.log(params)
-
   const suffix = params!.suffix
   const module = await db.module.findFirst({
     where: { suffix },
