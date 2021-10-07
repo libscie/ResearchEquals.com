@@ -1,13 +1,24 @@
+import { useQuery } from "blitz"
+
 import ReadyToPublishModal from "../../core/modals/ReadyToPublishModal"
 import DeleteModuleModal from "../../core/modals/DeleteModuleModal"
-
-// const [moduleInfo, { refetch }] = useQuery(useCurrentModule, module.suffix)
+import useCurrentModule from "../queries/useCurrentModule"
+import { useEffect } from "react"
 
 const ModuleEdit = ({ user, module, isAuthor }) => {
+  const [moduleEdit, { refetch }] = useQuery(useCurrentModule, { suffix: module.suffix })
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refetch()
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
     <div className="max-w-4xl mx-auto">
       <div className="flex justify-center items-center">
-        <h1 className="text-8xl font-black">{module.title}</h1>
+        <h1 className="text-8xl font-black">{moduleEdit.title}</h1>
       </div>
       <div>
         <h2 className="text-4xl font-black">Abstract</h2>
