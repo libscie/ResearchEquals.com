@@ -164,7 +164,7 @@ const Dashboard = ({ user, draftModules, invitedModules, modules, workspaces }) 
                   <span>Thanks for responding to this invitation</span>
                 ) : (
                   <>
-                    <Link href={Routes.ModulePage({ suffix: invitation.suffix })}>
+                    <Link href={Routes.ModuleEditPage({ suffix: invitation.suffix })}>
                       <a>
                         {moment(invitation.createdAt).fromNow()} 10.53962/{invitation.suffix}{" "}
                         {invitation.title}
