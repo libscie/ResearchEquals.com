@@ -1,14 +1,14 @@
 import { getSession, useMutation, useRouter } from "blitz"
-import { Dialog, Transition } from "@headlessui/react"
-import { Fragment, useState } from "react"
+import { useState } from "react"
 import Layout from "../../core/layouts/Layout"
 import db from "db"
 import publishModule from "app/modules/mutations/publishModule"
 import NavbarApp from "../../core/components/navbarApp"
 import ReadyToPublishModal from "../../core/modals/ReadyToPublishModal"
 import DeleteModuleModal from "../../core/modals/DeleteModuleModal"
+import Banner from "../../core/components/Banner"
 
-export const getServerSideProps = async ({ params, req, res }) => {
+export const getServerSideProps = async ({ params, req, res }, ctx) => {
   const session = await getSession(req, res)
 
   const suffix = params!.suffix
@@ -16,6 +16,12 @@ export const getServerSideProps = async ({ params, req, res }) => {
     where: { suffix },
     include: {
       authors: true,
+    },
+  })
+
+  const user = await db.user.findFirst({
+    where: {
+      id: session.$publicData.userId,
     },
   })
 
@@ -37,31 +43,33 @@ export const getServerSideProps = async ({ params, req, res }) => {
       module,
       isAuthor: module.authors.filter((e) => e.workspaceId === session.$publicData.workspaceId)
         .length,
+      user,
     },
   }
 }
 
-const ModuleEditPage = ({ module, isAuthor }) => {
-  const [publishMutation] = useMutation(publishModule)
-  const router = useRouter()
-  let [isOpen, setIsOpen] = useState(false)
-
+const ModuleEditPage = ({ user, module, isAuthor }) => {
   return (
     <Layout title={`R= ${module.title}`}>
-      <NavbarApp />
-      <div className="flex justify-center items-center">
-        <h1>{module.title}</h1>
-        <p>{module.description}</p>
-      </div>
-      {isAuthor && !module.published ? (
-        <>
-          <ReadyToPublishModal module={module} />
-          <DeleteModuleModal module={module} />
-        </>
+      {!user.emailIsVerified ? (
+        <Banner message="You can only start publishing once your email is verified. Please check your inbox." />
       ) : (
         ""
       )}
-      <div>{JSON.stringify(module)}</div>
+      <NavbarApp />
+      <div className="max-w-4xl mx-auto">
+        <div className="flex justify-center items-center">
+          <h1>{module.title}</h1>
+          <p>{module.description}</p>
+        </div>
+        {isAuthor && !module.published && user.emailIsVerified ? (
+          <ReadyToPublishModal module={module} />
+        ) : (
+          ""
+        )}
+        {isAuthor && !module.published ? <DeleteModuleModal module={module} /> : ""}
+        <div>{JSON.stringify(module)}</div>
+      </div>
     </Layout>
   )
 }
