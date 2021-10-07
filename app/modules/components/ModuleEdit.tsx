@@ -18,7 +18,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="flex justify-center items-center">
-        <h1 className="text-8xl font-black">{moduleEdit.title}</h1>
+        <h1 className="text-8xl font-black">{moduleEdit!.title!}</h1>
       </div>
       <div>
         <h2 className="text-4xl font-black">Abstract</h2>
