@@ -3,7 +3,12 @@ import db from "db"
 import { Signup } from "app/auth/validations"
 import { sendEmailWithTemplate } from "app/postmark"
 import { url } from "app/url"
+import algoliasearch from "algoliasearch"
+
 import * as verifyEmail from "../verify-email"
+
+const client = algoliasearch(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_API_ADMIN_KEY)
+const index = client.initIndex("dev_workspaces")
 
 export default resolver.pipe(resolver.zod(Signup), async ({ email, password, handle }, ctx) => {
   const hashedPassword = await SecurePassword.hash(password.trim())
@@ -26,6 +31,8 @@ export default resolver.pipe(resolver.zod(Signup), async ({ email, password, han
     select: { id: true, name: true, email: true, role: true, memberships: true },
   })
 
+  // TODO: Need to make the object more precise and handle less data
+  await index.saveObject(user, { autoGenerateObjectIDIfNotExist: true })
   const emailCode = await verifyEmail.generateCode(hashedPassword)
 
   await Promise.all([
