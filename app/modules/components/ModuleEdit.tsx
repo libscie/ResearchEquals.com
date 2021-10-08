@@ -1,24 +1,81 @@
-import { useQuery } from "blitz"
+import { useQuery, useMutation } from "blitz"
+import { Wax } from "wax-prosemirror-core"
+import { Popover, Transition } from "@headlessui/react"
+import { ChevronDoubleDownIcon } from "@heroicons/react/solid"
+import { Fragment } from "react"
+import { DefaultSchema } from "wax-prosemirror-utilities"
 
 import ReadyToPublishModal from "../../core/modals/ReadyToPublishModal"
 import DeleteModuleModal from "../../core/modals/DeleteModuleModal"
 import useCurrentModule from "../queries/useCurrentModule"
 import { useEffect } from "react"
+import InstaLayout from "../../wax/InstaLayout"
+import changeTitle from "../mutations/changeTitle"
 
 const ModuleEdit = ({ user, module, isAuthor }) => {
   const [moduleEdit, { refetch }] = useQuery(useCurrentModule, { suffix: module.suffix })
+  const [changeTitleMutation] = useMutation(changeTitle)
 
   useEffect(() => {
     const interval = setInterval(() => {
       refetch()
     }, 1000)
     return () => clearInterval(interval)
-  }, [])
+  }, [refetch])
 
   return (
     <div className="max-w-4xl mx-auto">
       <div className="flex justify-center items-center">
-        <h1 className="text-8xl font-black">{moduleEdit!.title!}</h1>
+        <Popover className="relative">
+          {({ open }) => (
+            <>
+              <Popover.Button
+                className={`${open ? "" : "text-opacity-90"}
+                text-black group bg-orange-700 px-3 py-2 rounded-md inline-flex items-center text-base font-medium hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
+              >
+                <h1 className="text-8xl font-black">{moduleEdit!.title!}</h1>
+                <ChevronDoubleDownIcon
+                  className={`${open ? "" : "text-opacity-70"}
+                  ml-2 h-5 w-5 text-white group-hover:text-opacity-80 bg-black transition ease-in-out duration-150`}
+                  aria-hidden="true"
+                />
+              </Popover.Button>
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-150"
+                enterFrom="opacity-0 translate-y-1"
+                enterTo="opacity-100 translate-y-0"
+                leave="transition ease-in duration-150"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 translate-y-1"
+              >
+                <Popover.Panel className="absolute z-10 w-screen max-w-sm px-4 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0 lg:max-w-3xl">
+                  <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                    <div className="relative grid gap-8 bg-white p-7 lg:grid-cols-2">
+                      <Wax
+                        autoFocus
+                        placeholder={moduleEdit!.title!}
+                        value={moduleEdit!.title!}
+                        config={{
+                          SchemaService: DefaultSchema,
+                          services: [],
+                        }}
+                        layout={InstaLayout}
+                        onChange={(source) => {
+                          changeTitleMutation({
+                            suffix: moduleEdit!.suffix,
+                            title: source.replace(/<\/?[^>]+(>|$)/g, ""),
+                          })
+                          refetch()
+                        }}
+                      />
+                    </div>
+                  </div>
+                </Popover.Panel>
+              </Transition>
+            </>
+          )}
+        </Popover>
       </div>
       <div>
         <h2 className="text-4xl font-black">Abstract</h2>
