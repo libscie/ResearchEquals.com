@@ -9,7 +9,7 @@ import db from "db"
 import updateInvitation from "../authorship/mutations/updateInvitation"
 import Banner from "../core/components/Banner"
 
-const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_API_SEARCH_KEY)
+const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
 export const getServerSideProps = async ({ req, res }) => {
   const session = await getSession(req, res)
