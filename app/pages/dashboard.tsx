@@ -1,11 +1,15 @@
 import { getSession, Link, Routes, useMutation } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import moment from "moment"
-
+import React from "react"
+import algoliasearch from "algoliasearch/lite"
+import { InstantSearch, SearchBox, Hits } from "react-instantsearch-dom"
 import Navbar from "../core/components/navbarApp"
 import db from "db"
 import updateInvitation from "../authorship/mutations/updateInvitation"
 import Banner from "../core/components/Banner"
+
+const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_API_SEARCH_KEY)
 
 export const getServerSideProps = async ({ req, res }) => {
   const session = await getSession(req, res)
@@ -199,6 +203,13 @@ const Dashboard = ({ user, draftModules, invitedModules, modules, workspaces }) 
               </p>
             )
           })}
+        </div>
+        <div>
+          <h2 className="font-bold text-4xl">Search</h2>
+          <InstantSearch indexName="dev_workspaces" searchClient={searchClient}>
+            <SearchBox />
+            <Hits />
+          </InstantSearch>
         </div>
       </main>
     </>
