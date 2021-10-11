@@ -2,12 +2,16 @@ import { getSession, Link, Routes, useMutation } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import moment from "moment"
 import React from "react"
-import algoliasearch from "algoliasearch/lite"
-import { InstantSearch, SearchBox, Hits } from "react-instantsearch-dom"
+import { getAlgoliaResults } from "@algolia/autocomplete-js"
+import SearchItem from "../core/components/SearchItem"
+
+import "@algolia/autocomplete-theme-classic"
+import algoliasearch from "algoliasearch"
 import Navbar from "../core/components/navbarApp"
 import db from "db"
 import updateInvitation from "../authorship/mutations/updateInvitation"
 import Banner from "../core/components/Banner"
+import Autocomplete from "../core/components/Autocomplete"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
@@ -204,13 +208,30 @@ const Dashboard = ({ user, draftModules, invitedModules, modules, workspaces }) 
             )
           })}
         </div>
-        <div>
-          <h2 className="font-bold text-4xl">Search</h2>
-          <InstantSearch indexName="dev_workspaces" searchClient={searchClient}>
-            <SearchBox />
-            <Hits />
-          </InstantSearch>
-        </div>
+        <Autocomplete
+          openOnFocus={true}
+          getSources={({ query }) => [
+            {
+              sourceId: "products",
+              getItems() {
+                return getAlgoliaResults({
+                  searchClient,
+                  queries: [
+                    {
+                      indexName: "dev_workspaces",
+                      query,
+                    },
+                  ],
+                })
+              },
+              templates: {
+                item({ item, components }) {
+                  return <SearchItem hit={item} components={components} />
+                },
+              },
+            },
+          ]}
+        />
       </main>
     </>
   )
