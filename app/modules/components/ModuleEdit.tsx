@@ -4,6 +4,7 @@ import { Popover, Transition } from "@headlessui/react"
 import { ChevronDoubleDownIcon } from "@heroicons/react/solid"
 import { Fragment } from "react"
 import { DefaultSchema } from "wax-prosemirror-utilities"
+import moment from "moment"
 
 import ReadyToPublishModal from "../../core/modals/ReadyToPublishModal"
 import DeleteModuleModal from "../../core/modals/DeleteModuleModal"
@@ -11,10 +12,12 @@ import useCurrentModule from "../queries/useCurrentModule"
 import { useEffect } from "react"
 import InstaLayout from "../../wax/InstaLayout"
 import changeTitle from "../mutations/changeTitle"
+import changeAbstract from "../mutations/changeAbstract"
 
 const ModuleEdit = ({ user, module, isAuthor }) => {
   const [moduleEdit, { refetch }] = useQuery(useCurrentModule, { suffix: module.suffix })
   const [changeTitleMutation] = useMutation(changeTitle)
+  const [changeAbstractMutation] = useMutation(changeAbstract)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -78,12 +81,63 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
         </Popover>
       </div>
       <div>
-        <h2 className="text-4xl font-black">Abstract</h2>
-        <p>{module.description}</p>
+        <h2>Last edited:</h2>
+        <p>{moment(module.updatedAt).fromNow()}</p>
       </div>
       <div>
-        <p>{module.updatedAt.toString()}</p>
+        <h2 className="text-4xl font-black">Abstract</h2>
+        <Popover className="relative">
+          {({ open }) => (
+            <>
+              <Popover.Button
+                className={`${open ? "" : "text-opacity-90"}
+                group bg-orange-700 rounded-md inline-flex items-center hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
+              >
+                <p>{moduleEdit!.description!}</p>
+                <ChevronDoubleDownIcon
+                  className={`${open ? "" : "text-opacity-70"}
+                  ml-2 h-5 w-5 text-white group-hover:text-opacity-80 bg-black transition ease-in-out duration-150`}
+                  aria-hidden="true"
+                />
+              </Popover.Button>
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-150"
+                enterFrom="opacity-0 translate-y-1"
+                enterTo="opacity-100 translate-y-0"
+                leave="transition ease-in duration-150"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 translate-y-1"
+              >
+                <Popover.Panel className="absolute z-10 w-screen max-w-sm px-4 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0 lg:max-w-3xl">
+                  <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                    <div className="relative grid gap-8 bg-white p-7 lg:grid-cols-2">
+                      <Wax
+                        autoFocus
+                        placeholder={moduleEdit!.description!}
+                        value={moduleEdit!.description!}
+                        config={{
+                          SchemaService: DefaultSchema,
+                          services: [],
+                        }}
+                        layout={InstaLayout}
+                        onChange={(source) => {
+                          changeAbstractMutation({
+                            suffix: moduleEdit!.suffix,
+                            description: source.replace(/<\/?[^>]+(>|$)/g, ""),
+                          })
+                          refetch()
+                        }}
+                      />
+                    </div>
+                  </div>
+                </Popover.Panel>
+              </Transition>
+            </>
+          )}
+        </Popover>
       </div>
+
       <div className="flex flex-col">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
