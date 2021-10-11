@@ -28,11 +28,27 @@ export default resolver.pipe(resolver.zod(Signup), async ({ email, password, han
         },
       },
     },
-    select: { id: true, name: true, email: true, role: true, memberships: true },
+    include: {
+      memberships: {
+        include: {
+          workspace: true,
+        },
+      },
+    },
   })
 
-  // TODO: Need to make the object more precise and handle less data
-  await index.saveObject(user, { autoGenerateObjectIDIfNotExist: true })
+  // Index the new workspace with Algolia for search
+  // Should only be one membership at this point
+  user.memberships.map(async (membership) => {
+    await index.saveObject({
+      objectID: membership.workspace.id,
+      name: membership.workspace.name,
+      handle: membership.workspace.handle,
+      avatar: membership.workspace.avatar,
+      pronouns: membership.workspace.pronouns,
+    })
+  })
+
   const emailCode = await verifyEmail.generateCode(hashedPassword)
 
   await Promise.all([
