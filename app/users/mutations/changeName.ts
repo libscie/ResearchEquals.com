@@ -1,5 +1,9 @@
 import { NotFoundError, resolver } from "blitz"
 import db from "db"
+import algoliasearch from "algoliasearch"
+
+const client = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_ADMIN_KEY!)
+const index = client.initIndex("dev_workspaces")
 
 export default resolver.pipe(resolver.authorize(), async ({ name }, ctx) => {
   const user = await db.user.findFirst({ where: { id: ctx.session.userId! } })
@@ -17,6 +21,15 @@ export default resolver.pipe(resolver.authorize(), async ({ name }, ctx) => {
     where: { id: workspace.id },
     data: { name },
   })
+
+  await index.partialUpdateObjects([
+    {
+      objectID: workspace.id,
+      name: name,
+      // handle: membership.workspace.handle,
+      // avatar: membership.workspace.avatar,
+    },
+  ])
 
   return true
 })
