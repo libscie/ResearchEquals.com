@@ -48,6 +48,10 @@
     "react-dom": "18.0.0-alpha-64f83a6fd-20210819",
     "react-instantsearch-dom": "6.12.1",
     "tailwindcss": "2.1.2",
+    "wax-prosemirror-core": "0.1.3",
+    "wax-prosemirror-plugins": "0.1.3",
+    "wax-prosemirror-services": "0.1.3",
+    "wax-prosemirror-utilities": "0.1.3",
     "xml-js": "1.6.11",
     "zod": "3.7.3"
   },
