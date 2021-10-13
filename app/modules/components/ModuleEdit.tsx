@@ -5,6 +5,13 @@ import { ChevronDoubleDownIcon } from "@heroicons/react/solid"
 import { Fragment } from "react"
 import { DefaultSchema } from "wax-prosemirror-utilities"
 import moment from "moment"
+import algoliasearch from "algoliasearch"
+import { getAlgoliaResults } from "@algolia/autocomplete-js"
+import { Toaster, toast } from "react-hot-toast"
+
+import addAuthor from "../mutations/addAuthor"
+
+import "@algolia/autocomplete-theme-classic"
 
 import ReadyToPublishModal from "../../core/modals/ReadyToPublishModal"
 import DeleteModuleModal from "../../core/modals/DeleteModuleModal"
@@ -13,21 +20,29 @@ import { useEffect } from "react"
 import InstaLayout from "../../wax/InstaLayout"
 import changeTitle from "../mutations/changeTitle"
 import changeAbstract from "../mutations/changeAbstract"
+import Autocomplete from "../../core/components/Autocomplete"
+
+const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
 const ModuleEdit = ({ user, module, isAuthor }) => {
   const [moduleEdit, { refetch }] = useQuery(useCurrentModule, { suffix: module.suffix })
   const [changeTitleMutation] = useMutation(changeTitle)
   const [changeAbstractMutation] = useMutation(changeAbstract)
+  const [addAuthorMutation] = useMutation(addAuthor)
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      refetch()
-    }, 1000)
-    return () => clearInterval(interval)
-  }, [refetch])
+  console.log(moduleEdit)
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     refetch()
+  //   }, 1000)
+  //   return () => clearInterval(interval)
+  // }, [refetch])
 
   return (
     <div className="max-w-4xl mx-auto">
+      <div>
+        <Toaster />
+      </div>
       <div className="flex justify-center items-center">
         <Popover className="relative">
           {({ open }) => (
@@ -163,32 +178,35 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {module.authors.map((author) => (
-                    <tr key={author.workspace.orcid}>
+                  {moduleEdit!.authors.map((author) => (
+                    <tr key={author!.workspace!.orcid}>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
-                          {author.workspace.avatar ? (
+                          {author!.workspace!.avatar ? (
                             <div className="flex-shrink-0 h-10 w-10">
                               <img
                                 className="h-10 w-10 rounded-full"
-                                src={author.workspace.avatar}
-                                alt={`Avatar of ${author.workspace.name}`}
+                                src={author!.workspace!.avatar}
+                                alt={`Avatar of ${author!.workspace!.name}`}
                               />
                             </div>
                           ) : (
                             <div className="flex-shrink-0 h-10 w-10">
                               <img
                                 className="h-10 w-10 rounded-full"
-                                src={`https://eu.ui-avatars.com/api/?rounded=true&background=random&name=${author.workspace.handle}`}
-                                alt={`Avatar of ${author.workspace.name}`}
+                                src={`https://eu.ui-avatars.com/api/?rounded=true&background=random&name=${author!
+                                  .workspace!.handle!}`}
+                                alt={`Avatar of ${author!.workspace!.name!}`}
                               />
                             </div>
                           )}
                           <div className="ml-4">
                             <div className="text-sm font-medium text-gray-900">
-                              {author.workspace.name}
+                              {author!.workspace!.name}
                             </div>
-                            <div className="text-sm text-gray-500">@{author.workspace.handle}</div>
+                            <div className="text-sm text-gray-500">
+                              @{author!.workspace!.handle}
+                            </div>
                           </div>
                         </div>
                       </td>
@@ -202,6 +220,47 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
                       </td>
                     </tr>
                   ))}
+                  <tr>
+                    <Autocomplete
+                      openOnFocus={true}
+                      defaultActiveItemId="0"
+                      getSources={({ query }) => [
+                        {
+                          sourceId: "products",
+                          async onSelect(params) {
+                            const { item, setQuery } = params
+                            try {
+                              await addAuthorMutation({
+                                authorId: item.objectID,
+                                moduleId: moduleEdit!.id,
+                              })
+                              toast.success("Author invited")
+                            } catch (error) {
+                              toast.error("Something went wrong")
+                            }
+                            setQuery("")
+                            await refetch()
+                          },
+                          getItems() {
+                            return getAlgoliaResults({
+                              searchClient,
+                              queries: [
+                                {
+                                  indexName: "dev_workspaces",
+                                  query,
+                                },
+                              ],
+                            })
+                          },
+                          templates: {
+                            item({ item, components }) {
+                              return <div>{item.handle}</div>
+                            },
+                          },
+                        },
+                      ]}
+                    />
+                  </tr>
                 </tbody>
               </table>
             </div>
