@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from "blitz"
+import { useQuery, useMutation, useSession } from "blitz"
 import { Wax } from "wax-prosemirror-core"
 import { Popover, Transition } from "@headlessui/react"
 import { ChevronDoubleDownIcon } from "@heroicons/react/solid"
@@ -10,6 +10,9 @@ import { getAlgoliaResults } from "@algolia/autocomplete-js"
 import { Toaster, toast } from "react-hot-toast"
 
 import addAuthor from "../mutations/addAuthor"
+import removeInvitation from "../../authorship/mutations/removeInvitation"
+import approveAuthorship from "../../authorship/mutations/approveAuthorship"
+import acceptInvitation from "../../authorship/mutations/acceptInvitation"
 
 import "@algolia/autocomplete-theme-classic"
 
@@ -25,12 +28,17 @@ import Autocomplete from "../../core/components/Autocomplete"
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
 const ModuleEdit = ({ user, module, isAuthor }) => {
+  const session = useSession()
   const [moduleEdit, { refetch }] = useQuery(useCurrentModule, { suffix: module.suffix })
   const [changeTitleMutation] = useMutation(changeTitle)
   const [changeAbstractMutation] = useMutation(changeAbstract)
   const [addAuthorMutation] = useMutation(addAuthor)
+  const [removeInvitationMutation] = useMutation(removeInvitation)
+  const [approveAuthorshipMutation] = useMutation(approveAuthorship)
+  const [acceptInvitationMutation] = useMutation(acceptInvitation)
 
   console.log(moduleEdit)
+  console.log(session.workspaceId)
   // useEffect(() => {
   //   const interval = setInterval(() => {
   //     refetch()
@@ -168,17 +176,15 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
                       Status
-                    </th>
-                    <th scope="col" className="relative px-6 py-3">
-                      <span className="sr-only">Edit</span>
                     </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {moduleEdit!.authors.map((author) => (
+                    // Only render if  acceptedInvitation != false
                     <tr key={author!.workspace!.orcid}>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
@@ -210,14 +216,78 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                          {author.readyToPublish.toString()}
-                        </span>
+                      <td className="px-6 py-4 text-right whitespace-nowrap">
+                        {/* Placeholder for delete invite */}
+                        {author.workspace!.id === session.workspaceId &&
+                        author.acceptedInvitation === null ? (
+                          <>
+                            <button
+                              className="bg-green-500 rounded text-white px-4 py-2 hover:bg-green-600"
+                              onClick={async () => {
+                                // TODO: Accept mutation
+                                await acceptInvitationMutation({ id: author.id })
+                                // await removeInvitationMutation({ id: author.id })
+                                toast.success("Accepted invitation")
+                                refetch()
+                              }}
+                            >
+                              Accept
+                            </button>
+                            <button
+                              className="ml-2 bg-red-500 rounded text-white px-4 py-2 hover:bg-red-600"
+                              onClick={async () => {
+                                await removeInvitationMutation({ id: author.id })
+                                toast("Declined invitation")
+                                refetch()
+                              }}
+                            >
+                              Decline
+                            </button>
+                          </>
+                        ) : author.acceptedInvitation === null ? (
+                          // If invite is not yet accepted/rejected -> allow for deleting
+                          <button
+                            className="bg-red-500 rounded text-white px-4 py-2 hover:bg-red-600"
+                            onClick={async () => {
+                              await removeInvitationMutation({ id: author.id })
+                              toast("Removed author")
+                              refetch()
+                            }}
+                          >
+                            Remove invite
+                          </button>
+                        ) : author.readyToPublish === false &&
+                          author.acceptedInvitation === true &&
+                          author.workspace!.id === session.workspaceId ? (
+                          // if author has accepted invite but not ready to publish
+                          // button to indicate ready to publish
+                          <button
+                            className="bg-green-500 rounded text-white px-4 py-2 hover:bg-green-600"
+                            onClick={async () => {
+                              await approveAuthorshipMutation({ id: author.id })
+                              toast.success("Version approved for publication")
+                              refetch()
+                              // alert("This will approve to publish")
+                            }}
+                          >
+                            Approve to publish
+                          </button>
+                        ) : (
+                          // Display publish readiness status
+                          <span
+                            className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                              author.readyToPublish
+                                ? "bg-green-100 text-green-800"
+                                : "bg-yellow-100 text-yellow-800"
+                            }`}
+                          >
+                            {author.readyToPublish ? "Approved" : "Pending"}
+                          </span>
+                        )}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      {/* <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <ReadyToPublishModal module={module} />
-                      </td>
+                      </td> */}
                     </tr>
                   ))}
                   <tr>
