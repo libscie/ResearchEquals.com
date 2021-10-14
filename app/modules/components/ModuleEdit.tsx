@@ -37,8 +37,6 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
   const [approveAuthorshipMutation] = useMutation(approveAuthorship)
   const [acceptInvitationMutation] = useMutation(acceptInvitation)
 
-  console.log(moduleEdit)
-  console.log(session.workspaceId)
   // useEffect(() => {
   //   const interval = setInterval(() => {
   //     refetch()
@@ -183,6 +181,47 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
+                  <tr>
+                    <Autocomplete
+                      openOnFocus={true}
+                      defaultActiveItemId="0"
+                      getSources={({ query }) => [
+                        {
+                          sourceId: "products",
+                          async onSelect(params) {
+                            const { item, setQuery } = params
+                            try {
+                              await addAuthorMutation({
+                                authorId: item.objectID,
+                                moduleId: moduleEdit!.id,
+                              })
+                              toast.success("Author invited")
+                            } catch (error) {
+                              toast.error("Something went wrong")
+                            }
+                            setQuery("")
+                            await refetch()
+                          },
+                          getItems() {
+                            return getAlgoliaResults({
+                              searchClient,
+                              queries: [
+                                {
+                                  indexName: "dev_workspaces",
+                                  query,
+                                },
+                              ],
+                            })
+                          },
+                          templates: {
+                            item({ item, components }) {
+                              return <div>{item.handle}</div>
+                            },
+                          },
+                        },
+                      ]}
+                    />
+                  </tr>
                   {moduleEdit!.authors.map((author) => (
                     // Only render if  acceptedInvitation != false
                     <tr key={author!.workspace!.orcid}>
@@ -226,7 +265,6 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
                               onClick={async () => {
                                 // TODO: Accept mutation
                                 await acceptInvitationMutation({ id: author.id })
-                                // await removeInvitationMutation({ id: author.id })
                                 toast.success("Accepted invitation")
                                 refetch()
                               }}
@@ -285,52 +323,8 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
                           </span>
                         )}
                       </td>
-                      {/* <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <ReadyToPublishModal module={module} />
-                      </td> */}
                     </tr>
                   ))}
-                  <tr>
-                    <Autocomplete
-                      openOnFocus={true}
-                      defaultActiveItemId="0"
-                      getSources={({ query }) => [
-                        {
-                          sourceId: "products",
-                          async onSelect(params) {
-                            const { item, setQuery } = params
-                            try {
-                              await addAuthorMutation({
-                                authorId: item.objectID,
-                                moduleId: moduleEdit!.id,
-                              })
-                              toast.success("Author invited")
-                            } catch (error) {
-                              toast.error("Something went wrong")
-                            }
-                            setQuery("")
-                            await refetch()
-                          },
-                          getItems() {
-                            return getAlgoliaResults({
-                              searchClient,
-                              queries: [
-                                {
-                                  indexName: "dev_workspaces",
-                                  query,
-                                },
-                              ],
-                            })
-                          },
-                          templates: {
-                            item({ item, components }) {
-                              return <div>{item.handle}</div>
-                            },
-                          },
-                        },
-                      ]}
-                    />
-                  </tr>
                 </tbody>
               </table>
             </div>
