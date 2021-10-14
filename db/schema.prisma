@@ -43,6 +43,8 @@ model Authorship {
   acceptedInvitation Boolean?
   readyToPublish     Boolean  @default(false)
 
+  authorshipRank Int? @default(0)
+
   @@unique([moduleId, workspaceId])
 }
 
