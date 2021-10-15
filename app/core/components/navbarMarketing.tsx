@@ -25,8 +25,6 @@ import logout from "../../auth/mutations/logout"
 import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
 import Autocomplete from "./Autocomplete"
 
-import "@algolia/autocomplete-theme-classic"
-
 export default function Example() {
   // 1. container box
   // 2. logo container
