@@ -270,16 +270,20 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
                         ]}
                       />
                     </tr>
-                    <Droppable droppableId="authors-ranking" style={{ height: "500px" }}>
+                    <Droppable droppableId="authors-ranking">
                       {(provided: DroppableProvided) => (
-                        <div ref={provided.innerRef} {...provided.droppableProps}>
+                        <tr
+                          ref={provided.innerRef}
+                          {...provided.droppableProps}
+                          style={{ height: `${moduleEdit!.authors.length * 72}px` }}
+                        >
                           <AuthorList
                             authors={moduleEdit!.authors}
                             setAuthorState={setQueryData}
                             suffix={moduleEdit!.suffix}
                           />
                           {provided.placeholder}
-                        </div>
+                        </tr>
                       )}
                     </Droppable>
                   </tbody>
