@@ -27,6 +27,7 @@
   "dependencies": {
     "@algolia/autocomplete-js": "1.4.0",
     "@algolia/autocomplete-theme-classic": "1.4.0",
+    "@carbon/icons-react": "10.41.0",
     "@headlessui/react": "1.4.0",
     "@heroicons/react": "1.0.4",
     "@prisma/client": "2.29.1",
