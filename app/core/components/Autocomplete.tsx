@@ -24,7 +24,7 @@ function Autocomplete(props) {
     }
   }, [props])
 
-  return <div ref={containerRef} />
+  return <div className="h-full" ref={containerRef} />
 }
 
 export default Autocomplete
