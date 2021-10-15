@@ -2,7 +2,7 @@ import { useQuery, useMutation, useSession } from "blitz"
 import { Wax } from "wax-prosemirror-core"
 import { Popover, Transition } from "@headlessui/react"
 import { ChevronDoubleDownIcon } from "@heroicons/react/solid"
-import { Fragment, useState } from "react"
+import { Fragment, useEffect, useState } from "react"
 import { DefaultSchema } from "wax-prosemirror-utilities"
 import moment from "moment"
 import algoliasearch from "algoliasearch"
@@ -27,14 +27,25 @@ import Autocomplete from "../../core/components/Autocomplete"
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
 const ModuleEdit = ({ user, module, isAuthor }) => {
-  const session = useSession()
-  const [moduleEdit, { refetch }] = useQuery(useCurrentModule, { suffix: module.suffix })
+  const [moduleEdit, { refetch, setQueryData }] = useQuery(
+    useCurrentModule,
+    { suffix: module.suffix },
+    { refetchOnWindowFocus: true }
+  )
   const [authorState, setAuthorState] = useState(moduleEdit!.authors)
   const [changeTitleMutation] = useMutation(changeTitle)
   const [changeAbstractMutation] = useMutation(changeAbstract)
   const [addAuthorMutation] = useMutation(addAuthor)
   const [updateAuthorRankMutation] = useMutation(updateAuthorRank)
 
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     refetch()
+  //     console.log(moduleEdit!.authors)
+  //     setAuthorState(moduleEdit!.authors)
+  //   }, 10000)
+  //   return () => clearInterval(interval)
+  // }, [refetch])
   return (
     <div className="max-w-4xl mx-auto">
       <div>
@@ -76,12 +87,13 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
                           services: [],
                         }}
                         layout={InstaLayout}
-                        onChange={(source) => {
-                          changeTitleMutation({
+                        onChange={async (source) => {
+                          const updatedModule = await changeTitleMutation({
                             suffix: moduleEdit!.suffix,
                             title: source.replace(/<\/?[^>]+(>|$)/g, ""),
                           })
-                          refetch()
+                          // refetch()
+                          setQueryData(updatedModule)
                         }}
                       />
                     </div>
@@ -94,7 +106,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
       </div>
       <div>
         <h2>Last edited:</h2>
-        <p>{moment(module.updatedAt).fromNow()}</p>
+        <p>{moment(moduleEdit!.updatedAt).fromNow()}</p>
       </div>
       <div>
         <h2 className="text-4xl font-black">Abstract</h2>
@@ -133,12 +145,15 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
                           services: [],
                         }}
                         layout={InstaLayout}
-                        onChange={(source) => {
-                          changeAbstractMutation({
+                        onChange={async (source) => {
+                          // TODO: Add instant edit
+                          const updatedModule = await changeAbstractMutation({
                             suffix: moduleEdit!.suffix,
-                            description: source.replace(/<\/?[^>]+(>|$)/g, ""),
+                            title: source.replace(/<\/?[^>]+(>|$)/g, ""),
                           })
-                          refetch()
+                          // refetch()
+                          console.log(updatedModule)
+                          setQueryData(updatedModule)
                         }}
                       />
                     </div>
@@ -164,7 +179,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
             return
           }
 
-          const newAuthorState = Array.from(authorState)
+          const newAuthorState = Array.from(moduleEdit!.authors)
           newAuthorState.splice(source.index, 1)
           newAuthorState.splice(
             destination.index,
@@ -180,14 +195,16 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
             i += 1
           })
 
-          setAuthorState(newAuthorState)
-
           // Update database
           newAuthorState.map(async (author) => {
-            await updateAuthorRankMutation({ id: author.id, rank: author.authorshipRank })
+            const updatedModule = await updateAuthorRankMutation({
+              id: author.id,
+              rank: author.authorshipRank,
+              suffix: moduleEdit!.suffix,
+            })
             console.log(`Updated ${author.id} to rank ${author.authorshipRank}`)
+            setQueryData(updatedModule!)
           })
-          refetch()
         }}
       >
         <div className="flex flex-col">
@@ -222,16 +239,16 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
                             async onSelect(params) {
                               const { item, setQuery } = params
                               try {
-                                await addAuthorMutation({
+                                const updatedModule = await addAuthorMutation({
                                   authorId: item.objectID,
                                   moduleId: moduleEdit!.id,
                                 })
                                 toast.success("Author invited")
+                                setQueryData(updatedModule)
                               } catch (error) {
                                 toast.error("Something went wrong")
                               }
                               setQuery("")
-                              await refetch()
                             },
                             getItems() {
                               return getAlgoliaResults({
@@ -253,13 +270,13 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
                         ]}
                       />
                     </tr>
-                    <Droppable droppableId="authors-ranking">
+                    <Droppable droppableId="authors-ranking" style={{ height: "500px" }}>
                       {(provided: DroppableProvided) => (
                         <div ref={provided.innerRef} {...provided.droppableProps}>
                           <AuthorList
-                            authors={authorState}
-                            refetch={refetch}
-                            setAuthorState={setAuthorState}
+                            authors={moduleEdit!.authors}
+                            setAuthorState={setQueryData}
+                            suffix={moduleEdit!.suffix}
                           />
                           {provided.placeholder}
                         </div>

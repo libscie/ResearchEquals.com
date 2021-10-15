@@ -9,12 +9,12 @@ import approveAuthorship from "../../authorship/mutations/approveAuthorship"
 
 function AuthorList({
   authors,
-  refetch,
   setAuthorState,
+  suffix,
 }: {
   authors: Array<any>
-  refetch: Function
   setAuthorState: Function
+  suffix: string
 }) {
   const session = useSession()
   const [removeInvitationMutation] = useMutation(removeInvitation)
@@ -77,10 +77,16 @@ function AuthorList({
                     <button
                       className="bg-green-500 rounded text-white px-4 py-2 hover:bg-green-600"
                       onClick={async () => {
-                        // TODO: Accept mutation
-                        await acceptInvitationMutation({ id: author.id })
-                        toast.success("Accepted invitation")
-                        refetch()
+                        try {
+                          const updatedModule = await acceptInvitationMutation({
+                            id: author.id,
+                            suffix,
+                          })
+                          toast.success("Accepted invitation")
+                          setAuthorState(updatedModule)
+                        } catch (error) {
+                          toast.error("Something went wrong")
+                        }
                       }}
                     >
                       Accept
@@ -88,9 +94,16 @@ function AuthorList({
                     <button
                       className="ml-2 bg-red-500 rounded text-white px-4 py-2 hover:bg-red-600"
                       onClick={async () => {
-                        await removeInvitationMutation({ id: author.id })
-                        toast("Declined invitation")
-                        refetch()
+                        try {
+                          const updatedModule = await removeInvitationMutation({
+                            id: author.id,
+                            suffix,
+                          })
+                          toast("Declined invitation")
+                          setAuthorState(updatedModule)
+                        } catch (error) {
+                          toast.error("Something went wrong")
+                        }
                       }}
                     >
                       Decline
@@ -101,10 +114,16 @@ function AuthorList({
                   <button
                     className="bg-red-500 rounded text-white px-4 py-2 hover:bg-red-600"
                     onClick={async () => {
-                      await removeInvitationMutation({ id: author.id })
-                      toast("Removed author")
-                      // TODO: Update state
-                      refetch()
+                      try {
+                        const updatedModule = await removeInvitationMutation({
+                          id: author.id,
+                          suffix,
+                        })
+                        toast("Removed author", { icon: "👋" })
+                        setAuthorState(updatedModule)
+                      } catch (error) {
+                        toast.error("Something went wrong")
+                      }
                     }}
                   >
                     Remove invite
@@ -117,9 +136,12 @@ function AuthorList({
                   <button
                     className="bg-green-500 rounded text-white px-4 py-2 hover:bg-green-600"
                     onClick={async () => {
-                      await approveAuthorshipMutation({ id: author.id })
+                      const updatedModule = await approveAuthorshipMutation({
+                        id: author.id,
+                        suffix,
+                      })
                       toast.success("Version approved for publication")
-                      refetch()
+                      setAuthorState(updatedModule)
                       // alert("This will approve to publish")
                     }}
                   >
