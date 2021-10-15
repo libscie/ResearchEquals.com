@@ -17,5 +17,16 @@ export default resolver.pipe(resolver.authorize(), async ({ suffix, title }) => 
     },
   })
 
-  return true
+  const updatedModule = await db.module.findFirst({
+    where: { suffix },
+    include: {
+      authors: {
+        include: {
+          workspace: true,
+        },
+      },
+    },
+  })
+
+  return updatedModule!
 })

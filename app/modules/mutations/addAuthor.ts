@@ -13,7 +13,14 @@ export default resolver.pipe(resolver.authorize(), async ({ authorId, moduleId }
         },
       },
     },
+    include: {
+      authors: {
+        include: {
+          workspace: true,
+        },
+      },
+    },
   })
 
-  return true
+  return module
 })
