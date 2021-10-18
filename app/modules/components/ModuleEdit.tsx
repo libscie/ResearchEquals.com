@@ -1,33 +1,56 @@
-import { useQuery, useMutation } from "blitz"
+import { useQuery, useMutation, useSession } from "blitz"
 import { Wax } from "wax-prosemirror-core"
 import { Popover, Transition } from "@headlessui/react"
 import { ChevronDoubleDownIcon } from "@heroicons/react/solid"
-import { Fragment } from "react"
+import { Fragment, useEffect, useState } from "react"
 import { DefaultSchema } from "wax-prosemirror-utilities"
 import moment from "moment"
+import algoliasearch from "algoliasearch"
+import { getAlgoliaResults } from "@algolia/autocomplete-js"
+import { Toaster, toast } from "react-hot-toast"
+import { DragDropContext, Droppable, DroppableProvided } from "react-beautiful-dnd"
+
+import addAuthor from "../mutations/addAuthor"
+import AuthorList from "../../core/components/AuthorList"
+import updateAuthorRank from "../../authorship/mutations/updateAuthorRank"
+
+import "@algolia/autocomplete-theme-classic"
 
 import ReadyToPublishModal from "../../core/modals/ReadyToPublishModal"
 import DeleteModuleModal from "../../core/modals/DeleteModuleModal"
 import useCurrentModule from "../queries/useCurrentModule"
-import { useEffect } from "react"
 import InstaLayout from "../../wax/InstaLayout"
 import changeTitle from "../mutations/changeTitle"
 import changeAbstract from "../mutations/changeAbstract"
+import Autocomplete from "../../core/components/Autocomplete"
+
+const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
 const ModuleEdit = ({ user, module, isAuthor }) => {
-  const [moduleEdit, { refetch }] = useQuery(useCurrentModule, { suffix: module.suffix })
+  const [moduleEdit, { refetch, setQueryData }] = useQuery(
+    useCurrentModule,
+    { suffix: module.suffix },
+    { refetchOnWindowFocus: true }
+  )
+  const [authorState, setAuthorState] = useState(moduleEdit!.authors)
   const [changeTitleMutation] = useMutation(changeTitle)
   const [changeAbstractMutation] = useMutation(changeAbstract)
+  const [addAuthorMutation] = useMutation(addAuthor)
+  const [updateAuthorRankMutation] = useMutation(updateAuthorRank)
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      refetch()
-    }, 1000)
-    return () => clearInterval(interval)
-  }, [refetch])
-
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     refetch()
+  //     console.log(moduleEdit!.authors)
+  //     setAuthorState(moduleEdit!.authors)
+  //   }, 10000)
+  //   return () => clearInterval(interval)
+  // }, [refetch])
   return (
     <div className="max-w-4xl mx-auto">
+      <div>
+        <Toaster />
+      </div>
       <div className="flex justify-center items-center">
         <Popover className="relative">
           {({ open }) => (
@@ -64,12 +87,13 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
                           services: [],
                         }}
                         layout={InstaLayout}
-                        onChange={(source) => {
-                          changeTitleMutation({
+                        onChange={async (source) => {
+                          const updatedModule = await changeTitleMutation({
                             suffix: moduleEdit!.suffix,
                             title: source.replace(/<\/?[^>]+(>|$)/g, ""),
                           })
-                          refetch()
+                          // refetch()
+                          setQueryData(updatedModule)
                         }}
                       />
                     </div>
@@ -82,7 +106,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
       </div>
       <div>
         <h2>Last edited:</h2>
-        <p>{moment(module.updatedAt).fromNow()}</p>
+        <p>{moment(moduleEdit!.updatedAt).fromNow()}</p>
       </div>
       <div>
         <h2 className="text-4xl font-black">Abstract</h2>
@@ -121,12 +145,15 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
                           services: [],
                         }}
                         layout={InstaLayout}
-                        onChange={(source) => {
-                          changeAbstractMutation({
+                        onChange={async (source) => {
+                          // TODO: Add instant edit
+                          const updatedModule = await changeAbstractMutation({
                             suffix: moduleEdit!.suffix,
-                            description: source.replace(/<\/?[^>]+(>|$)/g, ""),
+                            title: source.replace(/<\/?[^>]+(>|$)/g, ""),
                           })
-                          refetch()
+                          // refetch()
+                          console.log(updatedModule)
+                          setQueryData(updatedModule)
                         }}
                       />
                     </div>
@@ -137,77 +164,135 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
           )}
         </Popover>
       </div>
+      <DragDropContext
+        onDragEnd={async (result) => {
+          const { destination, source, draggableId } = result
+          // If no destination, do nothing
+          if (!destination) {
+            return
+          }
+          // If destination and source are equivalent, do nothing
+          if (
+            destination.droppableId === source.droppableId &&
+            destination.index === source.index
+          ) {
+            return
+          }
 
-      <div className="flex flex-col">
-        <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Status
-                    </th>
-                    <th scope="col" className="relative px-6 py-3">
-                      <span className="sr-only">Edit</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {module.authors.map((author) => (
-                    <tr key={author.workspace.orcid}>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          {author.workspace.avatar ? (
-                            <div className="flex-shrink-0 h-10 w-10">
-                              <img
-                                className="h-10 w-10 rounded-full"
-                                src={author.workspace.avatar}
-                                alt={`Avatar of ${author.workspace.name}`}
-                              />
-                            </div>
-                          ) : (
-                            <div className="flex-shrink-0 h-10 w-10">
-                              <img
-                                className="h-10 w-10 rounded-full"
-                                src={`https://eu.ui-avatars.com/api/?rounded=true&background=random&name=${author.workspace.handle}`}
-                                alt={`Avatar of ${author.workspace.name}`}
-                              />
-                            </div>
-                          )}
-                          <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">
-                              {author.workspace.name}
-                            </div>
-                            <div className="text-sm text-gray-500">@{author.workspace.handle}</div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                          {author.readyToPublish.toString()}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <ReadyToPublishModal module={module} />
-                      </td>
+          const newAuthorState = Array.from(moduleEdit!.authors)
+          newAuthorState.splice(source.index, 1)
+          newAuthorState.splice(
+            destination.index,
+            0,
+            authorState.filter((author) => {
+              return author.workspaceId === parseInt(draggableId)
+            })[0]!
+          )
+
+          let i = 0
+          newAuthorState.map((author) => {
+            author.authorshipRank = i
+            i += 1
+          })
+
+          // Update database
+          newAuthorState.map(async (author) => {
+            const updatedModule = await updateAuthorRankMutation({
+              id: author.id,
+              rank: author.authorshipRank,
+              suffix: moduleEdit!.suffix,
+            })
+            console.log(`Updated ${author.id} to rank ${author.authorshipRank}`)
+            setQueryData(updatedModule!)
+          })
+        }}
+      >
+        <div className="flex flex-col">
+          <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+              <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Status
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    <tr>
+                      <Autocomplete
+                        openOnFocus={true}
+                        defaultActiveItemId="0"
+                        getSources={({ query }) => [
+                          {
+                            sourceId: "products",
+                            async onSelect(params) {
+                              const { item, setQuery } = params
+                              try {
+                                const updatedModule = await addAuthorMutation({
+                                  authorId: item.objectID,
+                                  moduleId: moduleEdit!.id,
+                                })
+                                toast.success("Author invited")
+                                setQueryData(updatedModule)
+                              } catch (error) {
+                                toast.error("Something went wrong")
+                              }
+                              setQuery("")
+                            },
+                            getItems() {
+                              return getAlgoliaResults({
+                                searchClient,
+                                queries: [
+                                  {
+                                    indexName: "dev_workspaces",
+                                    query,
+                                  },
+                                ],
+                              })
+                            },
+                            templates: {
+                              item({ item, components }) {
+                                return <div>{item.handle}</div>
+                              },
+                            },
+                          },
+                        ]}
+                      />
+                    </tr>
+                    <Droppable droppableId="authors-ranking">
+                      {(provided: DroppableProvided) => (
+                        <tr
+                          ref={provided.innerRef}
+                          {...provided.droppableProps}
+                          style={{ height: `${moduleEdit!.authors.length * 72}px` }}
+                        >
+                          <AuthorList
+                            authors={moduleEdit!.authors}
+                            setAuthorState={setQueryData}
+                            suffix={moduleEdit!.suffix}
+                          />
+                          {provided.placeholder}
+                        </tr>
+                      )}
+                    </Droppable>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </DragDropContext>
       <div>{JSON.stringify(module)}</div>
       {isAuthor && !module.published && user.emailIsVerified ? (
         <ReadyToPublishModal module={module} />
