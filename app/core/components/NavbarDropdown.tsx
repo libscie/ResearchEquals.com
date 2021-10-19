@@ -20,7 +20,7 @@ const DropdownContents = () => {
           <div className="flex-shrink-0">
             <img
               className="h-10 w-10 rounded-full"
-              src={currentWorkspace.avatar}
+              src={currentWorkspace!.avatar!}
               alt={`Avatar of ${
                 currentWorkspace.name ? currentWorkspace.name : currentWorkspace.handle
               }`}

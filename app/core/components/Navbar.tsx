@@ -30,6 +30,7 @@ const Navbar = () => {
               <label htmlFor="search" className="sr-only">
                 Search
               </label>
+              {/* TODO: Add algolia search in here */}
               <Autocomplete className="h-full" />
             </div>
           </div>

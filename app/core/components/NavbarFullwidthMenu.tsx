@@ -19,7 +19,7 @@ const FullWidthMenu = () => {
         {/* TODO: Workspace switcher */}
         <img
           className="h-8 w-8 rounded-full"
-          src={currentWorkspace.avatar}
+          src={currentWorkspace!.avatar!}
           alt={`Avatar of ${
             currentWorkspace.name ? currentWorkspace.name : currentWorkspace.handle
           }`}
