@@ -1,5 +1,6 @@
 import Layout from "app/core/layouts/Layout"
 import db from "db"
+import Navbar from "../core/components/Navbar"
 
 export const getServerSideProps = async ({ params }) => {
   const handle = params!.handle
@@ -19,6 +20,7 @@ export const getServerSideProps = async ({ params }) => {
 const HandlePage = ({ workspace }) => {
   return (
     <>
+      <Navbar />
       <div className="flex justify-center items-center">{workspace.handle}</div>
       <div>{JSON.stringify(workspace)}</div>
     </>

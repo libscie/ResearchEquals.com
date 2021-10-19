@@ -1,6 +1,6 @@
 import Layout from "../../core/layouts/Layout"
 import db from "db"
-import NavbarApp from "../../core/components/navbarApp"
+import NavbarApp from "../../core/components/Navbar"
 
 export async function getStaticPaths() {
   const modules = await db.module.findMany({
