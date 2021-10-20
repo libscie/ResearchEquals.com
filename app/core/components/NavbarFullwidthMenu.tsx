@@ -28,7 +28,6 @@ const FullWidthMenu = () => {
   if (currentUser && currentWorkspace) {
     return (
       <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
-        {/* TODO: Workspace switcher */}
         <Listbox
           value={selected}
           onChange={async (value) => {
