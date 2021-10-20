@@ -1,29 +1,112 @@
-import { Link, Routes, useMutation } from "blitz"
+import { Link, Routes, useMutation, useSession } from "blitz"
 import { OverflowMenuHorizontal32, Notification32, Settings32 } from "@carbon/icons-react"
-import { Menu, Transition } from "@headlessui/react"
-import { Fragment } from "react"
+import { Listbox, Menu, Transition } from "@headlessui/react"
+import { Fragment, useState } from "react"
+import { CheckIcon, SelectorIcon } from "@heroicons/react/solid"
 
 import { useCurrentUser } from "../hooks/useCurrentUser"
 import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
 import logout from "../../auth/mutations/logout"
 import SettingsModal from "../modals/settings"
+import changeSessionWorkspace from "../../workspaces/mutations/changeSessionWorkspace"
 
 const FullWidthMenu = () => {
   const currentUser = useCurrentUser()
+  const session = useSession()
   const currentWorkspace = useCurrentWorkspace()
   const [logoutMutation] = useMutation(logout)
+  const [changeSessionWorkspaceMutation] = useMutation(changeSessionWorkspace)
+  // Match the selected state with the session workspace
+  const [selected, setSelected] = useState(
+    currentUser?.memberships.filter((membership) => {
+      if (membership.workspace.id === session.workspaceId) {
+        return membership
+      }
+    })[0]
+  )
 
   if (currentUser && currentWorkspace) {
     return (
       <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
         {/* TODO: Workspace switcher */}
-        <img
-          className="h-8 w-8 rounded-full"
-          src={currentWorkspace!.avatar!}
-          alt={`Avatar of ${
-            currentWorkspace.name ? currentWorkspace.name : currentWorkspace.handle
-          }`}
-        />
+        <Listbox
+          value={selected}
+          onChange={async (value) => {
+            await changeSessionWorkspaceMutation(value?.workspace.id)
+            setSelected(value)
+          }}
+        >
+          <div className="relative mt-1">
+            <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
+              <span className="flex">
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src={selected!.workspace!.avatar!}
+                  alt={`Avatar of ${
+                    selected!.workspace.name ? selected!.workspace.name : selected!.workspace.handle
+                  }`}
+                />
+                {/* <span className="items-middle"></span> */}
+                <span className="inset-y-0 pl-2 right-0 flex items-center pointer-events-none">
+                  @{selected!.workspace.handle}
+                </span>
+              </span>
+              <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                <SelectorIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
+              </span>
+            </Listbox.Button>
+            <Transition
+              as={Fragment}
+              leave="transition ease-in duration-100"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                {currentUser.memberships.map((membership, index) => (
+                  <Listbox.Option
+                    key={index}
+                    className={({ active }) =>
+                      `${active ? "text-indigo-900 bg-indigo-100" : "text-gray-900"}
+                      cursor-default select-none relative py-2 pl-10 pr-4`
+                    }
+                    value={membership}
+                  >
+                    {({ selected, active }) => (
+                      <>
+                        <span
+                          className={`${selected ? "font-medium" : "font-normal"} flex truncate`}
+                        >
+                          <img
+                            className="h-7 w-7 rounded-full"
+                            src={membership.workspace!.avatar!}
+                            alt={`Avatar of ${
+                              membership.workspace.name
+                                ? membership.workspace.name
+                                : membership.workspace.handle
+                            }`}
+                          />
+                          <span
+                            className={`${selected ? "font-medium" : "font-normal"} block truncate`}
+                          >
+                            {membership.workspace.handle}
+                          </span>
+                          {selected ? (
+                            <span
+                              className={`${active ? "text-amber-600" : "text-amber-600"}
+                                absolute inset-y-0 left-0 flex items-center pl-3`}
+                            >
+                              <CheckIcon className="w-5 h-5" aria-hidden="true" />
+                            </span>
+                          ) : null}
+                        </span>
+                      </>
+                    )}
+                  </Listbox.Option>
+                ))}
+              </Listbox.Options>
+            </Transition>
+          </div>
+        </Listbox>
         <a
           href="#"
           className="ml-5 flex-shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
