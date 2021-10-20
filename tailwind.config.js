@@ -4,7 +4,11 @@ module.exports = {
   purge: ["{pages,app}/**/*.{js,ts,jsx,tsx}"],
   darkMode: "media", // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      spacing: {
+        120: "35rem",
+      },
+    },
   },
   variants: {
     extend: {},
