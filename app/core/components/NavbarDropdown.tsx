@@ -1,35 +1,118 @@
 import { Fragment, useState } from "react"
-import { Transition, Dialog } from "@headlessui/react"
-import { Link, Routes, useMutation } from "blitz"
+import { Listbox, Transition, Dialog } from "@headlessui/react"
+import { Link, Routes, useMutation, useSession } from "blitz"
 import { Suspense } from "react"
+import { CheckIcon, SelectorIcon } from "@heroicons/react/solid"
 import { Close32, Menu32 } from "@carbon/icons-react"
 import { useCurrentUser } from "../hooks/useCurrentUser"
 import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
 import logout from "../../auth/mutations/logout"
 import SettingsModal from "../modals/settings"
+import changeSessionWorkspace from "../../workspaces/mutations/changeSessionWorkspace"
 
 const DropdownContents = () => {
   const currentUser = useCurrentUser()
   const currentWorkspace = useCurrentWorkspace()
   const [logoutMutation] = useMutation(logout)
+  const session = useSession()
+  const [changeSessionWorkspaceMutation] = useMutation(changeSessionWorkspace)
+  // Match the selected state with the session workspace
+  const [selected, setSelected] = useState(
+    currentUser?.memberships.filter((membership) => {
+      if (membership.workspace.id === session.workspaceId) {
+        return membership
+      }
+    })[0]
+  )
 
   if (currentUser && currentWorkspace) {
     return (
-      <div>
-        <div className="max-w-3xl mx-auto px-0 flex items-center">
-          <div className="flex-shrink-0">
-            <img
-              className="h-10 w-10 rounded-full"
-              src={currentWorkspace!.avatar!}
-              alt={`Avatar of ${
-                currentWorkspace.name ? currentWorkspace.name : currentWorkspace.handle
-              }`}
-            />
-          </div>
-          <div className="ml-3">
-            <div className="text-base font-medium text-gray-800">{currentWorkspace.name}</div>
-            <div className="text-sm font-medium text-gray-500">{currentUser.email}</div>
-          </div>
+      <div className="">
+        <div className="">
+          <Listbox
+            value={selected}
+            onChange={async (value) => {
+              await changeSessionWorkspaceMutation(value?.workspace.id)
+              setSelected(value)
+            }}
+          >
+            <div className="relative">
+              <Listbox.Button className="flex py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
+                <div className="flex-shrink-0">
+                  <img
+                    className="h-10 w-10 rounded-full"
+                    src={selected!.workspace!.avatar!}
+                    alt={`Avatar of ${
+                      selected!.workspace.name
+                        ? selected!.workspace.name
+                        : selected!.workspace.handle
+                    }`}
+                  />
+                </div>
+                <div className="ml-3">
+                  <div className="text-base font-medium text-gray-800">
+                    {selected!.workspace.name}
+                  </div>
+                  <div className="text-sm font-medium text-gray-500">{currentUser.email}</div>
+                </div>
+                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                  <SelectorIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
+                </span>
+              </Listbox.Button>
+              <Transition
+                as={Fragment}
+                leave="transition ease-in duration-100"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                  {currentUser.memberships.map((membership, index) => (
+                    <Listbox.Option
+                      key={index}
+                      className={({ active }) =>
+                        `${active ? "text-indigo-900 bg-indigo-100" : "text-gray-900"}
+                      cursor-default select-none relative py-2 pl-10 pr-4`
+                      }
+                      value={membership}
+                    >
+                      {({ selected, active }) => (
+                        <>
+                          <span
+                            className={`${selected ? "font-medium" : "font-normal"} flex truncate`}
+                          >
+                            <img
+                              className="h-7 w-7 rounded-full"
+                              src={membership.workspace!.avatar!}
+                              alt={`Avatar of ${
+                                membership.workspace.name
+                                  ? membership.workspace.name
+                                  : membership.workspace.handle
+                              }`}
+                            />
+                            <span
+                              className={`${
+                                selected ? "font-medium" : "font-normal"
+                              } block truncate`}
+                            >
+                              {membership.workspace.handle}
+                            </span>
+                            {selected ? (
+                              <span
+                                className={`${active ? "text-amber-600" : "text-amber-600"}
+                                absolute inset-y-0 left-0 flex items-center pl-3`}
+                              >
+                                <CheckIcon className="w-5 h-5" aria-hidden="true" />
+                              </span>
+                            ) : null}
+                          </span>
+                        </>
+                      )}
+                    </Listbox.Option>
+                  ))}
+                </Listbox.Options>
+              </Transition>
+            </div>
+          </Listbox>
         </div>
         <div className="mt-3 max-w-3xl mx-auto px-0 space-y-1">
           <Link href={Routes.Dashboard()}>
