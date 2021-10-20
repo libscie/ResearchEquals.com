@@ -124,151 +124,126 @@ export default function SettingsModal({ user, workspace }) {
                           "focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60"
                         )}
                       >
-                        <div>
-                          <h3 className="font-bold text-2xl">Name</h3>
-                          {nameChanged ? (
-                            <div>
-                              <h2>Name changed successfully</h2>
-                            </div>
-                          ) : (
-                            <Form
-                              className="m-0"
-                              submitText="Change name"
-                              schema={ChangeName}
-                              initialValues={{ name: user!.name! ?? "" }}
-                              onSubmit={async (values) => {
-                                try {
-                                  await changeNameMutation(values)
-                                } catch (error) {
-                                  return {
-                                    [FORM_ERROR]:
-                                      "Sorry, we had an unexpected error. Please try again.",
+                        <div className="flex">
+                          <img
+                            src={workspace!.avatar}
+                            width={120}
+                            height={120}
+                            className="rounded-full"
+                          />
+                          <div className="mx-2 align-center justify-center justify-items-center">
+                            <h3 className="font-bold text-2xl">Avatar</h3>
+                            {avatarChanged ? (
+                              <div>
+                                <h2>Avatar changed successfully</h2>
+                              </div>
+                            ) : (
+                              <Widget
+                                publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
+                                secureSignature={uploadSecret.signature}
+                                secureExpire={uploadSecret.expire}
+                                crop="1:1"
+                                imageShrink="480x480"
+                                imagesOnly
+                                previewStep
+                                clearable
+                                systemDialog
+                                onChange={async (info) => {
+                                  try {
+                                    // TODO: Remove old avatar from uploadcare after successfully updating
+                                    // TODO: Secure uploading
+                                    // https://uploadcare.com/docs/security/secure-uploads/
+                                    await changeAvatarMutation({
+                                      handle: workspace!.handle,
+                                      avatar: info.cdnUrl ?? "",
+                                    })
+                                  } catch (err) {
+                                    alert(err)
                                   }
-                                }
-                              }}
-                            >
-                              <LabeledTextField
-                                className="w-full border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                name="name"
-                                placeholder="Name"
-                                label="Name"
+                                  console.log("Upload completed:", info)
+                                }}
                               />
-                            </Form>
-                          )}
+                            )}
+                          </div>
                         </div>
-                        <div>
-                          <h3 className="font-bold text-2xl">Avatar</h3>
-                          {avatarChanged ? (
-                            <div>
-                              <h2>Avatar changed successfully</h2>
-                            </div>
-                          ) : (
-                            <Widget
-                              publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
-                              secureSignature={uploadSecret.signature}
-                              secureExpire={uploadSecret.expire}
-                              crop="1:1"
-                              imageShrink="480x480"
-                              imagesOnly
-                              previewStep
-                              clearable
-                              systemDialog
-                              onChange={async (info) => {
-                                try {
-                                  // TODO: Remove old avatar from uploadcare after successfully updating
-                                  // TODO: Secure uploading
-                                  // https://uploadcare.com/docs/security/secure-uploads/
-                                  await changeAvatarMutation({
-                                    handle: workspace!.handle,
-                                    avatar: info.cdnUrl ?? "",
-                                  })
-                                } catch (err) {
-                                  alert(err)
-                                }
-                                console.log("Upload completed:", info)
-                              }}
-                            />
-                          )}
-                        </div>
-                        <div>
-                          <h3 className="font-bold text-2xl">Bio</h3>
-                          {bioChanged ? (
-                            <div>
-                              <h2>Bio changed successfully</h2>
-                            </div>
-                          ) : (
-                            <Form
-                              className="m-0"
-                              submitText="Change bio"
-                              initialValues={{ bio: workspace!.bio }}
-                              onSubmit={async (values) => {
-                                try {
-                                  await changeBioMutation({
-                                    handle: workspace!.handle,
-                                    bio: values.bio,
-                                  })
-                                } catch (error) {
-                                  return {
-                                    [FORM_ERROR]:
-                                      "Sorry, we had an unexpected error. Please try again.",
-                                  }
-                                }
-                              }}
-                            >
-                              <LabeledTextField
-                                className="w-full border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                name="bio"
-                                placeholder="Bio"
-                                type="text"
-                                label="Current Bio"
-                              />
-                            </Form>
-                          )}
-                        </div>
-                        <div>
-                          <h3 className="font-bold text-2xl">Pronouns</h3>
-                          {pronounsChanged ? (
-                            <div>
-                              <h2>Pronouns changed successfully</h2>
-                            </div>
-                          ) : (
-                            <Form
-                              className="m-0"
-                              submitText="Change pronouns"
-                              initialValues={{ pronouns: workspace!.pronouns }}
-                              onSubmit={async (values) => {
-                                try {
-                                  await changePronounsMutation({
-                                    handle: workspace!.handle,
-                                    pronouns: values.pronouns,
-                                  })
-                                } catch (error) {
-                                  return {
-                                    [FORM_ERROR]:
-                                      "Sorry, we had an unexpected error. Please try again.",
-                                  }
-                                }
-                              }}
-                            >
-                              <LabeledTextField
-                                className="w-full border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                name="pronouns"
-                                placeholder="Pronouns"
-                                type="text"
-                                label="Current pronouns"
-                              />
-                            </Form>
-                          )}
-                        </div>
-                        <div>
+                        <div className="my-2">
                           <h3 className="font-bold text-2xl">ORCID</h3>
                           {!workspace!.orcid ? (
                             <Link href="/api/auth/orcid">
-                              <a>Add ORCID</a>
+                              <button className="py-2 px-4 bg-green-500 rounded text-white">
+                                Connect your ORCID
+                              </button>
                             </Link>
                           ) : (
                             <p>{workspace!.orcid}</p>
                           )}
+                        </div>
+                        <div>
+                          <Form
+                            className="m-0"
+                            // submitText="Change name"
+                            // schema={ChangeName}
+                            initialValues={{
+                              name: user!.name! ?? "",
+                              bio: workspace!.bio,
+                              pronouns: workspace!.pronouns,
+                            }}
+                            onSubmit={async (values) => {
+                              try {
+                                await changeNameMutation({ name: values.name })
+                                await changeBioMutation({
+                                  handle: workspace!.handle,
+                                  bio: values.bio,
+                                })
+                                await changePronounsMutation({
+                                  handle: workspace!.handle,
+                                  pronouns: values.pronouns,
+                                })
+                              } catch (error) {
+                                return {
+                                  [FORM_ERROR]:
+                                    "Sorry, we had an unexpected error. Please try again.",
+                                }
+                              }
+                            }}
+                          >
+                            <LabeledTextField
+                              className="w-full border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                              name="name"
+                              placeholder="Name"
+                              label="Name"
+                            />
+                            <LabeledTextField
+                              className="w-full border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                              name="bio"
+                              placeholder="Bio"
+                              type="text"
+                              label="Current Bio"
+                            />
+                            <LabeledTextField
+                              className="w-full border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                              name="pronouns"
+                              placeholder="Pronouns"
+                              type="text"
+                              label="Current pronouns"
+                            />
+                            <div className="bg-white sticky bottom-0 pb-4">
+                              <button
+                                type="submit"
+                                className="bg-green-300 rounded py-2 px-4 text-white"
+                              >
+                                Save
+                              </button>
+                              <button
+                                className="bg-red-300 rounded py-2 mt-2 ml-2 px-4 text-white"
+                                onClick={() => {
+                                  setIsOpen(false)
+                                }}
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          </Form>
                         </div>
                       </Tab.Panel>
                       <Tab.Panel
