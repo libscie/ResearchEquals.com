@@ -64,28 +64,40 @@ const FullWidthMenu = () => {
             {/* TODO: Add keyboard navigation */}
             <Menu.Items className="origin-top-right absolute z-10 right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 focus:outline-none">
               <Menu.Item key="dropdown-dashboard">
-                <Link href={Routes.Dashboard()}>
-                  <button className="w-full block py-2 px-4 text-left text-sm text-gray-700 hover:bg-gray-100">
+                {({ active }) => (
+                  // The Link component doesn't work with Headless
+                  <a
+                    className={`${active ? "bg-gray-100" : ""}
+                    w-full block py-2 px-4 text-left text-sm text-gray-700`}
+                    href="/dashboard"
+                  >
                     Dashboard
-                  </button>
-                </Link>
+                  </a>
+                )}
               </Menu.Item>
               <Menu.Item key="dropdown-profile">
-                <Link href={Routes.HandlePage({ handle: currentWorkspace.handle })}>
-                  <button className="w-full block py-2 px-4 text-left text-sm text-gray-700 hover:bg-gray-100">
+                {({ active }) => (
+                  <a
+                    className={`${active ? "bg-gray-100" : ""}
+                    w-full block py-2 px-4 text-left text-sm text-gray-700`}
+                    href={`/${currentWorkspace.handle}`}
+                  >
                     Profile
-                  </button>
-                </Link>
+                  </a>
+                )}
               </Menu.Item>
               <Menu.Item key="dropdown-logout">
-                <button
-                  className="w-full block py-2 px-4 text-left text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={async () => {
-                    await logoutMutation()
-                  }}
-                >
-                  Logout
-                </button>
+                {({ active }) => (
+                  <button
+                    className={`${active ? "bg-gray-100" : ""}
+                  w-full block py-2 px-4 text-left text-sm text-gray-700`}
+                    onClick={async () => {
+                      await logoutMutation()
+                    }}
+                  >
+                    Logout
+                  </button>
+                )}
               </Menu.Item>
             </Menu.Items>
           </Transition>
