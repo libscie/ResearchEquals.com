@@ -26,7 +26,7 @@ export default function SettingsModal({ user, workspace }) {
   let [categories] = useState(["Workspace", "Account", "Billing"])
 
   const [changePasswordMutation, { isSuccess: passwordChanged }] = useMutation(changePassword)
-  const [changeEmailMutation, { isSuccess: emailChanged }] = useMutation(changeEmail)
+  const [changeEmailMutation] = useMutation(changeEmail)
   const [changeNameMutation, { isSuccess: nameChanged }] = useMutation(changeName)
   const [changeAvatarMutation, { isSuccess: avatarChanged }] = useMutation(changeAvatar)
   const [changeBioMutation, { isSuccess: bioChanged }] = useMutation(changeBio)
@@ -279,112 +279,96 @@ export default function SettingsModal({ user, workspace }) {
                         )}
                       >
                         <div>
-                          {emailChanged ? (
-                            <div>
-                              <h2>Email changed successfully</h2>
-                            </div>
-                          ) : (
-                            <Form
-                              className="m-0"
-                              submitText="Change email"
-                              schema={ChangeEmail}
-                              initialValues={{ email: user!.email! }}
-                              onSubmit={async (values) => {
-                                try {
+                          <Form
+                            className="m-0"
+                            // submitText="Change password"
+                            // schema={ChangePassword}
+                            initialValues={{
+                              email: user!.email!,
+                              currentPassword: "",
+                              newPassword: "",
+                              newRepeat: "",
+                            }}
+                            onSubmit={async (values) => {
+                              try {
+                                if (user!.email! !== values.email) {
                                   await changeEmailMutation(values)
-                                } catch (error) {
+                                }
+                              } catch (error) {
+                                return {
+                                  [FORM_ERROR]:
+                                    "Sorry, we had an unexpected error. Please try again.",
+                                }
+                              }
+
+                              if (values.newPassword !== values.newRepeat) {
+                                return {
+                                  [FORM_ERROR]: "Please check the new password for typo's",
+                                }
+                              }
+                              try {
+                                await changePasswordMutation(values)
+                              } catch (error) {
+                                if (error.name === "AuthenticationError") {
+                                  return {
+                                    [FORM_ERROR]: error.message,
+                                  }
+                                } else {
                                   return {
                                     [FORM_ERROR]:
                                       "Sorry, we had an unexpected error. Please try again.",
                                   }
                                 }
-                              }}
-                            >
-                              <LabeledTextField
-                                className="w-full border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                name="email"
-                                placeholder="Email"
-                                type="email"
-                                label="Email"
-                              />
-                            </Form>
-                          )}
-                        </div>
-                        <div>
-                          {passwordChanged ? (
-                            <div>
-                              <h2>Password changed successfully</h2>
+                              }
+                            }}
+                          >
+                            <LabeledTextField
+                              className="w-full border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                              name="email"
+                              placeholder="Email"
+                              type="email"
+                              label="Email"
+                            />
+                            <LabeledTextField
+                              className="w-full border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                              name="currentPassword"
+                              placeholder="Password"
+                              type="password"
+                              label="Current password"
+                            />
+                            <LabeledTextField
+                              className="w-full border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                              name="newPassword"
+                              placeholder="Password"
+                              type="password"
+                              label="New password"
+                            />
+                            <LabeledTextField
+                              className="w-full border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                              name="newRepeat"
+                              placeholder="Password"
+                              type="password"
+                              label="Repeat new password"
+                            />
+                            <DeleteModal />
+                            {/* text-center */}
+                            <div className="bg-white sticky bottom-0 pb-4">
+                              <button
+                                type="submit"
+                                className="bg-green-300 rounded py-2 px-4 text-white"
+                              >
+                                Save
+                              </button>
+                              <button
+                                className="bg-red-300 rounded py-2 mt-2 ml-2 px-4 text-white"
+                                onClick={() => {
+                                  setIsOpen(false)
+                                }}
+                              >
+                                Cancel
+                              </button>
                             </div>
-                          ) : (
-                            <Form
-                              className="m-0"
-                              submitText="Change password"
-                              schema={ChangePassword}
-                              initialValues={{
-                                currentPassword: "",
-                                newPassword: "",
-                                newRepeat: "",
-                              }}
-                              onSubmit={async (values) => {
-                                if (values.newPassword !== values.newRepeat) {
-                                  return {
-                                    [FORM_ERROR]: "Please check the new password for typo's",
-                                  }
-                                }
-                                try {
-                                  await changePasswordMutation(values)
-                                } catch (error) {
-                                  if (error.name === "AuthenticationError") {
-                                    return {
-                                      [FORM_ERROR]: error.message,
-                                    }
-                                  } else {
-                                    return {
-                                      [FORM_ERROR]:
-                                        "Sorry, we had an unexpected error. Please try again.",
-                                    }
-                                  }
-                                }
-                              }}
-                            >
-                              <LabeledTextField
-                                className="w-full border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                name="currentPassword"
-                                placeholder="Password"
-                                type="password"
-                                label="Current password"
-                              />
-                              <LabeledTextField
-                                className="w-full border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                name="newPassword"
-                                placeholder="Password"
-                                type="password"
-                                label="New password"
-                              />
-                              <LabeledTextField
-                                className="w-full border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                name="newRepeat"
-                                placeholder="Password"
-                                type="password"
-                                label="Repeat new password"
-                              />
-                            </Form>
-                          )}
-                          <DeleteModal />
-                          {/* text-center */}
-                          <div className="bg-white sticky bottom-0 pb-4">
-                            <button className="bg-green-300 rounded py-2 px-4 text-white">
-                              Save
-                            </button>
-                            <button
-                              className="bg-red-300 rounded py-2 mt-2 ml-2 px-4 text-white"
-                              onClick={() => {
-                                setIsOpen(false)
-                              }}
-                            >
-                              Cancel
-                            </button>
-                          </div>
+                          </Form>
                         </div>
                       </Tab.Panel>
                       <Tab.Panel
