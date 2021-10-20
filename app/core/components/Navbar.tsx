@@ -36,7 +36,15 @@ const Navbar = () => {
           </div>
         </div>
         <div className="flex items-center md:absolute md:right-0 md:inset-y-0 lg:hidden">
-          <NavbarDropdown />
+          <Suspense
+            fallback={
+              <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
+                <ProgressBarRound32 className="animate-spin text-white dark:text-white" />
+              </div>
+            }
+          >
+            <NavbarDropdown />
+          </Suspense>
         </div>
         <Suspense
           fallback={

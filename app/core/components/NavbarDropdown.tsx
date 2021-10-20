@@ -42,7 +42,7 @@ const DropdownContents = () => {
               Profile
             </button>
           </Link>
-          <Link href="">
+          <Link href="#">
             <button className="block rounded-md py-2 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900">
               <SettingsModal
                 button={
