@@ -21,7 +21,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
 
-export default function SettingsModal({ user, workspace }) {
+export default function SettingsModal({ button, user, workspace }) {
   let [isOpen, setIsOpen] = useState(false)
   let [categories] = useState(["Workspace", "Account", "Billing"])
 
@@ -40,9 +40,9 @@ export default function SettingsModal({ user, workspace }) {
         onClick={() => {
           setIsOpen(true)
         }}
-        className="ml-2 px-4 py-2 text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 "
+        className="block text-left text-sm text-gray-700 rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 lg:ml-5"
       >
-        Settings
+        {button}
       </button>
 
       <Transition appear show={isOpen} as={Fragment}>

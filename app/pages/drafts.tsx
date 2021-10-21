@@ -1,6 +1,6 @@
 import { BlitzPage } from "blitz"
 import Layout from "app/core/layouts/Layout"
-import Navbar from "../core/components/navbarMarketing"
+import Navbar from "../core/components/Navbar"
 
 const DraftsPage: BlitzPage = () => {
   return (

@@ -1,8 +1,9 @@
 import { BlitzPage } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import Countdown from "react-countdown"
+import { ProgressBarRound32 } from "@carbon/icons-react"
 
-import Navbar from "../core/components/navbarMarketing"
+import Navbar from "../core/components/Navbar"
 
 const Completionist = () => <span>You are good to go!</span>
 

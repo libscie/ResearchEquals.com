@@ -7,7 +7,7 @@ import SearchItem from "../core/components/SearchItem"
 
 import "@algolia/autocomplete-theme-classic"
 import algoliasearch from "algoliasearch"
-import Navbar from "../core/components/navbarApp"
+import Navbar from "../core/components/Navbar"
 import db from "db"
 import updateInvitation from "../authorship/mutations/updateInvitation"
 import Banner from "../core/components/Banner"
