@@ -15,7 +15,7 @@ import { ChangePassword, ChangeEmail, ChangeName } from "app/auth/validations"
 import DeleteModal from "./delete"
 import getSignature from "../queries/getSignature"
 
-export default function SettingsModal({ user, workspace }) {
+export default function SettingsModal({ button, user, workspace }) {
   let [isOpen, setIsOpen] = useState(false)
   const [changePasswordMutation, { isSuccess: passwordChanged }] = useMutation(changePassword)
   const [changeEmailMutation, { isSuccess: emailChanged }] = useMutation(changeEmail)
@@ -34,9 +34,9 @@ export default function SettingsModal({ user, workspace }) {
         onClick={() => {
           setIsOpen(true)
         }}
-        className="ml-2 px-4 py-2 text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 "
+        className="block text-left text-sm text-gray-700 rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 lg:ml-5"
       >
-        Settings
+        {button}
       </button>
 
       <Transition appear show={isOpen} as={Fragment}>
