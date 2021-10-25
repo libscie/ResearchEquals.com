@@ -4,6 +4,7 @@ import { Disclosure } from "@headlessui/react"
 import { ChevronUpIcon } from "@heroicons/react/solid"
 import { Suspense, useState } from "react"
 import { ProgressBarRound32 } from "@carbon/icons-react"
+import moment from "moment"
 
 import Navbar from "../core/components/Navbar"
 import getDrafts from "../core/queries/getDrafts"
@@ -26,7 +27,7 @@ const DraftsContents = () => {
             />
           </Disclosure.Button>
           <Disclosure.Panel
-            className="float-left w-full sm:w-64 bg-red-100 px-4 pt-4 pb-2 text-2xl text-gray-500"
+            className="float-left w-full sm:w-64 bg-red-100 text-2xl text-gray-500"
             style={{
               height: "calc(100vh - 78.233333px)",
               float: "left",
@@ -34,43 +35,76 @@ const DraftsContents = () => {
             }}
           >
             <Suspense fallback="Loading...">
-              {drafts.map((draft, index) => {
-                return (
+              <ul role="list" className="divide-y divide-gray-200">
+                {drafts.map((message, index) => (
                   <>
-                    <Disclosure.Button
-                      as="div"
-                      key={draft.suffix + "-disclosure" + index}
-                      className={`inline sm:hidden ${
-                        currentModule === draft ? "bg-indigo-600" : "bg-pink-300"
-                      } max-w-screen mt-2`}
-                    >
-                      <button
-                        onClick={() => {
-                          setModule(draft)
-                        }}
-                        className={`inline sm:hidden ${
-                          currentModule === draft ? "bg-indigo-600" : "bg-pink-300"
-                        } max-w-screen mt-2`}
-                      >
-                        <h2 className="truncate text-black text-left">{draft.title}</h2>
-                        <p className="truncate text-xs  text-left">{draft.description}</p>
-                      </button>
-                    </Disclosure.Button>
-                    <button
-                      key={draft.suffix + "-button" + index}
-                      className={`hidden sm:inline ${
-                        currentModule === draft ? "bg-indigo-600" : "bg-pink-300"
-                      } max-w-10 mt-2`}
+                    <li
+                      key={message.id + index}
+                      className={`hidden sm:block relative bg-white py-5 px-4 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ${
+                        currentModule === message ? "bg-indigo-300" : "bg-white"
+                      }`}
                       onClick={() => {
-                        setModule(draft)
+                        setModule(message)
                       }}
                     >
-                      <h2 className="truncate text-black text-left">{draft.title}</h2>
-                      <p className="truncate text-xs text-left">{draft.description}</p>
-                    </button>
+                      <div className="flex justify-between space-x-3">
+                        <div className="min-w-0 flex-1">
+                          <a href="#" className="block focus:outline-none">
+                            <span className="absolute inset-0" aria-hidden="true" />
+                            <p className="text-sm font-medium text-gray-900 truncate">
+                              {message.title}
+                            </p>
+                            <p className="text-sm text-gray-500 truncate">{message.description}</p>
+                          </a>
+                          <p>
+                            <time
+                              dateTime={message.updatedAt.toString()}
+                              className="flex-shrink-0 whitespace-nowrap text-sm text-gray-500"
+                            >
+                              {moment(message.updatedAt).fromNow()}
+                            </time>
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                    <span
+                      onClick={() => {
+                        setModule(message)
+                      }}
+                    >
+                      <Disclosure.Button
+                        as="li"
+                        key={message.id + "-disclosure" + index}
+                        className={`sm:hidden relative bg-white py-5 px-4 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ${
+                          currentModule === message ? "bg-indigo-300" : "bg-white"
+                        }`}
+                      >
+                        <div className="flex justify-between space-x-3">
+                          <div className="min-w-0 flex-1">
+                            <a href="#" className="block focus:outline-none">
+                              <span className="absolute inset-0" aria-hidden="true" />
+                              <p className="text-sm font-medium text-gray-900 truncate">
+                                {message.title}
+                              </p>
+                              <p className="text-sm text-gray-500 truncate">
+                                {message.description}
+                              </p>
+                              <p>
+                                <time
+                                  dateTime={message.updatedAt.toString()}
+                                  className="flex-shrink-0 whitespace-nowrap text-sm text-gray-500"
+                                >
+                                  {moment(message.updatedAt).fromNow()}
+                                </time>
+                              </p>
+                            </a>
+                          </div>
+                        </div>
+                      </Disclosure.Button>
+                    </span>
                   </>
-                )
-              })}
+                ))}
+              </ul>
             </Suspense>
           </Disclosure.Panel>
           <div
