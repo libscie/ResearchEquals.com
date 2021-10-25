@@ -17,6 +17,7 @@ const config: BlitzConfig = {
     ORCID_CLIENT_SANDBOX: process.env.ORCID_CLIENT_SANDBOX,
     ALGOLIA_APP_ID: process.env.ALGOLIA_APP_ID,
     ALGOLIA_API_SEARCH_KEY: process.env.ALGOLIA_API_SEARCH_KEY,
+    ALGOLIA_PREFIX: process.env.ALGOLIA_PREFIX,
   },
   /* Uncomment this to customize the webpack config
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
