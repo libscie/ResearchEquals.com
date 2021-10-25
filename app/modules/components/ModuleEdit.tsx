@@ -255,7 +255,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
                                 searchClient,
                                 queries: [
                                   {
-                                    indexName: "dev_workspaces",
+                                    indexName: `${process.env.ALGOLIA_PREFIX}OLIA_PREFIX}_workspaces`,
                                     query,
                                   },
                                 ],
