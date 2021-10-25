@@ -13,7 +13,7 @@ export default async function getSignature({ session }) {
     },
     orderBy: [
       {
-        updatedAt: "asc",
+        updatedAt: "desc",
       },
     ],
   })
