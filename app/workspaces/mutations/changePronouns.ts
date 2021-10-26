@@ -9,7 +9,7 @@ const ChangePronouns = z.object({
 })
 
 const client = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_ADMIN_KEY!)
-const index = client.initIndex("dev_workspaces")
+const index = client.initIndex(`${process.env.ALGOLIA_PREFIX}_workspaces`)
 
 export default resolver.pipe(
   resolver.zod(ChangePronouns),

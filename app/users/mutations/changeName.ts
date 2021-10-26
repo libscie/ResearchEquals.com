@@ -3,7 +3,7 @@ import db from "db"
 import algoliasearch from "algoliasearch"
 
 const client = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_ADMIN_KEY!)
-const index = client.initIndex("dev_workspaces")
+const index = client.initIndex(`${process.env.ALGOLIA_PREFIX}OLIA_PREFIX}_workspaces`)
 
 export default resolver.pipe(resolver.authorize(), async ({ name }, ctx) => {
   const user = await db.user.findFirst({ where: { id: ctx.session.userId! } })
