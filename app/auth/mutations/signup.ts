@@ -12,6 +12,7 @@ const index = client.initIndex(`${process.env.ALGOLIA_PREFIX}OLIA_PREFIX}_worksp
 
 export default resolver.pipe(resolver.zod(Signup), async ({ email, password, handle }, ctx) => {
   const hashedPassword = await SecurePassword.hash(password.trim())
+  const hexColor = Math.floor(Math.random() * 16777215).toString(16)
   const user = await db.user.create({
     data: {
       email: email.toLowerCase().trim(),
@@ -23,6 +24,7 @@ export default resolver.pipe(resolver.zod(Signup), async ({ email, password, han
           workspace: {
             create: {
               handle,
+              avatar: `https://eu.ui-avatars.com/api/?rounded=true&background=${hexColor}&name=${handle}`,
             },
           },
         },
