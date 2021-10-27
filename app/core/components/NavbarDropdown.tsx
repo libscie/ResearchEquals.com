@@ -1,6 +1,6 @@
 import { Fragment, useState } from "react"
 import { Listbox, Transition, Dialog } from "@headlessui/react"
-import { Link, Routes, useMutation, useSession } from "blitz"
+import { Link, Routes, useMutation, useSession, useQuery } from "blitz"
 import { Suspense } from "react"
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid"
 import { Close32, Menu32 } from "@carbon/icons-react"
@@ -9,12 +9,15 @@ import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
 import logout from "../../auth/mutations/logout"
 import SettingsModal from "../modals/settings"
 import changeSessionWorkspace from "../../workspaces/mutations/changeSessionWorkspace"
+import getDrafts from "../queries/getDrafts"
 
 const DropdownContents = () => {
   const currentUser = useCurrentUser()
   const currentWorkspace = useCurrentWorkspace()
   const [logoutMutation] = useMutation(logout)
   const session = useSession()
+  const [drafts] = useQuery(getDrafts, { session })
+
   const [changeSessionWorkspaceMutation] = useMutation(changeSessionWorkspace)
   // Match the selected state with the session workspace
   const [selected, setSelected] = useState(
@@ -123,6 +126,14 @@ const DropdownContents = () => {
           <Link href={Routes.HandlePage({ handle: currentWorkspace.handle })}>
             <button className="block rounded-md py-2 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900">
               Profile
+            </button>
+          </Link>
+          <Link href={Routes.DraftsPage()}>
+            <button className="block rounded-md py-2 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900">
+              Drafts
+              <span className="bg-gray-100 text-gray-900 ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium">
+                {drafts.length}
+              </span>
             </button>
           </Link>
           <Link href="#">
