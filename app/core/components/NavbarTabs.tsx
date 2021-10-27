@@ -14,6 +14,7 @@ const NavTabs = () => {
   const currentWorkspace = useCurrentWorkspace()
   const router = useRouter()
   const [drafts] = useQuery(getDrafts, { session })
+  console.log(currentWorkspace)
 
   const tabs = [
     {
@@ -23,8 +24,8 @@ const NavTabs = () => {
     },
     {
       name: "Profile",
-      href: Routes.HandlePage({ handle: "chjh2" }),
-      current: router.asPath === `/chjh2`,
+      href: Routes.HandlePage({ handle: currentWorkspace!.handle }),
+      current: router.asPath === `/${currentWorkspace!.handle}`,
     },
     {
       name: "Drafts",
