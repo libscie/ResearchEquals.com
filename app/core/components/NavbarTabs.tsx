@@ -24,8 +24,8 @@ const NavTabs = () => {
     },
     {
       name: "Profile",
-      href: Routes.HandlePage({ handle: currentWorkspace!.handle }),
-      current: router.asPath === `/${currentWorkspace!.handle}`,
+      href: currentWorkspace ? Routes.HandlePage({ handle: currentWorkspace!.handle }) : "",
+      current: currentWorkspace ? router.asPath === `/${currentWorkspace!.handle}` : "",
     },
     {
       name: "Drafts",
