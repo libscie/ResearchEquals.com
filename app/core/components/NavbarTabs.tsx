@@ -16,24 +16,27 @@ const NavTabs = () => {
   const [drafts] = useQuery(getDrafts, { session })
   console.log(currentWorkspace)
 
-  const tabs = [
-    {
-      name: "Dashboard",
-      href: Routes.Dashboard(),
-      current: router.asPath === Routes.Dashboard().pathname,
-    },
-    {
-      name: "Profile",
-      href: Routes.HandlePage({ handle: currentWorkspace!.handle }),
-      current: router.asPath === `/${currentWorkspace!.handle}`,
-    },
-    {
-      name: "Drafts",
-      href: Routes.DraftsPage(),
-      count: drafts.length,
-      current: router.asPath === Routes.DraftsPage().pathname,
-    },
-  ]
+  let tabs
+  if (currentWorkspace) {
+    tabs = [
+      {
+        name: "Dashboard",
+        href: Routes.Dashboard(),
+        current: router.asPath === Routes.Dashboard().pathname,
+      },
+      {
+        name: "Profile",
+        href: Routes.HandlePage({ handle: currentWorkspace!.handle }),
+        current: router.asPath === `/${currentWorkspace!.handle}`,
+      },
+      {
+        name: "Drafts",
+        href: Routes.DraftsPage(),
+        count: drafts.length,
+        current: router.asPath === Routes.DraftsPage().pathname,
+      },
+    ]
+  }
 
   if (currentUser && currentWorkspace) {
     return (
