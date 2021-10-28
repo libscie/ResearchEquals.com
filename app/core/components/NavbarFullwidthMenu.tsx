@@ -232,12 +232,7 @@ const FullWidthMenu = () => {
                         </div>
                       </div>
                       <div className="mt-6 relative flex-1 px-4 sm:px-6">
-                        <CreateModuleForm
-                          onSuccess={(items) => {
-                            console.log(items)
-                            router.push("/dashboard")
-                          }}
-                        />
+                        <CreateModuleForm workspace={currentWorkspace} />
                       </div>
                     </div>
                   </div>
