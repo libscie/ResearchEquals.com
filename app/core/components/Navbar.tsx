@@ -1,11 +1,17 @@
 import { Link, Routes, useQuery } from "blitz"
 import { Suspense } from "react"
 import { ProgressBarRound32 } from "@carbon/icons-react"
+import { getAlgoliaResults } from "@algolia/autocomplete-js"
+import algoliasearch from "algoliasearch"
 
+import "@algolia/autocomplete-theme-classic"
 import Autocomplete from "./Autocomplete"
 import NavbarFullwidthMenu from "./NavbarFullwidthMenu"
 import NavbarDropdown from "./NavbarDropdown"
 import NavbarTabs from "./NavbarTabs"
+import router from "next/router"
+
+const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
 const Navbar = () => {
   return (
@@ -33,7 +39,38 @@ const Navbar = () => {
                   Search
                 </label>
                 {/* TODO: Add algolia search in here */}
-                <Autocomplete className="h-full" />
+                <Autocomplete
+                  className="h-full"
+                  openOnFocus={true}
+                  defaultActiveItemId="0"
+                  getSources={({ query }) => [
+                    {
+                      sourceId: "products",
+                      async onSelect(params) {
+                        const { item, setQuery } = params
+                        if (item.handle) {
+                          router.push(`/${item.handle}`)
+                        }
+                      },
+                      getItems() {
+                        return getAlgoliaResults({
+                          searchClient,
+                          queries: [
+                            {
+                              indexName: `${process.env.ALGOLIA_PREFIX}_workspaces`,
+                              query,
+                            },
+                          ],
+                        })
+                      },
+                      templates: {
+                        item({ item, components }) {
+                          return <div>{item.handle}</div>
+                        },
+                      },
+                    },
+                  ]}
+                />
               </div>
             </div>
           </div>
