@@ -120,6 +120,8 @@ const DashboardContent = () => {
         </div>
       </>
     )
+  } else {
+    return <></>
   }
 }
 
