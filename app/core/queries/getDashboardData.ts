@@ -82,5 +82,17 @@ export default async function getSignature({ session }) {
     ],
   })
 
-  return { user, workspace, draftModules, invitedModules, modules, workspaces }
+  const followableWorkspaces = await db.workspace.findMany({
+    where: { id: { not: session.workspaceId } },
+  })
+
+  return {
+    user,
+    workspace,
+    draftModules,
+    invitedModules,
+    modules,
+    workspaces,
+    followableWorkspaces,
+  }
 }
