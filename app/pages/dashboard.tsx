@@ -18,7 +18,6 @@ const DashboardContent = () => {
   const session = useSession()
   const [updateInvitationMutation, { isSuccess: invitationUpdated }] = useMutation(updateInvitation)
   const [data, { refetch }] = useQuery(getDashboardData, { session })
-  console.log(data.workspaces)
   const stats = [
     {
       name: "Drafts",
@@ -84,7 +83,7 @@ const DashboardContent = () => {
           {data.workspaces ? (
             <div className="hidden lg:inline">
               <h2 className="font-bold text-4xl">Who to follow</h2>
-              {data.workspaces.map((workspace) => (
+              {data.followableWorkspaces.map((workspace) => (
                 <div key={workspace.id + workspace.handle} className="flex w-full">
                   <Link href={Routes.HandlePage({ handle: workspace.handle })}>
                     <a className="flex-grow flex">
@@ -95,9 +94,12 @@ const DashboardContent = () => {
                   <button
                     className="right-0"
                     onClick={() => {
+                      // TODO: Add follow action
                       alert(`You will follow ${workspace.handle}`)
+                      // TODO: Maybe refetch upon completion?
                     }}
                   >
+                    {/* TODO: Make dynamic depending on whether person is being followed or not */}
                     Follow
                   </button>
                 </div>
@@ -140,7 +142,7 @@ const DashboardContent = () => {
             ))}
           </div>
           <h2 className="font-bold text-4xl">Feed</h2>
-          <div className="flex flex-col flex-grow relative block w-full border-2 border-gray-300 border-dashed rounded-lg text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 h-96">
+          <div className="flex flex-col flex-grow relative block w-full border-2 border-gray-300 border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 h-96">
             <div className="table flex-grow w-full">
               <span className="mx-auto table-cell align-middle leading-normal text-sm font-medium text-gray-900">
                 <div>Following people will help populate your feed</div>
