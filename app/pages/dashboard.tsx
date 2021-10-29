@@ -1,9 +1,9 @@
 import { getSession, Link, Routes, useMutation, useSession, useQuery } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import moment from "moment"
-import React, { Suspense } from "react"
+import React, { Suspense, Fragment } from "react"
 import { CheckmarkOutline32 } from "@carbon/icons-react"
-
+import { Popover, Transition } from "@headlessui/react"
 import getDashboardData from "../core/queries/getDashboardData"
 import { InformationCircleIcon, ArrowSmDownIcon, ArrowSmUpIcon } from "@heroicons/react/solid"
 import Navbar from "../core/components/Navbar"
@@ -16,6 +16,24 @@ import unfollowWorkspace from "../workspaces/mutations/unfollowWorkspace"
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
+
+const solutions = [
+  {
+    name: "Insights",
+    description: "Measure actions your users take",
+    href: "##",
+  },
+  {
+    name: "Automations",
+    description: "Create your own targeted content",
+    href: "##",
+  },
+  {
+    name: "Reports",
+    description: "Keep track of your growth",
+    href: "##",
+  },
+]
 
 const DashboardContent = () => {
   const session = useSession()
@@ -115,26 +133,53 @@ const DashboardContent = () => {
               <OnboardingQuests data={data} />
             </div>
             <h2 className="font-bold text-4xl">Feed</h2>
-            <div className="flex flex-col flex-grow relative block w-full border-2 border-gray-300 border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 h-96">
-              <div className="table flex-grow w-full">
-                <span className="mx-auto table-cell align-middle leading-normal text-sm font-medium text-gray-900">
-                  <div>Following people will help populate your feed</div>
-                  <div className="font-bold">Find people to follow</div>
-                </span>
+            {data!.modules.length > 0 ? (
+              <>
+                {data!.modules.map((module) => {
+                  return (
+                    <div key={module.suffix} className="bg-pink-300 mb-2">
+                      {/* {JSON.stringify(module)} */}
+                      <div>
+                        <p>{module.type}</p>
+                        <p>{module.title}</p>
+                      </div>
+                      <div className="flex">
+                        <div className="flex-grow">
+                          <p>DOI: 10.53962/{module.suffix}</p>
+                          <p>Published: {module.publishedAt?.toISOString().substring(0, 10)}</p>
+                        </div>
+                        <div className="flex -space-x-2 relative z-0 overflow-hidden text-right">
+                          {module.authors.map((author) => (
+                            <img
+                              key={author.id + author.moduleId}
+                              src={author.workspace!.avatar!}
+                              className="relative z-30 inline-block h-6 w-6 rounded-full "
+                            />
+                          ))}
+                        </div>
+                      </div>
+                      {/* <p>
+                        <Link href={Routes.ModulePage({ suffix: module.suffix })}>
+                          <a>
+                            {moment(module.publishedAt).fromNow()} 10.53962/{module.suffix}{" "}
+                            {module.title}
+                          </a>
+                        </Link>
+                      </p> */}
+                    </div>
+                  )
+                })}
+              </>
+            ) : (
+              <div className="flex flex-col flex-grow relative block w-full border-2 border-gray-300 border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 h-96">
+                <div className="table flex-grow w-full">
+                  <span className="mx-auto table-cell align-middle leading-normal text-sm font-medium text-gray-900">
+                    <div>Following people will help populate your feed</div>
+                    <button className="font-bold">Find people to follow</button>
+                  </span>
+                </div>
               </div>
-              {data!.modules.map((module) => {
-                return (
-                  <p key={module.suffix}>
-                    <Link href={Routes.ModulePage({ suffix: module.suffix })}>
-                      <a>
-                        {moment(module.publishedAt).fromNow()} 10.53962/{module.suffix}{" "}
-                        {module.title}
-                      </a>
-                    </Link>
-                  </p>
-                )
-              })}
-            </div>
+            )}
           </div>
         </div>
       </>
