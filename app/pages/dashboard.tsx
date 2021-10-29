@@ -10,6 +10,8 @@ import Navbar from "../core/components/Navbar"
 import updateInvitation from "../authorship/mutations/updateInvitation"
 import Banner from "../core/components/Banner"
 import OnboardingQuests from "../core/components/OnboardingQuests"
+import followWorkspace from "../workspaces/mutations/followWorkspace"
+import unfollowWorkspace from "../workspaces/mutations/unfollowWorkspace"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -18,6 +20,8 @@ function classNames(...classes) {
 const DashboardContent = () => {
   const session = useSession()
   // const [updateInvitationMutation, { isSuccess: invitationUpdated }] = useMutation(updateInvitation)
+  const [followWorkspaceMutation] = useMutation(followWorkspace)
+  const [unfollowWorkspaceMutation] = useMutation(unfollowWorkspace)
   const [data, { refetch }] = useQuery(getDashboardData, { session })
   const stats = [
     {
@@ -45,7 +49,7 @@ const DashboardContent = () => {
             <div className="my-2">
               <h1 className="text-4xl font-medium text-gray-900">
                 Welcome back,{" "}
-                {data.workspace!.name ? data.workspace!.name : "@" + data.workspace!.handle} 👋
+                {data.workspace!.name ? data.workspace!.name : "@" + data.workspace!.handle}
               </h1>
             </div>
             <h2 className="text-lg leading-6 font-medium text-gray-900">Your work</h2>
@@ -74,14 +78,29 @@ const DashboardContent = () => {
                     </Link>
                     <button
                       className="right-0"
-                      onClick={() => {
-                        // TODO: Add follow action
-                        alert(`You will follow ${workspace.handle}`)
+                      onClick={async () => {
+                        if (
+                          data.workspace!.following.filter((x) => x.id === workspace.id).length > 0
+                        ) {
+                          await unfollowWorkspaceMutation({
+                            followerId: data.workspace?.id!,
+                            followedId: workspace.id,
+                          })
+                        } else {
+                          // TODO: Add follow action
+                          await followWorkspaceMutation({
+                            followerId: data.workspace?.id!,
+                            followedId: workspace.id,
+                          })
+                        }
+                        refetch()
                         // TODO: Maybe refetch upon completion?
                       }}
                     >
+                      {data.workspace!.following.filter((x) => x.id === workspace.id).length > 0
+                        ? "Following"
+                        : "Follow"}
                       {/* TODO: Make dynamic depending on whether person is being followed or not */}
-                      Follow
                     </button>
                   </div>
                 ))}
