@@ -16,6 +16,9 @@ export default async function getSignature({ session }) {
     where: {
       id: session.workspaceId!,
     },
+    include: {
+      following: true,
+    },
   })
 
   const draftModules = await db.module.findMany({
