@@ -88,7 +88,7 @@ const DashboardContent = () => {
                 <div key={workspace.id + workspace.handle} className="flex w-full">
                   <Link href={Routes.HandlePage({ handle: workspace.handle })}>
                     <a className="flex-grow flex">
-                      <img className="w-10 h-10 rounded-full" src={workspace.avatar} />
+                      <img className="w-10 h-10 rounded-full" src={workspace!.avatar!} />
                       <p className="flex-grow">{workspace.handle}</p>
                     </a>
                   </Link>
