@@ -21,7 +21,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
 
-export default function SettingsModal({ button, user, workspace }) {
+export default function SettingsModal({ button, styling, user, workspace }) {
   let [isOpen, setIsOpen] = useState(false)
   let [categories] = useState(["Workspace", "Account", "Billing"])
 
@@ -40,7 +40,7 @@ export default function SettingsModal({ button, user, workspace }) {
         onClick={() => {
           setIsOpen(true)
         }}
-        className="block text-left text-sm text-gray-700 rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 lg:ml-5"
+        className={styling}
       >
         {button}
       </button>

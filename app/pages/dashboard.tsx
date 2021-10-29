@@ -9,6 +9,7 @@ import { InformationCircleIcon, ArrowSmDownIcon, ArrowSmUpIcon } from "@heroicon
 import Navbar from "../core/components/Navbar"
 import updateInvitation from "../authorship/mutations/updateInvitation"
 import Banner from "../core/components/Banner"
+import OnboardingQuests from "../core/components/OnboardingQuests"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -26,27 +27,6 @@ const DashboardContent = () => {
     {
       name: "Invitations",
       stat: "23",
-    },
-  ]
-
-  const quests = [
-    {
-      title: "Connect your ORCID account",
-      description:
-        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis.",
-      action: "Connect",
-    },
-    {
-      title: "Update your profile",
-      description:
-        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis.",
-      action: "Update",
-    },
-    {
-      title: "Create first draft",
-      description:
-        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis.",
-      action: "Create",
     },
   ]
 
@@ -113,34 +93,7 @@ const DashboardContent = () => {
           {/* Column 2 */}
           <div className="lg:w-3/4 flex flex-col ">
             <div className="sm:flex w-full">
-              {/* TODO: Add quests */}
-              {quests.map((quest, index) => (
-                <div
-                  key={quest.title + "-" + index}
-                  className="rounded-md bg-blue-50 p-4 my-2 sm:my-0 sm:mr-2 w-full"
-                >
-                  <div className="flex">
-                    <div className="">
-                      <CheckmarkOutline32 className="h-5 w-5 text-green-400" aria-hidden="true" />
-                    </div>
-                    <div className="ml-3 flex-1 md:flex">
-                      <p className="text-sm text-blue-700 mr-2">
-                        <span className=" font-bold">{quest.title}</span> {quest.description}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="block text-right">
-                    <p className="mt-3 text-sm md:mt-0 md:ml-6">
-                      <a
-                        href="#"
-                        className="whitespace-nowrap font-medium text-blue-700 hover:text-blue-600 underline"
-                      >
-                        {quest.action} <span aria-hidden="true">&rarr;</span>
-                      </a>
-                    </p>
-                  </div>
-                </div>
-              ))}
+              <OnboardingQuests data={data} />
             </div>
             <h2 className="font-bold text-4xl">Feed</h2>
             <div className="flex flex-col flex-grow relative block w-full border-2 border-gray-300 border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 h-96">

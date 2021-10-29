@@ -119,6 +119,7 @@ const FullWidthMenu = () => {
         </a>
         <span className="sr-only">Open settings</span>
         <SettingsModal
+          styling="block text-left text-sm text-gray-700 rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 lg:ml-5"
           button={
             <Settings32
               className="h-6 w-6 text-gray-400 hover:text-gray-500 rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
