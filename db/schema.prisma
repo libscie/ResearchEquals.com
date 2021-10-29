@@ -61,6 +61,8 @@ model Workspace {
 
   members     Membership[]
   authorships Authorship[]
+  following   Workspace[]  @relation("WorkspaceToWorkspace")
+  followers   Workspace[]  @relation("WorkspaceToWorkspace")
 }
 
 model Membership {
