@@ -17,17 +17,12 @@ function classNames(...classes) {
 const DashboardContent = () => {
   const session = useSession()
   const [updateInvitationMutation, { isSuccess: invitationUpdated }] = useMutation(updateInvitation)
-
   const [data, { refetch }] = useQuery(getDashboardData, { session })
-
+  console.log(data.workspaces)
   const stats = [
     {
       name: "Drafts",
       stat: data.draftModules.length,
-    },
-    {
-      name: "Co-authors",
-      stat: "512",
     },
     {
       name: "Invitations",
@@ -64,17 +59,17 @@ const DashboardContent = () => {
         <Banner message="You can only start publishing once your email is verified. Please check your inbox." />
       )}
 
-      <div className="2xl:flex w-screen">
+      <div className="lg:flex w-screen">
         {/* Column 1 */}
-        <div className="w-1/4">
+        <div className="lg:w-1/4">
           <div className="my-2">
             <h1 className="text-4xl font-medium text-gray-900">
               Welcome back,{" "}
-              {data.workspace!.name ? data.workspace!.name : "@" + data.workspace!.handle} 👋{" "}
+              {data.workspace!.name ? data.workspace!.name : "@" + data.workspace!.handle} 👋
             </h1>
           </div>
           <h2 className="text-lg leading-6 font-medium text-gray-900">Your work</h2>
-          <dl className="mt-5 grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow divide-y divide-gray-200 md:grid-cols-3 md:divide-y-0 md:divide-x">
+          <dl className="mt-5 rounded-lg bg-white overflow-hidden shadow divide-y divide-gray-200 md:grid-cols-3 md:divide-y-0 md:divide-x">
             {stats.map((item) => (
               <div key={item.name} className="px-4 py-5 sm:p-6">
                 <dt className="text-base font-normal text-gray-900">{item.name}</dt>
@@ -82,159 +77,89 @@ const DashboardContent = () => {
                   <div className="flex items-baseline text-2xl font-semibold text-indigo-600">
                     {item.stat}
                   </div>
-
-                  {/* <div
-                    className={classNames(
-                      item.changeType === "increase"
-                        ? "bg-green-100 text-green-800"
-                        : "bg-red-100 text-red-800",
-                      "inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0"
-                    )}
-                  >
-                    {item.changeType === "increase" ? (
-                      <ArrowSmUpIcon
-                        className="-ml-1 mr-0.5 flex-shrink-0 self-center h-5 w-5 text-green-500"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <ArrowSmDownIcon
-                        className="-ml-1 mr-0.5 flex-shrink-0 self-center h-5 w-5 text-red-500"
-                        aria-hidden="true"
-                      />
-                    )}
-
-                    <span className="sr-only">
-                      {item.changeType === "increase" ? "Increased" : "Decreased"} by
-                    </span>
-                    {item.change}
-                  </div> */}
                 </dd>
               </div>
             ))}
           </dl>
-          <div>
-            <h2 className="font-bold text-4xl">Who to follow</h2>
-            {data!.invitedModules.map((invitation) => {
+          {data.workspaces ? (
+            <div className="hidden lg:inline">
+              <h2 className="font-bold text-4xl">Who to follow</h2>
+              {data.workspaces.map((workspace) => (
+                <div key={workspace.id + workspace.handle} className="flex w-full">
+                  <Link href={Routes.HandlePage({ handle: workspace.handle })}>
+                    <a className="flex-grow flex">
+                      <img className="w-10 h-10 rounded-full" src={workspace.avatar} />
+                      <p className="flex-grow">{workspace.handle}</p>
+                    </a>
+                  </Link>
+                  <button
+                    className="right-0"
+                    onClick={() => {
+                      alert(`You will follow ${workspace.handle}`)
+                    }}
+                  >
+                    Follow
+                  </button>
+                </div>
+              ))}
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+        {/* Column 2 */}
+        <div className="lg:w-3/4 flex flex-col ">
+          <div className="sm:flex w-full">
+            {/* TODO: Add quests */}
+            {quests.map((quest, index) => (
+              <div
+                key={quest.title + "-" + index}
+                className="rounded-md bg-blue-50 p-4 my-2 sm:my-0 sm:mr-2 w-full"
+              >
+                <div className="flex">
+                  <div className="">
+                    <CheckmarkOutline32 className="h-5 w-5 text-green-400" aria-hidden="true" />
+                  </div>
+                  <div className="ml-3 flex-1 md:flex">
+                    <p className="text-sm text-blue-700 mr-2">
+                      <span className=" font-bold">{quest.title}</span> {quest.description}
+                    </p>
+                  </div>
+                </div>
+                <div className="block text-right">
+                  <p className="mt-3 text-sm md:mt-0 md:ml-6">
+                    <a
+                      href="#"
+                      className="whitespace-nowrap font-medium text-blue-700 hover:text-blue-600 underline"
+                    >
+                      {quest.action} <span aria-hidden="true">&rarr;</span>
+                    </a>
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <h2 className="font-bold text-4xl">Feed</h2>
+          <div className="flex flex-col flex-grow relative block w-full border-2 border-gray-300 border-dashed rounded-lg text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 h-96">
+            <div className="table flex-grow w-full">
+              <span className="mx-auto table-cell align-middle leading-normal text-sm font-medium text-gray-900">
+                <div>Following people will help populate your feed</div>
+                <div className="font-bold">Find people to follow</div>
+              </span>
+            </div>
+            {data!.modules.map((module) => {
               return (
-                <p key={invitation.suffix}>
-                  {invitationUpdated ? (
-                    <span>Thanks for responding to this invitation</span>
-                  ) : (
-                    <>
-                      <Link href={Routes.ModuleEditPage({ suffix: invitation.suffix })}>
-                        <a>
-                          {moment(invitation.createdAt).fromNow()} 10.53962/{invitation.suffix}{" "}
-                          {invitation.title}
-                        </a>
-                      </Link>
-                      <div>
-                        <button
-                          onClick={async () => {
-                            await updateInvitationMutation({
-                              id: invitation!.authors[0]!.id,
-                              accept: true,
-                            })
-                            refetch()
-                          }}
-                        >
-                          Accept
-                        </button>
-                      </div>
-                      <div>
-                        <button
-                          onClick={async () => {
-                            await updateInvitationMutation({
-                              id: invitation!.authors[0]!.id,
-                              accept: false,
-                            })
-                            refetch()
-                          }}
-                        >
-                          Decline
-                        </button>
-                      </div>
-                    </>
-                  )}
+                <p key={module.suffix}>
+                  <Link href={Routes.ModulePage({ suffix: module.suffix })}>
+                    <a>
+                      {moment(module.publishedAt).fromNow()} 10.53962/{module.suffix} {module.title}
+                    </a>
+                  </Link>
                 </p>
               )
             })}
           </div>
         </div>
-        {/* Column 2 */}
-        <div className="w-3/4">
-          <div>
-            <h2 className="text-xl">Fullfil your destiny</h2>
-            <div className="sm:flex w-full">
-              {/* TODO: Add quests */}
-              {quests.map((quest, index) => (
-                <div
-                  key={quest.title + "-" + index}
-                  className="rounded-md bg-blue-50 p-4 my-2 sm:my-0 sm:mr-2 w-full"
-                >
-                  <div className="flex">
-                    <div className="">
-                      <CheckmarkOutline32 className="h-5 w-5 text-green-400" aria-hidden="true" />
-                    </div>
-                    <div className="ml-3 flex-1 md:flex">
-                      <p className="text-sm text-blue-700 mr-2">
-                        <span className=" font-bold">{quest.title}</span> {quest.description}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="block text-right">
-                    <p className="mt-3 text-sm md:mt-0 md:ml-6">
-                      <a
-                        href="#"
-                        className="whitespace-nowrap font-medium text-blue-700 hover:text-blue-600"
-                      >
-                        {quest.action} <span aria-hidden="true">&rarr;</span>
-                      </a>
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="flex">
-            <div className="w-full">
-              <h2 className="font-bold text-4xl">Feed</h2>
-              <div className="relative block w-full border-2 border-gray-300 border-dashed rounded-lg text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 h-96">
-                <div className="table h-96 w-full">
-                  <span className="mx-auto table-cell align-middle leading-normal text-sm font-medium text-gray-900">
-                    <div>Following people will help populate your feed</div>
-                    <div className="font-bold">Find people to follow</div>
-                  </span>
-                </div>
-              </div>
-              {data!.modules.map((module) => {
-                return (
-                  <p key={module.suffix}>
-                    <Link href={Routes.ModulePage({ suffix: module.suffix })}>
-                      <a>
-                        {moment(module.publishedAt).fromNow()} 10.53962/{module.suffix}{" "}
-                        {module.title}
-                      </a>
-                    </Link>
-                  </p>
-                )
-              })}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="w-full">
-        {data!.draftModules.map((draft) => {
-          return (
-            <p key={draft.suffix}>
-              Last edited: {moment(draft.updatedAt).fromNow()}
-              <Link href={Routes.ModuleEditPage({ suffix: draft.suffix })}>
-                <a>
-                  10.53962/{draft.suffix} {draft.title}
-                </a>
-              </Link>
-            </p>
-          )
-        })}
       </div>
     </>
   )
@@ -244,7 +169,7 @@ const Dashboard = ({ user, draftModules, invitedModules, modules, workspaces }) 
   return (
     <>
       <Navbar />
-      <main className="max-w-7xl 2xl:max-w-full mx-auto">
+      <main className="max-w-7xl lg:max-w-full mx-auto">
         <Suspense fallback="Loading...">
           <DashboardContent />
         </Suspense>
