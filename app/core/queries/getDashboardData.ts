@@ -73,9 +73,35 @@ export default async function getSignature({ session }) {
       },
     ],
     include: {
-      authors: true,
+      authors: {
+        include: {
+          workspace: true,
+        },
+      },
     },
   })
+
+  // // console.log(workspace)
+
+  // const feedWorkspace = await db.workspace.findMany({
+  //   where: {
+  //     OR: workspace?.following.map((x) => {
+  //       return { id: { equals: x.id } }
+  //     }),
+  //   },
+  //   include: {
+  //     authorships: {
+  //       include: {
+  //         module: true,
+  //       },
+  //     },
+  //   },
+  // })
+
+  // const [feedModules] = feedWorkspace.map((workspace) => {
+  //   return workspace.authorships
+  // })
+  // console.log(feedModules)
 
   const workspaces = await db.workspace.findMany({
     orderBy: [
