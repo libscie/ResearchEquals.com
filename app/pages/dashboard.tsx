@@ -1,4 +1,13 @@
-import { getSession, Link, Routes, useMutation, useSession, useQuery } from "blitz"
+import {
+  getSession,
+  Link,
+  Routes,
+  useMutation,
+  useSession,
+  useQuery,
+  useRouter,
+  usePaginatedQuery,
+} from "blitz"
 import Layout from "app/core/layouts/Layout"
 import moment from "moment"
 import React, { Suspense, Fragment } from "react"
@@ -12,6 +21,7 @@ import Banner from "../core/components/Banner"
 import OnboardingQuests from "../core/components/OnboardingQuests"
 import followWorkspace from "../workspaces/mutations/followWorkspace"
 import unfollowWorkspace from "../workspaces/mutations/unfollowWorkspace"
+import getFeed from "../workspaces/queries/getFeed"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -35,12 +45,24 @@ const solutions = [
   },
 ]
 
+const ITEMS_PER_PAGE = 1
+
 const DashboardContent = () => {
   const session = useSession()
   // const [updateInvitationMutation, { isSuccess: invitationUpdated }] = useMutation(updateInvitation)
   const [followWorkspaceMutation] = useMutation(followWorkspace)
   const [unfollowWorkspaceMutation] = useMutation(unfollowWorkspace)
   const [data, { refetch }] = useQuery(getDashboardData, { session })
+  const router = useRouter()
+  const page = Number(router.query.page) || 0
+  const [{ modules, hasMore }] = usePaginatedQuery(getFeed, {
+    orderBy: { id: "asc" },
+    skip: ITEMS_PER_PAGE * page,
+    take: ITEMS_PER_PAGE,
+  })
+  const goToPreviousPage = () => router.push({ query: { page: page - 1 } })
+  const goToNextPage = () => router.push({ query: { page: page + 1 } })
+
   const stats = [
     {
       name: "Drafts",
@@ -133,6 +155,21 @@ const DashboardContent = () => {
               <OnboardingQuests data={data} />
             </div>
             <h2 className="font-bold text-4xl">Feed</h2>
+            <div>
+              {modules.map((project) => (
+                <p key={project.id}>
+                  {/* <Link href={Routes.Project({ handle: project.handle })}> */}
+                  <a>{project.title}</a>
+                  {/* </Link> */}
+                </p>
+              ))}
+              <button disabled={page === 0} onClick={goToPreviousPage}>
+                Previous
+              </button>
+              <button disabled={!hasMore} onClick={goToNextPage}>
+                Next
+              </button>
+            </div>
             {data!.modules.length > 0 ? (
               <>
                 {data!.modules.map((module) => {
