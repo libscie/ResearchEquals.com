@@ -14,7 +14,13 @@ import React, { Suspense, Fragment } from "react"
 import { CheckmarkOutline32 } from "@carbon/icons-react"
 import { Popover, Transition } from "@headlessui/react"
 import getDashboardData from "../core/queries/getDashboardData"
-import { InformationCircleIcon, ArrowSmDownIcon, ArrowSmUpIcon } from "@heroicons/react/solid"
+import {
+  InformationCircleIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ArrowSmDownIcon,
+  ArrowSmUpIcon,
+} from "@heroicons/react/solid"
 import Navbar from "../core/components/Navbar"
 import updateInvitation from "../authorship/mutations/updateInvitation"
 import Banner from "../core/components/Banner"
@@ -161,13 +167,53 @@ const DashboardContent = () => {
                     </div>
                   </div>
                 ))}
-                Showing {ITEMS_PER_PAGE * page + 1}-{ITEMS_PER_PAGE + page} of {count} results
-                <button disabled={page === 0} onClick={goToPreviousPage}>
-                  Previous
-                </button>
-                <button disabled={!hasMore} onClick={goToNextPage}>
-                  Next
-                </button>
+                <div className="flex">
+                  <div className="flex-1 flex items-center justify-between">
+                    <p className="text-sm text-gray-700">
+                      Showing <span className="font-medium">{ITEMS_PER_PAGE * page + 1}</span> to{" "}
+                      <span className="font-medium">{ITEMS_PER_PAGE + page}</span> of{" "}
+                      <span className="font-medium">{count}</span> results
+                    </p>
+                  </div>
+                  <nav
+                    className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+                    aria-label="Pagination"
+                  >
+                    <button
+                      className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                      disabled={page === 0}
+                      onClick={goToPreviousPage}
+                    >
+                      <span className="sr-only">Previous</span>
+                      <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
+                    </button>
+                    {Array.from({ length: Math.ceil(count / ITEMS_PER_PAGE) }, (x, i) => i).map(
+                      (pageNr) => (
+                        <button
+                          key={`page-nav-feed-${pageNr}`}
+                          className="relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                          disabled={page === pageNr}
+                          onClick={() => {
+                            goToPage(pageNr)
+                          }}
+                        >
+                          <span className="sr-only">Navigate to page {pageNr}</span>
+                          <span className="h-5 w-5 " aria-hidden="true">
+                            {pageNr + 1}
+                          </span>
+                        </button>
+                      )
+                    )}
+                    <button
+                      className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                      disabled={!hasMore}
+                      onClick={goToNextPage}
+                    >
+                      <span className="sr-only">Previous</span>
+                      <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
+                    </button>
+                  </nav>
+                </div>
               </div>
             ) : (
               <div className="flex flex-col flex-grow relative block w-full border-2 border-gray-300 border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 h-96">
