@@ -81,28 +81,6 @@ export default async function getSignature({ session }) {
     },
   })
 
-  // // console.log(workspace)
-
-  // const feedWorkspace = await db.workspace.findMany({
-  //   where: {
-  //     OR: workspace?.following.map((x) => {
-  //       return { id: { equals: x.id } }
-  //     }),
-  //   },
-  //   include: {
-  //     authorships: {
-  //       include: {
-  //         module: true,
-  //       },
-  //     },
-  //   },
-  // })
-
-  // const [feedModules] = feedWorkspace.map((workspace) => {
-  //   return workspace.authorships
-  // })
-  // console.log(feedModules)
-
   const workspaces = await db.workspace.findMany({
     orderBy: [
       {
@@ -112,7 +90,9 @@ export default async function getSignature({ session }) {
   })
 
   const followableWorkspaces = await db.workspace.findMany({
-    where: { id: { not: session.workspaceId } },
+    where: {
+      id: { not: { in: [session.workspaceId, ...workspace?.following.map((x) => x.id)!] } },
+    },
   })
 
   return {
