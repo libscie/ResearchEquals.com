@@ -1,5 +1,4 @@
 import {
-  getSession,
   Link,
   Routes,
   useMutation,
@@ -9,27 +8,17 @@ import {
   usePaginatedQuery,
 } from "blitz"
 import Layout from "app/core/layouts/Layout"
-import moment from "moment"
-import React, { Suspense, Fragment } from "react"
-import { CheckmarkOutline32 } from "@carbon/icons-react"
-import { Popover, Transition } from "@headlessui/react"
+import React, { Suspense } from "react"
 import getDashboardData from "../core/queries/getDashboardData"
-import {
-  InformationCircleIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ArrowSmDownIcon,
-  ArrowSmUpIcon,
-} from "@heroicons/react/solid"
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid"
 import Navbar from "../core/components/Navbar"
-import updateInvitation from "../authorship/mutations/updateInvitation"
 import Banner from "../core/components/Banner"
 import OnboardingQuests from "../core/components/OnboardingQuests"
 import followWorkspace from "../workspaces/mutations/followWorkspace"
 import unfollowWorkspace from "../workspaces/mutations/unfollowWorkspace"
 import getFeed from "../workspaces/queries/getFeed"
 
-const ITEMS_PER_PAGE = 2
+const ITEMS_PER_PAGE = 10
 
 const DashboardContent = () => {
   const session = useSession()
@@ -39,7 +28,7 @@ const DashboardContent = () => {
   const [data, { refetch }] = useQuery(getDashboardData, { session })
   const router = useRouter()
   const page = Number(router.query.page) || 0
-  const [{ modules, hasMore, count }] = usePaginatedQuery(getFeed, {
+  const [{ modules, hasMore, count }, { refetch: refetchFeed }] = usePaginatedQuery(getFeed, {
     orderBy: { id: "asc" },
     skip: ITEMS_PER_PAGE * page,
     take: ITEMS_PER_PAGE,
@@ -119,6 +108,7 @@ const DashboardContent = () => {
                           })
                         }
                         refetch()
+                        refetchFeed()
                         // TODO: Maybe refetch upon completion?
                       }}
                     >
@@ -171,8 +161,10 @@ const DashboardContent = () => {
                   <div className="flex-1 flex items-center justify-between">
                     <p className="text-sm text-gray-700">
                       Showing <span className="font-medium">{ITEMS_PER_PAGE * page + 1}</span> to{" "}
-                      <span className="font-medium">{ITEMS_PER_PAGE + page}</span> of{" "}
-                      <span className="font-medium">{count}</span> results
+                      <span className="font-medium">
+                        {ITEMS_PER_PAGE + page > count ? count : ITEMS_PER_PAGE + page}
+                      </span>{" "}
+                      of <span className="font-medium">{count}</span> results
                     </p>
                   </div>
                   <nav
