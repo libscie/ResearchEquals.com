@@ -15,7 +15,7 @@ import { Form, FORM_ERROR } from "../components/Form"
 import { LabeledTextField } from "app/core/components/LabeledTextField"
 import { ChangePassword, ChangeEmail, ChangeName } from "app/auth/validations"
 import DeleteModal from "./delete"
-import getSignature from "../../auth/getSignature"
+import getSignature from "../../auth/queries/getSignature"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
