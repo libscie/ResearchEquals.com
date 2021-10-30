@@ -6,7 +6,21 @@ interface GetModuleInput
 
 export default resolver.pipe(
   resolver.authorize(),
-  async ({ where, orderBy, skip = 0, take = 100 }: GetModuleInput) => {
+  async ({ where, orderBy, skip = 0, take = 100 }: GetModuleInput, ctx) => {
+    // 1.  get followed workspace ids
+    const workspace = await db.workspace.findFirst({
+      where: { id: ctx.session.workspaceId },
+      include: {
+        following: true,
+      },
+    })
+    // 2. create filter list
+    const followedWorkspaces = workspace?.following.map((following) => {
+      return following.id
+    })
+    followedWorkspaces?.push(ctx.session.workspaceId!)
+
+    // 3. match filter list to all modules in query
     const {
       items: modules,
       hasMore,
@@ -15,11 +29,30 @@ export default resolver.pipe(
     } = await paginate({
       skip,
       take,
-      count: () => db.module.count({ where }),
+      count: () =>
+        db.module.count({
+          where: {
+            authors: {
+              some: {
+                workspaceId: {
+                  in: followedWorkspaces,
+                },
+              },
+            },
+          },
+        }),
       query: (paginateArgs) =>
         db.module.findMany({
           ...paginateArgs,
-          where,
+          where: {
+            authors: {
+              some: {
+                workspaceId: {
+                  in: followedWorkspaces,
+                },
+              },
+            },
+          },
           orderBy,
           include: {
             authors: {
