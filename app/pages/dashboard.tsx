@@ -9,6 +9,8 @@ import {
 } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import React, { Suspense } from "react"
+import toast, { Toaster } from "react-hot-toast"
+
 import getDashboardData from "../core/queries/getDashboardData"
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid"
 import Navbar from "../core/components/Navbar"
@@ -79,7 +81,7 @@ const DashboardContent = () => {
                 </div>
               ))}
             </dl>
-            {data.workspaces ? (
+            {data.followableWorkspaces.length > 0 ? (
               <div className="hidden lg:inline">
                 <h2 className="font-bold text-4xl">Who to follow</h2>
                 {data.followableWorkspaces.map((workspace) => (
@@ -93,29 +95,36 @@ const DashboardContent = () => {
                     <button
                       className="right-0"
                       onClick={async () => {
-                        if (
-                          data.workspace!.following.filter((x) => x.id === workspace.id).length > 0
-                        ) {
-                          await unfollowWorkspaceMutation({
-                            followerId: data.workspace?.id!,
-                            followedId: workspace.id,
-                          })
-                        } else {
-                          // TODO: Add follow action
-                          await followWorkspaceMutation({
-                            followerId: data.workspace?.id!,
-                            followedId: workspace.id,
-                          })
-                        }
+                        await followWorkspaceMutation({
+                          followerId: data.workspace?.id!,
+                          followedId: workspace.id,
+                        })
+
+                        toast((t) => (
+                          <span>
+                            Custom and <b>bold</b>
+                            <button
+                              onClick={async () => {
+                                await unfollowWorkspaceMutation({
+                                  followerId: data.workspace?.id!,
+                                  followedId: workspace.id,
+                                })
+                                refetch()
+                                refetchFeed()
+                                toast.dismiss(t.id)
+                              }}
+                            >
+                              Undo
+                            </button>
+                          </span>
+                        ))
                         refetch()
                         refetchFeed()
-                        // TODO: Maybe refetch upon completion?
                       }}
                     >
                       {data.workspace!.following.filter((x) => x.id === workspace.id).length > 0
                         ? "Following"
                         : "Follow"}
-                      {/* TODO: Make dynamic depending on whether person is being followed or not */}
                     </button>
                   </div>
                 ))}
@@ -135,7 +144,6 @@ const DashboardContent = () => {
               <div>
                 {modules.map((module) => (
                   <div key={module.suffix} className="bg-pink-300 mb-2">
-                    {/* {JSON.stringify(module)} */}
                     <div>
                       <p>{module.type}</p>
                       <p>{module.title}</p>
@@ -229,6 +237,7 @@ const DashboardContent = () => {
 const Dashboard = () => {
   return (
     <>
+      <Toaster />
       <Navbar />
       <main className="max-w-7xl lg:max-w-full mx-auto">
         <Suspense fallback="Loading...">
