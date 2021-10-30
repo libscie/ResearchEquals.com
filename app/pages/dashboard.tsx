@@ -23,29 +23,7 @@ import followWorkspace from "../workspaces/mutations/followWorkspace"
 import unfollowWorkspace from "../workspaces/mutations/unfollowWorkspace"
 import getFeed from "../workspaces/queries/getFeed"
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ")
-}
-
-const solutions = [
-  {
-    name: "Insights",
-    description: "Measure actions your users take",
-    href: "##",
-  },
-  {
-    name: "Automations",
-    description: "Create your own targeted content",
-    href: "##",
-  },
-  {
-    name: "Reports",
-    description: "Keep track of your growth",
-    href: "##",
-  },
-]
-
-const ITEMS_PER_PAGE = 1
+const ITEMS_PER_PAGE = 2
 
 const DashboardContent = () => {
   const session = useSession()
@@ -55,12 +33,13 @@ const DashboardContent = () => {
   const [data, { refetch }] = useQuery(getDashboardData, { session })
   const router = useRouter()
   const page = Number(router.query.page) || 0
-  const [{ modules, hasMore }] = usePaginatedQuery(getFeed, {
+  const [{ modules, hasMore, count }] = usePaginatedQuery(getFeed, {
     orderBy: { id: "asc" },
     skip: ITEMS_PER_PAGE * page,
     take: ITEMS_PER_PAGE,
   })
   const goToPreviousPage = () => router.push({ query: { page: page - 1 } })
+  const goToPage = (number) => router.push({ query: { page: number } })
   const goToNextPage = () => router.push({ query: { page: page + 1 } })
 
   const stats = [
@@ -155,58 +134,41 @@ const DashboardContent = () => {
               <OnboardingQuests data={data} />
             </div>
             <h2 className="font-bold text-4xl">Feed</h2>
-            <div>
-              {modules.map((project) => (
-                <p key={project.id}>
-                  {/* <Link href={Routes.Project({ handle: project.handle })}> */}
-                  <a>{project.title}</a>
-                  {/* </Link> */}
-                </p>
-              ))}
-              <button disabled={page === 0} onClick={goToPreviousPage}>
-                Previous
-              </button>
-              <button disabled={!hasMore} onClick={goToNextPage}>
-                Next
-              </button>
-            </div>
-            {data!.modules.length > 0 ? (
-              <>
-                {data!.modules.map((module) => {
-                  return (
-                    <div key={module.suffix} className="bg-pink-300 mb-2">
-                      {/* {JSON.stringify(module)} */}
-                      <div>
-                        <p>{module.type}</p>
-                        <p>{module.title}</p>
-                      </div>
-                      <div className="flex">
-                        <div className="flex-grow">
-                          <p>DOI: 10.53962/{module.suffix}</p>
-                          <p>Published: {module.publishedAt?.toISOString().substring(0, 10)}</p>
-                        </div>
-                        <div className="flex -space-x-2 relative z-0 overflow-hidden text-right">
-                          {module.authors.map((author) => (
-                            <img
-                              key={author.id + author.moduleId}
-                              src={author.workspace!.avatar!}
-                              className="relative z-30 inline-block h-6 w-6 rounded-full "
-                            />
-                          ))}
-                        </div>
-                      </div>
-                      {/* <p>
-                        <Link href={Routes.ModulePage({ suffix: module.suffix })}>
-                          <a>
-                            {moment(module.publishedAt).fromNow()} 10.53962/{module.suffix}{" "}
-                            {module.title}
-                          </a>
-                        </Link>
-                      </p> */}
+
+            {modules.length > 0 ? (
+              <div>
+                {modules.map((module) => (
+                  <div key={module.suffix} className="bg-pink-300 mb-2">
+                    {/* {JSON.stringify(module)} */}
+                    <div>
+                      <p>{module.type}</p>
+                      <p>{module.title}</p>
                     </div>
-                  )
-                })}
-              </>
+                    <div className="flex">
+                      <div className="flex-grow">
+                        <p>DOI: 10.53962/{module.suffix}</p>
+                        <p>Published: {module.publishedAt?.toISOString().substring(0, 10)}</p>
+                      </div>
+                      <div className="flex -space-x-2 relative z-0 overflow-hidden text-right">
+                        {module.authors.map((author) => (
+                          <img
+                            key={author.id + author.moduleId}
+                            src={author.workspace!.avatar!}
+                            className="relative z-30 inline-block h-6 w-6 rounded-full "
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                Showing {ITEMS_PER_PAGE * page + 1}-{ITEMS_PER_PAGE + page} of {count} results
+                <button disabled={page === 0} onClick={goToPreviousPage}>
+                  Previous
+                </button>
+                <button disabled={!hasMore} onClick={goToNextPage}>
+                  Next
+                </button>
+              </div>
             ) : (
               <div className="flex flex-col flex-grow relative block w-full border-2 border-gray-300 border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 h-96">
                 <div className="table flex-grow w-full">
