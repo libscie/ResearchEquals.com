@@ -10,9 +10,10 @@ import {
 import Layout from "app/core/layouts/Layout"
 import React, { Suspense } from "react"
 import toast, { Toaster } from "react-hot-toast"
+import { Disclosure } from "@headlessui/react"
 
 import getDashboardData from "../core/queries/getDashboardData"
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid"
+import { ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon } from "@heroicons/react/solid"
 import Navbar from "../core/components/Navbar"
 import Banner from "../core/components/Banner"
 import OnboardingQuests from "../core/components/OnboardingQuests"
@@ -83,51 +84,7 @@ const DashboardContent = () => {
             </dl>
             {data.followableWorkspaces.length > 0 ? (
               <div className="hidden lg:inline">
-                <h2 className="font-bold text-4xl">Who to follow</h2>
-                {data.followableWorkspaces.map((workspace) => (
-                  <div key={workspace.id + workspace.handle} className="flex w-full">
-                    <Link href={Routes.HandlePage({ handle: workspace.handle })}>
-                      <a className="flex-grow flex">
-                        <img className="w-10 h-10 rounded-full" src={workspace!.avatar!} />
-                        <p className="flex-grow">{workspace.handle}</p>
-                      </a>
-                    </Link>
-                    <button
-                      className="right-0"
-                      onClick={async () => {
-                        await followWorkspaceMutation({
-                          followerId: data.workspace?.id!,
-                          followedId: workspace.id,
-                        })
-
-                        toast((t) => (
-                          <span>
-                            Custom and <b>bold</b>
-                            <button
-                              onClick={async () => {
-                                await unfollowWorkspaceMutation({
-                                  followerId: data.workspace?.id!,
-                                  followedId: workspace.id,
-                                })
-                                refetch()
-                                refetchFeed()
-                                toast.dismiss(t.id)
-                              }}
-                            >
-                              Undo
-                            </button>
-                          </span>
-                        ))
-                        refetch()
-                        refetchFeed()
-                      }}
-                    >
-                      {data.workspace!.following.filter((x) => x.id === workspace.id).length > 0
-                        ? "Following"
-                        : "Follow"}
-                    </button>
-                  </div>
-                ))}
+                <WhoToFollow data={data} refetch={refetch} refetchFeed={refetchFeed} />
               </div>
             ) : (
               ""
@@ -157,6 +114,7 @@ const DashboardContent = () => {
                         {module.authors.map((author) => (
                           <img
                             key={author.id + author.moduleId}
+                            // Had an issue here before, noting for future
                             src={author.workspace!.avatar!}
                             className="relative z-30 inline-block h-6 w-6 rounded-full "
                           />
@@ -218,10 +176,36 @@ const DashboardContent = () => {
             ) : (
               <div className="flex flex-col flex-grow relative block w-full border-2 border-gray-300 border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 h-96">
                 <div className="table flex-grow w-full">
+                  <div className="hidden sm:table-cell w-1/4"></div>
                   <span className="mx-auto table-cell align-middle leading-normal text-sm font-medium text-gray-900">
-                    <div>Following people will help populate your feed</div>
-                    <button className="font-bold">Find people to follow</button>
+                    {data.followableWorkspaces.length > 0 ? (
+                      <>
+                        <div>Following people will help populate your feed</div>
+                        <Disclosure>
+                          {({ open }) => (
+                            <>
+                              <Disclosure.Button
+                                as="p"
+                                className=" px-4 py-2 text-sm font-medium text-purple-900 bg-purple-100 rounded-lg hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"
+                              >
+                                <span className="font-bold">Find people to follow</span>
+                              </Disclosure.Button>
+                              <Disclosure.Panel className="px-4 pt-4 pb-2 text-left text-gray-500">
+                                <WhoToFollow
+                                  data={data}
+                                  refetch={refetch}
+                                  refetchFeed={refetchFeed}
+                                />
+                              </Disclosure.Panel>
+                            </>
+                          )}
+                        </Disclosure>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </span>
+                  <div className="hidden sm:table-cell w-1/4"></div>
                 </div>
               </div>
             )}
@@ -244,6 +228,61 @@ const Dashboard = () => {
           <DashboardContent />
         </Suspense>
       </main>
+    </>
+  )
+}
+
+const WhoToFollow = ({ data, refetch, refetchFeed }) => {
+  const [followWorkspaceMutation] = useMutation(followWorkspace)
+  const [unfollowWorkspaceMutation] = useMutation(unfollowWorkspace)
+
+  return (
+    <>
+      <h2 className="font-bold text-4xl">Who to follow</h2>
+      {data.followableWorkspaces.map((workspace) => (
+        <div key={workspace.id + workspace.handle} className="flex">
+          <Link href={Routes.HandlePage({ handle: workspace.handle })}>
+            <a className="flex-grow flex">
+              <img className="w-10 h-10 rounded-full" src={workspace!.avatar!} />
+              <p className="flex-grow">{workspace.handle}</p>
+            </a>
+          </Link>
+          <button
+            className="right-0"
+            onClick={async () => {
+              await followWorkspaceMutation({
+                followerId: data.workspace?.id!,
+                followedId: workspace.id,
+              })
+
+              toast((t) => (
+                <span>
+                  Custom and <b>bold</b>
+                  <button
+                    onClick={async () => {
+                      await unfollowWorkspaceMutation({
+                        followerId: data.workspace?.id!,
+                        followedId: workspace.id,
+                      })
+                      refetch()
+                      refetchFeed()
+                      toast.dismiss(t.id)
+                    }}
+                  >
+                    Undo
+                  </button>
+                </span>
+              ))
+              refetch()
+              refetchFeed()
+            }}
+          >
+            {data.workspace!.following.filter((x) => x.id === workspace.id).length > 0
+              ? "Following"
+              : "Follow"}
+          </button>
+        </div>
+      ))}
     </>
   )
 }
