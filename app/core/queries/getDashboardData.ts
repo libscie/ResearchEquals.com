@@ -18,6 +18,7 @@ export default async function getSignature({ session }) {
     },
     include: {
       following: true,
+      authorships: true,
     },
   })
 
