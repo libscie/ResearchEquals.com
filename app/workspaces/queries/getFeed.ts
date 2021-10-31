@@ -32,6 +32,7 @@ export default resolver.pipe(
       count: () =>
         db.module.count({
           where: {
+            published: true,
             authors: {
               some: {
                 workspaceId: {
@@ -45,6 +46,7 @@ export default resolver.pipe(
         db.module.findMany({
           ...paginateArgs,
           where: {
+            published: true,
             authors: {
               some: {
                 workspaceId: {
