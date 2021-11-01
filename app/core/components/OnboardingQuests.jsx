@@ -8,8 +8,8 @@ import { XIcon } from "@heroicons/react/outline"
 
 import SettingsModal from "../modals/settings"
 import changeAvatar from "../../workspaces/mutations/changeAvatar"
-import getSignature from "../queries/getSignature"
 import CreateModuleForm from "../../modules/components/CreateModuleForm"
+import getSignature from "../../auth/queries/getSignature"
 
 const OnboardingQuests = ({ data }) => {
   return (
