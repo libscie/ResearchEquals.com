@@ -16,6 +16,10 @@ export default async function getSignature({ session }) {
     where: {
       id: session.workspaceId!,
     },
+    include: {
+      following: true,
+      authorships: true,
+    },
   })
 
   const draftModules = await db.module.findMany({
@@ -70,7 +74,11 @@ export default async function getSignature({ session }) {
       },
     ],
     include: {
-      authors: true,
+      authors: {
+        include: {
+          workspace: true,
+        },
+      },
     },
   })
 
@@ -82,5 +90,19 @@ export default async function getSignature({ session }) {
     ],
   })
 
-  return { user, workspace, draftModules, invitedModules, modules, workspaces }
+  const followableWorkspaces = await db.workspace.findMany({
+    where: {
+      id: { not: { in: [session.workspaceId, ...workspace?.following.map((x) => x.id)!] } },
+    },
+  })
+
+  return {
+    user,
+    workspace,
+    draftModules,
+    invitedModules,
+    modules,
+    workspaces,
+    followableWorkspaces,
+  }
 }

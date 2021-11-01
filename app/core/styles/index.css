@@ -13,3 +13,7 @@
 .aa-DetachedSearchButton button {
   height: 100%;
 }
+
+.uploadcare--widget {
+  display: none;
+}
