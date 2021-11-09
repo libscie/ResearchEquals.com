@@ -107,7 +107,12 @@ const DashboardContent = () => {
                     </div>
                     <div className="flex">
                       <div className="flex-grow">
-                        <p>DOI: 10.53962/{module.suffix}</p>
+                        <p>
+                          DOI:{" "}
+                          <Link href={Routes.ModulePage({ suffix: module.suffix })}>
+                            <a>10.53962/{module.suffix}</a>
+                          </Link>
+                        </p>
                         <p>Published: {module.publishedAt?.toISOString().substring(0, 10)}</p>
                       </div>
                       <div className="flex -space-x-2 relative z-0 overflow-hidden text-right">
