@@ -1,13 +1,16 @@
 import Layout from "app/core/layouts/Layout"
 import db from "db"
-import { Link, useRouter, usePaginatedQuery, useParams } from "blitz"
+import { Link, useRouter, usePaginatedQuery, useParams, useMutation } from "blitz"
 import { Calendar32, Link32, UserFollow32 } from "@carbon/icons-react"
 import { ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon } from "@heroicons/react/solid"
 import { Suspense } from "react"
+import toast, { Toaster } from "react-hot-toast"
 
 import Navbar from "../core/components/Navbar"
 import getHandleFeed from "../workspaces/queries/getHandleFeed"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
+import followWorkspace from "../workspaces/mutations/followWorkspace"
+import unfollowWorkspace from "../workspaces/mutations/unfollowWorkspace"
 
 const ITEMS_PER_PAGE = 10
 
@@ -38,6 +41,7 @@ const HandlePage = ({ workspace }) => {
   return (
     <>
       <Navbar />
+      <Toaster />
       <div className="max-w-7xl bg-pink-100 mx-auto">
         <div className="w-full">
           <div className="flex">
@@ -52,7 +56,7 @@ const HandlePage = ({ workspace }) => {
             </div>
             <div>
               <Suspense fallback="Loading...">
-                <FollowButton />
+                <FollowButton workspace={workspace} />
               </Suspense>
             </div>
           </div>
@@ -103,21 +107,78 @@ HandlePage.getLayout = (page) => <Layout title="Handle">{page}</Layout>
 
 export default HandlePage
 
-const FollowButton = () => {
+const FollowButton = ({ workspace }) => {
   const params = useParams()
-  const workspace = useCurrentWorkspace()
+  const ownWorkspace = useCurrentWorkspace()
+  const [followWorkspaceMutation] = useMutation(followWorkspace)
+  const [unfollowWorkspaceMutation] = useMutation(unfollowWorkspace)
 
+  console.log(workspace)
   return (
     <>
-      {workspace!.handle === params.handle ? (
+      {ownWorkspace!.handle === params.handle ? (
         <></>
-      ) : workspace?.following.filter((follows) => follows.handle === params.handle).length ===
+      ) : ownWorkspace?.following.filter((follows) => follows.handle === params.handle).length ===
         0 ? (
         // TODO: Add action
-        <button className="py-4 px-2 bg-indigo-600">Follow</button>
+        <button
+          className="py-4 px-2 bg-indigo-600"
+          onClick={async () => {
+            await followWorkspaceMutation({
+              followerId: ownWorkspace?.id!,
+              followedId: workspace.id,
+            })
+
+            toast((t) => (
+              <span>
+                Custom and <b>bold</b>
+                <button
+                  onClick={async () => {
+                    await unfollowWorkspaceMutation({
+                      followerId: ownWorkspace?.id!,
+                      followedId: workspace.id,
+                    })
+                    toast.dismiss(t.id)
+                  }}
+                >
+                  Undo
+                </button>
+              </span>
+            ))
+          }}
+        >
+          Follow
+        </button>
       ) : (
         // TODO: Add action
-        <button className="py-4 px-2 bg-indigo-600">Unfollow</button>
+        <button
+          className="py-4 px-2 bg-indigo-600"
+          onClick={async () => {
+            await unfollowWorkspaceMutation({
+              followerId: ownWorkspace?.id!,
+              followedId: workspace.id,
+            })
+
+            toast((t) => (
+              <span>
+                Custom and <b>bold</b>
+                <button
+                  onClick={async () => {
+                    await followWorkspaceMutation({
+                      followerId: ownWorkspace?.id!,
+                      followedId: workspace.id,
+                    })
+                    toast.dismiss(t.id)
+                  }}
+                >
+                  Undo
+                </button>
+              </span>
+            ))
+          }}
+        >
+          Unfollow
+        </button>
       )}
     </>
   )
