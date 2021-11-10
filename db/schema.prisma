@@ -57,6 +57,7 @@ model Workspace {
   name      String?
   bio       String?
   pronouns  String?  @db.VarChar(20)
+  url       String?
   orcid     String?  @unique
 
   members     Membership[]
