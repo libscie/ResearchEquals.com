@@ -4,7 +4,7 @@ import { z } from "zod"
 
 const ChangeBio = z.object({
   handle: z.string(),
-  bio: z.string().min(0).max(300),
+  bio: z.string(),
 })
 
 export default resolver.pipe(
