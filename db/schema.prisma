@@ -24,11 +24,12 @@ model Module {
   license     License?  @relation(fields: [licenseId], references: [id])
   licenseId   Int?
 
-  type     String
-  main     Json?
-  authors  Authorship[]
-  parents  Module[]     @relation("ModuleToModule")
-  children Module[]     @relation("ModuleToModule", references: [id])
+  type       String
+  main       Json?
+  supporting Json?
+  authors    Authorship[]
+  parents    Module[]     @relation("ModuleToModule")
+  children   Module[]     @relation("ModuleToModule", references: [id])
 }
 
 model License {
