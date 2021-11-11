@@ -8,7 +8,7 @@ import addMain from "../mutations/addMain"
 
 const EditMainFile = ({ mainFile, setQueryData, moduleEdit }) => {
   const [uploadSecret] = useQuery(getSignature, undefined)
-  const widgetApiMain = useRef()
+  const widgetApi = useRef()
   const [addMainMutation] = useMutation(addMain)
 
   return (
@@ -33,7 +33,7 @@ const EditMainFile = ({ mainFile, setQueryData, moduleEdit }) => {
             type="button"
             className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             onClick={() => {
-              widgetApiMain.current.openDialog()
+              widgetApi.current.openDialog()
             }}
           >
             Upload file
@@ -41,7 +41,7 @@ const EditMainFile = ({ mainFile, setQueryData, moduleEdit }) => {
               publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
               secureSignature={uploadSecret.signature}
               secureExpire={uploadSecret.expire}
-              ref={widgetApiMain}
+              ref={widgetApi}
               previewStep
               clearable
               onChange={async (info) => {
