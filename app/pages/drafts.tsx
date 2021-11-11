@@ -1,7 +1,7 @@
 import { BlitzPage, useSession, useQuery } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import { Disclosure } from "@headlessui/react"
-import { ChevronUpIcon } from "@heroicons/react/solid"
+import { ChevronRightIcon } from "@heroicons/react/solid"
 import { Suspense, useState } from "react"
 import { ProgressBarRound32 } from "@carbon/icons-react"
 import moment from "moment"
@@ -21,11 +21,6 @@ const DraftsContents = () => {
     <Disclosure defaultOpen={true}>
       {({ open }) => (
         <>
-          <Disclosure.Button className="hidden sm:inline inherit top-0 left-0 justify-between px-4 py-2 text-sm font-medium text-left text-purple-900 bg-purple-100 rounded-lg hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-            <ChevronUpIcon
-              className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-purple-500 `}
-            />
-          </Disclosure.Button>
           <Disclosure.Panel
             className="float-left w-full sm:w-64 bg-red-100 text-2xl text-gray-500"
             style={{
@@ -107,6 +102,11 @@ const DraftsContents = () => {
               </ul>
             </Suspense>
           </Disclosure.Panel>
+          <Disclosure.Button className="hidden sm:inline inherit top-0 left-0 justify-between px-4 py-2 text-sm font-medium text-left text-purple-900 bg-purple-100 rounded-lg hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+            <ChevronRightIcon
+              className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-purple-500 `}
+            />
+          </Disclosure.Button>
           <div
             className={`${open ? "bg-indigo-300 hidden" : "bg-pink-300"} float-right  sm:inline `}
             style={{
