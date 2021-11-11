@@ -47,6 +47,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
   const [addAuthorMutation] = useMutation(addAuthor)
   const [updateAuthorRankMutation] = useMutation(updateAuthorRank)
 
+  console.log(moduleEdit)
   const mainFile = moduleEdit!.main as Prisma.JsonObject
 
   return (
@@ -147,7 +148,12 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
       </div> */}
       {/* References */}
       {/* License */}
-      <div>License: {moduleEdit!.license}</div>
+      <div>
+        License:{" "}
+        <Link href={moduleEdit!.license!.url}>
+          <a target="_blank">{moduleEdit!.license!.name}</a>
+        </Link>
+      </div>
 
       {/* Old code */}
       <div className="flex justify-center items-center">
@@ -192,7 +198,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
                             title: source.replace(/<\/?[^>]+(>|$)/g, ""),
                           })
                           // refetch()
-                          setQueryData(updatedModule)
+                          setQueryData(updatedModule!)
                         }}
                       />
                     </div>
