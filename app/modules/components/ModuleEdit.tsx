@@ -20,6 +20,7 @@ import getSignature from "../../auth/queries/getSignature"
 import addMain from "../mutations/addMain"
 import EditMainFile from "./EditMainFile"
 import ManageAuthors from "./ManageAuthors"
+import EditSupportingFiles from "./EditSupportingFiles"
 
 import "@algolia/autocomplete-theme-classic"
 
@@ -111,49 +112,26 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
 
       {/* {JSON.stringify(mainFile)} */}
       {/* Supporting files */}
-      {/* <div>
+      <div>
         <h2>Supporting file(s)</h2>
-        <button
-          type="button"
-          className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          onClick={() => {
-            widgetApiSupporting.current.openDialog()
-          }}
-        >
-          Upload supporting files
-        </button>
-
-        <Widget
-          publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
-          secureSignature={uploadSecret.signature}
-          secureExpire={uploadSecret.expire}
-          // value="8fd6d947-4d03-4114-8054-c0ee7b3bda03~4"
-          ref={widgetApiSupporting}
-          previewStep
-          multiple
-          multipleMax={10}
-          clearable
-          onChange={async (info) => {
-            console.log(info)
-            try {
-              // TODO: Only store upon save
-              // await addSupportingMutation({ suffix: moduleEdit?.suffix, json: info })
-              //  TODO: add action
-            } catch (err) {
-              alert(err)
-            }
-            console.log("Upload completed:", info)
-          }}
+        <EditSupportingFiles
+          mainFile={mainFile}
+          setQueryData={setQueryData}
+          moduleEdit={moduleEdit}
         />
-      </div> */}
+      </div>
       {/* References */}
       {/* License */}
-      <div>
-        License:{" "}
-        <Link href={moduleEdit!.license!.url}>
-          <a target="_blank">{moduleEdit!.license!.name}</a>
-        </Link>
-      </div>
+      {moduleEdit!.license ? (
+        <div>
+          License:{" "}
+          <Link href={moduleEdit!.license!.url}>
+            <a target="_blank">{moduleEdit!.license!.name}</a>
+          </Link>
+        </div>
+      ) : (
+        <></>
+      )}
 
       {/* Old code */}
       <div className="flex justify-center items-center">
