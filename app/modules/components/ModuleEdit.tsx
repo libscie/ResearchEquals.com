@@ -6,23 +6,14 @@ import { Fragment, useState, useRef } from "react"
 import { DefaultSchema } from "wax-prosemirror-utilities"
 import moment from "moment"
 import algoliasearch from "algoliasearch"
-import { getAlgoliaResults } from "@algolia/autocomplete-js"
 import { Toaster, toast } from "react-hot-toast"
-import { DragDropContext, Droppable, DroppableProvided } from "react-beautiful-dnd"
 import { DocumentPdf32, TrashCan32, Download32 } from "@carbon/icons-react"
-import { Widget } from "@uploadcare/react-widget"
 import { Prisma } from "prisma"
 
-import addAuthor from "../mutations/addAuthor"
-import AuthorList from "../../core/components/AuthorList"
-import updateAuthorRank from "../../authorship/mutations/updateAuthorRank"
-import getSignature from "../../auth/queries/getSignature"
-import addMain from "../mutations/addMain"
 import EditMainFile from "./EditMainFile"
 import ManageAuthors from "./ManageAuthors"
 import EditSupportingFiles from "./EditSupportingFiles"
-
-import "@algolia/autocomplete-theme-classic"
+import getSupportingFiles from "../queries/getSupportingFiles"
 
 import ReadyToPublishModal from "../../core/modals/ReadyToPublishModal"
 import DeleteModuleModal from "../../core/modals/DeleteModuleModal"
@@ -32,23 +23,21 @@ import changeTitle from "../mutations/changeTitle"
 import changeAbstract from "../mutations/changeAbstract"
 import Autocomplete from "../../core/components/Autocomplete"
 
-const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
-
 const ModuleEdit = ({ user, module, isAuthor }) => {
   const [manageAuthorsOpen, setManageAuthorsOpen] = useState(false)
-  // const widgetApiSupporting = useRef()
   const [moduleEdit, { refetch, setQueryData }] = useQuery(
     useCurrentModule,
     { suffix: module.suffix },
     { refetchOnWindowFocus: true }
   )
-  const [authorState, setAuthorState] = useState(moduleEdit!.authors)
+  const supportingRaw = moduleEdit!.supporting as Prisma.JsonObject
+
+  const [supportingFiles] = useQuery(getSupportingFiles, {
+    groupUuid: supportingRaw.uuid,
+  })
   const [changeTitleMutation] = useMutation(changeTitle)
   const [changeAbstractMutation] = useMutation(changeAbstract)
-  const [addAuthorMutation] = useMutation(addAuthor)
-  const [updateAuthorRankMutation] = useMutation(updateAuthorRank)
 
-  console.log(moduleEdit)
   const mainFile = moduleEdit!.main as Prisma.JsonObject
 
   return (
@@ -114,6 +103,9 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
       {/* Supporting files */}
       <div>
         <h2>Supporting file(s)</h2>
+        {supportingFiles.files.map((file) => (
+          <>{file.original_filename}</>
+        ))}
         <EditSupportingFiles
           mainFile={mainFile}
           setQueryData={setQueryData}

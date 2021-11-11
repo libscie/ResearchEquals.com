@@ -23,6 +23,7 @@ const EditSupportingFiles = ({ mainFile, setQueryData, moduleEdit }) => {
       alert(err)
     }
   }
+
   return (
     <>
       <button
@@ -40,7 +41,6 @@ const EditSupportingFiles = ({ mainFile, setQueryData, moduleEdit }) => {
             secureExpire={uploadSecret.expire}
             ref={widgetApi}
             value={moduleEdit.supporting.uuid}
-            // TODO: add value for group
             previewStep
             multiple
             multipleMax={10}
@@ -53,7 +53,6 @@ const EditSupportingFiles = ({ mainFile, setQueryData, moduleEdit }) => {
             secureSignature={uploadSecret.signature}
             secureExpire={uploadSecret.expire}
             ref={widgetApi}
-            // TODO: add value for group
             previewStep
             multiple
             multipleMax={10}
