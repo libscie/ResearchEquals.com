@@ -1,18 +1,24 @@
-import { useQuery, useMutation, useSession } from "blitz"
+import { useQuery, useMutation, Link } from "blitz"
 import { Wax } from "wax-prosemirror-core"
 import { Popover, Transition } from "@headlessui/react"
 import { ChevronDoubleDownIcon } from "@heroicons/react/solid"
-import { Fragment, useEffect, useState } from "react"
+import { Fragment, useState, useRef } from "react"
 import { DefaultSchema } from "wax-prosemirror-utilities"
 import moment from "moment"
 import algoliasearch from "algoliasearch"
 import { getAlgoliaResults } from "@algolia/autocomplete-js"
 import { Toaster, toast } from "react-hot-toast"
 import { DragDropContext, Droppable, DroppableProvided } from "react-beautiful-dnd"
+import { DocumentPdf32, TrashCan32, Download32 } from "@carbon/icons-react"
+import { Widget } from "@uploadcare/react-widget"
+import { Prisma } from "prisma"
 
 import addAuthor from "../mutations/addAuthor"
 import AuthorList from "../../core/components/AuthorList"
 import updateAuthorRank from "../../authorship/mutations/updateAuthorRank"
+import getSignature from "../../auth/queries/getSignature"
+import addMain from "../mutations/addMain"
+import EditMainFile from "./EditMainFile"
 
 import "@algolia/autocomplete-theme-classic"
 
@@ -27,6 +33,7 @@ import Autocomplete from "../../core/components/Autocomplete"
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
 const ModuleEdit = ({ user, module, isAuthor }) => {
+  // const widgetApiSupporting = useRef()
   const [moduleEdit, { refetch, setQueryData }] = useQuery(
     useCurrentModule,
     { suffix: module.suffix },
@@ -38,19 +45,102 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
   const [addAuthorMutation] = useMutation(addAuthor)
   const [updateAuthorRankMutation] = useMutation(updateAuthorRank)
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     refetch()
-  //     console.log(moduleEdit!.authors)
-  //     setAuthorState(moduleEdit!.authors)
-  //   }, 10000)
-  //   return () => clearInterval(interval)
-  // }, [refetch])
+  const mainFile = moduleEdit!.main as Prisma.JsonObject
+
   return (
     <div className="max-w-4xl mx-auto">
-      <div>
-        <Toaster />
+      <Toaster />
+      {/* Menu bar */}
+      <div className="w-full bg-gray-300 flex">
+        <div className="flex-grow"></div>
+        <DocumentPdf32 />
+        <DeleteModuleModal module={module} />
       </div>
+      {/* Last updated */}
+      <div className="text-center">
+        Last updated: {moment(moduleEdit?.updatedAt).fromNow()} (
+        {moduleEdit?.updatedAt.toISOString()})
+      </div>
+      {/* Parents */}
+      <div className="flex w-full">
+        Follows from: <Autocomplete />
+      </div>
+      {/* Metadata */}
+      <div className="w-full">
+        <p>{moduleEdit!.type}</p>
+        <h1 className="min-h-16">{moduleEdit!.title}</h1>
+      </div>
+      {/* Authors */}
+      <div className="flex border-t-2 border-b-2 border-gray-800">
+        <div className="flex-grow">
+          {moduleEdit?.authors.map((author) => (
+            <img
+              key={author.id + author.workspace!.handle}
+              alt={`Avatar of ${author.workspace!.handle}`}
+              className="w-8 h-8 rounded-full"
+              src={author.workspace?.avatar!}
+            />
+          ))}
+        </div>
+        <button
+          className="px-4 py-2 bg-indigo-500 text-white rounded"
+          onClick={() => {
+            alert("this should open a popover")
+          }}
+        >
+          Manage authors
+        </button>
+      </div>
+      {/* Description */}
+      <div>{moduleEdit!.description}</div>
+      {/* Main file */}
+      <div>
+        <h2>Main file</h2>
+        <EditMainFile mainFile={mainFile} setQueryData={setQueryData} moduleEdit={moduleEdit} />
+      </div>
+
+      {/* {JSON.stringify(mainFile)} */}
+      {/* Supporting files */}
+      {/* <div>
+        <h2>Supporting file(s)</h2>
+        <button
+          type="button"
+          className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          onClick={() => {
+            widgetApiSupporting.current.openDialog()
+          }}
+        >
+          Upload supporting files
+        </button>
+
+        <Widget
+          publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
+          secureSignature={uploadSecret.signature}
+          secureExpire={uploadSecret.expire}
+          // value="8fd6d947-4d03-4114-8054-c0ee7b3bda03~4"
+          ref={widgetApiSupporting}
+          previewStep
+          multiple
+          multipleMax={10}
+          clearable
+          onChange={async (info) => {
+            console.log(info)
+            try {
+              // TODO: Only store upon save
+              // await addSupportingMutation({ suffix: moduleEdit?.suffix, json: info })
+              //  TODO: add action
+            } catch (err) {
+              alert(err)
+            }
+            console.log("Upload completed:", info)
+          }}
+        />
+      </div> */}
+      {/* References */}
+      {/* License */}
+      <div>License: {moduleEdit!.license}</div>
+
+      {/* Old code */}
       <div className="flex justify-center items-center">
         <Popover className="relative">
           {({ open }) => (
@@ -293,13 +383,13 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
           </div>
         </div>
       </DragDropContext>
-      <div>{JSON.stringify(module)}</div>
+      {/* <div>{JSON.stringify(module)}</div>
       {isAuthor && !module.published && user.emailIsVerified ? (
         <ReadyToPublishModal module={module} />
       ) : (
         ""
       )}
-      {isAuthor && !module.published ? <DeleteModuleModal module={module} /> : ""}
+       */}
     </div>
   )
 }
