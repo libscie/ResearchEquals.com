@@ -13,20 +13,30 @@ generator client {
 // --------------------------------------
 
 model Module {
-  id          Int          @id @default(autoincrement())
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  published   Boolean      @default(false)
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  published   Boolean   @default(false)
   publishedAt DateTime?
-  suffix      String       @unique
-  title       String       @db.VarChar(300)
+  suffix      String    @unique
+  title       String    @db.VarChar(300)
   description String?
-  license     String?
-  type        String
-  main        Json?
-  authors     Authorship[]
-  parents     Module[]     @relation("ModuleToModule")
-  children    Module[]     @relation("ModuleToModule", references: [id])
+  license     License?  @relation(fields: [licenseId], references: [id])
+  licenseId   Int?
+
+  type     String
+  main     Json?
+  authors  Authorship[]
+  parents  Module[]     @relation("ModuleToModule")
+  children Module[]     @relation("ModuleToModule", references: [id])
+}
+
+model License {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  url       String
+  name      String
+  Module    Module[]
 }
 
 model Authorship {
