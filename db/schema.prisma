@@ -23,7 +23,8 @@ model Module {
   description String?
   license     String?
   type        String
-  main        String
+  main        Json
+  supporting  Json[]
   authors     Authorship[]
   parents     Module[]     @relation("ModuleToModule")
   children    Module[]     @relation("ModuleToModule", references: [id])
