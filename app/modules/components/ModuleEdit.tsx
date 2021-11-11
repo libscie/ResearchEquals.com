@@ -19,6 +19,7 @@ import updateAuthorRank from "../../authorship/mutations/updateAuthorRank"
 import getSignature from "../../auth/queries/getSignature"
 import addMain from "../mutations/addMain"
 import EditMainFile from "./EditMainFile"
+import ManageAuthors from "./ManageAuthors"
 
 import "@algolia/autocomplete-theme-classic"
 
@@ -33,6 +34,7 @@ import Autocomplete from "../../core/components/Autocomplete"
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
 const ModuleEdit = ({ user, module, isAuthor }) => {
+  const [manageAuthorsOpen, setManageAuthorsOpen] = useState(false)
   // const widgetApiSupporting = useRef()
   const [moduleEdit, { refetch, setQueryData }] = useQuery(
     useCurrentModule,
@@ -72,20 +74,27 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
       </div>
       {/* Authors */}
       <div className="flex border-t-2 border-b-2 border-gray-800">
-        <div className="flex-grow">
+        <div className="flex-grow flex -space-x-2 relative z-0 overflow-hidden">
           {moduleEdit?.authors.map((author) => (
             <img
               key={author.id + author.workspace!.handle}
               alt={`Avatar of ${author.workspace!.handle}`}
-              className="w-8 h-8 rounded-full"
+              className="relative z-30 inline-block h-8 w-8 rounded-full"
               src={author.workspace?.avatar!}
             />
           ))}
         </div>
+        <ManageAuthors
+          open={manageAuthorsOpen}
+          setOpen={setManageAuthorsOpen}
+          moduleEdit={moduleEdit}
+          setQueryData={setQueryData}
+        />
         <button
-          className="px-4 py-2 bg-indigo-500 text-white rounded"
+          type="button"
+          className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           onClick={() => {
-            alert("this should open a popover")
+            setManageAuthorsOpen(true)
           }}
         >
           Manage authors
@@ -194,10 +203,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
           )}
         </Popover>
       </div>
-      <div>
-        <h2>Last edited:</h2>
-        <p>{moment(moduleEdit!.updatedAt).fromNow()}</p>
-      </div>
+
       <div>
         <h2 className="text-4xl font-black">Abstract</h2>
         <Popover className="relative">
@@ -254,135 +260,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
           )}
         </Popover>
       </div>
-      <DragDropContext
-        onDragEnd={async (result) => {
-          const { destination, source, draggableId } = result
-          // If no destination, do nothing
-          if (!destination) {
-            return
-          }
-          // If destination and source are equivalent, do nothing
-          if (
-            destination.droppableId === source.droppableId &&
-            destination.index === source.index
-          ) {
-            return
-          }
 
-          const newAuthorState = Array.from(moduleEdit!.authors)
-          newAuthorState.splice(source.index, 1)
-          newAuthorState.splice(
-            destination.index,
-            0,
-            authorState.filter((author) => {
-              return author.workspaceId === parseInt(draggableId)
-            })[0]!
-          )
-
-          let i = 0
-          newAuthorState.map((author) => {
-            author.authorshipRank = i
-            i += 1
-          })
-
-          // Update database
-          newAuthorState.map(async (author) => {
-            const updatedModule = await updateAuthorRankMutation({
-              id: author.id,
-              rank: author.authorshipRank,
-              suffix: moduleEdit!.suffix,
-            })
-            console.log(`Updated ${author.id} to rank ${author.authorshipRank}`)
-            setQueryData(updatedModule!)
-          })
-        }}
-      >
-        <div className="flex flex-col">
-          <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-              <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        Name
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        Status
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    <tr>
-                      <Autocomplete
-                        openOnFocus={true}
-                        defaultActiveItemId="0"
-                        getSources={({ query }) => [
-                          {
-                            sourceId: "products",
-                            async onSelect(params) {
-                              const { item, setQuery } = params
-                              try {
-                                const updatedModule = await addAuthorMutation({
-                                  authorId: item.objectID,
-                                  moduleId: moduleEdit!.id,
-                                })
-                                toast.success("Author invited")
-                                setQueryData(updatedModule)
-                              } catch (error) {
-                                toast.error("Something went wrong")
-                              }
-                              setQuery("")
-                            },
-                            getItems() {
-                              return getAlgoliaResults({
-                                searchClient,
-                                queries: [
-                                  {
-                                    indexName: `${process.env.ALGOLIA_PREFIX}_workspaces`,
-                                    query,
-                                  },
-                                ],
-                              })
-                            },
-                            templates: {
-                              item({ item, components }) {
-                                return <div>{item.handle}</div>
-                              },
-                            },
-                          },
-                        ]}
-                      />
-                    </tr>
-                    <Droppable droppableId="authors-ranking">
-                      {(provided: DroppableProvided) => (
-                        <tr
-                          ref={provided.innerRef}
-                          {...provided.droppableProps}
-                          style={{ height: `${moduleEdit!.authors.length * 72}px` }}
-                        >
-                          <AuthorList
-                            authors={moduleEdit!.authors}
-                            setAuthorState={setQueryData}
-                            suffix={moduleEdit!.suffix}
-                          />
-                          {provided.placeholder}
-                        </tr>
-                      )}
-                    </Droppable>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </DragDropContext>
       {/* <div>{JSON.stringify(module)}</div>
       {isAuthor && !module.published && user.emailIsVerified ? (
         <ReadyToPublishModal module={module} />
