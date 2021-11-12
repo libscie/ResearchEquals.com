@@ -32,15 +32,14 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
     { suffix: module.suffix },
     { refetchOnWindowFocus: true }
   )
+  const mainFile = moduleEdit!.main as Prisma.JsonObject
   const supportingRaw = moduleEdit!.supporting as Prisma.JsonObject
-
   const [supportingFiles] = useQuery(getSupportingFiles, {
     groupUuid: supportingRaw.uuid,
   })
+
   const [changeTitleMutation] = useMutation(changeTitle)
   const [changeAbstractMutation] = useMutation(changeAbstract)
-
-  const mainFile = moduleEdit!.main as Prisma.JsonObject
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -77,7 +76,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
       {/* Metadata */}
       <div className="w-full">
         {/* TODO: Add edit */}
-        <p>{moduleEdit!.type}</p>
+        <p>{moduleEdit!.type.name}</p>
         <h1 className="min-h-16">{moduleEdit!.title}</h1>
       </div>
       {/* Authors */}
@@ -119,15 +118,20 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
       {/* Supporting files */}
       <div>
         <h2>Supporting file(s)</h2>
-        {supportingFiles.files.map((file) => (
-          <>
-            <EditFileDisplay
-              name={file.original_filename}
-              size={file.size}
-              url={file.original_file_url}
-            />
-          </>
-        ))}
+        {/* TODO: Robustify conditions */}
+        {supportingFiles ? (
+          supportingFiles.files.map((file) => (
+            <>
+              <EditFileDisplay
+                name={file.original_filename}
+                size={file.size}
+                url={file.original_file_url}
+              />
+            </>
+          ))
+        ) : (
+          <></>
+        )}
         <EditSupportingFiles
           mainFile={mainFile}
           setQueryData={setQueryData}
