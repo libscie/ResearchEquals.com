@@ -17,6 +17,7 @@ export default resolver.pipe(resolver.authorize(), async ({ suffix, json }) => {
         },
       },
       license: true,
+      type: true,
     },
   })
 

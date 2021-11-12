@@ -1,6 +1,9 @@
 import axios from "axios"
 
 const getSupportingFiles = async ({ groupUuid }) => {
+  if (groupUuid === undefined) {
+    return null
+  }
   const datestring = new Date()
   const supportingInfo = await axios.get(`https://api.uploadcare.com/groups/${groupUuid}/`, {
     headers: {

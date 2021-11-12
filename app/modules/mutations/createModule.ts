@@ -22,7 +22,10 @@ export default resolver.pipe(
         suffix: await generateSuffix(undefined),
         title,
         description,
-        type,
+        type: {
+          // TODO: Add type selector
+          connect: { id: 1 },
+        },
         main,
         authors: {
           create: authorInvitations,

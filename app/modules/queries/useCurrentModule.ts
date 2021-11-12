@@ -11,6 +11,7 @@ export default async function getCurrentWorkspace({ suffix }) {
         },
       },
       license: true,
+      type: true,
     },
   })
 
