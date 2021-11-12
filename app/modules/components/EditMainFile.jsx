@@ -5,6 +5,7 @@ import { useRef } from "react"
 
 import getSignature from "../../auth/queries/getSignature"
 import addMain from "../mutations/addMain"
+import EditFileDisplay from "../../core/components/EditFileDisplay"
 
 const EditMainFile = ({ mainFile, setQueryData, moduleEdit }) => {
   const [uploadSecret] = useQuery(getSignature, undefined)
@@ -14,19 +15,7 @@ const EditMainFile = ({ mainFile, setQueryData, moduleEdit }) => {
   return (
     <>
       {mainFile ? (
-        <div className="flex">
-          <p className="flex-grow flex border-2 border-gray-700">
-            <span className="flex-grow">{mainFile.name}</span>
-            <span>{mainFile.size / 1000}KB</span>
-          </p>
-          <p className="flex">
-            <a href={mainFile.cdnUrl} download>
-              <Download32 />
-            </a>
-            {/* TODO: Add action */}
-            <TrashCan32 />
-          </p>
-        </div>
+        <EditFileDisplay name={mainFile.name} size={mainFile.size} url={mainFile.cdnUrl} />
       ) : (
         <>
           <button

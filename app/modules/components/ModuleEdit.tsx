@@ -7,7 +7,7 @@ import { DefaultSchema } from "wax-prosemirror-utilities"
 import moment from "moment"
 import algoliasearch from "algoliasearch"
 import { Toaster, toast } from "react-hot-toast"
-import { DocumentPdf32, TrashCan32, Download32 } from "@carbon/icons-react"
+import { DocumentPdf32, Edit32, EditOff32, TrashCan32, Download32 } from "@carbon/icons-react"
 import { Prisma } from "prisma"
 
 import EditMainFile from "./EditMainFile"
@@ -22,8 +22,10 @@ import InstaLayout from "../../wax/InstaLayout"
 import changeTitle from "../mutations/changeTitle"
 import changeAbstract from "../mutations/changeAbstract"
 import Autocomplete from "../../core/components/Autocomplete"
+import EditFileDisplay from "../../core/components/EditFileDisplay"
 
 const ModuleEdit = ({ user, module, isAuthor }) => {
+  const [isEditing, setIsEditing] = useState(false)
   const [manageAuthorsOpen, setManageAuthorsOpen] = useState(false)
   const [moduleEdit, { refetch, setQueryData }] = useQuery(
     useCurrentModule,
@@ -46,6 +48,19 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
       {/* Menu bar */}
       <div className="w-full bg-gray-300 flex">
         <div className="flex-grow"></div>
+        {isEditing ? (
+          <EditOff32
+            onClick={() => {
+              setIsEditing(false)
+            }}
+          />
+        ) : (
+          <Edit32
+            onClick={() => {
+              setIsEditing(true)
+            }}
+          />
+        )}
         <DocumentPdf32 />
         <DeleteModuleModal module={module} />
       </div>
@@ -56,10 +71,12 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
       </div>
       {/* Parents */}
       <div className="flex w-full">
+        {/* TODO: Add action */}
         Follows from: <Autocomplete />
       </div>
       {/* Metadata */}
       <div className="w-full">
+        {/* TODO: Add edit */}
         <p>{moduleEdit!.type}</p>
         <h1 className="min-h-16">{moduleEdit!.title}</h1>
       </div>
@@ -99,12 +116,17 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
         <EditMainFile mainFile={mainFile} setQueryData={setQueryData} moduleEdit={moduleEdit} />
       </div>
 
-      {/* {JSON.stringify(mainFile)} */}
       {/* Supporting files */}
       <div>
         <h2>Supporting file(s)</h2>
         {supportingFiles.files.map((file) => (
-          <>{file.original_filename}</>
+          <>
+            <EditFileDisplay
+              name={file.original_filename}
+              size={file.size}
+              url={file.original_file_url}
+            />
+          </>
         ))}
         <EditSupportingFiles
           mainFile={mainFile}
@@ -124,126 +146,6 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
       ) : (
         <></>
       )}
-
-      {/* Old code */}
-      <div className="flex justify-center items-center">
-        <Popover className="relative">
-          {({ open }) => (
-            <>
-              <Popover.Button
-                className={`${open ? "" : "text-opacity-90"}
-                text-black group bg-orange-700 px-3 py-2 rounded-md inline-flex items-center text-base font-medium hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
-              >
-                <h1 className="text-8xl font-black">{moduleEdit!.title!}</h1>
-                <ChevronDoubleDownIcon
-                  className={`${open ? "" : "text-opacity-70"}
-                  ml-2 h-5 w-5 text-white group-hover:text-opacity-80 bg-black transition ease-in-out duration-150`}
-                  aria-hidden="true"
-                />
-              </Popover.Button>
-              <Transition
-                as={Fragment}
-                enter="transition ease-out duration-150"
-                enterFrom="opacity-0 translate-y-1"
-                enterTo="opacity-100 translate-y-0"
-                leave="transition ease-in duration-150"
-                leaveFrom="opacity-100 translate-y-0"
-                leaveTo="opacity-0 translate-y-1"
-              >
-                <Popover.Panel className="absolute z-10 w-screen max-w-sm px-4 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0 lg:max-w-3xl">
-                  <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                    <div className="relative grid gap-8 bg-white p-7 lg:grid-cols-2">
-                      <Wax
-                        autoFocus
-                        placeholder={moduleEdit!.title!}
-                        value={moduleEdit!.title!}
-                        config={{
-                          SchemaService: DefaultSchema,
-                          services: [],
-                        }}
-                        layout={InstaLayout}
-                        onChange={async (source) => {
-                          const updatedModule = await changeTitleMutation({
-                            suffix: moduleEdit!.suffix,
-                            title: source.replace(/<\/?[^>]+(>|$)/g, ""),
-                          })
-                          // refetch()
-                          setQueryData(updatedModule!)
-                        }}
-                      />
-                    </div>
-                  </div>
-                </Popover.Panel>
-              </Transition>
-            </>
-          )}
-        </Popover>
-      </div>
-
-      <div>
-        <h2 className="text-4xl font-black">Abstract</h2>
-        <Popover className="relative">
-          {({ open }) => (
-            <>
-              <Popover.Button
-                className={`${open ? "" : "text-opacity-90"}
-                group bg-orange-700 rounded-md inline-flex items-center hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
-              >
-                <p>{moduleEdit!.description!}</p>
-                <ChevronDoubleDownIcon
-                  className={`${open ? "" : "text-opacity-70"}
-                  ml-2 h-5 w-5 text-white group-hover:text-opacity-80 bg-black transition ease-in-out duration-150`}
-                  aria-hidden="true"
-                />
-              </Popover.Button>
-              <Transition
-                as={Fragment}
-                enter="transition ease-out duration-150"
-                enterFrom="opacity-0 translate-y-1"
-                enterTo="opacity-100 translate-y-0"
-                leave="transition ease-in duration-150"
-                leaveFrom="opacity-100 translate-y-0"
-                leaveTo="opacity-0 translate-y-1"
-              >
-                <Popover.Panel className="absolute z-10 w-screen max-w-sm px-4 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0 lg:max-w-3xl">
-                  <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                    <div className="relative grid gap-8 bg-white p-7 lg:grid-cols-2">
-                      <Wax
-                        autoFocus
-                        placeholder={moduleEdit!.description!}
-                        value={moduleEdit!.description!}
-                        config={{
-                          SchemaService: DefaultSchema,
-                          services: [],
-                        }}
-                        layout={InstaLayout}
-                        onChange={async (source) => {
-                          // TODO: Add instant edit
-                          const updatedModule = await changeAbstractMutation({
-                            suffix: moduleEdit!.suffix,
-                            title: source.replace(/<\/?[^>]+(>|$)/g, ""),
-                          })
-                          // refetch()
-                          console.log(updatedModule)
-                          setQueryData(updatedModule)
-                        }}
-                      />
-                    </div>
-                  </div>
-                </Popover.Panel>
-              </Transition>
-            </>
-          )}
-        </Popover>
-      </div>
-
-      {/* <div>{JSON.stringify(module)}</div>
-      {isAuthor && !module.published && user.emailIsVerified ? (
-        <ReadyToPublishModal module={module} />
-      ) : (
-        ""
-      )}
-       */}
     </div>
   )
 }
