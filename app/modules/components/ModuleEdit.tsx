@@ -47,20 +47,28 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
       {/* Menu bar */}
       <div className="w-full bg-gray-300 flex">
         <div className="flex-grow"></div>
-        {isEditing ? (
-          <EditOff32
-            onClick={() => {
-              setIsEditing(false)
-            }}
-          />
-        ) : (
-          <Edit32
-            onClick={() => {
-              setIsEditing(true)
-            }}
-          />
-        )}
-        <DocumentPdf32 />
+        <div>
+          <span className="inline-block h-full align-middle"> </span>
+
+          {isEditing ? (
+            <EditOff32
+              className="inline-block align-middle"
+              onClick={() => {
+                setIsEditing(false)
+              }}
+            />
+          ) : (
+            <Edit32
+              className="inline-block align-middle"
+              onClick={() => {
+                setIsEditing(true)
+              }}
+            />
+          )}
+          <span className="inline-block h-full align-middle"> </span>
+
+          <DocumentPdf32 className="inline-block align-middle" />
+        </div>
         <DeleteModuleModal module={module} />
       </div>
       {/* Last updated */}
@@ -82,14 +90,20 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
       {/* Authors */}
       <div className="flex border-t-2 border-b-2 border-gray-800">
         <div className="flex-grow flex -space-x-2 relative z-0 overflow-hidden">
-          {moduleEdit?.authors.map((author) => (
-            <img
-              key={author.id + author.workspace!.handle}
-              alt={`Avatar of ${author.workspace!.handle}`}
-              className="relative z-30 inline-block h-8 w-8 rounded-full"
-              src={author.workspace?.avatar!}
-            />
-          ))}
+          <div className="inline-block h-full align-middle">
+            {moduleEdit?.authors.map((author) => (
+              <>
+                {/* Tricks it into the middle */}
+                <span className="inline-block h-full align-middle"></span>
+                <img
+                  key={author.id + author.workspace!.handle}
+                  alt={`Avatar of ${author.workspace!.handle}`}
+                  className="inline-block align-middle relative z-30 inline-block h-8 w-8 rounded-full"
+                  src={author.workspace?.avatar!}
+                />
+              </>
+            ))}
+          </div>
         </div>
         <ManageAuthors
           open={manageAuthorsOpen}
