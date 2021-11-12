@@ -24,7 +24,9 @@ model Module {
   license     License?  @relation(fields: [licenseId], references: [id])
   licenseId   Int?
 
-  type       String
+  type         ModuleType @relation(fields: [moduleTypeId], references: [id])
+  moduleTypeId Int
+
   main       Json?
   supporting Json?
   authors    Authorship[]
@@ -36,6 +38,14 @@ model License {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   url       String
+  name      String
+  Module    Module[]
+}
+
+model ModuleType {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  wikidata  String
   name      String
   Module    Module[]
 }
