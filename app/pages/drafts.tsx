@@ -62,32 +62,17 @@ const DraftsContents = () => {
                       <Disclosure.Button
                         as="li"
                         key={message.id + "-disclosure" + index}
-                        className={`sm:hidden relative bg-white py-5 px-4 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ${
+                        className={`sm:hidden relative focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ${
                           currentModule === message ? "bg-indigo-300" : "bg-white"
                         }`}
                       >
-                        {/* TODO: replace with ModuleCard */}
-                        <div className="flex justify-between space-x-3">
-                          <div className="min-w-0 flex-1">
-                            <a href="#" className="block focus:outline-none">
-                              <span className="absolute inset-0" aria-hidden="true" />
-                              <p className="text-sm font-medium text-gray-900 truncate">
-                                {message.title}
-                              </p>
-                              <p className="text-sm text-gray-500 truncate">
-                                {message.description}
-                              </p>
-                              <p>
-                                <time
-                                  dateTime={message.updatedAt.toString()}
-                                  className="flex-shrink-0 whitespace-nowrap text-sm text-gray-500"
-                                >
-                                  {moment(message.updatedAt).fromNow()}
-                                </time>
-                              </p>
-                            </a>
-                          </div>
-                        </div>
+                        <ModuleCard
+                          type={message.type.name}
+                          title={message.title}
+                          status="Draft"
+                          time={moment(message.updatedAt).fromNow()}
+                          authors={message.authors}
+                        />
                       </Disclosure.Button>
                     </span>
                   </>
