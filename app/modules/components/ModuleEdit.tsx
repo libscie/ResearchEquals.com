@@ -23,6 +23,7 @@ import changeTitle from "../mutations/changeTitle"
 import changeAbstract from "../mutations/changeAbstract"
 import Autocomplete from "../../core/components/Autocomplete"
 import EditFileDisplay from "../../core/components/EditFileDisplay"
+import PublishModuleModal from "../../core/modals/PublishModuleModal"
 
 const ModuleEdit = ({ user, module, isAuthor }) => {
   const [isEditing, setIsEditing] = useState(false)
@@ -42,7 +43,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
   const [changeAbstractMutation] = useMutation(changeAbstract)
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto overflow-y-auto">
       <Toaster />
       {/* Menu bar */}
       <div className="w-full bg-gray-300 flex">
@@ -69,26 +70,33 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
 
           <DocumentPdf32 className="inline-block align-middle" />
         </div>
-        <DeleteModuleModal module={module} />
       </div>
       {/* Last updated */}
-      <div className="text-center">
+      <div className="text-center text-xs">
         Last updated: {moment(moduleEdit?.updatedAt).fromNow()} (
         {moduleEdit?.updatedAt.toISOString()})
       </div>
       {/* Parents */}
-      <div className="flex w-full">
+      <div className="flex w-full max-h-8 text-xs my-2">
         {/* TODO: Add action */}
         Follows from: <Autocomplete />
       </div>
       {/* Metadata */}
-      <div className="w-full">
+      <div className="w-full my-4 pb-8">
         {/* TODO: Add edit */}
-        <p>{moduleEdit!.type.name}</p>
-        <h1 className="min-h-16">{moduleEdit!.title}</h1>
+        {isEditing ? (
+          <p className="text-gray-500 text-xs">{moduleEdit!.type.name}</p>
+        ) : (
+          <p className="text-gray-500 text-xs">{moduleEdit!.type.name}</p>
+        )}
+        {isEditing ? (
+          <h1 className="min-h-16 text-base">{moduleEdit!.title}</h1>
+        ) : (
+          <h1 className="min-h-16 text-base">{moduleEdit!.title}</h1>
+        )}
       </div>
       {/* Authors */}
-      <div className="flex border-t-2 border-b-2 border-gray-800">
+      <div className="flex border-t-2 border-b-2 border-gray-800 my-4 py-2">
         <div className="flex-grow flex -space-x-2 relative z-0 overflow-hidden">
           <div className="inline-block h-full align-middle">
             {moduleEdit?.authors.map((author) => (
@@ -113,7 +121,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
         />
         <button
           type="button"
-          className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="inline-flex items-center h-8  px-6 py-3 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           onClick={() => {
             setManageAuthorsOpen(true)
           }}
@@ -122,10 +130,10 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
         </button>
       </div>
       {/* Description */}
-      <div>{moduleEdit!.description}</div>
+      <div className="text-xs">{moduleEdit!.description}</div>
       {/* Main file */}
       <div>
-        <h2>Main file</h2>
+        <h2 className="text-xs">Main file</h2>
         <EditMainFile mainFile={mainFile} setQueryData={setQueryData} moduleEdit={moduleEdit} />
       </div>
 
@@ -140,6 +148,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
                 name={file.original_filename}
                 size={file.size}
                 url={file.original_file_url}
+                uuid={file.uuid}
               />
             </>
           ))
@@ -155,15 +164,31 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
       {/* References */}
       {/* License */}
       {moduleEdit!.license ? (
-        <div>
+        <div className="text-center">
           License:{" "}
-          <Link href={moduleEdit!.license!.url}>
-            <a target="_blank">{moduleEdit!.license!.name}</a>
-          </Link>
+          {isEditing ? (
+            <Link href={moduleEdit!.license!.url}>
+              <a target="_blank">{moduleEdit!.license!.name}</a>
+            </Link>
+          ) : (
+            <Link href={moduleEdit!.license!.url}>
+              <a target="_blank">{moduleEdit!.license!.name}</a>
+            </Link>
+          )}
         </div>
       ) : (
         <></>
       )}
+      <div className="text-center">
+        {/* Publish module */}
+        {moduleEdit!.authors.filter((author) => author.readyToPublish !== true).length === 0 ? (
+          <PublishModuleModal module={module} />
+        ) : (
+          <></>
+        )}
+        {/* Delete module */}
+        <DeleteModuleModal module={module} />
+      </div>
     </div>
   )
 }
