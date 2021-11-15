@@ -1,4 +1,4 @@
-import { BlitzPage, useSession, useQuery } from "blitz"
+import { BlitzPage, useSession, useQuery, useRouterQuery, Router } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import { Disclosure } from "@headlessui/react"
 import { ChevronRightIcon } from "@heroicons/react/solid"
@@ -16,13 +16,14 @@ const DraftsContents = () => {
   const [currentModule, setModule] = useState<any>(undefined)
   const [drafts] = useQuery(getDrafts, { session })
   const user = useCurrentUser()
+  const query = useRouterQuery()
 
   return (
     <Disclosure defaultOpen={true}>
       {({ open }) => (
         <>
           <Disclosure.Panel
-            className="float-left w-full sm:w-64 bg-red-100 text-2xl text-gray-500"
+            className="float-left w-full sm:w-64 bg-gray-300 text-2xl text-gray-500"
             style={{
               height: "calc(100vh - 78.233333px)",
               float: "left",
@@ -40,6 +41,7 @@ const DraftsContents = () => {
                       }`}
                       onClick={() => {
                         setModule(message)
+                        Router.push("/drafts", { query: { suffix: message.suffix } })
                       }}
                     >
                       <div className="flex justify-between space-x-3">
@@ -65,6 +67,7 @@ const DraftsContents = () => {
                     <span
                       onClick={() => {
                         setModule(message)
+                        Router.push("/drafts", { query: { suffix: message.suffix } })
                       }}
                     >
                       <Disclosure.Button
@@ -102,13 +105,13 @@ const DraftsContents = () => {
               </ul>
             </Suspense>
           </Disclosure.Panel>
-          <Disclosure.Button className="hidden sm:inline inherit top-0 left-0 justify-between px-4 py-2 text-sm font-medium text-left text-purple-900 bg-purple-100 rounded-lg hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+          <Disclosure.Button className="hidden sm:inline inherit top-0 left-0 justify-between px-4 py-2 text-sm font-medium text-left text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
             <ChevronRightIcon
               className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-purple-500 `}
             />
           </Disclosure.Button>
           <div
-            className={`${open ? "bg-indigo-300 hidden" : "bg-pink-300"} float-right  sm:inline `}
+            className={`${open ? "bg-gray-300 hidden" : "bg-gray-300"} float-right  sm:inline `}
             style={{
               top: 0,
               width: "100%",
@@ -116,7 +119,7 @@ const DraftsContents = () => {
               overflow: "scroll",
             }}
           >
-            <div className="max-w-5xl my-16 sm:my-6 bg-red-100 mx-auto text-xl">
+            <div className="max-w-5xl my-16 sm:my-6  mx-auto text-xl">
               <Disclosure.Button className="inline sm:hidden">x</Disclosure.Button>
               {currentModule ? (
                 <Suspense
