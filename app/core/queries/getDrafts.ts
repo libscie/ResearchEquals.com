@@ -16,6 +16,14 @@ export default async function getSignature({ session }) {
         updatedAt: "desc",
       },
     ],
+    include: {
+      type: true,
+      authors: {
+        include: {
+          workspace: true,
+        },
+      },
+    },
   })
 
   return draftModules
