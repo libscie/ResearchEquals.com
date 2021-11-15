@@ -1,6 +1,6 @@
 import { Download32, TrashCan32 } from "@carbon/icons-react"
 
-const EditFileDisplay = ({ name, size, url }) => {
+const EditFileDisplay = ({ name, size, url, uuid }) => {
   return (
     <div className="flex my-2">
       <p className="flex-grow flex border-2 border-gray-700 px-2 py-1 hover:bg-indigo-500">
@@ -12,7 +12,12 @@ const EditFileDisplay = ({ name, size, url }) => {
           <Download32 />
         </a>
         {/* TODO: Add action */}
-        <TrashCan32 />
+        <TrashCan32
+          className="cursor-pointer"
+          onClick={async () => {
+            alert(uuid)
+          }}
+        />
       </p>
     </div>
   )
