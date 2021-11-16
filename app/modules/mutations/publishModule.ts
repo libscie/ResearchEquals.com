@@ -52,6 +52,7 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }, ctx) =
     doi: `10.53962/${module.suffix}`,
     license: module.license?.url,
     type: module.type.name,
+    // It's called name and not title to improve Algolia search
     name: module.title,
     description: module.description,
     publishedAt: module.publishedAt,
