@@ -30,7 +30,7 @@ model Module {
   main       Json?
   supporting Json?        @default("{}")
   authors    Authorship[]
-  parents    Module[]     @relation("ModuleToModule")
+  parents    Module[]     @relation("ModuleToModule", references: [id])
   children   Module[]     @relation("ModuleToModule", references: [id])
 }
 
