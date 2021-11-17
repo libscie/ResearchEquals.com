@@ -28,7 +28,7 @@ model Module {
   moduleTypeId Int
 
   main       Json?
-  supporting Json?        @default("{}")
+  supporting Json?        @default("{\"files\": []}")
   authors    Authorship[]
   parents    Module[]     @relation("ModuleToModule", references: [id])
   children   Module[]     @relation("ModuleToModule", references: [id])
