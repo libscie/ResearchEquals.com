@@ -1,6 +1,10 @@
 import { Download32, TrashCan32 } from "@carbon/icons-react"
+import { useMutation } from "blitz"
 
-const EditFileDisplay = ({ name, size, url, uuid }) => {
+import deleteMainFile from "../../modules/mutations/deleteMainFile"
+
+const EditFileDisplay = ({ name, size, url, uuid, suffix, setQueryData }) => {
+  const [deleteMainMutation] = useMutation(deleteMainFile)
   return (
     <div className="flex my-2">
       <p className="flex-grow flex border-2 border-gray-700 px-2 py-1 hover:bg-indigo-500">
@@ -8,14 +12,14 @@ const EditFileDisplay = ({ name, size, url, uuid }) => {
         <span>{size / 1000}KB</span>
       </p>
       <p className="flex">
-        <a href={url} download>
+        <a href={url} target="_blank" download rel="noreferrer">
           <Download32 />
         </a>
-        {/* TODO: Add action */}
         <TrashCan32
           className="cursor-pointer"
           onClick={async () => {
-            alert(uuid)
+            const updatedModule = await deleteMainMutation({ suffix, uuid })
+            setQueryData(updatedModule)
           }}
         />
       </p>

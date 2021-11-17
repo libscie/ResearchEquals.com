@@ -60,12 +60,17 @@ const Navbar = () => {
                               indexName: `${process.env.ALGOLIA_PREFIX}_workspaces`,
                               query,
                             },
+                            {
+                              indexName: `${process.env.ALGOLIA_PREFIX}_modules`,
+                              query,
+                            },
                           ],
                         })
                       },
                       templates: {
                         item({ item, components }) {
-                          return <div>{item.handle}</div>
+                          // TODO: Need to update search results per Algolia index
+                          return <div>{JSON.stringify(item)}</div>
                         },
                       },
                     },
