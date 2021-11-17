@@ -5,18 +5,20 @@ import { useRef } from "react"
 
 import getSignature from "../../auth/queries/getSignature"
 import addSupporting from "../mutations/addSupporting"
+import getSupportingFiles from "../mutations/getSupportingFiles"
 
-const EditSupportingFiles = ({ mainFile, setQueryData, moduleEdit }) => {
+const EditSupportingFiles = ({ setQueryData, moduleEdit }) => {
   const [uploadSecret] = useQuery(getSignature, undefined)
   const widgetApi = useRef()
   const [addSupportingMutation] = useMutation(addSupporting)
+  const [getSupportingFilesMutation] = useMutation(getSupportingFiles)
+
   const updateSupporting = async (info) => {
-    console.log("Upload completed:", info)
     try {
-      // TODO: Only store upon save
+      const newFiles = await getSupportingFilesMutation({ groupUuid: info.uuid })
       const updatedModule = await addSupportingMutation({
         suffix: moduleEdit.suffix,
-        json: info,
+        newFiles: newFiles.files,
       })
       setQueryData(updatedModule)
     } catch (err) {
@@ -40,7 +42,6 @@ const EditSupportingFiles = ({ mainFile, setQueryData, moduleEdit }) => {
             secureSignature={uploadSecret.signature}
             secureExpire={uploadSecret.expire}
             ref={widgetApi}
-            value={moduleEdit.supporting.uuid}
             previewStep
             multiple
             multipleMax={10}

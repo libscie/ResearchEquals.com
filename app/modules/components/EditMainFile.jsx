@@ -1,11 +1,10 @@
-import { Download32, TrashCan32 } from "@carbon/icons-react"
 import { useQuery, useMutation } from "blitz"
 import { Widget } from "@uploadcare/react-widget"
 import { useRef } from "react"
 
 import getSignature from "../../auth/queries/getSignature"
 import addMain from "../mutations/addMain"
-import EditFileDisplay from "../../core/components/EditFileDisplay"
+import EditMainFileDisplay from "../../core/components/EditMainFileDisplay"
 
 const EditMainFile = ({ mainFile, setQueryData, moduleEdit }) => {
   const [uploadSecret] = useQuery(getSignature, undefined)
@@ -15,11 +14,13 @@ const EditMainFile = ({ mainFile, setQueryData, moduleEdit }) => {
   return (
     <>
       {mainFile ? (
-        <EditFileDisplay
+        <EditMainFileDisplay
           name={mainFile.name}
           size={mainFile.size}
           url={mainFile.cdnUrl}
           uuid={mainFile.uuid}
+          suffix={moduleEdit.suffix}
+          setQueryData={setQueryData}
         />
       ) : (
         <>
@@ -46,11 +47,9 @@ const EditMainFile = ({ mainFile, setQueryData, moduleEdit }) => {
                     json: info,
                   })
                   setQueryData(updatedModule)
-                  //  TODO: add action
                 } catch (err) {
                   alert(err)
                 }
-                console.log("Upload completed:", info)
               }}
             />
           </button>

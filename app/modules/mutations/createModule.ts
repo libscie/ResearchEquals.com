@@ -1,4 +1,4 @@
-import { NotFoundError, resolver } from "blitz"
+import { resolver } from "blitz"
 import db from "db"
 import generateSuffix from "./generateSuffix"
 
@@ -24,6 +24,9 @@ export default resolver.pipe(
         description,
         type: {
           // TODO: Add type selector
+          connect: { id: 1 },
+        },
+        license: {
           connect: { id: 1 },
         },
         main,

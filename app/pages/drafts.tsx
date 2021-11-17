@@ -25,7 +25,7 @@ const DraftsContents = () => {
       {({ open }) => (
         <>
           <Disclosure.Panel
-            className="float-left w-full sm:w-1/4 bg-gray-300 text-2xl text-gray-500 overflow-y-auto"
+            className="float-left w-full sm:border-r border-gray-700 sm:w-1/4 bg-gray-300 text-2xl text-gray-500 overflow-y-auto"
             style={{
               height: "calc(100vh - 78.233333px)",
               float: "left",

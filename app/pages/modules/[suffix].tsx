@@ -7,6 +7,7 @@ import {
   Download32,
   TrashCan32,
 } from "@carbon/icons-react"
+import { Prisma } from "prisma"
 
 import Layout from "../../core/layouts/Layout"
 import db from "db"
@@ -59,6 +60,9 @@ export async function getStaticProps(context) {
 }
 
 const ModulePage = ({ module }) => {
+  const mainFile = module!.main as Prisma.JsonObject
+  const supportingRaw = module!.supporting as Prisma.JsonObject
+
   return (
     <Layout title={`R= ${module.title}`}>
       <NavbarApp />
