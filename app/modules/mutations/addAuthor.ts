@@ -21,6 +21,7 @@ export default resolver.pipe(resolver.authorize(), async ({ authorId, moduleId }
       },
       license: true,
       type: true,
+      parents: true,
     },
   })
 
