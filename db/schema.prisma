@@ -39,6 +39,7 @@ model License {
   createdAt DateTime @default(now())
   url       String
   name      String
+  price     Int      @default(0)
   Module    Module[]
 }
 
