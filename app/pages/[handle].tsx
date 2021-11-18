@@ -41,20 +41,37 @@ export const getServerSideProps = async ({ params }) => {
 
 const HandlePage = ({ workspace }) => {
   return (
-    <>
+    <div className="bg-gray-300 dark:bg-gray-700 text-black dark:text-white h-full">
       <Navbar />
       <Toaster />
-      <div className="max-w-7xl bg-pink-100 mx-auto">
+      <div className="max-w-7xl mx-2 sm:mx-auto">
         <div className="w-full">
-          <div className="flex">
+          <div className="flex my-8">
             <div>
-              <img src={workspace.avatar} className="rounded-full h-14 w-14" />
+              <img src={workspace.avatar} className="rounded-full h-28 w-28" />
             </div>
             <div className="flex-grow ml-4">
-              <p className="align-middle">
-                {workspace.name} <span className="text-gray-500">({workspace.pronouns})</span>
+              <span className="inline-block h-full align-middle"> </span>
+              <p className="inline-block align-middle">
+                {workspace.name ? workspace.name : ""}{" "}
+                {workspace.pronouns ? (
+                  <span className="text-gray-500">({workspace.pronouns})</span>
+                ) : (
+                  ""
+                )}
+                {workspace.orcid ? (
+                  <p>
+                    <Link href={`https://orcid.org/${workspace.orcid}`}>
+                      <a target="_blank" className="text-gray-500">
+                        {workspace.orcid}
+                      </a>
+                    </Link>
+                  </p>
+                ) : (
+                  ""
+                )}
+                <p className="text-gray-500">@{workspace.handle}</p>
               </p>
-              <p className="text-gray-500">@{workspace.handle}</p>
             </div>
             <div>
               <Suspense fallback="Loading...">
@@ -62,46 +79,48 @@ const HandlePage = ({ workspace }) => {
               </Suspense>
             </div>
           </div>
-          <div>{workspace.bio}</div>
+          <div className="my-4">{workspace.bio}</div>
 
           <div className="sm:flex">
-            <p className="flex">
-              <span>
-                <Calendar32 className="w-4 h-4" />
-              </span>
-              {workspace.createdAt.toString()}
+            <p className="flex mr-2">
+              <p>
+                <span className="inline-block h-full align-middle"> </span>
+                <Calendar32 className="w-4 h-4 inline-block align-middle mr-1" />
+                Signed up {moment(workspace.createdAt).fromNow()}
+              </p>
             </p>
             {workspace.url ? (
-              <p className="flex">
-                <span>
-                  <Link32 className="w-4 h-4" />
-                </span>
-                <Link href={workspace.url}>
-                  <a target="_blank">{workspace.url}</a>
-                </Link>
+              <p className="flex mr-2">
+                <p>
+                  <span className="inline-block h-full align-middle"> </span>
+                  <Link32 className="w-4 h-4  inline-block align-middle mr-1" />
+                  <Link href={workspace.url}>
+                    <a target="_blank" className="mr-2">
+                      {workspace.url}
+                    </a>
+                  </Link>
+                </p>
               </p>
             ) : (
               <></>
             )}
-            <p className="flex">
-              <span>
-                <Suspense fallback="Loading...">
-                  <UserFollow32 className="w-4 h-4" />
-                </Suspense>
-              </span>
-              Following {workspace.following.length}
+            <p className="flex mr-2">
+              <p>
+                <span className="inline-block h-full align-middle"> </span>
+                <UserFollow32 className="w-4 h-4  inline-block align-middle mr-1" />
+                Following <Suspense fallback="Loading...">{workspace.following.length}</Suspense>
+              </p>
             </p>
           </div>
         </div>
-        <div className="w-full">
-          <h2 className="text-2xl">Published modules</h2>
+        <div className="w-full ">
+          <h2 className="text-2xl my-4">Published modules</h2>
           <Suspense fallback="Loading...">
             <HandleFeed handle={workspace.handle} />
           </Suspense>
         </div>
       </div>
-      {/* <div>{JSON.stringify(workspace)}</div> */}
-    </>
+    </div>
   )
 }
 
@@ -115,42 +134,45 @@ const FollowButton = ({ workspace }) => {
   const [followWorkspaceMutation] = useMutation(followWorkspace)
   const [unfollowWorkspaceMutation] = useMutation(unfollowWorkspace)
 
-  console.log(workspace)
   return (
     <>
       {ownWorkspace!.handle === params.handle ? (
         <></>
       ) : ownWorkspace?.following.filter((follows) => follows.handle === params.handle).length ===
         0 ? (
-        // TODO: Add action
-        <button
-          className="py-4 px-2 bg-indigo-600"
-          onClick={async () => {
-            await followWorkspaceMutation({
-              followerId: ownWorkspace?.id!,
-              followedId: workspace.id,
-            })
+        <>
+          <span className="inline-block h-full align-middle"></span>
+          <button
+            className="py-2 px-2 text-gray-500 rounded border border-gray-500 bg-gray-300 hover:bg-gray-400 inline-block align-middle"
+            onClick={async () => {
+              // TODO: Add action
 
-            toast((t) => (
-              <span>
-                Custom and <b>bold</b>
-                <button
-                  onClick={async () => {
-                    await unfollowWorkspaceMutation({
-                      followerId: ownWorkspace?.id!,
-                      followedId: workspace.id,
-                    })
-                    toast.dismiss(t.id)
-                  }}
-                >
-                  Undo
-                </button>
-              </span>
-            ))
-          }}
-        >
-          Follow
-        </button>
+              await followWorkspaceMutation({
+                followerId: ownWorkspace?.id!,
+                followedId: workspace.id,
+              })
+
+              toast((t) => (
+                <span>
+                  Custom and <b>bold</b>
+                  <button
+                    onClick={async () => {
+                      await unfollowWorkspaceMutation({
+                        followerId: ownWorkspace?.id!,
+                        followedId: workspace.id,
+                      })
+                      toast.dismiss(t.id)
+                    }}
+                  >
+                    Undo
+                  </button>
+                </span>
+              ))
+            }}
+          >
+            Follow
+          </button>
+        </>
       ) : (
         // TODO: Add action
         <button
@@ -202,7 +224,7 @@ const HandleFeed = ({ handle }) => {
     <>
       {modules.length > 0 ? (
         <div>
-          <ul role="list" className="divide-y divide-gray-200">
+          <ul role="list" className="divide-y divide-gray-200 border border-gray-500">
             {modules.map((module) => (
               <>
                 <li
@@ -222,7 +244,7 @@ const HandleFeed = ({ handle }) => {
               </>
             ))}
           </ul>
-          <div className="flex">
+          <div className="flex my-1">
             <div className="flex-1 flex items-center justify-between">
               <p className="text-sm text-gray-700">
                 Showing <span className="font-medium">{ITEMS_PER_PAGE * page + 1}</span> to{" "}
@@ -233,11 +255,11 @@ const HandleFeed = ({ handle }) => {
               </p>
             </div>
             <nav
-              className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+              className="relative z-0 inline-flex rounded-md -space-x-px"
               aria-label="Pagination"
             >
               <button
-                className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                className="relative inline-flex items-center px-2 py-2 bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-400"
                 disabled={page === 0}
                 onClick={goToPreviousPage}
               >
@@ -248,7 +270,7 @@ const HandleFeed = ({ handle }) => {
                 (pageNr) => (
                   <button
                     key={`page-nav-feed-${pageNr}`}
-                    className="relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                    className="relative inline-flex items-center px-2 py-2 bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-400"
                     disabled={page === pageNr}
                     onClick={() => {
                       goToPage(pageNr)
@@ -262,7 +284,7 @@ const HandleFeed = ({ handle }) => {
                 )
               )}
               <button
-                className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                className="relative inline-flex items-center px-2 py-2 bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-400"
                 disabled={!hasMore}
                 onClick={goToNextPage}
               >
@@ -273,7 +295,7 @@ const HandleFeed = ({ handle }) => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col flex-grow relative block w-full border-2 border-gray-300 border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 h-96">
+        <div className="flex flex-col flex-grow relative w-full border-2 border-gray-400 border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 h-28">
           <div className="table flex-grow w-full">
             <div className="hidden sm:table-cell w-1/4"></div>
             <span className="mx-auto table-cell align-middle leading-normal text-sm font-medium text-gray-900">
