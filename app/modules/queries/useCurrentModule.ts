@@ -10,6 +10,9 @@ export default async function getCurrentWorkspace({ suffix }) {
           workspace: true,
         },
       },
+      license: true,
+      type: true,
+      parents: true,
     },
   })
 

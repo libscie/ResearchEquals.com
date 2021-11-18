@@ -1,11 +1,11 @@
 import { useMutation, useRouter } from "blitz"
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
-import deleteModule from "app/modules/mutations/deleteModule"
+import publishModule from "../../modules/mutations/publishModule"
 
-export default function DeleteModule({ module }) {
+export default function PublishModule({ module }) {
   let [isOpen, setIsOpen] = useState(false)
-  const [deleteModuleMutation] = useMutation(deleteModule)
+  const [publishModuleMutation] = useMutation(publishModule)
   const router = useRouter()
 
   function closeModal() {
@@ -18,8 +18,8 @@ export default function DeleteModule({ module }) {
 
   return (
     <>
-      <button className="px-4 py-2 bg-red-500 text-white hover:bg-red-300" onClick={openModal}>
-        Delete module
+      <button className="px-4 py-2 bg-green-500 text-white hover:bg-green-300" onClick={openModal}>
+        Publish module
       </button>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" onClose={closeModal}>
@@ -55,20 +55,21 @@ export default function DeleteModule({ module }) {
                 </Dialog.Title>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">
-                    The module will be deleted once you verify. No co-author approval is needed to
-                    do this.
+                    All co-authors have approved this version for publication. Once you publish this
+                    module, you cannot delete it. It may be retracted or corrected at any time.
                   </p>
                 </div>
                 <div className="mt-4">
                   <button
                     type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 mr-4"
+                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-green-900 bg-green-100 border border-transparent rounded-md hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-500 mr-4"
                     onClick={async () => {
-                      await deleteModuleMutation({ id: module.id })
+                      await publishModuleMutation({ id: module.id })
+                      // TODO: Update route to that of module?
                       router.push("/dashboard")
                     }}
                   >
-                    Delete
+                    Publish
                   </button>
                   <button
                     type="button"

@@ -5,12 +5,14 @@ import { Calendar32, Link32, UserFollow32 } from "@carbon/icons-react"
 import { ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon } from "@heroicons/react/solid"
 import { Suspense } from "react"
 import toast, { Toaster } from "react-hot-toast"
+import moment from "moment"
 
 import Navbar from "../core/components/Navbar"
 import getHandleFeed from "../workspaces/queries/getHandleFeed"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import followWorkspace from "../workspaces/mutations/followWorkspace"
 import unfollowWorkspace from "../workspaces/mutations/unfollowWorkspace"
+import ModuleCard from "../core/components/ModuleCard"
 
 const ITEMS_PER_PAGE = 10
 
@@ -200,30 +202,26 @@ const HandleFeed = ({ handle }) => {
     <>
       {modules.length > 0 ? (
         <div>
-          {modules.map((module) => (
-            <div key={module.suffix} className="bg-pink-300 mb-2">
-              <div>
-                <p>{module.type}</p>
-                <p>{module.title}</p>
-              </div>
-              <div className="flex">
-                <div className="flex-grow">
-                  <p>DOI: 10.53962/{module.suffix}</p>
-                  <p>Published: {module.publishedAt?.toISOString().substring(0, 10)}</p>
-                </div>
-                <div className="flex -space-x-2 relative z-0 overflow-hidden text-right">
-                  {module.authors.map((author) => (
-                    <img
-                      key={author.id + author.moduleId}
-                      // Had an issue here before, noting for future
-                      src={author.workspace!.avatar!}
-                      className="relative z-30 inline-block h-6 w-6 rounded-full "
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-          ))}
+          <ul role="list" className="divide-y divide-gray-200">
+            {modules.map((module) => (
+              <>
+                <li
+                  onClick={() => {
+                    router.push(`/modules/${module.suffix}`)
+                  }}
+                  className="cursor-pointer"
+                >
+                  <ModuleCard
+                    type={module.type}
+                    title={module.title}
+                    status={`DOI: 10.53962/${module.suffix}`}
+                    time={moment(module.publishedAt).fromNow()}
+                    authors={module.authors}
+                  />
+                </li>
+              </>
+            ))}
+          </ul>
           <div className="flex">
             <div className="flex-1 flex items-center justify-between">
               <p className="text-sm text-gray-700">
