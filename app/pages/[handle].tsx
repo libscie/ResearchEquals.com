@@ -43,7 +43,7 @@ const HandlePage = ({ workspace }) => {
   return (
     <div className="bg-gray-300 dark:bg-gray-700 text-black dark:text-white h-full">
       <Navbar />
-      <Toaster />
+      <Toaster position="bottom-center" reverseOrder={false} />{" "}
       <div className="max-w-7xl mx-2 sm:mx-auto">
         <div className="w-full">
           <div className="flex my-8">
