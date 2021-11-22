@@ -19,7 +19,7 @@ export default function DeleteModule({ module }) {
   return (
     <>
       <button className="px-4 py-2 bg-red-500 text-white hover:bg-red-300" onClick={openModal}>
-        Delete
+        Delete module
       </button>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" onClose={closeModal}>

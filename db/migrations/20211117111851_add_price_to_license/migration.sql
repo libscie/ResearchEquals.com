@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "License" ADD COLUMN     "price" INTEGER NOT NULL DEFAULT 0;

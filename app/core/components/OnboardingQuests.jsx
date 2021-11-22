@@ -116,7 +116,7 @@ const OnboardingAvatar = ({ data }) => {
 
   return (
     <>
-      {!data.avatar ? (
+      {!data.avatar.match(/ucarecdn/g) ? (
         <div
           key="avatar-onboarding-quest"
           className="rounded-md bg-blue-50 p-4 my-2 sm:my-0 sm:mr-2 w-full"
@@ -153,8 +153,7 @@ const OnboardingAvatar = ({ data }) => {
                 clearable
                 onChange={async (info) => {
                   try {
-                    alert(data.handle)
-                    alert(info.cdnUrl)
+                    console.log(JSON.stringify(info))
                     await changeAvatarMutation({
                       handle: data.handle,
                       avatar: info.cdnUrl,

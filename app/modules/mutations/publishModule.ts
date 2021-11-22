@@ -1,10 +1,14 @@
 import { NotFoundError, resolver } from "blitz"
 import db from "db"
 import moment from "moment"
+import algoliasearch from "algoliasearch"
 import axios from "axios"
 import convert from "xml-js"
 import FormData from "form-data"
 import { Readable } from "stream"
+
+const client = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_ADMIN_KEY!)
+const index = client.initIndex(`${process.env.ALGOLIA_PREFIX}_modules`)
 
 export default resolver.pipe(resolver.authorize(), async ({ id, suffix }, ctx) => {
   const datetime = Date.now()
@@ -28,7 +32,7 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }, ctx) =
   // })
 
   // await axios.post(process.env.CROSSREF_URL!, form, { headers: form.getHeaders() })
-  await db.module.update({
+  const module = await db.module.update({
     where: {
       id,
     },
@@ -36,6 +40,22 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }, ctx) =
       published: true,
       publishedAt: moment(datetime).format(),
     },
+    include: {
+      license: true,
+      type: true,
+    },
+  })
+
+  await index.saveObject({
+    objectID: module.id,
+    suffix: module.suffix,
+    doi: `10.53962/${module.suffix}`,
+    license: module.license?.url,
+    type: module.type.name,
+    // It's called name and not title to improve Algolia search
+    name: module.title,
+    description: module.description,
+    publishedAt: module.publishedAt,
   })
 
   return true

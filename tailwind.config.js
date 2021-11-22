@@ -5,6 +5,9 @@ module.exports = {
   darkMode: "media", // or 'media' or 'class'
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Noto Sans", "system-ui"],
+      },
       spacing: {
         120: "35rem",
       },
@@ -13,5 +16,5 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [require("@tailwindcss/line-clamp")],
+  plugins: [require("@tailwindcss/line-clamp"), require("@tailwindcss/forms")],
 }

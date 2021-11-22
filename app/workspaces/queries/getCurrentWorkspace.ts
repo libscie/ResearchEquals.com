@@ -6,6 +6,9 @@ export default async function getCurrentWorkspace(_ = null, { session }: Ctx) {
 
   const workspace = await db.workspace.findFirst({
     where: { id: session.workspaceId },
+    include: {
+      following: true,
+    },
   })
 
   return workspace

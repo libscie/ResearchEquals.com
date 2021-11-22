@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
 .aa-Autocomplete {
   height: 100%;
 }
@@ -16,4 +18,8 @@
 
 .uploadcare--widget {
   display: none;
+}
+
+.uploadcare--panel {
+  font-family: "Noto Sans", sans-serif;
 }

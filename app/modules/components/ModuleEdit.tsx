@@ -1,305 +1,340 @@
-import { useQuery, useMutation, useSession } from "blitz"
-import { Wax } from "wax-prosemirror-core"
-import { Popover, Transition } from "@headlessui/react"
-import { ChevronDoubleDownIcon } from "@heroicons/react/solid"
-import { Fragment, useEffect, useState } from "react"
-import { DefaultSchema } from "wax-prosemirror-utilities"
+import { useQuery, useMutation, Link, validateZodSchema } from "blitz"
+import { useState, useEffect } from "react"
 import moment from "moment"
 import algoliasearch from "algoliasearch"
+import { z } from "zod"
 import { getAlgoliaResults } from "@algolia/autocomplete-js"
-import { Toaster, toast } from "react-hot-toast"
-import { DragDropContext, Droppable, DroppableProvided } from "react-beautiful-dnd"
+import { Toaster } from "react-hot-toast"
+import { Edit32, EditOff32, Save32 } from "@carbon/icons-react"
+import { Prisma } from "prisma"
+import { useFormik } from "formik"
 
-import addAuthor from "../mutations/addAuthor"
-import AuthorList from "../../core/components/AuthorList"
-import updateAuthorRank from "../../authorship/mutations/updateAuthorRank"
+import EditMainFile from "./EditMainFile"
+import ManageAuthors from "./ManageAuthors"
+import EditSupportingFiles from "./EditSupportingFiles"
 
-import "@algolia/autocomplete-theme-classic"
-
-import ReadyToPublishModal from "../../core/modals/ReadyToPublishModal"
 import DeleteModuleModal from "../../core/modals/DeleteModuleModal"
 import useCurrentModule from "../queries/useCurrentModule"
-import InstaLayout from "../../wax/InstaLayout"
-import changeTitle from "../mutations/changeTitle"
-import changeAbstract from "../mutations/changeAbstract"
 import Autocomplete from "../../core/components/Autocomplete"
+import PublishModuleModal from "../../core/modals/PublishModuleModal"
+import addParent from "../mutations/addParent"
+import getTypes from "../../core/queries/getTypes"
+import getLicenses from "app/core/queries/getLicenses"
+import editModuleScreen from "../mutations/editModuleScreen"
+import EditSupportingFileDisplay from "../../core/components/EditSupportingFileDisplay"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
 const ModuleEdit = ({ user, module, isAuthor }) => {
+  const [isEditing, setIsEditing] = useState(false)
+  const [manageAuthorsOpen, setManageAuthorsOpen] = useState(false)
   const [moduleEdit, { refetch, setQueryData }] = useQuery(
     useCurrentModule,
     { suffix: module.suffix },
     { refetchOnWindowFocus: true }
   )
-  const [authorState, setAuthorState] = useState(moduleEdit!.authors)
-  const [changeTitleMutation] = useMutation(changeTitle)
-  const [changeAbstractMutation] = useMutation(changeAbstract)
-  const [addAuthorMutation] = useMutation(addAuthor)
-  const [updateAuthorRankMutation] = useMutation(updateAuthorRank)
+  const [moduleTypes] = useQuery(getTypes, undefined)
+  const [licenses] = useQuery(getLicenses, undefined)
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     refetch()
-  //     console.log(moduleEdit!.authors)
-  //     setAuthorState(moduleEdit!.authors)
-  //   }, 10000)
-  //   return () => clearInterval(interval)
-  // }, [refetch])
+  const mainFile = moduleEdit!.main as Prisma.JsonObject
+  const supportingRaw = moduleEdit!.supporting as Prisma.JsonObject
+
+  const [addParentMutation] = useMutation(addParent)
+  const [editModuleScreenMutation] = useMutation(editModuleScreen)
+
+  const formik = useFormik({
+    initialValues: {
+      type: moduleEdit!.type.id.toString(),
+      title: moduleEdit!.title,
+      description: moduleEdit!.description,
+      license: moduleEdit!.license?.id.toString(),
+    },
+    validate: validateZodSchema(
+      z.object({
+        type: z.string().min(1),
+        title: z.string().max(300),
+        description: z.string(),
+        license: z.string().min(1),
+      })
+    ),
+    onSubmit: async (values) => {
+      const updatedModule = await editModuleScreenMutation({
+        suffix: moduleEdit?.suffix,
+        typeId: parseInt(values.type),
+        title: values.title,
+        description: values.description,
+        licenseId: parseInt(values.license),
+      })
+      setQueryData(updatedModule)
+      setIsEditing(false)
+    },
+  })
+
+  useEffect(() => {
+    formik.setFieldValue("type", moduleEdit!.type.id.toString())
+    formik.setFieldValue("title", moduleEdit!.title)
+    formik.setFieldValue("description", moduleEdit!.description)
+    formik.setFieldValue("license", moduleEdit!.license!.id)
+  }, [moduleEdit])
+
   return (
-    <div className="max-w-4xl mx-auto">
-      <div>
-        <Toaster />
-      </div>
-      <div className="flex justify-center items-center">
-        <Popover className="relative">
-          {({ open }) => (
-            <>
-              <Popover.Button
-                className={`${open ? "" : "text-opacity-90"}
-                text-black group bg-orange-700 px-3 py-2 rounded-md inline-flex items-center text-base font-medium hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
-              >
-                <h1 className="text-8xl font-black">{moduleEdit!.title!}</h1>
-                <ChevronDoubleDownIcon
-                  className={`${open ? "" : "text-opacity-70"}
-                  ml-2 h-5 w-5 text-white group-hover:text-opacity-80 bg-black transition ease-in-out duration-150`}
-                  aria-hidden="true"
-                />
-              </Popover.Button>
-              <Transition
-                as={Fragment}
-                enter="transition ease-out duration-150"
-                enterFrom="opacity-0 translate-y-1"
-                enterTo="opacity-100 translate-y-0"
-                leave="transition ease-in duration-150"
-                leaveFrom="opacity-100 translate-y-0"
-                leaveTo="opacity-0 translate-y-1"
-              >
-                <Popover.Panel className="absolute z-10 w-screen max-w-sm px-4 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0 lg:max-w-3xl">
-                  <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                    <div className="relative grid gap-8 bg-white p-7 lg:grid-cols-2">
-                      <Wax
-                        autoFocus
-                        placeholder={moduleEdit!.title!}
-                        value={moduleEdit!.title!}
-                        config={{
-                          SchemaService: DefaultSchema,
-                          services: [],
-                        }}
-                        layout={InstaLayout}
-                        onChange={async (source) => {
-                          const updatedModule = await changeTitleMutation({
-                            suffix: moduleEdit!.suffix,
-                            title: source.replace(/<\/?[^>]+(>|$)/g, ""),
-                          })
-                          // refetch()
-                          setQueryData(updatedModule)
-                        }}
-                      />
-                    </div>
-                  </div>
-                </Popover.Panel>
-              </Transition>
-            </>
+    <div className="max-w-4xl mx-auto overflow-y-auto text-base">
+      <Toaster />
+      {/* Menu bar */}
+      <div className="w-full bg-gray-300 flex">
+        {/* Push all menu bars to the right */}
+        <div className="flex-grow"></div>
+        <div>
+          <span className="inline-block h-full align-middle"> </span>
+
+          {isEditing ? (
+            <EditOff32
+              className="inline-block align-middle"
+              onClick={() => {
+                setIsEditing(false)
+              }}
+            />
+          ) : (
+            <Edit32
+              className="inline-block align-middle"
+              onClick={() => {
+                setIsEditing(true)
+              }}
+            />
           )}
-        </Popover>
+          {/* <span className="inline-block h-full align-middle"> </span> */}
+          {/* <DocumentPdf32 className="inline-block align-middle" /> */}
+        </div>
       </div>
-      <div>
-        <h2>Last edited:</h2>
-        <p>{moment(moduleEdit!.updatedAt).fromNow()}</p>
+      {/* Last updated */}
+      <div className="text-center ">
+        Last updated: {moment(moduleEdit?.updatedAt).fromNow()} (
+        {moduleEdit?.updatedAt.toISOString()})
       </div>
-      <div>
-        <h2 className="text-4xl font-black">Abstract</h2>
-        <Popover className="relative">
-          {({ open }) => (
-            <>
-              <Popover.Button
-                className={`${open ? "" : "text-opacity-90"}
-                group bg-orange-700 rounded-md inline-flex items-center hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
-              >
-                <p>{moduleEdit!.description!}</p>
-                <ChevronDoubleDownIcon
-                  className={`${open ? "" : "text-opacity-70"}
-                  ml-2 h-5 w-5 text-white group-hover:text-opacity-80 bg-black transition ease-in-out duration-150`}
-                  aria-hidden="true"
+      {/* Parents */}
+      <div className="flex w-full max-h-8 my-2">
+        <span>
+          Follows from:{" "}
+          <span className="bg-gray-200 sgroup-hover:bg-gray-200 ml-auto inline-block py-0.5 px-3 text-xs rounded-full">
+            {moduleEdit?.parents ? moduleEdit?.parents.length : "0"}
+          </span>
+        </span>
+        <Autocomplete
+          className="h-full"
+          openOnFocus={true}
+          defaultActiveItemId="0"
+          getSources={({ query }) => [
+            {
+              sourceId: "products",
+              async onSelect(params) {
+                const { item, setQuery } = params
+                const updatedMod = await addParentMutation({
+                  currentId: moduleEdit?.id,
+                  connectId: item.objectID,
+                })
+                setQueryData(updatedMod)
+              },
+              getItems() {
+                return getAlgoliaResults({
+                  searchClient,
+                  queries: [
+                    {
+                      indexName: `${process.env.ALGOLIA_PREFIX}_modules`,
+                      query,
+                    },
+                  ],
+                })
+              },
+              templates: {
+                item({ item, components }) {
+                  // TODO: Need to update search results per Algolia index
+                  return <div>{JSON.stringify(item)}</div>
+                },
+              },
+            },
+          ]}
+        />
+      </div>
+      {/* Display editable form or display content */}
+      {isEditing ? (
+        <div className="my-8">
+          <form onSubmit={formik.handleSubmit}>
+            <div>
+              <label htmlFor="type" className="sr-only">
+                Module type
+              </label>
+              <select className="rounded my-1" id="type" {...formik.getFieldProps("type")}>
+                <option value="">--Please choose a module type--</option>
+                {moduleTypes.map((type) => (
+                  <>
+                    <option value={type.id}>{type.name}</option>
+                  </>
+                ))}
+              </select>
+              {formik.touched.type && formik.errors.type ? <div>{formik.errors.type}</div> : null}
+            </div>
+            <div>
+              <label htmlFor="title" className="sr-only block text-sm font-medium text-gray-700">
+                Title
+              </label>
+              <div className="mt-1">
+                <textarea
+                  rows={2}
+                  id="title"
+                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                  {...formik.getFieldProps("title")}
                 />
-              </Popover.Button>
-              <Transition
-                as={Fragment}
-                enter="transition ease-out duration-150"
-                enterFrom="opacity-0 translate-y-1"
-                enterTo="opacity-100 translate-y-0"
-                leave="transition ease-in duration-150"
-                leaveFrom="opacity-100 translate-y-0"
-                leaveTo="opacity-0 translate-y-1"
-              >
-                <Popover.Panel className="absolute z-10 w-screen max-w-sm px-4 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0 lg:max-w-3xl">
-                  <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                    <div className="relative grid gap-8 bg-white p-7 lg:grid-cols-2">
-                      <Wax
-                        autoFocus
-                        placeholder={moduleEdit!.description!}
-                        value={moduleEdit!.description!}
-                        config={{
-                          SchemaService: DefaultSchema,
-                          services: [],
-                        }}
-                        layout={InstaLayout}
-                        onChange={async (source) => {
-                          // TODO: Add instant edit
-                          const updatedModule = await changeAbstractMutation({
-                            suffix: moduleEdit!.suffix,
-                            title: source.replace(/<\/?[^>]+(>|$)/g, ""),
-                          })
-                          // refetch()
-                          console.log(updatedModule)
-                          setQueryData(updatedModule)
-                        }}
-                      />
-                    </div>
-                  </div>
-                </Popover.Panel>
-              </Transition>
-            </>
-          )}
-        </Popover>
-      </div>
-      <DragDropContext
-        onDragEnd={async (result) => {
-          const { destination, source, draggableId } = result
-          // If no destination, do nothing
-          if (!destination) {
-            return
-          }
-          // If destination and source are equivalent, do nothing
-          if (
-            destination.droppableId === source.droppableId &&
-            destination.index === source.index
-          ) {
-            return
-          }
-
-          const newAuthorState = Array.from(moduleEdit!.authors)
-          newAuthorState.splice(source.index, 1)
-          newAuthorState.splice(
-            destination.index,
-            0,
-            authorState.filter((author) => {
-              return author.workspaceId === parseInt(draggableId)
-            })[0]!
-          )
-
-          let i = 0
-          newAuthorState.map((author) => {
-            author.authorshipRank = i
-            i += 1
-          })
-
-          // Update database
-          newAuthorState.map(async (author) => {
-            const updatedModule = await updateAuthorRankMutation({
-              id: author.id,
-              rank: author.authorshipRank,
-              suffix: moduleEdit!.suffix,
-            })
-            console.log(`Updated ${author.id} to rank ${author.authorshipRank}`)
-            setQueryData(updatedModule!)
-          })
-        }}
-      >
-        <div className="flex flex-col">
-          <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-              <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        Name
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        Status
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    <tr>
-                      <Autocomplete
-                        openOnFocus={true}
-                        defaultActiveItemId="0"
-                        getSources={({ query }) => [
-                          {
-                            sourceId: "products",
-                            async onSelect(params) {
-                              const { item, setQuery } = params
-                              try {
-                                const updatedModule = await addAuthorMutation({
-                                  authorId: item.objectID,
-                                  moduleId: moduleEdit!.id,
-                                })
-                                toast.success("Author invited")
-                                setQueryData(updatedModule)
-                              } catch (error) {
-                                toast.error("Something went wrong")
-                              }
-                              setQuery("")
-                            },
-                            getItems() {
-                              return getAlgoliaResults({
-                                searchClient,
-                                queries: [
-                                  {
-                                    indexName: `${process.env.ALGOLIA_PREFIX}_workspaces`,
-                                    query,
-                                  },
-                                ],
-                              })
-                            },
-                            templates: {
-                              item({ item, components }) {
-                                return <div>{item.handle}</div>
-                              },
-                            },
-                          },
-                        ]}
-                      />
-                    </tr>
-                    <Droppable droppableId="authors-ranking">
-                      {(provided: DroppableProvided) => (
-                        <tr
-                          ref={provided.innerRef}
-                          {...provided.droppableProps}
-                          style={{ height: `${moduleEdit!.authors.length * 72}px` }}
-                        >
-                          <AuthorList
-                            authors={moduleEdit!.authors}
-                            setAuthorState={setQueryData}
-                            suffix={moduleEdit!.suffix}
-                          />
-                          {provided.placeholder}
-                        </tr>
-                      )}
-                    </Droppable>
-                  </tbody>
-                </table>
+                {formik.touched.title && formik.errors.title ? (
+                  <div>{formik.errors.title}</div>
+                ) : null}
               </div>
             </div>
+            <div>
+              <label
+                htmlFor="description"
+                className="sr-only block text-sm font-medium text-gray-700"
+              >
+                Description
+              </label>
+              <div className="mt-1">
+                <textarea
+                  rows={8}
+                  id="description"
+                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                  {...formik.getFieldProps("description")}
+                />
+                {formik.touched.description && formik.errors.description ? (
+                  <div>{formik.errors.description}</div>
+                ) : null}
+              </div>
+            </div>
+            <div>
+              <label htmlFor="license" className="sr-only">
+                License
+              </label>
+              <select className="rounded my-1" id="license" {...formik.getFieldProps("license")}>
+                <option value="">--Please choose a license--</option>
+                {licenses.map((license) => (
+                  <>
+                    <option value={license.id}>
+                      {license.name} ({license.price > 0 ? `${license.price / 100}EUR` : "Free"})
+                    </option>
+                  </>
+                ))}
+              </select>
+              {formik.touched.license && formik.errors.license ? (
+                <div>{formik.errors.license}</div>
+              ) : null}
+            </div>
+            <button
+              type="submit"
+              className="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Save
+              <Save32 className="ml-2 -mr-0.5 h-4 w-4" aria-hidden="true" />
+            </button>
+          </form>
+        </div>
+      ) : (
+        <div className="w-full mt-8">
+          <p className="text-gray-500 ">{moduleEdit!.type.name}</p>
+          <h1 className="min-h-16">{moduleEdit!.title}</h1>
+          {/* Description */}
+          <div className="">{moduleEdit!.description}</div>
+          {/* License */}
+          {moduleEdit!.license ? (
+            <div>
+              License:{" "}
+              {isEditing ? (
+                <Link href={moduleEdit!.license!.url}>
+                  <a target="_blank">{moduleEdit!.license!.name}</a>
+                </Link>
+              ) : (
+                <Link href={moduleEdit!.license!.url}>
+                  <a target="_blank">{moduleEdit!.license!.name}</a>
+                </Link>
+              )}
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
+      )}
+
+      {/* Authors */}
+      <div className="flex border-t border-b border-gray-800 mt-2 py-2">
+        <div className="flex-grow flex -space-x-2 relative z-0 overflow-hidden">
+          <div className="inline-block h-full align-middle">
+            {moduleEdit?.authors.map((author) => (
+              <>
+                {/* Tricks it into the middle */}
+                <span className="inline-block h-full align-middle"></span>
+                <img
+                  key={author.id + author.workspace!.handle}
+                  alt={`Avatar of ${author.workspace!.handle}`}
+                  className="inline-block align-middle relative z-30 inline-block h-8 w-8 rounded-full"
+                  src={author.workspace?.avatar!}
+                />
+              </>
+            ))}
           </div>
         </div>
-      </DragDropContext>
-      <div>{JSON.stringify(module)}</div>
-      {isAuthor && !module.published && user.emailIsVerified ? (
-        <ReadyToPublishModal module={module} />
-      ) : (
-        ""
-      )}
-      {isAuthor && !module.published ? <DeleteModuleModal module={module} /> : ""}
+        <ManageAuthors
+          open={manageAuthorsOpen}
+          setOpen={setManageAuthorsOpen}
+          moduleEdit={moduleEdit}
+          setQueryData={setQueryData}
+        />
+        <button
+          type="button"
+          className="inline-flex items-center h-8  px-6 py-3 border border-transparent  font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          onClick={() => {
+            setManageAuthorsOpen(true)
+          }}
+        >
+          Manage authors
+        </button>
+      </div>
+
+      <div className="my-8">
+        <h2 className="">Main file</h2>
+        <EditMainFile mainFile={mainFile} setQueryData={setQueryData} moduleEdit={moduleEdit} />
+      </div>
+
+      {/* Supporting files */}
+      <div className="my-8">
+        <h2>Supporting file(s)</h2>
+        {supportingRaw.files.length > 0 ? (
+          <>
+            {supportingRaw.files.map((file) => (
+              <>
+                <EditSupportingFileDisplay
+                  name={file.original_filename}
+                  size={file.size}
+                  url={file.original_file_url}
+                  uuid={file.uuid}
+                  suffix={moduleEdit!.suffix}
+                  setQueryData={setQueryData}
+                />
+              </>
+            ))}
+          </>
+        ) : (
+          <></>
+        )}
+        <EditSupportingFiles setQueryData={setQueryData} moduleEdit={moduleEdit} />
+      </div>
+      {/* PLACEHOLDER References */}
+      <div className="text-center">
+        {/* Publish module */}
+        {moduleEdit!.authors.filter((author) => author.readyToPublish !== true).length === 0 ? (
+          <PublishModuleModal module={module} />
+        ) : (
+          <></>
+        )}
+        {/* Delete module */}
+        <DeleteModuleModal module={module} />
+      </div>
     </div>
   )
 }
