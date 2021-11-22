@@ -19,3 +19,7 @@
 .uploadcare--widget {
   display: none;
 }
+
+.uploadcare--panel {
+  font-family: "Noto Sans", sans-serif;
+}
