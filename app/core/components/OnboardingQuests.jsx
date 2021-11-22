@@ -29,17 +29,14 @@ const OnboardingOrcid = ({ data }) => {
   return (
     <>
       {!data ? (
-        <div
-          key="orcid-onboarding-quest"
-          className="rounded-md bg-blue-50 p-4 my-2 sm:my-0 sm:mr-2 w-full"
-        >
+        <div key="orcid-onboarding-quest" className="bg-gray-100 p-4 my-2 sm:my-0 sm:mr-2 w-full">
           <div className="flex">
             <div className="">
-              <CheckmarkOutline32 className="h-5 w-5 text-green-400" aria-hidden="true" />
+              <CheckmarkOutline32 className="h-5 w-5 text-black" aria-hidden="true" />
             </div>
             <div className="ml-3 flex-1 md:flex">
-              <p className="text-sm text-blue-700 mr-2">
-                <span className=" font-bold">Connect your ORCID account</span>{" "}
+              <p className="text-sm mr-2">
+                <span className="font-bold">Connect your ORCID account</span>{" "}
                 <span>
                   Make sure your modules get linked to your ORCID account. This helps you easily
                   track your publications.
@@ -49,10 +46,7 @@ const OnboardingOrcid = ({ data }) => {
           </div>
           <div className="block text-right">
             <p className="mt-3 text-sm md:mt-0 md:ml-6">
-              <a
-                href="/api/auth/orcid"
-                className="whitespace-nowrap font-medium text-blue-700 hover:text-blue-600 underline"
-              >
+              <a href="/api/auth/orcid" className="whitespace-nowrap font-medium  underline">
                 Connect now <span aria-hidden="true">&rarr;</span>
               </a>
             </p>
@@ -69,16 +63,13 @@ const OnboardingProfile = ({ data }) => {
   return (
     <>
       {!data.workspace.name ? (
-        <div
-          key="profile-onboarding-quest"
-          className="rounded-md bg-blue-50 p-4 my-2 sm:my-0 sm:mr-2 w-full"
-        >
+        <div key="profile-onboarding-quest" className="bg-gray-100 p-4 my-2 sm:my-0 sm:mr-2 w-full">
           <div className="flex">
             <div className="">
-              <CheckmarkOutline32 className="h-5 w-5 text-green-400" aria-hidden="true" />
+              <CheckmarkOutline32 className="h-5 w-5 text-black" aria-hidden="true" />
             </div>
             <div className="ml-3 flex-1 md:flex">
-              <p className="text-sm text-blue-700 mr-2">
+              <p className="text-sm mr-2">
                 <span className=" font-bold">Complete your profile</span>{" "}
                 <span>
                   Make sure people get to know who they are working with. Help them understand where
@@ -90,7 +81,7 @@ const OnboardingProfile = ({ data }) => {
           <div className=" text-right">
             <p className="mt-3 text-sm md:mt-0 md:ml-6">
               <SettingsModal
-                styling="whitespace-nowrap font-medium text-blue-700 hover:text-blue-600 underline"
+                styling="whitespace-nowrap font-medium hover:text-blue-600 underline"
                 button={
                   <>
                     Add information <span aria-hidden="true">&rarr;</span>
@@ -117,16 +108,13 @@ const OnboardingAvatar = ({ data }) => {
   return (
     <>
       {!data.avatar.match(/ucarecdn/g) ? (
-        <div
-          key="avatar-onboarding-quest"
-          className="rounded-md bg-blue-50 p-4 my-2 sm:my-0 sm:mr-2 w-full"
-        >
+        <div key="avatar-onboarding-quest" className="bg-gray-100 p-4 my-2 sm:my-0 sm:mr-2 w-full">
           <div className="flex">
             <div className="">
-              <CheckmarkOutline32 className="h-5 w-5 text-green-400" aria-hidden="true" />
+              <CheckmarkOutline32 className="h-5 w-5 text-black" aria-hidden="true" />
             </div>
             <div className="ml-3 flex-1 md:flex">
-              <p className="text-sm text-blue-700 mr-2">
+              <p className="text-sm mr-2">
                 <span className=" font-bold">Add an avatar</span> <span>Yes, just upload.</span>
               </p>
             </div>
@@ -134,7 +122,7 @@ const OnboardingAvatar = ({ data }) => {
           <div className="block text-right">
             <p className="mt-3 text-sm md:mt-0 md:ml-6">
               <button
-                className="whitespace-nowrap font-medium text-blue-700 hover:text-blue-600 underline"
+                className="whitespace-nowrap font-medium hover:text-blue-600 underline"
                 onClick={() => {
                   widgetApi.current.openDialog()
                 }}
@@ -179,16 +167,13 @@ const OnboardingDraft = ({ data }) => {
   return (
     <>
       {!data.authorships.length > 0 ? (
-        <div
-          key="draft-onboarding-quest"
-          className="rounded-md bg-blue-50 p-4 my-2 sm:my-0 sm:mr-2 w-full"
-        >
+        <div key="draft-onboarding-quest" className="bg-gray-100 p-4 my-2 sm:my-0 sm:mr-2 w-full">
           <div className="flex">
             <div className="">
-              <CheckmarkOutline32 className="h-5 w-5 text-green-400" aria-hidden="true" />
+              <CheckmarkOutline32 className="h-5 w-5 text-black" aria-hidden="true" />
             </div>
             <div className="ml-3 flex-1 md:flex">
-              <p className="text-sm text-blue-700 mr-2">
+              <p className="text-sm mr-2">
                 <span className=" font-bold">Create first draft</span> <span>PLACEHOLDER</span>
               </p>
             </div>
@@ -199,7 +184,7 @@ const OnboardingDraft = ({ data }) => {
                 onClick={() => {
                   setCreateOpen(true)
                 }}
-                className="whitespace-nowrap font-medium text-blue-700 hover:text-blue-600 underline"
+                className="whitespace-nowrap font-medium hover:text-blue-600 underline"
               >
                 Create module <span aria-hidden="true">&rarr;</span>
               </button>
@@ -228,7 +213,7 @@ const OnboardingDraft = ({ data }) => {
                                 <div className="ml-3 h-7 flex items-center">
                                   <button
                                     type="button"
-                                    className="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    className="bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                     onClick={() => setCreateOpen(false)}
                                   >
                                     <span className="sr-only">Close panel</span>
