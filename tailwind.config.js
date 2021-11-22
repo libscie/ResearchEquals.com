@@ -5,6 +5,9 @@ module.exports = {
   darkMode: "media", // or 'media' or 'class'
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Noto Sans", "system-ui"],
+      },
       spacing: {
         120: "35rem",
       },
