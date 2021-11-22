@@ -219,8 +219,7 @@ const DashboardContent = () => {
 const Dashboard = () => {
   return (
     <>
-      <Toaster />
-      <Navbar />
+      <Toaster position="bottom-center" reverseOrder={false} /> <Navbar />
       <main className="max-w-7xl lg:max-w-full mx-auto">
         <Suspense fallback="Loading...">
           <DashboardContent />
