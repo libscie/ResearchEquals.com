@@ -79,7 +79,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
 
   return (
     <div className="max-w-4xl mx-auto overflow-y-auto text-base">
-      <Toaster />
+      <Toaster position="bottom-center" reverseOrder={false} />
       {/* Menu bar */}
       <div className="w-full bg-gray-300 flex">
         {/* Push all menu bars to the right */}
