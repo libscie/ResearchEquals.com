@@ -22,6 +22,8 @@ import getTypes from "../../core/queries/getTypes"
 import getLicenses from "app/core/queries/getLicenses"
 import editModuleScreen from "../mutations/editModuleScreen"
 import EditSupportingFileDisplay from "../../core/components/EditSupportingFileDisplay"
+import MetadataView from "./MetadataView"
+import AuthorAvatars from "./AuthorAvatars"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
@@ -74,7 +76,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
     formik.setFieldValue("type", moduleEdit!.type.id.toString())
     formik.setFieldValue("title", moduleEdit!.title)
     formik.setFieldValue("description", moduleEdit!.description)
-    formik.setFieldValue("license", moduleEdit!.license!.id)
+    formik.setFieldValue("license", moduleEdit!.license!.id.toString())
   }, [moduleEdit])
 
   return (
@@ -236,48 +238,12 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
           </form>
         </div>
       ) : (
-        <div className="w-full mt-8">
-          <p className="text-gray-500 ">{moduleEdit!.type.name}</p>
-          <h1 className="min-h-16">{moduleEdit!.title}</h1>
-          {/* Description */}
-          <div className="">{moduleEdit!.description}</div>
-          {/* License */}
-          {moduleEdit!.license ? (
-            <div>
-              License:{" "}
-              {isEditing ? (
-                <Link href={moduleEdit!.license!.url}>
-                  <a target="_blank">{moduleEdit!.license!.name}</a>
-                </Link>
-              ) : (
-                <Link href={moduleEdit!.license!.url}>
-                  <a target="_blank">{moduleEdit!.license!.name}</a>
-                </Link>
-              )}
-            </div>
-          ) : (
-            <></>
-          )}
-        </div>
+        <MetadataView module={moduleEdit} />
       )}
-
       {/* Authors */}
       <div className="flex border-t border-b border-gray-800 mt-2 py-2">
         <div className="flex-grow flex -space-x-2 relative z-0 overflow-hidden">
-          <div className="inline-block h-full align-middle">
-            {moduleEdit?.authors.map((author) => (
-              <>
-                {/* Tricks it into the middle */}
-                <span className="inline-block h-full align-middle"></span>
-                <img
-                  key={author.id + author.workspace!.handle}
-                  alt={`Avatar of ${author.workspace!.handle}`}
-                  className="inline-block align-middle relative z-30 inline-block h-8 w-8 rounded-full"
-                  src={author.workspace?.avatar!}
-                />
-              </>
-            ))}
-          </div>
+          <AuthorAvatars module={module} />
         </div>
         <ManageAuthors
           open={manageAuthorsOpen}
