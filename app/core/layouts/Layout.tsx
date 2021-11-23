@@ -11,11 +11,11 @@ const Layout = ({ title, children }: LayoutProps) => {
   return (
     <>
       <Head>
-        <title>{title || "web-app-tbd"}</title>
+        <title>{title || "ResearchEquals"}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="h-screen bg-gray-300 dark:bg-gray-900 text-black dark:text-white">
-        {children}
+      <div className="min-h-screen flex flex-col bg-gray-300 dark:bg-gray-900 text-black dark:text-white">
+        <div className="flex-grow">{children}</div>
       </div>
       <CookieConsent
         location="bottom"
