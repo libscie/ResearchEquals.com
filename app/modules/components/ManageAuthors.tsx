@@ -11,6 +11,7 @@ import Autocomplete from "../../core/components/Autocomplete"
 import addAuthor from "../mutations/addAuthor"
 import updateAuthorRank from "../../authorship/mutations/updateAuthorRank"
 import AuthorList from "../../core/components/AuthorList"
+import SearchResultWorkspace from "../../core/components/SearchResultWorkspace"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
@@ -158,7 +159,7 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
                                           },
                                           templates: {
                                             item({ item, components }) {
-                                              return <div>{item.handle}</div>
+                                              return <SearchResultWorkspace item={item} />
                                             },
                                           },
                                         },
