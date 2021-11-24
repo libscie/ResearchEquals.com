@@ -85,7 +85,7 @@ export const LoginForm = (props: LoginFormProps) => {
               </div>
             </div>
             <div className="text-indigo-600 text-center my-4 font-medium text-sm">
-              <Link href={Routes.ResetPasswordPage()}>
+              <Link href={Routes.ForgotPasswordPage()}>
                 <a>Forgot your password?</a>
               </Link>
             </div>
