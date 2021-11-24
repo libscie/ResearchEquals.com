@@ -3,6 +3,9 @@ import { Suspense } from "react"
 import { ProgressBarRound32 } from "@carbon/icons-react"
 import { getAlgoliaResults } from "@algolia/autocomplete-js"
 import algoliasearch from "algoliasearch"
+import { Blog32 } from "@carbon/icons-react"
+import SearchResultWorkspace from "./SearchResultWorkspace"
+import SearchResultModule from "./SearchResultModule"
 
 import "@algolia/autocomplete-theme-classic"
 import Autocomplete from "./Autocomplete"
@@ -69,8 +72,20 @@ const Navbar = () => {
                       },
                       templates: {
                         item({ item, components }) {
-                          // TODO: Need to update search results per Algolia index
-                          return <div>{JSON.stringify(item)}</div>
+                          return (
+                            <>
+                              {item.__autocomplete_indexName.match(/_workspaces/g) ? (
+                                <SearchResultWorkspace item={item} />
+                              ) : (
+                                ""
+                              )}
+                              {item.__autocomplete_indexName.match(/_modules/g) ? (
+                                <SearchResultModule item={item} />
+                              ) : (
+                                ""
+                              )}
+                            </>
+                          )
                         },
                       },
                     },
