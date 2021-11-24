@@ -47,10 +47,6 @@ const DashboardContent = () => {
       name: "Drafts",
       stat: data.draftModules.length,
     },
-    {
-      name: "Invitations",
-      stat: "23",
-    },
   ]
 
   if (data) {
@@ -62,17 +58,17 @@ const DashboardContent = () => {
           <Banner message="You can only start publishing once your email is verified. Please check your inbox." />
         )}
 
-        <div className="lg:flex w-screen">
+        <div className="lg:flex flex-row">
           {/* Column 1 */}
-          <div className="lg:w-1/4">
+          <div className="lg:w-1/4 p-4">
             <div className="my-2">
               <h1 className="text-4xl font-medium text-gray-900">
                 Welcome back,{" "}
-                {data.workspace!.name ? data.workspace!.name : "@" + data.workspace!.handle}
+                {data.workspace!.name ? data.workspace!.name : "@" + data.workspace!.handle}!
               </h1>
             </div>
-            <h2 className="text-lg leading-6 font-medium text-gray-900">Your work</h2>
-            <dl className="mt-5 rounded-lg bg-white overflow-hidden shadow divide-y divide-gray-200 md:grid-cols-3 md:divide-y-0 md:divide-x">
+            <p className="text-gray-900">Get to work here</p>
+            <dl className="mt-2 bg-gray-100 hover:bg-gray-50 overflow-hidden shadow divide-y divide-gray-200 md:grid-cols-3 md:divide-y-0 md:divide-x">
               {stats.map((item) => (
                 <div key={item.name} className="px-4 py-5 sm:p-6">
                   <dt className="text-base font-normal text-gray-900">{item.name}</dt>
@@ -93,119 +89,126 @@ const DashboardContent = () => {
             )}
           </div>
           {/* Column 2 */}
-          <div className="lg:w-3/4 flex flex-col ">
-            <div className="sm:flex w-full">
+          <div className="flex w-full flex-col px-4">
+            <div className="sm:flex w-full mt-4">
               <OnboardingQuests data={data} />
             </div>
-            <h2 className="font-bold text-4xl">Feed</h2>
-
-            {modules.length > 0 ? (
-              <div>
-                <ul role="list" className="divide-y divide-gray-200">
-                  {modules.map((module) => (
-                    <>
-                      <li
-                        onClick={() => {
-                          router.push(`/modules/${module.suffix}`)
-                        }}
-                        className="cursor-pointer"
-                      >
-                        <ModuleCard
-                          type={module.type}
-                          title={module.title}
-                          status={`DOI: 10.53962/${module.suffix}`}
-                          time={moment(module.publishedAt).fromNow()}
-                          authors={module.authors}
-                        />
-                      </li>
-                    </>
-                  ))}
-                </ul>
-                <div className="flex">
-                  <div className="flex-1 flex items-center justify-between">
-                    <p className="text-sm text-gray-700">
-                      Showing <span className="font-medium">{ITEMS_PER_PAGE * page + 1}</span> to{" "}
-                      <span className="font-medium">
-                        {ITEMS_PER_PAGE + page > count ? count : ITEMS_PER_PAGE + page}
-                      </span>{" "}
-                      of <span className="font-medium">{count}</span> results
-                    </p>
-                  </div>
-                  <nav
-                    className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
-                    aria-label="Pagination"
-                  >
-                    <button
-                      className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                      disabled={page === 0}
-                      onClick={goToPreviousPage}
-                    >
-                      <span className="sr-only">Previous</span>
-                      <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
-                    </button>
-                    {Array.from({ length: Math.ceil(count / ITEMS_PER_PAGE) }, (x, i) => i).map(
-                      (pageNr) => (
-                        <button
-                          key={`page-nav-feed-${pageNr}`}
-                          className="relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                          disabled={page === pageNr}
+            <div className="my-4">
+              <h2 className="font-bold text-4xl">Feed</h2>
+              {modules.length > 0 ? (
+                <div>
+                  <ul role="list" className="divide-y divide-gray-200">
+                    {modules.map((module) => (
+                      <>
+                        <li
                           onClick={() => {
-                            goToPage(pageNr)
+                            router.push(`/modules/${module.suffix}`)
                           }}
+                          className="cursor-pointer"
                         >
-                          <span className="sr-only">Navigate to page {pageNr}</span>
-                          <span className="h-5 w-5 " aria-hidden="true">
-                            {pageNr + 1}
-                          </span>
-                        </button>
-                      )
-                    )}
-                    <button
-                      className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                      disabled={!hasMore}
-                      onClick={goToNextPage}
+                          <ModuleCard
+                            type={module.type}
+                            title={module.title}
+                            status={`DOI: 10.53962/${module.suffix}`}
+                            time={moment(module.publishedAt).fromNow()}
+                            authors={module.authors}
+                          />
+                        </li>
+                      </>
+                    ))}
+                  </ul>
+                  <div className="flex">
+                    <div className="flex-1 flex items-center justify-between">
+                      <p className="text-sm text-gray-700">
+                        Showing <span className="font-medium">{ITEMS_PER_PAGE * page + 1}</span> to{" "}
+                        <span className="font-medium">
+                          {ITEMS_PER_PAGE + page > count ? count : ITEMS_PER_PAGE + page}
+                        </span>{" "}
+                        of <span className="font-medium">{count}</span> results
+                      </p>
+                    </div>
+                    <nav
+                      className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+                      aria-label="Pagination"
                     >
-                      <span className="sr-only">Previous</span>
-                      <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
-                    </button>
-                  </nav>
+                      <button
+                        className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                        disabled={page === 0}
+                        onClick={goToPreviousPage}
+                      >
+                        <span className="sr-only">Previous</span>
+                        <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
+                      </button>
+                      {Array.from({ length: Math.ceil(count / ITEMS_PER_PAGE) }, (x, i) => i).map(
+                        (pageNr) => (
+                          <button
+                            key={`page-nav-feed-${pageNr}`}
+                            className="relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                            disabled={page === pageNr}
+                            onClick={() => {
+                              goToPage(pageNr)
+                            }}
+                          >
+                            <span className="sr-only">Navigate to page {pageNr}</span>
+                            <span className="h-5 w-5 " aria-hidden="true">
+                              {pageNr + 1}
+                            </span>
+                          </button>
+                        )
+                      )}
+                      <button
+                        className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                        disabled={!hasMore}
+                        onClick={goToNextPage}
+                      >
+                        <span className="sr-only">Previous</span>
+                        <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
+                      </button>
+                    </nav>
+                  </div>
                 </div>
+              ) : (
+                <div className="flex flex-col flex-grow relative w-full border-2 border-gray-1000 border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500  my-4 h-auto">
+                  <div className="table flex-grow w-full">
+                    <div className="sm:table-cell w-1/4 h-28"></div>
+                    <span className="mx-auto table-cell align-middle leading-normal text-sm font-medium text-gray-900">
+                      {data.followableWorkspaces.length > 0 ? (
+                        <>
+                          <div>Following people will help populate your feed</div>
+                          <Disclosure>
+                            {({ open }) => (
+                              <>
+                                <Disclosure.Button as="p" className=" px-4 py-2 text-sm">
+                                  <span className="font-bold underline cursor-pointer">
+                                    Find people to follow
+                                  </span>
+                                </Disclosure.Button>
+                                <Disclosure.Panel className="px-4 pt-4 pb-2 text-left text-gray-500">
+                                  <WhoToFollow
+                                    data={data}
+                                    refetch={refetch}
+                                    refetchFeed={refetchFeed}
+                                  />
+                                </Disclosure.Panel>
+                              </>
+                            )}
+                          </Disclosure>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </span>
+                    <div className="hidden sm:table-cell w-1/4"></div>
+                  </div>
+                </div>
+              )}
+            </div>
+            {data.followableWorkspaces.length > 0 ? (
+              <div className="inline lg:hidden">
+                <WhoToFollow data={data} refetch={refetch} refetchFeed={refetchFeed} />
               </div>
             ) : (
-              <div className="flex flex-col flex-grow relative block w-full border-2 border-gray-300 border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 h-96">
-                <div className="table flex-grow w-full">
-                  <div className="hidden sm:table-cell w-1/4"></div>
-                  <span className="mx-auto table-cell align-middle leading-normal text-sm font-medium text-gray-900">
-                    {data.followableWorkspaces.length > 0 ? (
-                      <>
-                        <div>Following people will help populate your feed</div>
-                        <Disclosure>
-                          {({ open }) => (
-                            <>
-                              <Disclosure.Button
-                                as="p"
-                                className=" px-4 py-2 text-sm font-medium text-purple-900 bg-purple-100 rounded-lg hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"
-                              >
-                                <span className="font-bold">Find people to follow</span>
-                              </Disclosure.Button>
-                              <Disclosure.Panel className="px-4 pt-4 pb-2 text-left text-gray-500">
-                                <WhoToFollow
-                                  data={data}
-                                  refetch={refetch}
-                                  refetchFeed={refetchFeed}
-                                />
-                              </Disclosure.Panel>
-                            </>
-                          )}
-                        </Disclosure>
-                      </>
-                    ) : (
-                      <></>
-                    )}
-                  </span>
-                  <div className="hidden sm:table-cell w-1/4"></div>
-                </div>
-              </div>
+              ""
             )}
           </div>
         </div>
@@ -219,9 +222,9 @@ const DashboardContent = () => {
 const Dashboard = () => {
   return (
     <>
-      <Toaster />
+      <Toaster position="bottom-center" reverseOrder={false} />
       <Navbar />
-      <main className="max-w-7xl lg:max-w-full mx-auto">
+      <main className="max-w-7xl lg:max-w-full mx-auto bg-gray-300 max-h-full h-full">
         <Suspense fallback="Loading...">
           <DashboardContent />
         </Suspense>
@@ -236,17 +239,33 @@ const WhoToFollow = ({ data, refetch, refetchFeed }) => {
 
   return (
     <>
-      <h2 className="font-bold text-4xl">Who to follow</h2>
+      <h2 className="font-bold text-4xl my-2 text-black">Who to follow</h2>
       {data.followableWorkspaces.map((workspace) => (
-        <div key={workspace.id + workspace.handle} className="flex">
+        <div
+          key={workspace.id + workspace.handle}
+          className="flex bg-gray-100 p-2 hover:bg-gray-50"
+        >
           <Link href={Routes.HandlePage({ handle: workspace.handle })}>
             <a className="flex-grow flex">
-              <img className="w-10 h-10 rounded-full" src={workspace!.avatar!} />
-              <p className="flex-grow">{workspace.handle}</p>
+              <img className="w-10 h-10 rounded-full mr-2" src={workspace!.avatar!} />
+              <p className="flex-grow">
+                <span className="inline-block h-full align-middle"> </span>
+                <p className="inline-block align-middle truncate">
+                  {workspace.name ? (
+                    <>
+                      <span>{workspace.name}</span> -{" "}
+                      <span className="text-gray-500">@{workspace.handle}</span>
+                    </>
+                  ) : (
+                    <span className="text-black">@{workspace.handle}</span>
+                  )}
+                </p>
+              </p>
             </a>
           </Link>
           <button
-            className="right-0"
+            type="button"
+            className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             onClick={async () => {
               await followWorkspaceMutation({
                 followerId: data.workspace?.id!,
