@@ -184,7 +184,7 @@ export default function SettingsModal({ button, styling, user, workspace }) {
                             // submitText="Change name"
                             // schema={ChangeName}
                             initialValues={{
-                              name: user!.name! ?? "",
+                              name: workspace!.name! ?? "",
                               bio: workspace!.bio,
                               pronouns: workspace!.pronouns,
                             }}
