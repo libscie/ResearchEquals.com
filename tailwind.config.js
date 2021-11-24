@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Noto Sans", "system-ui"],
+        sans: ["Noto Sans Display", "system-ui"],
       },
       spacing: {
         120: "35rem",
