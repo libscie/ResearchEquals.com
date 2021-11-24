@@ -24,6 +24,7 @@ import editModuleScreen from "../mutations/editModuleScreen"
 import EditSupportingFileDisplay from "../../core/components/EditSupportingFileDisplay"
 import MetadataView from "./MetadataView"
 import AuthorAvatars from "./AuthorAvatars"
+import SearchResultModule from "../../core/components/SearchResultModule"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
@@ -150,7 +151,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
               templates: {
                 item({ item, components }) {
                   // TODO: Need to update search results per Algolia index
-                  return <div>{JSON.stringify(item)}</div>
+                  return <SearchResultModule item={item} />
                 },
               },
             },
