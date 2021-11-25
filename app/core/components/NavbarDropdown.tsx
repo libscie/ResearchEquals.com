@@ -240,11 +240,6 @@ const NavbarDropdown = () => {
                     <div className="flex items-center justify-between">
                       <div>
                         <ResearchEqualsLogo />
-                        {/* <img
-                          className="block h-8 w-auto"
-                          src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
-                          alt="Workflow"
-                        /> */}
                       </div>
                       <div className="-mr-2">
                         <button className="rounded-md p-2 inline-flex items-center justify-center text-gray-500 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
