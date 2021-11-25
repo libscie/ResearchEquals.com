@@ -40,8 +40,8 @@ const OnboardingOrcid = ({ data }) => {
               <p className="text-sm mr-2">
                 <span className="font-bold">Connect your ORCID</span>{" "}
                 <span>
-                  This updates your name, helps track publications, and is a requirement to start
-                  publishing on ResearchEquals.
+                  This updates your name, helps track publications, and is required to publish on
+                  ResearchEquals.
                 </span>
               </p>
             </div>
