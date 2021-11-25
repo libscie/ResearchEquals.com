@@ -14,11 +14,10 @@ import getSignature from "../../auth/queries/getSignature"
 const OnboardingQuests = ({ data }) => {
   return (
     <>
-      <OnboardingAvatar data={data.workspace} />
       <OnboardingOrcid data={data.workspace.orcid} />
+      <OnboardingAvatar data={data.workspace} />
       <OnboardingProfile data={data} />
       <OnboardingDraft data={data.workspace} />
-      {/* TODO: Add first draft quest */}
     </>
   )
 }
@@ -29,17 +28,20 @@ const OnboardingOrcid = ({ data }) => {
   return (
     <>
       {!data ? (
-        <div key="orcid-onboarding-quest" className="bg-gray-100 p-4 my-2 sm:my-0 sm:mr-2 w-full">
-          <div className="flex">
+        <div
+          key="orcid-onboarding-quest"
+          className="flex flex-col bg-gray-100 p-4 my-2 sm:my-0 sm:mr-2 w-full"
+        >
+          <div className="flex flex-grow">
             <div className="">
-              <CheckmarkOutline32 className="h-5 w-5 text-black" aria-hidden="true" />
+              <CheckmarkOutline32 className="h-5 w-5 text-black opacity-50" aria-hidden="true" />
             </div>
             <div className="ml-3 flex-1 md:flex">
               <p className="text-sm mr-2">
-                <span className="font-bold">Connect your ORCID account</span>{" "}
+                <span className="font-bold">Connect your ORCID</span>{" "}
                 <span>
-                  Make sure your modules get linked to your ORCID account. This helps you easily
-                  track your publications.
+                  This updates your name, helps track publications, and is a requirement to start
+                  publishing on ResearchEquals.
                 </span>
               </p>
             </div>
@@ -62,18 +64,21 @@ const OnboardingOrcid = ({ data }) => {
 const OnboardingProfile = ({ data }) => {
   return (
     <>
-      {!data.workspace.name ? (
-        <div key="profile-onboarding-quest" className="bg-gray-100 p-4 my-2 sm:my-0 sm:mr-2 w-full">
-          <div className="flex">
+      {!data.workspace.bio ? (
+        <div
+          key="profile-onboarding-quest"
+          className="flex flex-col bg-gray-100 p-4 my-2 sm:my-0 sm:mr-2 w-full"
+        >
+          <div className="flex flex-grow">
             <div className="">
-              <CheckmarkOutline32 className="h-5 w-5 text-black" aria-hidden="true" />
+              <CheckmarkOutline32 className="h-5 w-5 text-black opacity-50" aria-hidden="true" />
             </div>
             <div className="ml-3 flex-1 md:flex">
               <p className="text-sm mr-2">
-                <span className=" font-bold">Complete your profile</span>{" "}
+                <span className=" font-bold">Add your info</span>{" "}
                 <span>
-                  Make sure people get to know who they are working with. Help them understand where
-                  you are coming from. Add your name, bio, and pronouns.
+                  Make sure people know who you are. Add your bio, pronouns, and a link to your
+                  website.
                 </span>
               </p>
             </div>
@@ -108,14 +113,18 @@ const OnboardingAvatar = ({ data }) => {
   return (
     <>
       {!data.avatar.match(/ucarecdn/g) ? (
-        <div key="avatar-onboarding-quest" className="bg-gray-100 p-4 my-2 sm:my-0 sm:mr-2 w-full">
-          <div className="flex">
+        <div
+          key="avatar-onboarding-quest"
+          className="flex flex-col bg-gray-100 p-4 my-2 sm:my-0 sm:mr-2 w-full"
+        >
+          <div className="flex flex-grow">
             <div className="">
-              <CheckmarkOutline32 className="h-5 w-5 text-black" aria-hidden="true" />
+              <CheckmarkOutline32 className="h-5 w-5 text-black  opacity-50" aria-hidden="true" />
             </div>
             <div className="ml-3 flex-1 md:flex">
               <p className="text-sm mr-2">
-                <span className=" font-bold">Add an avatar</span> <span>Yes, just upload.</span>
+                <span className=" font-bold">Add an avatar</span>{" "}
+                <span>Help people recognize you throughout ResearchEquals.</span>
               </p>
             </div>
           </div>
@@ -167,14 +176,21 @@ const OnboardingDraft = ({ data }) => {
   return (
     <>
       {!data.authorships.length > 0 ? (
-        <div key="draft-onboarding-quest" className="bg-gray-100 p-4 my-2 sm:my-0 sm:mr-2 w-full">
-          <div className="flex">
+        <div
+          key="draft-onboarding-quest"
+          className="flex flex-col bg-gray-100 p-4 my-2 sm:my-0 sm:mr-2 w-full"
+        >
+          <div className="flex flex-grow">
             <div className="">
-              <CheckmarkOutline32 className="h-5 w-5 text-black" aria-hidden="true" />
+              <CheckmarkOutline32 className="h-5 w-5 text-black  opacity-50" aria-hidden="true" />
             </div>
             <div className="ml-3 flex-1 md:flex">
               <p className="text-sm mr-2">
-                <span className=" font-bold">Create first draft</span> <span>PLACEHOLDER</span>
+                <span className=" font-bold">Create your first module</span>{" "}
+                <span>
+                  What are you working on today? All research steps are building blocks. Start
+                  sharing your progress.
+                </span>
               </p>
             </div>
           </div>
