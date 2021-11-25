@@ -4,6 +4,7 @@ import changeUrl from "app/workspaces/mutations/changeUrl"
 import { Link, useMutation, validateZodSchema } from "blitz"
 import { useFormik } from "formik"
 import { z } from "zod"
+import { Renew32 } from "@carbon/icons-react"
 
 const WorkspaceSettings = ({ workspace, setIsOpen }) => {
   const [changeBioMutation, { isSuccess: bioChanged }] = useMutation(changeBio)
@@ -71,7 +72,17 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
             ) : (
               <>
                 <p className="text-gray-900">{workspace!.name}</p>
-                <p className="text-gray-500">{workspace!.orcid}</p>
+                <p className="text-gray-500 flex">
+                  {workspace!.orcid}
+                  <span className="inline-block h-full align-middle"> </span>
+                  <p className="inline-block align-middle">
+                    <Link href="api/auth/orcid">
+                      <button className="inline-block align-middle">
+                        <Renew32 className="cursor-pointer w-5 h-5 " />{" "}
+                      </button>
+                    </Link>
+                  </p>
+                </p>
               </>
             )}
             <p className="text-gray-500">@{workspace.handle}</p>
