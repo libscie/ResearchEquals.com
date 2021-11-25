@@ -6,10 +6,12 @@ import {
   AuthorizationError,
   ErrorFallbackProps,
   useQueryErrorResetBoundary,
+  Routes,
 } from "blitz"
 import LoginForm from "app/auth/components/LoginForm"
 
 import "app/core/styles/index.css"
+import router, { Router } from "next/router"
 
 export default function App({ Component, pageProps }: AppProps) {
   const getLayout = Component.getLayout || ((page) => page)
