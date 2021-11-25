@@ -18,85 +18,96 @@ export default function DeleteModal() {
   }
 
   return (
-    <div className="">
-      <div className="py-10">
-        <h3 className="text-lg leading-6 font-medium text-gray-900">Delete your account</h3>
-        <div className="mt-2 max-w-xl text-sm text-gray-500">
-          <p>
-            Your publication profile and publications will not be deleted if you have published.
-          </p>
+    <>
+      <h3 className="text-sm font-medium text-gray-700 dark:text-gray-100">Delete your account</h3>
+      <div className="flex w-11/12">
+        <div className="">
+          <div className="my-2 text-sm font-medium text-gray-700 dark:text-gray-100">
+            <p>
+              Your publication profile and publications will not be deleted if you have published.
+            </p>
+          </div>
         </div>
-        <div className="mt-5">
+        <div className="my-2">
           <button
             type="button"
-            className="inline-flex items-center justify-center px-4 py-2 border border-transparent font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm"
+            className="px-4 py-2 border border-transparent font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm"
             onClick={openModal}
           >
-            Delete account
+            Delete
           </button>
-          <Transition appear show={isOpen} as={Fragment}>
-            <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" onClose={closeModal}>
-              <div className="min-h-screen px-4 text-center">
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-out duration-300"
-                  enterFrom="opacity-0"
-                  enterTo="opacity-100"
-                  leave="ease-in duration-200"
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0"
-                >
-                  <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-                </Transition.Child>
-
-                {/* This element is to trick the browser into centering the modal contents. */}
-                <span className="inline-block h-screen align-middle" aria-hidden="true">
-                  &#8203;
-                </span>
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-out duration-300"
-                  enterFrom="opacity-0 scale-95"
-                  enterTo="opacity-100 scale-100"
-                  leave="ease-in duration-200"
-                  leaveFrom="opacity-100 scale-100"
-                  leaveTo="opacity-0 scale-95"
-                >
-                  <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                    <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                      Are you sure?
-                    </Dialog.Title>
-                    <div className="mt-2">
-                      <p className="text-sm text-gray-500">
-                        Your user account will be deleted without recovery options. Your already
-                        published modules will not be deleted. Your public profile will only be
-                        deleted if there are no publications linked to it.
-                      </p>
-                    </div>
-
-                    <div className="mt-4">
-                      <button
-                        type="button"
-                        className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                        onClick={async () => {
-                          try {
-                            await deleteUserMutation()
-                            router.push("/")
-                          } catch (err) {
-                            throw err
-                          }
-                        }}
-                      >
-                        Yes Im sure
-                      </button>
-                    </div>
-                  </div>
-                </Transition.Child>
-              </div>
-            </Dialog>
-          </Transition>
         </div>
+        <Transition appear show={isOpen} as={Fragment}>
+          <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" onClose={closeModal}>
+            <div className="min-h-screen px-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+              </Transition.Child>
+
+              {/* This element is to trick the browser into centering the modal contents. */}
+              <span className="inline-block h-screen align-middle" aria-hidden="true">
+                &#8203;
+              </span>
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform shadow-xl rounded-2xl text-gray-900 dark:text-gray-100 bg-gray-300 dark:bg-gray-900">
+                  <Dialog.Title as="h3" className="text-lg font-medium leading-6 ">
+                    Confirm account deletion
+                  </Dialog.Title>
+                  <div className="mt-2">
+                    <p className="text-sm text-gray-900">
+                      Your user account will be deleted without recovery options. Your already
+                      published modules will not be deleted. Your public profile will only be
+                      deleted if there are no publications linked to it.
+                    </p>
+                  </div>
+
+                  <div className="mt-4">
+                    <button
+                      type="button"
+                      className="inline-flex justify-center px-4 py-2 text-sm font-medium text-green-900 bg-green-100 border border-transparent rounded-md hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-500"
+                      onClick={async () => {
+                        try {
+                          await deleteUserMutation()
+                          router.push("/")
+                        } catch (err) {
+                          throw err
+                        }
+                      }}
+                    >
+                      Delete
+                    </button>
+                    <button
+                      type="button"
+                      className="inline-flex justify-center px-4 py-2 text-sm font-medium text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2  mx-2 focus-visible:ring-red-500"
+                      onClick={async () => {
+                        setIsOpen(false)
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </Transition.Child>
+            </div>
+          </Dialog>
+        </Transition>
       </div>
-    </div>
+    </>
   )
 }
