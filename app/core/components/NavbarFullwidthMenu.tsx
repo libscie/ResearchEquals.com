@@ -50,7 +50,7 @@ const FullWidthMenu = () => {
                   }`}
                 />
                 {/* <span className="items-middle"></span> */}
-                <span className="inset-y-0 pl-2 right-0 flex items-center pointer-events-none">
+                <span className="inset-y-0 pl-2 right-0 flex items-center pointer-events-none truncate overflow-ellipsis">
                   @{selected!.workspace.handle}
                 </span>
               </span>
