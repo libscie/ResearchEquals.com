@@ -94,7 +94,7 @@ const ModulePage = ({ module }) => {
   return (
     <Layout title={`R=${module.title}`}>
       <NavbarApp />
-      <div className="max-w-7xl mx-auto my-4">
+      <div className="max-w-7xl sm:mx-auto my-4 mx-2">
         <div className="w-full bg-gray-300 flex">
           <div className="flex-grow"></div>
           <Share32 />
