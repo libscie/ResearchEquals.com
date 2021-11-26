@@ -41,90 +41,94 @@ export const getServerSideProps = async ({ params }) => {
 
 const HandlePage = ({ workspace }) => {
   return (
-    <div className="bg-gray-300 dark:bg-gray-700 text-black dark:text-white h-full">
-      <Navbar />
-      <Toaster position="bottom-center" reverseOrder={false} />{" "}
-      <div className="max-w-7xl mx-2 sm:mx-auto">
-        <div className="w-full">
-          <div className="flex my-8">
-            <div>
-              <img src={workspace.avatar} className="rounded-full h-28 w-28" />
-            </div>
-            <div className="flex-grow ml-4">
-              <span className="inline-block h-full align-middle"> </span>
-              <p className="inline-block align-middle">
-                {workspace.name ? workspace.name : ""}{" "}
-                {workspace.pronouns ? (
-                  <span className="text-gray-500">({workspace.pronouns})</span>
-                ) : (
-                  ""
-                )}
-                {workspace.orcid ? (
-                  <p>
-                    <Link href={`https://orcid.org/${workspace.orcid}`}>
-                      <a target="_blank" className="text-gray-500">
-                        {workspace.orcid}
-                      </a>
-                    </Link>
-                  </p>
-                ) : (
-                  ""
-                )}
-                <p className="text-gray-500">@{workspace.handle}</p>
-              </p>
-            </div>
-            <div>
-              <Suspense fallback="Loading...">
-                <FollowButton workspace={workspace} />
-              </Suspense>
-            </div>
-          </div>
-          <div className="my-4">{workspace.bio}</div>
-
-          <div className="sm:flex">
-            <p className="flex mr-2">
-              <p>
+    <Layout title={`R=${workspace.name || workspace.handle}`}>
+      <div className="bg-gray-300 dark:bg-gray-700 text-black dark:text-white h-full">
+        <Navbar />
+        <Toaster position="bottom-center" reverseOrder={false} />{" "}
+        <div className="max-w-7xl mx-2 sm:mx-auto">
+          <div className="w-full">
+            <div className="flex my-8">
+              <div>
+                <img src={workspace.avatar} className="rounded-full h-28 w-28" />
+              </div>
+              <div className="flex-grow ml-4">
                 <span className="inline-block h-full align-middle"> </span>
-                <Calendar32 className="w-4 h-4 inline-block align-middle mr-1" />
-                Signed up {moment(workspace.createdAt).fromNow()}
-              </p>
-            </p>
-            {workspace.url ? (
+                <p className="inline-block align-middle">
+                  {workspace.name ? workspace.name : ""}{" "}
+                  {workspace.pronouns ? (
+                    <span className="text-gray-500">({workspace.pronouns})</span>
+                  ) : (
+                    ""
+                  )}
+                  {workspace.orcid ? (
+                    <p>
+                      <Link href={`https://orcid.org/${workspace.orcid}`}>
+                        <a target="_blank" className="text-gray-500">
+                          {workspace.orcid}
+                        </a>
+                      </Link>
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                  <p className="text-gray-500">@{workspace.handle}</p>
+                </p>
+              </div>
+              {workspace ? (
+                <div>
+                  <Suspense fallback="Loading...">
+                    <FollowButton workspace={workspace} />
+                  </Suspense>
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+            <div className="my-4">{workspace.bio}</div>
+
+            <div className="sm:flex">
               <p className="flex mr-2">
                 <p>
                   <span className="inline-block h-full align-middle"> </span>
-                  <Link32 className="w-4 h-4  inline-block align-middle mr-1" />
-                  <Link href={workspace.url}>
-                    <a target="_blank" className="mr-2">
-                      {workspace.url}
-                    </a>
-                  </Link>
+                  <Calendar32 className="w-4 h-4 inline-block align-middle mr-1" />
+                  Signed up {moment(workspace.createdAt).fromNow()}
                 </p>
               </p>
-            ) : (
-              <></>
-            )}
-            <p className="flex mr-2">
-              <p>
-                <span className="inline-block h-full align-middle"> </span>
-                <UserFollow32 className="w-4 h-4  inline-block align-middle mr-1" />
-                Following <Suspense fallback="Loading...">{workspace.following.length}</Suspense>
+              {workspace.url ? (
+                <p className="flex mr-2">
+                  <p>
+                    <span className="inline-block h-full align-middle"> </span>
+                    <Link32 className="w-4 h-4  inline-block align-middle mr-1" />
+                    <Link href={workspace.url}>
+                      <a target="_blank" className="mr-2">
+                        {workspace.url}
+                      </a>
+                    </Link>
+                  </p>
+                </p>
+              ) : (
+                <></>
+              )}
+              <p className="flex mr-2">
+                <p>
+                  <span className="inline-block h-full align-middle"> </span>
+                  <UserFollow32 className="w-4 h-4  inline-block align-middle mr-1" />
+                  Following <Suspense fallback="Loading...">{workspace.following.length}</Suspense>
+                </p>
               </p>
-            </p>
+            </div>
+          </div>
+          <div className="w-full ">
+            <h2 className="text-2xl my-4">Published modules</h2>
+            <Suspense fallback="Loading...">
+              <HandleFeed handle={workspace.handle} />
+            </Suspense>
           </div>
         </div>
-        <div className="w-full ">
-          <h2 className="text-2xl my-4">Published modules</h2>
-          <Suspense fallback="Loading...">
-            <HandleFeed handle={workspace.handle} />
-          </Suspense>
-        </div>
       </div>
-    </div>
+    </Layout>
   )
 }
-
-HandlePage.getLayout = (page) => <Layout title="Handle">{page}</Layout>
 
 export default HandlePage
 
@@ -136,18 +140,50 @@ const FollowButton = ({ workspace }) => {
 
   return (
     <>
-      {ownWorkspace!.handle === params.handle ? (
-        <></>
-      ) : ownWorkspace?.following.filter((follows) => follows.handle === params.handle).length ===
-        0 ? (
-        <>
-          <span className="inline-block h-full align-middle"></span>
-          <button
-            className="py-2 px-2 text-gray-500 rounded border border-gray-500 bg-gray-300 hover:bg-gray-400 inline-block align-middle"
-            onClick={async () => {
-              // TODO: Add action
+      {ownWorkspace ? (
+        ownWorkspace!.handle === params.handle ? (
+          <></>
+        ) : ownWorkspace?.following.filter((follows) => follows.handle === params.handle).length ===
+          0 ? (
+          <>
+            <span className="inline-block h-full align-middle"></span>
+            <button
+              className="py-2 px-2 text-gray-500 rounded border border-gray-500 bg-gray-300 hover:bg-gray-400 inline-block align-middle"
+              onClick={async () => {
+                // TODO: Add action
 
-              await followWorkspaceMutation({
+                await followWorkspaceMutation({
+                  followerId: ownWorkspace?.id!,
+                  followedId: workspace.id,
+                })
+
+                toast((t) => (
+                  <span>
+                    Custom and <b>bold</b>
+                    <button
+                      onClick={async () => {
+                        await unfollowWorkspaceMutation({
+                          followerId: ownWorkspace?.id!,
+                          followedId: workspace.id,
+                        })
+                        toast.dismiss(t.id)
+                      }}
+                    >
+                      Undo
+                    </button>
+                  </span>
+                ))
+              }}
+            >
+              Follow
+            </button>
+          </>
+        ) : (
+          // TODO: Add action
+          <button
+            className="py-4 px-2 bg-indigo-600"
+            onClick={async () => {
+              await unfollowWorkspaceMutation({
                 followerId: ownWorkspace?.id!,
                 followedId: workspace.id,
               })
@@ -157,7 +193,7 @@ const FollowButton = ({ workspace }) => {
                   Custom and <b>bold</b>
                   <button
                     onClick={async () => {
-                      await unfollowWorkspaceMutation({
+                      await followWorkspaceMutation({
                         followerId: ownWorkspace?.id!,
                         followedId: workspace.id,
                       })
@@ -170,39 +206,11 @@ const FollowButton = ({ workspace }) => {
               ))
             }}
           >
-            Follow
+            Unfollow
           </button>
-        </>
+        )
       ) : (
-        // TODO: Add action
-        <button
-          className="py-4 px-2 bg-indigo-600"
-          onClick={async () => {
-            await unfollowWorkspaceMutation({
-              followerId: ownWorkspace?.id!,
-              followedId: workspace.id,
-            })
-
-            toast((t) => (
-              <span>
-                Custom and <b>bold</b>
-                <button
-                  onClick={async () => {
-                    await followWorkspaceMutation({
-                      followerId: ownWorkspace?.id!,
-                      followedId: workspace.id,
-                    })
-                    toast.dismiss(t.id)
-                  }}
-                >
-                  Undo
-                </button>
-              </span>
-            ))
-          }}
-        >
-          Unfollow
-        </button>
+        ""
       )}
     </>
   )
