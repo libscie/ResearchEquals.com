@@ -1,16 +1,15 @@
-import { Link, Routes, useMutation, useSession, useRouter } from "blitz"
+import { Link, Routes, useMutation, useSession, useRouter, validateZodSchema } from "blitz"
 import { OverflowMenuHorizontal32, Notification32, Settings32 } from "@carbon/icons-react"
-import { Dialog, Listbox, Menu, Transition } from "@headlessui/react"
+import { Listbox, Menu, Transition } from "@headlessui/react"
 import { Fragment, useState } from "react"
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid"
-import { XIcon } from "@heroicons/react/outline"
 
 import { useCurrentUser } from "../hooks/useCurrentUser"
 import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
 import logout from "../../auth/mutations/logout"
 import SettingsModal from "../modals/settings"
 import changeSessionWorkspace from "../../workspaces/mutations/changeSessionWorkspace"
-import CreateModuleForm from "../../modules/components/CreateModuleForm"
+import QuickDraft from "../../modules/components/QuickDraft"
 
 const FullWidthMenu = () => {
   const currentUser = useCurrentUser()
@@ -19,7 +18,6 @@ const FullWidthMenu = () => {
   const currentWorkspace = useCurrentWorkspace()
   const [logoutMutation] = useMutation(logout)
   const [changeSessionWorkspaceMutation] = useMutation(changeSessionWorkspace)
-  const [openCreate, setCreateOpen] = useState(false)
   // Match the selected state with the session workspace
   const [selected, setSelected] = useState(
     currentUser?.memberships.filter((membership) => {
@@ -189,59 +187,10 @@ const FullWidthMenu = () => {
             </Menu.Items>
           </Transition>
         </Menu>
-        {/* TODO: Add action */}
-        <button
-          onClick={() => {
-            setCreateOpen(true)
-          }}
-          className="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          Create module
-        </button>
-        <Transition.Root show={openCreate} as={Fragment}>
-          <Dialog as="div" className="fixed inset-0 overflow-hidden" onClose={setCreateOpen}>
-            <div className="absolute inset-0 overflow-hidden">
-              <Dialog.Overlay className="absolute inset-0" />
-
-              <div className="fixed inset-y-0 right-0 pl-10 max-w-full flex sm:pl-16">
-                <Transition.Child
-                  as={Fragment}
-                  enter="transform transition ease-in-out duration-500 sm:duration-700"
-                  enterFrom="translate-x-full"
-                  enterTo="translate-x-0"
-                  leave="transform transition ease-in-out duration-500 sm:duration-700"
-                  leaveFrom="translate-x-0"
-                  leaveTo="translate-x-full"
-                >
-                  <div className="w-screen max-w-2xl">
-                    <div className="h-full flex flex-col py-0 bg-white shadow-xl overflow-y-scroll">
-                      <div className="px-4 sm:px-6 py-6 bg-indigo-600">
-                        <div className="flex items-start justify-between">
-                          <Dialog.Title className="text-lg font-medium text-white">
-                            Create research module
-                          </Dialog.Title>
-                          <div className="ml-3 h-7 flex items-center">
-                            <button
-                              type="button"
-                              className="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                              onClick={() => setCreateOpen(false)}
-                            >
-                              <span className="sr-only">Close panel</span>
-                              <XIcon className="h-6 w-6" aria-hidden="true" />
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="mt-6 relative flex-1 px-4 sm:px-6">
-                        <CreateModuleForm workspace={currentWorkspace} />
-                      </div>
-                    </div>
-                  </div>
-                </Transition.Child>
-              </div>
-            </div>
-          </Dialog>
-        </Transition.Root>
+        <QuickDraft
+          buttonText="Create module"
+          buttonStyle="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        />
       </div>
     )
   } else {
