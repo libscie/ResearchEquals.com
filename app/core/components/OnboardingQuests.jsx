@@ -8,8 +8,8 @@ import { XIcon } from "@heroicons/react/outline"
 
 import SettingsModal from "../modals/settings"
 import changeAvatar from "../../workspaces/mutations/changeAvatar"
-import CreateModuleForm from "../../modules/components/CreateModuleForm"
 import getSignature from "../../auth/queries/getSignature"
+import QuickDraft from "../../modules/components/QuickDraft"
 
 const OnboardingQuests = ({ data }) => {
   return (
@@ -196,58 +196,14 @@ const OnboardingDraft = ({ data }) => {
           </div>
           <div className="block text-right">
             <p className="mt-3 text-sm md:mt-0 md:ml-6">
-              <button
-                onClick={() => {
-                  setCreateOpen(true)
-                }}
-                className="whitespace-nowrap font-medium hover:text-blue-600 underline"
-              >
-                Create module <span aria-hidden="true">&rarr;</span>
-              </button>
-              <Transition.Root show={openCreate} as={Fragment}>
-                <Dialog as="div" className="fixed inset-0 overflow-hidden" onClose={setCreateOpen}>
-                  <div className="absolute inset-0 overflow-hidden">
-                    <Dialog.Overlay className="absolute inset-0" />
-
-                    <div className="fixed inset-y-0 right-0 pl-10 max-w-full flex sm:pl-16">
-                      <Transition.Child
-                        as={Fragment}
-                        enter="transform transition ease-in-out duration-500 sm:duration-700"
-                        enterFrom="translate-x-full"
-                        enterTo="translate-x-0"
-                        leave="transform transition ease-in-out duration-500 sm:duration-700"
-                        leaveFrom="translate-x-0"
-                        leaveTo="translate-x-full"
-                      >
-                        <div className="w-screen max-w-2xl">
-                          <div className="h-full flex flex-col py-0 bg-white shadow-xl overflow-y-scroll">
-                            <div className="px-4 sm:px-6 py-6 bg-indigo-600">
-                              <div className="flex items-start justify-between">
-                                <Dialog.Title className="text-lg font-medium text-white">
-                                  Create research module
-                                </Dialog.Title>
-                                <div className="ml-3 h-7 flex items-center">
-                                  <button
-                                    type="button"
-                                    className="bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                    onClick={() => setCreateOpen(false)}
-                                  >
-                                    <span className="sr-only">Close panel</span>
-                                    <XIcon className="h-6 w-6" aria-hidden="true" />
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="mt-6 relative flex-1 px-4 sm:px-6">
-                              <CreateModuleForm workspace={data} />
-                            </div>
-                          </div>
-                        </div>
-                      </Transition.Child>
-                    </div>
-                  </div>
-                </Dialog>
-              </Transition.Root>
+              <QuickDraft
+                buttonText={
+                  <>
+                    Create module <span aria-hidden="true">&rarr;</span>
+                  </>
+                }
+                buttonStyle="whitespace-nowrap font-medium hover:text-blue-600 underline"
+              />
             </p>
           </div>
         </div>
