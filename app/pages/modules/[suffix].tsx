@@ -1,18 +1,11 @@
 import moment from "moment"
-import {
-  Share32,
-  DocumentPdf32,
-  AddAlt32,
-  Flow32,
-  Download32,
-  TrashCan32,
-} from "@carbon/icons-react"
+import { Share32, DocumentPdf32, AddAlt32 } from "@carbon/icons-react"
 import { Prisma } from "prisma"
+import { NotFoundError } from "blitz"
 
 import Layout from "../../core/layouts/Layout"
 import db from "db"
 import NavbarApp from "../../core/components/Navbar"
-import { Link } from "blitz"
 import MetadataView from "../../modules/components/MetadataView"
 import ViewFiles from "../../modules/components/ViewFiles"
 import ViewAuthors from "../../modules/components/ViewAuthors"
@@ -20,31 +13,7 @@ import FollowsFromView from "../../modules/components/FollowsFromView"
 import LeadsToView from "../../modules/components/LeadsToView"
 import AuthorAvatars from "../../modules/components/AuthorAvatars"
 
-// TODO: Replace with getServerSideProps
-export async function getStaticPaths() {
-  const modules = await db.module.findMany({
-    where: {
-      published: {
-        equals: true,
-      },
-    },
-  })
-  const pathObject = modules.map((module) => {
-    return {
-      params: {
-        suffix: module.suffix,
-      },
-    }
-  })
-  console.log(pathObject)
-
-  return {
-    paths: pathObject,
-    fallback: false,
-  }
-}
-
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const module = await db.module.findFirst({
     where: {
       suffix: context.params.suffix,
@@ -80,10 +49,12 @@ export async function getStaticProps(context) {
     },
   })
 
+  if (!module) throw new NotFoundError()
+
   return {
     props: {
       module,
-    }, // will be passed to the page component as props
+    },
   }
 }
 
@@ -94,7 +65,7 @@ const ModulePage = ({ module }) => {
   return (
     <Layout title={`R=${module.title}`}>
       <NavbarApp />
-      <div className="max-w-7xl mx-auto my-4">
+      <div className="max-w-7xl sm:mx-auto my-4 mx-2">
         <div className="w-full bg-gray-300 flex">
           <div className="flex-grow"></div>
           <Share32 />
