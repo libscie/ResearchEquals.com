@@ -1,4 +1,4 @@
-# ResearchEquals.com <img src="https://pbs.twimg.com/profile_images/1457432990661890059/OXxEMPhf_400x400.jpg" align="right" height="64" />
+# ResearchEquals.com <img src="https://ucarecdn.com/6b429a46-7b66-4f4a-9f8c-13338fb438c2/RBadgegh.png" align="right" height="64" />
 
 [ResearchEquals.com](https://researchequals.com) is a research module server, where researchers can publish building blocks of research and link them together in chronological order.
 
