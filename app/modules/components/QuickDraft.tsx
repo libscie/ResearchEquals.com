@@ -77,7 +77,7 @@ const QuickDraft = ({ buttonText, buttonStyle }) => {
                 <div className="w-screen max-w-md">
                   <form
                     onSubmit={formik.handleSubmit}
-                    className="h-full divide-y divide-gray-200 flex flex-col bg-gray-300 shadow-xl"
+                    className="h-full divide-y divide-gray-500 dark:divide-gray-500 flex flex-col bg-gray-300 dark:bg-gray-300 shadow-xl"
                   >
                     <div className="min-h-0 flex-1 flex flex-col py-6 overflow-y-auto">
                       <div className="px-4 sm:px-6">
@@ -99,7 +99,7 @@ const QuickDraft = ({ buttonText, buttonStyle }) => {
                       </div>
                       <div className="mt-6 relative flex-1 px-4 sm:px-6">
                         {/* Replace with your content */}
-                        <div className="text-sm leading-5 font-normal border-b border-gray-200 pb-4">
+                        <div className="text-sm leading-5 font-normal border-b border-gray-500 dark:border-gray-500 pb-4">
                           Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus
                           hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel,
                           dapibus id, mattis vel, nisi.
@@ -107,7 +107,7 @@ const QuickDraft = ({ buttonText, buttonStyle }) => {
                         <div className="my-4">
                           <label
                             htmlFor="title"
-                            className=" my-1 block text-sm font-medium text-gray-700 dark:text-gray-100"
+                            className=" my-1 block text-sm font-medium text-gray-700 dark:text-gray-700"
                           >
                             Title
                           </label>
@@ -116,7 +116,7 @@ const QuickDraft = ({ buttonText, buttonStyle }) => {
                               id="title"
                               type="title"
                               required
-                              className="appearance-none block w-full px-3 py-2 border border-gray-500 bg-gray-300 dark:bg-gray-800 dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+                              className="appearance-none block w-full px-3 py-2 border border-gray-500 bg-gray-300 dark:bg-gray-300 dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
                               {...formik.getFieldProps("title")}
                             />
                             {formik.touched.title && formik.errors.title ? (
@@ -127,7 +127,7 @@ const QuickDraft = ({ buttonText, buttonStyle }) => {
                         <div className="my-4">
                           <label
                             htmlFor="description"
-                            className="my-1 block text-sm font-medium text-gray-700 dark:text-gray-100"
+                            className="my-1 block text-sm font-medium text-gray-700 dark:text-gray-700"
                           >
                             Description
                           </label>
@@ -135,7 +135,7 @@ const QuickDraft = ({ buttonText, buttonStyle }) => {
                             <textarea
                               rows={4}
                               id="description"
-                              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-500 bg-gray-300 dark:bg-gray-800 rounded-md"
+                              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-500 bg-gray-300 dark:bg-gray-300 rounded-md"
                               {...formik.getFieldProps("description")}
                             />
                             {formik.touched.description && formik.errors.description ? (
@@ -147,7 +147,7 @@ const QuickDraft = ({ buttonText, buttonStyle }) => {
                         <div className="my-4">
                           <label
                             htmlFor="type"
-                            className="my-1 block text-sm font-medium text-gray-700 dark:text-gray-100"
+                            className="my-1 block text-sm font-medium text-gray-700 dark:text-gray-700"
                           >
                             Module type
                           </label>
@@ -155,7 +155,7 @@ const QuickDraft = ({ buttonText, buttonStyle }) => {
                             <select
                               id="type"
                               required
-                              className="appearance-none block w-full px-3 py-2 border border-gray-500 bg-gray-300 dark:bg-gray-800 dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+                              className="appearance-none block w-full px-3 py-2 border border-gray-500 bg-gray-300 dark:bg-gray-300 dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
                               {...formik.getFieldProps("type")}
                             >
                               <option className="text-gray-900" value=""></option>
@@ -174,7 +174,7 @@ const QuickDraft = ({ buttonText, buttonStyle }) => {
                         <div className="my-4">
                           <label
                             htmlFor="license"
-                            className="flex my-1 text-sm font-medium text-gray-700 dark:text-gray-100"
+                            className="flex my-1 text-sm font-medium text-gray-700 dark:text-gray-700"
                           >
                             License{" "}
                             <HelpFilled32 className="ml-1 fill-current text-gray-400 w-4 h-4" />
@@ -183,7 +183,7 @@ const QuickDraft = ({ buttonText, buttonStyle }) => {
                             <select
                               id="license"
                               required
-                              className="appearance-none block w-full px-3 py-2 border border-gray-500 bg-gray-300 dark:bg-gray-800 dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+                              className="appearance-none block w-full px-3 py-2 border border-gray-500 bg-gray-300 dark:bg-gray-300 dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
                               {...formik.getFieldProps("license")}
                             >
                               <option className="text-gray-900" value=""></option>

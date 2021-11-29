@@ -97,7 +97,7 @@ const DashboardContent = () => {
               <h2 className="font-bold text-4xl">Feed</h2>
               {modules.length > 0 ? (
                 <div>
-                  <ul role="list" className="divide-y divide-gray-200">
+                  <ul role="list" className="divide-y divide-gray-200 my-2">
                     {modules.map((module) => (
                       <>
                         <li
@@ -117,7 +117,9 @@ const DashboardContent = () => {
                       </>
                     ))}
                   </ul>
-                  <div className="flex">
+                  {/* TODO: Put into one component */}
+
+                  <div className="flex my-1">
                     <div className="flex-1 flex items-center justify-between">
                       <p className="text-sm text-gray-700">
                         Showing <span className="font-medium">{ITEMS_PER_PAGE * page + 1}</span> to{" "}
@@ -128,11 +130,11 @@ const DashboardContent = () => {
                       </p>
                     </div>
                     <nav
-                      className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+                      className="relative z-0 inline-flex rounded-md -space-x-px"
                       aria-label="Pagination"
                     >
                       <button
-                        className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                        className="relative inline-flex items-center px-2 py-2 bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-400"
                         disabled={page === 0}
                         onClick={goToPreviousPage}
                       >
@@ -143,7 +145,7 @@ const DashboardContent = () => {
                         (pageNr) => (
                           <button
                             key={`page-nav-feed-${pageNr}`}
-                            className="relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                            className="relative inline-flex items-center px-2 py-2 bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-400"
                             disabled={page === pageNr}
                             onClick={() => {
                               goToPage(pageNr)
@@ -157,7 +159,7 @@ const DashboardContent = () => {
                         )
                       )}
                       <button
-                        className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                        className="relative inline-flex items-center px-2 py-2 bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-400"
                         disabled={!hasMore}
                         onClick={goToNextPage}
                       >

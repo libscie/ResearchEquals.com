@@ -252,6 +252,7 @@ const HandleFeed = ({ handle }) => {
               </>
             ))}
           </ul>
+          {/* TODO: Put into one component - also used in dashboard.tsx */}
           <div className="flex my-1">
             <div className="flex-1 flex items-center justify-between">
               <p className="text-sm text-gray-700">
