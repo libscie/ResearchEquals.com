@@ -16,7 +16,7 @@ import AuthorAvatars from "../../modules/components/AuthorAvatars"
 export async function getServerSideProps(context) {
   const module = await db.module.findFirst({
     where: {
-      suffix: context.params.suffix,
+      suffix: context.params.suffix.toLowerCase(),
     },
     include: {
       parents: {

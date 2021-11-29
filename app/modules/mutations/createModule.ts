@@ -1,10 +1,10 @@
 import { resolver } from "blitz"
-import db from "db"
+import db, { Prisma } from "db"
 import generateSuffix from "./generateSuffix"
 
 export default resolver.pipe(
   resolver.authorize(),
-  async ({ title, description, type, main, authors }, ctx) => {
+  async ({ title, description, typeId, licenseId, authors }, ctx) => {
     const authorInvitations = authors.map((author) => {
       return {
         workspaceId: author,
@@ -23,13 +23,11 @@ export default resolver.pipe(
         title,
         description,
         type: {
-          // TODO: Add type selector
-          connect: { id: 1 },
+          connect: { id: typeId },
         },
         license: {
-          connect: { id: 1 },
+          connect: { id: licenseId },
         },
-        main,
         authors: {
           create: authorInvitations,
         },

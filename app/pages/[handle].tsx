@@ -17,7 +17,7 @@ import ModuleCard from "../core/components/ModuleCard"
 const ITEMS_PER_PAGE = 10
 
 export const getServerSideProps = async ({ params }) => {
-  const handle = params!.handle
+  const handle = params!.handle.toLowerCase()
   const workspace = await db.workspace.findFirst({
     where: { handle },
     include: {
