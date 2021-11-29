@@ -51,6 +51,9 @@ const Navbar = () => {
                         if (item.handle) {
                           router.push(`/${item.handle}`)
                         }
+                        if (item.suffix) {
+                          router.push(`/modules/${item.suffix}`)
+                        }
                       },
                       getItems() {
                         return getAlgoliaResults({
