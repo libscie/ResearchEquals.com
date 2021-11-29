@@ -19,10 +19,10 @@ export default function DeleteModal() {
 
   return (
     <>
-      <h3 className="text-sm font-medium text-gray-700 dark:text-gray-100">Delete your account</h3>
+      <h3 className="text-sm font-medium text-gray-700 dark:text-gray-700">Delete your account</h3>
       <div className="flex w-11/12">
         <div className="">
-          <div className="my-2 text-sm font-medium text-gray-700 dark:text-gray-100">
+          <div className="my-2 text-sm text-gray-700 dark:text-gray-700">
             <p>
               Your publication profile and publications will not be deleted if you have published.
             </p>
