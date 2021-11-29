@@ -117,8 +117,7 @@ const DashboardContent = () => {
                       </>
                     ))}
                   </ul>
-                  {/* TODO: Put into one component */}
-
+                  {/* TODO: Put into one component - also used in [handle].tsx */}
                   <div className="flex my-1">
                     <div className="flex-1 flex items-center justify-between">
                       <p className="text-sm text-gray-700">
