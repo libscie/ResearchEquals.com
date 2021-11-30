@@ -26,6 +26,5 @@ export default async function getInvitedModules({ session }) {
     },
   })
 
-  console.log(invitedModules)
   return invitedModules
 }

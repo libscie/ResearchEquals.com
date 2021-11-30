@@ -58,7 +58,8 @@ const NavTabs = () => {
                       tab.current
                         ? "border-indigo-500 text-gray-200"
                         : "border-transparent hover:text-gray-300 hover:border-gray-200",
-                      "whitespace-nowrap flex py-4 px-1 border-b-2 font-medium text-sm"
+                      tab.count === 0 ? "pointer-events-none text-gray-300" : "",
+                      "whitespace-nowrap flex py-4 px-1 border-b-2 font-medium text-sm disabled"
                     )}
                     aria-current={tab.current ? "page" : undefined}
                   >

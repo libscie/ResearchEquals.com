@@ -66,38 +66,23 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
       ) : (
         ""
       )}
-
       {/* Supporting files */}
-      {/* <div className="my-8">
-        <h2>Supporting file(s)</h2>
-        {supportingRaw.files.map((file) => (
-          <>
-            <ViewFiles
-              name={file.original_filename}
-              size={file.size}
-              url={file.original_file_url}
-            />
-          </>
-        ))}
-        {supportingRaw.files.length > 0 ? (
-          <>
-            {supportingRaw.files.map((file) => (
-              <>
-                <EditSupportingFileDisplay
-                  name={file.original_filename}
-                  size={file.size}
-                  url={file.original_file_url}
-                  uuid={file.uuid}
-                  suffix={moduleEdit!.suffix}
-                  setQueryData={setQueryData}
-                />
-              </>
-            ))}
-          </>
-        ) : (
-          <></>
-        )}
-      </div> */}
+      {supportingRaw.length > 0 ? (
+        <div className="my-8">
+          <h2>Supporting file(s)</h2>
+          {supportingRaw.files.map((file) => (
+            <>
+              <ViewFiles
+                name={file.original_filename}
+                size={file.size}
+                url={file.original_file_url}
+              />
+            </>
+          ))}
+        </div>
+      ) : (
+        ""
+      )}
       {/* PLACEHOLDER References */}
     </div>
   )
