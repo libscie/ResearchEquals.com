@@ -1,6 +1,6 @@
 import Layout from "app/core/layouts/Layout"
 import db from "db"
-import { Link, useRouter, usePaginatedQuery, useParams, useMutation } from "blitz"
+import { Link, useRouter, usePaginatedQuery, useParams, useMutation, useQuery } from "blitz"
 import { Calendar32, Link32, UserFollow32 } from "@carbon/icons-react"
 import { ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon } from "@heroicons/react/solid"
 import { Suspense } from "react"
@@ -13,6 +13,7 @@ import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import followWorkspace from "../workspaces/mutations/followWorkspace"
 import unfollowWorkspace from "../workspaces/mutations/unfollowWorkspace"
 import ModuleCard from "../core/components/ModuleCard"
+import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
 
 const ITEMS_PER_PAGE = 10
 
@@ -134,7 +135,9 @@ export default HandlePage
 
 const FollowButton = ({ workspace }) => {
   const params = useParams()
-  const ownWorkspace = useCurrentWorkspace()
+  // const [ownWorkspace] = useCurrentWorkspace()
+  const [ownWorkspace, { refetch }] = useQuery(getCurrentWorkspace, null)
+
   const [followWorkspaceMutation] = useMutation(followWorkspace)
   const [unfollowWorkspaceMutation] = useMutation(unfollowWorkspace)
 
@@ -156,58 +159,32 @@ const FollowButton = ({ workspace }) => {
                   followerId: ownWorkspace?.id!,
                   followedId: workspace.id,
                 })
+                refetch()
 
-                toast((t) => (
-                  <span>
-                    Custom and <b>bold</b>
-                    <button
-                      onClick={async () => {
-                        await unfollowWorkspaceMutation({
-                          followerId: ownWorkspace?.id!,
-                          followedId: workspace.id,
-                        })
-                        toast.dismiss(t.id)
-                      }}
-                    >
-                      Undo
-                    </button>
-                  </span>
-                ))
+                toast.success("Following!")
               }}
             >
               Follow
             </button>
           </>
         ) : (
-          // TODO: Add action
-          <button
-            className="py-4 px-2 bg-indigo-600"
-            onClick={async () => {
-              await unfollowWorkspaceMutation({
-                followerId: ownWorkspace?.id!,
-                followedId: workspace.id,
-              })
+          <>
+            <span className="inline-block h-full align-middle"></span>
 
-              toast((t) => (
-                <span>
-                  Custom and <b>bold</b>
-                  <button
-                    onClick={async () => {
-                      await followWorkspaceMutation({
-                        followerId: ownWorkspace?.id!,
-                        followedId: workspace.id,
-                      })
-                      toast.dismiss(t.id)
-                    }}
-                  >
-                    Undo
-                  </button>
-                </span>
-              ))
-            }}
-          >
-            Unfollow
-          </button>
+            <button
+              className="py-2 px-2 text-gray-500 rounded border border-gray-500 bg-gray-300 hover:bg-gray-400 inline-block align-middle"
+              onClick={async () => {
+                await unfollowWorkspaceMutation({
+                  followerId: ownWorkspace?.id!,
+                  followedId: workspace.id,
+                })
+                refetch()
+                toast("Unfollowed", { icon: "👋" })
+              }}
+            >
+              Unfollow
+            </button>
+          </>
         )
       ) : (
         ""
