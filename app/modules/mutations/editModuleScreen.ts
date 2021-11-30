@@ -42,7 +42,16 @@ export default resolver.pipe(
         },
         license: true,
         type: true,
-        parents: true,
+        parents: {
+          include: {
+            type: true,
+            authors: {
+              include: {
+                workspace: true,
+              },
+            },
+          },
+        },
       },
     })
 

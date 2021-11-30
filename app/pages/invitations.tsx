@@ -7,11 +7,10 @@ import { ProgressBarRound32 } from "@carbon/icons-react"
 import moment from "moment"
 
 import Navbar from "../core/components/Navbar"
-import getDrafts from "../core/queries/getDrafts"
-import ModuleEdit from "../modules/components/ModuleEdit"
 import { useCurrentUser } from "../core/hooks/useCurrentUser"
 import ModuleCard from "../core/components/ModuleCard"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
+import ModuleInvitation from "../modules/components/ModuleInvitation"
 
 const Invitations = () => {
   const session = useSession()
@@ -106,7 +105,7 @@ const Invitations = () => {
                     </div>
                   }
                 >
-                  <ModuleEdit user={user} module={currentModule} isAuthor={true} />
+                  <ModuleInvitation user={user} module={currentModule} isAuthor={true} />
                 </Suspense>
               ) : (
                 ""

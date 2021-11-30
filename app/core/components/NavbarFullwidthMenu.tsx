@@ -7,7 +7,12 @@ import {
   validateZodSchema,
   useQuery,
 } from "blitz"
-import { OverflowMenuHorizontal32, Notification32, Settings32 } from "@carbon/icons-react"
+import {
+  OverflowMenuHorizontal32,
+  Notification32,
+  NotificationNew32,
+  Settings32,
+} from "@carbon/icons-react"
 import { Listbox, Menu, Popover, Transition } from "@headlessui/react"
 import { Fragment, useState } from "react"
 import { CheckIcon, SelectorIcon, ChevronDownIcon } from "@heroicons/react/solid"
@@ -128,7 +133,11 @@ const FullWidthMenu = () => {
                 ml-5 flex-shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
               >
                 <span className="sr-only">View notifications</span>
-                <Notification32 className="h-6 w-6" aria-hidden="true" />
+                {invitedModules.length > 0 ? (
+                  <NotificationNew32 className="h-6 w-6" aria-hidden="true" />
+                ) : (
+                  <Notification32 className="h-6 w-6" aria-hidden="true" />
+                )}
               </Popover.Button>
               <Transition
                 as={Fragment}
@@ -143,13 +152,15 @@ const FullWidthMenu = () => {
                   <ul className="divide-y divide-gray-500">
                     {invitedModules.map((invited) => (
                       <>
-                        <li className="p-2">
-                          <p className="text-xs leading-4 text-gray-500">
-                            {moment(invited.updatedAt).fromNow()}
-                          </p>
-                          <p className="text-xs leading-4 font-bold">Invited to co-author</p>
-                          <p className="text-xs leading-4">{invited.title}</p>
-                        </li>
+                        <Link href="/invitations">
+                          <li className="cursor-pointer p-2">
+                            <p className="text-xs leading-4 text-gray-500">
+                              {moment(invited.updatedAt).fromNow()}
+                            </p>
+                            <p className="text-xs leading-4 font-bold">{invited.title}</p>
+                            <p className="text-xs leading-4">Invited to co-author</p>
+                          </li>
+                        </Link>
                       </>
                     ))}
                   </ul>
