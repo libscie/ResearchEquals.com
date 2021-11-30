@@ -1,8 +1,8 @@
 import { Link, Routes, useMutation, useSession, useRouter, validateZodSchema } from "blitz"
 import { OverflowMenuHorizontal32, Notification32, Settings32 } from "@carbon/icons-react"
-import { Listbox, Menu, Transition } from "@headlessui/react"
+import { Listbox, Menu, Popover, Transition } from "@headlessui/react"
 import { Fragment, useState } from "react"
-import { CheckIcon, SelectorIcon } from "@heroicons/react/solid"
+import { CheckIcon, SelectorIcon, ChevronDownIcon } from "@heroicons/react/solid"
 
 import { useCurrentUser } from "../hooks/useCurrentUser"
 import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
@@ -108,13 +108,33 @@ const FullWidthMenu = () => {
             </Transition>
           </div>
         </Listbox>
-        <a
-          href="#"
-          className="ml-5 flex-shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          <span className="sr-only">View notifications</span>
-          <Notification32 className="h-6 w-6" aria-hidden="true" />
-        </a>
+        <Popover className="relative">
+          {({ open }) => (
+            <>
+              <Popover.Button
+                className={`
+                ${open ? "" : "text-opacity-90"}
+                ml-5 flex-shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
+              >
+                <span className="sr-only">View notifications</span>
+                <Notification32 className="h-6 w-6" aria-hidden="true" />
+              </Popover.Button>
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-200"
+                enterFrom="opacity-0 translate-y-1"
+                enterTo="opacity-100 translate-y-0"
+                leave="transition ease-in duration-150"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 translate-y-1"
+              >
+                <Popover.Panel className="absolute z-10 max-w-28 w-28 bg-gray-300 dark:bg-gray-300 px-4 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0">
+                  <div className="p-2">test</div>
+                </Popover.Panel>
+              </Transition>
+            </>
+          )}
+        </Popover>
         <span className="sr-only">Open settings</span>
         <SettingsModal
           styling="block text-left text-sm text-gray-700 rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 lg:ml-5"
