@@ -1,3 +1,4 @@
+import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 import { Link, Routes, useQuery, useSession, useRouter } from "blitz"
 
 import { useCurrentUser } from "../hooks/useCurrentUser"
@@ -14,7 +15,7 @@ const NavTabs = () => {
   const currentWorkspace = useCurrentWorkspace()
   const router = useRouter()
   const [drafts] = useQuery(getDrafts, { session })
-  console.log(currentWorkspace)
+  const [invitations] = useQuery(getInvitedModules, { session })
 
   let tabs
   if (currentWorkspace) {
@@ -34,6 +35,12 @@ const NavTabs = () => {
         href: Routes.DraftsPage(),
         count: drafts.length,
         current: router.asPath === Routes.DraftsPage().pathname,
+      },
+      {
+        name: "Invitations",
+        href: Routes.InvitationsPage(),
+        count: invitations.length,
+        current: router.asPath === Routes.InvitationsPage().pathname,
       },
     ]
   }

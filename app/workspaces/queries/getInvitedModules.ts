@@ -17,14 +17,15 @@ export default async function getInvitedModules({ session }) {
       },
     ],
     include: {
+      type: true,
       authors: {
-        where: {
-          workspaceId: session.workspaceId,
-          acceptedInvitation: null,
+        include: {
+          workspace: true,
         },
       },
     },
   })
 
+  console.log(invitedModules)
   return invitedModules
 }
