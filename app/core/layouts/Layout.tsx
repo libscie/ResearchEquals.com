@@ -14,7 +14,7 @@ const Layout = ({ title, children }: LayoutProps) => {
         <title>{title || "ResearchEquals"}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="min-h-screen flex flex-col bg-gray-300 dark:bg-gray-900 text-black dark:text-white">
+      <div className="min-h-screen flex flex-col bg-gray-300 dark:bg-gray-300 text-gray-900 dark:text-gray-900">
         <div className="flex-grow">{children}</div>
       </div>
       <CookieConsent

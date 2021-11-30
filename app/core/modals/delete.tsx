@@ -19,10 +19,10 @@ export default function DeleteModal() {
 
   return (
     <>
-      <h3 className="text-sm font-medium text-gray-700 dark:text-gray-100">Delete your account</h3>
+      <h3 className="text-sm font-medium text-gray-700 dark:text-gray-700">Delete your account</h3>
       <div className="flex w-11/12">
         <div className="">
-          <div className="my-2 text-sm font-medium text-gray-700 dark:text-gray-100">
+          <div className="my-2 text-sm text-gray-700 dark:text-gray-700">
             <p>
               Your publication profile and publications will not be deleted if you have published.
             </p>
@@ -31,7 +31,7 @@ export default function DeleteModal() {
         <div className="my-2">
           <button
             type="button"
-            className="px-4 py-2 border border-transparent font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm"
+            className=" py-2 px-4 border border-gray-500 bg-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             onClick={openModal}
           >
             Delete
@@ -65,12 +65,12 @@ export default function DeleteModal() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform shadow-xl rounded-2xl text-gray-900 dark:text-gray-100 bg-gray-300 dark:bg-gray-900">
+                <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform shadow-xl text-gray-900 dark:text-gray-900 bg-gray-300 dark:bg-gray-300">
                   <Dialog.Title as="h3" className="text-lg font-medium leading-6 ">
                     Confirm account deletion
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-sm text-gray-900">
+                    <p className="text-sm">
                       Your user account will be deleted without recovery options. Your already
                       published modules will not be deleted. Your public profile will only be
                       deleted if there are no publications linked to it.
@@ -80,7 +80,7 @@ export default function DeleteModal() {
                   <div className="mt-4">
                     <button
                       type="button"
-                      className="inline-flex justify-center px-4 py-2 text-sm font-medium text-green-900 bg-green-100 border border-transparent rounded-md hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-500"
+                      className=" py-2 px-4 border border-gray-500 bg-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                       onClick={async () => {
                         try {
                           await deleteUserMutation()
@@ -94,7 +94,7 @@ export default function DeleteModal() {
                     </button>
                     <button
                       type="button"
-                      className="inline-flex justify-center px-4 py-2 text-sm font-medium text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2  mx-2 focus-visible:ring-red-500"
+                      className="mx-2 py-2 px-4 border border-gray-500 bg-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                       onClick={async () => {
                         setIsOpen(false)
                       }}

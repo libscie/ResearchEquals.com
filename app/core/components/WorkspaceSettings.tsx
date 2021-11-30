@@ -93,7 +93,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         <div className="my-4">
           <label
             htmlFor="bio"
-            className="my-1 block text-sm font-medium text-gray-700 dark:text-gray-100"
+            className="my-1 block text-sm font-medium bg-gray-300 dark:bg-gray-300 text-gray-700 dark:text-gray-700"
           >
             Bio
           </label>
@@ -101,7 +101,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
             <textarea
               rows={4}
               id="bio"
-              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-11/12 sm:text-sm border border-gray-500 bg-gray-300 dark:bg-gray-800 rounded-md"
+              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-11/12 sm:text-sm border border-gray-500 bg-gray-300 dark:bg-gray-300 text-gray-700 dark:text-gray-700 rounded-md"
               {...formik.getFieldProps("bio")}
               defaultValue={workspace.bio}
             />
@@ -113,7 +113,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         <div className="my-4">
           <label
             htmlFor="pronouns"
-            className=" my-1 block text-sm font-medium text-gray-700 dark:text-gray-100"
+            className="my-1 block text-sm font-medium bg-gray-300 dark:bg-gray-300 text-gray-700 dark:text-gray-700"
           >
             Pronouns
           </label>
@@ -122,7 +122,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               id="pronouns"
               type="pronouns"
               autoComplete="pronouns"
-              className="appearance-none block w-11/12 px-3 py-2 border border-gray-500 bg-gray-300 dark:bg-gray-800  dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+              className="appearance-none block w-11/12 px-3 py-2 border border-gray-500 bg-gray-300 dark:bg-gray-300 text-gray-700 dark:text-gray-700  dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
               {...formik.getFieldProps("pronouns")}
             />
             {formik.touched.pronouns && formik.errors.pronouns ? (
@@ -133,7 +133,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         <div className="my-4">
           <label
             htmlFor="profileUrl"
-            className=" my-1 block text-sm font-medium text-gray-700 dark:text-gray-100"
+            className="my-1 block text-sm font-medium bg-gray-300 dark:bg-gray-300 text-gray-700 dark:text-gray-700"
           >
             Profile URL
           </label>
@@ -143,7 +143,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               id="profileUrl"
               type="url"
               autoComplete="profileUrl"
-              className="appearance-none block w-11/12 px-3 py-2 border border-gray-500 bg-gray-300 dark:bg-gray-800  dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+              className="appearance-none block w-11/12 px-3 py-2 border border-gray-500 bg-gray-300 dark:bg-gray-300 text-gray-700 dark:text-gray-700 dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
               {...formik.getFieldProps("profileUrl")}
             />
             {formik.touched.profileUrl && formik.errors.profileUrl ? (
@@ -155,13 +155,13 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         <div className="sticky bottom-0 py-2 bg-gray-300">
           <button
             type="submit"
-            className="px-4 py-2 border text-medium border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className=" py-2 px-4 border border-gray-500 bg-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             Save
           </button>
           <button
             type="submit"
-            className="mx-2 px-4 py-2 border text-medium border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+            className="mx-2 py-2 px-4 border border-gray-500 bg-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             onClick={() => {
               setIsOpen(false)
             }}

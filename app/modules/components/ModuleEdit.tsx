@@ -84,7 +84,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
     <div className="max-w-4xl mx-auto overflow-y-auto text-base">
       <Toaster position="bottom-center" reverseOrder={false} />
       {/* Menu bar */}
-      <div className="w-full bg-gray-300 flex">
+      <div className="w-full flex">
         {/* Push all menu bars to the right */}
         <div className="flex-grow"></div>
         <div>
@@ -162,11 +162,15 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
       {isEditing ? (
         <div className="my-8">
           <form onSubmit={formik.handleSubmit}>
-            <div>
+            <div className="my-2">
               <label htmlFor="type" className="sr-only">
                 Module type
               </label>
-              <select className="rounded my-1" id="type" {...formik.getFieldProps("type")}>
+              <select
+                className="rounded my-1 bg-gray-300 dark:bg-gray-300"
+                id="type"
+                {...formik.getFieldProps("type")}
+              >
                 <option value="">--Please choose a module type--</option>
                 {moduleTypes.map((type) => (
                   <>
@@ -176,7 +180,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
               </select>
               {formik.touched.type && formik.errors.type ? <div>{formik.errors.type}</div> : null}
             </div>
-            <div>
+            <div className="my-2">
               <label htmlFor="title" className="sr-only block text-sm font-medium text-gray-700">
                 Title
               </label>
@@ -184,7 +188,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
                 <textarea
                   rows={2}
                   id="title"
-                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-500 bg-gray-300 dark:bg-gray-300 rounded-md"
                   {...formik.getFieldProps("title")}
                 />
                 {formik.touched.title && formik.errors.title ? (
@@ -192,7 +196,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
                 ) : null}
               </div>
             </div>
-            <div>
+            <div className="my-2">
               <label
                 htmlFor="description"
                 className="sr-only block text-sm font-medium text-gray-700"
@@ -203,7 +207,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
                 <textarea
                   rows={8}
                   id="description"
-                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-500  bg-gray-300 dark:bg-gray-300 rounded-md"
                   {...formik.getFieldProps("description")}
                 />
                 {formik.touched.description && formik.errors.description ? (
@@ -211,11 +215,15 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
                 ) : null}
               </div>
             </div>
-            <div>
+            <div className="my-2">
               <label htmlFor="license" className="sr-only">
                 License
               </label>
-              <select className="rounded my-1" id="license" {...formik.getFieldProps("license")}>
+              <select
+                className="rounded my-1 bg-gray-300 dark:bg-gray-300"
+                id="license"
+                {...formik.getFieldProps("license")}
+              >
                 <option value="">--Please choose a license--</option>
                 {licenses.map((license) => (
                   <>
@@ -231,7 +239,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
             </div>
             <button
               type="submit"
-              className="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="my-2 inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md bg-gray-300 dark:bg-gray-300 text-gray-900 dark:text-gray-900  hover:bg-indigo-300 border border-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Save
               <Save32 className="ml-2 -mr-0.5 h-4 w-4" aria-hidden="true" />

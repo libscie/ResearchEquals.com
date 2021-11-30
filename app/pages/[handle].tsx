@@ -42,7 +42,7 @@ export const getServerSideProps = async ({ params }) => {
 const HandlePage = ({ workspace }) => {
   return (
     <Layout title={`R=${workspace.name || workspace.handle}`}>
-      <div className="bg-gray-300 dark:bg-gray-700 text-black dark:text-white h-full">
+      <div className="bg-gray-300 dark:bg-gray-300 text-gray-900 dark:text-gray-900 h-full">
         <Navbar />
         <Toaster position="bottom-center" reverseOrder={false} />{" "}
         <div className="max-w-7xl mx-2 sm:mx-auto">
@@ -252,6 +252,7 @@ const HandleFeed = ({ handle }) => {
               </>
             ))}
           </ul>
+          {/* TODO: Put into one component - also used in dashboard.tsx */}
           <div className="flex my-1">
             <div className="flex-1 flex items-center justify-between">
               <p className="text-sm text-gray-700">
