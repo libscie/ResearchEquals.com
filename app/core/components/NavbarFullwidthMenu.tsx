@@ -1,8 +1,17 @@
-import { Link, Routes, useMutation, useSession, useRouter, validateZodSchema } from "blitz"
+import {
+  Link,
+  Routes,
+  useMutation,
+  useSession,
+  useRouter,
+  validateZodSchema,
+  useQuery,
+} from "blitz"
 import { OverflowMenuHorizontal32, Notification32, Settings32 } from "@carbon/icons-react"
 import { Listbox, Menu, Popover, Transition } from "@headlessui/react"
 import { Fragment, useState } from "react"
 import { CheckIcon, SelectorIcon, ChevronDownIcon } from "@heroicons/react/solid"
+import moment from "moment"
 
 import { useCurrentUser } from "../hooks/useCurrentUser"
 import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
@@ -10,12 +19,14 @@ import logout from "../../auth/mutations/logout"
 import SettingsModal from "../modals/settings"
 import changeSessionWorkspace from "../../workspaces/mutations/changeSessionWorkspace"
 import QuickDraft from "../../modules/components/QuickDraft"
+import getInvitedModules from "../../workspaces/queries/getInvitedModules"
 
 const FullWidthMenu = () => {
   const currentUser = useCurrentUser()
   const session = useSession()
   const router = useRouter()
   const currentWorkspace = useCurrentWorkspace()
+  const [invitedModules] = useQuery(getInvitedModules, { session })
   const [logoutMutation] = useMutation(logout)
   const [changeSessionWorkspaceMutation] = useMutation(changeSessionWorkspace)
   // Match the selected state with the session workspace
@@ -128,8 +139,20 @@ const FullWidthMenu = () => {
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-0 translate-y-1"
               >
-                <Popover.Panel className="absolute z-10 max-w-28 w-28 bg-gray-300 dark:bg-gray-300 px-4 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0">
-                  <div className="p-2">test</div>
+                <Popover.Panel className="absolute z-10 max-w-72 w-72 bg-gray-300 dark:bg-gray-300 px-4 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0 shadow-2xl">
+                  <ul className="divide-y divide-gray-500">
+                    {invitedModules.map((invited) => (
+                      <>
+                        <li className="p-2">
+                          <p className="text-xs leading-4 text-gray-500">
+                            {moment(invited.updatedAt).fromNow()}
+                          </p>
+                          <p className="text-xs leading-4 font-bold">Invited to co-author</p>
+                          <p className="text-xs leading-4">{invited.title}</p>
+                        </li>
+                      </>
+                    ))}
+                  </ul>
                 </Popover.Panel>
               </Transition>
             </>
