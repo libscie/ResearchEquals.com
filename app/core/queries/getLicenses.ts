@@ -4,11 +4,13 @@ export default async function getLicenses() {
   const licenses = await db.license.findMany({
     orderBy: [
       {
-        name: "desc",
+        price: "asc",
+      },
+      {
+        name: "asc",
       },
     ],
   })
 
-  console.log(licenses)
   return licenses
 }
