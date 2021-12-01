@@ -12,7 +12,16 @@ export default async function getCurrentWorkspace({ suffix }) {
       },
       license: true,
       type: true,
-      parents: true,
+      parents: {
+        include: {
+          type: true,
+          authors: {
+            include: {
+              workspace: true,
+            },
+          },
+        },
+      },
     },
   })
 

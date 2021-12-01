@@ -1,8 +1,22 @@
-import { Link, Routes, useMutation, useSession, useRouter, validateZodSchema } from "blitz"
-import { OverflowMenuHorizontal32, Notification32, Settings32 } from "@carbon/icons-react"
-import { Listbox, Menu, Transition } from "@headlessui/react"
+import {
+  Link,
+  Routes,
+  useMutation,
+  useSession,
+  useRouter,
+  validateZodSchema,
+  useQuery,
+} from "blitz"
+import {
+  OverflowMenuHorizontal32,
+  Notification32,
+  NotificationNew32,
+  Settings32,
+} from "@carbon/icons-react"
+import { Listbox, Menu, Popover, Transition } from "@headlessui/react"
 import { Fragment, useState } from "react"
-import { CheckIcon, SelectorIcon } from "@heroicons/react/solid"
+import { CheckIcon, SelectorIcon, ChevronDownIcon } from "@heroicons/react/solid"
+import moment from "moment"
 
 import { useCurrentUser } from "../hooks/useCurrentUser"
 import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
@@ -10,12 +24,14 @@ import logout from "../../auth/mutations/logout"
 import SettingsModal from "../modals/settings"
 import changeSessionWorkspace from "../../workspaces/mutations/changeSessionWorkspace"
 import QuickDraft from "../../modules/components/QuickDraft"
+import getInvitedModules from "../../workspaces/queries/getInvitedModules"
 
 const FullWidthMenu = () => {
   const currentUser = useCurrentUser()
   const session = useSession()
   const router = useRouter()
   const currentWorkspace = useCurrentWorkspace()
+  const [invitedModules] = useQuery(getInvitedModules, { session })
   const [logoutMutation] = useMutation(logout)
   const [changeSessionWorkspaceMutation] = useMutation(changeSessionWorkspace)
   // Match the selected state with the session workspace
@@ -108,13 +124,51 @@ const FullWidthMenu = () => {
             </Transition>
           </div>
         </Listbox>
-        <a
-          href="#"
-          className="ml-5 flex-shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          <span className="sr-only">View notifications</span>
-          <Notification32 className="h-6 w-6" aria-hidden="true" />
-        </a>
+        <Popover className="relative">
+          {({ open }) => (
+            <>
+              <Popover.Button
+                className={`
+                ${open ? "" : "text-opacity-90"}
+                ml-5 flex-shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
+              >
+                <span className="sr-only">View notifications</span>
+                {invitedModules.length > 0 ? (
+                  <NotificationNew32 className="h-6 w-6" aria-hidden="true" />
+                ) : (
+                  <Notification32 className="h-6 w-6" aria-hidden="true" />
+                )}
+              </Popover.Button>
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-200"
+                enterFrom="opacity-0 translate-y-1"
+                enterTo="opacity-100 translate-y-0"
+                leave="transition ease-in duration-150"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 translate-y-1"
+              >
+                <Popover.Panel className="absolute z-10 max-w-72 w-72 bg-gray-300 dark:bg-gray-300 px-4 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0 shadow-2xl">
+                  <ul className="divide-y divide-gray-500">
+                    {invitedModules.map((invited) => (
+                      <>
+                        <Link href="/invitations">
+                          <li className="cursor-pointer p-2">
+                            <p className="text-xs leading-4 text-gray-500">
+                              {moment(invited.updatedAt).fromNow()}
+                            </p>
+                            <p className="text-xs leading-4 font-bold">{invited.title}</p>
+                            <p className="text-xs leading-4">Invited to co-author</p>
+                          </li>
+                        </Link>
+                      </>
+                    ))}
+                  </ul>
+                </Popover.Panel>
+              </Transition>
+            </>
+          )}
+        </Popover>
         <span className="sr-only">Open settings</span>
         <SettingsModal
           styling="block text-left text-sm text-gray-700 rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 lg:ml-5"

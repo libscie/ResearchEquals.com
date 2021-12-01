@@ -1,3 +1,4 @@
+import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 import { Link, Routes, useQuery, useSession, useRouter } from "blitz"
 
 import { useCurrentUser } from "../hooks/useCurrentUser"
@@ -14,7 +15,7 @@ const NavTabs = () => {
   const currentWorkspace = useCurrentWorkspace()
   const router = useRouter()
   const [drafts] = useQuery(getDrafts, { session })
-  console.log(currentWorkspace)
+  const [invitations] = useQuery(getInvitedModules, { session })
 
   let tabs
   if (currentWorkspace) {
@@ -35,6 +36,12 @@ const NavTabs = () => {
         count: drafts.length,
         current: router.asPath === Routes.DraftsPage().pathname,
       },
+      {
+        name: "Invitations",
+        href: Routes.InvitationsPage(),
+        count: invitations.length,
+        current: router.asPath === Routes.InvitationsPage().pathname,
+      },
     ]
   }
 
@@ -51,7 +58,8 @@ const NavTabs = () => {
                       tab.current
                         ? "border-indigo-500 text-gray-200"
                         : "border-transparent hover:text-gray-300 hover:border-gray-200",
-                      "whitespace-nowrap flex py-4 px-1 border-b-2 font-medium text-sm"
+                      tab.count === 0 ? "pointer-events-none text-gray-300" : "",
+                      "whitespace-nowrap flex py-4 px-1 border-b-2 font-medium text-sm disabled"
                     )}
                     aria-current={tab.current ? "page" : undefined}
                   >
