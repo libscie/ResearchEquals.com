@@ -21,15 +21,15 @@ export default resolver.pipe(resolver.authorize(), async (_, ctx) => {
 
   // TODO: Remove workspace information?
   // TODO: How to deal with multi-member workspaces?
+  await ctx.session.$revoke()
 
-  await db.membership.deleteMany({ where: { userId: ctx.session.userId } })
+  await db.membership.deleteMany({ where: { userId: user.id } })
   if (workspace.authorships.length === 0) {
-    await db.workspace.delete({ where: { id: ctx.session.workspaceId } })
+    await db.workspace.delete({ where: { id: workspace.id } })
     await index.deleteObject(workspace.id.toString())
   }
-  await db.session.deleteMany({ where: { userId: ctx.session.userId } })
+  await db.session.deleteMany({ where: { userId: user.id } })
   await db.user.delete({ where: { id: user.id } })
-  await ctx.session.$revoke()
   // For some reason ctx.session.$revokeAll() doesn't delete
 
   return true
