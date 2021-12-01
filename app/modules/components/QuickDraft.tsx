@@ -31,7 +31,6 @@ const QuickDraft = ({ buttonText, buttonStyle }) => {
       })
     ),
     onSubmit: async (values) => {
-      // alert(JSON.stringify(values))
       try {
         await createModuleMutation({
           title: values.title,
@@ -41,11 +40,20 @@ const QuickDraft = ({ buttonText, buttonStyle }) => {
           authors: [],
         })
         setCreateOpen(false)
+        formikReset()
       } catch (error) {
         alert(error.toString())
       }
     },
   })
+
+  const formikReset = () => {
+    formik.setFieldValue("title", "")
+    formik.setFieldValue("description", "")
+    formik.setFieldValue("main", "")
+    formik.setFieldValue("type", "")
+    formik.setFieldValue("license", "")
+  }
 
   return (
     <>
@@ -208,7 +216,10 @@ const QuickDraft = ({ buttonText, buttonStyle }) => {
                       <button
                         type="button"
                         className="mx-4  py-2 px-4 border border-gray-500 bg-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        onClick={() => setCreateOpen(false)}
+                        onClick={() => {
+                          setCreateOpen(false)
+                          formikReset()
+                        }}
                       >
                         Cancel
                       </button>
