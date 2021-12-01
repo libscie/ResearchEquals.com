@@ -239,7 +239,7 @@ const SignupPage: BlitzPage = () => {
               </Switch>
               <p className="mx-2 text-gray-500 dark:text-gray-100 font-normal text-base">
                 I agree to the{" "}
-                <Link href="https://google.com">
+                <Link href="https://libscie.notion.site/Code-of-Conduct-580ab64832a2478fad7d9dfad9d3da15">
                   <a target="_blank" className="text-gray-700 dark:text-gray-100 underline">
                     Code of Conduct
                   </a>
