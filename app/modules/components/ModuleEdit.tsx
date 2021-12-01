@@ -4,7 +4,6 @@ import moment from "moment"
 import algoliasearch from "algoliasearch"
 import { z } from "zod"
 import { getAlgoliaResults } from "@algolia/autocomplete-js"
-import { Toaster } from "react-hot-toast"
 import { Edit32, EditOff32, Save32 } from "@carbon/icons-react"
 import { Prisma } from "prisma"
 import { useFormik } from "formik"
@@ -82,7 +81,6 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
 
   return (
     <div className="max-w-4xl mx-auto overflow-y-auto text-base">
-      <Toaster position="bottom-center" reverseOrder={false} />
       {/* Menu bar */}
       <div className="w-full flex">
         {/* Push all menu bars to the right */}

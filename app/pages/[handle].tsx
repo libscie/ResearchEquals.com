@@ -45,7 +45,6 @@ const HandlePage = ({ workspace }) => {
     <Layout title={`R=${workspace.name || workspace.handle}`}>
       <div className="bg-gray-300 dark:bg-gray-300 text-gray-900 dark:text-gray-900 h-full">
         <Navbar />
-        <Toaster position="bottom-center" reverseOrder={false} />{" "}
         <div className="max-w-7xl mx-2 sm:mx-auto">
           <div className="w-full">
             <div className="flex my-8">
