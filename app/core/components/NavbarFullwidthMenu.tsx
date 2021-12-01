@@ -130,7 +130,9 @@ const FullWidthMenu = () => {
               <Popover.Button
                 className={`
                 ${open ? "" : "text-opacity-90"}
-                ml-5 flex-shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
+                ml-5 flex-shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+                ${invitedModules.length > 0 ? "" : "pointer-events-none"}
+                `}
               >
                 <span className="sr-only">View notifications</span>
                 {invitedModules.length > 0 ? (
