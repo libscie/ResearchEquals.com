@@ -34,8 +34,8 @@ const EditMainFile = ({ mainFile, setQueryData, moduleEdit }) => {
             Upload file
             <Widget
               publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
-              secureSignature={uploadSecret.signature}
-              secureExpire={uploadSecret.expire}
+              // secureSignature={uploadSecret.signature}
+              // secureExpire={uploadSecret.expire}
               ref={widgetApi}
               previewStep
               clearable

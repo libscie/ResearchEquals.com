@@ -39,8 +39,8 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit }) => {
         {moduleEdit.supporting ? (
           <Widget
             publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
-            secureSignature={uploadSecret.signature}
-            secureExpire={uploadSecret.expire}
+            // secureSignature={uploadSecret.signature}
+            // secureExpire={uploadSecret.expire}
             ref={widgetApi}
             previewStep
             multiple
@@ -51,8 +51,8 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit }) => {
         ) : (
           <Widget
             publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
-            secureSignature={uploadSecret.signature}
-            secureExpire={uploadSecret.expire}
+            // secureSignature={uploadSecret.signature}
+            // secureExpire={uploadSecret.expire}
             ref={widgetApi}
             previewStep
             multiple
