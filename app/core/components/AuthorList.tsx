@@ -1,5 +1,5 @@
 import React, { useRef } from "react"
-import { useMutation, useSession } from "blitz"
+import { Link, useMutation, useSession } from "blitz"
 import toast from "react-hot-toast"
 import { Draggable } from "react-beautiful-dnd"
 
@@ -136,12 +136,16 @@ function AuthorList({
                   <button
                     className="bg-green-500 rounded text-white px-4 py-2 hover:bg-green-600"
                     onClick={async () => {
-                      const updatedModule = await approveAuthorshipMutation({
-                        id: author.id,
-                        suffix,
-                      })
-                      toast.success("Version approved for publication")
-                      setAuthorState(updatedModule)
+                      if (!author.workspace.orcid || !author.workspace.name) {
+                        toast.error("You cannot publish until you link your ORCID")
+                      } else {
+                        const updatedModule = await approveAuthorshipMutation({
+                          id: author.id,
+                          suffix,
+                        })
+                        toast.success("Version approved for publication")
+                        setAuthorState(updatedModule)
+                      }
                       // alert("This will approve to publish")
                     }}
                   >
