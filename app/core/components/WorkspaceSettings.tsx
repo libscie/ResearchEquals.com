@@ -5,6 +5,7 @@ import { Link, useMutation, validateZodSchema } from "blitz"
 import { useFormik } from "formik"
 import { z } from "zod"
 import { Renew32 } from "@carbon/icons-react"
+import toast from "react-hot-toast"
 
 const WorkspaceSettings = ({ workspace, setIsOpen }) => {
   const [changeBioMutation, { isSuccess: bioChanged }] = useMutation(changeBio)
@@ -19,35 +20,52 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
     },
     validate: validateZodSchema(
       z.object({
-        bio: z.string(),
-        pronouns: z.string().max(20),
-        profileUrl: z.string().url(),
+        bio: z.any(),
+        pronouns: z.any(),
+        profileUrl: z.any(),
       })
     ),
     onSubmit: async (values) => {
       try {
         if (values.bio !== workspace.bio) {
-          await changeBioMutation({
-            handle: workspace!.handle,
-            bio: values.bio,
-          })
+          try {
+            z.string().parse(values.bio)
+            await changeBioMutation({
+              handle: workspace!.handle,
+              bio: values.bio,
+            })
+            toast.success("Updated bio")
+          } catch (error) {
+            toast.error("Bio needs to be a string")
+          }
         }
 
         if (values.pronouns !== workspace.pronouns) {
-          await changePronounsMutation({
-            handle: workspace!.handle,
-            pronouns: values.pronouns,
-          })
+          try {
+            z.string().max(20).parse(values.pronouns)
+            await changePronounsMutation({
+              handle: workspace!.handle,
+              pronouns: values.pronouns,
+            })
+            toast.success("Updated pronouns")
+          } catch (error) {
+            toast.error("Pronouns can be 20 characters")
+          }
         }
 
-        if (values.profileUrl !== workspace.url) {
-          await changeUrlMutation({
-            handle: workspace!.handle,
-            url: values.profileUrl,
-          })
+        if (values.profileUrl !== workspace.url && values.profileUrl !== "") {
+          try {
+            z.string().url().parse(values.profileUrl)
+            await changeUrlMutation({
+              handle: workspace!.handle,
+              url: values.profileUrl,
+            })
+            toast.success("Updated URL")
+          } catch (error) {
+            toast.error("Enter a valid URL")
+          }
         }
-
-        setIsOpen(false)
+        // TODO: Add remove Url mutation when empty
       } catch (error) {
         alert(error.toString())
       }
@@ -160,7 +178,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
             Save
           </button>
           <button
-            type="submit"
+            type="reset"
             className="mx-2 py-2 px-4 border border-gray-500 bg-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             onClick={() => {
               setIsOpen(false)
