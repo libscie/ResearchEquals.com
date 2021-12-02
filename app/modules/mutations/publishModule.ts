@@ -13,6 +13,18 @@ const index = client.initIndex(`${process.env.ALGOLIA_PREFIX}_modules`)
 export default resolver.pipe(resolver.authorize(), async ({ id, suffix }, ctx) => {
   const datetime = Date.now()
 
+  const module = await db.module.findFirst({
+    where: {
+      id,
+    },
+    include: {
+      license: true,
+      type: true,
+    },
+  })
+
+  if (!module!.main) throw Error("Main file is empty")
+
   // TODO: Generate JS Object to convert to XML
   // const jsData = {}
   // const xmlData = convert.js2xml(jsData)
@@ -32,7 +44,7 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }, ctx) =
   // })
 
   // await axios.post(process.env.CROSSREF_URL!, form, { headers: form.getHeaders() })
-  const module = await db.module.update({
+  const publishedModule = await db.module.update({
     where: {
       id,
     },
@@ -47,15 +59,15 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }, ctx) =
   })
 
   await index.saveObject({
-    objectID: module.id,
-    suffix: module.suffix,
-    doi: `10.53962/${module.suffix}`,
-    license: module.license?.url,
-    type: module.type.name,
+    objectID: publishedModule.id,
+    suffix: publishedModule.suffix,
+    doi: `10.53962/${publishedModule.suffix}`,
+    license: publishedModule.license?.url,
+    type: publishedModule.type.name,
     // It's called name and not title to improve Algolia search
-    name: module.title,
-    description: module.description,
-    publishedAt: module.publishedAt,
+    name: publishedModule.title,
+    description: publishedModule.description,
+    publishedAt: publishedModule.publishedAt,
   })
 
   return true

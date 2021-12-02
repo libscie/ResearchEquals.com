@@ -1,7 +1,9 @@
 import { useMutation, useRouter } from "blitz"
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
+
 import publishModule from "../../modules/mutations/publishModule"
+import toast from "react-hot-toast"
 
 export default function PublishModule({ module }) {
   let [isOpen, setIsOpen] = useState(false)
@@ -64,9 +66,13 @@ export default function PublishModule({ module }) {
                     type="button"
                     className="inline-flex justify-center px-4 py-2 text-sm font-medium text-green-900 bg-green-100 border border-transparent rounded-md hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-500 mr-4"
                     onClick={async () => {
-                      await publishModuleMutation({ id: module.id })
+                      try {
+                        await publishModuleMutation({ id: module.id })
+                        router.push("/dashboard")
+                      } catch (error) {
+                        toast.error("Module cannot be published. Ensure main file is added.")
+                      }
                       // TODO: Update route to that of module?
-                      router.push("/dashboard")
                     }}
                   >
                     Publish
