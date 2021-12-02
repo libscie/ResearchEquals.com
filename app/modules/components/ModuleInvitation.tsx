@@ -2,7 +2,6 @@ import { useQuery, useMutation, Link, validateZodSchema } from "blitz"
 import { useState, useEffect } from "react"
 import moment from "moment"
 import algoliasearch from "algoliasearch"
-import { Toaster } from "react-hot-toast"
 import { Edit32, EditOff32, Save32 } from "@carbon/icons-react"
 import { Prisma } from "prisma"
 import useCurrentModule from "../queries/useCurrentModule"
@@ -26,7 +25,6 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
 
   return (
     <div className="max-w-4xl mx-auto overflow-y-auto text-base">
-      <Toaster position="bottom-center" reverseOrder={false} />
       {/* Menu bar */}
       <div className="w-full flex">
         {/* Push all menu bars to the right */}

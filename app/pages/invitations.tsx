@@ -179,7 +179,6 @@ const Invitations = () => {
 const InvitationsPage: BlitzPage = () => {
   return (
     <>
-      <Toaster position="bottom-center" reverseOrder={false} />
       <Navbar />
       <main className="flex relative">
         <Suspense fallback="Loading...">

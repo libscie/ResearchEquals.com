@@ -1,6 +1,7 @@
 import { ReactNode } from "react"
 import { Head, Link } from "blitz"
 import CookieConsent from "react-cookie-consent"
+import { Toaster } from "react-hot-toast"
 
 type LayoutProps = {
   title?: string
@@ -10,6 +11,7 @@ type LayoutProps = {
 const Layout = ({ title, children }: LayoutProps) => {
   return (
     <>
+      <Toaster position="bottom-center" reverseOrder={false} />
       <Head>
         <title>{title || "ResearchEquals"}</title>
         <link rel="icon" href="/favicon.ico" />

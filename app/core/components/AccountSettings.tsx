@@ -5,6 +5,7 @@ import changePronouns from "app/workspaces/mutations/changePronouns"
 import changeUrl from "app/workspaces/mutations/changeUrl"
 import { Link, useMutation, validateZodSchema } from "blitz"
 import { useFormik } from "formik"
+import toast from "react-hot-toast"
 import { z } from "zod"
 import DeleteModal from "../modals/delete"
 
@@ -34,14 +35,18 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
             await changeEmailMutation(values)
           }
         } catch (error) {
-          // TODO: Add prompt for email duplicate
+          toast.error("You cannot use this email")
         }
 
         if (values.newPassword !== values.passwordConfirmation && values.newPassword !== "") {
           alert("Please check the new password for typo's")
-        } else {
-          await changePasswordMutation(values)
-          setIsOpen(false)
+        } else if (values.newPassword !== "") {
+          try {
+            await changePasswordMutation(values)
+            setIsOpen(false)
+          } catch (error) {
+            toast.error("Password needs to be at least 10 characters")
+          }
         }
       } catch (error) {
         alert(error.toString())
@@ -101,6 +106,7 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
           >
             New password
           </label>
+          <p className="text-xs">Password needs to be at least 10 characters.</p>
           <div className="mt-1">
             <input
               id="newPassword"
@@ -118,7 +124,7 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
             htmlFor="passwordConfirmation"
             className=" my-1 block text-sm font-medium bg-gray-300 dark:bg-gray-300 text-gray-700 dark:text-gray-700"
           >
-            New password
+            Repeat password
           </label>
           <div className="mt-1">
             <input
