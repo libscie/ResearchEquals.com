@@ -140,8 +140,8 @@ const OnboardingAvatar = ({ data }) => {
               </button>
               <Widget
                 publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
-                secureSignature={uploadSecret.signature}
-                secureExpire={uploadSecret.expire}
+                // secureSignature={uploadSecret.signature}
+                // secureExpire={uploadSecret.expire}
                 crop="1:1"
                 ref={widgetApi}
                 imageShrink="480x480"
