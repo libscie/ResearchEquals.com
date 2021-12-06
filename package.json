@@ -44,7 +44,7 @@
     "passport-orcid": "0.0.4",
     "postcss": "8.3.6",
     "postmark": "2.7.7",
-    "prisma": "2.29.1",
+    "prisma": "3.6.0",
     "react": "18.0.0-alpha-64f83a6fd-20210819",
     "react-beautiful-dnd": "13.1.0",
     "react-cookie-consent": "6.3.0",
