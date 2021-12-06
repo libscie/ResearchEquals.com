@@ -1,6 +1,9 @@
 {
   "name": "web-app-tbd",
   "version": "1.0.0",
+  "engines": {
+    "node": "17.x"
+  },
   "scripts": {
     "dev": "blitz dev",
     "build": "blitz build",
