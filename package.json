@@ -63,11 +63,11 @@
     "xml-js": "1.6.11",
     "zod": "3.7.3",
     "husky": "6.0.0",
+    "eslint": "7.32.0",
     "typescript": "~4.3"
   },
   "devDependencies": {
     "@types/react": "17.0.19",
-    "eslint": "7.32.0",
     "lint-staged": "10.5.4",
     "prettier": "2.3.2",
     "prettier-plugin-prisma": "0.15.0",
