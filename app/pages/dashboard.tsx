@@ -6,9 +6,10 @@ import {
   useQuery,
   useRouter,
   usePaginatedQuery,
+  useRouterQuery,
 } from "blitz"
 import Layout from "app/core/layouts/Layout"
-import React, { Suspense } from "react"
+import React, { Suspense, useEffect } from "react"
 import toast, { Toaster } from "react-hot-toast"
 import { Disclosure } from "@headlessui/react"
 import moment from "moment"
@@ -27,6 +28,7 @@ const ITEMS_PER_PAGE = 10
 
 const DashboardContent = () => {
   const session = useSession()
+  const query = useRouterQuery()
   // const [updateInvitationMutation, { isSuccess: invitationUpdated }] = useMutation(updateInvitation)
   const [followWorkspaceMutation] = useMutation(followWorkspace)
   const [unfollowWorkspaceMutation] = useMutation(unfollowWorkspace)
@@ -48,6 +50,12 @@ const DashboardContent = () => {
       stat: data.draftModules.length,
     },
   ]
+
+  useEffect(() => {
+    if (query.authError) {
+      toast.error("ORCID connection failed.")
+    }
+  }, [])
 
   if (data) {
     return (
