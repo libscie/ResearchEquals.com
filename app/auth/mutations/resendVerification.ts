@@ -16,7 +16,7 @@ export default resolver.pipe(async (_, ctx) => {
   await Promise.all([
     sendEmailWithTemplate(user!.email!, "welcome", {
       handle: user!.email!,
-      days: 14,
+      days: 30,
       verify_email_url: url`/verifyEmail/${emailCode}`,
     }),
   ])

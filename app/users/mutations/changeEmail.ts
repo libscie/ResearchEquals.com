@@ -19,7 +19,7 @@ export default resolver.pipe(resolver.authorize(), async ({ email }, ctx) => {
   await Promise.all([
     sendEmailWithTemplate(email, "welcome", {
       handle: "test",
-      days: 14,
+      days: 30,
       verify_email_url: url`/verifyEmail/${emailCode}`,
     }),
   ])
