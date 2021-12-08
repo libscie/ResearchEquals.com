@@ -19,6 +19,25 @@ const config: BlitzConfig = {
     ALGOLIA_API_SEARCH_KEY: process.env.ALGOLIA_API_SEARCH_KEY,
     ALGOLIA_PREFIX: process.env.ALGOLIA_PREFIX,
   },
+  pageExtensions: ["md", "mdx", "tsx", "ts", "jsx", "js"],
+  webpack(config, options) {
+    config.module.rules.push({
+      test: /\.mdx?$/,
+      use: [
+        // The default `babel-loader` used by Next:
+        options.defaultLoaders.babel,
+        {
+          loader: "@mdx-js/loader",
+          /** @type {import('@mdx-js/loader').Options} */
+          options: {
+            /* jsxImportSource: …, otherOptions… */
+          },
+        },
+      ],
+    })
+
+    return config
+  },
   /* Uncomment this to customize the webpack config
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     // Note: we provide webpack above so you should not `require` it
