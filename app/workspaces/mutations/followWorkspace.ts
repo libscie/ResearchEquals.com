@@ -1,19 +1,18 @@
 import { resolver } from "blitz"
 import db from "db"
 import { z } from "zod"
+import { Ctx } from "blitz"
 
 const FollowWorkspace = z.object({
-  followerId: z.number(),
   followedId: z.number(),
 })
 
 export default resolver.pipe(
   resolver.zod(FollowWorkspace),
   resolver.authorize(),
-  async ({ followerId, followedId, ...data }) => {
-    // TODO: in multi-tenant app, you must add validation to ensure correct tenant
+  async ({ followedId, ...data }, ctx: Ctx) => {
     const workspace = await db.workspace.update({
-      where: { id: followerId },
+      where: { id: ctx.session.$publicData.workspaceId },
       data: {
         following: {
           connect: {

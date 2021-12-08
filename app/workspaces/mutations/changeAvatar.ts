@@ -16,7 +16,6 @@ export default resolver.pipe(
   resolver.zod(ChangeAvatar),
   resolver.authorize(),
   async ({ ...data }, ctx: Ctx) => {
-    // TODO: in multi-tenant app, you must add validation to ensure correct tenant
     const workspaceOld = await db.workspace.findFirst({
       where: { id: ctx.session.$publicData.workspaceId },
     })
