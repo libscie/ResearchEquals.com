@@ -2,9 +2,11 @@ import { resolver } from "blitz"
 import db from "db"
 import { sendEmailWithTemplate } from "app/postmark"
 import { url } from "app/url"
+import { Ctx } from "blitz"
+
 import * as verifyEmail from "../verify-email"
 
-export default resolver.pipe(async (_, ctx) => {
+export default resolver.pipe(async (_, ctx: Ctx) => {
   const user = await db.user.findFirst({
     where: {
       id: ctx.session.$publicData.userId!,
