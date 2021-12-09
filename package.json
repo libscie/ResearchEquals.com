@@ -33,6 +33,8 @@
     "@carbon/icons-react": "10.41.0",
     "@headlessui/react": "1.4.0",
     "@heroicons/react": "1.0.4",
+    "@mdx-js/loader": "2.0.0-rc.2",
+    "@mdx-js/react": "2.0.0-rc.2",
     "@prisma/client": "2.29.1",
     "@tailwindcss/forms": "0.3.4",
     "@tailwindcss/line-clamp": "0.2.2",
