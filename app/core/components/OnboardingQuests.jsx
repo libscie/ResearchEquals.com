@@ -152,7 +152,6 @@ const OnboardingAvatar = ({ data }) => {
                   try {
                     console.log(JSON.stringify(info))
                     await changeAvatarMutation({
-                      handle: data.handle,
                       avatar: info.cdnUrl,
                     })
                   } catch (err) {

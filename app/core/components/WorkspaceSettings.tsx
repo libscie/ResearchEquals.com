@@ -31,7 +31,6 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
           try {
             z.string().parse(values.bio)
             await changeBioMutation({
-              handle: workspace!.handle,
               bio: values.bio,
             })
             toast.success("Updated bio")
@@ -44,7 +43,6 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
           try {
             z.string().max(20).parse(values.pronouns)
             await changePronounsMutation({
-              handle: workspace!.handle,
               pronouns: values.pronouns,
             })
             toast.success("Updated pronouns")
@@ -57,7 +55,6 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
           try {
             z.string().url().parse(values.profileUrl)
             await changeUrlMutation({
-              handle: workspace!.handle,
               url: values.profileUrl,
             })
             toast.success("Updated URL")

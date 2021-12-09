@@ -155,7 +155,6 @@ const FollowButton = ({ workspace }) => {
                 // TODO: Add action
 
                 await followWorkspaceMutation({
-                  followerId: ownWorkspace?.id!,
                   followedId: workspace.id,
                 })
                 refetch()
@@ -174,7 +173,6 @@ const FollowButton = ({ workspace }) => {
               className="py-2 px-2 text-gray-500 rounded border border-gray-500 bg-gray-300 hover:bg-gray-400 inline-block align-middle"
               onClick={async () => {
                 await unfollowWorkspaceMutation({
-                  followerId: ownWorkspace?.id!,
                   followedId: workspace.id,
                 })
                 refetch()

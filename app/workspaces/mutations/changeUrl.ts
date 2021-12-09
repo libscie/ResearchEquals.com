@@ -2,9 +2,9 @@ import { resolver } from "blitz"
 import db from "db"
 import { z } from "zod"
 import algoliasearch from "algoliasearch"
+import { Ctx } from "blitz"
 
 const ChangeUrl = z.object({
-  handle: z.string(),
   url: z.string().url(),
 })
 
@@ -14,9 +14,11 @@ const index = client.initIndex(`${process.env.ALGOLIA_PREFIX}_workspaces`)
 export default resolver.pipe(
   resolver.zod(ChangeUrl),
   resolver.authorize(),
-  async ({ handle, ...data }) => {
-    // TODO: in multi-tenant app, you must add validation to ensure correct tenant
-    const workspace = await db.workspace.update({ where: { handle }, data })
+  async ({ ...data }, ctx: Ctx) => {
+    const workspace = await db.workspace.update({
+      where: { id: ctx.session.$publicData.workspaceId },
+      data,
+    })
 
     await index.partialUpdateObjects([
       {

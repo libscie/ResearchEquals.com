@@ -18,14 +18,14 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
       email: user!.email!,
       currentPassword: "",
       newPassword: "",
-      passwordConfirmation: "",
+      newRepeat: "",
     },
     validate: validateZodSchema(
       z.object({
         email: z.string().email(),
         currentPassword: z.string(),
         newPassword: z.string(),
-        passwordConfirmation: z.string(),
+        newRepeat: z.string(),
       })
     ),
     onSubmit: async (values) => {
@@ -38,7 +38,7 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
           toast.error("You cannot use this email")
         }
 
-        if (values.newPassword !== values.passwordConfirmation && values.newPassword !== "") {
+        if (values.newPassword !== values.newRepeat && values.newPassword !== "") {
           alert("Please check the new password for typo's")
         } else if (values.newPassword !== "") {
           try {
@@ -81,21 +81,21 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
         </div>
         <div className="my-4">
           <label
-            htmlFor="password"
+            htmlFor="currentPassword"
             className=" my-1 block text-sm font-medium bg-gray-300 dark:bg-gray-300 text-gray-700 dark:text-gray-700"
           >
             Current password
           </label>
           <div className="mt-1">
             <input
-              id="password"
+              id="currentPassword"
               type="password"
               autoComplete="password"
               className="appearance-none block w-11/12 px-3 py-2 border border-gray-500 bg-gray-300 dark:bg-gray-300 text-gray-700 dark:text-gray-700 dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
-              {...formik.getFieldProps("password")}
+              {...formik.getFieldProps("currentPassword")}
             />
-            {formik.touched.password && formik.errors.password ? (
-              <div className="font-normal text-sm">{formik.errors.password}</div>
+            {formik.touched.currentPassword && formik.errors.currentPassword ? (
+              <div className="font-normal text-sm">{formik.errors.currentPassword}</div>
             ) : null}
           </div>
         </div>
@@ -121,20 +121,20 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
         </div>
         <div className="my-4">
           <label
-            htmlFor="passwordConfirmation"
+            htmlFor="newRepeat"
             className=" my-1 block text-sm font-medium bg-gray-300 dark:bg-gray-300 text-gray-700 dark:text-gray-700"
           >
             Repeat password
           </label>
           <div className="mt-1">
             <input
-              id="passwordConfirmation"
+              id="newRepeat"
               type="password"
               className="appearance-none block w-11/12 px-3 py-2 border border-gray-500 bg-gray-300 dark:bg-gray-300 text-gray-700 dark:text-gray-700 dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
-              {...formik.getFieldProps("passwordConfirmation")}
+              {...formik.getFieldProps("newRepeat")}
             />
-            {formik.touched.passwordConfirmation && formik.errors.passwordConfirmation ? (
-              <div className="font-normal text-sm">{formik.errors.passwordConfirmation}</div>
+            {formik.touched.newRepeat && formik.errors.newRepeat ? (
+              <div className="font-normal text-sm">{formik.errors.newRepeat}</div>
             ) : null}
           </div>
         </div>
@@ -148,7 +148,6 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
             Save
           </button>
           <button
-            type="submit"
             className="mx-2 py-2 px-4 border border-gray-500 bg-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             onClick={() => {
               setIsOpen(false)
