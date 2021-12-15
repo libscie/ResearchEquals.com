@@ -253,7 +253,7 @@ const FullWidthMenu = () => {
     return (
       <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
         <Link href={Routes.LoginPage()}>
-          <a className="whitespace-nowrap text-base hover:text-gray-300 border-2 border-indigo-600 px-4 py-2 text-white rounded">
+          <a className="whitespace-nowrap text-base hover:text-gray-600 dark:hover:text-gray-100 border-2 border-indigo-600 px-4 py-2 text-gray-900 dark:text-white rounded">
             Log in
           </a>
         </Link>

@@ -2,7 +2,7 @@ const ResearchEqualsLogo = () => {
   return (
     <>
       <svg
-        className="fill-current text-indigo-600 mx-auto h-12 w-auto"
+        className="fill-current text-indigo-600 dark:text-white mx-auto h-12 w-auto"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 453.54 453.54"
       >
