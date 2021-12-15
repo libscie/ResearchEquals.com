@@ -163,3 +163,9 @@ model Token {
 enum TokenType {
   RESET_PASSWORD
 }
+
+model ReleaseList {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  email     String
+}
