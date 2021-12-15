@@ -12,6 +12,7 @@ import {
   CurrencyEuro32,
   Checkmark24,
   CheckmarkFilled24,
+  Favorite32,
   CircleStrokeGlyph,
   TableSplit32,
   Terminal32,
@@ -106,7 +107,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                       For your entire research journey, no matter the output.
                     </p>
                     <p className="text-xl text-gray-800 dark:text-gray-50">
-                      A new publishing format: Research modules.
+                      A new publishing format: Research modules. Only on ResearchEquals.com
                     </p>
                   </div>
                   {/* TODO: Replace with formik form */}
@@ -394,8 +395,10 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                   <h2 className="text-2xl font-extrabold text-white dark:text-gray-50 sm:text-5xl sm:tracking-tight lg:text-6xl my-4">
                     Zero cost
                   </h2>
-                  <p className="my-2 text-lg">
-                    We <span aria-label="love">💜</span> open access, so we made it free.
+                  <p className="flex my-2 text-lg">
+                    We{" "}
+                    <Favorite32 className="fill-current stroke-current stroke-2 text-white mx-2 w-6 h-6" />{" "}
+                    open access, so we made it free.
                   </p>
                   <ul role="list" className="my-4 space-y-4">
                     {freeLicenses.map((license) => (
