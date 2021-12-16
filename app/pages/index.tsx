@@ -106,7 +106,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                     <p className="mt-6 text-xl text-gray-800 dark:text-gray-50">
                       For your entire research journey, no matter the output.
                     </p>
-                    <p className="text-xl text-gray-800 dark:text-gray-50">
+                    <p className="my-4 text-xl text-gray-800 dark:text-gray-50">
                       A new publishing format: Research modules. Only on ResearchEquals.com
                     </p>
                   </div>
