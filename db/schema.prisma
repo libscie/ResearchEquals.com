@@ -41,6 +41,8 @@ model License {
   name      String
   price     Int      @default(0)
   Module    Module[]
+
+  @@unique([url, name])
 }
 
 model ModuleType {
