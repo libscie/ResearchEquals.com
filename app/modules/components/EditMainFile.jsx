@@ -13,13 +13,13 @@ const EditMainFile = ({ mainFile, setQueryData, moduleEdit }) => {
 
   return (
     <>
-      {mainFile ? (
+      {Object.keys(mainFile).length > 0 ? (
         <EditMainFileDisplay
           name={mainFile.name}
           size={mainFile.size}
           url={mainFile.cdnUrl}
           uuid={mainFile.uuid}
-          suffix={moduleEdit.suffix}
+          moduleId={moduleEdit.id}
           setQueryData={setQueryData}
         />
       ) : (
@@ -43,7 +43,7 @@ const EditMainFile = ({ mainFile, setQueryData, moduleEdit }) => {
                 try {
                   // TODO: Only store upon save
                   const updatedModule = await addMainMutation({
-                    suffix: moduleEdit?.suffix,
+                    id: moduleEdit?.id,
                     json: info,
                   })
                   setQueryData(updatedModule)

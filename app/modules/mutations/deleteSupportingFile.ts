@@ -3,15 +3,15 @@ import db from "db"
 import axios from "axios"
 import { Prisma } from "prisma"
 
-export default resolver.pipe(resolver.authorize(), async ({ suffix, uuid }) => {
+export default resolver.pipe(resolver.authorize(), async ({ id, uuid }) => {
   const module = await db.module.findFirst({
-    where: { suffix },
+    where: { id },
   })
   let supportingFiles = module!.supporting as Prisma.JsonObject
   supportingFiles.files = supportingFiles.files.filter((file) => file.uuid !== uuid)
 
   const updatedModule = await db.module.update({
-    where: { suffix: suffix },
+    where: { id },
     data: {
       supporting: supportingFiles,
     },

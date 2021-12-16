@@ -2,10 +2,10 @@ import { NotFoundError, resolver } from "blitz"
 import db from "db"
 import axios from "axios"
 
-export default resolver.pipe(resolver.authorize(), async ({ suffix, uuid }) => {
+export default resolver.pipe(resolver.authorize(), async ({ id, uuid }) => {
   const module = await db.module.update({
-    where: { suffix },
-    data: { main: null },
+    where: { id },
+    data: { main: {} },
   })
 
   // Force all authors to reapprove for publishing
@@ -30,7 +30,7 @@ export default resolver.pipe(resolver.authorize(), async ({ suffix, uuid }) => {
   })
 
   const updatedModule = await db.module.findFirst({
-    where: { suffix },
+    where: { id },
     include: {
       authors: {
         include: {

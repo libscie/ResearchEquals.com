@@ -286,7 +286,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
                   size={file.size}
                   url={file.original_file_url}
                   uuid={file.uuid}
-                  suffix={moduleEdit!.suffix}
+                  moduleId={moduleEdit!.id}
                   setQueryData={setQueryData}
                 />
               </>

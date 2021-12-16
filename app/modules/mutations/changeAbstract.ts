@@ -1,9 +1,9 @@
 import { NotFoundError, resolver } from "blitz"
 import db from "db"
 
-export default resolver.pipe(resolver.authorize(), async ({ suffix, description }) => {
+export default resolver.pipe(resolver.authorize(), async ({ id, description }) => {
   const module = await db.module.update({
-    where: { suffix },
+    where: { id },
     data: { description },
   })
 
@@ -18,7 +18,7 @@ export default resolver.pipe(resolver.authorize(), async ({ suffix, description 
   })
 
   const updatedModule = await db.module.findFirst({
-    where: { suffix },
+    where: { id },
     include: {
       authors: {
         include: {
