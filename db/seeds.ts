@@ -53,6 +53,35 @@ const seed = async () => {
     ],
     skipDuplicates: true,
   })
+
+  await db.moduleType.createMany({
+    data: [
+      { wikidata: "Q131841", name: "Idea" },
+      { wikidata: "Q1371819", name: "Plan" },
+      { wikidata: "Q17737", name: "Theory" },
+      { wikidata: "Q2412849", name: "Literature review" },
+      { wikidata: "Q321703", name: "Premise" },
+      { wikidata: "Q41719", name: "Hypothesis" },
+      { wikidata: "Q748250", name: "Prediction" },
+      { wikidata: "Q94535766", name: "Assertion" },
+      { wikidata: "Q185698", name: "Methodology" },
+      { wikidata: "Q82604", name: "Design" },
+      { wikidata: "Q41689629", name: "Procedure" },
+      { wikidata: "Q16798631", name: "Equipment" },
+      { wikidata: "Q42848", name: "Data" },
+      { wikidata: "Q1070421", name: "Script" },
+      { wikidata: "Q1347572", name: "Evidence" },
+      { wikidata: "Q217602", name: "Analysis" },
+      { wikidata: "Q17104930", name: "Outcome" },
+      { wikidata: "Q3030248", name: "Discussion" },
+      { wikidata: "Q333291", name: "Abstract" },
+      { wikidata: "Q1318295", name: "Narrative" },
+      { wikidata: "Q604733", name: "Presentation" },
+      { wikidata: "Q265158", name: "Review" },
+      { wikidata: "Q55107540", name: "Other" },
+    ],
+    skipDuplicates: true,
+  })
 }
 
 export default seed
