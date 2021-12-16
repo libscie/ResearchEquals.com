@@ -39,7 +39,17 @@ import { z } from "zod"
 import releaselist from "../users/mutations/releaselist"
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const licenses = await db.license.findMany()
+  const licenses = await db.license.findMany({
+    orderBy: [
+      {
+        price: "asc",
+      },
+      {
+        name: "asc",
+      },
+    ],
+  })
+
   return {
     props: {
       licenses,
