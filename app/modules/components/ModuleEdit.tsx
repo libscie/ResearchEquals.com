@@ -61,7 +61,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
     ),
     onSubmit: async (values) => {
       const updatedModule = await editModuleScreenMutation({
-        suffix: moduleEdit?.suffix,
+        id: moduleEdit?.id,
         typeId: parseInt(values.type),
         title: values.title,
         description: values.description,
