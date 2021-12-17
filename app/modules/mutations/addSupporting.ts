@@ -2,10 +2,10 @@ import { NotFoundError, resolver } from "blitz"
 import db from "db"
 import { Prisma } from "prisma"
 
-export default resolver.pipe(resolver.authorize(), async ({ suffix, newFiles }) => {
+export default resolver.pipe(resolver.authorize(), async ({ id, newFiles }) => {
   // 1. Get module supporting files JSON
   const oldModule = await db.module.findFirst({
-    where: { suffix },
+    where: { id },
   })
   let supportingFiles = oldModule?.supporting as Prisma.JsonObject
   // 2. Map the array to push each files object into supporting files
@@ -14,7 +14,7 @@ export default resolver.pipe(resolver.authorize(), async ({ suffix, newFiles }) 
   })
   // 3. write the data into the module
   const updatedModule = await db.module.update({
-    where: { suffix },
+    where: { id },
     data: { supporting: supportingFiles as Prisma.JsonObject },
     include: {
       authors: {

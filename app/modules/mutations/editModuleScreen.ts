@@ -3,9 +3,9 @@ import db from "db"
 
 export default resolver.pipe(
   resolver.authorize(),
-  async ({ suffix, typeId, title, description, licenseId }) => {
+  async ({ id, typeId, title, description, licenseId }) => {
     const module = await db.module.update({
-      where: { suffix },
+      where: { id },
       data: {
         type: {
           connect: {
@@ -33,7 +33,7 @@ export default resolver.pipe(
     })
 
     const updatedModule = await db.module.findFirst({
-      where: { suffix },
+      where: { id },
       include: {
         authors: {
           include: {

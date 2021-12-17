@@ -19,6 +19,7 @@ export default resolver.pipe(
 
     const module = await db.module.create({
       data: {
+        prefix: process.env.DOI_PREFIX,
         suffix: await generateSuffix(undefined),
         title,
         description,

@@ -17,7 +17,7 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit }) => {
     try {
       const newFiles = await getSupportingFilesMutation({ groupUuid: info.uuid })
       const updatedModule = await addSupportingMutation({
-        suffix: moduleEdit.suffix,
+        id: moduleEdit.id,
         newFiles: newFiles.files,
       })
       setQueryData(updatedModule)
