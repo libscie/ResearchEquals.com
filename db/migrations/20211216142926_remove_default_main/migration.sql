@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "Module" ALTER COLUMN "main" DROP DEFAULT;
