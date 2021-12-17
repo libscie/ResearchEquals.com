@@ -21,13 +21,11 @@ import {
   Events32,
   TextAlignLeft32,
   Video32,
-  Replicate32,
   CircleFillGlyph,
   LogoTwitter32,
   LogoGithub32,
-  LogoLinkedin32,
 } from "@carbon/icons-react"
-import { ChevronRightIcon, StarIcon } from "@heroicons/react/solid"
+import { ChevronRightIcon } from "@heroicons/react/solid"
 import Xarrows from "react-xarrows"
 import { useMediaPredicate } from "react-media-hook"
 import { useFormik } from "formik"
