@@ -6,9 +6,10 @@ import {
   useQuery,
   useRouter,
   usePaginatedQuery,
+  useRouterQuery,
 } from "blitz"
 import Layout from "app/core/layouts/Layout"
-import React, { Suspense } from "react"
+import React, { Suspense, useEffect } from "react"
 import toast, { Toaster } from "react-hot-toast"
 import { Disclosure } from "@headlessui/react"
 import moment from "moment"
@@ -27,6 +28,7 @@ const ITEMS_PER_PAGE = 10
 
 const DashboardContent = () => {
   const session = useSession()
+  const query = useRouterQuery()
   // const [updateInvitationMutation, { isSuccess: invitationUpdated }] = useMutation(updateInvitation)
   const [followWorkspaceMutation] = useMutation(followWorkspace)
   const [unfollowWorkspaceMutation] = useMutation(unfollowWorkspace)
@@ -48,6 +50,12 @@ const DashboardContent = () => {
       stat: data.draftModules.length,
     },
   ]
+
+  useEffect(() => {
+    if (query.authError) {
+      toast.error("ORCID connection failed.")
+    }
+  }, [])
 
   if (data) {
     return (
@@ -268,7 +276,6 @@ const WhoToFollow = ({ data, refetch, refetchFeed }) => {
             className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             onClick={async () => {
               await followWorkspaceMutation({
-                followerId: data.workspace?.id!,
                 followedId: workspace.id,
               })
 
@@ -278,7 +285,6 @@ const WhoToFollow = ({ data, refetch, refetchFeed }) => {
                   <button
                     onClick={async () => {
                       await unfollowWorkspaceMutation({
-                        followerId: data.workspace?.id!,
                         followedId: workspace.id,
                       })
                       refetch()

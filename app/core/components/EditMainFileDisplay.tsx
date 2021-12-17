@@ -3,7 +3,7 @@ import { useMutation } from "blitz"
 
 import deleteMainFile from "../../modules/mutations/deleteMainFile"
 
-const EditFileDisplay = ({ name, size, url, uuid, suffix, setQueryData }) => {
+const EditFileDisplay = ({ name, size, url, uuid, moduleId, setQueryData }) => {
   const [deleteMainMutation] = useMutation(deleteMainFile)
   return (
     <div className="flex my-2">
@@ -18,7 +18,7 @@ const EditFileDisplay = ({ name, size, url, uuid, suffix, setQueryData }) => {
         <TrashCan32
           className="cursor-pointer"
           onClick={async () => {
-            const updatedModule = await deleteMainMutation({ suffix, uuid })
+            const updatedModule = await deleteMainMutation({ id: moduleId, uuid })
             setQueryData(updatedModule)
           }}
         />

@@ -51,6 +51,8 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }, ctx) =
     data: {
       published: true,
       publishedAt: moment(datetime).format(),
+      publishedWhere: "ResearchEquals",
+      url: `https://doi.org/${process.env.DOI_PREFIX}/${module!.suffix}`,
     },
     include: {
       license: true,
@@ -60,8 +62,7 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }, ctx) =
 
   await index.saveObject({
     objectID: publishedModule.id,
-    suffix: publishedModule.suffix,
-    doi: `10.53962/${publishedModule.suffix}`,
+    doi: `${process.env.DOI_PREFIX}/${publishedModule.suffix}`,
     license: publishedModule.license?.url,
     type: publishedModule.type.name,
     // It's called name and not title to improve Algolia search

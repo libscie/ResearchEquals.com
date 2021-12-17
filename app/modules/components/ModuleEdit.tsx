@@ -61,7 +61,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
     ),
     onSubmit: async (values) => {
       const updatedModule = await editModuleScreenMutation({
-        suffix: moduleEdit?.suffix,
+        id: moduleEdit?.id,
         typeId: parseInt(values.type),
         title: values.title,
         description: values.description,
@@ -286,7 +286,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
                   size={file.size}
                   url={file.original_file_url}
                   uuid={file.uuid}
-                  suffix={moduleEdit!.suffix}
+                  moduleId={moduleEdit!.id}
                   setQueryData={setQueryData}
                 />
               </>

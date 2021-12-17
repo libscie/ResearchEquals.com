@@ -8,7 +8,7 @@ const index = client.initIndex(`${process.env.ALGOLIA_PREFIX}_workspaces`)
 
 export default passportAuth(({ ctx, req, res }) => ({
   successRedirectUrl: "/dashboard",
-  errorRedirectUrl: "/",
+  errorRedirectUrl: "/dashboard",
   strategies: [
     {
       strategy: new OrcidStrategy(

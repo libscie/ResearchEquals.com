@@ -3,9 +3,9 @@ import db from "db"
 import { z } from "zod"
 import algoliasearch from "algoliasearch"
 import axios from "axios"
+import { Ctx } from "blitz"
 
 const ChangeAvatar = z.object({
-  handle: z.string(),
   avatar: z.string(),
 })
 
@@ -15,10 +15,14 @@ const index = client.initIndex(`${process.env.ALGOLIA_PREFIX}_workspaces`)
 export default resolver.pipe(
   resolver.zod(ChangeAvatar),
   resolver.authorize(),
-  async ({ handle, ...data }) => {
-    // TODO: in multi-tenant app, you must add validation to ensure correct tenant
-    const workspaceOld = await db.workspace.findFirst({ where: { handle } })
-    const workspace = await db.workspace.update({ where: { handle }, data })
+  async ({ ...data }, ctx: Ctx) => {
+    const workspaceOld = await db.workspace.findFirst({
+      where: { id: ctx.session.$publicData.workspaceId },
+    })
+    const workspace = await db.workspace.update({
+      where: { id: ctx.session.$publicData.workspaceId },
+      data,
+    })
 
     await index.partialUpdateObjects([
       {

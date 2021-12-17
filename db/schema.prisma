@@ -13,25 +13,38 @@ generator client {
 // --------------------------------------
 
 model Module {
-  id          Int       @id @default(autoincrement())
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  published   Boolean   @default(false)
-  publishedAt DateTime?
-  suffix      String    @unique
-  title       String    @db.VarChar(300)
-  description String?
-  license     License?  @relation(fields: [licenseId], references: [id])
-  licenseId   Int?
+  id             Int       @id @default(autoincrement())
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  published      Boolean   @default(false)
+  publishedAt    DateTime?
+  publishedWhere String?
+  url            String?
+  isbn           String?
+  prefix         String?
+  suffix         String?
+  title          String
+  description    String? // Could rename to abstract/summary
+  license        License?  @relation(fields: [licenseId], references: [id])
+  licenseId      Int?
 
   type         ModuleType @relation(fields: [moduleTypeId], references: [id])
   moduleTypeId Int
 
-  main       Json?
-  supporting Json?        @default("{\"files\": []}")
+  main       Json? @default("{}")
+  supporting Json? @default("{\"files\": []}")
+
   authors    Authorship[]
-  parents    Module[]     @relation("ModuleToModule", references: [id])
-  children   Module[]     @relation("ModuleToModule", references: [id])
+  authorsRaw Json?        @default("{}")
+
+  parents  Module[] @relation("ModuleToModule", references: [id])
+  children Module[] @relation("ModuleToModule", references: [id])
+
+  references    Module[] @relation("ModuleReference", references: [id])
+  referencedBy  Module[] @relation("ModuleReference", references: [id])
+  referencesRaw Json?    @default("{}")
+
+  @@unique([prefix, suffix])
 }
 
 model License {
@@ -41,6 +54,8 @@ model License {
   name      String
   price     Int      @default(0)
   Module    Module[]
+
+  @@unique([url, name])
 }
 
 model ModuleType {
