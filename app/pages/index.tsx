@@ -388,7 +388,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                 <p className="my-2 text-lg">
                   Forking paths, failed experiments, it is all part of our research journeys.
                 </p>
-                <p className="my-2 text-lg">Document it, learn from it.</p>
+                <p className="my-2 text-lg">Document it, learn from it - no matter the output.</p>
               </div>
               <div className="hidden sm:inline w-4/6"></div>
             </div>
