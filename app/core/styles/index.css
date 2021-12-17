@@ -3,6 +3,28 @@
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
+.module {
+  --notchSize: 20px;
+  clip-path: polygon(
+    0% 0%,
+    0% 100%,
+    calc(100% - var(--notchSize)) 100%,
+    100% calc(100% - var(--notchSize)),
+    100% 0%
+  );
+}
+
+.module-small {
+  --notchSize: 5px;
+  clip-path: polygon(
+    0% 0%,
+    0% 100%,
+    calc(100% - var(--notchSize)) 100%,
+    100% calc(100% - var(--notchSize)),
+    100% 0%
+  );
+}
+
 .aa-Autocomplete {
   height: 100%;
 }
