@@ -113,9 +113,9 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                       Step by step publishing of{" "}
                       <span className="text-indigo-600 my-2">your research</span>
                     </h1>
-                    <p className="mt-6 text-xl text-gray-800 dark:text-gray-50">
+                    {/* <p className="mt-6 text-xl text-gray-800 dark:text-gray-50">
                       For your entire research journey, no matter the output.
-                    </p>
+                    </p> */}
                     <p className="my-4 text-xl text-gray-800 dark:text-gray-50">
                       A new publishing format: Research modules. Only on ResearchEquals.com
                     </p>
@@ -393,12 +393,10 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
               <div className="hidden sm:inline w-4/6"></div>
             </div>
           </div>
-
-          {/* <div className="grid grid-cols-2 gap-0 sm:gap-32"> */}
           <div className="sm:flex">
             <div
               id="publish-free"
-              className="module bg-green-600 p-4 mx-2 xs:mr-28 sm:mr-28 lg:mr-96"
+              className="module bg-green-600 p-4 mx-2 xs:mr-28 sm:mr-28 lg:mr-96 h-full"
             >
               {freeLicenses.length > 0 ? (
                 <>
@@ -468,77 +466,83 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
               <h2 className="text-2xl font-extrabold text-white dark:text-gray-50 sm:text-5xl sm:tracking-tight lg:text-6xl my-4 mr-4">
                 Publish on your terms
               </h2>
-
               {/* TODO: Calls to action */}
               {/* <button>Sign up</button> */}
               {/* <button>Book a demo</button> */}
-
-              <div className="sm:flex">
-                <div className="flex space-x-3 text-lg mr-4">
-                  <Language32
-                    className=" fill-current flex-shrink-0 h-6 w-6 text-white mr-2"
-                    aria-hidden="true"
-                  />
-                  Your language
+              <div className="flex">
+                <div className="flex-grow"></div>
+                <div className="">
+                  <div className="flex space-x-3 text-lg mr-4">
+                    <Language32
+                      className=" fill-current flex-shrink-0 h-6 w-6 text-white mr-2"
+                      aria-hidden="true"
+                    />
+                    Your language
+                  </div>
+                  <div className="flex space-x-3 text-lg mr-4">
+                    <Alarm32
+                      className=" fill-current flex-shrink-0 h-6 w-6 text-white mr-2"
+                      aria-hidden="true"
+                    />
+                    Your timeline
+                  </div>
+                  <div className="flex space-x-3 text-lg mr-4">
+                    <Events32
+                      className=" fill-current flex-shrink-0 h-6 w-6 text-white mr-2"
+                      aria-hidden="true"
+                    />
+                    Your co-authors
+                  </div>
+                  <div className="flex space-x-3 text-lg mr-4">
+                    <div
+                      className="module-small fill-current bg-white flex-shrink-0 h-6 w-6 text-white mr-2"
+                      aria-hidden="true"
+                    />
+                    Your outputs
+                  </div>
                 </div>
-                <div className="flex space-x-3 text-lg mr-4">
-                  <Alarm32
-                    className=" fill-current flex-shrink-0 h-6 w-6 text-white mr-2"
-                    aria-hidden="true"
-                  />
-                  Your timeline
-                </div>
-                <div className="flex space-x-3 text-lg mr-4">
-                  <Events32
-                    className=" fill-current flex-shrink-0 h-6 w-6 text-white mr-2"
-                    aria-hidden="true"
-                  />
-                  Your co-authors
-                </div>
-                <div className="flex space-x-3 text-lg mr-4">
-                  <div
-                    className="module-small fill-current bg-white flex-shrink-0 h-6 w-6 text-white mr-2"
-                    aria-hidden="true"
-                  />
-                  Your outputs
-                </div>
+                <div className="flex-grow"></div>
               </div>
-              <form onSubmit={formik.handleSubmit} className="my-6 sm:max-w-lg sm:w-full sm:flex">
-                <div className="min-w-0 flex-1">
-                  <label htmlFor="email" className="sr-only">
-                    Email address
-                  </label>
-                  <input
-                    id="email"
-                    type="email"
-                    required
-                    className="block w-full border border-gray-300 bg-white dark:bg-gray-900 rounded-md px-5 py-3 text-base text-gray-900 dark:text-white placeholder-gray-500 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                    placeholder="Enter your email"
-                    {...formik.getFieldProps("email")}
-                  />
-                  {formik.touched.email && formik.errors.email ? (
-                    <div className="font-normal text-sm">{formik.errors.email}</div>
-                  ) : null}
-                </div>
-                <div className="my-8 sm:mt-0 sm:ml-3">
-                  {isSuccess ? (
-                    <button
-                      type="submit"
-                      disabled
-                      className="block w-full rounded-md border border-transparent px-5 py-3 bg-green-600 text-base font-medium text-white shadow focus:outline-none focus:ring-2 focus:ring-offset-2 sm:px-10 text-center"
-                    >
-                      <CheckmarkFilled24 className="text-center" />
-                    </button>
-                  ) : (
-                    <button
-                      type="submit"
-                      className="block w-full rounded-md border border-transparent px-5 py-3 bg-white text-base font-medium text-indigo-600 shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:px-10"
-                    >
-                      Keep me updated
-                    </button>
-                  )}
-                </div>
-              </form>
+              <div className="flex">
+                <div className="flex-grow"></div>
+                <form onSubmit={formik.handleSubmit} className="mt-6 sm:max-w-lg sm:w-full sm:flex">
+                  <div className="min-w-0 flex-1">
+                    <label htmlFor="email" className="sr-only">
+                      Email address
+                    </label>
+                    <input
+                      id="email"
+                      type="email"
+                      required
+                      className="block w-full border border-gray-300 bg-white dark:bg-gray-900 rounded-md px-5 py-3 text-base text-gray-900 dark:text-white placeholder-gray-500 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                      placeholder="Enter your email"
+                      {...formik.getFieldProps("email")}
+                    />
+                    {formik.touched.email && formik.errors.email ? (
+                      <div className="font-normal text-sm">{formik.errors.email}</div>
+                    ) : null}
+                  </div>
+                  <div className="my-8 sm:mt-0 sm:ml-3">
+                    {isSuccess ? (
+                      <button
+                        type="submit"
+                        disabled
+                        className="block w-full rounded-md border border-transparent px-5 py-3 bg-green-600 text-base font-medium text-white shadow focus:outline-none focus:ring-2 focus:ring-offset-2 sm:px-10 text-center"
+                      >
+                        <CheckmarkFilled24 className="text-center" />
+                      </button>
+                    ) : (
+                      <button
+                        type="submit"
+                        className="block w-full rounded-md border border-transparent px-5 py-3 bg-white text-base font-medium text-indigo-600 shadow hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:px-10"
+                      >
+                        Keep me updated
+                      </button>
+                    )}
+                  </div>
+                </form>
+                <div className="flex-grow"></div>
+              </div>
             </div>
           </div>
         </div>
