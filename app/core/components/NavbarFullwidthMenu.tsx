@@ -252,7 +252,8 @@ const FullWidthMenu = () => {
   } else {
     return (
       <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
-        <Link href={Routes.LoginPage()}>
+        {/* TODO: Release uncomment */}
+        {/* <Link href={Routes.LoginPage()}>
           <a className="whitespace-nowrap text-base hover:text-gray-600 dark:hover:text-gray-100 border-2 border-indigo-600 px-4 py-2 text-gray-900 dark:text-white rounded">
             Log in
           </a>
@@ -261,7 +262,7 @@ const FullWidthMenu = () => {
           <a className="ml-4 2xl:ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base text-white bg-indigo-600 hover:bg-indigo-700">
             Create account
           </a>
-        </Link>
+        </Link> */}
       </div>
     )
   }

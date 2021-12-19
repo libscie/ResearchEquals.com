@@ -23,7 +23,7 @@ const Navbar = () => {
       <div className="w-full bg-white dark:bg-gray-900 mx-auto px-4 sm:px-6 lg:px-8 z-50">
         <div className="relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8">
           <div className="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
-            <div className="flex-shrink-0 flex items-center">
+            <div className="flex-shrink-0 flex items-center my-2">
               {/* TODO: Replace w logo */}
               <Link href={Routes.Home()}>
                 <a>
@@ -38,8 +38,8 @@ const Navbar = () => {
                 <label htmlFor="search" className="sr-only">
                   Search
                 </label>
-                {/* TODO: Add algolia search in here */}
-                <Autocomplete
+                {/* TODO: Release uncomment */}
+                {/* <Autocomplete
                   className="h-full"
                   openOnFocus={true}
                   defaultActiveItemId="0"
@@ -90,7 +90,7 @@ const Navbar = () => {
                       },
                     },
                   ]}
-                />
+                /> */}
               </div>
             </div>
           </div>
