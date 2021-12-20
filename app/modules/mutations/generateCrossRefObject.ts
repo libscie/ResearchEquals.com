@@ -1,51 +1,18 @@
-// Replace id with Date.now as well?
-const generateHead = ({ registrant, email }) => {
-  const datetime = Date.now()
+import head from "../../core/crossref/head"
+import body from "../../core/crossref/body"
 
-  const jsHead = {
-    type: "element",
-    name: "head",
-    elements: [
-      {
-        type: "element",
-        name: "doi_batch_id",
-        elements: [{ type: "text", text: datetime.toString() }],
-      },
-      {
-        type: "element",
-        name: "timestamp",
-        elements: [{ type: "text", text: datetime }],
-      },
-      {
-        type: "element",
-        name: "depositor",
-        elements: [
-          {
-            type: "element",
-            name: "depositor_name",
-            elements: [{ type: "text", text: registrant }],
-          },
-          {
-            type: "element",
-            name: "email_address",
-            elements: [{ type: "text", text: email }],
-          },
-        ],
-      },
-      {
-        type: "element",
-        name: "registrant",
-        elements: [{ type: "text", text: registrant }],
-      },
-    ],
-  }
-
-  return jsHead
-}
-
-const generateBody = () => {}
-
-const generateCrossRef = ({ schema, registrant, email }) => {
+const generateCrossRef = ({
+  schema,
+  type,
+  title,
+  authors,
+  abstractText,
+  license,
+  license_url,
+  doi,
+  resolve_url,
+  citations,
+}) => {
   const jsCrossRef = {
     declaration: {
       attributes: {
@@ -62,11 +29,23 @@ const generateCrossRef = ({ schema, registrant, email }) => {
           xmlns: `http://www.crossref.org/schema/${schema}`,
           "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
           "xsi:schemaLocation": `http://www.crossref.org/schema/${schema} http://www.crossref.org/schemas/crossref${schema}.xsd`,
+          "xmlns:jats": "http://www.ncbi.nlm.nih.gov/JATS1",
         },
         elements: [
-          generateHead({
-            registrant,
-            email,
+          head({
+            registrant: "Liberate Science GmbH",
+            email: "info@libscie.org",
+          }),
+          body({
+            type,
+            title,
+            authors,
+            abstractText,
+            license,
+            license_url,
+            doi,
+            resolve_url,
+            citations,
           }),
         ],
       },
