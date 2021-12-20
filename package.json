@@ -29,7 +29,6 @@
   },
   "dependencies": {
     "@algolia/autocomplete-js": "1.4.0",
-    "@algolia/autocomplete-theme-classic": "1.4.0",
     "@carbon/icons-react": "10.41.0",
     "@floating-ui/dom": "0.1.7",
     "@headlessui/react": "1.4.0",

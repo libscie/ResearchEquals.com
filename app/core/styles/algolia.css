@@ -1,41 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap");
-
-.module {
-  --notchSize: 20px;
-  clip-path: polygon(
-    0% 0%,
-    0% 100%,
-    calc(100% - var(--notchSize)) 100%,
-    100% calc(100% - var(--notchSize)),
-    100% 0%
-  );
-}
-
-.module-small {
-  --notchSize: 5px;
-  clip-path: polygon(
-    0% 0%,
-    0% 100%,
-    calc(100% - var(--notchSize)) 100%,
-    100% calc(100% - var(--notchSize)),
-    100% 0%
-  );
-}
-
-.uploadcare--widget {
-  display: none;
-}
-
-.uploadcare--panel {
-  font-family: "Noto Sans Display", sans-serif;
-}
-
 /* Search styling */
 /*! @algolia/autocomplete-theme-classic 1.5.1 | MIT License | © Algolia, Inc. and contributors | https://github.com/algolia/autocomplete */
-/* :root {
+:root {
   --aa-search-input-height: 44px;
   --aa-input-icon-size: 20px;
   --aa-base-unit: 16;
@@ -1040,4 +1005,4 @@ body[data-theme="dark"] {
   .aa-TouchOnly {
     display: none;
   }
-} */
+}

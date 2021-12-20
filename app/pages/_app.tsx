@@ -11,6 +11,7 @@ import {
 import LoginForm from "app/auth/components/LoginForm"
 
 import "app/core/styles/index.css"
+import "app/core/styles/algolia.css"
 import router, { Router } from "next/router"
 
 export default function App({ Component, pageProps }: AppProps) {

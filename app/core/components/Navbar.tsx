@@ -8,7 +8,6 @@ import SearchResultWorkspace from "./SearchResultWorkspace"
 import SearchResultModule from "./SearchResultModule"
 import ResearchEqualsLogo from "./ResearchEqualsLogo"
 
-import "@algolia/autocomplete-theme-classic"
 import Autocomplete from "./Autocomplete"
 import NavbarFullwidthMenu from "./NavbarFullwidthMenu"
 import NavbarDropdown from "./NavbarDropdown"
