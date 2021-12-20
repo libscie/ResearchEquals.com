@@ -166,8 +166,7 @@ const DropdownContents = () => {
     return (
       <div>
         <div>
-          {/* TODO: Release uncomment */}
-          {/* <Link href={Routes.LoginPage()}>
+          <Link href={Routes.LoginPage()}>
             <button className="block rounded-md py-2 px-0 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900">
               Log in
             </button>
@@ -176,7 +175,7 @@ const DropdownContents = () => {
             <button className="block rounded-md py-2 px-0 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900">
               Create account
             </button>
-          </Link> */}
+          </Link>
         </div>
       </div>
     )

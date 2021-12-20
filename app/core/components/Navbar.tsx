@@ -38,8 +38,7 @@ const Navbar = () => {
                 <label htmlFor="search" className="sr-only">
                   Search
                 </label>
-                {/* TODO: Release uncomment */}
-                {/* <Autocomplete
+                <Autocomplete
                   className="h-full"
                   openOnFocus={true}
                   defaultActiveItemId="0"
@@ -90,7 +89,7 @@ const Navbar = () => {
                       },
                     },
                   ]}
-                /> */}
+                />
               </div>
             </div>
           </div>
