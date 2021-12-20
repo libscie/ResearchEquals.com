@@ -1,8 +1,8 @@
 /* Search styling */
 /*! @algolia/autocomplete-theme-classic 1.5.1 | MIT License | © Algolia, Inc. and contributors | https://github.com/algolia/autocomplete */
 :root {
-  --aa-search-input-height: 44px;
-  --aa-input-icon-size: 20px;
+  --aa-search-input-height: 38px;
+  --aa-input-icon-size: 16px;
   --aa-base-unit: 16;
   --aa-spacing-factor: 1;
   --aa-spacing: calc(var(--aa-base-unit) * var(--aa-spacing-factor) * 1px);
@@ -15,15 +15,15 @@
   --aa-font-weight-semibold: 600;
   --aa-font-weight-bold: 700;
   --aa-icon-size: 20px;
-  --aa-icon-stroke-width: 1.6;
+  --aa-icon-stroke-width: 2.5;
   --aa-icon-color-rgb: 119, 119, 163;
   --aa-icon-color-alpha: 1;
   --aa-action-icon-size: 20px;
-  --aa-text-color-rgb: 38, 38, 39;
+  --aa-text-color-rgb: 15, 23, 42;
   --aa-text-color-alpha: 1;
-  --aa-primary-color-rgb: 62, 52, 211;
-  --aa-primary-color-alpha: 0.2;
-  --aa-muted-color-rgb: 128, 126, 163;
+  --aa-primary-color-rgb: 148, 163, 184;
+  --aa-primary-color-alpha: 1;
+  --aa-muted-color-rgb: 148, 163, 184;
   --aa-muted-color-alpha: 0.6;
   --aa-panel-border-color-rgb: 128, 126, 163;
   --aa-panel-border-color-alpha: 0.3;
@@ -56,21 +56,23 @@
     --aa-action-icon-size: 22px;
   }
 }
-body.dark,
-body[data-theme="dark"] {
-  --aa-text-color-rgb: 183, 192, 199;
-  --aa-primary-color-rgb: 146, 138, 255;
-  --aa-muted-color-rgb: 146, 138, 255;
-  --aa-input-background-color-rgb: 0, 3, 9;
-  --aa-background-color-rgb: 21, 24, 42;
-  --aa-selected-color-rgb: 146, 138, 255;
-  --aa-selected-color-alpha: 0.25;
-  --aa-description-highlight-background-color-rgb: 0 255 255;
-  --aa-description-highlight-background-color-alpha: 0.25;
-  --aa-icon-color-rgb: 119, 119, 163;
-  --aa-panel-shadow: inset 1px 1px 0 0 #2c2e40, 0 3px 8px 0 #000309;
-  --aa-scrollbar-track-background-color-rgb: 44, 46, 64;
-  --aa-scrollbar-thumb-background-color-rgb: var(--aa-background-color-rgb);
+@media (prefers-color-scheme: dark) {
+  :root {
+    --aa-input-background-color-rgb: 30, 41, 59;
+    --aa-text-color-rgb: 183, 192, 199;
+    --aa-primary-color-rgb: 226, 232, 240;
+    --aa-primary-color-alpha: 1;
+    --aa-muted-color-rgb: 226, 232, 240;
+    --aa-background-color-rgb: 21, 24, 42;
+    --aa-selected-color-rgb: 146, 138, 255;
+    --aa-selected-color-alpha: 0.25;
+    --aa-description-highlight-background-color-rgb: 0 255 255;
+    --aa-description-highlight-background-color-alpha: 0.25;
+    --aa-icon-color-rgb: 119, 119, 163;
+    --aa-panel-shadow: inset 1px 1px 0 0 #2c2e40, 0 3px 8px 0 #000309;
+    --aa-scrollbar-track-background-color-rgb: 44, 46, 64;
+    --aa-scrollbar-thumb-background-color-rgb: var(--aa-background-color-rgb);
+  }
 }
 .aa-Autocomplete {
   height: 100%;
@@ -79,7 +81,6 @@ body[data-theme="dark"] {
 .aa-Panel * {
   box-sizing: border-box;
 }
-.aa-Autocomplete,
 .aa-DetachedFormContainer,
 .aa-Panel {
   color: #262627;
@@ -114,17 +115,17 @@ body[data-theme="dark"] {
 .aa-Form[focus-within] {
   border-color: #3e34d3;
   border-color: rgba(var(--aa-primary-color-rgb), 1);
-  box-shadow: 0 0 0 2px rgba(62, 52, 211, 0.2), inset 0 0 0 2px rgba(62, 52, 211, 0.2);
-  box-shadow: rgba(var(--aa-primary-color-rgb), var(--aa-primary-color-alpha)) 0 0 0 2px,
-    inset rgba(var(--aa-primary-color-rgb), var(--aa-primary-color-alpha)) 0 0 0 2px;
+  /* box-shadow: 0 0 0 2px rgba(62, 52, 211, 0.2), inset 0 0 0 2px rgba(62, 52, 211, 0.2); */
+  /* box-shadow: rgba(var(--aa-primary-color-rgb), var(--aa-primary-color-alpha)) 0 0 0 2px,
+    inset rgba(var(--aa-primary-color-rgb), var(--aa-primary-color-alpha)) 0 0 0 2px; */
   outline: medium none currentColor;
 }
 .aa-Form:focus-within {
   border-color: #3e34d3;
   border-color: rgba(var(--aa-primary-color-rgb), 1);
-  box-shadow: 0 0 0 2px rgba(62, 52, 211, 0.2), inset 0 0 0 2px rgba(62, 52, 211, 0.2);
+  /* box-shadow: 0 0 0 2px rgba(62, 52, 211, 0.2), inset 0 0 0 2px rgba(62, 52, 211, 0.2);
   box-shadow: rgba(var(--aa-primary-color-rgb), var(--aa-primary-color-alpha)) 0 0 0 2px,
-    inset rgba(var(--aa-primary-color-rgb), var(--aa-primary-color-alpha)) 0 0 0 2px;
+    inset rgba(var(--aa-primary-color-rgb), var(--aa-primary-color-alpha)) 0 0 0 2px; */
   outline: medium none currentColor;
 }
 .aa-InputWrapperPrefix {
@@ -918,7 +919,7 @@ body[data-theme="dark"] {
   font-family: var(--aa-font-family);
   font-size: 16px;
   font-size: var(--aa-font-size);
-  height: 44px;
+  height: 38px;
   height: var(--aa-search-input-height);
   margin: 0;
   padding: 0 5.5px;
@@ -926,7 +927,6 @@ body[data-theme="dark"] {
   position: relative;
   text-align: left;
   width: 100%;
-  height: 100%;
 }
 
 .aa-DetachedSearchButton:focus {
