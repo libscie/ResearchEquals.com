@@ -54,6 +54,7 @@ const VerifyMail: BlitzPage = () => {
   )
 }
 
+VerifyMail.authenticate = true
 VerifyMail.getLayout = (page) => <Layout title="Verifying Email ...">{page}</Layout>
 
 export default VerifyMail

@@ -4,10 +4,17 @@ module.exports = {
   purge: ["{pages,app}/**/*.{js,ts,jsx,tsx}"],
   darkMode: "media", // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["Noto Sans Display", "system-ui"],
+      },
+      spacing: {
+        120: "35rem",
+      },
+    },
   },
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/line-clamp"), require("@tailwindcss/forms")],
 }
