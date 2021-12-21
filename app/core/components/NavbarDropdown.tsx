@@ -164,20 +164,18 @@ const DropdownContents = () => {
     )
   } else {
     return (
-      <div>
-        <div>
-          <Link href={Routes.LoginPage()}>
-            <button className="block rounded-md py-2 px-0 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900">
-              Log in
-            </button>
-          </Link>
-          <Link href={Routes.SignupPage()}>
-            <button className="block rounded-md py-2 px-0 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900">
-              Create account
-            </button>
-          </Link>
-        </div>
-      </div>
+      <>
+        <Link href={Routes.LoginPage()}>
+          <button className="w-full block rounded-md py-2 px-0 text-sm leading-5 font-normal text-indigo-700 dark:text-gray-200 bg-indigo-100 hover:bg-indigo-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-0 dark:border dark:border-gray-600">
+            Log in
+          </button>
+        </Link>
+        <Link href={Routes.SignupPage()}>
+          <button className="w-full my-1 block rounded-md py-2 px-0 text-sm leading-5 font-normal text-white bg-indigo-600 hover:bg-indigo-700">
+            Create account
+          </button>
+        </Link>
+      </>
     )
   }
 }
@@ -257,7 +255,7 @@ const NavbarDropdown = () => {
                   </div>
                 </Dialog.Title>
                 <div className="pt-5 pb-6 px-0">
-                  <div className="flex items-center justify-between">
+                  <div className="items-center justify-between">
                     <Suspense fallback="Loading...">
                       <DropdownContents />
                     </Suspense>
