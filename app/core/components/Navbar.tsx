@@ -8,7 +8,6 @@ import SearchResultWorkspace from "./SearchResultWorkspace"
 import SearchResultModule from "./SearchResultModule"
 import ResearchEqualsLogo from "./ResearchEqualsLogo"
 
-import "@algolia/autocomplete-theme-classic"
 import Autocomplete from "./Autocomplete"
 import NavbarFullwidthMenu from "./NavbarFullwidthMenu"
 import NavbarDropdown from "./NavbarDropdown"
@@ -34,7 +33,8 @@ const Navbar = () => {
           </div>
           <div className="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6">
             <div className="flex items-center px-6 py-4 md:max-w-3xl md:mx-auto lg:max-w-none lg:mx-0 xl:px-0">
-              <div className="w-full">
+              <div className="flex-grow"></div>
+              <div className="w-full xl:w-1/3">
                 <label htmlFor="search" className="sr-only">
                   Search
                 </label>
@@ -91,6 +91,7 @@ const Navbar = () => {
                   ]}
                 />
               </div>
+              <div className="flex-grow"></div>
             </div>
           </div>
           <div className="flex items-center md:absolute md:right-0 md:inset-y-0 lg:hidden">

@@ -25,18 +25,6 @@
   );
 }
 
-.aa-Autocomplete {
-  height: 100%;
-}
-
-.aa-Form {
-  height: 100%;
-}
-
-.aa-DetachedSearchButton button {
-  height: 100%;
-}
-
 .uploadcare--widget {
   display: none;
 }
