@@ -166,12 +166,12 @@ const DropdownContents = () => {
     return (
       <>
         <Link href={Routes.LoginPage()}>
-          <button className="w-full block rounded-md py-2 px-0 text-sm leading-5 font-normal text-indigo-700 dark:text-gray-200 bg-indigo-100 dark:bg-gray-800 border-0 dark:border dark:border-gray-600">
+          <button className="w-full block rounded-md py-2 px-0 text-sm leading-5 font-normal text-indigo-700 dark:text-gray-200 bg-indigo-100 hover:bg-indigo-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-0 dark:border dark:border-gray-600">
             Log in
           </button>
         </Link>
         <Link href={Routes.SignupPage()}>
-          <button className="w-full my-1 block rounded-md py-2 px-0 text-sm leading-5 font-normal text-white bg-indigo-600">
+          <button className="w-full my-1 block rounded-md py-2 px-0 text-sm leading-5 font-normal text-white bg-indigo-600 hover:bg-indigo-700">
             Create account
           </button>
         </Link>
