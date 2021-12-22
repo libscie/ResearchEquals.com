@@ -111,7 +111,7 @@
     var(--aa-input-background-color-alpha)
   );
   border: 1px solid rgba(128, 126, 163, 0.8);
-  border: 1px solid rgba(var(--aa-input-border-color-rgb), var(--aa-input-border-color-alpha));
+  border: 1px solid rgba(var(--aa-search-border-color-rgb), 1);
   border-radius: 3px;
   display: flex;
   line-height: 1em;
@@ -122,7 +122,8 @@
 }
 .aa-Form[focus-within] {
   border-color: #3e34d3;
-  border-color: rgba(var(--aa-primary-color-rgb), 1);
+  border-color: rgba(var(--aa-search-border-color-rgb), 1);
+  border-radius: 3px 3px 0 0;
   /* box-shadow: 0 0 0 2px rgba(62, 52, 211, 0.2), inset 0 0 0 2px rgba(62, 52, 211, 0.2); */
   /* box-shadow: rgba(var(--aa-primary-color-rgb), var(--aa-primary-color-alpha)) 0 0 0 2px,
     inset rgba(var(--aa-primary-color-rgb), var(--aa-primary-color-alpha)) 0 0 0 2px; */
@@ -130,7 +131,9 @@
 }
 .aa-Form:focus-within {
   border-color: #3e34d3;
-  border-color: rgba(var(--aa-primary-color-rgb), 1);
+  border-color: rgba(var(--aa-search-border-color-rgb), 1);
+  border-radius: 3px 3px 0 0;
+
   /* box-shadow: 0 0 0 2px rgba(62, 52, 211, 0.2), inset 0 0 0 2px rgba(62, 52, 211, 0.2);
   box-shadow: rgba(var(--aa-primary-color-rgb), var(--aa-primary-color-alpha)) 0 0 0 2px,
     inset rgba(var(--aa-primary-color-rgb), var(--aa-primary-color-alpha)) 0 0 0 2px; */
