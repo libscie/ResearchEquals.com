@@ -1,22 +1,19 @@
 import Layout from "app/core/layouts/Layout"
 import db from "db"
 import { Link, useRouter, usePaginatedQuery, useParams, useMutation, useQuery } from "blitz"
-import { Calendar32, Link32, UserFollow32 } from "@carbon/icons-react"
 import {
   CalendarIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  ChevronUpIcon,
   LinkIcon,
   UserAddIcon,
 } from "@heroicons/react/solid"
 import { Suspense } from "react"
-import toast, { Toaster } from "react-hot-toast"
+import toast from "react-hot-toast"
 import moment from "moment"
 
 import Navbar from "../core/components/Navbar"
 import getHandleFeed from "../workspaces/queries/getHandleFeed"
-import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import followWorkspace from "../workspaces/mutations/followWorkspace"
 import unfollowWorkspace from "../workspaces/mutations/unfollowWorkspace"
 import ModuleCard from "../core/components/ModuleCard"
@@ -67,17 +64,6 @@ const HandlePage = ({ workspace }) => {
                   ) : (
                     ""
                   )}
-                  {/* {workspace.orcid ? (
-                    <p>
-                      <Link href={`https://orcid.org/${workspace.orcid}`}>
-                        <a target="_blank" className="text-gray-500">
-                          {workspace.orcid}
-                        </a>
-                      </Link>
-                    </p>
-                  ) : (
-                    ""
-                  )} */}
                   <p className="text-base leading-6 font-medium text-gray-500 dark:text-gray-200">
                     @{workspace.handle}
                   </p>
@@ -170,7 +156,6 @@ export default HandlePage
 
 const FollowButton = ({ workspace }) => {
   const params = useParams()
-  // const [ownWorkspace] = useCurrentWorkspace()
   const [ownWorkspace, { refetch }] = useQuery(getCurrentWorkspace, null)
 
   const [followWorkspaceMutation] = useMutation(followWorkspace)
