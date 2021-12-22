@@ -48,9 +48,9 @@ const NavTabs = () => {
   if (currentUser && currentWorkspace) {
     return (
       <>
-        <div className="w-full text-gray-900 dark:text-gray-200 mx-auto px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
+        <div className="w-full text-gray-900 dark:text-gray-200 mx-auto px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900 border-b dark:border-gray-600 border-gray-100">
           <div className="hidden sm:block">
-            <nav className="-mb-px flex space-x-8" aria-label="Tabs">
+            <nav className="flex space-x-8" aria-label="Tabs">
               {tabs.map((tab) => (
                 <Link key={tab.name} href={tab.href}>
                   <a
@@ -59,7 +59,7 @@ const NavTabs = () => {
                         ? "bg-gray-100 dark:bg-gray-800"
                         : "hover:bg-gray-100 dark:hover:bg-gray-800",
                       tab.count === 0 ? "pointer-events-none text-gray-400 dark:text-gray-700" : "",
-                      "group whitespace-nowrap flex py-2 px-4 text-sm leading-5 font-normal rounded-md disabled"
+                      "group whitespace-nowrap flex my-2 py-2 px-4 text-sm leading-5 font-normal rounded-md disabled"
                     )}
                     aria-current={tab.current ? "page" : undefined}
                   >
