@@ -72,17 +72,21 @@ const FullWidthMenu = () => {
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-0 translate-y-1"
               >
-                <Popover.Panel className="absolute z-10 max-w-72 w-72 bg-gray-300 dark:bg-gray-300 px-4 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0 shadow-2xl">
-                  <ul className="divide-y divide-gray-500">
+                <Popover.Panel className="absolute z-10 max-w-72 w-72 bg-white dark:bg-gray-800 rounded-md ring-1 ring-gray-400 dark:ring-gray-600 ring-opacity-5 dark:ring-opacity-100 px-4 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0 shadow-lg">
+                  <ul className="divide-y dark:divide-gray-600">
                     {invitedModules.map((invited) => (
                       <>
                         <Link href="/invitations">
                           <li className="cursor-pointer p-2">
-                            <p className="text-xs leading-4 text-gray-500">
+                            <p className="text-xs leading-4 text-gray-400">
                               {moment(invited.updatedAt).fromNow()}
                             </p>
-                            <p className="text-xs leading-4 font-bold">{invited.title}</p>
-                            <p className="text-xs leading-4">Invited to co-author</p>
+                            <p className="text-sm leading-4 font-bold text-gray-900 dark:text-gray-200 mt-2 mb-1">
+                              {invited.title}
+                            </p>
+                            <p className="text-xs leading-4 text-gray-900 dark:text-gray-200 my-1">
+                              Invitation to co-author
+                            </p>
                           </li>
                         </Link>
                       </>
@@ -167,7 +171,7 @@ const FullWidthMenu = () => {
               Draft
             </>
           }
-          buttonStyle="bg-indigo-50 dark:bg-gray-800 text-indigo-700 dark:text-gray-200 ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-normal rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          buttonStyle="bg-indigo-50 dark:bg-gray-800 text-indigo-700 dark:text-gray-200 ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-normal rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:border dark:border-gray-400"
         />
       </div>
     )
