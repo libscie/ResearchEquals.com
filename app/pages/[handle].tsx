@@ -156,7 +156,6 @@ const HandlePage = ({ workspace }) => {
             </div>
           </div>
           <div className="w-full ">
-            <h2 className="text-2xl my-4">Published modules</h2>
             <Suspense fallback="Loading...">
               <HandleFeed handle={workspace.handle} />
             </Suspense>
@@ -187,7 +186,7 @@ const FollowButton = ({ workspace }) => {
           <>
             <span className="inline-block h-full align-middle"></span>
             <button
-              className="py-2 px-4 shadow-sm text-sm leading-4 font-medium bg-indigo-100 dark:bg-gray-800 hover:bg-indigo-200 dark:hover:bg-gray-700 text-indigo-700 dark:text-gray-200 rounded dark:border dark:border-gray-600 inline-block align-middle focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500"
+              className="py-2 px-4 shadow-sm text-sm leading-4 font-medium bg-indigo-100 dark:bg-gray-800 hover:bg-indigo-200 dark:hover:bg-gray-700 text-indigo-700 dark:text-gray-200 rounded dark:border dark:border-gray-600 inline-block align-middle focus:outline-none focus:ring-2 focus:ring-offset-0   focus:ring-indigo-500"
               onClick={async () => {
                 // TODO: Add action
 
@@ -207,7 +206,7 @@ const FollowButton = ({ workspace }) => {
             <span className="inline-block h-full align-middle"></span>
 
             <button
-              className="py-2 px-2 text-gray-500 rounded border border-gray-500 bg-gray-300 hover:bg-gray-400 inline-block align-middle"
+              className="py-2 px-4 shadow-sm text-sm leading-4 font-medium bg-indigo-100 dark:bg-gray-800 hover:bg-indigo-200 dark:hover:bg-gray-700 text-indigo-700 dark:text-gray-200 rounded dark:border dark:border-gray-600 inline-block align-middle focus:outline-none focus:ring-2 focus:ring-offset-0   focus:ring-indigo-500"
               onClick={async () => {
                 await unfollowWorkspaceMutation({
                   followedId: workspace.id,
@@ -315,11 +314,11 @@ const HandleFeed = ({ handle }) => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col flex-grow relative w-full border-2 border-gray-400 border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 h-28">
+        <div className="flex mt-8 flex-col flex-grow relative w-full border-2 border-gray-500 dark:border-gray-400 border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 h-28">
           <div className="table flex-grow w-full">
             <div className="hidden sm:table-cell w-1/4"></div>
-            <span className="mx-auto table-cell align-middle leading-normal text-sm font-medium text-gray-900">
-              Nothing published yet!
+            <span className="mx-auto table-cell align-middle leading-normal text-sm font-medium text-gray-500 dark:text-gray-400">
+              Nothing published yet
             </span>
             <div className="hidden sm:table-cell w-1/4"></div>
           </div>
