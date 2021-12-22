@@ -494,6 +494,10 @@
   min-height: calc(var(--aa-spacing) * 2.5);
   padding: 4px;
   padding: calc(var(--aa-spacing-half) / 2);
+  border-bottom: 1px solid rgba(var(--aa-search-border-color-rgb), 1);
+}
+.aa-Item:last-of-type {
+  border-bottom: 0px solid rgba(var(--aa-search-border-color-rgb), 1);
 }
 .aa-Item[aria-selected="true"] {
   background-color: rgba(179, 173, 214, 0.205);
