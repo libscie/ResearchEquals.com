@@ -1,7 +1,7 @@
 const SearchResultWorkspace = ({ item }) => {
   return (
     <>
-      <div className="flex my-1">
+      <div className="flex my-1 mx-1">
         <div className="mr-2">
           <img
             className="w-8 h-8 rounded-full inline-block h-full align-middle"

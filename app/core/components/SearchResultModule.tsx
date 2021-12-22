@@ -3,7 +3,7 @@ import { Blog32 } from "@carbon/icons-react"
 const SearchResultModule = ({ item }) => {
   return (
     <>
-      <div className="flex">
+      <div className="flex mx-1 my-1">
         <div className="mr-2">
           <svg
             width="32"
