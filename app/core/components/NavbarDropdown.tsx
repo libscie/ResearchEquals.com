@@ -2,7 +2,7 @@ import { Fragment, useState } from "react"
 import { Listbox, Transition, Dialog } from "@headlessui/react"
 import { Link, Routes, useMutation, useSession, useQuery } from "blitz"
 import { Suspense } from "react"
-import { CheckIcon, SelectorIcon } from "@heroicons/react/solid"
+import { CheckIcon, MenuIcon, SelectorIcon } from "@heroicons/react/solid"
 import { Close32, Menu32 } from "@carbon/icons-react"
 import { useCurrentUser } from "../hooks/useCurrentUser"
 import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
@@ -185,21 +185,26 @@ const NavbarDropdown = () => {
 
   return (
     <>
-      <span className="sr-only">Open menu</span>
       {isOpen ? (
-        <Close32
-          className="block h-6 w-6 text-gray-400"
-          onClick={() => {
-            setIsOpen(false)
-          }}
-        />
+        <>
+          <span className="sr-only">Close menu</span>
+          <Close32
+            className="block h-6 w-6 text-gray-400"
+            onClick={() => {
+              setIsOpen(false)
+            }}
+          />
+        </>
       ) : (
-        <Menu32
-          className="block h-6 w-6 text-gray-400"
-          onClick={() => {
-            setIsOpen(true)
-          }}
-        />
+        <>
+          <span className="sr-only">Open menu</span>
+          <MenuIcon
+            className="block h-6 w-6 text-gray-400 dark:text-gray-200 hover:bg-gray-100 hover:text-gray-500 dark:hover:bg-gray-800 rounded-md focus:ring-2 focus:ring-offset-0 focus:ring-gray-200"
+            onClick={() => {
+              setIsOpen(true)
+            }}
+          />
+        </>
       )}
 
       <Transition appear show={isOpen} as={Fragment}>
@@ -220,7 +225,7 @@ const NavbarDropdown = () => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+              <Dialog.Overlay className="fixed inset-0 bg-gray-900 bg-opacity-25 transition-opacity" />
             </Transition.Child>
 
             <Transition.Child
@@ -232,7 +237,7 @@ const NavbarDropdown = () => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-full p-5 my-0 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl">
+              <div className="inline-block w-full p-5 my-0 overflow-hidden text-left align-middle transition-all transform bg-white dark:bg-gray-900 shadow-xl">
                 <Dialog.Title as="h1" className="text-lg font-medium leading-6 text-gray-900">
                   <div className="pt-0 pb-6 px-0">
                     <div className="flex items-center justify-between">
