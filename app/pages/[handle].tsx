@@ -18,6 +18,8 @@ import followWorkspace from "../workspaces/mutations/followWorkspace"
 import unfollowWorkspace from "../workspaces/mutations/unfollowWorkspace"
 import ModuleCard from "../core/components/ModuleCard"
 import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
+import SettingsModal from "../core/modals/settings"
+import getCurrentUser from "app/users/queries/getCurrentUser"
 
 const ITEMS_PER_PAGE = 10
 
@@ -108,7 +110,10 @@ const HandlePage = ({ workspace }) => {
                       />
                     </svg>
                     <Link href={`https://orcid.org/${workspace.orcid}`}>
-                      <a target="_blank" className="underline">
+                      <a
+                        target="_blank"
+                        className="underline text-sm leading-4 font-normal text-gray-500 dark:text-gray-200"
+                      >
                         {workspace.orcid}
                       </a>
                     </Link>
@@ -123,7 +128,10 @@ const HandlePage = ({ workspace }) => {
                     <span className="inline-block h-full align-middle"> </span>
                     <LinkIcon className="w-4 h-4 inline-block align-middle mr-1 text-gray-700 dark:text-gray-400" />
                     <Link href={workspace.url}>
-                      <a target="_blank" className="underline">
+                      <a
+                        target="_blank"
+                        className="underline text-sm leading-4 font-normal text-gray-500 dark:text-gray-200"
+                      >
                         {workspace.url}
                       </a>
                     </Link>
@@ -156,6 +164,7 @@ export default HandlePage
 
 const FollowButton = ({ workspace }) => {
   const params = useParams()
+  const [currentUser] = useQuery(getCurrentUser, null)
   const [ownWorkspace, { refetch }] = useQuery(getCurrentWorkspace, null)
 
   const [followWorkspaceMutation] = useMutation(followWorkspace)
@@ -165,7 +174,15 @@ const FollowButton = ({ workspace }) => {
     <>
       {ownWorkspace ? (
         ownWorkspace!.handle === params.handle ? (
-          <></>
+          <>
+            <span className="inline-block h-full align-middle"></span>
+            <SettingsModal
+              button="Edit Profile"
+              styling="py-2 px-4 shadow-sm text-sm leading-4 font-medium bg-indigo-100 dark:bg-gray-800 hover:bg-indigo-200 dark:hover:bg-gray-700 text-indigo-700 dark:text-gray-200 rounded dark:border dark:border-gray-600 inline-block align-middle focus:outline-none focus:ring-2 focus:ring-offset-0   focus:ring-indigo-500"
+              user={currentUser}
+              workspace={ownWorkspace}
+            />
+          </>
         ) : ownWorkspace?.following.filter((follows) => follows.handle === params.handle).length ===
           0 ? (
           <>
@@ -226,31 +243,36 @@ const HandleFeed = ({ handle }) => {
   return (
     <>
       {modules.length > 0 ? (
-        <div>
-          <ul role="list" className="divide-y divide-gray-200 border border-gray-500">
-            {modules.map((module) => (
-              <>
-                <li
-                  onClick={() => {
-                    router.push(`/modules/${module.suffix}`)
-                  }}
-                  className="cursor-pointer"
-                >
-                  <ModuleCard
-                    type={module.type}
-                    title={module.title}
-                    status={`DOI: 10.53962/${module.suffix}`}
-                    time={moment(module.publishedAt).fromNow()}
-                    authors={module.authors}
-                  />
-                </li>
-              </>
-            ))}
-          </ul>
+        <>
+          <div className="rounded-t-md border border-gray-300 dark:border-gray-600 mt-8 divide-y divide-gray-300 dark:divide-gray-600">
+            <h1 className="text-xs leading-4 font-medium mx-4 my-2 text-gray-500 dark:text-gray-400 ">
+              Published modules
+            </h1>
+            <ul role="list" className="divide-y divide-gray-300 dark:divide-gray-600">
+              {modules.map((module) => (
+                <>
+                  <li
+                    onClick={() => {
+                      router.push(`/modules/${module.suffix}`)
+                    }}
+                    className="cursor-pointer"
+                  >
+                    <ModuleCard
+                      type={module.type.name}
+                      title={module.title}
+                      status={`DOI: 10.53962/${module.suffix}`}
+                      time={moment(module.publishedAt).fromNow()}
+                      authors={module.authors}
+                    />
+                  </li>
+                </>
+              ))}
+            </ul>
+          </div>
           {/* TODO: Put into one component - also used in dashboard.tsx */}
           <div className="flex my-1">
             <div className="flex-1 flex items-center justify-between">
-              <p className="text-sm text-gray-700">
+              <p className="text-sm leading-5 font-normal text-gray-700 dark:text-gray-200">
                 Showing <span className="font-medium">{ITEMS_PER_PAGE * page + 1}</span> to{" "}
                 <span className="font-medium">
                   {ITEMS_PER_PAGE + page > count ? count : ITEMS_PER_PAGE + page}
@@ -259,11 +281,11 @@ const HandleFeed = ({ handle }) => {
               </p>
             </div>
             <nav
-              className="relative z-0 inline-flex rounded-md -space-x-px"
+              className="relative z-0 inline-flex rounded-md border border-gray-300 dark:border-gray-600 -space-x-px divide-x divide-gray-300 dark:divide-gray-600"
               aria-label="Pagination"
             >
               <button
-                className="relative inline-flex items-center px-2 py-2 bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-400"
+                className="relative inline-flex items-center rounded-l-md px-2 py-2 text-sm font-medium text-gray-500 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
                 disabled={page === 0}
                 onClick={goToPreviousPage}
               >
@@ -274,7 +296,11 @@ const HandleFeed = ({ handle }) => {
                 (pageNr) => (
                   <button
                     key={`page-nav-feed-${pageNr}`}
-                    className="relative inline-flex items-center px-2 py-2 bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-400"
+                    className={
+                      page == pageNr
+                        ? "relative inline-flex items-center px-2 py-2 text-sm font-medium text-indigo-600 dark:text-gray-200 bg-indigo-50 dark:bg-gray-700 ring-1 ring-indigo-600 z-10 dark:ring-0"
+                        : "relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+                    }
                     disabled={page === pageNr}
                     onClick={() => {
                       goToPage(pageNr)
@@ -288,7 +314,7 @@ const HandleFeed = ({ handle }) => {
                 )
               )}
               <button
-                className="relative inline-flex items-center px-2 py-2 bg-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-400"
+                className="relative inline-flex items-center rounded-r-md px-2 py-2 text-sm font-medium text-gray-500 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
                 disabled={!hasMore}
                 onClick={goToNextPage}
               >
@@ -297,7 +323,7 @@ const HandleFeed = ({ handle }) => {
               </button>
             </nav>
           </div>
-        </div>
+        </>
       ) : (
         <div className="flex mt-8 flex-col flex-grow relative w-full border-2 border-gray-500 dark:border-gray-400 border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 h-28">
           <div className="table flex-grow w-full">
