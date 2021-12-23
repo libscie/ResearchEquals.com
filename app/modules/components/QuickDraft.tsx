@@ -105,13 +105,14 @@ const QuickDraft = ({ buttonText, buttonStyle }) => {
                           </div>
                         </div>
                       </div>
+                      <div className="mt-6 px-4 sm:px-6 text-sm leading-5 font-normal border-b border-gray-500 dark:border-gray-500 pb-4 dark:text-white">
+                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus
+                        hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel,
+                        dapibus id, mattis vel, nisi.
+                      </div>
                       <div className="mt-6 relative flex-1 px-4 sm:px-6">
                         {/* Replace with your content */}
-                        <div className="text-sm leading-5 font-normal border-b border-gray-500 dark:border-gray-500 pb-4 dark:text-white">
-                          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus
-                          hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel,
-                          dapibus id, mattis vel, nisi.
-                        </div>
+
                         <div className="my-4">
                           <label
                             htmlFor="title"
