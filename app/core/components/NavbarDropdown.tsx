@@ -2,7 +2,7 @@ import { Fragment, useState } from "react"
 import { Listbox, Transition, Dialog } from "@headlessui/react"
 import { Link, Routes, useMutation, useSession, useQuery } from "blitz"
 import { Suspense } from "react"
-import { CheckIcon, MenuIcon, SelectorIcon } from "@heroicons/react/solid"
+import { CheckIcon, MenuIcon, PlusSmIcon, SelectorIcon } from "@heroicons/react/solid"
 import { Close32, Menu32 } from "@carbon/icons-react"
 import { useCurrentUser } from "../hooks/useCurrentUser"
 import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
@@ -11,167 +11,108 @@ import SettingsModal from "../modals/settings"
 import changeSessionWorkspace from "../../workspaces/mutations/changeSessionWorkspace"
 import getDrafts from "../queries/getDrafts"
 import ResearchEqualsLogo from "./ResearchEqualsLogo"
+import { BellIcon } from "@heroicons/react/outline"
+import QuickDraft from "../../modules/components/QuickDraft"
+import getInvitedModules from "app/workspaces/queries/getInvitedModules"
+import DropdownNotificationModal from "../modals/DropdownNotificationModal"
 
 const DropdownContents = () => {
   const currentUser = useCurrentUser()
   const currentWorkspace = useCurrentWorkspace()
   const [logoutMutation] = useMutation(logout)
   const session = useSession()
+  const [invitedModules] = useQuery(getInvitedModules, { session })
   const [drafts] = useQuery(getDrafts, { session })
-
-  const [changeSessionWorkspaceMutation] = useMutation(changeSessionWorkspace)
-  // Match the selected state with the session workspace
-  const [selected, setSelected] = useState(
-    currentUser?.memberships.filter((membership) => {
-      if (membership.workspace.id === session.workspaceId) {
-        return membership
-      }
-    })[0]
-  )
 
   if (currentUser && currentWorkspace) {
     return (
-      <div className="">
-        <div className="">
-          <Listbox
-            value={selected}
-            onChange={async (value) => {
-              await changeSessionWorkspaceMutation(value?.workspace.id)
-              setSelected(value)
-            }}
-          >
-            <div className="relative">
-              <Listbox.Button className="flex py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
-                <div className="flex-shrink-0">
-                  <img
-                    className="h-10 w-10 rounded-full"
-                    src={selected!.workspace!.avatar!}
-                    alt={`Avatar of ${
-                      selected!.workspace.name
-                        ? selected!.workspace.name
-                        : selected!.workspace.handle
-                    }`}
-                  />
-                </div>
-                <div className="ml-3">
-                  <div className="text-base font-medium text-gray-800">
-                    {selected!.workspace.name}
-                  </div>
-                  <div className="text-sm font-medium text-gray-500">{currentUser.email}</div>
-                </div>
-                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                  <SelectorIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
-                </span>
-              </Listbox.Button>
-              <Transition
-                as={Fragment}
-                leave="transition ease-in duration-100"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                  {currentUser.memberships.map((membership, index) => (
-                    <Listbox.Option
-                      key={index}
-                      className={({ active }) =>
-                        `${active ? "text-indigo-900 bg-indigo-100" : "text-gray-900"}
-                      cursor-default select-none relative py-2 pl-10 pr-4`
-                      }
-                      value={membership}
-                    >
-                      {({ selected, active }) => (
-                        <>
-                          <span
-                            className={`${selected ? "font-medium" : "font-normal"} flex truncate`}
-                          >
-                            <img
-                              className="h-7 w-7 rounded-full"
-                              src={membership.workspace!.avatar!}
-                              alt={`Avatar of ${
-                                membership.workspace.name
-                                  ? membership.workspace.name
-                                  : membership.workspace.handle
-                              }`}
-                            />
-                            <span
-                              className={`${
-                                selected ? "font-medium" : "font-normal"
-                              } block truncate`}
-                            >
-                              {membership.workspace.handle}
-                            </span>
-                            {selected ? (
-                              <span
-                                className={`${active ? "text-amber-600" : "text-amber-600"}
-                                absolute inset-y-0 left-0 flex items-center pl-3`}
-                              >
-                                <CheckIcon className="w-5 h-5" aria-hidden="true" />
-                              </span>
-                            ) : null}
-                          </span>
-                        </>
-                      )}
-                    </Listbox.Option>
-                  ))}
-                </Listbox.Options>
-              </Transition>
-            </div>
-          </Listbox>
-        </div>
-        <div className="mt-3 max-w-3xl mx-auto px-0 space-y-1">
+      <>
+        <div className="mt-3 pt-0 pb-2 px-4 max-w-3xl space-y-1 border-b border-gray-200 dark:border-gray-600">
+          <QuickDraft
+            buttonText={
+              <>
+                <PlusSmIcon className="inline w-4 h-4 fill-current text-indigo-500 dark:text-gray-400" />
+                Quick Draft
+              </>
+            }
+            buttonStyle="w-full py-2 bg-indigo-50 dark:bg-gray-800 text-indigo-700 dark:text-gray-200  border border-transparent text-sm leading-5 font-normal rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:border dark:border-gray-400 dark:hover:bg-gray-700"
+          />
           <Link href={Routes.Dashboard()}>
-            <button className="block rounded-md py-2 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900">
+            <button className="group w-full text-left block rounded-md px-2 py-2 text-gray-900 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 text-base leading-5 font-normal">
               Dashboard
             </button>
           </Link>
           <Link href={Routes.HandlePage({ handle: currentWorkspace.handle })}>
-            <button className="block rounded-md py-2 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900">
+            <button className="group w-full text-left block rounded-md px-2 py-2 text-gray-900 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 text-base leading-5 font-normal">
               Profile
             </button>
           </Link>
           <Link href={Routes.DraftsPage()}>
-            <button className="block rounded-md py-2 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900">
+            <button className="group w-full text-left block rounded-md px-2 py-2 text-gray-900 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 text-base leading-5 font-normal">
               Drafts
-              <span className="bg-gray-100 text-gray-900 ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium">
+              <span className="bg-white dark:bg-gray-900 border border-gray-300 shadow-sm group-hover:bg-indigo-100 group-hover:text-indigo-800 dark:border-gray-600 dark:group-hover:bg-gray-700 text-gray-900 dark:text-gray-200 ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium">
                 {drafts.length}
               </span>
             </button>
           </Link>
-          <Link href="#">
-            <button className="block rounded-md py-2 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900">
-              <SettingsModal
-                styling="block rounded-md text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
-                button={
-                  <button className="block rounded-md text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900">
-                    Settings
-                  </button>
-                }
-                user={currentUser}
-                workspace={currentWorkspace}
-              />
+          <Link href={Routes.InvitationsPage()}>
+            <button className="group w-full text-left block rounded-md px-2 py-2 text-gray-900 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 text-base leading-5 font-normal">
+              Invitations
+              <span className="bg-white dark:bg-gray-900 border border-gray-300 shadow-sm group-hover:bg-indigo-100 group-hover:text-indigo-800 dark:border-gray-600 dark:group-hover:bg-gray-700 text-gray-900 dark:text-gray-200 ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium">
+                {invitedModules.length}
+              </span>
             </button>
           </Link>
+        </div>
+        <div className="mt-3 pt-0 pb-2 px-4 max-w-3xl space-y-1">
+          <li className="py-2 px-2 flex">
+            <div className="mr-2">
+              <img
+                src={currentWorkspace!.avatar!}
+                alt={`Avatar of ${currentWorkspace.name}`}
+                className="w-10 h-10 rounded-full inline-block h-full align-middle"
+              />
+            </div>
+            <div className="flex-grow">
+              <span className="inline-block h-full align-middle"></span>
+              <p className="text-gray-700 dark:text-gray-200 text-sm leading-4 font-normal my-auto inline-block align-middle">
+                {currentWorkspace.name}
+                <p className="text-gray-500 dark:text-gray-400 text-xs leading-4 font-normal">
+                  @{currentWorkspace.handle}
+                </p>
+              </p>
+            </div>
+            <DropdownNotificationModal invitedModules={invitedModules} />
+          </li>
+          <Link href="#">
+            <SettingsModal
+              styling="w-full text-left block rounded-md px-2 py-2 text-gray-500 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 text-base leading-5 font-normal"
+              button="Settings"
+              user={currentUser}
+              workspace={currentWorkspace}
+            />
+          </Link>
           <button
-            className="block rounded-md py-2 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+            className="w-full text-left block rounded-md px-2 py-2 text-gray-500 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 text-base leading-5 font-normal"
             onClick={async () => {
               await logoutMutation()
             }}
           >
-            Logout
+            Log out
           </button>
         </div>
-      </div>
+      </>
     )
   } else {
     return (
       <>
         <Link href={Routes.LoginPage()}>
-          <button className="w-full block rounded-md py-2 px-0 text-sm leading-5 font-normal text-indigo-700 dark:text-gray-200 bg-indigo-100 hover:bg-indigo-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-0 dark:border dark:border-gray-600">
+          <button className="w-full block rounded-md py-2 px-0 text-sm leading-5 font-normal text-indigo-700 dark:text-gray-200 bg-indigo-100 hover:bg-indigo-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-0 dark:border dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             Log in
           </button>
         </Link>
         <Link href={Routes.SignupPage()}>
-          <button className="w-full my-1 block rounded-md py-2 px-0 text-sm leading-5 font-normal text-white bg-indigo-600 hover:bg-indigo-700">
+          <button className="w-full my-1 block rounded-md py-2 px-0 text-sm leading-5 font-normal text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             Create account
           </button>
         </Link>
@@ -197,13 +138,15 @@ const NavbarDropdown = () => {
         </>
       ) : (
         <>
-          <span className="sr-only">Open menu</span>
-          <MenuIcon
-            className="block h-6 w-6 text-gray-400 dark:text-gray-200 hover:bg-gray-100 hover:text-gray-500 dark:hover:bg-gray-800 rounded-md focus:ring-2 focus:ring-offset-0 focus:ring-gray-200"
+          <button
+            className="rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
             onClick={() => {
               setIsOpen(true)
             }}
-          />
+          >
+            <span className="sr-only">Open menu</span>
+            <MenuIcon className="block h-6 w-6 text-gray-400 dark:text-gray-200 hover:bg-gray-100 hover:text-gray-500 dark:hover:bg-gray-800 rounded-md focus:ring-2 focus:ring-offset-0 focus:ring-gray-200" />
+          </button>
         </>
       )}
 
@@ -237,34 +180,31 @@ const NavbarDropdown = () => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-full p-5 my-0 overflow-hidden text-left align-middle transition-all transform bg-white dark:bg-gray-900 shadow-xl">
-                <Dialog.Title as="h1" className="text-lg font-medium leading-6 text-gray-900">
-                  <div className="pt-0 pb-6 px-0">
+              <div className="inline-block w-full my-0 overflow-hidden text-left align-middle transition-all transform bg-white dark:bg-gray-900 shadow-xl border-b dark:border-gray-600">
+                <Dialog.Title as="h1" className="text-lg font-medium leading-6 text-gray-900 m-5">
+                  <div className="pt-0 pb-0 px-0">
                     <div className="flex items-center justify-between">
                       <div>
                         <ResearchEqualsLogo />
                       </div>
                       <div className="-mr-2">
-                        <button className="rounded-md p-2 inline-flex items-center justify-center text-gray-500 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                        <button
+                          className="rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                          onClick={() => {
+                            setIsOpen(false)
+                          }}
+                        >
                           <span className="sr-only">Close menu</span>
-                          <Close32
-                            className="h-6 w-6"
-                            aria-hidden="true"
-                            onClick={() => {
-                              setIsOpen(false)
-                            }}
-                          />
+                          <Close32 className="h-6 w-6" aria-hidden="true" />
                         </button>
                       </div>
                     </div>
                   </div>
                 </Dialog.Title>
-                <div className="pt-5 pb-6 px-0">
-                  <div className="items-center justify-between">
-                    <Suspense fallback="Loading...">
-                      <DropdownContents />
-                    </Suspense>
-                  </div>
+                <div className="items-center justify-between">
+                  <Suspense fallback="Loading...">
+                    <DropdownContents />
+                  </Suspense>
                 </div>
               </div>
             </Transition.Child>
