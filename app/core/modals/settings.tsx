@@ -1,24 +1,6 @@
-import { useMutation, useRouter, Link, useQuery, validateZodSchema } from "blitz"
 import { Dialog, Transition, Tab } from "@headlessui/react"
-import { Fragment, useState } from "react"
-import { Widget } from "@uploadcare/react-widget"
-import changePassword from "app/auth/mutations/changePassword"
-import changeBio from "app/workspaces/mutations/changeBio"
-import changeEmail from "app/users/mutations/changeEmail"
-import changeName from "app/users/mutations/changeName"
-import changePronouns from "app/workspaces/mutations/changePronouns"
-import deleteUser from "app/users/mutations/deleteUser"
-import changeAvatar from "app/workspaces/mutations/changeAvatar"
+import { Fragment, useEffect, useState } from "react"
 import { XIcon } from "@heroicons/react/solid"
-
-import { Form, FORM_ERROR } from "../components/Form"
-import { LabeledTextField } from "app/core/components/LabeledTextField"
-import { ChangePassword, ChangeEmail, ChangeName } from "app/auth/validations"
-import DeleteModal from "./delete"
-import getSignature from "../../auth/queries/getSignature"
-import { z } from "zod"
-import { useFormik } from "formik"
-import changeUrl from "../../workspaces/mutations/changeUrl"
 import WorkspaceSettings from "../components/WorkspaceSettings"
 import AccountSettings from "../components/AccountSettings"
 
@@ -26,13 +8,9 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
 
-export default function SettingsModal({ button, styling, user, workspace }) {
+export default function SettingsModal({ button, styling, user, workspace, state = false }) {
   let [isOpen, setIsOpen] = useState(false)
   let [categories] = useState(["Workspace", "Account", "Billing"])
-
-  const [changePasswordMutation, { isSuccess: passwordChanged }] = useMutation(changePassword)
-  const [changeEmailMutation] = useMutation(changeEmail)
-  const [uploadSecret] = useQuery(getSignature, undefined)
 
   return (
     <>
