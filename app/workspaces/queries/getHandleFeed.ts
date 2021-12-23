@@ -49,6 +49,7 @@ export default resolver.pipe(async ({ handle, orderBy, skip = 0, take = 100 }, c
           authors: {
             include: { workspace: true },
           },
+          type: true,
         },
       }),
   })
