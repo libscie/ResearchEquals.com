@@ -20,6 +20,9 @@ import ModuleCard from "../core/components/ModuleCard"
 import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
 import SettingsModal from "../core/modals/settings"
 import getCurrentUser from "app/users/queries/getCurrentUser"
+import HandlePanel from "../modules/components/HandlePanel"
+import UnfollowButton from "../workspaces/components/UnfollowButton"
+import FollowButton from "../workspaces/components/FollowButton"
 
 const ITEMS_PER_PAGE = 10
 
@@ -47,6 +50,7 @@ export const getServerSideProps = async ({ params }) => {
 }
 
 const HandlePage = ({ workspace }) => {
+  console.log(workspace.following)
   return (
     <Layout title={`R=${workspace.name || workspace.handle}`}>
       <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-200 h-full">
@@ -74,7 +78,7 @@ const HandlePage = ({ workspace }) => {
               {workspace ? (
                 <div>
                   <Suspense fallback="Loading...">
-                    <FollowButton workspace={workspace} />
+                    <FollowHandleButton workspace={workspace} />
                   </Suspense>
                 </div>
               ) : (
@@ -140,13 +144,22 @@ const HandlePage = ({ workspace }) => {
               ) : (
                 <></>
               )}
-              <p className="flex my-2 text-sm leading-4 font-normal text-gray-500 dark:text-gray-200">
-                <p>
-                  <span className="inline-block h-full align-middle"> </span>
-                  <UserAddIcon className="w-4 h-4 inline-block align-middle mr-1 text-gray-700 dark:text-gray-400" />
-                  Following <Suspense fallback="Loading...">{workspace.following.length}</Suspense>
-                </p>
-              </p>
+              <Suspense fallback="">
+                <HandlePanel
+                  buttonText={
+                    <p className="flex my-2 text-sm leading-4 font-normal text-gray-500 dark:text-gray-200">
+                      <p>
+                        <span className="inline-block h-full align-middle"> </span>
+                        <UserAddIcon className="w-4 h-4 inline-block align-middle mr-1 text-gray-700 dark:text-gray-400" />
+                        Following{" "}
+                        <Suspense fallback="Loading...">{workspace.following.length}</Suspense>
+                      </p>
+                    </p>
+                  }
+                  title="Following"
+                  authors={workspace.following}
+                />
+              </Suspense>
             </div>
           </div>
           <div className="w-full ">
@@ -162,13 +175,10 @@ const HandlePage = ({ workspace }) => {
 
 export default HandlePage
 
-const FollowButton = ({ workspace }) => {
+const FollowHandleButton = ({ workspace }) => {
   const params = useParams()
   const [currentUser] = useQuery(getCurrentUser, null)
   const [ownWorkspace, { refetch }] = useQuery(getCurrentWorkspace, null)
-
-  const [followWorkspaceMutation] = useMutation(followWorkspace)
-  const [unfollowWorkspaceMutation] = useMutation(unfollowWorkspace)
 
   return (
     <>
@@ -185,41 +195,9 @@ const FollowButton = ({ workspace }) => {
           </>
         ) : ownWorkspace?.following.filter((follows) => follows.handle === params.handle).length ===
           0 ? (
-          <>
-            <span className="inline-block h-full align-middle"></span>
-            <button
-              className="py-2 px-4 shadow-sm text-sm leading-4 font-medium bg-indigo-100 dark:bg-gray-800 hover:bg-indigo-200 dark:hover:bg-gray-700 text-indigo-700 dark:text-gray-200 rounded dark:border dark:border-gray-600 inline-block align-middle focus:outline-none focus:ring-2 focus:ring-offset-0   focus:ring-indigo-500"
-              onClick={async () => {
-                // TODO: Add action
-
-                await followWorkspaceMutation({
-                  followedId: workspace.id,
-                })
-                refetch()
-
-                toast.success("Following!")
-              }}
-            >
-              Follow
-            </button>
-          </>
+          <FollowButton author={workspace.id} refetchFn={refetch} />
         ) : (
-          <>
-            <span className="inline-block h-full align-middle"></span>
-
-            <button
-              className="py-2 px-4 shadow-sm text-sm leading-4 font-medium bg-indigo-100 dark:bg-gray-800 hover:bg-indigo-200 dark:hover:bg-gray-700 text-indigo-700 dark:text-gray-200 rounded dark:border dark:border-gray-600 inline-block align-middle focus:outline-none focus:ring-2 focus:ring-offset-0   focus:ring-indigo-500"
-              onClick={async () => {
-                await unfollowWorkspaceMutation({
-                  followedId: workspace.id,
-                })
-                refetch()
-                toast("Unfollowed", { icon: "👋" })
-              }}
-            >
-              Unfollow
-            </button>
-          </>
+          <UnfollowButton author={workspace} refetchFn={refetch} />
         )
       ) : (
         ""
