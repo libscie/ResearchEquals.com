@@ -11,6 +11,7 @@ import SettingsModal from "../modals/settings"
 import QuickDraft from "../../modules/components/QuickDraft"
 import getInvitedModules from "../../workspaces/queries/getInvitedModules"
 import { BellIcon } from "@heroicons/react/outline"
+import InvitationNotification from "./InvitationNotification"
 
 const FullWidthMenu = () => {
   const currentUser = useCurrentUser()
@@ -71,19 +72,7 @@ const FullWidthMenu = () => {
                   <ul className="divide-y dark:divide-gray-600">
                     {invitedModules.map((invited) => (
                       <>
-                        <Link href="/invitations">
-                          <li className="cursor-pointer p-2">
-                            <p className="text-xs leading-4 text-gray-400">
-                              {moment(invited.updatedAt).fromNow()}
-                            </p>
-                            <p className="text-sm leading-4 font-bold text-gray-900 dark:text-gray-200 mt-2 mb-1">
-                              {invited.title}
-                            </p>
-                            <p className="text-xs leading-4 text-gray-900 dark:text-gray-200 my-1">
-                              Invitation to co-author
-                            </p>
-                          </li>
-                        </Link>
+                        <InvitationNotification invited={invited} />
                       </>
                     ))}
                   </ul>
@@ -152,7 +141,7 @@ const FullWidthMenu = () => {
               Draft
             </>
           }
-          buttonStyle="bg-indigo-50 dark:bg-gray-800 text-indigo-700 dark:text-gray-200 ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-normal rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:border dark:border-gray-400"
+          buttonStyle="bg-indigo-50 dark:bg-gray-800 text-indigo-700 dark:text-gray-200 ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-normal rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:border dark:border-gray-400 dark:hover:bg-gray-700"
         />
       </div>
     )
