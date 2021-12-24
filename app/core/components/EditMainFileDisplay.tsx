@@ -1,6 +1,7 @@
 import { Download24, TrashCan24 } from "@carbon/icons-react"
 import { useMutation } from "blitz"
 import toast from "react-hot-toast"
+import filesize from "filesize"
 
 import deleteMainFile from "../../modules/mutations/deleteMainFile"
 
@@ -17,7 +18,7 @@ const EditFileDisplay = ({ name, size, url, uuid, moduleId, setQueryData }) => {
       >
         <span className="flex-grow  inline-block align-middle">{name}</span>
         {/* https://www.npmjs.com/package/filesize */}
-        <span>{size / 1000}KB</span>
+        <span>{filesize(size)}</span>
       </a>
       <p className="flex">
         <button className="mx-2">

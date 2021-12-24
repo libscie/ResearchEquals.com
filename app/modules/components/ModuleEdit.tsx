@@ -228,9 +228,20 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
                 </button>
               )}
 
-              <button className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-xs leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700">
+              <button
+                className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-xs leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700"
+                onClick={() => {
+                  setManageAuthorsOpen(true)
+                }}
+              >
                 Manage Authors
               </button>
+              <ManageAuthors
+                open={manageAuthorsOpen}
+                setOpen={setManageAuthorsOpen}
+                moduleEdit={moduleEdit}
+                setQueryData={setQueryData}
+              />
               <span className="flex-grow sm:hidden"></span>
             </div>
           </div>
@@ -408,27 +419,6 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
       ) : (
         <MetadataView module={moduleEdit} />
       )}
-      {/* Authors */}
-      <div className="flex border-t border-b border-gray-800 mt-2 py-2">
-        <div className="flex-grow flex -space-x-2 relative z-0 overflow-hidden">
-          <AuthorAvatars module={module} />
-        </div>
-        <ManageAuthors
-          open={manageAuthorsOpen}
-          setOpen={setManageAuthorsOpen}
-          moduleEdit={moduleEdit}
-          setQueryData={setQueryData}
-        />
-        <button
-          type="button"
-          className="inline-flex items-center h-8  px-6 py-3 border border-transparent  font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          onClick={() => {
-            setManageAuthorsOpen(true)
-          }}
-        >
-          Manage authors
-        </button>
-      </div>
 
       {/* PLACEHOLDER References */}
       <div className="text-center">
