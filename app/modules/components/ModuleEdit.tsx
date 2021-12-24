@@ -8,6 +8,7 @@ import { Edit24, EditOff24, Save32 } from "@carbon/icons-react"
 import { Prisma } from "prisma"
 import { useFormik } from "formik"
 import { Maximize24, Minimize24 } from "@carbon/icons-react"
+import toast from "react-hot-toast"
 
 import EditMainFile from "./EditMainFile"
 import ManageAuthors from "./ManageAuthors"
@@ -27,11 +28,14 @@ import AuthorAvatars from "./AuthorAvatars"
 import SearchResultModule from "../../core/components/SearchResultModule"
 import { ArrowNarrowLeftIcon, PlusSmIcon } from "@heroicons/react/solid"
 import AuthorAvatarsNew from "./AuthorAvatarsNew"
+import SearchResultWorkspace from "../../core/components/SearchResultWorkspace"
+import addAuthor from "../mutations/addAuthor"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
 const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
   const [isEditing, setIsEditing] = useState(false)
+  const [addAuthors, setAddAuthors] = useState(false)
   const [manageAuthorsOpen, setManageAuthorsOpen] = useState(false)
   const [moduleEdit, { refetch, setQueryData }] = useQuery(
     useCurrentModule,
@@ -46,6 +50,7 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
 
   const [addParentMutation] = useMutation(addParent)
   const [editModuleScreenMutation] = useMutation(editModuleScreen)
+  const [addAuthorMutation] = useMutation(addAuthor)
 
   const formik = useFormik({
     initialValues: {
@@ -146,7 +151,7 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
               </Link>
             </div>
           </div>
-          <div className="py-4 px-2 h-32">
+          <div className="py-4 px-2 min-h-32">
             <p className="text-xs leading-4 font-normal text-gray-500 dark:text-white">
               {moduleEdit?.type.name}
             </p>
@@ -155,17 +160,78 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
             </p>
           </div>
           {/* Authors section */}
-          <div className="px-1 py-1 flex">
-            <span className="flex-grow">
+          <div className="px-1 py-1 sm:flex place-items-center sm:place-items-left">
+            <div className="flex sm:inline">
+              <span className="flex-grow"></span>
+
               <AuthorAvatarsNew authors={moduleEdit?.authors} />
-            </span>
-            <button className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 rounded text-xs leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-              <PlusSmIcon className="fill-current text-gray-500 dark:text-gray-200 w-4 h-4" />
-              Add Authors
-            </button>
-            <button className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 rounded text-xs leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-              Manage Authors
-            </button>
+              <span className="flex-grow"></span>
+            </div>
+            <span className="sm:flex-grow"></span>
+            <div className="flex sm:contents">
+              <span className="flex-grow sm:hidden"></span>
+
+              {addAuthors ? (
+                <>
+                  <div className="w-28 sm:w-56 h-full">
+                    <Autocomplete
+                      openOnFocus={true}
+                      defaultActiveItemId="0"
+                      getSources={({ query }) => [
+                        {
+                          sourceId: "products",
+                          async onSelect(params) {
+                            const { item, setQuery } = params
+                            try {
+                              const updatedModule = await addAuthorMutation({
+                                authorId: item.objectID,
+                                moduleId: moduleEdit!.id,
+                              })
+                              toast.success("Author invited")
+                              setQueryData(updatedModule)
+                            } catch (error) {
+                              toast.error("Something went wrong")
+                            }
+                            setQuery("")
+                          },
+                          getItems() {
+                            return getAlgoliaResults({
+                              searchClient,
+                              queries: [
+                                {
+                                  indexName: `${process.env.ALGOLIA_PREFIX}_workspaces`,
+                                  query,
+                                },
+                              ],
+                            })
+                          },
+                          templates: {
+                            item({ item, components }) {
+                              return <SearchResultWorkspace item={item} />
+                            },
+                          },
+                        },
+                      ]}
+                    />
+                  </div>
+                </>
+              ) : (
+                <button
+                  className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-xs leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  onClick={() => {
+                    setAddAuthors(true)
+                  }}
+                >
+                  <PlusSmIcon className="fill-current text-gray-500 dark:text-gray-200 w-4 h-4 dark:hover:text-gray-400" />
+                  Add Authors
+                </button>
+              )}
+
+              <button className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-xs leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700">
+                Manage Authors
+              </button>
+              <span className="flex-grow sm:hidden"></span>
+            </div>
           </div>
           {/* Description section */}
           <div className="text-xs leading-4 font-normal pt-4 pl-2 pr-4 pb-2">
