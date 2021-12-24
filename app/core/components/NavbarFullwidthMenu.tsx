@@ -38,7 +38,7 @@ const FullWidthMenu = () => {
               <Popover.Button
                 className={`
                 ${open ? "" : "text-opacity-90"}
-                ml-2 flex-shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+                mx-0 flex-shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
                 ${invitedModules.length > 0 ? "" : "pointer-events-none"}
                 `}
               >
@@ -94,7 +94,7 @@ const FullWidthMenu = () => {
         </Popover>
         <span className="sr-only">Open settings</span>
         <SettingsModal
-          styling="ml-2 flex-shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
+          styling="ml-1 flex-shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
           button={
             <CogIcon
               className="h-6 w-6 text-gray-400 hover:text-gray-500 rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
