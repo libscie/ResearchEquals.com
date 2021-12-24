@@ -25,6 +25,7 @@ import EditSupportingFileDisplay from "../../core/components/EditSupportingFileD
 import MetadataView from "./MetadataView"
 import AuthorAvatars from "./AuthorAvatars"
 import SearchResultModule from "../../core/components/SearchResultModule"
+import { ArrowNarrowLeftIcon } from "@heroicons/react/solid"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
@@ -84,7 +85,6 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
     <div className="p-5 mx-auto overflow-y-auto text-base">
       {/* Menu bar */}
       <div className="w-full flex">
-        {/* Push all menu bars to the right */}
         {inboxOpen ? (
           <button
             onClick={() => {
@@ -92,7 +92,7 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
             }}
           >
             <label className="sr-only">Go full screen</label>
-            <Maximize24 />
+            <Maximize24 className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600" />
           </button>
         ) : (
           <button
@@ -101,23 +101,22 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
             }}
           >
             <label className="sr-only">Go full screen</label>
-            <Minimize24 />
+            <ArrowNarrowLeftIcon className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600" />
           </button>
         )}
+        {/* Push all menu bars to the right */}
         <div className="flex-grow"></div>
         <div>
-          <span className="inline-block h-full align-middle"> </span>
-
           {isEditing ? (
             <EditOff24
-              className="inline-block align-middle"
+              className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600"
               onClick={() => {
                 setIsEditing(false)
               }}
             />
           ) : (
             <Edit24
-              className="inline-block align-middle"
+              className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600"
               onClick={() => {
                 setIsEditing(true)
               }}

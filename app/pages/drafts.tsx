@@ -31,7 +31,7 @@ const DraftsContents = () => {
       <div
         className={`${
           !inboxOpen ? "hidden" : "inline"
-        } w-full lg:w-1/3 divide-y-0 divide-gray-100 dark:divide-gray-600`}
+        } w-full lg:w-80 divide-y-0 divide-gray-100 dark:divide-gray-600`}
         style={{ minHeight: "calc(100vh - 74px - 54px)" }}
       >
         <h1 className="lg:hidden text-lg leading-7 font-medium text-gray-900 dark:text-gray-200 px-4 sm:px-6 lg:px-8 py-4 border-b lg:border-b-0 border-gray-100 dark:border-gray-600">
