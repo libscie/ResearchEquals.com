@@ -4,9 +4,10 @@ import moment from "moment"
 import algoliasearch from "algoliasearch"
 import { z } from "zod"
 import { getAlgoliaResults } from "@algolia/autocomplete-js"
-import { Edit32, EditOff32, Save32 } from "@carbon/icons-react"
+import { Edit24, EditOff24, Save32 } from "@carbon/icons-react"
 import { Prisma } from "prisma"
 import { useFormik } from "formik"
+import { Maximize24, Minimize24 } from "@carbon/icons-react"
 
 import EditMainFile from "./EditMainFile"
 import ManageAuthors from "./ManageAuthors"
@@ -27,7 +28,7 @@ import SearchResultModule from "../../core/components/SearchResultModule"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
-const ModuleEdit = ({ user, module, isAuthor }) => {
+const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [manageAuthorsOpen, setManageAuthorsOpen] = useState(false)
   const [moduleEdit, { refetch, setQueryData }] = useQuery(
@@ -80,23 +81,42 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
   }, [moduleEdit])
 
   return (
-    <div className="max-w-4xl mx-auto overflow-y-auto text-base">
+    <div className="p-5 mx-auto overflow-y-auto text-base">
       {/* Menu bar */}
       <div className="w-full flex">
         {/* Push all menu bars to the right */}
+        {inboxOpen ? (
+          <button
+            onClick={() => {
+              setInboxOpen(false)
+            }}
+          >
+            <label className="sr-only">Go full screen</label>
+            <Maximize24 />
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              setInboxOpen(true)
+            }}
+          >
+            <label className="sr-only">Go full screen</label>
+            <Minimize24 />
+          </button>
+        )}
         <div className="flex-grow"></div>
         <div>
           <span className="inline-block h-full align-middle"> </span>
 
           {isEditing ? (
-            <EditOff32
+            <EditOff24
               className="inline-block align-middle"
               onClick={() => {
                 setIsEditing(false)
               }}
             />
           ) : (
-            <Edit32
+            <Edit24
               className="inline-block align-middle"
               onClick={() => {
                 setIsEditing(true)
