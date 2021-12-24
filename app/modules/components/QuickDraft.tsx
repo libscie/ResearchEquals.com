@@ -7,6 +7,7 @@ import { useFormik } from "formik"
 import { Fragment, useState } from "react"
 import { z } from "zod"
 import { HelpFilled32 } from "@carbon/icons-react"
+
 import createModule from "../mutations/createModule"
 
 const QuickDraft = ({ buttonText, buttonStyle }) => {
@@ -169,7 +170,9 @@ const QuickDraft = ({ buttonText, buttonStyle }) => {
                               <option className="text-gray-900" value=""></option>
                               {moduleTypes.map((type) => (
                                 <>
-                                  <option value={type.id}>{type.name}</option>
+                                  <option value={type.id} className="text-gray-900">
+                                    {type.name}
+                                  </option>
                                 </>
                               ))}
                             </select>
@@ -184,8 +187,7 @@ const QuickDraft = ({ buttonText, buttonStyle }) => {
                             htmlFor="license"
                             className="flex my-1 text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
                           >
-                            License{" "}
-                            <HelpFilled32 className="ml-1 fill-current text-gray-700 dark:text-gray-200 w-4 h-4" />
+                            License
                           </label>
                           <div className="mt-1">
                             <select
@@ -197,7 +199,7 @@ const QuickDraft = ({ buttonText, buttonStyle }) => {
                               <option className="text-gray-900" value=""></option>
                               {licenses.map((license) => (
                                 <>
-                                  <option value={license.id}>
+                                  <option value={license.id} className="text-gray-900">
                                     {license.name} (
                                     {license.price > 0 ? `${license.price / 100}EUR` : "Free"})
                                   </option>
