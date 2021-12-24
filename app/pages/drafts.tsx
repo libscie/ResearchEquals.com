@@ -11,6 +11,7 @@ import getDrafts from "../core/queries/getDrafts"
 import ModuleEdit from "../modules/components/ModuleEdit"
 import { useCurrentUser } from "../core/hooks/useCurrentUser"
 import ModuleCard from "../core/components/ModuleCard"
+import { useMediaPredicate } from "react-media-hook"
 
 const DraftsContents = () => {
   const session = useSession()
@@ -19,6 +20,7 @@ const DraftsContents = () => {
   const [drafts] = useQuery(getDrafts, { session })
   const user = useCurrentUser()
   const query = useRouterQuery()
+  const biggerWindow = useMediaPredicate("(min-width: 1024px)")
 
   useEffect(() => {
     if (query.suffix) {
@@ -43,7 +45,7 @@ const DraftsContents = () => {
               <li
                 onClick={() => {
                   setModule(draft)
-                  setInboxOpen(false)
+                  setInboxOpen(biggerWindow)
                   Router.push("/drafts", { query: { suffix: draft.suffix } })
                 }}
                 className="cursor-pointer"
