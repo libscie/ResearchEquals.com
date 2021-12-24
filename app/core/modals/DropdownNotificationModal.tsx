@@ -18,6 +18,7 @@ const DropdownNotificationModal = ({ invitedModules }) => {
         onClick={() => {
           setIsOpen(true)
         }}
+        disabled={invitedModules.length === 0}
       >
         <span className="inline-block h-full align-middle"></span>
         <BellIcon
@@ -73,7 +74,7 @@ const DropdownNotificationModal = ({ invitedModules }) => {
                       <h1 className="text-lg leading-7 font-medium text-gray-900 dark:text-gray-200 px-2">
                         Notifications
                       </h1>
-                      <div className="-mr-2">
+                      <div className="mr-2">
                         <button
                           className="rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
                           onClick={() => {

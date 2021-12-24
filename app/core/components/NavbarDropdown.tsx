@@ -1,6 +1,6 @@
 import { Fragment, useState } from "react"
 import { Listbox, Transition, Dialog } from "@headlessui/react"
-import { Link, Routes, useMutation, useSession, useQuery } from "blitz"
+import { Link, Routes, useMutation, useSession, useQuery, useRouter } from "blitz"
 import { Suspense } from "react"
 import { CheckIcon, MenuIcon, PlusSmIcon, SelectorIcon } from "@heroicons/react/solid"
 import { Close32, Menu32 } from "@carbon/icons-react"
@@ -21,6 +21,7 @@ const DropdownContents = () => {
   const currentWorkspace = useCurrentWorkspace()
   const [logoutMutation] = useMutation(logout)
   const session = useSession()
+  const router = useRouter()
   const [invitedModules] = useQuery(getInvitedModules, { session })
   const [drafts] = useQuery(getDrafts, { session })
 
@@ -95,6 +96,7 @@ const DropdownContents = () => {
           <button
             className="w-full text-left block rounded-md px-2 py-2 text-gray-500 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 text-base leading-5 font-normal"
             onClick={async () => {
+              router.push("/")
               await logoutMutation()
             }}
           >
@@ -106,16 +108,18 @@ const DropdownContents = () => {
   } else {
     return (
       <>
-        <Link href={Routes.LoginPage()}>
-          <button className="w-full block rounded-md py-2 px-0 text-sm leading-5 font-normal text-indigo-700 dark:text-gray-200 bg-indigo-100 hover:bg-indigo-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-0 dark:border dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Log in
-          </button>
-        </Link>
-        <Link href={Routes.SignupPage()}>
-          <button className="w-full my-1 block rounded-md py-2 px-0 text-sm leading-5 font-normal text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Create account
-          </button>
-        </Link>
+        <div className="px-5 pb-2">
+          <Link href={Routes.LoginPage()}>
+            <button className="w-full block rounded-md py-2 px-0 text-sm leading-5 font-normal text-indigo-700 dark:text-gray-200 bg-indigo-100 hover:bg-indigo-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-0 dark:border dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              Log in
+            </button>
+          </Link>
+          <Link href={Routes.SignupPage()}>
+            <button className="w-full my-1 block rounded-md py-2 px-0 text-sm leading-5 font-normal text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              Create account
+            </button>
+          </Link>
+        </div>
       </>
     )
   }
