@@ -2,6 +2,7 @@ import { Download32, TrashCan32 } from "@carbon/icons-react"
 import { useQuery, useMutation } from "blitz"
 import { Widget } from "@uploadcare/react-widget"
 import { useRef } from "react"
+import { PlusSmIcon } from "@heroicons/react/solid"
 
 import getSignature from "../../auth/queries/getSignature"
 import addSupporting from "../mutations/addSupporting"
@@ -30,12 +31,12 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit }) => {
     <>
       <button
         type="button"
-        className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-xs leading-4 font-normal shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700"
         onClick={() => {
           widgetApi.current.openDialog()
         }}
       >
-        Add +
+        <PlusSmIcon className="w-4 h-4" /> Add Supporting File(s)
         {moduleEdit.supporting ? (
           <Widget
             publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}

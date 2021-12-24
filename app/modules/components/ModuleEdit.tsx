@@ -30,6 +30,7 @@ import { ArrowNarrowLeftIcon, PlusSmIcon } from "@heroicons/react/solid"
 import AuthorAvatarsNew from "./AuthorAvatarsNew"
 import SearchResultWorkspace from "../../core/components/SearchResultWorkspace"
 import addAuthor from "../mutations/addAuthor"
+import EditMainFileDisplay from "../../core/components/EditMainFileDisplay"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
@@ -139,7 +140,7 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
               Last updated: {moment(moduleEdit?.updatedAt).fromNow()}
             </div>
             <div className="flex-grow py-2">
-              DOI upon publishing:{" "}
+              DOI upon publish:{" "}
               <span className="text-gray-300 dark:text-gray-600">{`${moduleEdit?.prefix}/${
                 moduleEdit!.suffix
               }`}</span>
@@ -238,6 +239,38 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
             {moduleEdit!.description}
           </div>
         </div>
+      </div>
+      <div className="my-4">
+        <h2 className="text-xs leading-4 font-semibold text-gray-500 dark:text-gray-200 my-2">
+          Main file
+        </h2>
+        <EditMainFile mainFile={mainFile} setQueryData={setQueryData} moduleEdit={moduleEdit} />
+      </div>
+
+      {/* Supporting files */}
+      <div className="my-3">
+        <h2 className="text-xs leading-4 font-semibold text-gray-500 dark:text-gray-200 my-2">
+          Supporting file(s)
+        </h2>
+        {supportingRaw.files.length > 0 ? (
+          <>
+            {supportingRaw.files.map((file) => (
+              <>
+                <EditSupportingFileDisplay
+                  name={file.original_filename}
+                  size={file.size}
+                  url={file.original_file_url}
+                  uuid={file.uuid}
+                  moduleId={moduleEdit!.id}
+                  setQueryData={setQueryData}
+                />
+              </>
+            ))}
+          </>
+        ) : (
+          <></>
+        )}
+        <EditSupportingFiles setQueryData={setQueryData} moduleEdit={moduleEdit} />
       </div>
 
       {/* Parents */}
@@ -397,34 +430,6 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
         </button>
       </div>
 
-      <div className="my-8">
-        <h2 className="">Main file</h2>
-        <EditMainFile mainFile={mainFile} setQueryData={setQueryData} moduleEdit={moduleEdit} />
-      </div>
-
-      {/* Supporting files */}
-      <div className="my-8">
-        <h2>Supporting file(s)</h2>
-        {supportingRaw.files.length > 0 ? (
-          <>
-            {supportingRaw.files.map((file) => (
-              <>
-                <EditSupportingFileDisplay
-                  name={file.original_filename}
-                  size={file.size}
-                  url={file.original_file_url}
-                  uuid={file.uuid}
-                  moduleId={moduleEdit!.id}
-                  setQueryData={setQueryData}
-                />
-              </>
-            ))}
-          </>
-        ) : (
-          <></>
-        )}
-        <EditSupportingFiles setQueryData={setQueryData} moduleEdit={moduleEdit} />
-      </div>
       {/* PLACEHOLDER References */}
       <div className="text-center">
         {/* Publish module */}
