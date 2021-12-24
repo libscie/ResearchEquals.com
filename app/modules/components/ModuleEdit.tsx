@@ -25,7 +25,8 @@ import EditSupportingFileDisplay from "../../core/components/EditSupportingFileD
 import MetadataView from "./MetadataView"
 import AuthorAvatars from "./AuthorAvatars"
 import SearchResultModule from "../../core/components/SearchResultModule"
-import { ArrowNarrowLeftIcon } from "@heroicons/react/solid"
+import { ArrowNarrowLeftIcon, PlusSmIcon } from "@heroicons/react/solid"
+import AuthorAvatarsNew from "./AuthorAvatarsNew"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
@@ -126,11 +127,53 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
           {/* <DocumentPdf32 className="inline-block align-middle" /> */}
         </div>
       </div>
-      {/* Last updated */}
-      <div className="text-center ">
-        Last updated: {moment(moduleEdit?.updatedAt).fromNow()} (
-        {moduleEdit?.updatedAt.toISOString()})
+      <div className="module bg-gray-100 dark:bg-gray-600 my-4" style={{ padding: "1px" }}>
+        <div className="module bg-white dark:bg-gray-900 border-0 border-gray-100 dark:border-gray-600 divide-y divide-gray-100 dark:divide-gray-600">
+          <div className="lg:flex text-center divide-y lg:divide-y-0 lg:divide-x divide-gray-100 dark:divide-gray-600 text-gray-500 dark:text-gray-200 dark:bg-gray-800 text-xs leading-4 font-normal">
+            <div className="flex-grow py-2">
+              Last updated: {moment(moduleEdit?.updatedAt).fromNow()}
+            </div>
+            <div className="flex-grow py-2">
+              DOI upon publishing:{" "}
+              <span className="text-gray-300 dark:text-gray-600">{`${moduleEdit?.prefix}/${
+                moduleEdit!.suffix
+              }`}</span>
+            </div>
+            <div className="flex-grow py-2">
+              License:{" "}
+              <Link href={moduleEdit?.license!.url!}>
+                <a target="_blank">{moduleEdit?.license!.name}</a>
+              </Link>
+            </div>
+          </div>
+          <div className="py-4 px-2 h-32">
+            <p className="text-xs leading-4 font-normal text-gray-500 dark:text-white">
+              {moduleEdit?.type.name}
+            </p>
+            <p className="text-base leading-6 font-medium text-gray-900 dark:text-white">
+              {moduleEdit!.title}
+            </p>
+          </div>
+          {/* Authors section */}
+          <div className="px-1 py-1 flex">
+            <span className="flex-grow">
+              <AuthorAvatarsNew authors={moduleEdit?.authors} />
+            </span>
+            <button className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 rounded text-xs leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              <PlusSmIcon className="fill-current text-gray-500 dark:text-gray-200 w-4 h-4" />
+              Add Authors
+            </button>
+            <button className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 rounded text-xs leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              Manage Authors
+            </button>
+          </div>
+          {/* Description section */}
+          <div className="text-xs leading-4 font-normal pt-4 pl-2 pr-4 pb-2">
+            {moduleEdit!.description}
+          </div>
+        </div>
       </div>
+
       {/* Parents */}
       <div className="flex w-full max-h-8 my-2">
         <span>
