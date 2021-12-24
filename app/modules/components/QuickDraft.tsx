@@ -7,7 +7,6 @@ import { useFormik } from "formik"
 import { Fragment, useState } from "react"
 import { z } from "zod"
 import { HelpFilled32 } from "@carbon/icons-react"
-import ReactTooltip from "react-tooltip"
 
 import createModule from "../mutations/createModule"
 
@@ -188,15 +187,7 @@ const QuickDraft = ({ buttonText, buttonStyle }) => {
                             htmlFor="license"
                             className="flex my-1 text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
                           >
-                            License{" "}
-                            <HelpFilled32
-                              className="ml-1 fill-current text-gray-700 dark:text-gray-200 w-4 h-4"
-                              data-tip
-                              data-for="licenseTip"
-                            />
-                            <ReactTooltip id="licenseTip" place="top" effect="solid">
-                              You can change the license before publishing.
-                            </ReactTooltip>
+                            License
                           </label>
                           <div className="mt-1">
                             <select
