@@ -7,7 +7,7 @@ export default async function getLicenses() {
         price: "asc",
       },
       {
-        name: "desc",
+        name: "asc",
       },
     ],
   })

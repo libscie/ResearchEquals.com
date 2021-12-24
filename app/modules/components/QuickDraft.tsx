@@ -190,12 +190,12 @@ const QuickDraft = ({ buttonText, buttonStyle }) => {
                           >
                             License{" "}
                             <HelpFilled32
+                              className="ml-1 fill-current text-gray-700 dark:text-gray-200 w-4 h-4"
                               data-tip
                               data-for="licenseTip"
-                              className="ml-1 fill-current text-gray-700 dark:text-gray-200 w-4 h-4"
                             />
                             <ReactTooltip id="licenseTip" place="top" effect="solid">
-                              You can change your license until you publish.
+                              You can change the license before publishing.
                             </ReactTooltip>
                           </label>
                           <div className="mt-1">
