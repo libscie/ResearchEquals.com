@@ -8,7 +8,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
 
-export default function SettingsModal({ button, styling, user, workspace, state = false }) {
+export default function SettingsModal({ button, styling, user, workspace }) {
   let [isOpen, setIsOpen] = useState(false)
   let [categories] = useState(["Workspace", "Account", "Billing"])
 
