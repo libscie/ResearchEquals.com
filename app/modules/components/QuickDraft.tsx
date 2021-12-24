@@ -61,14 +61,13 @@ const QuickDraft = ({ buttonText, buttonStyle }) => {
         onClick={() => {
           setCreateOpen(true)
         }}
-        // className="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         className={buttonStyle}
       >
         {buttonText}
         {/* Create module */}
       </button>
       <Transition.Root show={openCreate} as={Fragment}>
-        <Dialog as="div" className="fixed inset-0 overflow-hidden" onClose={setCreateOpen}>
+        <Dialog as="div" className="fixed inset-0 overflow-hidden z-10" onClose={setCreateOpen}>
           <div className="absolute inset-0 overflow-hidden">
             <Dialog.Overlay className="fixed inset-0 bg-gray-900 bg-opacity-25 transition-opacity" />
 
@@ -225,7 +224,7 @@ const QuickDraft = ({ buttonText, buttonStyle }) => {
                         Cancel
                       </button>
                       <button
-                        type="button"
+                        type="submit"
                         className="flex py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
                       >
                         <CheckIcon className="w-4 h-4 fill-current text-green-500 pt-1" />
