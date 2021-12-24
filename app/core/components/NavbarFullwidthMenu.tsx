@@ -1,30 +1,16 @@
-import {
-  Link,
-  Routes,
-  useMutation,
-  useSession,
-  useRouter,
-  validateZodSchema,
-  useQuery,
-} from "blitz"
-import {
-  OverflowMenuHorizontal32,
-  Notification32,
-  NotificationNew32,
-  Settings32,
-} from "@carbon/icons-react"
+import { Link, Routes, useMutation, useSession, useRouter, useQuery } from "blitz"
 import { Listbox, Menu, Popover, Transition } from "@headlessui/react"
 import { Fragment, useState } from "react"
-import { CheckIcon, SelectorIcon, ChevronDownIcon, PlusSmIcon } from "@heroicons/react/solid"
+import { PlusSmIcon, CogIcon } from "@heroicons/react/solid"
 import moment from "moment"
 
 import { useCurrentUser } from "../hooks/useCurrentUser"
 import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
 import logout from "../../auth/mutations/logout"
 import SettingsModal from "../modals/settings"
-import changeSessionWorkspace from "../../workspaces/mutations/changeSessionWorkspace"
 import QuickDraft from "../../modules/components/QuickDraft"
 import getInvitedModules from "../../workspaces/queries/getInvitedModules"
+import { BellIcon } from "@heroicons/react/outline"
 import InvitationNotification from "./InvitationNotification"
 
 const FullWidthMenu = () => {
@@ -53,15 +39,24 @@ const FullWidthMenu = () => {
               <Popover.Button
                 className={`
                 ${open ? "" : "text-opacity-90"}
-                ml-5 flex-shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+                mx-0 flex-shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
                 ${invitedModules.length > 0 ? "" : "pointer-events-none"}
                 `}
               >
                 <span className="sr-only">View notifications</span>
                 {invitedModules.length > 0 ? (
-                  <NotificationNew32 className="h-6 w-6" aria-hidden="true" />
+                  <div className="relative">
+                    <BellIcon className="h-6 w-6" aria-hidden="true" />
+                    <svg
+                      className="absolute top-0 right-0 h-2 w-2 text-gray-400 dark:text-gray-400"
+                      fill="currentColor"
+                      viewBox="0 0 8 8"
+                    >
+                      <circle cx={4} cy={4} r={3} />
+                    </svg>
+                  </div>
                 ) : (
-                  <Notification32 className="h-6 w-6" aria-hidden="true" />
+                  <BellIcon className="h-6 w-6" aria-hidden="true" />
                 )}
               </Popover.Button>
               <Transition
@@ -86,20 +81,19 @@ const FullWidthMenu = () => {
             </>
           )}
         </Popover>
-        {/* <span className="sr-only">Open settings</span>
+        <span className="sr-only">Open settings</span>
         <SettingsModal
-          styling="block text-left text-sm text-gray-700 rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 lg:ml-5"
+          styling="ml-1 flex-shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
           button={
-            <Settings32
+            <CogIcon
               className="h-6 w-6 text-gray-400 hover:text-gray-500 rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               aria-hidden="true"
             />
           }
           user={currentUser}
           workspace={currentWorkspace}
-        /> */}
-
-        <Menu as="div" className="flex-shrink-0 relative ml-5">
+        />
+        <Menu as="div" className="flex-shrink-0 relative ml-2">
           <div>
             <Menu.Button className="rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
               <span className="sr-only">Open user menu</span>
@@ -122,19 +116,6 @@ const FullWidthMenu = () => {
             leaveTo="transform opacity-0 scale-95"
           >
             <Menu.Items className="origin-top-right absolute z-10 right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black dark:ring-gray-600 ring-opacity-5 dark:ring-opacity-100 py-1 focus:outline-none">
-              <Menu.Item key="dropdown-profile">
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active ? "bg-gray-100 dark:bg-gray-700 text-gray-900 " : "text-gray-500"
-                    }
-                    w-full block py-2 px-4 text-left text-sm leading-5 font-normal dark:text-gray-200`}
-                    onClick={async () => {}}
-                  >
-                    Settings
-                  </button>
-                )}
-              </Menu.Item>
               <Menu.Item key="dropdown-logout">
                 {({ active }) => (
                   <button
@@ -160,7 +141,7 @@ const FullWidthMenu = () => {
               Draft
             </>
           }
-          buttonStyle="bg-indigo-50 dark:bg-gray-800 text-indigo-700 dark:text-gray-200 ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-normal rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:border dark:border-gray-400 dark:hover:bg-gray-700"
+          buttonStyle="bg-indigo-50 dark:bg-gray-800 text-indigo-700 dark:text-gray-200 ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-normal rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:border dark:border-gray-400 dark:hover:bg-gray-700"
         />
       </div>
     )
