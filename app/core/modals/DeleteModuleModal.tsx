@@ -18,7 +18,10 @@ export default function DeleteModule({ module }) {
 
   return (
     <>
-      <button className="px-4 py-2 bg-red-500 text-white hover:bg-red-300" onClick={openModal}>
+      <button
+        className="mx-4 py-2 px-4 bg-red-100 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm leading-4 font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
+        onClick={openModal}
+      >
         Delete module
       </button>
       <Transition appear show={isOpen} as={Fragment}>
