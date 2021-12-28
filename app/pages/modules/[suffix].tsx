@@ -97,7 +97,12 @@ const ModulePage = ({ module }) => {
           <LeadsToView module={module} />
         </div>
         {/* metadata */}
-        <MetadataView module={module} />
+        {/* <MetadataView
+          module={module}
+          addAuthors={manageAuthorsOpen}
+          setQueryData={setQueryData}
+          setAddAuthors={setManageAuthorsOpen}
+        /> */}
 
         {/* main file */}
         <div className="flex border-t border-b border-gray-800 mt-2 py-2">

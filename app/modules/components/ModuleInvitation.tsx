@@ -46,7 +46,12 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
       ) : (
         ""
       )}
-      <MetadataView module={moduleEdit} />
+      <MetadataView
+        module={moduleEdit}
+        addAuthors={manageAuthorsOpen}
+        setQueryData={setQueryData}
+        setAddAuthors={setManageAuthorsOpen}
+      />
       {/* Authors */}
       <div className="flex border-t border-b border-gray-800 mt-2 py-2">
         <div className="flex-grow flex -space-x-2 relative z-0 overflow-hidden">
