@@ -3,12 +3,27 @@ import { Dialog, Transition } from "@headlessui/react"
 import { CheckIcon, XIcon } from "@heroicons/react/outline"
 import { DragDropContext, Droppable, DroppableProvided } from "react-beautiful-dnd"
 import { useMutation } from "blitz"
-import toast from "react-hot-toast"
-import algoliasearch from "algoliasearch"
 
-import addAuthor from "../mutations/addAuthor"
 import updateAuthorRank from "../../authorship/mutations/updateAuthorRank"
 import AuthorList from "../../core/components/AuthorList"
+
+// https://www.npmjs.com/package/array-move
+function arrayMoveMutable(array, fromIndex, toIndex) {
+  const startIndex = fromIndex < 0 ? array.length + fromIndex : fromIndex
+
+  if (startIndex >= 0 && startIndex < array.length) {
+    const endIndex = toIndex < 0 ? array.length + toIndex : toIndex
+
+    const [item] = array.splice(fromIndex, 1)
+    array.splice(endIndex, 0, item)
+  }
+}
+
+function arrayMoveImmutable(array, fromIndex, toIndex) {
+  array = [...array]
+  arrayMoveMutable(array, fromIndex, toIndex)
+  return array
+}
 
 const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
   const [authorState, setAuthorState] = useState(moduleEdit!.authors)
@@ -54,7 +69,6 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
                     Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id,
                     mattis vel, nisi.
                   </div>
-                  {/* <div className="relative flex-1"> */}
                   {/* Replace with your content */}
                   <DragDropContext
                     onDragEnd={async (result) => {
@@ -70,16 +84,10 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
                       ) {
                         return
                       }
-
-                      // const newAuthorState = Array.from(moduleEdit!.authors)
-                      console.log(moduleEdit!.authors)
-                      moduleEdit!.authors.splice(source.index, 1)
-                      moduleEdit!.authors.splice(
-                        destination.index,
-                        0,
-                        authorState.filter((author) => {
-                          return author.workspaceId === parseInt(draggableId)
-                        })[0]!
+                      console.log("It hits here")
+                      // There is a mistake in the updating
+                      console.log(
+                        arrayMoveMutable(moduleEdit!.authors, source.index, destination.index)
                       )
 
                       let i = 0
@@ -108,10 +116,9 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
                           className="relative flex-1 divide-y divide-gray-400 dark:divide-gray-600"
                           ref={provided.innerRef}
                           {...provided.droppableProps}
-                          // style={{ height: `${moduleEdit!.authors.length * 72}px` }}
                         >
                           <AuthorList
-                            authors={moduleEdit!.authors}
+                            authors={moduleEdit.authors}
                             setAuthorState={setQueryData}
                             suffix={moduleEdit!.suffix}
                           />
@@ -126,7 +133,7 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
                       type="button"
                       className="flex mx-4 py-2 px-4 bg-red-50 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
                       onClick={() => {
-                        alert("cancel authors")
+                        setOpen(false)
                       }}
                     >
                       <XIcon className="w-4 h-4 fill-current text-red-500 pt-1" />
@@ -136,10 +143,19 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
                       type="submit"
                       className="flex py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
                       onClick={() => {
-                        alert("save authors")
+                        // authorState.map(async (author) => {
+                        //   const updatedModule = await updateAuthorRankMutation({
+                        //     id: author.id,
+                        //     rank: author.authorshipRank,
+                        //     suffix: moduleEdit!.suffix,
+                        //   })
+                        //   console.log(`Updated ${author.id} to rank ${author.authorshipRank}`)
+                        //   setQueryData(updatedModule!)
+                        // })
+                        setOpen(false)
                       }}
                     >
-                      <CheckIcon className="w-4 h-4 fill-current text-green-500 pt-1" />
+                      <CheckIcon className="w-4 h-4 stroke-current text-green-500 pt-1" />
                       Save
                     </button>
                   </div>
