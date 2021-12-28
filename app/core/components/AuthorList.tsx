@@ -95,8 +95,6 @@ function AuthorList({
                   onClick={async () => {
                     if (!author.workspace.orcid || !author.workspace.name) {
                       toast.error("You cannot publish until you link your ORCID")
-                    } else if (!author.workspace.emailIsVerified) {
-                      toast.error("You cannot publish until you verify your email")
                     } else {
                       const updatedModule = await approveAuthorshipMutation({
                         id: author.id,
@@ -118,12 +116,12 @@ function AuthorList({
                     }`}
                   >
                     {author.readyToPublish ? (
-                      <span className="flex">
+                      <span className="flex mx-2">
                         <CheckIcon className="w-4 h-4 fill-current" />
                         Approved
                       </span>
                     ) : (
-                      <span className="flex">
+                      <span className="flex mx-2">
                         <MinusSmIcon className="w-4 h-4 fill-current text-gray-500 dark:text-gray-400" />
                         Pending
                       </span>

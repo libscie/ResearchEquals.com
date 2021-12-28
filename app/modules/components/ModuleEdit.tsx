@@ -135,7 +135,8 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
         </div>
       </div>
       {/* Publish module */}
-      {moduleEdit!.authors.filter((author) => author.readyToPublish !== true).length === 0 ? (
+      {moduleEdit!.authors.filter((author) => author.readyToPublish !== true).length === 0 &&
+      Object.keys(moduleEdit!.main!).length !== 0 ? (
         <PublishModuleModal module={module} />
       ) : (
         <></>

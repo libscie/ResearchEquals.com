@@ -4,6 +4,7 @@ import { Dialog, Transition } from "@headlessui/react"
 
 import publishModule from "../../modules/mutations/publishModule"
 import toast from "react-hot-toast"
+import { CheckCircleIcon } from "@heroicons/react/outline"
 
 export default function PublishModule({ module }) {
   let [isOpen, setIsOpen] = useState(false)
@@ -20,9 +21,29 @@ export default function PublishModule({ module }) {
 
   return (
     <>
-      <button className="px-4 py-2 bg-green-500 text-white hover:bg-green-300" onClick={openModal}>
-        Publish module
-      </button>
+      <div className="rounded-md bg-green-50 dark:bg-green-800 w-full p-2 flex my-4">
+        <div className="flex-shrink-0 inline-block align-middle">
+          <CheckCircleIcon
+            className="stroke-current h-5 w-5 text-green-500 dark:text-green-200 inline-block align-middle"
+            aria-hidden="true"
+          />
+        </div>
+        <div className="ml-3 flex-grow text-green-800 dark:text-green-100">
+          <h3 className="text-xs leading-4 font-normal text-green-800 dark:text-green-100 inline-block align-middle">
+            All authors approved this version for publication. Would you like to (pay and) publish
+            it now?
+          </h3>
+        </div>
+        <div className="">
+          <button
+            type="button"
+            className="border rounded border-green-500 text-green-500 dark:border-green-200 dark:text-green-200 px-2 py-1.5 text-xs leading-4 font-medium hover:bg-green-100 dark:hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-50 focus:ring-green-600"
+            onClick={openModal}
+          >
+            Publish module
+          </button>
+        </div>
+      </div>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" onClose={closeModal}>
           <div className="min-h-screen px-4 text-center">
@@ -57,8 +78,8 @@ export default function PublishModule({ module }) {
                 </Dialog.Title>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">
-                    All co-authors have approved this version for publication. Once you publish this
-                    module, you cannot delete it. It may be retracted or corrected at any time.
+                    Once you publish this module, you cannot delete it. It may be retracted or
+                    corrected at any time.
                   </p>
                 </div>
                 <div className="mt-4">
