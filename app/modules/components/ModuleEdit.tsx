@@ -133,6 +133,12 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
           {/* <DocumentPdf32 className="inline-block align-middle" /> */}
         </div>
       </div>
+      {/* Publish module */}
+      {moduleEdit!.authors.filter((author) => author.readyToPublish !== true).length === 0 ? (
+        <PublishModuleModal module={module} />
+      ) : (
+        <></>
+      )}
       {/* <div className="flex w-full max-h-8 my-2">
         <span>
           Follows from:{" "}
@@ -176,157 +182,6 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
           ]}
         />
       </div> */}
-      <div className="module bg-gray-100 dark:bg-gray-600 my-4" style={{ padding: "1px" }}>
-        <div className="module bg-white dark:bg-gray-900 border-0 border-gray-100 dark:border-gray-600 divide-y divide-gray-100 dark:divide-gray-600">
-          <div className="lg:flex text-center divide-y lg:divide-y-0 lg:divide-x divide-gray-100 dark:divide-gray-600 text-gray-500 dark:text-gray-200 dark:bg-gray-800 text-xs leading-4 font-normal">
-            <div className="flex-grow py-2">
-              Last updated: {moment(moduleEdit?.updatedAt).fromNow()}
-            </div>
-            <div className="flex-grow py-2">
-              DOI upon publish:{" "}
-              <span className="text-gray-300 dark:text-gray-600">{`${moduleEdit?.prefix}/${
-                moduleEdit!.suffix
-              }`}</span>
-            </div>
-            <div className="flex-grow py-2">
-              License:{" "}
-              <Link href={moduleEdit?.license!.url!}>
-                <a target="_blank">{moduleEdit?.license!.name}</a>
-              </Link>
-            </div>
-          </div>
-          <div className="py-4 px-2 min-h-32">
-            <p className="text-xs leading-4 font-normal text-gray-500 dark:text-white">
-              {moduleEdit?.type.name}
-            </p>
-            <p className="text-base leading-6 font-medium text-gray-900 dark:text-white">
-              {moduleEdit!.title}
-            </p>
-          </div>
-          {/* Authors section */}
-          <div className="px-1 py-1 sm:flex place-items-center sm:place-items-left">
-            <div className="flex sm:inline">
-              <span className="flex-grow"></span>
-
-              <AuthorAvatarsNew authors={moduleEdit?.authors} />
-              <span className="flex-grow"></span>
-            </div>
-            <span className="sm:flex-grow"></span>
-            <div className="flex sm:contents">
-              <span className="flex-grow sm:hidden"></span>
-
-              {addAuthors ? (
-                <>
-                  <div className="w-28 sm:w-56 h-full">
-                    <Autocomplete
-                      openOnFocus={true}
-                      defaultActiveItemId="0"
-                      getSources={({ query }) => [
-                        {
-                          sourceId: "products",
-                          async onSelect(params) {
-                            const { item, setQuery } = params
-                            try {
-                              const updatedModule = await addAuthorMutation({
-                                authorId: item.objectID,
-                                moduleId: moduleEdit!.id,
-                              })
-                              toast.success("Author invited")
-                              setQueryData(updatedModule)
-                            } catch (error) {
-                              toast.error("Something went wrong")
-                            }
-                            setQuery("")
-                          },
-                          getItems() {
-                            return getAlgoliaResults({
-                              searchClient,
-                              queries: [
-                                {
-                                  indexName: `${process.env.ALGOLIA_PREFIX}_workspaces`,
-                                  query,
-                                },
-                              ],
-                            })
-                          },
-                          templates: {
-                            item({ item, components }) {
-                              return <SearchResultWorkspace item={item} />
-                            },
-                          },
-                        },
-                      ]}
-                    />
-                  </div>
-                </>
-              ) : (
-                <button
-                  className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-xs leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700"
-                  onClick={() => {
-                    setAddAuthors(true)
-                  }}
-                >
-                  <PlusSmIcon className="fill-current text-gray-500 dark:text-gray-200 w-4 h-4 dark:hover:text-gray-400" />
-                  Add Authors
-                </button>
-              )}
-
-              <button
-                className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-xs leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700"
-                onClick={() => {
-                  setManageAuthorsOpen(true)
-                }}
-              >
-                Manage Authors
-              </button>
-              <ManageAuthors
-                open={manageAuthorsOpen}
-                setOpen={setManageAuthorsOpen}
-                moduleEdit={moduleEdit}
-                setQueryData={setQueryData}
-              />
-              <span className="flex-grow sm:hidden"></span>
-            </div>
-          </div>
-          {/* Description section */}
-          <div className="text-xs leading-4 font-normal pt-4 pl-2 pr-4 pb-2">
-            {moduleEdit!.description}
-          </div>
-        </div>
-      </div>
-      <div className="my-4">
-        <h2 className="text-xs leading-4 font-semibold text-gray-500 dark:text-gray-200 my-2">
-          Main file
-        </h2>
-        <EditMainFile mainFile={mainFile} setQueryData={setQueryData} moduleEdit={moduleEdit} />
-      </div>
-
-      {/* Supporting files */}
-      <div className="my-3">
-        <h2 className="text-xs leading-4 font-semibold text-gray-500 dark:text-gray-200 my-2">
-          Supporting file(s)
-        </h2>
-        {supportingRaw.files.length > 0 ? (
-          <>
-            {supportingRaw.files.map((file) => (
-              <>
-                <EditSupportingFileDisplay
-                  name={file.original_filename}
-                  size={file.size}
-                  url={file.original_file_url}
-                  uuid={file.uuid}
-                  moduleId={moduleEdit!.id}
-                  setQueryData={setQueryData}
-                />
-              </>
-            ))}
-          </>
-        ) : (
-          <></>
-        )}
-        <EditSupportingFiles setQueryData={setQueryData} moduleEdit={moduleEdit} />
-      </div>
-
       {/* Display editable form or display content */}
       {isEditing ? (
         <div className="my-8">
@@ -416,18 +271,48 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
           </form>
         </div>
       ) : (
-        <MetadataView module={moduleEdit} />
+        <MetadataView
+          module={moduleEdit}
+          addAuthors={addAuthors}
+          setQueryData={setQueryData}
+          setAddAuthors={setAddAuthors}
+        />
       )}
+      <div className="my-4">
+        <h2 className="text-xs leading-4 font-semibold text-gray-500 dark:text-gray-200 my-2">
+          Main file
+        </h2>
+        <EditMainFile mainFile={mainFile} setQueryData={setQueryData} moduleEdit={moduleEdit} />
+      </div>
 
-      {/* PLACEHOLDER References */}
-      <div className="text-center">
-        {/* Publish module */}
-        {moduleEdit!.authors.filter((author) => author.readyToPublish !== true).length === 0 ? (
-          <PublishModuleModal module={module} />
+      {/* Supporting files */}
+      <div className="my-3">
+        <h2 className="text-xs leading-4 font-semibold text-gray-500 dark:text-gray-200 my-2">
+          Supporting file(s)
+        </h2>
+        {supportingRaw.files.length > 0 ? (
+          <>
+            {supportingRaw.files.map((file) => (
+              <>
+                <EditSupportingFileDisplay
+                  name={file.original_filename}
+                  size={file.size}
+                  url={file.original_file_url}
+                  uuid={file.uuid}
+                  moduleId={moduleEdit!.id}
+                  setQueryData={setQueryData}
+                />
+              </>
+            ))}
+          </>
         ) : (
           <></>
         )}
-        {/* Delete module */}
+        <EditSupportingFiles setQueryData={setQueryData} moduleEdit={moduleEdit} />
+      </div>
+
+      {/* PLACEHOLDER References */}
+      <div className="text-center">
         <DeleteModuleModal module={module} />
       </div>
     </div>
