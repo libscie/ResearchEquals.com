@@ -158,6 +158,13 @@ const MetadataEdit = ({ module, addAuthors, setQueryData, setAddAuthors, setIsEd
                             const updatedModule = await addAuthorMutation({
                               authorId: item.objectID,
                               moduleId: module.id,
+                              authorshipRank:
+                                Math.max.apply(
+                                  Math,
+                                  module.authors.map(function (o) {
+                                    return o.authorshipRank
+                                  })
+                                ) + 1,
                             })
                             toast.success("Author invited")
                             setQueryData(updatedModule)
