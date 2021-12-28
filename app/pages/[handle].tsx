@@ -240,6 +240,7 @@ const HandleFeed = ({ handle }) => {
                       title={module.title}
                       status={`DOI: 10.53962/${module.suffix}`}
                       time={moment(module.publishedAt).fromNow()}
+                      timeText="Published"
                       authors={module.authors}
                     />
                   </li>
