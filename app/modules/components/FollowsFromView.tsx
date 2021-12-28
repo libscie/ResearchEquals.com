@@ -62,6 +62,7 @@ const FollowsFromView = ({ module }) => {
                                 title={parent.title}
                                 status={`10.53962/${parent.suffix}`}
                                 time={moment(parent.publishedAt).fromNow()}
+                                timeText="Published"
                                 authors={parent.authors}
                               />
                             </a>
