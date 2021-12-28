@@ -89,7 +89,7 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
   }, [moduleEdit])
 
   return (
-    <div className="p-5 mx-auto overflow-y-auto text-base">
+    <div className="p-5 max-w-7xl mx-auto overflow-y-auto text-base">
       {/* Menu bar */}
       <div className="w-full flex">
         {inboxOpen ? (
@@ -133,6 +133,49 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
           {/* <DocumentPdf32 className="inline-block align-middle" /> */}
         </div>
       </div>
+      {/* <div className="flex w-full max-h-8 my-2">
+        <span>
+          Follows from:{" "}
+          <span className="bg-gray-200 sgroup-hover:bg-gray-200 ml-auto inline-block py-0.5 px-3 text-xs rounded-full">
+            {moduleEdit?.parents ? moduleEdit?.parents.length : "0"}
+          </span>
+        </span>
+        <Autocomplete
+          className="h-full"
+          openOnFocus={true}
+          defaultActiveItemId="0"
+          getSources={({ query }) => [
+            {
+              sourceId: "products",
+              async onSelect(params) {
+                const { item, setQuery } = params
+                const updatedMod = await addParentMutation({
+                  currentId: moduleEdit?.id,
+                  connectId: item.objectID,
+                })
+                setQueryData(updatedMod)
+              },
+              getItems() {
+                return getAlgoliaResults({
+                  searchClient,
+                  queries: [
+                    {
+                      indexName: `${process.env.ALGOLIA_PREFIX}_modules`,
+                      query,
+                    },
+                  ],
+                })
+              },
+              templates: {
+                item({ item, components }) {
+                  // TODO: Need to update search results per Algolia index
+                  return <SearchResultModule item={item} />
+                },
+              },
+            },
+          ]}
+        />
+      </div> */}
       <div className="module bg-gray-100 dark:bg-gray-600 my-4" style={{ padding: "1px" }}>
         <div className="module bg-white dark:bg-gray-900 border-0 border-gray-100 dark:border-gray-600 divide-y divide-gray-100 dark:divide-gray-600">
           <div className="lg:flex text-center divide-y lg:divide-y-0 lg:divide-x divide-gray-100 dark:divide-gray-600 text-gray-500 dark:text-gray-200 dark:bg-gray-800 text-xs leading-4 font-normal">
@@ -284,50 +327,6 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
         <EditSupportingFiles setQueryData={setQueryData} moduleEdit={moduleEdit} />
       </div>
 
-      {/* Parents */}
-      <div className="flex w-full max-h-8 my-2">
-        <span>
-          Follows from:{" "}
-          <span className="bg-gray-200 sgroup-hover:bg-gray-200 ml-auto inline-block py-0.5 px-3 text-xs rounded-full">
-            {moduleEdit?.parents ? moduleEdit?.parents.length : "0"}
-          </span>
-        </span>
-        <Autocomplete
-          className="h-full"
-          openOnFocus={true}
-          defaultActiveItemId="0"
-          getSources={({ query }) => [
-            {
-              sourceId: "products",
-              async onSelect(params) {
-                const { item, setQuery } = params
-                const updatedMod = await addParentMutation({
-                  currentId: moduleEdit?.id,
-                  connectId: item.objectID,
-                })
-                setQueryData(updatedMod)
-              },
-              getItems() {
-                return getAlgoliaResults({
-                  searchClient,
-                  queries: [
-                    {
-                      indexName: `${process.env.ALGOLIA_PREFIX}_modules`,
-                      query,
-                    },
-                  ],
-                })
-              },
-              templates: {
-                item({ item, components }) {
-                  // TODO: Need to update search results per Algolia index
-                  return <SearchResultModule item={item} />
-                },
-              },
-            },
-          ]}
-        />
-      </div>
       {/* Display editable form or display content */}
       {isEditing ? (
         <div className="my-8">
