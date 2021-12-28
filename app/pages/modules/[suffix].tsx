@@ -9,8 +9,8 @@ import NavbarApp from "../../core/components/Navbar"
 import MetadataView from "../../modules/components/MetadataView"
 import ViewFiles from "../../modules/components/ViewFiles"
 import ViewAuthors from "../../modules/components/ViewAuthors"
-import FollowsFromView from "../../modules/components/FollowsFromView"
-import LeadsToView from "../../modules/components/LeadsToView"
+import FollowsFromView from "../../modules/components/ParentView"
+import LeadsToView from "../../modules/components/ChildView"
 import AuthorAvatars from "../../modules/components/AuthorAvatars"
 
 export async function getServerSideProps(context) {

@@ -5,7 +5,6 @@ import toast from "react-hot-toast"
 
 import useCurrentModule from "../queries/useCurrentModule"
 import ViewFiles from "./ViewFiles"
-import FollowsFromView from "./FollowsFromView"
 import { Maximize24 } from "@carbon/icons-react"
 import { ArrowNarrowLeftIcon } from "@heroicons/react/solid"
 import { UserAddIcon } from "@heroicons/react/outline"
