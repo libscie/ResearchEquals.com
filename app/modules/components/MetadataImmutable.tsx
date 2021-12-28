@@ -12,6 +12,9 @@ import { PlusSmIcon } from "@heroicons/react/solid"
 import { useState } from "react"
 import ManageAuthors from "./ManageAuthors"
 import ViewAuthors from "./ViewAuthors"
+import FollowsFromView from "./ParentView"
+import LeadsToView from "./ChildView"
+import ParentChildView from "./ParentChildView"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
@@ -32,6 +35,27 @@ const MetadataImmutable = ({ module, addAuthors, setQueryData, setAddAuthors }) 
             </Link>
           </div>
         </div>
+        {/* Parents */}
+        {module.parents!.length! > 0 ? (
+          <div className="flex w-full">
+            <FollowsFromView module={module} />
+          </div>
+        ) : (
+          ""
+        )}
+        {/* Children */}
+        {module.children!.length > 0 ? (
+          <div className="flex w-full">
+            <LeadsToView module={module} />
+          </div>
+        ) : (
+          ""
+        )}
+        {module.children!.length > 0 && module.parents!.length > 0 ? (
+          <ParentChildView module={module} />
+        ) : (
+          ""
+        )}
         <div className="py-4 px-2 min-h-32">
           <p className="text-xs leading-4 font-normal text-gray-500 dark:text-white">
             {module.type.name}

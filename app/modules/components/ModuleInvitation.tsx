@@ -113,14 +113,7 @@ const ModuleInvitation = ({
         <div className="flex-grow"></div>
         <div></div>
       </div>
-      {/* Parents */}
-      {moduleEdit?.parents!.length! > 0 ? (
-        <div className="flex w-full max-h-8 my-2">
-          <FollowsFromView module={moduleEdit} />
-        </div>
-      ) : (
-        ""
-      )}
+
       <MetadataImmutable
         module={moduleEdit}
         addAuthors={manageAuthorsOpen}
