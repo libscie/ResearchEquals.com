@@ -91,6 +91,13 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
 
   return (
     <div className="p-5 max-w-7xl mx-auto overflow-y-auto text-base">
+      {/* Publish module */}
+      {moduleEdit!.authors.filter((author) => author.readyToPublish !== true).length === 0 &&
+      Object.keys(moduleEdit!.main!).length !== 0 ? (
+        <PublishModuleModal module={module} />
+      ) : (
+        <></>
+      )}
       {/* Menu bar */}
       <div className="w-full flex">
         {inboxOpen ? (
@@ -134,13 +141,7 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
           {/* <DocumentPdf32 className="inline-block align-middle" /> */}
         </div>
       </div>
-      {/* Publish module */}
-      {moduleEdit!.authors.filter((author) => author.readyToPublish !== true).length === 0 &&
-      Object.keys(moduleEdit!.main!).length !== 0 ? (
-        <PublishModuleModal module={module} />
-      ) : (
-        <></>
-      )}
+
       {/* <div className="flex w-full max-h-8 my-2">
         <span>
           Follows from:{" "}
