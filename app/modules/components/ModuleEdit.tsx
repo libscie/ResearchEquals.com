@@ -31,6 +31,7 @@ import AuthorAvatarsNew from "./AuthorAvatarsNew"
 import SearchResultWorkspace from "../../core/components/SearchResultWorkspace"
 import addAuthor from "../mutations/addAuthor"
 import EditMainFileDisplay from "../../core/components/EditMainFileDisplay"
+import MetadataEdit from "./MetadataEdit"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
@@ -184,92 +185,13 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
       </div> */}
       {/* Display editable form or display content */}
       {isEditing ? (
-        <div className="my-8">
-          <form onSubmit={formik.handleSubmit}>
-            <div className="my-2">
-              <label htmlFor="type" className="sr-only">
-                Module type
-              </label>
-              <select
-                className="rounded my-1 bg-gray-300 dark:bg-gray-300"
-                id="type"
-                {...formik.getFieldProps("type")}
-              >
-                <option value="">--Please choose a module type--</option>
-                {moduleTypes.map((type) => (
-                  <>
-                    <option value={type.id}>{type.name}</option>
-                  </>
-                ))}
-              </select>
-              {formik.touched.type && formik.errors.type ? <div>{formik.errors.type}</div> : null}
-            </div>
-            <div className="my-2">
-              <label htmlFor="title" className="sr-only block text-sm font-medium text-gray-700">
-                Title
-              </label>
-              <div className="mt-1">
-                <textarea
-                  rows={2}
-                  id="title"
-                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-500 bg-gray-300 dark:bg-gray-300 rounded-md"
-                  {...formik.getFieldProps("title")}
-                />
-                {formik.touched.title && formik.errors.title ? (
-                  <div>{formik.errors.title}</div>
-                ) : null}
-              </div>
-            </div>
-            <div className="my-2">
-              <label
-                htmlFor="description"
-                className="sr-only block text-sm font-medium text-gray-700"
-              >
-                Description
-              </label>
-              <div className="mt-1">
-                <textarea
-                  rows={8}
-                  id="description"
-                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-500  bg-gray-300 dark:bg-gray-300 rounded-md"
-                  {...formik.getFieldProps("description")}
-                />
-                {formik.touched.description && formik.errors.description ? (
-                  <div>{formik.errors.description}</div>
-                ) : null}
-              </div>
-            </div>
-            <div className="my-2">
-              <label htmlFor="license" className="sr-only">
-                License
-              </label>
-              <select
-                className="rounded my-1 bg-gray-300 dark:bg-gray-300"
-                id="license"
-                {...formik.getFieldProps("license")}
-              >
-                <option value="">--Please choose a license--</option>
-                {licenses.map((license) => (
-                  <>
-                    <option value={license.id}>
-                      {license.name} ({license.price > 0 ? `${license.price / 100}EUR` : "Free"})
-                    </option>
-                  </>
-                ))}
-              </select>
-              {formik.touched.license && formik.errors.license ? (
-                <div>{formik.errors.license}</div>
-              ) : null}
-            </div>
-            <button
-              type="submit"
-              className="my-2 inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md bg-gray-300 dark:bg-gray-300 text-gray-900 dark:text-gray-900  hover:bg-indigo-300 border border-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Save
-              <Save32 className="ml-2 -mr-0.5 h-4 w-4" aria-hidden="true" />
-            </button>
-          </form>
-        </div>
+        <MetadataEdit
+          module={moduleEdit}
+          addAuthors={addAuthors}
+          setQueryData={setQueryData}
+          setAddAuthors={setAddAuthors}
+          setIsEditing={setIsEditing}
+        />
       ) : (
         <MetadataView
           module={moduleEdit}
