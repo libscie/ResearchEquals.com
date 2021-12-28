@@ -2,7 +2,7 @@ import { BlitzPage, useSession, useQuery, useRouterQuery, Router, useMutation } 
 import Layout from "app/core/layouts/Layout"
 import { Disclosure } from "@headlessui/react"
 import { ChevronRightIcon } from "@heroicons/react/solid"
-import { Suspense, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import { ProgressBarRound32 } from "@carbon/icons-react"
 import moment from "moment"
 import toast, { Toaster } from "react-hot-toast"
@@ -29,6 +29,12 @@ const Invitations = () => {
   // todo: uses author ID and suffix
   // requires us to match the current workspace to the author id for this module
   // find author id in invitations by filtering for workspace id
+
+  useEffect(() => {
+    if (query.suffix) {
+      setModule(invitations.filter((invite) => invite.suffix === query.suffix)[0])
+    }
+  }, [])
 
   return (
     <Disclosure defaultOpen={true}>
