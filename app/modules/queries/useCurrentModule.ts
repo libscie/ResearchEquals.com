@@ -24,6 +24,16 @@ export default async function getCurrentWorkspace({ suffix }) {
           },
         },
       },
+      children: {
+        include: {
+          type: true,
+          authors: {
+            include: {
+              workspace: true,
+            },
+          },
+        },
+      },
     },
   })
 
