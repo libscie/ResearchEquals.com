@@ -1,4 +1,8 @@
 import db from "db"
+import moment from "moment"
+import faker from "faker"
+
+import generateSuffix from "../app/modules/mutations/generateSuffix"
 
 /*
  * This seed function is executed when you run `blitz db seed`.
@@ -82,6 +86,101 @@ const seed = async () => {
     ],
     skipDuplicates: true,
   })
+
+  if (process.env.ALGOLIA_PREFIX !== "production") {
+    for (let index = 0; index < 50; index++) {
+      await db.user.create({
+        data: {
+          email: faker.internet.email(),
+          role: "CUSTOMER",
+          memberships: {
+            create: [
+              {
+                role: "OWNER",
+                workspace: {
+                  create: {
+                    handle: faker.internet.userName().toLowerCase(),
+                    avatar: faker.image.abstract(),
+                    url: faker.internet.url(),
+                  },
+                },
+              },
+            ],
+          },
+        },
+      })
+    }
+
+    let datetime
+    let suffix
+    for (let index = 0; index < 10; index++) {
+      datetime = Date.now()
+      suffix = await generateSuffix(undefined)
+      await db.module.create({
+        data: {
+          prefix: "10.53962",
+          suffix: await generateSuffix(undefined),
+          title: faker.lorem.sentence(),
+          description: faker.lorem.sentences(5 * (index + 1)),
+          published: true,
+          publishedWhere: "ResearchEquals",
+          publishedAt: faker.date.past(),
+          url: `https://doi.org/10.53962/${suffix}`,
+          main: {
+            name: faker.system.fileName(),
+            size: 603268,
+            uuid: faker.datatype.uuid(),
+            cdnUrl: faker.image.cats(),
+            isImage: true,
+            isStored: true,
+            mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            sourceInfo: { file: {}, source: "local" },
+            originalUrl: faker.image.cats(),
+            cdnUrlModifiers: null,
+            originalImageInfo: null,
+          },
+          type: {
+            connect: { id: 2 },
+          },
+          license: {
+            connect: { id: 1 },
+          },
+          authors: {
+            create: [
+              {
+                workspaceId: 51,
+                acceptedInvitation: true,
+              },
+              {
+                workspaceId: 52,
+                acceptedInvitation: true,
+              },
+              {
+                workspaceId: 53,
+                acceptedInvitation: true,
+              },
+              {
+                workspaceId: 54,
+                acceptedInvitation: true,
+              },
+              {
+                workspaceId: 55,
+                acceptedInvitation: true,
+              },
+              {
+                workspaceId: 56,
+                acceptedInvitation: true,
+              },
+              {
+                workspaceId: 57,
+                acceptedInvitation: true,
+              },
+            ],
+          },
+        },
+      })
+    }
+  }
 }
 
 export default seed
