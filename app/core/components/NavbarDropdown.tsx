@@ -70,7 +70,9 @@ const DropdownContents = () => {
             <div className="mr-2">
               <img
                 src={currentWorkspace!.avatar!}
-                alt={`Avatar of ${currentWorkspace.name}`}
+                alt={`Avatar of ${
+                  currentWorkspace.name ? currentWorkspace.name : currentWorkspace.handle
+                }`}
                 className="w-10 h-10 rounded-full inline-block h-full align-middle"
               />
             </div>

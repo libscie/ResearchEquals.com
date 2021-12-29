@@ -44,7 +44,9 @@ function AuthorList({
                   </div>
                   <img
                     src={author!.workspace!.avatar}
-                    alt={`Avatar of ${author!.workspace!.name}`}
+                    alt={`Avatar of ${
+                      author!.workspace!.name ? author!.workspace!.name : author!.workspace!.handle
+                    }`}
                     className="w-10 h-10 rounded-full inline-block h-full align-middle"
                   />
                 </div>
