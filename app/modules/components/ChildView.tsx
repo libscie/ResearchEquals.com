@@ -2,23 +2,59 @@ import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import { XIcon } from "@heroicons/react/outline"
 import { Link, Routes } from "blitz"
+import moment from "moment"
 
-const ViewAuthors = ({ button, module }) => {
-  const [viewAuthorsOpen, setViewAuthorsOpen] = useState(false)
+import ModuleCard from "../../core/components/ModuleCard"
+
+const LeadsToView = ({ module }) => {
+  const [leadsToOpen, setLeadsToOpen] = useState(false)
 
   return (
     <>
-      <button
-        type="button"
-        className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-xs leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700"
-        onClick={() => {
-          setViewAuthorsOpen(true)
-        }}
-      >
-        View authors
-      </button>
-      <Transition.Root show={viewAuthorsOpen} as={Fragment}>
-        <Dialog as="div" className="fixed inset-0 overflow-hidden" onClose={setViewAuthorsOpen}>
+      <div className="flex-grow flex">
+        <div
+          className="flex w-full text-gray-500 dark:text-gray-200 dark:bg-gray-800 text-xs leading-4 font-normal p-2 cursor-pointer"
+          onClick={() => {
+            setLeadsToOpen(true)
+          }}
+        >
+          <div className="flex">
+            <span className="mx-2">
+              <svg
+                width="17"
+                height="20"
+                viewBox="0 0 17 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="fill-current text-gray-600 dark:text-gray-200"
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M1.19336 13.0801L1.19336 19.0801H0.193359L0.193359 13.0801C0.193359 7.28109 4.89437 2.58008 10.6934 2.58008H11.6934V0.193327L16.6934 3.08008L11.6934 5.96683V3.58008L10.6934 3.58008C5.44665 3.58008 1.19336 7.83337 1.19336 13.0801Z"
+                />
+              </svg>
+            </span>
+            Leads to ({module.children.length}):
+            <span
+              className="flex-grow cursor-pointer ml-1 underline"
+              onClick={() => {
+                setLeadsToOpen(true)
+              }}
+            >
+              <div
+                key={module.children[0].title + "object"}
+                className="inline-block align-middle w-full"
+              ></div>
+            </span>
+            <span className="flex-grow underline truncate">
+              [{module.children[0].type.name}] {module.children[0].title}
+            </span>
+          </div>
+        </div>
+      </div>
+      <Transition.Root show={leadsToOpen} as={Fragment}>
+        <Dialog as="div" className="fixed inset-0 overflow-hidden" onClose={setLeadsToOpen}>
           <div className="absolute inset-0 overflow-hidden">
             <Dialog.Overlay className="fixed inset-0 bg-gray-900 bg-opacity-25 transition-opacity" />
 
@@ -37,13 +73,13 @@ const ViewAuthors = ({ button, module }) => {
                     <div className="px-4 sm:px-6">
                       <div className="flex items-start justify-between">
                         <Dialog.Title className="text-lg font-medium text-gray-900 dark:text-white">
-                          Module Authors
+                          Child modules
                         </Dialog.Title>
                         <div className="ml-3 h-7 flex items-center">
                           <button
                             type="button"
                             className="rounded-md text-gray-400 dark:text-gray-200 hover:text-gray-500 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                            onClick={() => setViewAuthorsOpen(false)}
+                            onClick={() => setLeadsToOpen(false)}
                           >
                             <span className="sr-only">Close panel</span>
                             <XIcon className="h-6 w-6" aria-hidden="true" />
@@ -59,32 +95,21 @@ const ViewAuthors = ({ button, module }) => {
                     {/* Replace with your content */}
 
                     <ul className="relative flex-1 divide-y divide-gray-400 dark:divide-gray-600">
-                      {module.authors.map((author) => (
+                      {module.children.map((child) => (
                         <>
-                          <li className="py-2 px-2 flex">
-                            <div className="mr-2 flex">
-                              <img
-                                src={author!.workspace!.avatar}
-                                alt={`Avatar of ${
-                                  author!.workspace!.name
-                                    ? author!.workspace!.name
-                                    : author!.workspace!.handle
-                                }`}
-                                className="w-10 h-10 rounded-full inline-block h-full align-middle"
-                              />
-                            </div>
-                            <div className="flex-grow">
-                              <span className="inline-block h-full align-middle"></span>
-                              <Link href={Routes.HandlePage({ handle: author.workspace.handle })}>
-                                <a className="text-gray-700 dark:text-gray-200 text-sm leading-4 font-normal my-auto inline-block align-middle">
-                                  {author!.workspace!.name}
-                                  <p className="text-gray-500 dark:text-gray-400 text-xs leading-4 font-normal">
-                                    @{author!.workspace!.handle}
-                                  </p>
-                                </a>
-                              </Link>
-                            </div>
-                            {/* <span className="inline-block h-full align-middle"></span> */}
+                          <li className="">
+                            <Link href={`https://doi.org/${child.prefix}/${child.suffix}`}>
+                              <a>
+                                <ModuleCard
+                                  type={child.type.name}
+                                  title={child.title}
+                                  status={`${child.prefix}/${child.suffix}`}
+                                  time={moment(child.publishedAt).fromNow()}
+                                  timeText="Published"
+                                  authors={child.authors}
+                                />
+                              </a>
+                            </Link>
                           </li>
                         </>
                       ))}
@@ -101,4 +126,4 @@ const ViewAuthors = ({ button, module }) => {
   )
 }
 
-export default ViewAuthors
+export default LeadsToView

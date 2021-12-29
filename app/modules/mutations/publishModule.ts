@@ -63,6 +63,7 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }, ctx) =
   await index.saveObject({
     objectID: publishedModule.id,
     doi: `${process.env.DOI_PREFIX}/${publishedModule.suffix}`,
+    suffix: publishedModule.suffix,
     license: publishedModule.license?.url,
     type: publishedModule.type.name,
     // It's called name and not title to improve Algolia search

@@ -52,6 +52,16 @@ export default resolver.pipe(
             },
           },
         },
+        children: {
+          include: {
+            type: true,
+            authors: {
+              include: {
+                workspace: true,
+              },
+            },
+          },
+        },
       },
     })
 

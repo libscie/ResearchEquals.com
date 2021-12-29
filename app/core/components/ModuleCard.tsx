@@ -1,6 +1,6 @@
 import AuthorAvatarsNew from "../../modules/components/AuthorAvatarsNew"
 
-const ModuleCard = ({ type, title, status, time, authors }) => {
+const ModuleCard = ({ type, title, status, time, timeText, authors }) => {
   return (
     <div className="flex flex-col h-32 w-full hover:bg-gray-50 dark:hover:bg-gray-800 px-4 py-2">
       <div className="flex-grow">
@@ -12,7 +12,9 @@ const ModuleCard = ({ type, title, status, time, authors }) => {
       <div className="flex">
         <div className="flex-grow text-xs leading-4 font-normal text-gray-500 dark:text-gray-400">
           <p>{status}</p>
-          <p>Published: {time}</p>
+          <p>
+            {timeText}: {time}
+          </p>
         </div>
         <AuthorAvatarsNew authors={authors} />
       </div>

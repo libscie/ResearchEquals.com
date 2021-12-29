@@ -55,6 +55,7 @@ const DraftsContents = () => {
                   title={draft.title}
                   status="Draft"
                   time={moment(draft.updatedAt).fromNow()}
+                  timeText="Updated"
                   authors={draft.authors}
                 />
               </li>
