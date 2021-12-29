@@ -69,7 +69,7 @@ const DashboardContent = () => {
         <div className="lg:flex flex-row text-gray-900 dark:text-gray-200">
           {/* Column 1 */}
           <div className="lg:w-1/4 p-4">
-            <div className="my-2">
+            <div className="my-0">
               <h1 className="text-4xl font-medium">
                 Welcome back,{" "}
                 {data.workspace!.name ? data.workspace!.name : "@" + data.workspace!.handle}!
@@ -212,15 +212,17 @@ const WhoToFollow = ({ data, refetch, refetchFeed }) => {
                 className="w-10 h-10 rounded-full inline-block h-full align-middle"
               />
             </div>
-            <div className="flex-grow">
-              <span className="inline-block h-full align-middle"></span>
-              <p className="text-gray-700 dark:text-gray-200 text-sm leading-4 font-normal my-auto inline-block align-middle">
-                {author.name}
-                <p className="text-gray-500 dark:text-gray-400 text-xs leading-4 font-normal">
-                  @{author.handle}
+            <Link href={Routes.HandlePage({ handle: author.handle })}>
+              <a className="flex-grow">
+                <span className="inline-block h-full align-middle"></span>
+                <p className="text-gray-700 dark:text-gray-200 text-sm leading-4 font-normal my-auto inline-block align-middle">
+                  {author.name}
+                  <p className="text-gray-500 dark:text-gray-400 text-xs leading-4 font-normal">
+                    @{author.handle}
+                  </p>
                 </p>
-              </p>
-            </div>
+              </a>
+            </Link>
             <FollowButton author={author} refetchFn={refetchFn} />
           </li>
         </>
