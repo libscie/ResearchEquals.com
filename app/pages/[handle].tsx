@@ -176,7 +176,7 @@ const FollowHandleButton = ({ workspace }) => {
   const params = useParams()
   const [currentUser] = useQuery(getCurrentUser, null)
   const [ownWorkspace, { refetch }] = useQuery(getCurrentWorkspace, null)
-
+  console.log(workspace.id)
   return (
     <>
       {ownWorkspace ? (
@@ -192,7 +192,7 @@ const FollowHandleButton = ({ workspace }) => {
           </>
         ) : ownWorkspace?.following.filter((follows) => follows.handle === params.handle).length ===
           0 ? (
-          <FollowButton author={workspace.id} refetchFn={refetch} />
+          <FollowButton author={workspace} refetchFn={refetch} />
         ) : (
           <UnfollowButton author={workspace} refetchFn={refetch} />
         )
