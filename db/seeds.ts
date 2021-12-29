@@ -148,31 +148,31 @@ const seed = async () => {
           authors: {
             create: [
               {
-                workspaceId: 51,
+                workspaceId: 1,
                 acceptedInvitation: true,
               },
               {
-                workspaceId: 52,
+                workspaceId: 2,
                 acceptedInvitation: true,
               },
               {
-                workspaceId: 53,
+                workspaceId: 3,
                 acceptedInvitation: true,
               },
               {
-                workspaceId: 54,
+                workspaceId: 4,
                 acceptedInvitation: true,
               },
               {
-                workspaceId: 55,
+                workspaceId: 5,
                 acceptedInvitation: true,
               },
               {
-                workspaceId: 56,
+                workspaceId: 6,
                 acceptedInvitation: true,
               },
               {
-                workspaceId: 57,
+                workspaceId: 7,
                 acceptedInvitation: true,
               },
             ],
