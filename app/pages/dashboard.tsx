@@ -66,12 +66,6 @@ const DashboardContent = () => {
   if (data) {
     return (
       <>
-        {data!.user!.emailIsVerified ? (
-          ""
-        ) : (
-          <Banner message="You can only start publishing once your email is verified. Please check your inbox." />
-        )}
-
         <div className="lg:flex flex-row text-gray-900 dark:text-gray-200">
           {/* Column 1 */}
           <div className="lg:w-1/4 p-4">
@@ -110,7 +104,7 @@ const DashboardContent = () => {
           </div>
           {/* Column 2 */}
           <div className="flex w-full flex-col px-4">
-            <div className="sm:flex w-full mt-4">
+            <div className="lg:flex w-full mt-4">
               <OnboardingQuests data={data} />
             </div>
             <div className="my-2">
@@ -171,7 +165,7 @@ const DashboardContent = () => {
               )}
             </div>
             {data.followableWorkspaces.length > 0 ? (
-              <div className="inline lg:hidden">
+              <div className="inline lg:hidden mb-16">
                 <WhoToFollow data={data} refetch={refetch} refetchFeed={refetchFeed} />
               </div>
             ) : (
