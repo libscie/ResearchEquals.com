@@ -10,14 +10,11 @@ import {
 } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import React, { Suspense, useEffect } from "react"
-import toast, { Toaster } from "react-hot-toast"
-import { Disclosure } from "@headlessui/react"
+import toast from "react-hot-toast"
 import moment from "moment"
 
 import getDashboardData from "../core/queries/getDashboardData"
-import { ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon } from "@heroicons/react/solid"
 import Navbar from "../core/components/Navbar"
-import Banner from "../core/components/Banner"
 import OnboardingQuests from "../core/components/OnboardingQuests"
 import followWorkspace from "../workspaces/mutations/followWorkspace"
 import unfollowWorkspace from "../workspaces/mutations/unfollowWorkspace"
@@ -26,14 +23,11 @@ import ModuleCard from "../core/components/ModuleCard"
 import FollowButton from "app/workspaces/components/FollowButton"
 import FeedPagination from "../core/components/FeedPagination"
 
-const ITEMS_PER_PAGE = 10
+const ITEMS_PER_PAGE = 5
 
 const DashboardContent = () => {
   const session = useSession()
   const query = useRouterQuery()
-  // const [updateInvitationMutation, { isSuccess: invitationUpdated }] = useMutation(updateInvitation)
-  const [followWorkspaceMutation] = useMutation(followWorkspace)
-  const [unfollowWorkspaceMutation] = useMutation(unfollowWorkspace)
   const [data, { refetch }] = useQuery(getDashboardData, { session })
   const router = useRouter()
   const page = Number(router.query.page) || 0
@@ -150,7 +144,7 @@ const DashboardContent = () => {
                 <div className="flex flex-col flex-grow relative w-full border-2 border-gray-1000 border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500  my-4 h-auto">
                   <div className="table flex-grow w-full">
                     <div className="sm:table-cell w-1/4 h-28"></div>
-                    <span className="mx-auto table-cell align-middle leading-normal text-sm leading-4 font-medium">
+                    <span className="mx-auto table-cell align-middle text-sm leading-4 font-medium">
                       {data.followableWorkspaces.length > 0 ? (
                         <>
                           <div>Following people will help fill your feed</div>
