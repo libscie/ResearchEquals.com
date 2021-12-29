@@ -7,15 +7,31 @@ import AuthorAvatarsNew from "./AuthorAvatarsNew"
 import ViewAuthors from "./ViewAuthors"
 import ParentChildView from "./ParentChildView"
 
-const MetadataImmutable = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
+const MetadataImmutable = ({ module }) => {
   return (
     <div className="module bg-gray-100 dark:bg-gray-600 my-4" style={{ padding: "1px" }}>
       <div className="module bg-white dark:bg-gray-900 border-0 border-gray-100 dark:border-gray-600 divide-y divide-gray-100 dark:divide-gray-600">
         <div className="lg:flex text-center divide-y lg:divide-y-0 lg:divide-x divide-gray-100 dark:divide-gray-600 text-gray-500 dark:text-gray-200 dark:bg-gray-800 text-xs leading-4 font-normal">
-          <div className="flex-grow py-2">Last updated: {moment(module.updatedAt).fromNow()}</div>
           <div className="flex-grow py-2">
-            DOI upon publish:{" "}
-            <span className="text-gray-300 dark:text-gray-600">{`${module.prefix}/${module.suffix}`}</span>
+            {module.published ? (
+              <>Published: {module.publishedAt.toISOString().substring(0, 10)}</>
+            ) : (
+              <>Last updated: {moment(module.updatedAt).fromNow()}</>
+            )}
+          </div>
+          <div className="flex-grow py-2">
+            {module.published ? (
+              <>
+                <Link href={`https://doi.org/${module.prefix}/${module.suffix}`}>
+                  <a className="underline">DOI: {`${module.prefix}/${module.suffix}`}</a>
+                </Link>
+              </>
+            ) : (
+              <>
+                DOI upon publish:{" "}
+                <span className="text-gray-300 dark:text-gray-600">{`${module.prefix}/${module.suffix}`}</span>
+              </>
+            )}
           </div>
           <div className="flex-grow py-2">
             License:{" "}

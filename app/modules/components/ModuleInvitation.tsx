@@ -33,7 +33,6 @@ const ModuleInvitation = ({
   const mainFile = moduleEdit!.main as Prisma.JsonObject
   const supportingRaw = moduleEdit!.supporting as Prisma.JsonObject
 
-  console.log(supportingRaw.files.length)
   return (
     <div className="p-5 max-w-7xl mx-auto overflow-y-auto text-base">
       {/* Invitation handling */}
@@ -113,12 +112,7 @@ const ModuleInvitation = ({
         <div></div>
       </div>
 
-      <MetadataImmutable
-        module={moduleEdit}
-        addAuthors={manageAuthorsOpen}
-        setQueryData={setQueryData}
-        setAddAuthors={setManageAuthorsOpen}
-      />
+      <MetadataImmutable module={moduleEdit} />
       {mainFile.name ? (
         <div className="my-8">
           <h2 className="">Main file</h2>
