@@ -101,6 +101,7 @@ const seed = async () => {
                   create: {
                     handle: faker.internet.userName().toLowerCase(),
                     avatar: faker.image.abstract(),
+                    name: faker.name.findName(),
                     url: faker.internet.url(),
                   },
                 },
