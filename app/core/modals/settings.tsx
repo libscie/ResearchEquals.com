@@ -107,7 +107,7 @@ export default function SettingsModal({ button, styling, user, workspace }) {
                         <WorkspaceSettings workspace={workspace} setIsOpen={setIsOpen} />
                       </Tab.Panel>
                       {/* Account tab */}
-                      <Tab.Panel key="account-panel" className="px-2">
+                      <Tab.Panel key="account-panel" className="">
                         <AccountSettings user={user} setIsOpen={setIsOpen} />
                       </Tab.Panel>
                       <Tab.Panel key="billing-panel" className="px-2"></Tab.Panel>

@@ -19,19 +19,19 @@ export default function DeleteModal() {
 
   return (
     <>
-      <h3 className="text-sm font-medium text-gray-700 dark:text-gray-700">Delete your account</h3>
+      <h3 className="text-sm font-medium text-gray-900 dark:text-gray-200">Delete your account</h3>
       <div className="flex w-11/12">
         <div className="">
-          <div className="my-2 text-sm text-gray-700 dark:text-gray-700">
+          <div className="my-2 text-xs text-gray-900 dark:text-gray-200">
             <p>
               Your publication profile and publications will not be deleted if you have published.
             </p>
           </div>
         </div>
-        <div className="my-2">
+        <div className="my-0">
           <button
             type="button"
-            className=" py-2 px-4 border border-gray-500 bg-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="flex py-2 px-4 bg-red-50 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
             onClick={openModal}
           >
             Delete
