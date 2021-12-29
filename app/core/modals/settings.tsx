@@ -66,12 +66,12 @@ export default function SettingsModal({ button, styling, user, workspace }) {
                   <Tab.Group>
                     <Dialog.Title
                       as="div"
-                      className="text-sm leading-5 font-normal text-gray-900 dark:text-gray-200 sticky top-0 border-b border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900"
+                      className="text-sm leading-5 font-normal text-gray-900 dark:text-gray-200 sticky top-0 border-b border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 rounded-t"
                     >
                       <h1 className="p-2 sm:hidden text-lg leading-7 font-medium text-gray-900 dark:text-gray-200 px-2">
                         Settings
                       </h1>
-                      <Tab.List className="flex p-1 space-x-1 z-10 bg-white dark:bg-gray-900">
+                      <Tab.List className="flex p-1 space-x-1 z-10 bg-white dark:bg-gray-900 rounded-t">
                         {categories.map((category) => (
                           <Tab
                             key={category}

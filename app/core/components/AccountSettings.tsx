@@ -70,7 +70,7 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
           <div className="mt-1 max-w-11/12">
             <input
               id="email"
-              className="bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-500  text-gray-900 dark:text-gray-200 dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+              className="bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300  text-gray-900 dark:text-gray-200 dark:border-gray-600 rounded-md placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
               {...formik.getFieldProps("email")}
             />
             {formik.touched.email && formik.errors.email ? (
@@ -96,7 +96,7 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
               id="currentPassword"
               type="password"
               autoComplete="password"
-              className="bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-500  text-gray-900 dark:text-gray-200 dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+              className="bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300  text-gray-900 dark:text-gray-200 dark:border-gray-600 rounded-md placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
               {...formik.getFieldProps("currentPassword")}
             />
             {formik.touched.currentPassword && formik.errors.currentPassword ? (
@@ -120,7 +120,7 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
             <input
               id="newPassword"
               type="password"
-              className="bg-transparent appearance-none block w-11/12 px-2 py-2 border border-gray-500  text-gray-900 dark:text-gray-200  dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+              className="bg-transparent appearance-none block w-11/12 px-2 py-2 border border-gray-300  text-gray-900 dark:text-gray-200  dark:border-gray-600 rounded-md placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
               {...formik.getFieldProps("newPassword")}
             />
             {formik.touched.newPassword && formik.errors.newPassword ? (
@@ -141,7 +141,7 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
             <input
               id="newRepeat"
               type="password"
-              className="bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-500  text-gray-900 dark:text-gray-200 dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+              className="bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300  text-gray-900 dark:text-gray-200 dark:border-gray-600 rounded-md placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
               {...formik.getFieldProps("newRepeat")}
             />
             {formik.touched.newRepeat && formik.errors.newRepeat ? (

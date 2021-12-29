@@ -7,6 +7,7 @@ import { z } from "zod"
 import { Renew32 } from "@carbon/icons-react"
 import toast from "react-hot-toast"
 import { CheckIcon, XIcon } from "@heroicons/react/solid"
+import ReactTooltip from "react-tooltip"
 
 const WorkspaceSettings = ({ workspace, setIsOpen }) => {
   const [changeBioMutation, { isSuccess: bioChanged }] = useMutation(changeBio)
@@ -94,14 +95,21 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               </Link>
             ) : (
               <>
-                <p className="">{workspace!.name}</p>
-                <p className="flex">
+                <p className="text-sm font-medium">{workspace!.name}</p>
+                <p className="flex text-sm font-medium">
                   {workspace!.orcid}
                   <span className="inline-block h-full align-middle"> </span>
                   <p className="inline-block align-middle">
                     <Link href="api/auth/orcid">
                       <button className="inline-block align-middle">
-                        <Renew32 className="cursor-pointer w-5 h-5 " />{" "}
+                        <Renew32
+                          data-tip
+                          data-for="refreshTip"
+                          className="ml-1 cursor-pointer w-4 h-4 "
+                        />
+                        <ReactTooltip id="refreshTip" place="top" effect="solid">
+                          Click here to refresh your info from ORCID
+                        </ReactTooltip>
                       </button>
                     </Link>
                   </p>
