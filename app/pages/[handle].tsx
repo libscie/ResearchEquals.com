@@ -51,7 +51,6 @@ export const getServerSideProps = async ({ params }) => {
 }
 
 const HandlePage = ({ workspace }) => {
-  console.log(workspace.following)
   return (
     <Layout title={`R=${workspace.name || workspace.handle}`}>
       <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-200 h-full">
@@ -213,9 +212,9 @@ const HandleFeed = ({ handle }) => {
     skip: ITEMS_PER_PAGE * page,
     take: ITEMS_PER_PAGE,
   })
-  const goToPreviousPage = () => router.push({ query: { page: page - 1 } })
-  const goToPage = (number) => router.push({ query: { page: number } })
-  const goToNextPage = () => router.push({ query: { page: page + 1 } })
+  const goToPreviousPage = () => router.push({ query: { handle, page: page - 1 } })
+  const goToPage = (number) => router.push({ query: { handle, page: number } })
+  const goToNextPage = () => router.push({ query: { handle, page: page + 1 } })
   return (
     <>
       {modules.length > 0 ? (
