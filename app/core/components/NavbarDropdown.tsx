@@ -28,7 +28,7 @@ const DropdownContents = () => {
   if (currentUser && currentWorkspace) {
     return (
       <>
-        <div className="mt-3 pt-0 pb-2 px-4 max-w-3xl space-y-1 border-b border-gray-200 dark:border-gray-600">
+        <div className="mt-3 pt-0 pb-2 px-4 space-y-1 border-b border-gray-200 dark:border-gray-600">
           <QuickDraft
             buttonText={
               <>
@@ -65,7 +65,7 @@ const DropdownContents = () => {
             </button>
           </Link>
         </div>
-        <div className="mt-3 pt-0 pb-2 px-4 max-w-3xl space-y-1">
+        <div className="mt-3 pt-0 pb-2 px-4 space-y-1">
           <li className="py-2 px-2 flex">
             <div className="mr-2">
               <img
