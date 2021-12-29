@@ -45,6 +45,8 @@
     "blitz": "0.39.0",
     "concurrently": "6.4.0",
     "eslint": "7.32.0",
+    "faker": "5.5.3",
+    "filesize": "8.0.6",
     "form-data": "4.0.0",
     "formik": "2.2.9",
     "husky": "6.0.0",

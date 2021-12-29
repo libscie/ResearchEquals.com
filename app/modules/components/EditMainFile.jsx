@@ -5,6 +5,7 @@ import { useRef } from "react"
 import getSignature from "../../auth/queries/getSignature"
 import addMain from "../mutations/addMain"
 import EditMainFileDisplay from "../../core/components/EditMainFileDisplay"
+import { PlusSmIcon } from "@heroicons/react/solid"
 
 const EditMainFile = ({ mainFile, setQueryData, moduleEdit }) => {
   const [uploadSecret] = useQuery(getSignature, undefined)
@@ -26,12 +27,12 @@ const EditMainFile = ({ mainFile, setQueryData, moduleEdit }) => {
         <>
           <button
             type="button"
-            className="inline-flex items-center px-6 py-3 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-xs leading-4 font-normal shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700"
             onClick={() => {
               widgetApi.current.openDialog()
             }}
           >
-            Upload file
+            <PlusSmIcon className="w-4 h-4" /> Add Main File
             <Widget
               publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
               // secureSignature={uploadSecret.signature}

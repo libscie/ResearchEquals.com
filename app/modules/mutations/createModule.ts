@@ -15,6 +15,7 @@ export default resolver.pipe(
     authorInvitations.push({
       workspaceId: ctx.session.$publicData.workspaceId,
       acceptedInvitation: true,
+      authorshipRank: 0,
     })
 
     const module = await db.module.create({

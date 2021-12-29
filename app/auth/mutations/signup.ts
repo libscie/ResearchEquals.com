@@ -26,7 +26,7 @@ export default resolver.pipe(
             role: "OWNER",
             workspace: {
               create: {
-                handle,
+                handle: handle.toLowerCase(),
                 avatar: `https://eu.ui-avatars.com/api/?rounded=true&background=${hexColor}&name=${handle}`,
               },
             },
