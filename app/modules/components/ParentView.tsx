@@ -9,12 +9,10 @@ import ModuleCard from "../../core/components/ModuleCard"
 const FollowsFromView = ({ module }) => {
   const [followsFromOpen, setFollowsFromOpen] = useState(false)
 
-  console.log(module)
-
   return (
     <>
-      <div className="flex-grow flex">
-        <div
+      <div className="flex-grow flex divide-x divide-gray-100 dark:divide-gray-600">
+        <button
           className="flex w-full text-gray-500 dark:text-gray-200 dark:bg-gray-800 text-xs leading-4 font-normal p-2 cursor-pointer"
           onClick={() => {
             setFollowsFromOpen(true)
@@ -30,26 +28,26 @@ const FollowsFromView = ({ module }) => {
                 <span className="flex-grow underline truncate">
                   [{module.parents[0].type.name}] {module.parents[0].title}
                 </span>
-                <span className="mx-2">
-                  <svg
-                    width="19"
-                    height="17"
-                    viewBox="0 0 19 17"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="fill-current text-gray-600 dark:text-gray-200"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M6 1.38672H0V0.386719H6C11.799 0.386719 16.5 5.08773 16.5 10.8867V11.8867H18.8868L16 16.8867L13.1132 11.8867H15.5V10.8867C15.5 5.64001 11.2467 1.38672 6 1.38672Z"
-                    />
-                  </svg>
-                </span>
               </div>
             </div>
           </span>
-        </div>
+        </button>
+        <span className="mx-2">
+          <svg
+            width="19"
+            height="17"
+            viewBox="0 0 19 17"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="fill-current text-gray-600 dark:text-gray-200"
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M6 1.38672H0V0.386719H6C11.799 0.386719 16.5 5.08773 16.5 10.8867V11.8867H18.8868L16 16.8867L13.1132 11.8867H15.5V10.8867C15.5 5.64001 11.2467 1.38672 6 1.38672Z"
+            />
+          </svg>
+        </span>
       </div>
       <Transition.Root show={followsFromOpen} as={Fragment}>
         <Dialog as="div" className="fixed inset-0 overflow-hidden" onClose={setFollowsFromOpen}>

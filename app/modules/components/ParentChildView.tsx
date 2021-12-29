@@ -12,69 +12,236 @@ const ParentChildView = ({ module }) => {
 
   return (
     <>
-      <div className="lg:flex">
-        <div
-          className="flex-grow w-full text-gray-500 dark:text-gray-200 dark:bg-gray-800 text-xs leading-4 font-normal p-2 cursor-pointer text-center"
-          onClick={() => {
-            setFollowsFromOpen(true)
-          }}
-        >
-          Follows from ({module.parents.length}):
-          <span className="flex-grow underline">
-            <div
-              key={module.parents[0].title + "object"}
-              className="inline-block align-middle w-full"
-            >
-              <div className="flex">
-                <span className="flex-grow underline truncate">
-                  [{module.parents[0].type.name}] {module.parents[0].title}
-                </span>
-              </div>
-            </div>
-          </span>
-        </div>
-        <div className="dark:text-gray-200 dark:bg-gray-800 px-2 flex lg:inline">
-          <span className="flex-grow"></span>
-          <svg
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="fill-current text-gray-600 dark:text-gray-200"
+      <div className="hidden lg:flex divide-x divide-gray-100 dark:divide-gray-600">
+        {module.parents.length > 0 ? (
+          <div
+            className="flex-grow w-full text-gray-500 dark:text-gray-200 dark:bg-gray-800 text-xs leading-4 font-normal p-2 cursor-pointer text-center"
+            onClick={() => {
+              setFollowsFromOpen(true)
+            }}
           >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M27 13L32 15.8868L27 18.7735V16.3868H26C21.5298 16.3868 17.7807 19.4742 16.7689 23.6331C16.6473 23.0488 16.4793 22.4815 16.2689 21.9352C17.83 18.0946 21.5988 15.3868 26 15.3868H27V13Z"
-            />
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M6 16.3867H0V15.3867H6C11.799 15.3867 16.5 20.0877 16.5 25.8867V26.8867H18.8868L16 31.8867L13.1132 26.8867H15.5V25.8867C15.5 20.64 11.2467 16.3867 6 16.3867Z"
-            />
-          </svg>
+            Follows from ({module.parents.length}):
+            <span className="flex-grow underline">
+              <div
+                key={module.parents[0].title + "object"}
+                className="inline-block align-middle w-full"
+              >
+                <div className="flex">
+                  <span className="flex-grow underline truncate">
+                    [{module.parents[0].type.name}] {module.parents[0].title}
+                  </span>
+                </div>
+              </div>
+            </span>
+          </div>
+        ) : (
+          <div className="flex-grow w-full text-gray-500 dark:text-gray-200 dark:bg-gray-800 text-xs leading-4 font-normal p-2 cursor-pointer text-center"></div>
+        )}
+        <div className="dark:text-gray-200 dark:bg-gray-800 px-2 flex lg:inline border-x border-gray-100 dark:border-gray-600 ">
+          <span className="flex-grow"></span>
+          {module.parents.length > 0 && module.children.length > 0 ? (
+            // Icon both parent and child
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="fill-current text-gray-600 dark:text-gray-200"
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M27 13L32 15.8868L27 18.7735V16.3868H26C21.5298 16.3868 17.7807 19.4742 16.7689 23.6331C16.6473 23.0488 16.4793 22.4815 16.2689 21.9352C17.83 18.0946 21.5988 15.3868 26 15.3868H27V13Z"
+              />
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M6 16.3867H0V15.3867H6C11.799 15.3867 16.5 20.0877 16.5 25.8867V26.8867H18.8868L16 31.8867L13.1132 26.8867H15.5V25.8867C15.5 20.64 11.2467 16.3867 6 16.3867Z"
+              />
+            </svg>
+          ) : module.parents.length > 0 ? (
+            // Icon only parent
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="fill-current text-gray-600 dark:text-gray-200"
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M6 16.3867H0V15.3867H6C11.799 15.3867 16.5 20.0877 16.5 25.8867V26.8867H18.8868L16 31.8867L13.1132 26.8867H15.5V25.8867C15.5 20.64 11.2467 16.3867 6 16.3867Z"
+              />
+            </svg>
+          ) : module.children.length > 0 ? (
+            // Icon only children
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="fill-current text-gray-600 dark:text-gray-200"
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M16 26.8867V32.8867H15V26.8867C15 21.0877 19.701 16.3867 25.5 16.3867H26.5V14L31.5 16.8867L26.5 19.7735V17.3867H25.5C20.2533 17.3867 16 21.64 16 26.8867Z"
+              />
+            </svg>
+          ) : (
+            ""
+          )}
           <span className="flex-grow"></span>
         </div>
-        <div
-          className="flex-grow w-full text-gray-500 dark:text-gray-200 dark:bg-gray-800 text-xs leading-4 font-normal p-2 cursor-pointer"
-          onClick={() => {
-            setLeadsToOpen(true)
-          }}
-        >
-          Leads to ({module.children.length}):
-          <span className="flex-grow underline">
-            <div
-              key={module.parents[0].title + "object"}
-              className="inline-block align-middle w-full"
-            >
-              <div className="flex">
-                <span className="flex-grow underline truncate">
-                  [{module.children[0].type.name}] {module.children[0].title}
-                </span>
+        {module.children.length > 0 ? (
+          <div
+            className="flex-grow w-full text-gray-500 dark:text-gray-200 dark:bg-gray-800 text-xs leading-4 font-normal p-2 cursor-pointer text-center"
+            onClick={() => {
+              setLeadsToOpen(true)
+            }}
+          >
+            Leads to ({module.children.length}):
+            <span className="flex-grow underline">
+              <div
+                key={module.children[0].title + "object"}
+                className="inline-block align-middle w-full"
+              >
+                <div className="flex">
+                  <span className="flex-grow underline truncate">
+                    [{module.children[0].type.name}] {module.children[0].title}
+                  </span>
+                </div>
               </div>
+            </span>
+          </div>
+        ) : (
+          <div className="flex-grow w-full text-gray-500 dark:text-gray-200 dark:bg-gray-800 text-xs leading-4 font-normal p-2 cursor-pointer text-center"></div>
+        )}
+      </div>
+      <div className="lg:hidden flex h-full divide-x divide-gray-100 dark:divide-gray-600 dark:bg-gray-800">
+        <div className="dark:text-gray-200 dark:bg-gray-800 px-2 flex lg:inline border-x border-gray-100 dark:border-gray-600  rotate-180">
+          <span className="inline-block h-full align-middle"></span>
+          {/* TODO: Update icon */}
+          {module.parents.length > 0 && module.children.length > 0 ? (
+            // Icon both parent and child
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="fill-current text-gray-600 dark:text-gray-200 inline-block h-full align-middle"
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M27 13L32 15.8868L27 18.7735V16.3868H26C21.5298 16.3868 17.7807 19.4742 16.7689 23.6331C16.6473 23.0488 16.4793 22.4815 16.2689 21.9352C17.83 18.0946 21.5988 15.3868 26 15.3868H27V13Z"
+              />
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M6 16.3867H0V15.3867H6C11.799 15.3867 16.5 20.0877 16.5 25.8867V26.8867H18.8868L16 31.8867L13.1132 26.8867H15.5V25.8867C15.5 20.64 11.2467 16.3867 6 16.3867Z"
+              />
+            </svg>
+          ) : module.parents.length > 0 ? (
+            // Icon only parent
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="fill-current text-gray-600 dark:text-gray-200 inline-block h-full align-middle"
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M27 13L32 15.8868L27 18.7735V16.3868H26C21.5298 16.3868 17.7807 19.4742 16.7689 23.6331C16.6473 23.0488 16.4793 22.4815 16.2689 21.9352C17.83 18.0946 21.5988 15.3868 26 15.3868H27V13Z"
+              />
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M6 16.3867H0V15.3867H6C11.799 15.3867 16.5 20.0877 16.5 25.8867V26.8867H18.8868L16 31.8867L13.1132 26.8867H15.5V25.8867C15.5 20.64 11.2467 16.3867 6 16.3867Z"
+              />
+            </svg>
+          ) : module.children.length > 0 ? (
+            // Icon only children
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="fill-current text-gray-600 dark:text-gray-200 inline-block h-full align-middle"
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M27 13L32 15.8868L27 18.7735V16.3868H26C21.5298 16.3868 17.7807 19.4742 16.7689 23.6331C16.6473 23.0488 16.4793 22.4815 16.2689 21.9352C17.83 18.0946 21.5988 15.3868 26 15.3868H27V13Z"
+              />
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M6 16.3867H0V15.3867H6C11.799 15.3867 16.5 20.0877 16.5 25.8867V26.8867H18.8868L16 31.8867L13.1132 26.8867H15.5V25.8867C15.5 20.64 11.2467 16.3867 6 16.3867Z"
+              />
+            </svg>
+          ) : (
+            ""
+          )}
+        </div>
+        <div className="divide-y divide-gray-100 dark:divide-gray-600 w-full">
+          {module.parents.length > 0 ? (
+            <div
+              className="flex-grow w-full text-gray-500 dark:text-gray-200 dark:bg-gray-800 text-xs leading-4 font-normal p-2 cursor-pointer text-center"
+              onClick={() => {
+                setFollowsFromOpen(true)
+              }}
+            >
+              Follows from ({module.parents.length}):
+              <span className="flex-grow underline">
+                <div
+                  key={module.parents[0].title + "object"}
+                  className="inline-block align-middle w-full"
+                >
+                  <div className="flex">
+                    <span className="flex-grow underline truncate-1">
+                      [{module.parents[0].type.name}] {module.parents[0].title}
+                    </span>
+                  </div>
+                </div>
+              </span>
             </div>
-          </span>
+          ) : (
+            ""
+          )}
+          {module.children.length > 0 ? (
+            <div
+              className="flex-grow w-full text-gray-500 dark:text-gray-200 dark:bg-gray-800 text-xs leading-4 font-normal p-2 cursor-pointer text-center"
+              onClick={() => {
+                setLeadsToOpen(true)
+              }}
+            >
+              Leads to ({module.children.length}):
+              <span className="flex-grow underline">
+                <div
+                  key={module.children[0].title + "object"}
+                  className="inline-block align-middle w-full"
+                >
+                  <div className="flex">
+                    <span className="flex-grow underline truncate-1 ">
+                      [{module.children[0].type.name}] {module.children[0].title}
+                    </span>
+                  </div>
+                </div>
+              </span>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
       <Transition.Root show={followsFromOpen} as={Fragment}>
