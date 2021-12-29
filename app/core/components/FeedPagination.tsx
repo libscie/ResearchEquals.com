@@ -11,8 +11,8 @@ const FeedPagination = ({
 }) => {
   return (
     <>
-      <div className="flex my-1">
-        <div className="flex-1 flex items-center justify-between">
+      <div className="flex my-1  max-w-screen">
+        <div className="hidden flex-1 sm:flex items-center justify-between">
           <p className="text-sm leading-5 font-normal text-gray-700 dark:text-gray-200">
             Showing <span className="font-medium">{ITEMS_PER_PAGE * page + 1}</span> to{" "}
             <span className="font-medium">
@@ -33,6 +33,7 @@ const FeedPagination = ({
             <span className="sr-only">Previous</span>
             <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
           </button>
+          {/* TODO: Drop middle buttons that don't fit screen */}
           {Array.from({ length: Math.ceil(count / ITEMS_PER_PAGE) }, (x, i) => i).map((pageNr) => (
             <button
               key={`page-nav-feed-${pageNr}`}
