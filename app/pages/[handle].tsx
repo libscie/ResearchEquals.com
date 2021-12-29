@@ -144,7 +144,7 @@ const HandlePage = ({ workspace }) => {
               <Suspense fallback="">
                 <HandlePanel
                   buttonText={
-                    <p className="flex my-2 text-sm leading-4 font-normal text-gray-500 dark:text-gray-200">
+                    <p className="flex text-sm leading-4 font-normal text-gray-500 dark:text-gray-200 underline">
                       <p>
                         <span className="inline-block h-full align-middle"> </span>
                         <UserAddIcon className="w-4 h-4 inline-block align-middle mr-1 text-gray-700 dark:text-gray-400" />
