@@ -151,7 +151,7 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
             ) : null}
           </div>
         </div>
-        <div className=" px-2">
+        <div className="px-2 my-2">
           <DeleteModal />
         </div>
 
