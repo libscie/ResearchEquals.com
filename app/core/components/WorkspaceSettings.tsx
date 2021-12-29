@@ -6,6 +6,7 @@ import { useFormik } from "formik"
 import { z } from "zod"
 import { Renew32 } from "@carbon/icons-react"
 import toast from "react-hot-toast"
+import { CheckIcon, XIcon } from "@heroicons/react/solid"
 
 const WorkspaceSettings = ({ workspace, setIsOpen }) => {
   const [changeBioMutation, { isSuccess: bioChanged }] = useMutation(changeBio)
@@ -62,6 +63,8 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
             toast.error("Enter a valid URL")
           }
         }
+
+        setIsOpen(false)
         // TODO: Add remove Url mutation when empty
       } catch (error) {
         alert(error.toString())
@@ -71,23 +74,28 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
 
   return (
     <>
-      <div className="flex my-4">
+      <div className="flex my-4 p-2">
         <div>
-          <img src={workspace!.avatar} width={120} height={120} className="rounded-full" />
+          <img
+            src={workspace!.avatar}
+            width={120}
+            height={120}
+            className="rounded-full h-14 w-14 max-h-14 max-w-14"
+          />
         </div>
-        <div className="flex-grow ml-2">
+        <div className="flex-grow ml-2 text-gray-900 dark:text-gray-200">
           <span className="inline-block h-full align-middle"> </span>
           <p className="inline-block align-middle">
             {!workspace!.orcid ? (
               <Link href="api/auth/orcid">
-                <button className="py-2 px-4 bg-green-500 rounded text-white">
+                <button className="flex py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500 mb-1">
                   Connect your ORCID
                 </button>
               </Link>
             ) : (
               <>
-                <p className="text-gray-900">{workspace!.name}</p>
-                <p className="text-gray-500 flex">
+                <p className="">{workspace!.name}</p>
+                <p className="flex">
                   {workspace!.orcid}
                   <span className="inline-block h-full align-middle"> </span>
                   <p className="inline-block align-middle">
@@ -100,23 +108,20 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
                 </p>
               </>
             )}
-            <p className="text-gray-500">@{workspace.handle}</p>
+            <p className="text-xs leading-4 font-normal">@{workspace.handle}</p>
           </p>
         </div>
       </div>
       <form onSubmit={formik.handleSubmit}>
-        <div className="my-4">
-          <label
-            htmlFor="bio"
-            className="my-1 block text-sm font-medium bg-gray-300 dark:bg-gray-300 text-gray-700 dark:text-gray-700"
-          >
+        <div className="my-4 text-gray-900 dark:text-gray-200 px-2">
+          <label htmlFor="bio" className="my-1 block text-sm font-medium">
             Bio
           </label>
           <div className="mt-1">
             <textarea
               rows={4}
               id="bio"
-              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-11/12 sm:text-sm border border-gray-500 bg-gray-300 dark:bg-gray-300 text-gray-700 dark:text-gray-700 rounded-md"
+              className="bg-transparent focus:ring-indigo-500 focus:border-indigo-500 block w-11/12 sm:text-sm border border-gray-300 dark:border-gray-600  text-gray-900 dark:text-gray-200 rounded"
               {...formik.getFieldProps("bio")}
               defaultValue={workspace.bio}
             />
@@ -125,19 +130,16 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
             ) : null}
           </div>
         </div>
-        <div className="my-4">
-          <label
-            htmlFor="pronouns"
-            className="my-1 block text-sm font-medium bg-gray-300 dark:bg-gray-300 text-gray-700 dark:text-gray-700"
-          >
+        <div className="my-4 text-gray-900 dark:text-gray-200 px-2">
+          <label htmlFor="pronouns" className="my-1 block text-sm font-medium">
             Pronouns
           </label>
-          <div className="mt-1">
+          <div className="mt-1 text-gray-900 dark:text-gray-200">
             <input
               id="pronouns"
               type="pronouns"
               autoComplete="pronouns"
-              className="appearance-none block w-11/12 px-3 py-2 border border-gray-500 bg-gray-300 dark:bg-gray-300 text-gray-700 dark:text-gray-700  dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+              className="bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
               {...formik.getFieldProps("pronouns")}
             />
             {formik.touched.pronouns && formik.errors.pronouns ? (
@@ -145,11 +147,8 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
             ) : null}
           </div>
         </div>
-        <div className="my-4">
-          <label
-            htmlFor="profileUrl"
-            className="my-1 block text-sm font-medium bg-gray-300 dark:bg-gray-300 text-gray-700 dark:text-gray-700"
-          >
+        <div className="my-4 text-gray-900 dark:text-gray-200 px-2">
+          <label htmlFor="profileUrl" className="my-1 block text-sm font-medium">
             Profile URL
           </label>
 
@@ -158,7 +157,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               id="profileUrl"
               type="url"
               autoComplete="profileUrl"
-              className="appearance-none block w-11/12 px-3 py-2 border border-gray-500 bg-gray-300 dark:bg-gray-300 text-gray-700 dark:text-gray-700 dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+              className=" bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded  placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
               {...formik.getFieldProps("profileUrl")}
             />
             {formik.touched.profileUrl && formik.errors.profileUrl ? (
@@ -167,21 +166,26 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
           </div>
         </div>
 
-        <div className="sticky bottom-0 py-2 bg-gray-300">
+        <div className="absolute right-0 w-full sm:sticky flex bottom-0 py-2 bg-white dark:bg-gray-900 border-t border-gray-300 dark:border-gray-600 text-right">
+          <span className="flex-grow"></span>
+          <div className="">
+            <button
+              type="reset"
+              className="flex mx-4 py-2 px-4 bg-red-50 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
+              onClick={() => {
+                setIsOpen(false)
+              }}
+            >
+              <XIcon className="w-4 h-4 fill-current text-red-500 pt-1" />
+              Cancel
+            </button>
+          </div>
           <button
             type="submit"
-            className=" py-2 px-4 border border-gray-500 bg-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="flex mr-4 py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
           >
+            <CheckIcon className="w-4 h-4 fill-current text-green-500 pt-1" />
             Save
-          </button>
-          <button
-            type="reset"
-            className="mx-2 py-2 px-4 border border-gray-500 bg-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            onClick={() => {
-              setIsOpen(false)
-            }}
-          >
-            Cancel
           </button>
         </div>
       </form>

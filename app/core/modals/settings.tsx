@@ -42,11 +42,14 @@ export default function SettingsModal({ button, styling, user, workspace }) {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+              <Dialog.Overlay className="fixed inset-0 bg-gray-900 bg-opacity-25 transition-opacity" />
             </Transition.Child>
 
             {/* This element is to trick the browser into centering the modal contents. */}
-            <span className="inline-block h-screen max-h-screen align-middle" aria-hidden="true">
+            <span
+              className="hidden sm:inline-block h-screen max-h-screen align-middle"
+              aria-hidden="true"
+            >
               &#8203;
             </span>
             <Transition.Child
@@ -58,31 +61,34 @@ export default function SettingsModal({ button, styling, user, workspace }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-full h-full sm:w-auto sm:min-w-120 sm:max-w-120 max-h-120  overflow-y-scroll text-left align-middle transition-all transform bg-gray-300 shadow-xl text-gray-900">
-                <div className="sm:w-120  ">
+              <div className="inline-block w-full min-h-screen sm:min-h-full  sm:w-auto sm:min-w-120 sm:max-w-120  text-left align-middle transition-all transform rounded bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 shadow text-gray-900">
+                <div className="sm:w-120">
                   <Tab.Group>
                     <Dialog.Title
                       as="div"
-                      className="text-lg bg-gray-300 font-medium leading-6 text-gray-900 sticky top-0 border-b-2 border-gray-700"
+                      className="text-sm leading-5 font-normal text-gray-900 dark:text-gray-200 sticky top-0 border-b border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900"
                     >
-                      <Tab.List className="flex p-1 space-x-1 z-10 bg-gray-300">
+                      <h1 className="p-2 sm:hidden text-lg leading-7 font-medium text-gray-900 dark:text-gray-200 px-2">
+                        Settings
+                      </h1>
+                      <Tab.List className="flex p-1 space-x-1 z-10 bg-white dark:bg-gray-900">
                         {categories.map((category) => (
                           <Tab
                             key={category}
                             className={({ selected }) =>
                               classNames(
-                                "w-full py-2.5 text-sm leading-5 font-medium text-gray-900",
-                                "focus:outline-none focus:ring-2 ring-offset-2 ring-offset-indigo-400 ring-white ring-opacity-60 ",
+                                "w-full py-2",
+                                "focus:outline-none focus:ring-2 ring-offset-2 ring-offset-indigo-400 ring-transparent ring-opacity-60 rounded",
                                 selected
-                                  ? "bg-gray-400 shadow"
-                                  : "text-gray-600 hover:bg-white/[0.12] hover:text-white"
+                                  ? "bg-gray-100 dark:bg-gray-800"
+                                  : "hover:bg-gray-100 dark:hover:bg-gray-800"
                               )
                             }
                           >
                             {category}
                           </Tab>
                         ))}
-                        <button className="rounded-md p-2 inline-flex items-center justify-center text-gray-500 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                        <button className="rounded-md p-2 inline-flex  items-center justify-center text-gray-500 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                           <span className="sr-only">Close menu</span>
                           <XIcon
                             className="h-6 w-6"
@@ -97,7 +103,7 @@ export default function SettingsModal({ button, styling, user, workspace }) {
 
                     {/* Workspace tab */}
                     <Tab.Panels className="mt-2 mb-0">
-                      <Tab.Panel key="workspace-panel" className="px-2">
+                      <Tab.Panel key="workspace-panel" className="">
                         <WorkspaceSettings workspace={workspace} setIsOpen={setIsOpen} />
                       </Tab.Panel>
                       {/* Account tab */}
