@@ -11,6 +11,7 @@ export default function PublishModule({ module }) {
   const [publishModuleMutation] = useMutation(publishModule)
   const router = useRouter()
 
+  console.log(module)
   function closeModal() {
     setIsOpen(false)
   }
@@ -56,7 +57,7 @@ export default function PublishModule({ module }) {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+              <Dialog.Overlay className="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity" />
             </Transition.Child>
 
             {/* This element is to trick the browser into centering the modal contents. */}
@@ -72,35 +73,34 @@ export default function PublishModule({ module }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                  Confirm
+              <div className="inline-block rounded w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform shadow-xl text-gray-900 dark:text-gray-200 bg-white dark:bg-gray-900 dark:border border-gray-300 dark:border-gray-600">
+                <Dialog.Title as="h3" className="text-lg font-medium leading-6">
+                  Confirm publication
                 </Dialog.Title>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">
-                    Once you publish this module, you cannot delete it. It may be retracted or
-                    corrected at any time.
+                    Once you publish this module, you cannot delete it. If you chose a restrictive
+                    license, you will be redirected to the payment page to complete the publication.
                   </p>
                 </div>
                 <div className="mt-4">
                   <button
                     type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-green-900 bg-green-100 border border-transparent rounded-md hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-500 mr-4"
+                    className="inline-flex justify-center mr-2 py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
                     onClick={async () => {
                       try {
                         await publishModuleMutation({ id: module.id })
-                        router.push("/dashboard")
+                        router.push(`/modules/${module.suffix}`)
                       } catch (error) {
                         toast.error("Module cannot be published. Ensure main file is added.")
                       }
-                      // TODO: Update route to that of module?
                     }}
                   >
                     Publish
                   </button>
                   <button
                     type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500"
+                    className="inline-flex justify-center mr-2 py-2 px-4 bg-red-50 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
                     onClick={closeModal}
                   >
                     Cancel
