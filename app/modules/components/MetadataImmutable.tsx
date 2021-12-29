@@ -12,7 +12,13 @@ const MetadataImmutable = ({ module }) => {
     <div className="module bg-gray-100 dark:bg-gray-600 my-4" style={{ padding: "1px" }}>
       <div className="module bg-white dark:bg-gray-900 border-0 border-gray-100 dark:border-gray-600 divide-y divide-gray-100 dark:divide-gray-600">
         <div className="lg:flex text-center divide-y lg:divide-y-0 lg:divide-x divide-gray-100 dark:divide-gray-600 text-gray-500 dark:text-gray-200 dark:bg-gray-800 text-xs leading-4 font-normal">
-          <div className="flex-grow py-2">Last updated: {moment(module.updatedAt).fromNow()}</div>
+          <div className="flex-grow py-2">
+            {module.published ? (
+              <>Published: {module.publishedAt.toISOString().substring(0, 10)}</>
+            ) : (
+              <>Last updated: {moment(module.updatedAt).fromNow()}</>
+            )}
+          </div>
           <div className="flex-grow py-2">
             {module.published ? (
               <>
