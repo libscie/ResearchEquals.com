@@ -51,6 +51,10 @@ const DashboardContent = () => {
       name: "Drafts",
       stat: data.draftModules.length,
     },
+    {
+      name: "Invitations",
+      stat: data.invitedModules.length,
+    },
   ]
 
   useEffect(() => {
@@ -77,16 +81,23 @@ const DashboardContent = () => {
                 {data.workspace!.name ? data.workspace!.name : "@" + data.workspace!.handle}!
               </h1>
             </div>
-            <dl className="mt-2 bg-gray-100 hover:bg-gray-50 overflow-hidden shadow divide-y divide-gray-200 md:grid-cols-3 md:divide-y-0 md:divide-x">
+            <dl className="mt-2 flex text-gray-900 dark:text-gray-200  overflow-hidden shadow dark:border rounded border-gray-100 dark:border-gray-600 divide-gray-100 dark:divide-gray-600 md:grid-cols-3 divide-x">
               {stats.map((item) => (
-                <div key={item.name} className="px-4 py-5 sm:p-6">
-                  <dt className="text-base font-normal text-gray-900">{item.name}</dt>
-                  <dd className="mt-1 flex justify-between items-baseline md:block lg:flex">
-                    <div className="flex items-baseline text-2xl font-semibold text-indigo-600">
-                      {item.stat}
-                    </div>
-                  </dd>
-                </div>
+                <>
+                  <Link href={`/${item.name.toLowerCase()}`}>
+                    <button
+                      className="px-4 py-5 sm:p-6 flex-grow hover:bg-gray-50 dark:hover:bg-gray-800 text-left"
+                      disabled={item.stat === 0}
+                    >
+                      <dt className="text-base font-normal">{item.name}</dt>
+                      <dd className="mt-1 flex justify-between items-baseline md:block lg:flex">
+                        <div className="flex items-baseline text-2xl font-semibold text-indigo-600 dark:text-indigo-200">
+                          {item.stat}
+                        </div>
+                      </dd>
+                    </button>
+                  </Link>
+                </>
               ))}
             </dl>
             {data.followableWorkspaces.length > 0 ? (
@@ -145,28 +156,10 @@ const DashboardContent = () => {
                 <div className="flex flex-col flex-grow relative w-full border-2 border-gray-1000 border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500  my-4 h-auto">
                   <div className="table flex-grow w-full">
                     <div className="sm:table-cell w-1/4 h-28"></div>
-                    <span className="mx-auto table-cell align-middle leading-normal text-sm font-medium text-gray-900">
+                    <span className="mx-auto table-cell align-middle leading-normal text-sm leading-4 font-medium">
                       {data.followableWorkspaces.length > 0 ? (
                         <>
-                          <div>Following people will help populate your feed</div>
-                          <Disclosure>
-                            {({ open }) => (
-                              <>
-                                <Disclosure.Button as="p" className=" px-4 py-2 text-sm">
-                                  <span className="font-bold underline cursor-pointer">
-                                    Find people to follow
-                                  </span>
-                                </Disclosure.Button>
-                                <Disclosure.Panel className="px-4 pt-4 pb-2 text-left text-gray-500">
-                                  <WhoToFollow
-                                    data={data}
-                                    refetch={refetch}
-                                    refetchFeed={refetchFeed}
-                                  />
-                                </Disclosure.Panel>
-                              </>
-                            )}
-                          </Disclosure>
+                          <div>Following people will help fill your feed</div>
                         </>
                       ) : (
                         <></>
