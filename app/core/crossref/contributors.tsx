@@ -31,7 +31,7 @@ const contributors = (authors) => {
             elements: [
               {
                 type: "text",
-                text: author.orcid,
+                text: `https://orcid.org/${author.orcid}`,
               },
             ],
           },
