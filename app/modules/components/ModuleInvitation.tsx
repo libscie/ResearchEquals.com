@@ -104,7 +104,10 @@ const ModuleInvitation = ({
             }}
           >
             <label className="sr-only">Go full screen</label>
-            <ArrowNarrowLeftIcon className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600" />
+            <ArrowNarrowLeftIcon
+              className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600"
+              aria-hidden="true"
+            />
           </button>
         )}
         {/* Push all menu bars to the right */}

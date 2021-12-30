@@ -29,10 +29,14 @@ const EditSupportingFileDisplay = ({ name, size, url, uuid, moduleId, setQueryDa
               toast(`Removed ${name}`, { icon: "🗑" })
               setQueryData(updatedModule)
             }}
+            aria-label="Delete file"
           />
         </button>
         <a href={url} target="_blank" download rel="noreferrer">
-          <Download24 className="w-6 h-6 fill-current text-gray-900 dark:text-gray-200 inline-block align-middle" />
+          <Download24
+            className="w-6 h-6 fill-current text-gray-900 dark:text-gray-200 inline-block align-middle"
+            aria-label="Download file"
+          />
         </a>
       </p>
     </div>

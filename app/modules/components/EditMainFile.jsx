@@ -32,7 +32,7 @@ const EditMainFile = ({ mainFile, setQueryData, moduleEdit }) => {
               widgetApi.current.openDialog()
             }}
           >
-            <PlusSmIcon className="w-4 h-4" /> Add Main File
+            <PlusSmIcon className="w-4 h-4" aria-hidden="true" /> Add Main File
             <Widget
               publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
               // secureSignature={uploadSecret.signature}

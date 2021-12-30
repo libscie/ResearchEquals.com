@@ -212,7 +212,10 @@ const MetadataEdit = ({ module, addAuthors, setQueryData, setAddAuthors, setIsEd
                   setAddAuthors(true)
                 }}
               >
-                <PlusSmIcon className="fill-current text-gray-500 dark:text-gray-200 w-4 h-4 dark:hover:text-gray-400" />
+                <PlusSmIcon
+                  className="fill-current text-gray-500 dark:text-gray-200 w-4 h-4 dark:hover:text-gray-400"
+                  aria-hidden="true"
+                />
                 Add Authors
               </button>
             )}

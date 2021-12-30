@@ -94,7 +94,10 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                               }
                             }}
                           >
-                            <TrashCan24 className="w-4 h-4 fill-current text-red-500 inline-block align-middle" />
+                            <TrashCan24
+                              className="w-4 h-4 fill-current text-red-500 inline-block align-middle"
+                              aria-hidden="true"
+                            />
                           </button>
                           <Link href={Routes.ModulePage({ suffix: module.suffix })}>
                             <a target="_blank">
@@ -121,7 +124,10 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                         setOpen(false)
                       }}
                     >
-                      <XIcon className="w-4 h-4 fill-current text-red-500 pt-1" />
+                      <XIcon
+                        className="w-4 h-4 fill-current text-red-500 pt-1"
+                        aria-hidden="true"
+                      />
                       Cancel
                     </button>
                     <button
@@ -131,7 +137,10 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                         setOpen(false)
                       }}
                     >
-                      <CheckIcon className="w-4 h-4 stroke-current text-green-500 pt-1" />
+                      <CheckIcon
+                        className="w-4 h-4 stroke-current text-green-500 pt-1"
+                        aria-hidden="true"
+                      />
                       Save
                     </button>
                   </div>

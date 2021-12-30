@@ -36,7 +36,7 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit }) => {
           widgetApi.current.openDialog()
         }}
       >
-        <PlusSmIcon className="w-4 h-4" /> Add Supporting File(s)
+        <PlusSmIcon className="w-4 h-4" aria-hidden="true" /> Add Supporting File(s)
         {moduleEdit.supporting ? (
           <Widget
             publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}

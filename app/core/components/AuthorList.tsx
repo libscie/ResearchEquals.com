@@ -40,7 +40,10 @@ function AuthorList({
                 <div className="mr-2 flex">
                   <div>
                     <span className="inline-block h-full align-middle"></span>
-                    <DotsVerticalIcon className="fill-current text-gray-400 w-5 h-5 inline-block align-middle" />
+                    <DotsVerticalIcon
+                      className="fill-current text-gray-400 w-5 h-5 inline-block align-middle"
+                      aria-hidden="true"
+                    />
                   </div>
                   <img
                     src={author!.workspace!.avatar}
@@ -116,12 +119,15 @@ function AuthorList({
                     >
                       {author.readyToPublish ? (
                         <span className="flex mx-2">
-                          <CheckIcon className="w-4 h-4 fill-current" />
+                          <CheckIcon className="w-4 h-4 fill-current" aria-hidden="true" />
                           Approved
                         </span>
                       ) : (
                         <span className="flex mx-2">
-                          <MinusSmIcon className="w-4 h-4 fill-current text-gray-500 dark:text-gray-400" />
+                          <MinusSmIcon
+                            className="w-4 h-4 fill-current text-gray-500 dark:text-gray-400"
+                            aria-hidden="true"
+                          />
                           Pending
                         </span>
                       )}
