@@ -6,7 +6,7 @@ import publishModule from "../../modules/mutations/publishModule"
 import toast from "react-hot-toast"
 import { CheckCircleIcon } from "@heroicons/react/outline"
 
-export default function PublishModule({ module }) {
+export default function PublishModule({ module, user }) {
   let [isOpen, setIsOpen] = useState(false)
   const [publishModuleMutation] = useMutation(publishModule)
   const router = useRouter()
@@ -111,7 +111,7 @@ export default function PublishModule({ module }) {
                 ) : (
                   <>
                     <form
-                      action={`/api/checkout_sessions?email=test@example.com&price_id=${module.license.price_id}&suffix=${module.suffix}&module_id=${module.id}`}
+                      action={`/api/checkout_sessions?email=${user.email}&price_id=${module.license.price_id}&suffix=${module.suffix}&module_id=${module.id}`}
                       method="POST"
                     >
                       <div className="mt-2">

@@ -6,7 +6,6 @@ import moment from "moment"
 import algoliasearch from "algoliasearch"
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET
-console.log(endpointSecret)
 const datetime = Date.now()
 
 const client = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_ADMIN_KEY!)
