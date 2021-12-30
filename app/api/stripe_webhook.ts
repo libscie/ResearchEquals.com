@@ -72,9 +72,10 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
         description: publishedModule.description,
         publishedAt: publishedModule.publishedAt,
       })
+      console.log(`[STRIPE WEBHOOK]: Publication complete; type ${event.type}, id: ${event.id}.`)
 
-    default:
-      console.log(`[STRIPE WEBHOOK]: Unhandled event type ${event.type}, id: ${event.id}.`)
+    // default:
+    // console.log(`[STRIPE WEBHOOK]: Unhandled event type ${event.type}, id: ${event.id}.`)
   }
 
   res.statusCode = 200
