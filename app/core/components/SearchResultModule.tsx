@@ -1,5 +1,3 @@
-import { Blog32 } from "@carbon/icons-react"
-
 const SearchResultModule = ({ item }) => {
   return (
     <>
@@ -9,7 +7,7 @@ const SearchResultModule = ({ item }) => {
             width="32"
             height="32"
             viewBox="0 0 32 32"
-            className="stroke-current fill-current stroke-2 text-gray-300 dark:text-gray-400 inline-block h-full align-middle"
+            className="stroke-current fill-current stroke-2 text-indigo-600 dark:text-indigo-600 inline-block h-full align-middle"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path d="M23.852 31.5H0.5V0.500011L31.5 0.500695V23.8532L23.852 31.5Z" />
