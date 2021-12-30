@@ -1,10 +1,15 @@
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import { XIcon } from "@heroicons/react/outline"
-import { Link, Routes } from "blitz"
+import { Link, Routes, useQuery } from "blitz"
+import FollowButton from "app/workspaces/components/FollowButton"
+import UnfollowButton from "app/workspaces/components/UnfollowButton"
+
+import getCurrentWorkspace from "../../workspaces/queries/getCurrentWorkspace"
 
 const ViewAuthors = ({ button, module }) => {
   const [viewAuthorsOpen, setViewAuthorsOpen] = useState(false)
+  const [ownWorkspace, { refetch }] = useQuery(getCurrentWorkspace, null)
 
   return (
     <>
@@ -84,7 +89,15 @@ const ViewAuthors = ({ button, module }) => {
                                 </a>
                               </Link>
                             </div>
-                            {/* <span className="inline-block h-full align-middle"></span> */}
+                            {ownWorkspace!.handle === author.handle ? (
+                              ""
+                            ) : ownWorkspace!.following.filter(
+                                (follow) => follow.handle === author.workspace.handle
+                              ).length > 0 ? (
+                              <UnfollowButton author={author.workspace} refetchFn={refetch} />
+                            ) : (
+                              <FollowButton author={author.workspace} refetchFn={refetch} />
+                            )}
                           </li>
                         </>
                       ))}

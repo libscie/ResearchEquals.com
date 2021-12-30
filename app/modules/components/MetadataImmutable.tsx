@@ -6,6 +6,7 @@ import toast from "react-hot-toast"
 import AuthorAvatarsNew from "./AuthorAvatarsNew"
 import ViewAuthors from "./ViewAuthors"
 import ParentChildView from "./ParentChildView"
+import { Suspense } from "react"
 
 const MetadataImmutable = ({ module }) => {
   return (
@@ -65,7 +66,9 @@ const MetadataImmutable = ({ module }) => {
           <span className="sm:flex-grow"></span>
           <div className="flex sm:contents">
             <span className="flex-grow sm:hidden"></span>
-            <ViewAuthors module={module} button={<>test</>} />
+            <Suspense fallback="">
+              <ViewAuthors module={module} button={<>test</>} />
+            </Suspense>
             <span className="flex-grow sm:hidden"></span>
           </div>
         </div>
