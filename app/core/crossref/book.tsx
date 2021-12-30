@@ -34,7 +34,7 @@ const book = ({
           language: "en",
         },
         elements: [
-          titles("ResearchEquals.com"),
+          titles("ResearchEquals"),
           publicationDate(),
           noisbn(),
           publisher(),
