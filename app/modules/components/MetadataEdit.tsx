@@ -16,6 +16,7 @@ import { z } from "zod"
 import editModuleScreen from "../mutations/editModuleScreen"
 import getTypes from "../../core/queries/getTypes"
 import getLicenses from "app/core/queries/getLicenses"
+import FollowsFromSearch from "./FollowsFromSearch"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
@@ -74,17 +75,19 @@ const MetadataEdit = ({ module, addAuthors, setQueryData, setAddAuthors, setIsEd
             DOI upon publish:{" "}
             <span className="text-gray-300 dark:text-gray-600">{`${module.prefix}/${module.suffix}`}</span>
           </div>
-          <div className="flex-grow py-2">
+          <div className="flex-grow py-1">
             <label htmlFor="license">License: </label>
             <select
-              className="rounded my-1 bg-gray-300 dark:bg-gray-300"
+              className="rounded bg-transparent text-xs leading-4 font-normal border border-gray-300 dark:border-gray-600"
               id="license"
               {...formik.getFieldProps("license")}
             >
-              <option value="">--Please choose a license--</option>
+              <option value="" className="text-gray-900">
+                --Please choose a license--
+              </option>
               {licenses.map((license) => (
                 <>
-                  <option value={license.id}>
+                  <option value={license.id} className="text-gray-900">
                     {license.name} ({license.price > 0 ? `${license.price / 100}EUR` : "Free"})
                   </option>
                 </>
@@ -95,20 +98,28 @@ const MetadataEdit = ({ module, addAuthors, setQueryData, setAddAuthors, setIsEd
             ) : null}
           </div>
         </div>
+        <div className="py-1 px-2 bg-white dark:bg-gray-800">
+          <FollowsFromSearch module={module} setQueryData={setQueryData} />
+        </div>
+
         <div className="py-4 px-2 min-h-32">
           <p className="text-xs leading-4 font-normal text-gray-500 dark:text-white">
             <label htmlFor="type" className="sr-only">
               Module type
             </label>
             <select
-              className="rounded my-1 bg-gray-300 dark:bg-gray-300"
+              className="border-gray-300 dark:border-gray-600 rounded bg-transparent text-xs leading-4 font-normal"
               id="type"
               {...formik.getFieldProps("type")}
             >
-              <option value="">--Please choose a module type--</option>
+              <option value="" className="text-gray-900">
+                --Please choose a module type--
+              </option>
               {moduleTypes.map((type) => (
                 <>
-                  <option value={type.id}>{type.name}</option>
+                  <option value={type.id} className="text-gray-900">
+                    {type.name}
+                  </option>
                 </>
               ))}
             </select>
@@ -118,11 +129,11 @@ const MetadataEdit = ({ module, addAuthors, setQueryData, setAddAuthors, setIsEd
             <label htmlFor="title" className="sr-only block text-sm font-medium text-gray-700">
               Title
             </label>
-            <div className="mt-1">
+            <div className="mt-1 ">
               <textarea
                 rows={2}
                 id="title"
-                className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-500 bg-gray-300 dark:bg-gray-300 rounded-md"
+                className="border border-gray-300 dark:border-gray-600 bg-transparent shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border  rounded-md"
                 {...formik.getFieldProps("title")}
               />
               {formik.touched.title && formik.errors.title ? (
@@ -232,7 +243,7 @@ const MetadataEdit = ({ module, addAuthors, setQueryData, setAddAuthors, setIsEd
             <textarea
               rows={8}
               id="description"
-              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-500  bg-gray-300 dark:bg-gray-300 rounded-md"
+              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 dark:border-gray-600 bg-transparent rounded-md"
               {...formik.getFieldProps("description")}
             />
             {formik.touched.description && formik.errors.description ? (
@@ -240,13 +251,23 @@ const MetadataEdit = ({ module, addAuthors, setQueryData, setAddAuthors, setIsEd
             ) : null}
           </div>
         </div>
-        <button
-          type="submit"
-          className="my-2 inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md bg-gray-300 dark:bg-gray-300 text-gray-900 dark:text-gray-900  hover:bg-indigo-300 border border-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          Save
-          <Save32 className="ml-2 -mr-0.5 h-4 w-4" aria-hidden="true" />
-        </button>
+        <div className="px-2 py-2 flex">
+          <button
+            type="submit"
+            className="flex py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
+          >
+            Save changes
+          </button>
+          <button
+            type="button"
+            className="flex mx-2 py-2 px-4 bg-red-50 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
+            onClick={() => {
+              setIsEditing(false)
+            }}
+          >
+            Cancel changes
+          </button>
+        </div>
       </form>
     </div>
   )

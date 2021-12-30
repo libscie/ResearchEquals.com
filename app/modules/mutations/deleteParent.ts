@@ -1,19 +1,13 @@
 import { resolver } from "blitz"
 import db from "db"
 
-export default resolver.pipe(resolver.authorize(), async ({ id, rank, suffix }) => {
-  await db.authorship.update({
-    where: {
-      id,
-    },
+export default resolver.pipe(resolver.authorize(), async ({ currentId, disconnectId }) => {
+  const module = await db.module.update({
+    where: { id: currentId },
     data: {
-      authorshipRank: rank,
-    },
-  })
-
-  const module = await db.module.findFirst({
-    where: {
-      suffix,
+      parents: {
+        disconnect: { id: parseInt(disconnectId) },
+      },
     },
     include: {
       authors: {
