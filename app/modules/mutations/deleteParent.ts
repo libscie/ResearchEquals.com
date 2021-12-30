@@ -1,12 +1,12 @@
 import { resolver } from "blitz"
 import db from "db"
 
-export default resolver.pipe(resolver.authorize(), async ({ currentId, connectId }) => {
+export default resolver.pipe(resolver.authorize(), async ({ currentId, disconnectId }) => {
   const module = await db.module.update({
     where: { id: currentId },
     data: {
       parents: {
-        connect: { id: parseInt(connectId) },
+        disconnect: { id: parseInt(disconnectId) },
       },
     },
     include: {
