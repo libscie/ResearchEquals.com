@@ -8,7 +8,6 @@ import SearchResultWorkspace from "./SearchResultWorkspace"
 import SearchResultModule from "./SearchResultModule"
 import ResearchEqualsLogo from "./ResearchEqualsLogo"
 
-import "@algolia/autocomplete-theme-classic"
 import Autocomplete from "./Autocomplete"
 import NavbarFullwidthMenu from "./NavbarFullwidthMenu"
 import NavbarDropdown from "./NavbarDropdown"
@@ -20,11 +19,10 @@ const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGO
 const Navbar = () => {
   return (
     <>
-      <div className="w-full bg-white dark:bg-gray-900 mx-auto px-4 sm:px-6 lg:px-8 z-50">
+      <div className="w-full bg-white dark:bg-gray-900 mx-auto px-4 sm:px-6 lg:px-8 z-50 border-b dark:border-gray-600 border-gray-100">
         <div className="relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8">
           <div className="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
             <div className="flex-shrink-0 flex items-center my-2">
-              {/* TODO: Replace w logo */}
               <Link href={Routes.Home()}>
                 <a>
                   <ResearchEqualsLogo />
@@ -34,7 +32,8 @@ const Navbar = () => {
           </div>
           <div className="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6">
             <div className="flex items-center px-6 py-4 md:max-w-3xl md:mx-auto lg:max-w-none lg:mx-0 xl:px-0">
-              <div className="w-full">
+              <div className="flex-grow"></div>
+              <div className="w-full xl:w-1/3">
                 <label htmlFor="search" className="sr-only">
                   Search
                 </label>
@@ -91,6 +90,7 @@ const Navbar = () => {
                   ]}
                 />
               </div>
+              <div className="flex-grow"></div>
             </div>
           </div>
           <div className="flex items-center md:absolute md:right-0 md:inset-y-0 lg:hidden">

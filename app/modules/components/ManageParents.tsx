@@ -2,10 +2,15 @@ import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import { CheckIcon, XIcon } from "@heroicons/react/outline"
 import { DragDropContext, Droppable, DroppableProvided } from "react-beautiful-dnd"
-import { useMutation } from "blitz"
+import { Link, Routes, useMutation } from "blitz"
+import { TrashCan24 } from "@carbon/icons-react"
 
 import updateAuthorRank from "../../authorship/mutations/updateAuthorRank"
 import AuthorList from "../../core/components/AuthorList"
+import ModuleCard from "app/core/components/ModuleCard"
+import moment from "moment"
+import deleteParent from "../mutations/deleteParent"
+import toast from "react-hot-toast"
 
 // https://www.npmjs.com/package/array-move
 function arrayMoveMutable(array, fromIndex, toIndex) {
@@ -25,10 +30,11 @@ function arrayMoveImmutable(array, fromIndex, toIndex) {
   return array
 }
 
-const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
-  const [authorState, setAuthorState] = useState(moduleEdit!.authors)
-  const [updateAuthorRankMutation] = useMutation(updateAuthorRank)
+const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
+  const [parentState, setParentState] = useState(moduleEdit!.parents)
+  const [deleteParentMutation] = useMutation(deleteParent)
 
+  console.log(moduleEdit)
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="fixed inset-0 overflow-hidden" onClose={setOpen}>
@@ -50,7 +56,7 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
                   <div className="px-4 sm:px-6">
                     <div className="flex items-start justify-between">
                       <Dialog.Title className="text-lg font-medium text-gray-900 dark:text-white">
-                        Manage authors
+                        Manage parent modules
                       </Dialog.Title>
                       <div className="ml-3 h-7 flex items-center">
                         <button
@@ -70,63 +76,43 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
                     mattis vel, nisi.
                   </div>
                   {/* Replace with your content */}
-                  <DragDropContext
-                    onDragEnd={async (result) => {
-                      const { destination, source, draggableId } = result
-                      // If no destination, do nothing
-                      if (!destination) {
-                        return
-                      }
-                      // If destination and source are equivalent, do nothing
-                      if (
-                        destination.droppableId === source.droppableId &&
-                        destination.index === source.index
-                      ) {
-                        return
-                      }
-                      console.log("It hits here")
-                      // There is a mistake in the updating
-                      console.log(
-                        arrayMoveMutable(moduleEdit!.authors, source.index, destination.index)
-                      )
 
-                      let i = 0
-                      console.log(moduleEdit!.authors)
-                      moduleEdit!.authors.map((author) => {
-                        author.authorshipRank = i
-                        i += 1
-                      })
-
-                      // Update database
-                      console.log(moduleEdit!.authors)
-                      moduleEdit!.authors.map(async (author) => {
-                        const updatedModule = await updateAuthorRankMutation({
-                          id: author.id,
-                          rank: author.authorshipRank,
-                          suffix: moduleEdit!.suffix,
-                        })
-                        console.log(`Updated ${author.id} to rank ${author.authorshipRank}`)
-                        setQueryData(updatedModule!)
-                      })
-                    }}
-                  >
-                    <Droppable droppableId="authors-ranking">
-                      {(provided: DroppableProvided) => (
-                        <ul
-                          className="relative flex-1 divide-y divide-gray-400 dark:divide-gray-600"
-                          ref={provided.innerRef}
-                          {...provided.droppableProps}
-                        >
-                          <AuthorList
-                            authors={moduleEdit.authors}
-                            setAuthorState={setQueryData}
-                            suffix={moduleEdit!.suffix}
-                          />
-                          {provided.placeholder}
-                        </ul>
-                      )}
-                    </Droppable>
-                  </DragDropContext>
+                  <ul className="relative flex-1 divide-y divide-gray-400 dark:divide-gray-600">
+                    {moduleEdit.parents.map((module) => (
+                      <>
+                        <div className="flex">
+                          <button
+                            className="px-2 hover:bg-gray-50 dark:hover:bg-gray-800"
+                            onClick={async () => {
+                              const updatedMod = await deleteParentMutation({
+                                currentId: moduleEdit.id,
+                                disconnectId: module.id,
+                              })
+                              setQueryData(updatedMod)
+                              toast(`Removed parent: ${module.title}`, { icon: "🗑" })
+                              if (updatedMod.parents.length === 0) {
+                                setOpen(false)
+                              }
+                            }}
+                          >
+                            <TrashCan24 className="w-4 h-4 fill-current text-red-500 inline-block align-middle" />
+                          </button>
+                          <Link href={Routes.ModulePage({ suffix: module.suffix })}>
+                            <a target="_blank">
+                              <ModuleCard
+                                type={module.type.name}
+                                title={module.title}
+                                status={`${module.prefix}/${module.suffix}`}
+                                time={moment(module.publishedAt).fromNow()}
+                                timeText="Published"
+                                authors={module.authors}
+                              />
+                            </a>
+                          </Link>
+                        </div>
+                      </>
+                    ))}
+                  </ul>
                   {/* /End replace */}
                   <div className="flex-shrink-0 px-4 py-4 flex justify-end border-t border-gray-400 dark:border-gray-600">
                     <button
@@ -143,15 +129,6 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
                       type="submit"
                       className="flex py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
                       onClick={() => {
-                        // authorState.map(async (author) => {
-                        //   const updatedModule = await updateAuthorRankMutation({
-                        //     id: author.id,
-                        //     rank: author.authorshipRank,
-                        //     suffix: moduleEdit!.suffix,
-                        //   })
-                        //   console.log(`Updated ${author.id} to rank ${author.authorshipRank}`)
-                        //   setQueryData(updatedModule!)
-                        // })
                         setOpen(false)
                       }}
                     >
@@ -169,4 +146,4 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
   )
 }
 
-export default ManageAuthors
+export default ManageParents

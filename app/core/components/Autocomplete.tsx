@@ -1,7 +1,6 @@
 import { autocomplete } from "@algolia/autocomplete-js"
 import React, { createElement, Fragment, useEffect, useRef } from "react"
 import { render } from "react-dom"
-import "@algolia/autocomplete-theme-classic"
 
 function Autocomplete(props) {
   const containerRef = useRef(null)

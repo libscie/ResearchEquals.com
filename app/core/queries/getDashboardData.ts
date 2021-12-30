@@ -94,6 +94,8 @@ export default async function getSignature({ session }) {
     where: {
       id: { not: { in: [session.workspaceId, ...workspace?.following.map((x) => x.id)!] } },
     },
+    take: 5,
+    skip: Math.max(0, Math.floor(Math.random() * workspaces.length) - 5),
   })
 
   return {
