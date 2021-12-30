@@ -8,20 +8,29 @@ export default async function handler(req, res) {
       try {
         // Create Checkout Sessions from body params.
         const session = await stripe.checkout.sessions.create({
-          customer_email: "customer@example.com",
+          customer_email: req.query.email,
           submit_type: "pay",
           billing_address_collection: "auto",
           line_items: [
             {
-              // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-              price: "price_1K98axLmgtJbKHNGBo3BcDFC",
+              price: req.query.price_id,
               quantity: 1,
             },
           ],
           mode: "payment",
           success_url: `${req.headers.origin}/?success=true`,
-          cancel_url: `${req.headers.origin}/?canceled=true`,
+          cancel_url: `${req.headers.origin}/drafts?suffix=${req.query.suffix}`,
           automatic_tax: { enabled: true },
+          payment_intent_data: {
+            metadata: {
+              description: `License fee for ${process.env.DOI_PREFIX}/${req.query.suffix}`,
+              suffix: req.query.suffix,
+              doi: `${process.env.DOI_PREFIX}/${req.query.suffix}`,
+            },
+          },
+          tax_id_collection: {
+            enabled: true,
+          },
         })
         res.redirect(303, session.url)
       } catch (err) {
