@@ -110,7 +110,6 @@ export default function SettingsModal({ button, styling, user, workspace }) {
                       <Tab.Panel key="account-panel" className="">
                         <AccountSettings user={user} setIsOpen={setIsOpen} />
                       </Tab.Panel>
-                      <Tab.Panel key="billing-panel" className="px-2"></Tab.Panel>
                     </Tab.Panels>
                   </Tab.Group>
                 </div>
