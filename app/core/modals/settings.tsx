@@ -10,7 +10,7 @@ function classNames(...classes) {
 
 export default function SettingsModal({ button, styling, user, workspace }) {
   let [isOpen, setIsOpen] = useState(false)
-  let [categories] = useState(["Workspace", "Account", "Billing"])
+  let [categories] = useState(["Workspace", "Account"])
 
   return (
     <>
