@@ -19,6 +19,7 @@ const config: BlitzConfig = {
     ALGOLIA_API_SEARCH_KEY: process.env.ALGOLIA_API_SEARCH_KEY,
     ALGOLIA_PREFIX: process.env.ALGOLIA_PREFIX,
     DOI_PREFIX: process.env.DOI_PREFIX,
+    STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY,
   },
   pageExtensions: ["md", "mdx", "tsx", "ts", "jsx", "js"],
   webpack(config, options) {

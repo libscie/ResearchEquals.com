@@ -60,6 +60,7 @@ export default resolver.pipe(
             authors: {
               include: { workspace: true },
             },
+            type: true,
           },
         }),
     })

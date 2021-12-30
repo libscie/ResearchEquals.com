@@ -4,9 +4,11 @@ import moment from "moment"
 import algoliasearch from "algoliasearch"
 import { z } from "zod"
 import { getAlgoliaResults } from "@algolia/autocomplete-js"
-import { Edit32, EditOff32, Save32 } from "@carbon/icons-react"
+import { Edit24, EditOff24, Save32 } from "@carbon/icons-react"
 import { Prisma } from "prisma"
 import { useFormik } from "formik"
+import { Maximize24, Minimize24 } from "@carbon/icons-react"
+import toast from "react-hot-toast"
 
 import EditMainFile from "./EditMainFile"
 import ManageAuthors from "./ManageAuthors"
@@ -24,11 +26,18 @@ import EditSupportingFileDisplay from "../../core/components/EditSupportingFileD
 import MetadataView from "./MetadataView"
 import AuthorAvatars from "./AuthorAvatars"
 import SearchResultModule from "../../core/components/SearchResultModule"
+import { ArrowNarrowLeftIcon, PlusSmIcon } from "@heroicons/react/solid"
+import AuthorAvatarsNew from "./AuthorAvatarsNew"
+import SearchResultWorkspace from "../../core/components/SearchResultWorkspace"
+import addAuthor from "../mutations/addAuthor"
+import EditMainFileDisplay from "../../core/components/EditMainFileDisplay"
+import MetadataEdit from "./MetadataEdit"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
-const ModuleEdit = ({ user, module, isAuthor }) => {
+const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
   const [isEditing, setIsEditing] = useState(false)
+  const [addAuthors, setAddAuthors] = useState(false)
   const [manageAuthorsOpen, setManageAuthorsOpen] = useState(false)
   const [moduleEdit, { refetch, setQueryData }] = useQuery(
     useCurrentModule,
@@ -43,6 +52,7 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
 
   const [addParentMutation] = useMutation(addParent)
   const [editModuleScreenMutation] = useMutation(editModuleScreen)
+  const [addAuthorMutation] = useMutation(addAuthor)
 
   const formik = useFormik({
     initialValues: {
@@ -80,24 +90,48 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
   }, [moduleEdit])
 
   return (
-    <div className="max-w-4xl mx-auto overflow-y-auto text-base">
+    <div className="p-5 max-w-7xl mx-auto overflow-y-auto text-base">
+      {/* Publish module */}
+      {moduleEdit!.authors.filter((author) => author.readyToPublish !== true).length === 0 &&
+      Object.keys(moduleEdit!.main!).length !== 0 ? (
+        <PublishModuleModal module={moduleEdit} />
+      ) : (
+        <></>
+      )}
       {/* Menu bar */}
       <div className="w-full flex">
+        {inboxOpen ? (
+          <button
+            onClick={() => {
+              setInboxOpen(false)
+            }}
+          >
+            <label className="sr-only">Go full screen</label>
+            <Maximize24 className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600" />
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              setInboxOpen(true)
+            }}
+          >
+            <label className="sr-only">Go full screen</label>
+            <ArrowNarrowLeftIcon className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600" />
+          </button>
+        )}
         {/* Push all menu bars to the right */}
         <div className="flex-grow"></div>
         <div>
-          <span className="inline-block h-full align-middle"> </span>
-
           {isEditing ? (
-            <EditOff32
-              className="inline-block align-middle"
+            <EditOff24
+              className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600"
               onClick={() => {
                 setIsEditing(false)
               }}
             />
           ) : (
-            <Edit32
-              className="inline-block align-middle"
+            <Edit24
+              className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600"
               onClick={() => {
                 setIsEditing(true)
               }}
@@ -107,176 +141,36 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
           {/* <DocumentPdf32 className="inline-block align-middle" /> */}
         </div>
       </div>
-      {/* Last updated */}
-      <div className="text-center ">
-        Last updated: {moment(moduleEdit?.updatedAt).fromNow()} (
-        {moduleEdit?.updatedAt.toISOString()})
-      </div>
-      {/* Parents */}
-      <div className="flex w-full max-h-8 my-2">
-        <span>
-          Follows from:{" "}
-          <span className="bg-gray-200 sgroup-hover:bg-gray-200 ml-auto inline-block py-0.5 px-3 text-xs rounded-full">
-            {moduleEdit?.parents ? moduleEdit?.parents.length : "0"}
-          </span>
-        </span>
-        <Autocomplete
-          className="h-full"
-          openOnFocus={true}
-          defaultActiveItemId="0"
-          getSources={({ query }) => [
-            {
-              sourceId: "products",
-              async onSelect(params) {
-                const { item, setQuery } = params
-                const updatedMod = await addParentMutation({
-                  currentId: moduleEdit?.id,
-                  connectId: item.objectID,
-                })
-                setQueryData(updatedMod)
-              },
-              getItems() {
-                return getAlgoliaResults({
-                  searchClient,
-                  queries: [
-                    {
-                      indexName: `${process.env.ALGOLIA_PREFIX}_modules`,
-                      query,
-                    },
-                  ],
-                })
-              },
-              templates: {
-                item({ item, components }) {
-                  // TODO: Need to update search results per Algolia index
-                  return <SearchResultModule item={item} />
-                },
-              },
-            },
-          ]}
-        />
-      </div>
+
       {/* Display editable form or display content */}
       {isEditing ? (
-        <div className="my-8">
-          <form onSubmit={formik.handleSubmit}>
-            <div className="my-2">
-              <label htmlFor="type" className="sr-only">
-                Module type
-              </label>
-              <select
-                className="rounded my-1 bg-gray-300 dark:bg-gray-300"
-                id="type"
-                {...formik.getFieldProps("type")}
-              >
-                <option value="">--Please choose a module type--</option>
-                {moduleTypes.map((type) => (
-                  <>
-                    <option value={type.id}>{type.name}</option>
-                  </>
-                ))}
-              </select>
-              {formik.touched.type && formik.errors.type ? <div>{formik.errors.type}</div> : null}
-            </div>
-            <div className="my-2">
-              <label htmlFor="title" className="sr-only block text-sm font-medium text-gray-700">
-                Title
-              </label>
-              <div className="mt-1">
-                <textarea
-                  rows={2}
-                  id="title"
-                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-500 bg-gray-300 dark:bg-gray-300 rounded-md"
-                  {...formik.getFieldProps("title")}
-                />
-                {formik.touched.title && formik.errors.title ? (
-                  <div>{formik.errors.title}</div>
-                ) : null}
-              </div>
-            </div>
-            <div className="my-2">
-              <label
-                htmlFor="description"
-                className="sr-only block text-sm font-medium text-gray-700"
-              >
-                Description
-              </label>
-              <div className="mt-1">
-                <textarea
-                  rows={8}
-                  id="description"
-                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-500  bg-gray-300 dark:bg-gray-300 rounded-md"
-                  {...formik.getFieldProps("description")}
-                />
-                {formik.touched.description && formik.errors.description ? (
-                  <div>{formik.errors.description}</div>
-                ) : null}
-              </div>
-            </div>
-            <div className="my-2">
-              <label htmlFor="license" className="sr-only">
-                License
-              </label>
-              <select
-                className="rounded my-1 bg-gray-300 dark:bg-gray-300"
-                id="license"
-                {...formik.getFieldProps("license")}
-              >
-                <option value="">--Please choose a license--</option>
-                {licenses.map((license) => (
-                  <>
-                    <option value={license.id}>
-                      {license.name} ({license.price > 0 ? `${license.price / 100}EUR` : "Free"})
-                    </option>
-                  </>
-                ))}
-              </select>
-              {formik.touched.license && formik.errors.license ? (
-                <div>{formik.errors.license}</div>
-              ) : null}
-            </div>
-            <button
-              type="submit"
-              className="my-2 inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md bg-gray-300 dark:bg-gray-300 text-gray-900 dark:text-gray-900  hover:bg-indigo-300 border border-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Save
-              <Save32 className="ml-2 -mr-0.5 h-4 w-4" aria-hidden="true" />
-            </button>
-          </form>
-        </div>
-      ) : (
-        <MetadataView module={moduleEdit} />
-      )}
-      {/* Authors */}
-      <div className="flex border-t border-b border-gray-800 mt-2 py-2">
-        <div className="flex-grow flex -space-x-2 relative z-0 overflow-hidden">
-          <AuthorAvatars module={module} />
-        </div>
-        <ManageAuthors
-          open={manageAuthorsOpen}
-          setOpen={setManageAuthorsOpen}
-          moduleEdit={moduleEdit}
+        <MetadataEdit
+          module={moduleEdit}
+          addAuthors={addAuthors}
           setQueryData={setQueryData}
+          setAddAuthors={setAddAuthors}
+          setIsEditing={setIsEditing}
         />
-        <button
-          type="button"
-          className="inline-flex items-center h-8  px-6 py-3 border border-transparent  font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          onClick={() => {
-            setManageAuthorsOpen(true)
-          }}
-        >
-          Manage authors
-        </button>
-      </div>
-
-      <div className="my-8">
-        <h2 className="">Main file</h2>
+      ) : (
+        <MetadataView
+          module={moduleEdit}
+          addAuthors={addAuthors}
+          setQueryData={setQueryData}
+          setAddAuthors={setAddAuthors}
+        />
+      )}
+      <div className="my-4">
+        <h2 className="text-xs leading-4 font-semibold text-gray-500 dark:text-gray-200 my-2">
+          Main file
+        </h2>
         <EditMainFile mainFile={mainFile} setQueryData={setQueryData} moduleEdit={moduleEdit} />
       </div>
 
       {/* Supporting files */}
-      <div className="my-8">
-        <h2>Supporting file(s)</h2>
+      <div className="my-3">
+        <h2 className="text-xs leading-4 font-semibold text-gray-500 dark:text-gray-200 my-2">
+          Supporting file(s)
+        </h2>
         {supportingRaw.files.length > 0 ? (
           <>
             {supportingRaw.files.map((file) => (
@@ -297,15 +191,9 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
         )}
         <EditSupportingFiles setQueryData={setQueryData} moduleEdit={moduleEdit} />
       </div>
+
       {/* PLACEHOLDER References */}
       <div className="text-center">
-        {/* Publish module */}
-        {moduleEdit!.authors.filter((author) => author.readyToPublish !== true).length === 0 ? (
-          <PublishModuleModal module={module} />
-        ) : (
-          <></>
-        )}
-        {/* Delete module */}
         <DeleteModuleModal module={module} />
       </div>
     </div>
