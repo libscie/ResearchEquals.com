@@ -27,6 +27,26 @@ export default resolver.pipe(resolver.authorize(), async ({ id, description }) =
       },
       license: true,
       type: true,
+      parents: {
+        include: {
+          type: true,
+          authors: {
+            include: {
+              workspace: true,
+            },
+          },
+        },
+      },
+      children: {
+        include: {
+          type: true,
+          authors: {
+            include: {
+              workspace: true,
+            },
+          },
+        },
+      },
     },
   })
 
