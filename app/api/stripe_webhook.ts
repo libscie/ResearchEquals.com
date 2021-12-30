@@ -1,9 +1,14 @@
 import { BlitzApiRequest, BlitzApiResponse, Ctx } from "blitz"
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
 import db from "db"
+import axios from "axios"
+import convert from "xml-js"
+import FormData from "form-data"
+import { Readable } from "stream"
 
 import moment from "moment"
 import algoliasearch from "algoliasearch"
+import generateCrossRefObject from "../modules/mutations/generateCrossRefObject"
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET
 const datetime = Date.now()
@@ -44,6 +49,63 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
   switch (event.type) {
     // only deal with success
     case "payment_intent.succeeded":
+      const datetime = Date.now()
+      // TODO: Can be simplified along with publishModule.ts
+      const module = await db.module.findFirst({
+        where: {
+          id: parseInt(event.data.object.metadata.module_id),
+        },
+        include: {
+          license: true,
+          type: true,
+          authors: {
+            include: {
+              workspace: true,
+            },
+          },
+        },
+      })
+
+      if (!module!.main) throw Error("Main file is empty")
+
+      const x = generateCrossRefObject({
+        schema: "5.3.1",
+        type: module!.type!.name,
+        title: module!.title,
+        authors: module!.authors!.map((author) => {
+          const js = {
+            name: author.workspace?.name,
+            orcid: author.workspace?.orcid,
+          }
+
+          return js
+        }),
+        citations: [],
+        abstractText: module!.description,
+        license: module!.license!.name,
+        license_url: module!.license!.url,
+        doi: `${module!.prefix}/${module!.suffix}`,
+        resolve_url: `${process.env.APP_ORIGIN}/modules/${module!.suffix}`,
+      })
+
+      const xmlData = convert.js2xml(x)
+      const xmlStream = new Readable()
+      xmlStream._read = () => {}
+      xmlStream.push(xmlData)
+      xmlStream.push(null)
+
+      const form = new FormData()
+      form.append("operation", "doMDUpload")
+      form.append("login_id", process.env.CROSSREF_LOGIN_ID)
+      form.append("login_passwd", process.env.CROSSREF_LOGIN_PASSWD)
+      form.append("fname", xmlStream, {
+        filename: `${module!.suffix}.xml`,
+        contentType: "text/xml",
+        knownLength: (xmlStream as any)._readableState!.length,
+      })
+
+      await axios.post(process.env.CROSSREF_URL!, form, { headers: form.getHeaders() })
+
       const publishedModule = await db.module.update({
         where: {
           id: parseInt(event.data.object.metadata.module_id),

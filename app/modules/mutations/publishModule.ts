@@ -14,6 +14,7 @@ const index = client.initIndex(`${process.env.ALGOLIA_PREFIX}_modules`)
 export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
   const datetime = Date.now()
 
+  // TODO: Can be simplified along with stripe_webhook.ts
   const module = await db.module.findFirst({
     where: {
       id,
