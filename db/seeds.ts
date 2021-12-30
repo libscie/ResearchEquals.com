@@ -12,52 +12,7 @@ import generateSuffix from "../app/modules/mutations/generateSuffix"
  * realistic data.
  */
 const seed = async () => {
-  await db.license.createMany({
-    data: [
-      {
-        url: "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
-        name: "CC0 Public Domain Dedication",
-        price: 0,
-      },
-      {
-        url: "https://creativecommons.org/licenses/by/4.0/legalcode",
-        name: "CC BY 4.0",
-        price: 0,
-      },
-      {
-        url: "https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode",
-        name: "CC BY-NC-ND 4.0",
-        price: 42999,
-      },
-      {
-        url: "https://creativecommons.org/licenses/by-nc-sa/4.0/",
-        name: "CC BY-NC-SA 4.0",
-        price: 32999,
-      },
-      {
-        url: "https://creativecommons.org/licenses/by-nd/4.0/legalcode",
-        name: "CC BY-ND 4.0",
-        price: 24999,
-      },
-      {
-        url: "https://creativecommons.org/licenses/by-nc/4.0/legalcode",
-        name: "CC BY-NC 4.0",
-        price: 19499,
-      },
-      {
-        url: "https://creativecommons.org/licenses/by-sa/4.0/legalcode",
-        name: "CC BY-SA 4.0",
-        price: 14999,
-      },
-      {
-        url: "",
-        name: "All rights reserved",
-        price: 54999,
-      },
-    ],
-    skipDuplicates: true,
-  })
-
+  // Always do this
   await db.moduleType.createMany({
     data: [
       { wikidata: "Q131841", name: "Idea" },
@@ -87,7 +42,117 @@ const seed = async () => {
     skipDuplicates: true,
   })
 
+  // Only do this in production
+  if (process.env.ALGOLIA_PREFIX === "production") {
+    // These are the production licenses (and prices)
+    await db.license.createMany({
+      data: [
+        {
+          url: "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
+          name: "CC0 Public Domain Dedication",
+          price: 0,
+        },
+        {
+          url: "https://creativecommons.org/licenses/by/4.0/legalcode",
+          name: "CC BY 4.0",
+          price: 0,
+        },
+        {
+          url: "https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode",
+          name: "CC BY-NC-ND 4.0",
+          price: 42999,
+          price_id: "price_1KCTCfLmgtJbKHNGKwS8Da2l",
+        },
+        {
+          url: "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+          name: "CC BY-NC-SA 4.0",
+          price: 32999,
+          price_id: "price_1KCTCgLmgtJbKHNGFMFbG3zs",
+        },
+        {
+          url: "https://creativecommons.org/licenses/by-nd/4.0/legalcode",
+          name: "CC BY-ND 4.0",
+          price: 24999,
+          price_id: "price_1KCTCiLmgtJbKHNGdXWdgVY9",
+        },
+        {
+          url: "https://creativecommons.org/licenses/by-nc/4.0/legalcode",
+          name: "CC BY-NC 4.0",
+          price: 19499,
+          price_id: "price_1KCTCjLmgtJbKHNG6G1nkZYe",
+        },
+        {
+          url: "https://creativecommons.org/licenses/by-sa/4.0/legalcode",
+          name: "CC BY-SA 4.0",
+          price: 14999,
+          price_id: "price_1KCTCcLmgtJbKHNGbu2vXiYR",
+        },
+        {
+          url: "",
+          name: "All rights reserved",
+          price: 54999,
+          price_id: "price_1KCTBbLmgtJbKHNGQSZHsNO0",
+        },
+      ],
+      skipDuplicates: true,
+    })
+  }
+
+  // Do this when not in production
   if (process.env.ALGOLIA_PREFIX !== "production") {
+    // These are the test environment prices
+    await db.license.createMany({
+      data: [
+        {
+          url: "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
+          name: "CC0 Public Domain Dedication",
+          price: 0,
+        },
+        {
+          url: "https://creativecommons.org/licenses/by/4.0/legalcode",
+          name: "CC BY 4.0",
+          price: 0,
+        },
+        {
+          url: "https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode",
+          name: "CC BY-NC-ND 4.0",
+          price: 42999,
+          price_id: "price_1KCRaTLmgtJbKHNG9WZlp04W",
+        },
+        {
+          url: "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+          name: "CC BY-NC-SA 4.0",
+          price: 32999,
+          price_id: "price_1KCRaqLmgtJbKHNGoj6TG4BQ",
+        },
+        {
+          url: "https://creativecommons.org/licenses/by-nd/4.0/legalcode",
+          name: "CC BY-ND 4.0",
+          price: 24999,
+          price_id: "price_1KCRbQLmgtJbKHNGQtGY2BtP",
+        },
+        {
+          url: "https://creativecommons.org/licenses/by-nc/4.0/legalcode",
+          name: "CC BY-NC 4.0",
+          price: 19499,
+          price_id: "price_1KCRdCLmgtJbKHNGop8lJ0r5",
+        },
+        {
+          url: "https://creativecommons.org/licenses/by-sa/4.0/legalcode",
+          name: "CC BY-SA 4.0",
+          price: 14999,
+          price_id: "price_1KCMOZLmgtJbKHNGvjMirRp0",
+        },
+        {
+          url: "",
+          name: "All rights reserved",
+          price: 54999,
+          price_id: "price_1KCRbjLmgtJbKHNGLa8TS0aH",
+        },
+      ],
+      skipDuplicates: true,
+    })
+
     for (let index = 0; index < 50; index++) {
       await db.user.create({
         data: {
