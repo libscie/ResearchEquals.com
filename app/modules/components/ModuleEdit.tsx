@@ -142,49 +142,6 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
         </div>
       </div>
 
-      {/* <div className="flex w-full max-h-8 my-2">
-        <span>
-          Follows from:{" "}
-          <span className="bg-gray-200 sgroup-hover:bg-gray-200 ml-auto inline-block py-0.5 px-3 text-xs rounded-full">
-            {moduleEdit?.parents ? moduleEdit?.parents.length : "0"}
-          </span>
-        </span>
-        <Autocomplete
-          className="h-full"
-          openOnFocus={true}
-          defaultActiveItemId="0"
-          getSources={({ query }) => [
-            {
-              sourceId: "products",
-              async onSelect(params) {
-                const { item, setQuery } = params
-                const updatedMod = await addParentMutation({
-                  currentId: moduleEdit?.id,
-                  connectId: item.objectID,
-                })
-                setQueryData(updatedMod)
-              },
-              getItems() {
-                return getAlgoliaResults({
-                  searchClient,
-                  queries: [
-                    {
-                      indexName: `${process.env.ALGOLIA_PREFIX}_modules`,
-                      query,
-                    },
-                  ],
-                })
-              },
-              templates: {
-                item({ item, components }) {
-                  // TODO: Need to update search results per Algolia index
-                  return <SearchResultModule item={item} />
-                },
-              },
-            },
-          ]}
-        />
-      </div> */}
       {/* Display editable form or display content */}
       {isEditing ? (
         <MetadataEdit

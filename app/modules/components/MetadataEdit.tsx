@@ -16,6 +16,7 @@ import { z } from "zod"
 import editModuleScreen from "../mutations/editModuleScreen"
 import getTypes from "../../core/queries/getTypes"
 import getLicenses from "app/core/queries/getLicenses"
+import FollowsFromSearch from "./FollowsFromSearch"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
@@ -95,6 +96,10 @@ const MetadataEdit = ({ module, addAuthors, setQueryData, setAddAuthors, setIsEd
             ) : null}
           </div>
         </div>
+        <div className="py-1 px-2 bg-white dark:bg-gray-800">
+          <FollowsFromSearch module={module} setQueryData={setQueryData} />
+        </div>
+
         <div className="py-4 px-2 min-h-32">
           <p className="text-xs leading-4 font-normal text-gray-500 dark:text-white">
             <label htmlFor="type" className="sr-only">
