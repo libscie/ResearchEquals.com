@@ -11,7 +11,6 @@ export default function PublishModule({ module }) {
   const [publishModuleMutation] = useMutation(publishModule)
   const router = useRouter()
 
-  console.log(module)
   function closeModal() {
     setIsOpen(false)
   }
@@ -77,35 +76,70 @@ export default function PublishModule({ module }) {
                 <Dialog.Title as="h3" className="text-lg font-medium leading-6">
                   Confirm publication
                 </Dialog.Title>
-                <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    Once you publish this module, you cannot delete it. If you chose a restrictive
-                    license, you will be redirected to the payment page to complete the publication.
-                  </p>
-                </div>
-                <div className="mt-4">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center mr-2 py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
-                    onClick={async () => {
-                      try {
-                        await publishModuleMutation({ id: module.id })
-                        router.push(`/modules/${module.suffix}`)
-                      } catch (error) {
-                        toast.error("Module cannot be published. Ensure main file is added.")
-                      }
-                    }}
-                  >
-                    Publish
-                  </button>
-                  <button
-                    type="button"
-                    className="inline-flex justify-center mr-2 py-2 px-4 bg-red-50 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
-                    onClick={closeModal}
-                  >
-                    Cancel
-                  </button>
-                </div>
+                {module.license.price === 0 ? (
+                  <>
+                    <div className="mt-2">
+                      <p className="text-sm text-gray-500">
+                        Once you publish this module, you cannot delete it. You can publish this
+                        module for free.
+                      </p>
+                    </div>
+                    <div className="mt-4">
+                      <button
+                        type="button"
+                        className="inline-flex justify-center mr-2 py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
+                        onClick={async () => {
+                          try {
+                            await publishModuleMutation({ id: module.id })
+                            router.push(`/modules/${module.suffix}`)
+                          } catch (error) {
+                            toast.error("Module cannot be published. Ensure main file is added.")
+                          }
+                        }}
+                      >
+                        Publish
+                      </button>
+                      <button
+                        type="button"
+                        className="inline-flex justify-center mr-2 py-2 px-4 bg-red-50 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
+                        onClick={closeModal}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <form
+                      action={`/api/checkout_sessions?email=test@example.com&price_id=${module.license.price_id}&suffix=${module.suffix}`}
+                      method="POST"
+                    >
+                      <div className="mt-2">
+                        <p className="text-sm text-gray-500">
+                          Once you publish this module, you cannot delete it. Because you chose a{" "}
+                          {module.license.name} license, publishing costs{" "}
+                          {module.license.price / 100} euro.
+                        </p>
+                      </div>
+                      <div className="mt-4">
+                        <button
+                          type="submit"
+                          role="link"
+                          className="inline-flex justify-center mr-2 py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
+                        >
+                          Pay and Publish
+                        </button>
+                        <button
+                          type="button"
+                          className="inline-flex justify-center mr-2 py-2 px-4 bg-red-50 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
+                          onClick={closeModal}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </form>
+                  </>
+                )}
               </div>
             </Transition.Child>
           </div>
