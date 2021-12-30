@@ -1,7 +1,7 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
 
 export default async function handler(req, res) {
-  if (!req.query.email || !req.query.price_id || !req.query.suffix) {
+  if (!req.query.email || !req.query.price_id || !req.query.suffix || !req.query.module_id) {
     res.status(500).end("Incomplete request")
   } else {
     if (req.method === "POST") {
@@ -18,7 +18,7 @@ export default async function handler(req, res) {
             },
           ],
           mode: "payment",
-          success_url: `${req.headers.origin}/?success=true`,
+          success_url: `${req.headers.origin}/modules/${req.query.suffix}?success=true`,
           cancel_url: `${req.headers.origin}/drafts?suffix=${req.query.suffix}`,
           automatic_tax: { enabled: true },
           payment_intent_data: {
@@ -26,6 +26,7 @@ export default async function handler(req, res) {
               description: `License fee for ${process.env.DOI_PREFIX}/${req.query.suffix}`,
               suffix: req.query.suffix,
               doi: `${process.env.DOI_PREFIX}/${req.query.suffix}`,
+              module_id: req.query.module_id,
             },
           },
           tax_id_collection: {

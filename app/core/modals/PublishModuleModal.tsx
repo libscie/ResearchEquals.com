@@ -111,7 +111,7 @@ export default function PublishModule({ module }) {
                 ) : (
                   <>
                     <form
-                      action={`/api/checkout_sessions?email=test@example.com&price_id=${module.license.price_id}&suffix=${module.suffix}`}
+                      action={`/api/checkout_sessions?email=test@example.com&price_id=${module.license.price_id}&suffix=${module.suffix}&module_id=${module.id}`}
                       method="POST"
                     >
                       <div className="mt-2">
