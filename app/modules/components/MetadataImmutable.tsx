@@ -40,7 +40,12 @@ const MetadataImmutable = ({ module }) => {
             </Link>
           </div>
         </div>
-        <ParentChildView module={module} />
+        {module.parents.length > 0 || module.children.lenght > 0 ? (
+          <ParentChildView module={module} />
+        ) : (
+          ""
+        )}
+
         <div className="py-4 px-2 min-h-32">
           <p className="text-xs leading-4 font-normal text-gray-500 dark:text-white">
             {module.type.name}

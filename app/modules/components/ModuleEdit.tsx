@@ -94,7 +94,7 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
       {/* Publish module */}
       {moduleEdit!.authors.filter((author) => author.readyToPublish !== true).length === 0 &&
       Object.keys(moduleEdit!.main!).length !== 0 ? (
-        <PublishModuleModal module={moduleEdit} />
+        <PublishModuleModal module={moduleEdit} user={user} />
       ) : (
         <></>
       )}
@@ -116,7 +116,10 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
             }}
           >
             <label className="sr-only">Go full screen</label>
-            <ArrowNarrowLeftIcon className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600" />
+            <ArrowNarrowLeftIcon
+              className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600"
+              aria-hidden="true"
+            />
           </button>
         )}
         {/* Push all menu bars to the right */}
@@ -128,6 +131,7 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
               onClick={() => {
                 setIsEditing(false)
               }}
+              aria-label="End editing mode without saving"
             />
           ) : (
             <Edit24
@@ -135,6 +139,7 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
               onClick={() => {
                 setIsEditing(true)
               }}
+              aria-label="Start editing mode"
             />
           )}
           {/* <span className="inline-block h-full align-middle"> </span> */}

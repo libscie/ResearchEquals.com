@@ -93,7 +93,10 @@ const HandlePage = ({ workspace }) => {
               <p className="flex my-2 text-sm leading-4 font-normal text-gray-500 dark:text-gray-200">
                 <p>
                   <span className="inline-block h-full align-middle"> </span>
-                  <CalendarIcon className="w-4 h-4 inline-block align-middle mr-1 text-gray-700 dark:text-gray-400" />
+                  <CalendarIcon
+                    className="w-4 h-4 inline-block align-middle mr-1 text-gray-700 dark:text-gray-400"
+                    aria-hidden="true"
+                  />
                   Signed up {moment(workspace.createdAt).fromNow()}
                 </p>
               </p>
@@ -127,7 +130,10 @@ const HandlePage = ({ workspace }) => {
                 <p className="flex my-2 text-sm leading-4 font-normal text-gray-500 dark:text-gray-200">
                   <p>
                     <span className="inline-block h-full align-middle"> </span>
-                    <LinkIcon className="w-4 h-4 inline-block align-middle mr-1 text-gray-700 dark:text-gray-400" />
+                    <LinkIcon
+                      className="w-4 h-4 inline-block align-middle mr-1 text-gray-700 dark:text-gray-400"
+                      aria-hidden="true"
+                    />
                     <Link href={workspace.url}>
                       <a
                         target="_blank"
@@ -147,7 +153,10 @@ const HandlePage = ({ workspace }) => {
                     <p className="flex text-sm leading-4 font-normal text-gray-500 dark:text-gray-200 underline">
                       <p>
                         <span className="inline-block h-full align-middle"> </span>
-                        <UserAddIcon className="w-4 h-4 inline-block align-middle mr-1 text-gray-700 dark:text-gray-400" />
+                        <UserAddIcon
+                          className="w-4 h-4 inline-block align-middle mr-1 text-gray-700 dark:text-gray-400"
+                          aria-hidden="true"
+                        />
                         Following{" "}
                         <Suspense fallback="Loading...">{workspace.following.length}</Suspense>
                       </p>
@@ -208,7 +217,7 @@ const HandleFeed = ({ handle }) => {
   const page = Number(router.query.page) || 0
   const [{ modules, hasMore, count }, { refetch: refetchFeed }] = usePaginatedQuery(getHandleFeed, {
     handle,
-    orderBy: { id: "asc" },
+    orderBy: { publishedAt: "desc" },
     skip: ITEMS_PER_PAGE * page,
     take: ITEMS_PER_PAGE,
   })

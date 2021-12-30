@@ -32,7 +32,10 @@ const DropdownContents = () => {
           <QuickDraft
             buttonText={
               <>
-                <PlusSmIcon className="inline w-4 h-4 fill-current text-indigo-500 dark:text-gray-400" />
+                <PlusSmIcon
+                  className="inline w-4 h-4 fill-current text-indigo-500 dark:text-gray-400"
+                  aria-hidden="true"
+                />
                 Quick Draft
               </>
             }

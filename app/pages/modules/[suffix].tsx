@@ -11,6 +11,7 @@ export async function getServerSideProps(context) {
   const module = await db.module.findFirst({
     where: {
       suffix: context.params.suffix.toLowerCase(),
+      published: true,
     },
     include: {
       parents: {
