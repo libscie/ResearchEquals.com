@@ -24,7 +24,26 @@ export default resolver.pipe(resolver.authorize(), async ({ id, newFiles }) => {
       },
       license: true,
       type: true,
-      parents: true,
+      parents: {
+        include: {
+          type: true,
+          authors: {
+            include: {
+              workspace: true,
+            },
+          },
+        },
+      },
+      children: {
+        include: {
+          type: true,
+          authors: {
+            include: {
+              workspace: true,
+            },
+          },
+        },
+      },
     },
   })
 

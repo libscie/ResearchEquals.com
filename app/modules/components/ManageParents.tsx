@@ -34,7 +34,6 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
   const [parentState, setParentState] = useState(moduleEdit!.parents)
   const [deleteParentMutation] = useMutation(deleteParent)
 
-  console.log(moduleEdit)
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="fixed inset-0 overflow-hidden" onClose={setOpen}>

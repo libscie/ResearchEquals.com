@@ -10,7 +10,7 @@ import { Readable } from "stream"
 const client = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_ADMIN_KEY!)
 const index = client.initIndex(`${process.env.ALGOLIA_PREFIX}_modules`)
 
-export default resolver.pipe(resolver.authorize(), async ({ id, suffix }, ctx) => {
+export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
   const datetime = Date.now()
 
   const module = await db.module.findFirst({

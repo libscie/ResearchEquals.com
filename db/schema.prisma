@@ -53,6 +53,7 @@ model License {
   url       String
   name      String
   price     Int      @default(0)
+  price_id  String?
   Module    Module[]
 
   @@unique([url, name])
