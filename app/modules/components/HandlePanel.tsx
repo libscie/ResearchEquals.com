@@ -82,7 +82,7 @@ const AuthorPanel = ({ buttonText, title, authors }) => {
                             </div>
                             <div className="flex-grow">
                               <span className="inline-block h-full align-middle"></span>
-                              <Link href={Routes.HandlePage({ handle: author.workspace.handle })}>
+                              <Link href={Routes.HandlePage({ handle: author.handle })}>
                                 <a className="text-gray-700 dark:text-gray-200 text-sm leading-4 font-normal my-auto inline-block align-middle">
                                   {author.name}
                                   <p className="text-gray-500 dark:text-gray-400 text-xs leading-4 font-normal">

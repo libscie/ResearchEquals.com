@@ -185,7 +185,6 @@ const FollowHandleButton = ({ workspace }) => {
   const params = useParams()
   const [currentUser] = useQuery(getCurrentUser, null)
   const [ownWorkspace, { refetch }] = useQuery(getCurrentWorkspace, null)
-  console.log(workspace.id)
   return (
     <>
       {ownWorkspace ? (
