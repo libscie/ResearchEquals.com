@@ -13,20 +13,58 @@ generator client {
 // --------------------------------------
 
 model Module {
-  id          Int          @id @default(autoincrement())
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  published   Boolean      @default(false)
-  publishedAt DateTime?
-  suffix      String       @unique
-  title       String       @db.VarChar(300)
-  description String?
-  license     String?
-  type        String
-  main        String
-  authors     Authorship[]
-  parents     Module[]     @relation("ModuleToModule")
-  children    Module[]     @relation("ModuleToModule", references: [id])
+  id             Int       @id @default(autoincrement())
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  published      Boolean   @default(false)
+  publishedAt    DateTime?
+  publishedWhere String?
+  url            String?
+  isbn           String?
+  prefix         String?
+  suffix         String?
+  title          String
+  description    String? // Could rename to abstract/summary
+  license        License?  @relation(fields: [licenseId], references: [id])
+  licenseId      Int?
+
+  type         ModuleType @relation(fields: [moduleTypeId], references: [id])
+  moduleTypeId Int
+
+  main       Json? @default("{}")
+  supporting Json? @default("{\"files\": []}")
+
+  authors    Authorship[]
+  authorsRaw Json?        @default("{}")
+
+  parents  Module[] @relation("ModuleToModule", references: [id])
+  children Module[] @relation("ModuleToModule", references: [id])
+
+  references    Module[] @relation("ModuleReference", references: [id])
+  referencedBy  Module[] @relation("ModuleReference", references: [id])
+  referencesRaw Json?    @default("{}")
+
+  @@unique([prefix, suffix])
+}
+
+model License {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  url       String
+  name      String
+  price     Int      @default(0)
+  price_id  String?
+  Module    Module[]
+
+  @@unique([url, name])
+}
+
+model ModuleType {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  wikidata  String
+  name      String
+  Module    Module[]
 }
 
 model Authorship {
@@ -43,6 +81,8 @@ model Authorship {
   acceptedInvitation Boolean?
   readyToPublish     Boolean  @default(false)
 
+  authorshipRank Int?
+
   @@unique([moduleId, workspaceId])
 }
 
@@ -55,10 +95,13 @@ model Workspace {
   name      String?
   bio       String?
   pronouns  String?  @db.VarChar(20)
+  url       String?
   orcid     String?  @unique
 
   members     Membership[]
   authorships Authorship[]
+  following   Workspace[]  @relation("WorkspaceToWorkspace")
+  followers   Workspace[]  @relation("WorkspaceToWorkspace")
 }
 
 model Membership {
@@ -135,4 +178,10 @@ model Token {
 
 enum TokenType {
   RESET_PASSWORD
+}
+
+model ReleaseList {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  email     String
 }

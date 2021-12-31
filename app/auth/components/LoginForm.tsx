@@ -1,8 +1,8 @@
-import { AuthenticationError, Link, useMutation, Routes } from "blitz"
-import { LabeledTextField } from "app/core/components/LabeledTextField"
-import { Form, FORM_ERROR } from "app/core/components/Form"
+import { AuthenticationError, Link, useMutation, Routes, validateZodSchema } from "blitz"
 import login from "app/auth/mutations/login"
-import { Login } from "app/auth/validations"
+import { useFormik } from "formik"
+import { z } from "zod"
+import ResearchEqualsLogo from "app/core/components/ResearchEqualsLogo"
 
 type LoginFormProps = {
   onSuccess?: () => void
@@ -11,67 +11,97 @@ type LoginFormProps = {
 export const LoginForm = (props: LoginFormProps) => {
   const [loginMutation] = useMutation(login)
 
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validate: validateZodSchema(
+      z.object({
+        email: z.string().email(),
+        password: z.string(),
+      })
+    ),
+    onSubmit: async (values) => {
+      try {
+        await loginMutation(values)
+      } catch (error) {
+        if (error instanceof AuthenticationError) {
+          alert("Sorry, those credentials are invalid")
+        } else {
+          alert(error.toString())
+        }
+      }
+    },
+  })
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <img
-            className="mx-auto h-12 w-auto"
-            src="https://raw.githubusercontent.com/libscie/design/afdb943134244050d2af9e28f4c7c34b32a73e2c/libscie-logomark.svg"
-            alt="Workflow"
-          />
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
-            Sign in to your account
-          </h2>
-        </div>
-        <Form
-          className="m-0"
-          submitText="Login"
-          schema={Login}
-          initialValues={{ email: "", password: "" }}
-          onSubmit={async (values) => {
-            try {
-              await loginMutation(values)
-              props.onSuccess?.()
-            } catch (error) {
-              if (error instanceof AuthenticationError) {
-                return { [FORM_ERROR]: "Sorry, those credentials are invalid" }
-              } else {
-                return {
-                  [FORM_ERROR]:
-                    "Sorry, we had an unexpected error. Please try again. - " + error.toString(),
-                }
-              }
-            }
-          }}
-        >
-          <LabeledTextField
-            className="w-full border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            name="email"
-            placeholder="Email"
-            label="Email address"
-          />
-          <LabeledTextField
-            className="w-full border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            name="password"
-            placeholder="Password"
-            type="password"
-            label="Password"
-          />
-        </Form>
-        <div className="text-sm">
-          <p>
-            <Link href={Routes.ForgotPasswordPage()}>
-              <a className="font-medium text-indigo-600 hover:text-indigo-500">
-                Forgot your password?
-              </a>
-            </Link>
-          </p>
-          <p>
+    <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <ResearchEqualsLogo />
+        <h1 className="mt-6 text-center text-3xl font-extrabold ">Log in to ResearchEquals</h1>
+        <div className="bg-white dark:bg-gray-800 shadow rounded py-4 px-6 my-8  mx-auto">
+          <form onSubmit={formik.handleSubmit}>
+            <div className="my-4">
+              <label
+                htmlFor="email"
+                className=" my-1 block text-sm font-medium text-gray-700 dark:text-gray-100"
+              >
+                Email address
+              </label>
+              <div className="mt-1">
+                <input
+                  id="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 dark:bg-gray-800 dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+                  placeholder="you@email.com"
+                  {...formik.getFieldProps("email")}
+                />
+                {formik.touched.email && formik.errors.email ? (
+                  <div className="font-normal text-sm">{formik.errors.email}</div>
+                ) : null}
+              </div>
+            </div>
+            {/* Password */}
+            <div className="my-4">
+              <label
+                htmlFor="password"
+                className="my-1 block text-sm font-medium text-gray-700 dark:text-gray-100"
+              >
+                Password
+              </label>
+              <div className="">
+                <input
+                  id="password"
+                  type="password"
+                  required
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:text-gray-100 dark:bg-gray-800 dark:border-gray-500"
+                  {...formik.getFieldProps("password")}
+                />
+                {formik.touched.password && formik.errors.password ? (
+                  <div className="font-normal text-sm">{formik.errors.password}</div>
+                ) : null}
+              </div>
+            </div>
+            <div className="text-indigo-600 text-center my-4 font-medium text-sm">
+              <Link href={Routes.ForgotPasswordPage()}>
+                <a>Forgot your password?</a>
+              </Link>
+            </div>
+            <button
+              type="submit"
+              className="w-full px-3 py-2 border text-medium border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Log in
+            </button>
+          </form>
+          <div className="text-gray-900 dark:text-white text-center my-4 font-medium text-sm">
+            Do not have an account?{" "}
             <Link href={Routes.SignupPage()}>
-              <a className="font-medium text-indigo-600 hover:text-indigo-500">Sign up here</a>
+              <a className="text-indigo-600">Sign up</a>
             </Link>
-          </p>
+          </div>
         </div>
       </div>
     </div>

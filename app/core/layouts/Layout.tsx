@@ -1,6 +1,7 @@
 import { ReactNode } from "react"
 import { Head, Link } from "blitz"
 import CookieConsent from "react-cookie-consent"
+import { Toaster } from "react-hot-toast"
 
 type LayoutProps = {
   title?: string
@@ -10,12 +11,14 @@ type LayoutProps = {
 const Layout = ({ title, children }: LayoutProps) => {
   return (
     <>
+      <Toaster position="bottom-center" reverseOrder={false} />
       <Head>
-        <title>{title || "web-app-tbd"}</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>{title || "ResearchEquals"}</title>
+        <link rel="icon" href="/favicon-32.png" />
+        <script data-respect-dnt data-no-cookie async src="https://cdn.splitbee.io/sb.js"></script>
       </Head>
-      <div className="w-screen h-screen bg-white dark:bg-gray-900 text-black dark:text-white">
-        {children}
+      <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+        <div className="flex-grow">{children}</div>
       </div>
       <CookieConsent
         location="bottom"
@@ -39,7 +42,7 @@ const Layout = ({ title, children }: LayoutProps) => {
       >
         We use essential cookies to provide a secure webpage. See also our{" "}
         {/* TODO - Update link */}
-        <Link href="https://www.notion.so/libscie/Terms-libscie-org-6f22bba7d3314ee2915ae4419e55317c#6021cfc8513f44b89aac6d57eea95d11">
+        <Link href="https://www.notion.so/libscie/Terms-researchequals-com-c6a3f7eac4ce4bb2a748c23076acf6e4#8cb6d40e1f8443e0a62ec326e2f819a3">
           <a className="hover:no-underline hover:text-white underline" target="_blank">
             Data policy
           </a>
