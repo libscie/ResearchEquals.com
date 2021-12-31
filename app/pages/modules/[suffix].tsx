@@ -58,7 +58,27 @@ const ModulePage = ({ module }) => {
   const supportingRaw = module!.supporting as Prisma.JsonObject
 
   return (
-    <Layout title={`R=${module.title}`}>
+    <Layout
+      title={`R=${module.title}`}
+      headChildren={
+        <>
+          <meta property="og:title" content={module.title} />
+          <meta property="og:url" content={`https://doi.org/${module.prefix}/${module.suffix}`} />
+          <meta property="og:description" content={module.description} />
+
+          <meta
+            property="og:image"
+            content={`${process.env.APP_ORIGIN}/api/images/modules/${module.suffix}`}
+          />
+          <meta
+            property="og:image:alt"
+            content={`Metadata display of a research module published on ${
+              module.publishedWhere ? module.publishedWhere : "ResearchEquals"
+            }. Type: ${module.type.name}. Title: ${module.title}`}
+          />
+        </>
+      }
+    >
       <NavbarApp />
       <main className="max-w-7xl sm:mx-auto my-4 mx-4">
         <div className="w-full flex">
