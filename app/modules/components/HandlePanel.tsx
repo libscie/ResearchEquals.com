@@ -5,7 +5,7 @@ import UnfollowButton from "app/workspaces/components/UnfollowButton"
 import followWorkspace from "app/workspaces/mutations/followWorkspace"
 import unfollowWorkspace from "app/workspaces/mutations/unfollowWorkspace"
 import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
-import { useMutation, useQuery } from "blitz"
+import { Link, Routes, useMutation, useQuery } from "blitz"
 import { Fragment, useState } from "react"
 import toast from "react-hot-toast"
 
@@ -82,12 +82,14 @@ const AuthorPanel = ({ buttonText, title, authors }) => {
                             </div>
                             <div className="flex-grow">
                               <span className="inline-block h-full align-middle"></span>
-                              <p className="text-gray-700 dark:text-gray-200 text-sm leading-4 font-normal my-auto inline-block align-middle">
-                                {author.name}
-                                <p className="text-gray-500 dark:text-gray-400 text-xs leading-4 font-normal">
-                                  @{author.handle}
-                                </p>
-                              </p>
+                              <Link href={Routes.HandlePage({ handle: author.handle })}>
+                                <a className="text-gray-700 dark:text-gray-200 text-sm leading-4 font-normal my-auto inline-block align-middle">
+                                  {author.name}
+                                  <p className="text-gray-500 dark:text-gray-400 text-xs leading-4 font-normal">
+                                    @{author.handle}
+                                  </p>
+                                </a>
+                              </Link>
                             </div>
                             {ownWorkspace!.handle === author.handle ? (
                               ""
