@@ -2,7 +2,7 @@ import { BlitzApiRequest, BlitzApiResponse } from "blitz"
 import puppeteer from "puppeteer"
 
 const handler = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
-  const browser = await puppeteer.launch()
+  const browser = await puppeteer.launch({ args: ["--no-sandbox"] })
   const page = await browser.newPage()
   await page.setViewport({
     width: 1200,
