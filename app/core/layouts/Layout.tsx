@@ -1,7 +1,18 @@
-import { ReactNode } from "react"
+import { ReactNode, useEffect } from "react"
 import { Head, Link } from "blitz"
-import CookieConsent from "react-cookie-consent"
+import CookieConsent, { Cookies, getCookieConsentValue } from "react-cookie-consent"
 import { Toaster } from "react-hot-toast"
+import Chatra from "@chatra/chatra"
+
+let config = {
+  setup: {
+    colors: {
+      buttonText: "#fff",
+      buttonBg: "#574cfa",
+    },
+  },
+  ID: "vZo7KBf3WqmQPPasZ",
+}
 
 type LayoutProps = {
   title?: string
@@ -9,6 +20,12 @@ type LayoutProps = {
 }
 
 const Layout = ({ title, children }: LayoutProps) => {
+  useEffect(() => {
+    if (getCookieConsentValue("web-app-tbd-website-cookie")) {
+      Chatra("init", config)
+    }
+  }, [])
+
   return (
     <>
       <Toaster position="bottom-center" reverseOrder={false} />
@@ -23,25 +40,32 @@ const Layout = ({ title, children }: LayoutProps) => {
       <CookieConsent
         location="bottom"
         style={{
-          background: "#574cfa",
+          background: "#4f46e5",
           fontSize: "1rem",
           left: "50",
           maxWidth: "100%",
         }}
-        buttonText="Got it"
+        buttonText="Accept"
+        declineButtonText="Decline"
         cookieName="web-app-tbd-website-cookie"
         buttonStyle={{
-          backgroundColor: "#2c2683",
+          backgroundColor: "#059669",
+          color: "#fff",
+          fontSize: "1rem",
+        }}
+        declineButtonStyle={{
+          backgroundColor: "#db2777",
           color: "#fff",
           fontSize: "1rem",
         }}
         expires={150}
         onAccept={() => {
-          console.log("Cookies acknowledged")
+          Chatra("init", config)
         }}
+        enableDeclineButton
       >
-        We use essential cookies to provide a secure webpage. See also our{" "}
-        {/* TODO - Update link */}
+        Essential cookies are required for security purposes. Optional cookies for live chat can be
+        declined or accepted. See also our{" "}
         <Link href="https://www.notion.so/libscie/Terms-researchequals-com-c6a3f7eac4ce4bb2a748c23076acf6e4#8cb6d40e1f8443e0a62ec326e2f819a3">
           <a className="hover:no-underline hover:text-white underline" target="_blank">
             Data policy
