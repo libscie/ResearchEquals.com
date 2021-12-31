@@ -6,7 +6,7 @@ import axios from "axios"
 import convert from "xml-js"
 import FormData from "form-data"
 import { Readable } from "stream"
-import generateCrossRefObject from "./generateCrossRefObject"
+import generateCrossRefObject from "../../core/crossref/generateCrossRefObject"
 
 const client = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_ADMIN_KEY!)
 const index = client.initIndex(`${process.env.ALGOLIA_PREFIX}_modules`)

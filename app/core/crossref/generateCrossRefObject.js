@@ -1,5 +1,5 @@
-import head from "../../core/crossref/head"
-import body from "../../core/crossref/body"
+import head from "./head"
+import body from "./body"
 
 const generateCrossRef = ({
   schema,
