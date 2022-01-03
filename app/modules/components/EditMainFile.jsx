@@ -10,7 +10,7 @@ import { fileSizeLimit, fileTypeLimit } from "../../core/utils/fileTypeLimit"
 
 const validators = [fileTypeLimit, fileSizeLimit]
 
-const EditMainFile = ({ mainFile, setQueryData, moduleEdit }) => {
+const EditMainFile = ({ mainFile, setQueryData, moduleEdit, user, workspace }) => {
   const [uploadSecret] = useQuery(getSignature, undefined)
   const widgetApi = useRef()
   const [addMainMutation] = useMutation(addMain)
@@ -26,7 +26,7 @@ const EditMainFile = ({ mainFile, setQueryData, moduleEdit }) => {
           moduleId={moduleEdit.id}
           setQueryData={setQueryData}
         />
-      ) : (
+      ) : user.emailIsVerified && workspace.orcid ? (
         <>
           <button
             type="button"
@@ -59,6 +59,10 @@ const EditMainFile = ({ mainFile, setQueryData, moduleEdit }) => {
             />
           </button>
         </>
+      ) : (
+        <p className="text-xs leading-4 font-normal text-gray-900 dark:text-gray-200 my-2">
+          Please verify email and connect your ORCID to upload files.
+        </p>
       )}
     </>
   )
