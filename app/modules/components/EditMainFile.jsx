@@ -6,6 +6,9 @@ import getSignature from "../../auth/queries/getSignature"
 import addMain from "../mutations/addMain"
 import EditMainFileDisplay from "../../core/components/EditMainFileDisplay"
 import { PlusSmIcon } from "@heroicons/react/solid"
+import { fileSizeLimit, fileTypeLimit } from "../../core/utils/fileTypeLimit"
+
+const validators = [fileTypeLimit, fileSizeLimit]
 
 const EditMainFile = ({ mainFile, setQueryData, moduleEdit }) => {
   const [uploadSecret] = useQuery(getSignature, undefined)
@@ -39,6 +42,7 @@ const EditMainFile = ({ mainFile, setQueryData, moduleEdit }) => {
               // secureExpire={uploadSecret.expire}
               ref={widgetApi}
               previewStep
+              validators={validators}
               clearable
               onChange={async (info) => {
                 try {

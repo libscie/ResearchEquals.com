@@ -7,6 +7,9 @@ import { PlusSmIcon } from "@heroicons/react/solid"
 import getSignature from "../../auth/queries/getSignature"
 import addSupporting from "../mutations/addSupporting"
 import getSupportingFiles from "../mutations/getSupportingFiles"
+import { fileSizeLimit, fileTypeLimit } from "../../core/utils/fileTypeLimit"
+
+const validators = [fileTypeLimit, fileSizeLimit]
 
 const EditSupportingFiles = ({ setQueryData, moduleEdit }) => {
   const [uploadSecret] = useQuery(getSignature, undefined)
@@ -43,6 +46,7 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit }) => {
             // secureSignature={uploadSecret.signature}
             // secureExpire={uploadSecret.expire}
             ref={widgetApi}
+            validators={validators}
             previewStep
             multiple
             multipleMax={10}
@@ -55,6 +59,7 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit }) => {
             // secureSignature={uploadSecret.signature}
             // secureExpire={uploadSecret.expire}
             ref={widgetApi}
+            validators={validators}
             previewStep
             multiple
             multipleMax={10}
