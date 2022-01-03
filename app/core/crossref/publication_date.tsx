@@ -1,6 +1,9 @@
 const publication_date = () => {
   const datetime = Date.now()
   const dateObject = new Date(datetime)
+  // Months are zero-indexed, so adding one for accurate deposit
+  // 11 = december by default
+  const month = dateObject.getUTCMonth() + 1
 
   const js = {
     // https://data.crossref.org/reports/help/schema_doc/4.4.2/schema_4_4_2.html#publication_date
@@ -16,7 +19,7 @@ const publication_date = () => {
         elements: [
           {
             type: "text",
-            text: dateObject.getUTCDay().toString().padStart(2, "0"),
+            text: dateObject.getUTCDate().toString().padStart(2, "0"),
           },
         ],
       },
@@ -26,7 +29,7 @@ const publication_date = () => {
         elements: [
           {
             type: "text",
-            text: dateObject.getUTCMonth().toString().padStart(2, "0"),
+            text: month.toString().padStart(2, "0"),
           },
         ],
       },
