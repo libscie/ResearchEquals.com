@@ -1,5 +1,5 @@
 {
-  "name": "web-app-tbd",
+  "name": "researchequals",
   "version": "1.0.0",
   "engines": {
     "node": "16.x"
@@ -30,6 +30,7 @@
   "dependencies": {
     "@algolia/autocomplete-js": "1.4.0",
     "@carbon/icons-react": "10.41.0",
+    "@chatra/chatra": "1.0.3",
     "@floating-ui/dom": "0.1.7",
     "@headlessui/react": "1.4.0",
     "@heroicons/react": "1.0.4",
