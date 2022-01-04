@@ -9,6 +9,7 @@ import { Prisma } from "prisma"
 import { useFormik } from "formik"
 import { Maximize24, Minimize24 } from "@carbon/icons-react"
 import toast from "react-hot-toast"
+import router from "next/router"
 
 import EditMainFile from "./EditMainFile"
 import ManageAuthors from "./ManageAuthors"
@@ -33,6 +34,7 @@ import addAuthor from "../mutations/addAuthor"
 import EditMainFileDisplay from "../../core/components/EditMainFileDisplay"
 import MetadataEdit from "./MetadataEdit"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
+import addReference from "../mutations/addReference"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
@@ -53,7 +55,7 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
   const mainFile = moduleEdit!.main as Prisma.JsonObject
   const supportingRaw = moduleEdit!.supporting as Prisma.JsonObject
 
-  const [addParentMutation] = useMutation(addParent)
+  const [addReferenceMutation] = useMutation(addReference)
   const [editModuleScreenMutation] = useMutation(editModuleScreen)
   const [addAuthorMutation] = useMutation(addAuthor)
 
@@ -212,6 +214,64 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
       </div>
 
       {/* PLACEHOLDER References */}
+      <div className="my-3">
+        <h2 className="text-xs leading-4 font-semibold text-gray-500 dark:text-gray-200 my-2">
+          Reference list
+        </h2>
+        <label htmlFor="search" className="sr-only">
+          Search references
+        </label>
+        <Autocomplete
+          className="h-full"
+          openOnFocus={true}
+          defaultActiveItemId="0"
+          getSources={({ query }) => [
+            {
+              sourceId: "products",
+              async onSelect(params) {
+                const { item, setQuery } = params
+                if (item.suffix) {
+                  // TODO: Add reference
+                  const updatedModule = await addReferenceMutation({
+                    currentId: moduleEdit?.id,
+                    connectId: item.objectID,
+                  })
+
+                  setQueryData(updatedModule)
+                }
+              },
+              getItems() {
+                return getAlgoliaResults({
+                  searchClient,
+                  queries: [
+                    {
+                      indexName: `${process.env.ALGOLIA_PREFIX}_modules`,
+                      query,
+                    },
+                  ],
+                })
+              },
+              templates: {
+                item({ item, components }) {
+                  return (
+                    <>
+                      {item.__autocomplete_indexName.match(/_modules/g) ? (
+                        <SearchResultModule item={item} />
+                      ) : (
+                        ""
+                      )}
+                    </>
+                  )
+                },
+              },
+            },
+          ]}
+        />
+        {/* {moduleEdit?.references!.map((reference) => (
+          <>{reference.title}</>
+        ))}
+        {JSON.stringify(moduleEdit)} */}
+      </div>
       <div className="text-center">
         <DeleteModuleModal module={module} />
       </div>
