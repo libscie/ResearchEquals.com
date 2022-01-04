@@ -41,7 +41,7 @@ const MetadataImmutable = ({ module }) => {
             </Link>
           </div>
         </div>
-        {module.parents.length > 0 || module.children.lenght > 0 ? (
+        {module.parents.length > 0 || module.children.length > 0 ? (
           <ParentChildView module={module} />
         ) : (
           ""

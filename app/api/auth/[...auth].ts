@@ -23,23 +23,28 @@ export default passportAuth(({ ctx, req, res }) => ({
         async function (accessToken, refreshToken, params, profile, done) {
           // TODO add a way for the user to know when this fails
           // EG when another account is already linked to the orcid
-          const workspace = await db.workspace.update({
-            where: {
-              id: ctx.session.$publicData.workspaceId,
-            },
-            data: {
-              name: params.name,
-              orcid: params.orcid,
-            },
-          })
+          try {
+            const workspace = await db.workspace.update({
+              where: {
+                id: ctx.session.$publicData.workspaceId,
+              },
+              data: {
+                name: params.name,
+                orcid: params.orcid,
+              },
+            })
 
-          await index.partialUpdateObjects([
-            {
-              objectID: workspace.id,
-              name: params.name,
-              orcid: params.orcid,
-            },
-          ])
+            await index.partialUpdateObjects([
+              {
+                objectID: workspace.id,
+                name: params.name,
+                orcid: params.orcid,
+              },
+            ])
+          } catch (e) {
+            // TODO: Could improve the situation by adding an error state upon going back to dashboard
+            console.log(e)
+          }
 
           return done(null, { publicData: ctx.session.$publicData })
         }

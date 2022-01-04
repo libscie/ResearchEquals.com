@@ -15,6 +15,9 @@ export async function getServerSideProps(context) {
     },
     include: {
       parents: {
+        where: {
+          published: true,
+        },
         include: {
           type: true,
           authors: {
@@ -25,6 +28,9 @@ export async function getServerSideProps(context) {
         },
       },
       children: {
+        where: {
+          published: true,
+        },
         include: {
           type: true,
           authors: {

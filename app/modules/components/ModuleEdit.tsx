@@ -32,12 +32,15 @@ import SearchResultWorkspace from "../../core/components/SearchResultWorkspace"
 import addAuthor from "../mutations/addAuthor"
 import EditMainFileDisplay from "../../core/components/EditMainFileDisplay"
 import MetadataEdit from "./MetadataEdit"
+import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
 const ModuleEdit = ({ user, workspace, module, isAuthor, setInboxOpen, inboxOpen }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [addAuthors, setAddAuthors] = useState(false)
+  const currentWorkspace = useCurrentWorkspace()
+
   const [manageAuthorsOpen, setManageAuthorsOpen] = useState(false)
   const [moduleEdit, { refetch, setQueryData }] = useQuery(
     useCurrentModule,
@@ -168,7 +171,13 @@ const ModuleEdit = ({ user, workspace, module, isAuthor, setInboxOpen, inboxOpen
         <h2 className="text-xs leading-4 font-semibold text-gray-500 dark:text-gray-200 my-2">
           Main file
         </h2>
-        <EditMainFile mainFile={mainFile} setQueryData={setQueryData} moduleEdit={moduleEdit} />
+        <EditMainFile
+          mainFile={mainFile}
+          setQueryData={setQueryData}
+          moduleEdit={moduleEdit}
+          user={user}
+          workspace={currentWorkspace}
+        />
       </div>
 
       {/* Supporting files */}
@@ -194,7 +203,12 @@ const ModuleEdit = ({ user, workspace, module, isAuthor, setInboxOpen, inboxOpen
         ) : (
           <></>
         )}
-        <EditSupportingFiles setQueryData={setQueryData} moduleEdit={moduleEdit} />
+        <EditSupportingFiles
+          setQueryData={setQueryData}
+          moduleEdit={moduleEdit}
+          user={user}
+          workspace={currentWorkspace}
+        />
       </div>
 
       {/* PLACEHOLDER References */}

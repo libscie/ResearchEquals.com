@@ -29,6 +29,10 @@ const DraftsContents = ({}) => {
     if (query.suffix) {
       setModule(drafts.filter((draft) => draft.suffix === query.suffix)[0])
     }
+
+    if (drafts.length === 0) {
+      setInboxOpen(false)
+    }
   }, [])
 
   return (
@@ -66,28 +70,43 @@ const DraftsContents = ({}) => {
           ))}
         </ul>
       </div>
-      <div className={`${inboxOpen ? "hidden lg:inline" : "inline"} flex-grow w-2/3`}>
-        {currentModule ? (
-          <Suspense
-            fallback={
-              <div className="mx-auto my-auto">
-                <ProgressBarRound32 className="animate-spin text-white dark:text-white" />
-              </div>
-            }
-          >
-            <ModuleEdit
-              user={user}
-              workspace={currentWorkspace}
-              module={currentModule}
-              isAuthor={true}
-              inboxOpen={inboxOpen}
-              setInboxOpen={setInboxOpen}
-            />
-          </Suspense>
-        ) : (
-          ""
-        )}
-      </div>
+      {drafts.length > 0 ? (
+        <>
+          <div className={`${inboxOpen ? "hidden lg:inline" : "inline"} flex-grow w-2/3`}>
+            {currentModule ? (
+              <Suspense
+                fallback={
+                  <div className="mx-auto my-auto">
+                    <ProgressBarRound32 className="animate-spin text-white dark:text-white" />
+                  </div>
+                }
+              >
+                <ModuleEdit
+                  user={user}
+                  module={currentModule}
+                  isAuthor={true}
+                  inboxOpen={inboxOpen}
+                  setInboxOpen={setInboxOpen}
+                />
+              </Suspense>
+            ) : (
+              ""
+            )}
+          </div>{" "}
+        </>
+      ) : (
+        <div className="flex flex-col flex-grow relative w-full border-2 border-gray-100 border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500  my-4 mx-4">
+          <div className="table flex-grow w-full h-full">
+            <div className="sm:table-cell w-1/4 h-28"></div>
+            <span className="mx-auto table-cell align-middle text-sm leading-4 font-medium">
+              <>
+                <div>No drafts left. Maybe start a new one?</div>
+              </>
+            </span>
+            <div className="hidden sm:table-cell w-1/4"></div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
