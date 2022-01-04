@@ -8,6 +8,11 @@ export default async function getCurrentWorkspace(_ = null, { session }: Ctx) {
     where: { id: session.workspaceId },
     include: {
       following: true,
+      authorships: {
+        include: {
+          module: true,
+        },
+      },
     },
   })
 
