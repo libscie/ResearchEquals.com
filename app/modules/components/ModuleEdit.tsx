@@ -35,7 +35,7 @@ import MetadataEdit from "./MetadataEdit"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
-const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
+const ModuleEdit = ({ user, workspace, module, isAuthor, setInboxOpen, inboxOpen }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [addAuthors, setAddAuthors] = useState(false)
   const [manageAuthorsOpen, setManageAuthorsOpen] = useState(false)
@@ -94,7 +94,7 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
       {/* Publish module */}
       {moduleEdit!.authors.filter((author) => author.readyToPublish !== true).length === 0 &&
       Object.keys(moduleEdit!.main!).length !== 0 ? (
-        <PublishModuleModal module={moduleEdit} user={user} />
+        <PublishModuleModal module={moduleEdit} user={user} workspace={workspace} />
       ) : (
         <></>
       )}
