@@ -68,7 +68,7 @@ export default function DeleteModule({ module }) {
                     className="inline-flex mr-2 py-2 px-4 bg-red-50 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
                     onClick={async () => {
                       await deleteModuleMutation({ id: module.id })
-                      router.push("/dashboard")
+                      router.push("/drafts")
                     }}
                   >
                     Delete

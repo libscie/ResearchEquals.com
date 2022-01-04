@@ -38,6 +38,10 @@ const Invitations = () => {
     if (query.suffix) {
       setModule(invitations.filter((invite) => invite.suffix === query.suffix)[0])
     }
+
+    if (invitations.length === 0) {
+      setInboxOpen(false)
+    }
   }, [])
 
   return (
@@ -75,29 +79,45 @@ const Invitations = () => {
           ))}
         </ul>
       </div>
-      <div className={`${inboxOpen ? "hidden lg:inline" : "inline"} flex-grow w-2/3`}>
-        {currentModule ? (
-          <Suspense
-            fallback={
-              <div className="mx-auto my-auto">
-                <ProgressBarRound32 className="animate-spin text-white dark:text-white" />
-              </div>
-            }
-          >
-            <ModuleInvitation
-              user={user}
-              module={currentModule}
-              setModule={setModule}
-              workspace={currentWorkspace}
-              isAuthor={true}
-              inboxOpen={inboxOpen}
-              setInboxOpen={setInboxOpen}
-            />
-          </Suspense>
-        ) : (
-          ""
-        )}
-      </div>
+      {invitations.length > 0 ? (
+        <>
+          <div className={`${inboxOpen ? "hidden lg:inline" : "inline"} flex-grow w-2/3`}>
+            {currentModule ? (
+              <Suspense
+                fallback={
+                  <div className="mx-auto my-auto">
+                    <ProgressBarRound32 className="animate-spin text-white dark:text-white" />
+                  </div>
+                }
+              >
+                <ModuleInvitation
+                  user={user}
+                  module={currentModule}
+                  setModule={setModule}
+                  workspace={currentWorkspace}
+                  isAuthor={true}
+                  inboxOpen={inboxOpen}
+                  setInboxOpen={setInboxOpen}
+                />
+              </Suspense>
+            ) : (
+              ""
+            )}
+          </div>
+        </>
+      ) : (
+        <div className="flex flex-col flex-grow relative w-full border-2 border-gray-100 border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500  my-4 mx-4">
+          <div className="table flex-grow w-full h-full">
+            <div className="sm:table-cell w-1/4 h-28"></div>
+            <span className="mx-auto table-cell align-middle text-sm leading-4 font-medium">
+              <>
+                <div>No invitations left. Maybe start your own module?</div>
+              </>
+            </span>
+            <div className="hidden sm:table-cell w-1/4"></div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
