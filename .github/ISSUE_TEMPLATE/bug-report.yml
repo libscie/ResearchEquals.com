@@ -1,0 +1,50 @@
+name: Bug report
+description: File a bug report in a few simple steps.
+title: "[Bug 🐞] "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Also tell us, what would you prefer to happen?
+      placeholder: Tell us what you see!
+      value: "A bug happened! 🐞"
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: url
+      description: Where did you find this bug? (URL)
+    validations:
+      required: true
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: What browser did you use?
+      multiple: true
+      options:
+        - Firefox
+        - Chrome
+        - Safari
+        - Microsoft Edge
+        - Opera
+        - Other (please specify)
+  - type: markdown
+    id: screenshot
+    attributes:
+      label: Screenshot(s) / screen recording
+      description: Please provide us with some screenshots or a screen recording to help understand the issue. Note that GitHub limits recordings to 10MB.
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: I agree to follow the [Code of Conduct](https://libscie.notion.site/Code-of-Conduct-580ab64832a2478fad7d9dfad9d3da15)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
