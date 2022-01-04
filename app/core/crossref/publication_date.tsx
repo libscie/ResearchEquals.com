@@ -19,7 +19,7 @@ const publication_date = () => {
         elements: [
           {
             type: "text",
-            text: dateObject.getUTCDate().toString().padStart(2, "0"),
+            text: month.toString().padStart(2, "0"),
           },
         ],
       },
@@ -29,7 +29,7 @@ const publication_date = () => {
         elements: [
           {
             type: "text",
-            text: month.toString().padStart(2, "0"),
+            text: dateObject.getUTCDate().toString().padStart(2, "0"),
           },
         ],
       },
