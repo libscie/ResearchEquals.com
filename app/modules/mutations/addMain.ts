@@ -11,6 +11,11 @@ export default resolver.pipe(resolver.authorize(), async ({ id, json }) => {
   const updatedModule = await db.module.findFirst({
     where: { id },
     include: {
+      references: {
+        orderBy: {
+          title: "asc",
+        },
+      },
       authors: {
         include: {
           workspace: true,

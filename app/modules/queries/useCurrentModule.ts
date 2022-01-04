@@ -4,6 +4,11 @@ export default async function getCurrentWorkspace({ suffix }) {
   const module = await db.module.findFirst({
     where: { suffix },
     include: {
+      references: {
+        orderBy: {
+          title: "asc",
+        },
+      },
       authors: {
         orderBy: {
           authorshipRank: "asc",

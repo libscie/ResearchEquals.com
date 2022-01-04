@@ -17,6 +17,11 @@ export default resolver.pipe(resolver.authorize(), async ({ id, newFiles }) => {
     where: { id },
     data: { supporting: supportingFiles as Prisma.JsonObject },
     include: {
+      references: {
+        orderBy: {
+          title: "asc",
+        },
+      },
       authors: {
         include: {
           workspace: true,

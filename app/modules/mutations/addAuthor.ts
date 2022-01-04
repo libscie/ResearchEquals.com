@@ -18,6 +18,11 @@ export default resolver.pipe(
         },
       },
       include: {
+        references: {
+          orderBy: {
+            title: "asc",
+          },
+        },
         authors: {
           include: {
             workspace: true,
