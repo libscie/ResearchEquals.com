@@ -1,4 +1,4 @@
-import { useQuery, useMutation, Link, validateZodSchema } from "blitz"
+import { useQuery, useMutation, Link, validateZodSchema, Routes } from "blitz"
 import { useState, useEffect } from "react"
 import moment from "moment"
 import algoliasearch from "algoliasearch"
@@ -317,8 +317,13 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
                 </button>
                 {reference.authors ? (
                   <>
-                    {reference.authors.map((author) => (
-                      <>{author!.workspace!.name}</>
+                    {reference.authors.map((author, index) => (
+                      <>
+                        <Link href={Routes.HandlePage({ handle: author!.workspace!.handle })}>
+                          <a target="_blank">{author!.workspace!.name}</a>
+                        </Link>
+                        {index === reference.authors.length - 1 ? "" : ", "}
+                      </>
                     ))}
                   </>
                 ) : (
