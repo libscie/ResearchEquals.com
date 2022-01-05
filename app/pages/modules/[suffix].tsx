@@ -12,6 +12,7 @@ export async function getServerSideProps(context) {
     where: {
       suffix: context.params.suffix.toLowerCase(),
       published: true,
+      prefix: "10.53962",
     },
     include: {
       parents: {
