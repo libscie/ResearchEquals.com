@@ -36,6 +36,7 @@ import MetadataEdit from "./MetadataEdit"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import addReference from "../mutations/addReference"
 import createReferenceModule from "../mutations/createReferenceModule"
+import deleteReference from "../mutations/deleteReference"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
@@ -57,6 +58,7 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
   const supportingRaw = moduleEdit!.supporting as Prisma.JsonObject
 
   const [addReferenceMutation] = useMutation(addReference)
+  const [deleteReferenceMutation] = useMutation(deleteReference)
   const [createReferenceMutation] = useMutation(createReferenceModule)
   const [editModuleScreenMutation] = useMutation(editModuleScreen)
   const [addAuthorMutation] = useMutation(addAuthor)
@@ -303,12 +305,30 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
                   <TrashCan24
                     className="w-6 h-6 fill-current text-red-500 inline-block align-middle"
                     onClick={async () => {
-                      alert(`delete ${reference.title}`)
+                      const updatedModule = await deleteReferenceMutation({
+                        currentId: moduleEdit?.id,
+                        disconnectId: reference.id,
+                      })
+
+                      setQueryData(updatedModule)
                     }}
                     aria-label="Delete reference"
                   />
                 </button>
-                {reference.title}
+                {reference.authors ? (
+                  <>
+                    {reference.authors.map((author) => (
+                      <>{author!.workspace!.name}</>
+                    ))}
+                  </>
+                ) : (
+                  "no"
+                )}{" "}
+                ({reference.publishedAt?.toISOString().substr(0, 10)}). {reference.title}.{" "}
+                <Link href={reference.url!}>
+                  <a target="_blank underline">{reference.url}</a>
+                </Link>
+                . <span className="italic">{reference.publishedWhere}</span>
               </li>
             </>
           ))}
