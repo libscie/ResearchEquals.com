@@ -6,10 +6,12 @@ import publishModule from "../../modules/mutations/publishModule"
 import toast from "react-hot-toast"
 import { CheckCircleIcon } from "@heroicons/react/outline"
 
-export default function PublishModule({ module, user }) {
+export default function PublishModule({ module, user, workspace }) {
   let [isOpen, setIsOpen] = useState(false)
   const [publishModuleMutation] = useMutation(publishModule)
   const router = useRouter()
+  const publishCount =
+    workspace.authorships.filter((authorship) => authorship.module.published).length + 1
 
   function closeModal() {
     setIsOpen(false)
@@ -87,6 +89,7 @@ export default function PublishModule({ module, user }) {
                     <div className="mt-4">
                       <button
                         type="button"
+                        data-splitbee-event={`Publish module ${publishCount}`}
                         className="inline-flex justify-center mr-2 py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
                         onClick={async () => {
                           try {
@@ -129,6 +132,7 @@ export default function PublishModule({ module, user }) {
                         <button
                           type="submit"
                           role="link"
+                          data-splitbee-event={`Publish module ${publishCount}`}
                           className="inline-flex justify-center mr-2 py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
                         >
                           Pay and Publish

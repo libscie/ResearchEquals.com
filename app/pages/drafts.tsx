@@ -12,8 +12,11 @@ import ModuleEdit from "../modules/components/ModuleEdit"
 import { useCurrentUser } from "../core/hooks/useCurrentUser"
 import ModuleCard from "../core/components/ModuleCard"
 import { useMediaPredicate } from "react-media-hook"
+import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 
-const DraftsContents = () => {
+const DraftsContents = ({}) => {
+  const currentWorkspace = useCurrentWorkspace()
+
   const session = useSession()
   const [currentModule, setModule] = useState<any>(undefined)
   const [inboxOpen, setInboxOpen] = useState(true)
