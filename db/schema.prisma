@@ -50,23 +50,20 @@ model Module {
 model License {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  url       String
-  name      String
+  source    String   @default("ResearchEquals")
+  url       String   @unique
+  name      String?
   price     Int      @default(0)
   price_id  String?
   Module    Module[]
-
-  @@unique([url, name])
 }
 
 model ModuleType {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  wikidata  String
-  name      String
+  wikidata  String?
+  name      String   @unique
   Module    Module[]
-
-  // @@unique([wikidata, name])
 }
 
 model Authorship {
