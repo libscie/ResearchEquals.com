@@ -63,7 +63,7 @@ const Navbar = () => {
                             },
                             {
                               indexName: `${process.env.ALGOLIA_PREFIX}_modules`,
-                              query,
+                              query: `${query} ${process.env.DOI_PREFIX}`,
                             },
                           ],
                         })
