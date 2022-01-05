@@ -1,5 +1,5 @@
 import { Prisma } from "prisma"
-import { NotFoundError } from "blitz"
+import { Link, NotFoundError, Routes } from "blitz"
 
 import Layout from "../../core/layouts/Layout"
 import db from "db"
@@ -15,10 +15,29 @@ export async function getServerSideProps(context) {
       prefix: "10.53962",
     },
     include: {
-      parents: {
-        where: {
-          published: true,
+      references: {
+        include: {
+          authors: {
+            include: {
+              workspace: true,
+            },
+          },
         },
+        orderBy: {
+          title: "asc",
+        },
+      },
+      authors: {
+        orderBy: {
+          authorshipRank: "asc",
+        },
+        include: {
+          workspace: true,
+        },
+      },
+      license: true,
+      type: true,
+      parents: {
         include: {
           type: true,
           authors: {
@@ -29,9 +48,6 @@ export async function getServerSideProps(context) {
         },
       },
       children: {
-        where: {
-          published: true,
-        },
         include: {
           type: true,
           authors: {
@@ -39,13 +55,6 @@ export async function getServerSideProps(context) {
               workspace: true,
             },
           },
-        },
-      },
-      license: true,
-      type: true,
-      authors: {
-        include: {
-          workspace: true,
         },
       },
     },
@@ -104,6 +113,59 @@ const ModulePage = ({ module }) => {
           ""
         )}
         {/* PLACEHOLDER References */}
+        <div className="my-3">
+          <h2>Reference list</h2>
+          <ol className="list-decimal list-inside my-4 text-normal">
+            {module.references.map((reference) => (
+              <>
+                <li>
+                  {reference.publishedWhere === "ResearchEquals" ? (
+                    <>
+                      {reference.authors.map((author, index) => (
+                        <>
+                          <Link href={Routes.HandlePage({ handle: author!.workspace!.handle })}>
+                            <a target="_blank">{author!.workspace!.name}</a>
+                          </Link>
+                          {index === reference.authors.length - 1 ? "" : ", "}
+                        </>
+                      ))}
+                    </>
+                  ) : (
+                    <>
+                      {reference!.authorsRaw!["object"] ? (
+                        <>
+                          {reference!.authorsRaw!["object"].map((author, index) => (
+                            <>
+                              {index === 3
+                                ? "[...]"
+                                : index > 3
+                                ? ""
+                                : author.given && author.family
+                                ? `${author.given} ${author.family}`
+                                : `${author.name}`}
+                              {index === reference!.authorsRaw!["object"].length - 1 || index > 2
+                                ? ""
+                                : ", "}
+                            </>
+                          ))}
+                        </>
+                      ) : (
+                        <>
+                          <p className="italic">{reference.publishedWhere}</p>
+                        </>
+                      )}
+                    </>
+                  )}{" "}
+                  ({reference.publishedAt?.toISOString().substr(0, 10)}). {reference.title}.{" "}
+                  <Link href={reference.url!}>
+                    <a target="_blank underline">{reference.url}</a>
+                  </Link>
+                  . <span className="italic">{reference.publishedWhere}</span>
+                </li>
+              </>
+            ))}
+          </ol>
+        </div>
       </main>
     </Layout>
   )
