@@ -63,6 +63,15 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
               workspace: true,
             },
           },
+          references: {
+            include: {
+              authors: {
+                include: {
+                  workspace: true,
+                },
+              },
+            },
+          },
         },
       })
 
@@ -80,7 +89,37 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
 
           return js
         }),
-        citations: [],
+        citations: module?.references.map((reference) => {
+          const refJs = {
+            publishedWhere: reference.publishedWhere,
+            authors:
+              reference.publishedWhere === "ResearchEquals"
+                ? reference.authors.map((author) => {
+                    const authJs = {
+                      name: author.workspace?.name,
+                      orcid: `https://orcid.org/${author!.workspace!.orcid}`,
+                    }
+
+                    return authJs
+                  })
+                : reference!.authorsRaw!["object"].map((author) => {
+                    const authJs = {
+                      name:
+                        author.given && author.family
+                          ? `${author.given} ${author.family}`
+                          : `${author.name}`,
+                    }
+
+                    return authJs
+                  }),
+            publishedAt: reference.publishedAt,
+            prefix: reference.prefix,
+            suffix: reference.suffix,
+            isbn: reference.isbn,
+            title: reference.title,
+          }
+          return refJs
+        }),
         abstractText: module!.description,
         license: module!.license!.name,
         license_url: module!.license!.url,

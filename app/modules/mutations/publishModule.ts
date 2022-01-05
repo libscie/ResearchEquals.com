@@ -27,6 +27,15 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
           workspace: true,
         },
       },
+      references: {
+        include: {
+          authors: {
+            include: {
+              workspace: true,
+            },
+          },
+        },
+      },
     },
   })
 
@@ -44,22 +53,37 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
 
       return js
     }),
-    citations: [
-      // {
-      //   publishedWhere: "ResearchEquals",
-      //   authors: [
-      //     {
-      //       name: "Chris Hartgerink",
-      //       orcid: "https://orcid.org/0000-0003-1050-6809",
-      //     },
-      //   ],
-      //   publishedAt: "2021",
-      //   prefix: "10.53962",
-      //   suffix: "1234",
-      //   isbn: "978-3-16-148410-0",
-      //   title: "This is a test",
-      // },
-    ],
+    citations: module?.references.map((reference) => {
+      const refJs = {
+        publishedWhere: reference.publishedWhere,
+        authors:
+          reference.publishedWhere === "ResearchEquals"
+            ? reference.authors.map((author) => {
+                const authJs = {
+                  name: author.workspace?.name,
+                  orcid: `https://orcid.org/${author!.workspace!.orcid}`,
+                }
+
+                return authJs
+              })
+            : reference!.authorsRaw!["object"].map((author) => {
+                const authJs = {
+                  name:
+                    author.given && author.family
+                      ? `${author.given} ${author.family}`
+                      : `${author.name}`,
+                }
+
+                return authJs
+              }),
+        publishedAt: reference.publishedAt,
+        prefix: reference.prefix,
+        suffix: reference.suffix,
+        isbn: reference.isbn,
+        title: reference.title,
+      }
+      return refJs
+    }),
     abstractText: module!.description,
     license: module!.license!.name,
     license_url: module!.license!.url,
