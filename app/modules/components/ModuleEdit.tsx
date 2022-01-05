@@ -7,7 +7,7 @@ import { getAlgoliaResults } from "@algolia/autocomplete-js"
 import { Edit24, EditOff24, Save32 } from "@carbon/icons-react"
 import { Prisma } from "prisma"
 import { useFormik } from "formik"
-import { Maximize24, Minimize24 } from "@carbon/icons-react"
+import { Maximize24, TrashCan24 } from "@carbon/icons-react"
 import toast from "react-hot-toast"
 import router from "next/router"
 
@@ -35,6 +35,7 @@ import EditMainFileDisplay from "../../core/components/EditMainFileDisplay"
 import MetadataEdit from "./MetadataEdit"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import addReference from "../mutations/addReference"
+import createReferenceModule from "../mutations/createReferenceModule"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
@@ -56,6 +57,7 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
   const supportingRaw = moduleEdit!.supporting as Prisma.JsonObject
 
   const [addReferenceMutation] = useMutation(addReference)
+  const [createReferenceMutation] = useMutation(createReferenceModule)
   const [editModuleScreenMutation] = useMutation(editModuleScreen)
   const [addAuthorMutation] = useMutation(addAuthor)
 
@@ -263,14 +265,54 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
                     </>
                   )
                 },
+                noResults() {
+                  return (
+                    <>
+                      {/* https://www.crossref.org/blog/dois-and-matching-regular-expressions/ */}
+                      {query.match(/^10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i) ? (
+                        <>
+                          {/* <SearchResultDoi query={query} /> */}
+                          <button
+                            onClick={async () => {
+                              // alert(query)
+                              toast.promise(createReferenceMutation({ doi: query }), {
+                                loading: "Searching...",
+                                success: <b>Reference added!</b>,
+                                error: <b>Could not find the reference.</b>,
+                              })
+                            }}
+                          >
+                            Find and add {query} to ResearchEquals reference database
+                          </button>
+                        </>
+                      ) : (
+                        "Input a DOI you'd like to reference."
+                      )}
+                    </>
+                  )
+                },
               },
             },
           ]}
         />
-        {/* {moduleEdit?.references!.map((reference) => (
-          <>{reference.title}</>
-        ))}
-        {JSON.stringify(moduleEdit)} */}
+        <ol className="list-decimal list-inside my-4 text-normal">
+          {moduleEdit?.references!.map((reference) => (
+            <>
+              <li>
+                <button className="mx-2">
+                  <TrashCan24
+                    className="w-6 h-6 fill-current text-red-500 inline-block align-middle"
+                    onClick={async () => {
+                      alert(`delete ${reference.title}`)
+                    }}
+                    aria-label="Delete reference"
+                  />
+                </button>
+                {reference.title}
+              </li>
+            </>
+          ))}
+        </ol>
       </div>
       <div className="text-center">
         <DeleteModuleModal module={module} />
