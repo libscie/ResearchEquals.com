@@ -273,22 +273,23 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
                       {/* https://www.crossref.org/blog/dois-and-matching-regular-expressions/ */}
                       {query.match(/^10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i) ? (
                         <>
-                          {/* <SearchResultDoi query={query} /> */}
                           <button
+                            className="text-gray-900 dark:text-gray-200 text-sm leading-4 font-normal"
                             onClick={async () => {
-                              // alert(query)
                               toast.promise(createReferenceMutation({ doi: query }), {
                                 loading: "Searching...",
-                                success: <b>Reference added!</b>,
-                                error: <b>Could not find the reference.</b>,
+                                success: "Reference added!",
+                                error: "Could not add reference.",
                               })
                             }}
                           >
-                            Find and add {query} to ResearchEquals reference database
+                            Click here to add {query} to ResearchEquals database
                           </button>
                         </>
                       ) : (
-                        "Input a DOI you'd like to reference."
+                        <p className="text-gray-900 dark:text-gray-200 text-sm leading-4 font-normal">
+                          Input a DOI to add
+                        </p>
                       )}
                     </>
                   )
@@ -315,7 +316,7 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
                     aria-label="Delete reference"
                   />
                 </button>
-                {reference.authors ? (
+                {reference.publishedWhere === "ResearchEquals" ? (
                   <>
                     {reference.authors.map((author, index) => (
                       <>
@@ -327,7 +328,30 @@ const ModuleEdit = ({ user, module, isAuthor, setInboxOpen, inboxOpen }) => {
                     ))}
                   </>
                 ) : (
-                  "no"
+                  <>
+                    {reference!.authorsRaw!["object"] ? (
+                      <>
+                        {reference!.authorsRaw!["object"].map((author, index) => (
+                          <>
+                            {index === 3
+                              ? "[...]"
+                              : index > 3
+                              ? ""
+                              : author.given && author.family
+                              ? `${author.given} ${author.family}`
+                              : `${author.name}`}
+                            {index === reference!.authorsRaw!["object"].length - 1 || index > 2
+                              ? ""
+                              : ", "}
+                          </>
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        <p className="italic">{reference.publishedWhere}</p>
+                      </>
+                    )}
+                  </>
                 )}{" "}
                 ({reference.publishedAt?.toISOString().substr(0, 10)}). {reference.title}.{" "}
                 <Link href={reference.url!}>
