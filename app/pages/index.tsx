@@ -39,6 +39,9 @@ import Footer from "../core/components/Footer"
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const licenses = await db.license.findMany({
+    where: {
+      source: "ResearchEquals",
+    },
     orderBy: [
       {
         price: "asc",
