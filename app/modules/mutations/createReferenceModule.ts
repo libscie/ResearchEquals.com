@@ -31,8 +31,8 @@ export default resolver.pipe(resolver.authorize(), async ({ doi }, ctx) => {
       publishedWhere: metadata["container-title"][0]
         ? metadata["container-title"][0]
         : metadata.publisher,
-      prefix: metadata.prefix,
-      suffix: metadata.DOI.replace(`${metadata.prefix}/`, ""),
+      prefix: metadata.DOI.split("/")[0],
+      suffix: metadata.DOI.split("/").slice(1).join("/"),
       isbn: metadata.ISBN ? metadata.ISBN[0] : undefined,
       url: `https://doi.org/${metadata.DOI}`,
       title: metadata.title[0],
