@@ -33,6 +33,13 @@ export default resolver.pipe(resolver.authorize(), async ({ id, uuid }) => {
     where: { id },
     include: {
       references: {
+        include: {
+          authors: {
+            include: {
+              workspace: true,
+            },
+          },
+        },
         orderBy: {
           title: "asc",
         },

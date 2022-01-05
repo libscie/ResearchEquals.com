@@ -19,6 +19,13 @@ export default resolver.pipe(
       },
       include: {
         references: {
+          include: {
+            authors: {
+              include: {
+                workspace: true,
+              },
+            },
+          },
           orderBy: {
             title: "asc",
           },

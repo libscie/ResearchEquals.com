@@ -21,6 +21,13 @@ export default resolver.pipe(resolver.authorize(), async ({ id, description }) =
     where: { id },
     include: {
       references: {
+        include: {
+          authors: {
+            include: {
+              workspace: true,
+            },
+          },
+        },
         orderBy: {
           title: "asc",
         },

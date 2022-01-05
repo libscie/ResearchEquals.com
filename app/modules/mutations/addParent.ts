@@ -11,6 +11,13 @@ export default resolver.pipe(resolver.authorize(), async ({ currentId, connectId
     },
     include: {
       references: {
+        include: {
+          authors: {
+            include: {
+              workspace: true,
+            },
+          },
+        },
         orderBy: {
           title: "asc",
         },

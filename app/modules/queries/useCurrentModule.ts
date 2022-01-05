@@ -5,6 +5,13 @@ export default async function getCurrentWorkspace({ suffix }) {
     where: { suffix },
     include: {
       references: {
+        include: {
+          authors: {
+            include: {
+              workspace: true,
+            },
+          },
+        },
         orderBy: {
           title: "asc",
         },
