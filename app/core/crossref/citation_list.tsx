@@ -5,6 +5,7 @@ const citation_list = ({ citations, authors }) => {
     type: "element",
     name: "citation_list",
     elements: citations.map((citation, index) => {
+      const datetime = new Date(citation.publishedAt)
       const citationJs = {
         type: "element",
         name: "citation",
@@ -29,7 +30,7 @@ const citation_list = ({ citations, authors }) => {
             elements: [
               {
                 type: "text",
-                text: authors[0].name,
+                text: citation.authors[0].name,
               },
             ],
           },
@@ -39,7 +40,7 @@ const citation_list = ({ citations, authors }) => {
             elements: [
               {
                 type: "text",
-                text: citation.publishedAt,
+                text: datetime.getUTCFullYear(),
               },
             ],
           },
@@ -53,16 +54,16 @@ const citation_list = ({ citations, authors }) => {
               },
             ],
           },
-          {
-            type: "element",
-            name: "isbn",
-            elements: [
-              {
-                type: "text",
-                text: citation.isbn,
-              },
-            ],
-          },
+          // {
+          //   type: "element",
+          //   name: "isbn",
+          //   elements: [
+          //     {
+          //       type: "text",
+          //       text: citation.isbn,
+          //     },
+          //   ],
+          // },
           {
             type: "element",
             name: "article_title",
