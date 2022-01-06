@@ -1,6 +1,6 @@
 // TODO: Verify output generated
 
-const citation_list = ({ citations, authors }) => {
+const citation_list = ({ citations }) => {
   const js = {
     type: "element",
     name: "citation_list",
