@@ -83,6 +83,7 @@ const DraftsContents = ({}) => {
               >
                 <ModuleEdit
                   user={user}
+                  workspace={currentWorkspace}
                   module={currentModule}
                   isAuthor={true}
                   inboxOpen={inboxOpen}
