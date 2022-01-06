@@ -88,7 +88,7 @@ const seed = async () => {
           price_id: "price_1KCTCcLmgtJbKHNGbu2vXiYR",
         },
         {
-          url: "",
+          url: "https://en.wikipedia.org/wiki/All_rights_reserved",
           name: "All rights reserved",
           price: 54999,
           price_id: "price_1KCTBbLmgtJbKHNGQSZHsNO0",
@@ -144,7 +144,7 @@ const seed = async () => {
           price_id: "price_1KCMOZLmgtJbKHNGvjMirRp0",
         },
         {
-          url: "",
+          url: "https://en.wikipedia.org/wiki/All_rights_reserved ",
           name: "All rights reserved",
           price: 54999,
           price_id: "price_1KCRbjLmgtJbKHNGLa8TS0aH",
