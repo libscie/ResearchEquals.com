@@ -39,8 +39,6 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
     },
   })
 
-  console.log(module)
-
   if (!module!.main) throw Error("Main file is empty")
 
   const x = generateCrossRefObject({
@@ -100,9 +98,6 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
   xmlStream._read = () => {}
   xmlStream.push(xmlData)
   xmlStream.push(null)
-
-  console.log(x)
-  throw Error("just throwing")
 
   const form = new FormData()
   form.append("operation", "doMDUpload")
