@@ -41,8 +41,6 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
 
   console.log(module)
 
-  throw Error("just throwing")
-
   if (!module!.main) throw Error("Main file is empty")
 
   const x = generateCrossRefObject({
@@ -57,37 +55,40 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
 
       return js
     }),
-    citations: module?.references.map((reference) => {
-      const refJs = {
-        publishedWhere: reference.publishedWhere,
-        authors:
-          reference.publishedWhere === "ResearchEquals"
-            ? reference.authors.map((author) => {
-                const authJs = {
-                  name: author.workspace?.name,
-                  orcid: `https://orcid.org/${author!.workspace!.orcid}`,
-                }
+    citations:
+      module!.references.length === 0
+        ? []
+        : module?.references.map((reference) => {
+            const refJs = {
+              publishedWhere: reference.publishedWhere,
+              authors:
+                reference.publishedWhere === "ResearchEquals"
+                  ? reference.authors.map((author) => {
+                      const authJs = {
+                        name: author.workspace?.name,
+                        orcid: `https://orcid.org/${author!.workspace!.orcid}`,
+                      }
 
-                return authJs
-              })
-            : reference!.authorsRaw!["object"].map((author) => {
-                const authJs = {
-                  name:
-                    author.given && author.family
-                      ? `${author.given} ${author.family}`
-                      : `${author.name}`,
-                }
+                      return authJs
+                    })
+                  : reference!.authorsRaw!["object"].map((author) => {
+                      const authJs = {
+                        name:
+                          author.given && author.family
+                            ? `${author.given} ${author.family}`
+                            : `${author.name}`,
+                      }
 
-                return authJs
-              }),
-        publishedAt: reference.publishedAt,
-        prefix: reference.prefix,
-        suffix: reference.suffix,
-        isbn: reference.isbn,
-        title: reference.title,
-      }
-      return refJs
-    }),
+                      return authJs
+                    }),
+              publishedAt: reference.publishedAt,
+              prefix: reference.prefix,
+              suffix: reference.suffix,
+              isbn: reference.isbn,
+              title: reference.title,
+            }
+            return refJs
+          }),
     abstractText: module!.description,
     license_url: module!.license!.url,
     doi: `${module!.prefix}/${module!.suffix}`,
@@ -99,6 +100,9 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
   xmlStream._read = () => {}
   xmlStream.push(xmlData)
   xmlStream.push(null)
+
+  console.log(x)
+  throw Error("just throwing")
 
   const form = new FormData()
   form.append("operation", "doMDUpload")
