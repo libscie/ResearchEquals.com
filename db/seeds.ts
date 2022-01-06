@@ -1,8 +1,11 @@
 import db from "db"
 import moment from "moment"
 import faker from "faker"
-
+import algoliasearch from "algoliasearch"
 import generateSuffix from "../app/modules/mutations/generateSuffix"
+
+const client = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_ADMIN_KEY!)
+const algIndex = client.initIndex(`${process.env.ALGOLIA_PREFIX}_workspaces`)
 
 /*
  * This seed function is executed when you run `blitz db seed`.
@@ -153,8 +156,9 @@ const seed = async () => {
       skipDuplicates: true,
     })
 
+    let user
     for (let index = 0; index < 50; index++) {
-      await db.user.create({
+      user = await db.user.create({
         data: {
           email: faker.internet.email(),
           role: "CUSTOMER",
@@ -174,6 +178,25 @@ const seed = async () => {
             ],
           },
         },
+        include: {
+          memberships: {
+            include: {
+              workspace: true,
+            },
+          },
+        },
+      })
+
+      console.log(user.memberships[0].workspace)
+
+      user!.memberships!.map(async (membership) => {
+        await algIndex.saveObject({
+          objectID: membership.workspace.id,
+          name: membership.workspace.name,
+          handle: membership.workspace.handle,
+          avatar: membership.workspace.avatar,
+          pronouns: membership.workspace.pronouns,
+        })
       })
     }
 
