@@ -21,7 +21,7 @@ type LayoutProps = {
 
 const Layout = ({ title, children }: LayoutProps) => {
   useEffect(() => {
-    if (getCookieConsentValue("web-app-tbd-website-cookie")) {
+    if (getCookieConsentValue("researchequals-website-cookie") === "true") {
       Chatra("init", config)
     }
   }, [])
@@ -47,7 +47,7 @@ const Layout = ({ title, children }: LayoutProps) => {
         }}
         buttonText="Accept"
         declineButtonText="Decline"
-        cookieName="web-app-tbd-website-cookie"
+        cookieName="researchequals-website-cookie"
         buttonStyle={{
           backgroundColor: "#059669",
           color: "#fff",
