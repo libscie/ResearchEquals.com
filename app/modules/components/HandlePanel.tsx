@@ -91,14 +91,18 @@ const AuthorPanel = ({ buttonText, title, authors }) => {
                                 </a>
                               </Link>
                             </div>
-                            {ownWorkspace!.handle === author.handle ? (
-                              ""
-                            ) : ownWorkspace!.following.filter(
-                                (follow) => follow.handle === author.handle
-                              ).length > 0 ? (
-                              <UnfollowButton author={author} refetchFn={refetch} />
+                            {ownWorkspace ? (
+                              ownWorkspace!.handle === author.handle ? (
+                                ""
+                              ) : ownWorkspace!.following.filter(
+                                  (follow) => follow.handle === author.handle
+                                ).length > 0 ? (
+                                <UnfollowButton author={author} refetchFn={refetch} />
+                              ) : (
+                                <FollowButton author={author} refetchFn={refetch} />
+                              )
                             ) : (
-                              <FollowButton author={author} refetchFn={refetch} />
+                              ""
                             )}
                           </li>
                         </>
