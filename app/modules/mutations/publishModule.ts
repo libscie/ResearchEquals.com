@@ -103,8 +103,6 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
 
   console.log(xmlData)
 
-  throw Error("just throwing")
-
   const form = new FormData()
   form.append("operation", "doMDUpload")
   form.append("login_id", process.env.CROSSREF_LOGIN_ID)
