@@ -9,16 +9,7 @@ import contributors from "./contributors"
 import citationList from "./citation_list"
 import componentList from "./component_list"
 
-const book = ({
-  title,
-  authors,
-  abstractText,
-  license,
-  license_url,
-  doi,
-  resolve_url,
-  citations,
-}) => {
+const book = ({ title, authors, abstractText, license_url, doi, resolve_url, citations }) => {
   const js = {
     type: "element",
     name: "book",
@@ -39,7 +30,6 @@ const book = ({
           noisbn(),
           publisher(),
           aiProgram({
-            license: "CC0 Public Domain Dedication",
             url: "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
           }),
           doiData({ doi: "10.53962/0000", url: "https://researchequals.com" }),
@@ -57,7 +47,7 @@ const book = ({
           titles(title),
           abstract(abstractText),
           publicationDate(),
-          aiProgram({ license, url: license_url }),
+          aiProgram({ url: license_url }),
           doiData({ doi, url: resolve_url }),
           citationList({ citations, authors }),
           componentList(),

@@ -1,4 +1,4 @@
-const aiProgram = ({ license, url }) => {
+const aiProgram = ({ url }) => {
   const js = {
     type: "element",
     name: "program",
