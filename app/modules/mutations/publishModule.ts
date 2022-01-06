@@ -39,6 +39,10 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
     },
   })
 
+  console.log(module)
+
+  throw Error("just throwing")
+
   if (!module!.main) throw Error("Main file is empty")
 
   const x = generateCrossRefObject({
@@ -85,7 +89,6 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
       return refJs
     }),
     abstractText: module!.description,
-    license: module!.license!.name,
     license_url: module!.license!.url,
     doi: `${module!.prefix}/${module!.suffix}`,
     resolve_url: `${process.env.APP_ORIGIN}/modules/${module!.suffix}`,

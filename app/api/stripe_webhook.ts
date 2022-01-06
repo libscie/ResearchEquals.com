@@ -121,7 +121,6 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
           return refJs
         }),
         abstractText: module!.description,
-        license: module!.license!.name,
         license_url: module!.license!.url,
         doi: `${module!.prefix}/${module!.suffix}`,
         resolve_url: `${process.env.APP_ORIGIN}/modules/${module!.suffix}`,
