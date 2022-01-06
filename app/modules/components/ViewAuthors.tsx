@@ -89,14 +89,18 @@ const ViewAuthors = ({ button, module }) => {
                                 </a>
                               </Link>
                             </div>
-                            {ownWorkspace!.handle === author.handle ? (
-                              ""
-                            ) : ownWorkspace!.following.filter(
-                                (follow) => follow.handle === author.workspace.handle
-                              ).length > 0 ? (
-                              <UnfollowButton author={author.workspace} refetchFn={refetch} />
+                            {ownWorkspace ? (
+                              ownWorkspace!.handle === author.handle ? (
+                                ""
+                              ) : ownWorkspace!.following.filter(
+                                  (follow) => follow.handle === author.workspace.handle
+                                ).length > 0 ? (
+                                <UnfollowButton author={author.workspace} refetchFn={refetch} />
+                              ) : (
+                                <FollowButton author={author.workspace} refetchFn={refetch} />
+                              )
                             ) : (
-                              <FollowButton author={author.workspace} refetchFn={refetch} />
+                              ""
                             )}
                           </li>
                         </>
