@@ -92,12 +92,12 @@ export default function PublishModule({ module, user, workspace }) {
                         data-splitbee-event={`Publish module ${publishCount}`}
                         className="inline-flex justify-center mr-2 py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
                         onClick={async () => {
-                          try {
-                            await publishModuleMutation({ id: module.id })
-                            router.push(`/modules/${module.suffix}`)
-                          } catch (error) {
-                            toast.error("Module cannot be published. Ensure main file is added.")
-                          }
+                          await toast.promise(publishModuleMutation({ id: module.id }), {
+                            loading: "Publishing...",
+                            success: "Published!",
+                            error: "Uh-oh this is embarassing.",
+                          })
+                          router.push(`/modules/${module.suffix}`)
                         }}
                       >
                         Publish
