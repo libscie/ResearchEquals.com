@@ -49,7 +49,7 @@ const book = ({ title, authors, abstractText, license_url, doi, resolve_url, cit
           publicationDate(),
           aiProgram({ url: license_url }),
           doiData({ doi, url: resolve_url }),
-          citationList({ citations, authors }),
+          citationList({ citations }),
           componentList(),
         ],
       },
