@@ -56,15 +56,20 @@ const ModuleInvitation = ({
             type="button"
             className="border rounded border-blue-500 text-blue-500 dark:border-blue-200 dark:text-blue-200 px-2 py-1.5 text-xs leading-4 font-medium hover:bg-blue-100 dark:hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-50 focus:ring-blue-600"
             onClick={async () => {
-              await acceptMutation({
-                id: module.authors.filter((author) => author.workspaceId === workspace.id)[0].id,
-                suffix: module.suffix,
-              })
+              await toast.promise(
+                acceptMutation({
+                  id: module.authors.filter((author) => author.workspaceId === workspace.id)[0].id,
+                  suffix: module.suffix,
+                }),
+                {
+                  loading: "Saving...",
+                  success: "Accepted invitation",
+                  error: "Hmm that didn't work...",
+                }
+              )
               refetch()
               // TODO: Move to next invitation on the list
               setModule(undefined)
-
-              toast.success("Accepted invitation")
             }}
           >
             Accept

@@ -11,12 +11,18 @@ const UnfollowButton = ({ author, refetchFn }) => {
       <button
         className="py-2 px-4 shadow-sm text-sm leading-4 font-medium bg-indigo-100 dark:bg-gray-800 hover:bg-indigo-200 dark:hover:bg-gray-700 text-indigo-700 dark:text-gray-200 rounded dark:border dark:border-gray-600 inline-block align-middle focus:outline-none focus:ring-2 focus:ring-offset-0   focus:ring-indigo-500"
         onClick={async () => {
-          await followWorkspaceMutation({
-            followedId: author.id,
-          })
-          refetchFn()
+          await toast.promise(
+            followWorkspaceMutation({
+              followedId: author.id,
+            }),
+            {
+              loading: "Saving...",
+              success: "Following",
+              error: "Hmm that didn't work...",
+            }
+          )
 
-          toast.success("Following!")
+          refetchFn()
         }}
       >
         Follow
