@@ -96,12 +96,20 @@ function AuthorList({
                       if (!author.workspace.orcid || !author.workspace.name) {
                         toast.error("You cannot publish until you link your ORCID")
                       } else {
-                        const updatedModule = await approveAuthorshipMutation({
-                          id: author.id,
-                          suffix,
-                        })
-                        toast.success("Version approved for publication")
-                        setAuthorState(updatedModule)
+                        toast.promise(
+                          approveAuthorshipMutation({
+                            id: author.id,
+                            suffix,
+                          }),
+                          {
+                            loading: "Loading",
+                            success: (data) => {
+                              setAuthorState(data)
+                              return "Version approved for publication"
+                            },
+                            error: "Uh-oh this is embarassing.",
+                          }
+                        )
                       }
                     }}
                   >

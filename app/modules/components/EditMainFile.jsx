@@ -1,6 +1,7 @@
 import { useQuery, useMutation } from "blitz"
 import { Widget } from "@uploadcare/react-widget"
 import { useRef } from "react"
+import toast from "react-hot-toast"
 
 import getSignature from "../../auth/queries/getSignature"
 import addMain from "../mutations/addMain"
@@ -45,13 +46,22 @@ const EditMainFile = ({ mainFile, setQueryData, moduleEdit, user, workspace }) =
               validators={validators}
               clearable
               onChange={async (info) => {
+                // TODO: Only store upon save
                 try {
-                  // TODO: Only store upon save
-                  const updatedModule = await addMainMutation({
-                    id: moduleEdit?.id,
-                    json: info,
-                  })
-                  setQueryData(updatedModule)
+                  toast.promise(
+                    addMainMutation({
+                      id: moduleEdit?.id,
+                      json: info,
+                    }),
+                    {
+                      loading: "Uploading...",
+                      success: (data) => {
+                        setQueryData(data)
+                        return "Uploaded!"
+                      },
+                      error: "Uh-oh this is embarassing.",
+                    }
+                  )
                 } catch (err) {
                   alert(err)
                 }

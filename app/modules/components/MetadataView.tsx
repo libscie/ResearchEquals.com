@@ -70,19 +70,40 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
                         async onSelect(params) {
                           const { item, setQuery } = params
                           try {
-                            const updatedModule = await addAuthorMutation({
-                              authorId: item.objectID,
-                              moduleId: module.id,
-                              authorshipRank:
-                                Math.max.apply(
-                                  Math,
-                                  module.authors.map(function (o) {
-                                    return o.authorshipRank
-                                  })
-                                ) + 1,
-                            })
-                            toast.success("Author invited")
-                            setQueryData(updatedModule)
+                            toast.promise(
+                              addAuthorMutation({
+                                authorId: item.objectID,
+                                moduleId: module.id,
+                                authorshipRank:
+                                  Math.max.apply(
+                                    Math,
+                                    module.authors.map(function (o) {
+                                      return o.authorshipRank
+                                    })
+                                  ) + 1,
+                              }),
+                              {
+                                loading: "Loading",
+                                success: (data) => {
+                                  setQueryData(data)
+                                  return "Author invited"
+                                },
+                                error: "Uh-oh this is embarassing.",
+                              }
+                            )
+                            // const updatedModule = await addAuthorMutation({
+                            //   authorId: item.objectID,
+                            //   moduleId: module.id,
+                            //   authorshipRank:
+                            //     Math.max.apply(
+                            //       Math,
+                            //       module.authors.map(function (o) {
+                            //         return o.authorshipRank
+                            //       })
+                            //     ) + 1,
+                            // })
+                            // toast.success("Author invited")
+                            // setQueryData(updatedModule)
                           } catch (error) {
                             toast.error("Something went wrong")
                           }

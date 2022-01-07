@@ -3,6 +3,7 @@ import { useQuery, useMutation } from "blitz"
 import { Widget } from "@uploadcare/react-widget"
 import { useRef } from "react"
 import { PlusSmIcon } from "@heroicons/react/solid"
+import toast from "react-hot-toast"
 
 import getSignature from "../../auth/queries/getSignature"
 import addSupporting from "../mutations/addSupporting"
@@ -20,11 +21,25 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit, user, workspace }) => {
   const updateSupporting = async (info) => {
     try {
       const newFiles = await getSupportingFilesMutation({ groupUuid: info.uuid })
-      const updatedModule = await addSupportingMutation({
-        id: moduleEdit.id,
-        newFiles: newFiles.files,
-      })
-      setQueryData(updatedModule)
+      toast.promise(
+        addSupportingMutation({
+          id: moduleEdit.id,
+          newFiles: newFiles.files,
+        }),
+        {
+          loading: "Uploading...",
+          success: (data) => {
+            setQueryData(data)
+            return "Uploaded!"
+          },
+          error: "Uh-oh this is embarassing.",
+        }
+      )
+      // const updatedModule = await addSupportingMutation({
+      //   id: moduleEdit.id,
+      //   newFiles: newFiles.files,
+      // })
+      // setQueryData(updatedModule)
     } catch (err) {
       alert(err)
     }

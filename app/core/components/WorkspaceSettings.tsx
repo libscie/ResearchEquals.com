@@ -32,10 +32,16 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         if (values.bio !== workspace.bio) {
           try {
             z.string().parse(values.bio)
-            await changeBioMutation({
-              bio: values.bio,
-            })
-            toast.success("Updated bio")
+            toast.promise(
+              changeBioMutation({
+                bio: values.bio,
+              }),
+              {
+                loading: "Saving...",
+                success: "Updated bio",
+                error: "Hmm that didn't work...",
+              }
+            )
           } catch (error) {
             toast.error("Bio needs to be a string")
           }
@@ -44,10 +50,16 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         if (values.pronouns !== workspace.pronouns) {
           try {
             z.string().max(20).parse(values.pronouns)
-            await changePronounsMutation({
-              pronouns: values.pronouns,
-            })
-            toast.success("Updated pronouns")
+            toast.promise(
+              changePronounsMutation({
+                pronouns: values.pronouns,
+              }),
+              {
+                loading: "Saving...",
+                success: "Updated pronouns",
+                error: "Hmm that didn't work...",
+              }
+            )
           } catch (error) {
             toast.error("Pronouns can be 20 characters")
           }
@@ -56,10 +68,16 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         if (values.profileUrl !== workspace.url && values.profileUrl !== "") {
           try {
             z.string().url().parse(values.profileUrl)
-            await changeUrlMutation({
-              url: values.profileUrl,
-            })
-            toast.success("Updated URL")
+            toast.promise(
+              changeUrlMutation({
+                url: values.profileUrl,
+              }),
+              {
+                loading: "Saving...",
+                success: "Updated URL",
+                error: "Hmm that didn't work...",
+              }
+            )
           } catch (error) {
             toast.error("Enter a valid URL")
           }
