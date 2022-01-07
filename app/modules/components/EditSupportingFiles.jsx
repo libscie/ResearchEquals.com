@@ -1,18 +1,15 @@
-import { Download32, TrashCan32 } from "@carbon/icons-react"
-import { useQuery, useMutation } from "blitz"
+import { useMutation } from "blitz"
 import { Widget } from "@uploadcare/react-widget"
 import { useRef } from "react"
 import { PlusSmIcon } from "@heroicons/react/solid"
 
-import getSignature from "../../auth/queries/getSignature"
 import addSupporting from "../mutations/addSupporting"
 import getSupportingFiles from "../mutations/getSupportingFiles"
 import { fileSizeLimit, fileTypeLimit } from "../../core/utils/fileTypeLimit"
 
 const validators = [fileTypeLimit, fileSizeLimit]
 
-const EditSupportingFiles = ({ setQueryData, moduleEdit, user, workspace }) => {
-  const [uploadSecret] = useQuery(getSignature, undefined)
+const EditSupportingFiles = ({ setQueryData, moduleEdit, user, workspace, expire, signature }) => {
   const widgetApi = useRef()
   const [addSupportingMutation] = useMutation(addSupporting)
   const [getSupportingFilesMutation] = useMutation(getSupportingFiles)
@@ -45,8 +42,8 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit, user, workspace }) => {
             {moduleEdit.supporting ? (
               <Widget
                 publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
-                // secureSignature={uploadSecret.signature}
-                // secureExpire={uploadSecret.expire}
+                secureSignature={signature}
+                secureExpire={expire}
                 ref={widgetApi}
                 validators={validators}
                 previewStep
@@ -58,8 +55,8 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit, user, workspace }) => {
             ) : (
               <Widget
                 publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
-                // secureSignature={uploadSecret.signature}
-                // secureExpire={uploadSecret.expire}
+                secureSignature={signature}
+                secureExpire={expire}
                 ref={widgetApi}
                 validators={validators}
                 previewStep
