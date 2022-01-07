@@ -1,9 +1,6 @@
-import { CheckmarkOutline32 } from "@carbon/icons-react"
 import { useMutation, useQuery } from "blitz"
 import { Widget } from "@uploadcare/react-widget"
-import { useRef, Fragment, useState } from "react"
-import { Dialog, Listbox, Menu, Transition } from "@headlessui/react"
-import { CheckIcon, SelectorIcon } from "@heroicons/react/solid"
+import { useRef } from "react"
 import { MailIcon, UserCircleIcon, UserIcon, VariableIcon, XIcon } from "@heroicons/react/outline"
 import { Formik, Form } from "formik"
 
@@ -13,12 +10,12 @@ import getSignature from "../../auth/queries/getSignature"
 import QuickDraft from "../../modules/components/QuickDraft"
 import resendVerification from "../../auth/mutations/resendVerification"
 
-const OnboardingQuests = ({ data }) => {
+const OnboardingQuests = ({ data, expire, signature }) => {
   return (
     <>
       <OnboardingEmail data={data.user.emailIsVerified} />
       <OnboardingOrcid data={data.workspace.orcid} />
-      <OnboardingAvatar data={data.workspace} />
+      <OnboardingAvatar data={data.workspace} expire={expire} signature={signature} />
       <OnboardingProfile data={data} />
       <OnboardingDraft data={data.workspace} />
     </>
@@ -172,7 +169,7 @@ const OnboardingProfile = ({ data }) => {
   )
 }
 
-const OnboardingAvatar = ({ data }) => {
+const OnboardingAvatar = ({ data, expire, signature }) => {
   const [changeAvatarMutation] = useMutation(changeAvatar)
   const [uploadSecret] = useQuery(getSignature, undefined)
   const widgetApi = useRef()
@@ -210,8 +207,8 @@ const OnboardingAvatar = ({ data }) => {
               </button>
               <Widget
                 publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
-                // secureSignature={uploadSecret.signature}
-                // secureExpire={uploadSecret.expire}
+                secureSignature={signature}
+                secureExpire={expire}
                 crop="1:1"
                 ref={widgetApi}
                 imageShrink="480x480"

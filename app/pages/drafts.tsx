@@ -1,7 +1,5 @@
-import { BlitzPage, useSession, useQuery, useRouterQuery, Router } from "blitz"
+import { useSession, useQuery, useRouterQuery, Router } from "blitz"
 import Layout from "app/core/layouts/Layout"
-import { Disclosure } from "@headlessui/react"
-import { ChevronRightIcon } from "@heroicons/react/solid"
 import { Suspense, useEffect, useState } from "react"
 import { ProgressBarRound32 } from "@carbon/icons-react"
 import moment from "moment"
@@ -13,10 +11,23 @@ import { useCurrentUser } from "../core/hooks/useCurrentUser"
 import ModuleCard from "../core/components/ModuleCard"
 import { useMediaPredicate } from "react-media-hook"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
+import generateSignature from "../signature"
 
-const DraftsContents = ({}) => {
+export async function getServerSideProps(context) {
+  // Expires in 30 minutes
+  const expire = Math.round(Date.now() / 1000) + 60 * 30
+  const signature = generateSignature(process.env.UPLOADCARE_SECRET_KEY, expire.toString())
+
+  return {
+    props: {
+      expire,
+      signature,
+    },
+  }
+}
+
+const DraftsContents = ({ expire, signature }) => {
   const currentWorkspace = useCurrentWorkspace()
-
   const session = useSession()
   const [currentModule, setModule] = useState<any>(undefined)
   const [inboxOpen, setInboxOpen] = useState(true)
@@ -88,6 +99,8 @@ const DraftsContents = ({}) => {
                   isAuthor={true}
                   inboxOpen={inboxOpen}
                   setInboxOpen={setInboxOpen}
+                  expire={expire}
+                  signature={signature}
                 />
               </Suspense>
             ) : (
@@ -112,13 +125,13 @@ const DraftsContents = ({}) => {
   )
 }
 
-const DraftsPage: BlitzPage = () => {
+const DraftsPage = ({ expire, signature }) => {
   return (
     <>
       <Navbar />
       <main className="flex relative">
         <Suspense fallback="Loading...">
-          <DraftsContents />
+          <DraftsContents expire={expire} signature={signature} />
         </Suspense>
       </main>
     </>

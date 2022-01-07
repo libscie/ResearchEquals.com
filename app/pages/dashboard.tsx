@@ -16,16 +16,28 @@ import moment from "moment"
 import getDashboardData from "../core/queries/getDashboardData"
 import Navbar from "../core/components/Navbar"
 import OnboardingQuests from "../core/components/OnboardingQuests"
-import followWorkspace from "../workspaces/mutations/followWorkspace"
-import unfollowWorkspace from "../workspaces/mutations/unfollowWorkspace"
 import getFeed from "../workspaces/queries/getFeed"
 import ModuleCard from "../core/components/ModuleCard"
 import FollowButton from "app/workspaces/components/FollowButton"
 import FeedPagination from "../core/components/FeedPagination"
+import generateSignature from "app/signature"
 
 const ITEMS_PER_PAGE = 5
 
-const DashboardContent = () => {
+export async function getServerSideProps(context) {
+  // Expires in 30 minutes
+  const expire = Math.round(Date.now() / 1000) + 60 * 30
+  const signature = generateSignature(process.env.UPLOADCARE_SECRET_KEY, expire.toString())
+
+  return {
+    props: {
+      expire,
+      signature,
+    },
+  }
+}
+
+const DashboardContent = ({ expire, signature }) => {
   const session = useSession()
   const query = useRouterQuery()
   const [data, { refetch }] = useQuery(getDashboardData, { session })
@@ -99,7 +111,7 @@ const DashboardContent = () => {
           {/* Column 2 */}
           <div className="flex w-full flex-col px-4">
             <div className="lg:flex w-full mt-4">
-              <OnboardingQuests data={data} />
+              <OnboardingQuests data={data} expire={expire} signature={signature} />
             </div>
             <div className="my-2">
               {modules.length > 0 ? (
@@ -174,13 +186,13 @@ const DashboardContent = () => {
   }
 }
 
-const Dashboard = () => {
+const Dashboard = ({ expire, signature }) => {
   return (
     <>
       <Navbar />
       <main className="max-w-7xl lg:max-w-full mx-auto max-h-full h-full">
         <Suspense fallback="Loading...">
-          <DashboardContent />
+          <DashboardContent expire={expire} signature={signature} />
         </Suspense>
       </main>
     </>

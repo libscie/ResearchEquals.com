@@ -1,6 +1,5 @@
 import { useQuery, useMutation, Link, validateZodSchema, Routes } from "blitz"
 import { useState, useEffect } from "react"
-import moment from "moment"
 import algoliasearch from "algoliasearch"
 import { z } from "zod"
 import { getAlgoliaResults } from "@algolia/autocomplete-js"
@@ -9,29 +8,19 @@ import { Prisma } from "prisma"
 import { useFormik } from "formik"
 import { Maximize24, TrashCan24 } from "@carbon/icons-react"
 import toast from "react-hot-toast"
-import router from "next/router"
 
 import EditMainFile from "./EditMainFile"
-import ManageAuthors from "./ManageAuthors"
 import EditSupportingFiles from "./EditSupportingFiles"
 
 import DeleteModuleModal from "../../core/modals/DeleteModuleModal"
 import useCurrentModule from "../queries/useCurrentModule"
 import Autocomplete from "../../core/components/Autocomplete"
 import PublishModuleModal from "../../core/modals/PublishModuleModal"
-import addParent from "../mutations/addParent"
-import getTypes from "../../core/queries/getTypes"
-import getLicenses from "app/core/queries/getLicenses"
 import editModuleScreen from "../mutations/editModuleScreen"
 import EditSupportingFileDisplay from "../../core/components/EditSupportingFileDisplay"
 import MetadataView from "./MetadataView"
-import AuthorAvatars from "./AuthorAvatars"
 import SearchResultModule from "../../core/components/SearchResultModule"
-import { ArrowNarrowLeftIcon, PlusSmIcon } from "@heroicons/react/solid"
-import AuthorAvatarsNew from "./AuthorAvatarsNew"
-import SearchResultWorkspace from "../../core/components/SearchResultWorkspace"
-import addAuthor from "../mutations/addAuthor"
-import EditMainFileDisplay from "../../core/components/EditMainFileDisplay"
+import { ArrowNarrowLeftIcon } from "@heroicons/react/solid"
 import MetadataEdit from "./MetadataEdit"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import addReference from "../mutations/addReference"
@@ -40,19 +29,25 @@ import deleteReference from "../mutations/deleteReference"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
-const ModuleEdit = ({ user, workspace, module, isAuthor, setInboxOpen, inboxOpen }) => {
+const ModuleEdit = ({
+  user,
+  workspace,
+  module,
+  isAuthor,
+  setInboxOpen,
+  inboxOpen,
+  expire,
+  signature,
+}) => {
   const [isEditing, setIsEditing] = useState(false)
   const [addAuthors, setAddAuthors] = useState(false)
   const currentWorkspace = useCurrentWorkspace()
 
-  const [manageAuthorsOpen, setManageAuthorsOpen] = useState(false)
   const [moduleEdit, { refetch, setQueryData }] = useQuery(
     useCurrentModule,
     { suffix: module.suffix },
     { refetchOnWindowFocus: true }
   )
-  const [moduleTypes] = useQuery(getTypes, undefined)
-  const [licenses] = useQuery(getLicenses, undefined)
 
   const mainFile = moduleEdit!.main as Prisma.JsonObject
   const supportingRaw = moduleEdit!.supporting as Prisma.JsonObject
@@ -61,7 +56,6 @@ const ModuleEdit = ({ user, workspace, module, isAuthor, setInboxOpen, inboxOpen
   const [deleteReferenceMutation] = useMutation(deleteReference)
   const [createReferenceMutation] = useMutation(createReferenceModule)
   const [editModuleScreenMutation] = useMutation(editModuleScreen)
-  const [addAuthorMutation] = useMutation(addAuthor)
 
   const formik = useFormik({
     initialValues: {
@@ -183,6 +177,8 @@ const ModuleEdit = ({ user, workspace, module, isAuthor, setInboxOpen, inboxOpen
           moduleEdit={moduleEdit}
           user={user}
           workspace={currentWorkspace}
+          expire={expire}
+          signature={signature}
         />
       </div>
 
@@ -214,6 +210,8 @@ const ModuleEdit = ({ user, workspace, module, isAuthor, setInboxOpen, inboxOpen
           moduleEdit={moduleEdit}
           user={user}
           workspace={currentWorkspace}
+          expire={expire}
+          signature={signature}
         />
       </div>
 

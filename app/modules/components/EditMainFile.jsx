@@ -1,9 +1,8 @@
-import { useQuery, useMutation } from "blitz"
+import { useMutation } from "blitz"
 import { Widget } from "@uploadcare/react-widget"
 import { useRef } from "react"
 import toast from "react-hot-toast"
 
-import getSignature from "../../auth/queries/getSignature"
 import addMain from "../mutations/addMain"
 import EditMainFileDisplay from "../../core/components/EditMainFileDisplay"
 import { PlusSmIcon } from "@heroicons/react/solid"
@@ -11,8 +10,15 @@ import { fileSizeLimit, fileTypeLimit } from "../../core/utils/fileTypeLimit"
 
 const validators = [fileTypeLimit, fileSizeLimit]
 
-const EditMainFile = ({ mainFile, setQueryData, moduleEdit, user, workspace }) => {
-  const [uploadSecret] = useQuery(getSignature, undefined)
+const EditMainFile = ({
+  mainFile,
+  setQueryData,
+  moduleEdit,
+  user,
+  workspace,
+  expire,
+  signature,
+}) => {
   const widgetApi = useRef()
   const [addMainMutation] = useMutation(addMain)
 
@@ -39,8 +45,8 @@ const EditMainFile = ({ mainFile, setQueryData, moduleEdit, user, workspace }) =
             <PlusSmIcon className="w-4 h-4" aria-hidden="true" /> Add Main File
             <Widget
               publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
-              // secureSignature={uploadSecret.signature}
-              // secureExpire={uploadSecret.expire}
+              secureSignature={signature}
+              secureExpire={expire}
               ref={widgetApi}
               previewStep
               validators={validators}
