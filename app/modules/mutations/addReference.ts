@@ -1,24 +1,14 @@
-import { NotFoundError, resolver } from "blitz"
+import { resolver } from "blitz"
 import db from "db"
 
-export default resolver.pipe(resolver.authorize(), async ({ id, title }) => {
+export default resolver.pipe(resolver.authorize(), async ({ currentId, connectId }) => {
   const module = await db.module.update({
-    where: { id },
-    data: { title },
-  })
-
-  // Force all authors to reapprove for publishing
-  await db.authorship.updateMany({
-    where: {
-      moduleId: module.id,
-    },
+    where: { id: currentId },
     data: {
-      readyToPublish: false,
+      references: {
+        connect: { id: parseInt(connectId) },
+      },
     },
-  })
-
-  const updatedModule = await db.module.findFirst({
-    where: { id },
     include: {
       references: {
         include: {
@@ -62,5 +52,5 @@ export default resolver.pipe(resolver.authorize(), async ({ id, title }) => {
     },
   })
 
-  return updatedModule!
+  return module
 })

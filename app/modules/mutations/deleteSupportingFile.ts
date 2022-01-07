@@ -16,6 +16,18 @@ export default resolver.pipe(resolver.authorize(), async ({ id, uuid }) => {
       supporting: supportingFiles,
     },
     include: {
+      references: {
+        include: {
+          authors: {
+            include: {
+              workspace: true,
+            },
+          },
+        },
+        orderBy: {
+          title: "asc",
+        },
+      },
       authors: {
         include: {
           workspace: true,

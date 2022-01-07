@@ -1,4 +1,4 @@
-import { useQuery, useMutation, Link, validateZodSchema } from "blitz"
+import { useQuery, useMutation, Link, validateZodSchema, Routes } from "blitz"
 import { useState, useEffect } from "react"
 import moment from "moment"
 import algoliasearch from "algoliasearch"
@@ -7,8 +7,9 @@ import { getAlgoliaResults } from "@algolia/autocomplete-js"
 import { Edit24, EditOff24, Save32 } from "@carbon/icons-react"
 import { Prisma } from "prisma"
 import { useFormik } from "formik"
-import { Maximize24, Minimize24 } from "@carbon/icons-react"
+import { Maximize24, TrashCan24 } from "@carbon/icons-react"
 import toast from "react-hot-toast"
+import router from "next/router"
 
 import EditMainFile from "./EditMainFile"
 import ManageAuthors from "./ManageAuthors"
@@ -33,6 +34,9 @@ import addAuthor from "../mutations/addAuthor"
 import EditMainFileDisplay from "../../core/components/EditMainFileDisplay"
 import MetadataEdit from "./MetadataEdit"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
+import addReference from "../mutations/addReference"
+import createReferenceModule from "../mutations/createReferenceModule"
+import deleteReference from "../mutations/deleteReference"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
@@ -53,7 +57,9 @@ const ModuleEdit = ({ user, workspace, module, isAuthor, setInboxOpen, inboxOpen
   const mainFile = moduleEdit!.main as Prisma.JsonObject
   const supportingRaw = moduleEdit!.supporting as Prisma.JsonObject
 
-  const [addParentMutation] = useMutation(addParent)
+  const [addReferenceMutation] = useMutation(addReference)
+  const [deleteReferenceMutation] = useMutation(deleteReference)
+  const [createReferenceMutation] = useMutation(createReferenceModule)
   const [editModuleScreenMutation] = useMutation(editModuleScreen)
   const [addAuthorMutation] = useMutation(addAuthor)
 
@@ -212,6 +218,151 @@ const ModuleEdit = ({ user, workspace, module, isAuthor, setInboxOpen, inboxOpen
       </div>
 
       {/* PLACEHOLDER References */}
+      <div className="my-3">
+        <h2 className="text-xs leading-4 font-semibold text-gray-500 dark:text-gray-200 my-2">
+          Reference list
+        </h2>
+        <label htmlFor="search" className="sr-only">
+          Search references
+        </label>
+        <Autocomplete
+          className="h-full"
+          openOnFocus={true}
+          defaultActiveItemId="0"
+          getSources={({ query }) => [
+            {
+              sourceId: "products",
+              async onSelect(params) {
+                const { item, setQuery } = params
+                if (item.suffix) {
+                  // TODO: Add reference
+                  const updatedModule = await addReferenceMutation({
+                    currentId: moduleEdit?.id,
+                    connectId: item.objectID,
+                  })
+
+                  setQueryData(updatedModule)
+                }
+              },
+              getItems() {
+                return getAlgoliaResults({
+                  searchClient,
+                  queries: [
+                    {
+                      indexName: `${process.env.ALGOLIA_PREFIX}_modules`,
+                      query,
+                    },
+                  ],
+                })
+              },
+              templates: {
+                item({ item, components }) {
+                  return (
+                    <>
+                      {item.__autocomplete_indexName.match(/_modules/g) ? (
+                        <SearchResultModule item={item} />
+                      ) : (
+                        ""
+                      )}
+                    </>
+                  )
+                },
+                noResults() {
+                  return (
+                    <>
+                      {/* https://www.crossref.org/blog/dois-and-matching-regular-expressions/ */}
+                      {query.match(/^10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i) ? (
+                        <>
+                          <button
+                            className="text-gray-900 dark:text-gray-200 text-sm leading-4 font-normal"
+                            onClick={async () => {
+                              toast.promise(createReferenceMutation({ doi: query }), {
+                                loading: "Searching...",
+                                success: "Reference added!",
+                                error: "Could not add reference.",
+                              })
+                            }}
+                          >
+                            Click here to add {query} to ResearchEquals database
+                          </button>
+                        </>
+                      ) : (
+                        <p className="text-gray-900 dark:text-gray-200 text-sm leading-4 font-normal">
+                          Input a DOI to add
+                        </p>
+                      )}
+                    </>
+                  )
+                },
+              },
+            },
+          ]}
+        />
+        <ol className="list-decimal list-inside my-4 text-normal">
+          {moduleEdit?.references!.map((reference) => (
+            <>
+              <li>
+                <button className="mx-2">
+                  <TrashCan24
+                    className="w-6 h-6 fill-current text-red-500 inline-block align-middle"
+                    onClick={async () => {
+                      const updatedModule = await deleteReferenceMutation({
+                        currentId: moduleEdit?.id,
+                        disconnectId: reference.id,
+                      })
+
+                      setQueryData(updatedModule)
+                    }}
+                    aria-label="Delete reference"
+                  />
+                </button>
+                {reference.publishedWhere === "ResearchEquals" ? (
+                  <>
+                    {reference.authors.map((author, index) => (
+                      <>
+                        <Link href={Routes.HandlePage({ handle: author!.workspace!.handle })}>
+                          <a target="_blank">{author!.workspace!.name}</a>
+                        </Link>
+                        {index === reference.authors.length - 1 ? "" : ", "}
+                      </>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    {reference!.authorsRaw!["object"] ? (
+                      <>
+                        {reference!.authorsRaw!["object"].map((author, index) => (
+                          <>
+                            {index === 3
+                              ? "[...]"
+                              : index > 3
+                              ? ""
+                              : author.given && author.family
+                              ? `${author.given} ${author.family}`
+                              : `${author.name}`}
+                            {index === reference!.authorsRaw!["object"].length - 1 || index > 2
+                              ? ""
+                              : ", "}
+                          </>
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        <p className="italic">{reference.publishedWhere}</p>
+                      </>
+                    )}
+                  </>
+                )}{" "}
+                ({reference.publishedAt?.toISOString().substr(0, 10)}). {reference.title}.{" "}
+                <Link href={reference.url!}>
+                  <a target="_blank underline">{reference.url}</a>
+                </Link>
+                . <span className="italic">{reference.publishedWhere}</span>
+              </li>
+            </>
+          ))}
+        </ol>
+      </div>
       <div className="text-center">
         <DeleteModuleModal module={module} />
       </div>

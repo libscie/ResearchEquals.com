@@ -35,7 +35,22 @@ export default resolver.pipe(
     const updatedModule = await db.module.findFirst({
       where: { id },
       include: {
+        references: {
+          include: {
+            authors: {
+              include: {
+                workspace: true,
+              },
+            },
+          },
+          orderBy: {
+            title: "asc",
+          },
+        },
         authors: {
+          orderBy: {
+            authorshipRank: "asc",
+          },
           include: {
             workspace: true,
           },
@@ -65,6 +80,6 @@ export default resolver.pipe(
       },
     })
 
-    return updatedModule!
+    return updatedModule
   }
 )
