@@ -93,10 +93,10 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
     <>
       <Navbar />
       <main className="lg:relative bg-white dark:bg-gray-900">
-        <div className="">
+        <div className="" id="hero">
           <div className="pt-8 overflow-hidden sm:pt-12 lg:relative lg:py-32">
             <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:gap-24">
-              <div id="hero">
+              <div>
                 <div className="mt-20">
                   <div>
                     <a href="#" className="inline-flex space-x-4">
