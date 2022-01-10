@@ -52,7 +52,15 @@ export const getServerSideProps = async ({ params }) => {
 
 const HandlePage = ({ workspace }) => {
   return (
-    <Layout title={`R=${workspace.name || workspace.handle}`}>
+    <Layout
+      title={`R=${workspace.name || workspace.handle}`}
+      headChildren={
+        <>
+          <meta property="og:title" content={workspace.name || workspace.handle} />
+          {workspace.bio ? <meta property="og:description" content={workspace.bio} /> : ""}
+        </>
+      }
+    >
       <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-200 h-full">
         <Navbar />
         <div className="lg:flex max-w-full mx-4">
