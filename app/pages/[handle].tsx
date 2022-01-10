@@ -1,21 +1,12 @@
 import Layout from "app/core/layouts/Layout"
 import db from "db"
-import { Link, useRouter, usePaginatedQuery, useParams, useMutation, useQuery } from "blitz"
-import {
-  CalendarIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  LinkIcon,
-  UserAddIcon,
-} from "@heroicons/react/solid"
+import { Link, useRouter, usePaginatedQuery, useParams, useQuery } from "blitz"
 import { Suspense } from "react"
-import toast from "react-hot-toast"
 import moment from "moment"
+import { Calendar32, UserFollow32, Link32 } from "@carbon/icons-react"
 
 import Navbar from "../core/components/Navbar"
 import getHandleFeed from "../workspaces/queries/getHandleFeed"
-import followWorkspace from "../workspaces/mutations/followWorkspace"
-import unfollowWorkspace from "../workspaces/mutations/unfollowWorkspace"
 import ModuleCard from "../core/components/ModuleCard"
 import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
 import SettingsModal from "../core/modals/settings"
@@ -98,10 +89,10 @@ const HandlePage = ({ workspace }) => {
             </div>
 
             <div>
-              <p className="flex my-2 text-sm leading-4 font-normal text-gray-500 dark:text-gray-200">
+              <p className="flex text-sm leading-4 font-normal text-gray-500 dark:text-gray-200">
                 <p>
                   <span className="inline-block h-full align-middle"> </span>
-                  <CalendarIcon
+                  <Calendar32
                     className="w-4 h-4 inline-block align-middle mr-1 text-gray-700 dark:text-gray-400"
                     aria-hidden="true"
                   />
@@ -138,7 +129,7 @@ const HandlePage = ({ workspace }) => {
                 <p className="flex my-2 text-sm leading-4 font-normal text-gray-500 dark:text-gray-200">
                   <p>
                     <span className="inline-block h-full align-middle"> </span>
-                    <LinkIcon
+                    <Link32
                       className="w-4 h-4 inline-block align-middle mr-1 text-gray-700 dark:text-gray-400"
                       aria-hidden="true"
                     />
@@ -155,25 +146,30 @@ const HandlePage = ({ workspace }) => {
               ) : (
                 <></>
               )}
-              <Suspense fallback="">
-                <HandlePanel
-                  buttonText={
-                    <p className="flex text-sm leading-4 font-normal text-gray-500 dark:text-gray-200 underline">
-                      <p>
-                        <span className="inline-block h-full align-middle"> </span>
-                        <UserAddIcon
-                          className="w-4 h-4 inline-block align-middle mr-1 text-gray-700 dark:text-gray-400"
-                          aria-hidden="true"
-                        />
-                        Following{" "}
-                        <Suspense fallback="Loading...">{workspace.following.length}</Suspense>
+              {workspace.following.length > 0 ? (
+                <Suspense fallback="">
+                  <HandlePanel
+                    buttonText={
+                      <p className="flex text-sm leading-4 font-normal text-gray-500 dark:text-gray-200 underline">
+                        <p>
+                          <span className="inline-block h-full align-middle"> </span>
+                          <UserFollow32
+                            className="w-4 h-4 inline-block align-middle mr-1 text-gray-700 dark:text-gray-400"
+                            aria-hidden="true"
+                          />
+                          Following{" "}
+                          <Suspense fallback="Loading...">{workspace.following.length}</Suspense>
+                        </p>
                       </p>
-                    </p>
-                  }
-                  title="Following"
-                  authors={workspace.following}
-                />
-              </Suspense>
+                    }
+                    title="Following"
+                    name={workspace.name || workspace.handle}
+                    authors={workspace.following}
+                  />
+                </Suspense>
+              ) : (
+                ""
+              )}
             </div>
           </div>
           <div className="w-full ">
