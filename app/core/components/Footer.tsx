@@ -1,5 +1,6 @@
 import { Link, Routes } from "blitz"
 import { LogoGithub32, LogoTwitter32 } from "@carbon/icons-react"
+import LibscieLogo from "./LibscieLogo"
 
 const Footer = () => {
   const date = new Date()
@@ -49,7 +50,7 @@ const Footer = () => {
             </Link>
           </p>
         </div>
-        <div className="w-10/12 sm:w-full mt-4 sm:mt-0">
+        <div className="w-10/12 sm:w-full mt-4 sm:mt-0 sm:mx-4">
           <h3 className="mb-4 font-bold text-sm">Funders</h3>
           <p className="mt-4 mb-4">
             <Link href="https://shuttleworthfoundation.org">
@@ -86,8 +87,13 @@ const Footer = () => {
             </Link>
           </p>
         </div>
-        <div className="w-10/12 sm:w-full text-sm">
-          {/* <h3 className="mb-4 font-bold">Navigation</h3> */}
+        <div className="w-10/12 sm:w-full text-sm mt-4 sm:mt-0 sm:mx-4">
+          <h3 className="mb-4 font-bold">Powered by</h3>
+          <Link href="https://libscie.org">
+            <a target="_blank">
+              <LibscieLogo />
+            </a>
+          </Link>
         </div>
         <div className="w-10/12 sm:w-full text-sm  mt-4 sm:mt-0">
           <h3 className="mb-4 font-bold text-sm">Follow</h3>

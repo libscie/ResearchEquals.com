@@ -111,14 +111,10 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                       Step by step publishing of{" "}
                       <span className="text-indigo-600 my-2">your research</span>
                     </h1>
-                    {/* <p className="mt-6 text-xl text-gray-800 dark:text-gray-50">
-                      For your entire research journey, no matter the output.
-                    </p> */}
                     <p className="my-4 text-xl text-gray-800 dark:text-gray-50">
-                      A new publishing format: Research modules. Only on ResearchEquals.com
+                      A new publishing format: Research modules.
                     </p>
                   </div>
-                  {/* TODO: Replace with formik form */}
                   <form
                     onSubmit={formik.handleSubmit}
                     className="mt-12 sm:max-w-lg sm:w-full sm:flex"
