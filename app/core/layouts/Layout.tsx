@@ -17,9 +17,10 @@ let config = {
 type LayoutProps = {
   title?: string
   children: ReactNode
+  headChildren?: ReactNode
 }
 
-const Layout = ({ title, children }: LayoutProps) => {
+const Layout = ({ title, children, headChildren }: LayoutProps) => {
   useEffect(() => {
     if (getCookieConsentValue("researchequals-website-cookie") === "true") {
       Chatra("init", config)
@@ -33,6 +34,7 @@ const Layout = ({ title, children }: LayoutProps) => {
         <title>{title || "ResearchEquals"}</title>
         <link rel="icon" href="/favicon-32.png" />
         <script data-respect-dnt data-no-cookie async src="https://cdn.splitbee.io/sb.js"></script>
+        {headChildren}
       </Head>
       <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
         <div className="flex-grow">{children}</div>
