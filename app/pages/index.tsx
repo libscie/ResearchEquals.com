@@ -96,7 +96,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
         <div className="">
           <div className="pt-8 overflow-hidden sm:pt-12 lg:relative lg:py-32">
             <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:gap-24">
-              <div>
+              <div id="hero">
                 <div className="mt-20">
                   <div>
                     <a href="#" className="inline-flex space-x-4">
@@ -556,6 +556,26 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
 }
 
 Home.suppressFirstRenderFlicker = true
-Home.getLayout = (page) => <Layout title="Home">{page}</Layout>
+Home.getLayout = (page) => (
+  <Layout
+    title="Home"
+    headChildren={
+      <>
+        <meta property="og:title" content="ResearchEquals.com" />
+        <meta
+          property="og:description"
+          content="Step by step publishing of your research, with a new publishing format: Research modules."
+        />
+        <meta property="og:image" content="https://og-images.herokuapp.com/researchequals" />
+        <meta
+          property="og:image:alt"
+          content="Screenshot of the homepage of ResearchEquals.com, including the description and a sign up button for release updates."
+        />
+      </>
+    }
+  >
+    {page}
+  </Layout>
+)
 
 export default Home
