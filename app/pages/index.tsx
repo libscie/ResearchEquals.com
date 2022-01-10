@@ -3,7 +3,6 @@ import {
   GetStaticProps,
   InferGetStaticPropsType,
   Link,
-  Routes,
   useMutation,
   validateZodSchema,
 } from "blitz"
@@ -22,8 +21,6 @@ import {
   TextAlignLeft32,
   Video32,
   CircleFillGlyph,
-  LogoTwitter32,
-  LogoGithub32,
 } from "@carbon/icons-react"
 import { ChevronRightIcon } from "@heroicons/react/solid"
 import Xarrows from "react-xarrows"
@@ -412,19 +409,17 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                   </p>
                   <ul role="list" className="my-4 space-y-4">
                     {freeLicenses.map((license) => (
-                      <>
-                        <li key="feature-01" className="flex space-x-3 text-lg">
-                          <Checkmark24
-                            className="stroke-current stroke-2 fill-current flex-shrink-0 h-6 w-6 text-white"
-                            aria-hidden="true"
-                          />
-                          <Link href={license.url}>
-                            <a target="_blank" className="">
-                              {license.name}
-                            </a>
-                          </Link>
-                        </li>
-                      </>
+                      <li key={license.id} className="flex space-x-3 text-lg">
+                        <Checkmark24
+                          className="stroke-current stroke-2 fill-current flex-shrink-0 h-6 w-6 text-white"
+                          aria-hidden="true"
+                        />
+                        <Link href={license.url}>
+                          <a target="_blank" className="">
+                            {license.name}
+                          </a>
+                        </Link>
+                      </li>
                     ))}
                   </ul>
                 </>
@@ -442,19 +437,17 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                   <p className="my-2 text-lg">Need more restrictive licenses?</p>
                   <ul role="list" className="my-4 space-y-4">
                     {payToClose.map((license) => (
-                      <>
-                        <li className="flex space-x-3 text-lg">
-                          <CurrencyEuro32
-                            className="stroke-current stroke-2 fill-current flex-shrink-0 h-6 w-6 text-white"
-                            aria-hidden="true"
-                          />
-                          <Link href={license.url}>
-                            <a target="_blank" className="">
-                              {license.price / 100} - {license.name}
-                            </a>
-                          </Link>
-                        </li>
-                      </>
+                      <li className="flex space-x-3 text-lg" key={license.id}>
+                        <CurrencyEuro32
+                          className="stroke-current stroke-2 fill-current flex-shrink-0 h-6 w-6 text-white"
+                          aria-hidden="true"
+                        />
+                        <Link href={license.url}>
+                          <a target="_blank" className="">
+                            {license.price / 100} - {license.name}
+                          </a>
+                        </Link>
+                      </li>
                     ))}
                   </ul>
                 </>
