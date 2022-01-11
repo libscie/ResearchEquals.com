@@ -73,8 +73,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                         Get started
                       </a>
                     </Link>
-                    {/* TODO: Update link */}
-                    <Link href={Routes.LoginPage()}>
+                    <Link href="/browse">
                       <a className="mx-4 whitespace-nowrap leading-5 font-normal text-indigo-700 dark:text-gray-200 bg-indigo-100 hover:bg-indigo-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-0 dark:border dark:border-gray-600 px-4 py-2 rounded-md">
                         Browse content
                       </a>
@@ -424,8 +423,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                     Get started
                   </a>
                 </Link>
-                {/* TODO: Update link */}
-                <Link href={Routes.LoginPage()}>
+                <Link href="/browse">
                   <a className="mx-4 whitespace-nowrap leading-5 font-normal text-indigo-700 dark:text-gray-200 bg-indigo-100 hover:bg-indigo-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-0 dark:border dark:border-gray-600 px-4 py-2 rounded-md">
                     Browse content
                   </a>
