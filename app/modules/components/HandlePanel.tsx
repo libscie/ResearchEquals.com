@@ -1,20 +1,14 @@
 import { Dialog, Transition } from "@headlessui/react"
-import { CheckIcon, XIcon } from "@heroicons/react/solid"
 import FollowButton from "app/workspaces/components/FollowButton"
 import UnfollowButton from "app/workspaces/components/UnfollowButton"
-import followWorkspace from "app/workspaces/mutations/followWorkspace"
-import unfollowWorkspace from "app/workspaces/mutations/unfollowWorkspace"
 import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
-import { Link, Routes, useMutation, useQuery } from "blitz"
+import { Link, Routes, useQuery } from "blitz"
 import { Fragment, useState } from "react"
-import toast from "react-hot-toast"
+import { Close32 } from "@carbon/icons-react"
 
-const AuthorPanel = ({ buttonText, title, authors }) => {
+const AuthorPanel = ({ buttonText, title, authors, name }) => {
   const [openPanel, setPanelOpen] = useState(false)
-  // Used to display the follow / unfollow button
   const [ownWorkspace, { refetch }] = useQuery(getCurrentWorkspace, null)
-  const [followWorkspaceMutation] = useMutation(followWorkspace)
-  const [unfollowWorkspaceMutation] = useMutation(unfollowWorkspace)
 
   return (
     <>
@@ -23,10 +17,7 @@ const AuthorPanel = ({ buttonText, title, authors }) => {
           setPanelOpen(true)
         }}
       >
-        <button>
-          {buttonText}
-          {/* Create module */}
-        </button>
+        <button>{buttonText}</button>
       </span>
       <Transition.Root show={openPanel} as={Fragment}>
         <Dialog as="div" className="fixed inset-0 overflow-hidden" onClose={setPanelOpen}>
@@ -57,22 +48,25 @@ const AuthorPanel = ({ buttonText, title, authors }) => {
                             onClick={() => setPanelOpen(false)}
                           >
                             <span className="sr-only">Close panel</span>
-                            <XIcon className="h-6 w-6" aria-hidden="true" />
+                            <Close32 className="h-6 w-6" aria-hidden="true" />
                           </button>
                         </div>
                       </div>
                     </div>
                     <div className="mt-6 px-4 sm:px-6 text-sm leading-5 font-normal border-b border-gray-400 dark:border-gray-600 pb-4 dark:text-white">
-                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit.
-                      Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id,
-                      mattis vel, nisi.
+                      These are the authors {name} is following. Maybe there is somebody in this
+                      list you find interesting?
                     </div>
-                    {/* <div className="relative flex-1"> */}
                     {/* Replace with your content */}
                     <ul className="relative flex-1 divide-y divide-gray-400 dark:divide-gray-600">
                       {authors.map((author) => (
                         <>
-                          <li className="py-2 px-2 flex">
+                          <li
+                            className="py-2 px-2 flex"
+                            onClick={() => {
+                              setPanelOpen(false)
+                            }}
+                          >
                             <div className="mr-2">
                               <img
                                 src={author.avatar}
