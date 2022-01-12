@@ -35,11 +35,7 @@ export default async function getSignature() {
       modules:
         index !== 0 ? itemCounter(dates, date) + data[index - 1].modules : itemCounter(dates, date),
     })
-    // console.log(data[index - 1].workspaces)
-    // console.log(itemCounter(dates, date))
   })
-
-  console.log(data)
 
   return data
 }
