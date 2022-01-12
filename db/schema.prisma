@@ -98,7 +98,7 @@ model Workspace {
   bio           String?
   pronouns      String?       @db.VarChar(20)
   url           String?
-  orcid         String?       @unique
+  orcid         String?
 
   members     Membership[]
   authorships Authorship[]
