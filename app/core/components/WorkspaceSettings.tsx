@@ -148,7 +148,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         <div className="flex-grow ml-2 text-gray-900 dark:text-gray-200">
           <span className="inline-block h-full align-middle"> </span>
           <p className="inline-block align-middle">
-            {!workspace!.orcid ? (
+            {!workspace!.orcid && workspace.workspaceType === "Individual" ? (
               <Link href="api/auth/orcid">
                 <button className="flex py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500 mb-1">
                   Connect your ORCID
@@ -157,27 +157,10 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
             ) : (
               <>
                 <p className="text-sm font-medium">{workspace!.name}</p>
-                <p className="flex text-sm font-medium">
-                  {workspace!.orcid}
-                  <span className="inline-block h-full align-middle"> </span>
-                  <p className="inline-block align-middle">
-                    <Link href="api/auth/orcid">
-                      <button className="inline-block align-middle">
-                        <Renew32
-                          data-tip
-                          data-for="refreshTip"
-                          className="ml-1 cursor-pointer w-4 h-4 "
-                        />
-                        <ReactTooltip id="refreshTip" place="top" effect="solid">
-                          Click here to refresh your info from ORCID
-                        </ReactTooltip>
-                      </button>
-                    </Link>
-                  </p>
-                </p>
+                <p className="flex text-sm font-medium">{workspace!.orcid}</p>
               </>
             )}
-            <p className="text-xs leading-4 font-normal">@{workspace.handle}</p>
+            <p className="text-sm leading-4 font-normal">@{workspace.handle}</p>
           </p>
         </div>
       </div>
