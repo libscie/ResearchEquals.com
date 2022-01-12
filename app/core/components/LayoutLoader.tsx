@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 
-const LayoutLoader = ({ page }) => {
+const LayoutLoader = ({ children }) => {
   return (
     <Suspense
       fallback={
@@ -85,7 +85,7 @@ const LayoutLoader = ({ page }) => {
         </>
       }
     >
-      {page}
+      {children}
     </Suspense>
   )
 }
