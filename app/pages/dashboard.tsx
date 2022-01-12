@@ -14,6 +14,7 @@ import generateSignature from "app/signature"
 import WhoToFollow from "../core/components/WhoToFollow"
 import LayoutLoader from "../core/components/LayoutLoader"
 import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
+import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 
 const ITEMS_PER_PAGE = 5
 
@@ -30,12 +31,16 @@ export async function getServerSideProps(context) {
   }
 }
 
-const DashboardContent = ({ expire, signature }) => {
-  const session = useSession()
-  const query = useRouterQuery()
-  const [ownWorkspace, { refetch: refetchWorkspace }] = useQuery(getCurrentWorkspace, null)
-  const [data, { refetch }] = useQuery(getDashboardData, { session })
-  const router = useRouter()
+const DashboardContent = ({
+  expire,
+  signature,
+  query,
+  ownWorkspace,
+  router,
+  data,
+  refetch,
+  refetchWorkspace,
+}) => {
   const page = Number(router.query.page) || 0
   const [{ modules, hasMore, count }, { refetch: refetchFeed }] = usePaginatedQuery(getFeed, {
     orderBy: { id: "asc" },
@@ -46,6 +51,7 @@ const DashboardContent = ({ expire, signature }) => {
   const goToPage = (number) => router.push({ query: { page: number } })
   const goToNextPage = () => router.push({ query: { page: page + 1 } })
 
+  console.log(data)
   const stats = [
     {
       name: "Drafts",
@@ -188,11 +194,34 @@ const DashboardContent = ({ expire, signature }) => {
 }
 
 const Dashboard = ({ expire, signature }) => {
+  const currentUser = useCurrentUser()
+  const session = useSession()
+  const query = useRouterQuery()
+  const [ownWorkspace, { refetch: refetchWorkspace }] = useQuery(getCurrentWorkspace, null)
+  const router = useRouter()
+  const [data, { refetch }] = useQuery(getDashboardData, { session })
+
   return (
     <>
-      <Navbar />
+      <Navbar
+        currentUser={currentUser}
+        session={session}
+        currentWorkspace={ownWorkspace}
+        router={router}
+        drafts={data.draftModules}
+        invitations={data.invitedModules}
+      />
       <main className="max-w-7xl lg:max-w-full mx-auto max-h-full h-full">
-        <DashboardContent expire={expire} signature={signature} />
+        <DashboardContent
+          expire={expire}
+          signature={signature}
+          query={query}
+          ownWorkspace={ownWorkspace}
+          router={router}
+          data={data}
+          refetch={refetch}
+          refetchWorkspace={refetchWorkspace}
+        />
       </main>
     </>
   )

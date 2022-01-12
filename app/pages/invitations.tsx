@@ -1,4 +1,4 @@
-import { BlitzPage, useSession, useQuery, useRouterQuery, Router, useMutation } from "blitz"
+import { BlitzPage, useSession, useQuery, useRouterQuery, Router, useRouter } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import { Suspense, useEffect, useState } from "react"
 import { ProgressBarRound32 } from "@carbon/icons-react"
@@ -9,11 +9,10 @@ import { useCurrentUser } from "../core/hooks/useCurrentUser"
 import ModuleCard from "../core/components/ModuleCard"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 import ModuleInvitation from "../modules/components/ModuleInvitation"
-import acceptInvitation from "../authorship/mutations/acceptInvitation"
-import removeInvitation from "../authorship/mutations/removeInvitation"
 import { useCurrentWorkspace } from "../core/hooks/useCurrentWorkspace"
 import { useMediaPredicate } from "react-media-hook"
 import LayoutLoader from "app/core/components/LayoutLoader"
+import getDrafts from "app/core/queries/getDrafts"
 
 const Invitations = () => {
   const session = useSession()
@@ -21,16 +20,9 @@ const Invitations = () => {
   const currentWorkspace = useCurrentWorkspace()
   const [inboxOpen, setInboxOpen] = useState(true)
   const biggerWindow = useMediaPredicate("(min-width: 1024px)")
-
   const [invitations, { refetch }] = useQuery(getInvitedModules, { session })
   const user = useCurrentUser()
-  // TODO: Actualy use routerquery for setmodule
   const query = useRouterQuery()
-  const [acceptMutation] = useMutation(acceptInvitation)
-  const [declineMutation] = useMutation(removeInvitation)
-  // todo: uses author ID and suffix
-  // requires us to match the current workspace to the author id for this module
-  // find author id in invitations by filtering for workspace id
 
   useEffect(() => {
     if (query.suffix) {
@@ -121,9 +113,23 @@ const Invitations = () => {
 }
 
 const InvitationsPage: BlitzPage = () => {
+  const currentUser = useCurrentUser()
+  const session = useSession()
+  const currentWorkspace = useCurrentWorkspace()
+  const router = useRouter()
+  const [drafts] = useQuery(getDrafts, { session })
+  const [invitations] = useQuery(getInvitedModules, { session })
+
   return (
     <>
-      <Navbar />
+      <Navbar
+        currentUser={currentUser}
+        session={session}
+        currentWorkspace={currentWorkspace}
+        router={router}
+        drafts={drafts}
+        invitations={invitations}
+      />
       <main className="flex relative">
         <Invitations />
       </main>

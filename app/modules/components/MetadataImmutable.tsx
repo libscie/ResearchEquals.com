@@ -1,7 +1,5 @@
-import Autocomplete from "app/core/components/Autocomplete"
-import { Link, useMutation } from "blitz"
+import { Link } from "blitz"
 import moment from "moment"
-import toast from "react-hot-toast"
 
 import AuthorAvatarsNew from "./AuthorAvatarsNew"
 import ViewAuthors from "./ViewAuthors"

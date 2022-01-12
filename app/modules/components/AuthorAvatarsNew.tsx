@@ -16,7 +16,6 @@ const AuthorAvatarsNew = ({ authors }) => {
             )}
           </>
         ))}
-        {/* </div> */}
         {authors.length >= 4 ? (
           <>
             <span className="inline-block h-full align-middle"> </span>

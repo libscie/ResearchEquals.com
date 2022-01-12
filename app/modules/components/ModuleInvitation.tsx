@@ -19,7 +19,6 @@ const ModuleInvitation = ({
   inboxOpen,
   setInboxOpen,
 }) => {
-  const [manageAuthorsOpen, setManageAuthorsOpen] = useState(false)
   const [moduleEdit, { refetch, setQueryData }] = useQuery(
     useCurrentModule,
     { suffix: module.suffix },
@@ -144,7 +143,7 @@ const ModuleInvitation = ({
       ) : (
         ""
       )}
-      {/* PLACEHOLDER References */}
+      {/* TODO: References */}
     </div>
   )
 }

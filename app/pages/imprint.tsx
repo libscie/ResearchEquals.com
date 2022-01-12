@@ -1,16 +1,33 @@
-import { BlitzPage, Link, Routes } from "blitz"
+import { BlitzPage, Link, Routes, useQuery, useRouter, useSession } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import Navbar from "../core/components/Navbar"
 import Footer from "../core/components/Footer"
 import LayoutLoader from "app/core/components/LayoutLoader"
+import { useCurrentUser } from "app/core/hooks/useCurrentUser"
+import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
+import getDrafts from "app/core/queries/getDrafts"
+import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 
 const Imprint: BlitzPage = () => {
   const page = "Imprint"
   const title = "Who runs this website?"
+  const currentUser = useCurrentUser()
+  const session = useSession()
+  const currentWorkspace = useCurrentWorkspace()
+  const router = useRouter()
+  const [drafts] = useQuery(getDrafts, { session })
+  const [invitations] = useQuery(getInvitedModules, { session })
 
   return (
     <>
-      <Navbar />
+      <Navbar
+        currentUser={currentUser}
+        session={session}
+        currentWorkspace={currentWorkspace}
+        router={router}
+        drafts={drafts}
+        invitations={invitations}
+      />
       <main className="lg:relative bg-white dark:bg-gray-900">
         <div className="mx-2">
           <div className="max-w-7xl mx-auto pt-10 text-black dark:text-white md:p-0 md:pt-10">

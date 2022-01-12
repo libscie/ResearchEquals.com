@@ -2,7 +2,7 @@ import Footer from "app/core/components/Footer"
 import Navbar from "app/core/components/Navbar"
 import Layout from "app/core/layouts/Layout"
 import getBrowseGraphData from "app/core/queries/getBrowseGraphData"
-import { Link, Routes, useInfiniteQuery, useQuery } from "blitz"
+import { Link, Routes, useInfiniteQuery, useQuery, useRouter, useSession } from "blitz"
 import moment from "moment"
 import React from "react"
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
@@ -10,6 +10,10 @@ import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "rec
 import getBrowseData from "../core/queries/getBrowseData"
 import AuthorAvatarsNew from "../modules/components/AuthorAvatarsNew"
 import LayoutLoader from "../core/components/LayoutLoader"
+import { useCurrentUser } from "app/core/hooks/useCurrentUser"
+import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
+import getDrafts from "app/core/queries/getDrafts"
+import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
@@ -59,7 +63,6 @@ const BrowseContent = () => {
               style={{
                 fontSize: "0.8rem",
               }}
-              // hide={true}
             />
             <YAxis
               dataKey="modules"
@@ -70,7 +73,6 @@ const BrowseContent = () => {
                 fontSize: "0.8rem",
               }}
               orientation="right"
-              // hide={true}
             />
             <Tooltip content={<CustomTooltip />} />
             <Area
@@ -130,9 +132,23 @@ const BrowseContent = () => {
 }
 
 const Browse = () => {
+  const currentUser = useCurrentUser()
+  const session = useSession()
+  const currentWorkspace = useCurrentWorkspace()
+  const router = useRouter()
+  const [drafts] = useQuery(getDrafts, { session })
+  const [invitations] = useQuery(getInvitedModules, { session })
+
   return (
     <>
-      <Navbar />
+      <Navbar
+        currentUser={currentUser}
+        session={session}
+        currentWorkspace={currentWorkspace}
+        router={router}
+        drafts={drafts}
+        invitations={invitations}
+      />
       <BrowseContent />
       <Footer />
     </>

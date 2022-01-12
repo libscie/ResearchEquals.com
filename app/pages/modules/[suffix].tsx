@@ -1,12 +1,16 @@
 import { Prisma } from "prisma"
-import { Link, NotFoundError, Routes } from "blitz"
+import { Link, NotFoundError, Routes, useQuery, useRouter, useSession } from "blitz"
 
 import Layout from "../../core/layouts/Layout"
 import db from "db"
-import NavbarApp from "../../core/components/Navbar"
+import Navbar from "../../core/components/Navbar"
 import ViewFiles from "../../modules/components/ViewFiles"
 import MetadataImmutable from "../../modules/components/MetadataImmutable"
 import LayoutLoader from "app/core/components/LayoutLoader"
+import getInvitedModules from "app/workspaces/queries/getInvitedModules"
+import getDrafts from "app/core/queries/getDrafts"
+import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
+import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 
 export async function getServerSideProps(context) {
   const module = await db.module.findFirst({
@@ -70,61 +74,56 @@ export async function getServerSideProps(context) {
   }
 }
 
-const ModulePage = ({ module }) => {
-  const mainFile = module!.main as Prisma.JsonObject
-  const supportingRaw = module!.supporting as Prisma.JsonObject
+const Module = ({ module, mainFile, supportingRaw }) => {
+  const currentUser = useCurrentUser()
+  const session = useSession()
+  const currentWorkspace = useCurrentWorkspace()
+  const router = useRouter()
+  const [drafts] = useQuery(getDrafts, { session })
+  const [invitations] = useQuery(getInvitedModules, { session })
 
   return (
-    <Layout
-      title={`R=${module.title}`}
-      headChildren={
-        <>
-          <meta property="og:title" content={module.title} />
-          <meta property="og:url" content={`https://doi.org/${module.prefix}/${module.suffix}`} />
-          {module.description ? (
-            <meta property="og:description" content={module.description} />
-          ) : (
-            ""
-          )}
-        </>
-      }
-    >
-      <LayoutLoader>
-        <NavbarApp />
-        <main className="max-w-7xl sm:mx-auto my-4 mx-4">
-          <div className="w-full flex">
-            {/* Push all menu bars to the right */}
-            <div className="flex-grow"></div>
-            <div>
-              {/* TODO: Add actions */}
-              {/* <AddAlt24 className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600" /> */}
-            </div>
+    <>
+      <Navbar
+        currentUser={currentUser}
+        session={session}
+        currentWorkspace={currentWorkspace}
+        router={router}
+        drafts={drafts}
+        invitations={invitations}
+      />
+      <main className="max-w-7xl sm:mx-auto my-4 mx-4">
+        <div className="w-full flex">
+          {/* Push all menu bars to the right */}
+          <div className="flex-grow"></div>
+          <div>{/* Space for menu bar items */}</div>
+        </div>
+        <MetadataImmutable module={module} />
+        {mainFile.name ? (
+          <div className="my-8">
+            <h2 className="">Main file</h2>
+            <ViewFiles name={mainFile.name} size={mainFile.size} url={mainFile.cdnUrl} />
           </div>
-          <MetadataImmutable module={module} />
-          {mainFile.name ? (
-            <div className="my-8">
-              <h2 className="">Main file</h2>
-              <ViewFiles name={mainFile.name} size={mainFile.size} url={mainFile.cdnUrl} />
-            </div>
-          ) : (
-            ""
-          )}
-          {supportingRaw.files.length > 0 ? (
-            <div className="my-8">
-              <h2>Supporting file(s)</h2>
-              {supportingRaw.files.map((file) => (
-                <>
-                  <ViewFiles
-                    name={file.original_filename}
-                    size={file.size}
-                    url={file.original_file_url}
-                  />
-                </>
-              ))}
-            </div>
-          ) : (
-            ""
-          )}
+        ) : (
+          ""
+        )}
+        {supportingRaw.files.length > 0 ? (
+          <div className="my-8">
+            <h2>Supporting file(s)</h2>
+            {supportingRaw.files.map((file) => (
+              <>
+                <ViewFiles
+                  name={file.original_filename}
+                  size={file.size}
+                  url={file.original_file_url}
+                />
+              </>
+            ))}
+          </div>
+        ) : (
+          ""
+        )}
+        {module.references.length > 0 ? (
           <div className="my-3">
             <h2>Reference list</h2>
             <ol className="list-decimal list-inside my-4 text-normal">
@@ -180,7 +179,35 @@ const ModulePage = ({ module }) => {
               ))}
             </ol>
           </div>
-        </main>
+        ) : (
+          ""
+        )}
+      </main>
+    </>
+  )
+}
+
+const ModulePage = ({ module }) => {
+  const mainFile = module!.main as Prisma.JsonObject
+  const supportingRaw = module!.supporting as Prisma.JsonObject
+
+  return (
+    <Layout
+      title={`R=${module.title}`}
+      headChildren={
+        <>
+          <meta property="og:title" content={module.title} />
+          <meta property="og:url" content={`https://doi.org/${module.prefix}/${module.suffix}`} />
+          {module.description ? (
+            <meta property="og:description" content={module.description} />
+          ) : (
+            ""
+          )}
+        </>
+      }
+    >
+      <LayoutLoader>
+        <Module module={module} mainFile={mainFile} supportingRaw={supportingRaw} />
       </LayoutLoader>
     </Layout>
   )

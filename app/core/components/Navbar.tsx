@@ -16,14 +16,7 @@ import getDrafts from "../queries/getDrafts"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
-const Navbar = () => {
-  const currentUser = useCurrentUser()
-  const session = useSession()
-  const currentWorkspace = useCurrentWorkspace()
-  const router = useRouter()
-  const [drafts] = useQuery(getDrafts, { session })
-  const [invitations] = useQuery(getInvitedModules, { session })
-
+const Navbar = ({ currentUser, session, currentWorkspace, router, drafts, invitations }) => {
   return (
     <>
       <div className="w-full bg-white dark:bg-gray-900 mx-auto px-4 sm:px-6 lg:px-8 z-50 border-b dark:border-gray-600 border-gray-100">

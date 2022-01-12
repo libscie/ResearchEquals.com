@@ -21,7 +21,6 @@ import EditSupportingFileDisplay from "../../core/components/EditSupportingFileD
 import MetadataView from "./MetadataView"
 import SearchResultModule from "../../core/components/SearchResultModule"
 import MetadataEdit from "./MetadataEdit"
-import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import addReference from "../mutations/addReference"
 import createReferenceModule from "../mutations/createReferenceModule"
 import deleteReference from "../mutations/deleteReference"
@@ -40,7 +39,6 @@ const ModuleEdit = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [addAuthors, setAddAuthors] = useState(false)
-  const currentWorkspace = useCurrentWorkspace()
 
   const [moduleEdit, { refetch, setQueryData }] = useQuery(
     useCurrentModule,
@@ -175,7 +173,7 @@ const ModuleEdit = ({
           setQueryData={setQueryData}
           moduleEdit={moduleEdit}
           user={user}
-          workspace={currentWorkspace}
+          workspace={workspace}
           expire={expire}
           signature={signature}
         />
@@ -208,7 +206,7 @@ const ModuleEdit = ({
           setQueryData={setQueryData}
           moduleEdit={moduleEdit}
           user={user}
-          workspace={currentWorkspace}
+          workspace={workspace}
           expire={expire}
           signature={signature}
         />
