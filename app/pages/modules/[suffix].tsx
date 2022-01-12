@@ -6,6 +6,7 @@ import db from "db"
 import NavbarApp from "../../core/components/Navbar"
 import ViewFiles from "../../modules/components/ViewFiles"
 import MetadataImmutable from "../../modules/components/MetadataImmutable"
+import LayoutLoader from "app/core/components/LayoutLoader"
 
 export async function getServerSideProps(context) {
   const module = await db.module.findFirst({
@@ -88,100 +89,99 @@ const ModulePage = ({ module }) => {
         </>
       }
     >
-      <NavbarApp />
-      <main className="max-w-7xl sm:mx-auto my-4 mx-4">
-        <div className="w-full flex">
-          {/* Push all menu bars to the right */}
-          <div className="flex-grow"></div>
-          <div>
-            {/* TODO: Add actions */}
-            {/* <AddAlt24 className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600" /> */}
+      <LayoutLoader>
+        <NavbarApp />
+        <main className="max-w-7xl sm:mx-auto my-4 mx-4">
+          <div className="w-full flex">
+            {/* Push all menu bars to the right */}
+            <div className="flex-grow"></div>
+            <div>
+              {/* TODO: Add actions */}
+              {/* <AddAlt24 className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600" /> */}
+            </div>
           </div>
-        </div>
-        <MetadataImmutable module={module} />
-
-        {mainFile.name ? (
-          <div className="my-8">
-            <h2 className="">Main file</h2>
-            <ViewFiles name={mainFile.name} size={mainFile.size} url={mainFile.cdnUrl} />
+          <MetadataImmutable module={module} />
+          {mainFile.name ? (
+            <div className="my-8">
+              <h2 className="">Main file</h2>
+              <ViewFiles name={mainFile.name} size={mainFile.size} url={mainFile.cdnUrl} />
+            </div>
+          ) : (
+            ""
+          )}
+          {supportingRaw.files.length > 0 ? (
+            <div className="my-8">
+              <h2>Supporting file(s)</h2>
+              {supportingRaw.files.map((file) => (
+                <>
+                  <ViewFiles
+                    name={file.original_filename}
+                    size={file.size}
+                    url={file.original_file_url}
+                  />
+                </>
+              ))}
+            </div>
+          ) : (
+            ""
+          )}
+          <div className="my-3">
+            <h2>Reference list</h2>
+            <ol className="list-decimal list-inside my-4 text-normal">
+              {module.references.map((reference) => (
+                <>
+                  <li>
+                    {reference.publishedWhere === "ResearchEquals" ? (
+                      <>
+                        {reference.authors.map((author, index) => (
+                          <>
+                            <Link href={Routes.HandlePage({ handle: author!.workspace!.handle })}>
+                              <a target="_blank">
+                                {author!.workspace!.firstName} {author!.workspace!.lastName}
+                              </a>
+                            </Link>
+                            {index === reference.authors.length - 1 ? "" : ", "}
+                          </>
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        {reference!.authorsRaw!["object"] ? (
+                          <>
+                            {reference!.authorsRaw!["object"].map((author, index) => (
+                              <>
+                                {index === 3
+                                  ? "[...]"
+                                  : index > 3
+                                  ? ""
+                                  : author.given && author.family
+                                  ? `${author.given} ${author.family}`
+                                  : `${author.name}`}
+                                {index === reference!.authorsRaw!["object"].length - 1 || index > 2
+                                  ? ""
+                                  : ", "}
+                              </>
+                            ))}
+                          </>
+                        ) : (
+                          <>
+                            <p className="italic">{reference.publishedWhere}</p>
+                          </>
+                        )}
+                      </>
+                    )}{" "}
+                    ({reference.publishedAt?.toISOString().substr(0, 10)}). {reference.title}.{" "}
+                    <Link href={reference.url!}>
+                      <a target="_blank underline">{reference.url}</a>
+                    </Link>
+                    . <span className="italic">{reference.publishedWhere}</span>
+                  </li>
+                </>
+              ))}
+            </ol>
           </div>
-        ) : (
-          ""
-        )}
-        {/* Supporting files */}
-        {supportingRaw.files.length > 0 ? (
-          <div className="my-8">
-            <h2>Supporting file(s)</h2>
-            {supportingRaw.files.map((file) => (
-              <>
-                <ViewFiles
-                  name={file.original_filename}
-                  size={file.size}
-                  url={file.original_file_url}
-                />
-              </>
-            ))}
-          </div>
-        ) : (
-          ""
-        )}
-        {/* PLACEHOLDER References */}
-        <div className="my-3">
-          <h2>Reference list</h2>
-          <ol className="list-decimal list-inside my-4 text-normal">
-            {module.references.map((reference) => (
-              <>
-                <li>
-                  {reference.publishedWhere === "ResearchEquals" ? (
-                    <>
-                      {reference.authors.map((author, index) => (
-                        <>
-                          <Link href={Routes.HandlePage({ handle: author!.workspace!.handle })}>
-                            <a target="_blank">
-                              {author!.workspace!.firstName} {author!.workspace!.lastName}
-                            </a>
-                          </Link>
-                          {index === reference.authors.length - 1 ? "" : ", "}
-                        </>
-                      ))}
-                    </>
-                  ) : (
-                    <>
-                      {reference!.authorsRaw!["object"] ? (
-                        <>
-                          {reference!.authorsRaw!["object"].map((author, index) => (
-                            <>
-                              {index === 3
-                                ? "[...]"
-                                : index > 3
-                                ? ""
-                                : author.given && author.family
-                                ? `${author.given} ${author.family}`
-                                : `${author.name}`}
-                              {index === reference!.authorsRaw!["object"].length - 1 || index > 2
-                                ? ""
-                                : ", "}
-                            </>
-                          ))}
-                        </>
-                      ) : (
-                        <>
-                          <p className="italic">{reference.publishedWhere}</p>
-                        </>
-                      )}
-                    </>
-                  )}{" "}
-                  ({reference.publishedAt?.toISOString().substr(0, 10)}). {reference.title}.{" "}
-                  <Link href={reference.url!}>
-                    <a target="_blank underline">{reference.url}</a>
-                  </Link>
-                  . <span className="italic">{reference.publishedWhere}</span>
-                </li>
-              </>
-            ))}
-          </ol>
-        </div>
-      </main>
+        </main>
+      </LayoutLoader>
     </Layout>
   )
 }

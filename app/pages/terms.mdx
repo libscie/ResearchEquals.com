@@ -1,15 +1,19 @@
 import Layout from "../core/layouts/Layout"
+import LayoutLoader from "../core/components/LayoutLoader"
 import Navbar from "../core/components/Navbar"
 import TermsContainer from "../core/components/TermsContainer"
 
 <Layout title="Dashboard">
-  <Navbar />
-  <TermsContainer>
-    # Terms of service
+  <LayoutLoader>
+    <Navbar />
+    <TermsContainer>
+      # Terms of service
 
-    Lorem ipsum
+      Lorem ipsum
 
-    Lorem ipsum
+      Lorem ipsum
 
-  </TermsContainer>
+    </TermsContainer>
+
+  </LayoutLoader>
 </Layout>

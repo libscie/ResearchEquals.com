@@ -5,11 +5,11 @@ import getBrowseGraphData from "app/core/queries/getBrowseGraphData"
 import { Link, Routes, useInfiniteQuery, useQuery } from "blitz"
 import moment from "moment"
 import React from "react"
-import { Suspense } from "react"
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 
 import getBrowseData from "../core/queries/getBrowseData"
 import AuthorAvatarsNew from "../modules/components/AuthorAvatarsNew"
+import LayoutLoader from "../core/components/LayoutLoader"
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
@@ -133,9 +133,7 @@ const Browse = () => {
   return (
     <>
       <Navbar />
-      <Suspense fallback="Loading...">
-        <BrowseContent />
-      </Suspense>
+      <BrowseContent />
       <Footer />
     </>
   )
@@ -160,7 +158,7 @@ Browse.getLayout = (page) => (
       </>
     }
   >
-    {page}
+    <LayoutLoader page={page} />
   </Layout>
 )
 

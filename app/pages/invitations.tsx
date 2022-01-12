@@ -1,11 +1,8 @@
 import { BlitzPage, useSession, useQuery, useRouterQuery, Router, useMutation } from "blitz"
 import Layout from "app/core/layouts/Layout"
-import { Disclosure } from "@headlessui/react"
-import { ChevronRightIcon } from "@heroicons/react/solid"
 import { Suspense, useEffect, useState } from "react"
 import { ProgressBarRound32 } from "@carbon/icons-react"
 import moment from "moment"
-import toast, { Toaster } from "react-hot-toast"
 
 import Navbar from "../core/components/Navbar"
 import { useCurrentUser } from "../core/hooks/useCurrentUser"
@@ -137,7 +134,7 @@ const InvitationsPage: BlitzPage = () => {
 InvitationsPage.authenticate = true
 InvitationsPage.getLayout = (page) => (
   <Layout title="R= Invitations">
-    <LayoutLoader page={page} />
+    <LayoutLoader>{page}</LayoutLoader>
   </Layout>
 )
 

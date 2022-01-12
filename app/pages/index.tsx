@@ -21,6 +21,7 @@ import ReactTooltip from "react-tooltip"
 import Navbar from "../core/components/Navbar"
 import db from "db"
 import Footer from "../core/components/Footer"
+import LayoutLoader from "../core/components/LayoutLoader"
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const licenses = await db.license.findMany({
@@ -458,7 +459,7 @@ Home.getLayout = (page) => (
       </>
     }
   >
-    {page}
+    <LayoutLoader>{page}</LayoutLoader>
   </Layout>
 )
 

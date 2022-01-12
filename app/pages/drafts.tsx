@@ -140,7 +140,7 @@ const DraftsPage = ({ expire, signature }) => {
 DraftsPage.authenticate = true
 DraftsPage.getLayout = (page) => (
   <Layout title="R= Drafts">
-    <LayoutLoader page={page} />
+    <LayoutLoader>{page}</LayoutLoader>
   </Layout>
 )
 
