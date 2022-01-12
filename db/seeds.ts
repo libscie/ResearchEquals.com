@@ -170,7 +170,8 @@ const seed = async () => {
                   create: {
                     handle: faker.internet.userName().toLowerCase(),
                     avatar: faker.image.abstract(),
-                    name: faker.name.findName(),
+                    firstName: faker.name.findName(),
+                    lastName: faker.name.findName(),
                     url: faker.internet.url(),
                   },
                 },
@@ -192,7 +193,8 @@ const seed = async () => {
       user!.memberships!.map(async (membership) => {
         await algIndex.saveObject({
           objectID: membership.workspace.id,
-          name: membership.workspace.name,
+          firstName: membership.workspace.firstName,
+          lastName: membership.workspace.lastName,
           handle: membership.workspace.handle,
           avatar: membership.workspace.avatar,
           pronouns: membership.workspace.pronouns,
