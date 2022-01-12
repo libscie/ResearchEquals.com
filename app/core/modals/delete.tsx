@@ -73,9 +73,9 @@ export default function DeleteModal() {
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm">
-                      Your user account will be deleted without recovery options. Your already
-                      published modules will not be deleted. Your public profile will only be
-                      deleted if there are no publications linked to it.
+                      Your account will be deleted without recovery options. Your published modules
+                      will not be deleted. Your workspace will only be deleted if there are no
+                      published modules linked to it.
                     </p>
                   </div>
 
