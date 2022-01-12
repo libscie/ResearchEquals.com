@@ -31,7 +31,8 @@ export default resolver.pipe(
       user!.memberships!.map(async (membership) => {
         await index.saveObject({
           objectID: membership.workspace.id,
-          name: membership.workspace.name,
+          firstName: membership.workspace.firstName,
+          lastName: membership.workspace.lastName,
           handle: membership.workspace.handle,
           avatar: membership.workspace.avatar,
           pronouns: membership.workspace.pronouns,

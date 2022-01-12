@@ -70,11 +70,7 @@ const ViewAuthors = ({ button, module }) => {
                             <div className="mr-2 flex">
                               <img
                                 src={author!.workspace!.avatar}
-                                alt={`Avatar of ${
-                                  author!.workspace!.name
-                                    ? author!.workspace!.name
-                                    : author!.workspace!.handle
-                                }`}
+                                alt={`Avatar of ${author!.workspace!.handle}`}
                                 className="w-10 h-10 rounded-full inline-block h-full align-middle"
                               />
                             </div>
@@ -82,7 +78,7 @@ const ViewAuthors = ({ button, module }) => {
                               <span className="inline-block h-full align-middle"></span>
                               <Link href={Routes.HandlePage({ handle: author.workspace.handle })}>
                                 <a className="text-gray-700 dark:text-gray-200 text-sm leading-4 font-normal my-auto inline-block align-middle">
-                                  {author!.workspace!.name}
+                                  {author!.workspace!.firstName} {author!.workspace!.lastName}
                                   <p className="text-gray-500 dark:text-gray-400 text-xs leading-4 font-normal">
                                     @{author!.workspace!.handle}
                                   </p>

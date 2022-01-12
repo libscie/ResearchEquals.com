@@ -47,7 +47,8 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
     title: module!.title,
     authors: module!.authors!.map((author) => {
       const js = {
-        name: author.workspace?.name,
+        firstName: author.workspace?.firstName,
+        lastName: author.workspace?.lastName,
         orcid: author.workspace?.orcid,
       }
 
@@ -63,7 +64,7 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
                 reference.publishedWhere === "ResearchEquals"
                   ? reference.authors.map((author) => {
                       const authJs = {
-                        name: author.workspace?.name,
+                        name: `${author.workspace?.firstName} ${author.workspace?.lastName}`,
                         orcid: `https://orcid.org/${author!.workspace!.orcid}`,
                       }
 

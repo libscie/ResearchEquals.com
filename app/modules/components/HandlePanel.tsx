@@ -70,7 +70,7 @@ const AuthorPanel = ({ buttonText, title, authors, name }) => {
                             <div className="mr-2">
                               <img
                                 src={author.avatar}
-                                alt={`Avatar of ${author.name ? author.name : author.handle}`}
+                                alt={`Avatar of ${author.handle}`}
                                 className="w-10 h-10 rounded-full inline-block h-full align-middle"
                               />
                             </div>

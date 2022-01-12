@@ -3,7 +3,7 @@ import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 
 import deleteUser from "app/users/mutations/deleteUser"
-import { TrashIcon } from "@heroicons/react/solid"
+import { TrashCan32 } from "@carbon/icons-react"
 
 export default function DeleteModal() {
   let [isOpen, setIsOpen] = useState(false)
@@ -35,7 +35,7 @@ export default function DeleteModal() {
             className="flex py-2 px-4 bg-red-50 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
             onClick={openModal}
           >
-            <TrashIcon className="w-5 h-5 fill-current text-red-500" aria-hidden="true" />
+            <TrashCan32 className="w-5 h-5 fill-current text-red-500" aria-hidden="true" />
             Delete
           </button>
         </div>
@@ -73,9 +73,9 @@ export default function DeleteModal() {
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm">
-                      Your user account will be deleted without recovery options. Your already
-                      published modules will not be deleted. Your public profile will only be
-                      deleted if there are no publications linked to it.
+                      Your account will be deleted without recovery options. Your published modules
+                      will not be deleted. Your workspace will only be deleted if there are no
+                      published modules linked to it.
                     </p>
                   </div>
 

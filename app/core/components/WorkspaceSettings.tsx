@@ -4,24 +4,31 @@ import changeUrl from "app/workspaces/mutations/changeUrl"
 import { Link, useMutation, validateZodSchema } from "blitz"
 import { useFormik } from "formik"
 import { z } from "zod"
-import { Renew32 } from "@carbon/icons-react"
+import { Checkmark32, Close32, Renew32 } from "@carbon/icons-react"
 import toast from "react-hot-toast"
-import { CheckIcon, XIcon } from "@heroicons/react/solid"
 import ReactTooltip from "react-tooltip"
+import changeLastName from "../../workspaces/mutations/changeLastName"
+import changeFirstName from "../../workspaces/mutations/changeFirstName"
 
 const WorkspaceSettings = ({ workspace, setIsOpen }) => {
-  const [changeBioMutation, { isSuccess: bioChanged }] = useMutation(changeBio)
-  const [changePronounsMutation, { isSuccess: pronounsChanged }] = useMutation(changePronouns)
-  const [changeUrlMutation, { isSuccess: urlChanged }] = useMutation(changeUrl)
+  const [changeFirstNameMutation] = useMutation(changeFirstName)
+  const [changeLastNameMutation] = useMutation(changeLastName)
+  const [changeBioMutation] = useMutation(changeBio)
+  const [changePronounsMutation] = useMutation(changePronouns)
+  const [changeUrlMutation] = useMutation(changeUrl)
 
   const formik = useFormik({
     initialValues: {
+      firstName: workspace.firstName,
+      lastName: workspace.lastName,
       bio: workspace.bio,
       pronouns: workspace.pronouns,
       profileUrl: workspace.url,
     },
     validate: validateZodSchema(
       z.object({
+        firstName: z.any(),
+        lastName: z.any(),
         bio: z.any(),
         pronouns: z.any(),
         profileUrl: z.any(),
@@ -29,6 +36,42 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
     ),
     onSubmit: async (values) => {
       try {
+        if (values.firstName !== workspace.firstName) {
+          try {
+            z.string().parse(values.firstName)
+            toast.promise(
+              changeFirstNameMutation({
+                firstName: values.firstName,
+              }),
+              {
+                loading: "Saving...",
+                success: "Updated first name",
+                error: "Hmm that didn't work first name...",
+              }
+            )
+          } catch (error) {
+            toast.error("First name needs to be a string")
+          }
+        }
+
+        if (values.lastName !== workspace.lastName) {
+          try {
+            z.string().parse(values.lastName)
+            toast.promise(
+              changeLastNameMutation({
+                lastName: values.lastName,
+              }),
+              {
+                loading: "Saving...",
+                success: "Updated last name",
+                error: "Hmm that didn't work...",
+              }
+            )
+          } catch (error) {
+            toast.error("Last name needs to be a string")
+          }
+        }
+
         if (values.bio !== workspace.bio) {
           try {
             z.string().parse(values.bio)
@@ -105,8 +148,8 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         <div className="flex-grow ml-2 text-gray-900 dark:text-gray-200">
           <span className="inline-block h-full align-middle"> </span>
           <p className="inline-block align-middle">
-            {!workspace!.orcid ? (
-              <Link href="api/auth/orcid">
+            {!workspace!.orcid && workspace.workspaceType === "Individual" ? (
+              <Link href="/api/auth/orcid">
                 <button className="flex py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500 mb-1">
                   Connect your ORCID
                 </button>
@@ -114,34 +157,51 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
             ) : (
               <>
                 <p className="text-sm font-medium">{workspace!.name}</p>
-                <p className="flex text-sm font-medium">
-                  {workspace!.orcid}
-                  <span className="inline-block h-full align-middle"> </span>
-                  <p className="inline-block align-middle">
-                    <Link href="api/auth/orcid">
-                      <button className="inline-block align-middle">
-                        <Renew32
-                          data-tip
-                          data-for="refreshTip"
-                          className="ml-1 cursor-pointer w-4 h-4 "
-                        />
-                        <ReactTooltip id="refreshTip" place="top" effect="solid">
-                          Click here to refresh your info from ORCID
-                        </ReactTooltip>
-                      </button>
-                    </Link>
-                  </p>
-                </p>
+                <p className="flex text-sm font-medium">{workspace!.orcid}</p>
               </>
             )}
-            <p className="text-xs leading-4 font-normal">@{workspace.handle}</p>
+            <p className="text-sm leading-4 font-normal">@{workspace.handle}</p>
           </p>
         </div>
       </div>
       <form onSubmit={formik.handleSubmit}>
         <div className="my-4 text-gray-900 dark:text-gray-200 px-2">
+          <label htmlFor="firstName" className="my-1 block text-sm font-medium">
+            First Name{" "}
+            {formik.touched.firstName && formik.errors.firstName
+              ? " - " + formik.errors.firstName
+              : null}
+          </label>
+          <div className="mt-1 text-gray-900 dark:text-gray-200">
+            <input
+              id="firstName"
+              type="firstName"
+              autoComplete="firstName"
+              className="bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+              {...formik.getFieldProps("firstName")}
+            />
+          </div>
+        </div>
+        <div className="my-4 text-gray-900 dark:text-gray-200 px-2">
+          <label htmlFor="lastName" className="my-1 block text-sm font-medium">
+            Last Name{" "}
+            {formik.touched.lastName && formik.errors.lastName
+              ? " - " + formik.errors.lastName
+              : null}
+          </label>
+          <div className="mt-1 text-gray-900 dark:text-gray-200">
+            <input
+              id="lastName"
+              type="lastName"
+              autoComplete="lastName"
+              className="bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+              {...formik.getFieldProps("lastName")}
+            />
+          </div>
+        </div>
+        <div className="my-4 text-gray-900 dark:text-gray-200 px-2">
           <label htmlFor="bio" className="my-1 block text-sm font-medium">
-            Bio
+            Bio {formik.touched.bio && formik.errors.bio ? " - " + formik.errors.bio : null}
           </label>
           <div className="mt-1">
             <textarea
@@ -151,14 +211,14 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               {...formik.getFieldProps("bio")}
               defaultValue={workspace.bio}
             />
-            {formik.touched.bio && formik.errors.bio ? (
-              <div className="font-normal text-sm">{formik.errors.bio}</div>
-            ) : null}
           </div>
         </div>
         <div className="my-4 text-gray-900 dark:text-gray-200 px-2">
           <label htmlFor="pronouns" className="my-1 block text-sm font-medium">
-            Pronouns
+            Pronouns{" "}
+            {formik.touched.pronouns && formik.errors.pronouns
+              ? " - " + formik.errors.pronouns
+              : null}
           </label>
           <div className="mt-1 text-gray-900 dark:text-gray-200">
             <input
@@ -168,16 +228,15 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               className="bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
               {...formik.getFieldProps("pronouns")}
             />
-            {formik.touched.pronouns && formik.errors.pronouns ? (
-              <div className="font-normal text-sm">{formik.errors.pronouns}</div>
-            ) : null}
           </div>
         </div>
         <div className="my-4 text-gray-900 dark:text-gray-200 px-2">
           <label htmlFor="profileUrl" className="my-1 block text-sm font-medium">
-            Profile URL
+            Profile URL{" "}
+            {formik.touched.profileUrl && formik.errors.profileUrl
+              ? " - " + formik.errors.profileUrl
+              : null}
           </label>
-
           <div className="mt-1">
             <input
               id="profileUrl"
@@ -186,9 +245,6 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               className=" bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded  placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
               {...formik.getFieldProps("profileUrl")}
             />
-            {formik.touched.profileUrl && formik.errors.profileUrl ? (
-              <div className="font-normal text-sm">{formik.errors.profileUrl}</div>
-            ) : null}
           </div>
         </div>
 
@@ -202,7 +258,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
                 setIsOpen(false)
               }}
             >
-              <XIcon className="w-4 h-4 fill-current text-red-500 pt-1" aria-hidden="true" />
+              <Close32 className="w-4 h-4 fill-current text-red-500 pt-1" aria-hidden="true" />
               Cancel
             </button>
           </div>
@@ -210,7 +266,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
             type="submit"
             className="flex mr-4 py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
           >
-            <CheckIcon className="w-4 h-4 fill-current text-green-500 pt-1" aria-hidden="true" />
+            <Checkmark32 className="w-4 h-4 fill-current text-green-500 pt-1" aria-hidden="true" />
             Save
           </button>
         </div>

@@ -14,29 +14,43 @@ const contributors = (authors) => {
         elements: [
           {
             type: "element",
-            name: "surname",
+            name: "given_name",
             elements: [
               {
                 type: "text",
-                text: author.name,
+                text: author.firstName,
               },
             ],
           },
           {
             type: "element",
-            name: "ORCID",
-            attributes: {
-              authenticated: true,
-            },
+            name: "surname",
             elements: [
               {
                 type: "text",
-                text: `https://orcid.org/${author.orcid}`,
+                text: author.lastName,
               },
             ],
           },
         ],
       }
+
+      if (author.orcid) {
+        authorJs.elements.push({
+          type: "element",
+          name: "ORCID",
+          attributes: {
+            authenticated: true,
+          },
+          elements: [
+            {
+              type: "text",
+              text: `https://orcid.org/${author.orcid}`,
+            },
+          ],
+        })
+      }
+
       return authorJs
     }),
   }

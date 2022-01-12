@@ -8,9 +8,7 @@ const AuthorAvatarsNew = ({ authors }) => {
               <img
                 className="relative inline-block h-6 w-6 rounded-full ring-1 ring-white dark:ring-gray-800"
                 src={author.workspace.avatar}
-                alt={`Avatar of ${
-                  author.workspace!.name ? author.workspace!.name : author.workspace.handle
-                }`}
+                alt={`Avatar of ${author.workspace.handle}`}
                 style={{ zIndex: 100 - index }}
               />
             ) : (

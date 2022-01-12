@@ -47,16 +47,14 @@ function AuthorList({
                   </div>
                   <img
                     src={author!.workspace!.avatar}
-                    alt={`Avatar of ${
-                      author!.workspace!.name ? author!.workspace!.name : author!.workspace!.handle
-                    }`}
+                    alt={`Avatar of ${author!.workspace!.handle}`}
                     className="w-10 h-10 rounded-full inline-block h-full align-middle"
                   />
                 </div>
                 <div className="flex-grow">
                   <span className="inline-block h-full align-middle"></span>
                   <p className="text-gray-700 dark:text-gray-200 text-sm leading-4 font-normal my-auto inline-block align-middle">
-                    {author!.workspace!.name}
+                    {author!.workspace!.firstName} {author!.workspace!.lastName}
                     <p className="text-gray-500 dark:text-gray-400 text-xs leading-4 font-normal">
                       @{author!.workspace!.handle}
                     </p>
@@ -93,8 +91,8 @@ function AuthorList({
                   <button
                     className="text-xs leading-4 font-medium text-green-500 rounded border border-gray-300 dark:border-gray-600 bg-white shadow-sm dark:bg-gray-800 px-4 py-2 hover:bg-gray-100 dark:hover:border-gray-200 dark:hover:bg-gray-700"
                     onClick={async () => {
-                      if (!author.workspace.orcid || !author.workspace.name) {
-                        toast.error("You cannot publish until you link your ORCID")
+                      if (!author.workspace.firstName && !author.workspace.lastName) {
+                        toast.error("You cannot publish until you add your name")
                       } else {
                         toast.promise(
                           approveAuthorshipMutation({

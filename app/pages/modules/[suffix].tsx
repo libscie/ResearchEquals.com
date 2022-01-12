@@ -137,7 +137,9 @@ const ModulePage = ({ module }) => {
                       {reference.authors.map((author, index) => (
                         <>
                           <Link href={Routes.HandlePage({ handle: author!.workspace!.handle })}>
-                            <a target="_blank">{author!.workspace!.name}</a>
+                            <a target="_blank">
+                              {author!.workspace!.firstName} {author!.workspace!.lastName}
+                            </a>
                           </Link>
                           {index === reference.authors.length - 1 ? "" : ", "}
                         </>

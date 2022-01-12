@@ -1,6 +1,7 @@
 import { Dialog, Transition, Tab } from "@headlessui/react"
-import { Fragment, useEffect, useState } from "react"
-import { XIcon } from "@heroicons/react/solid"
+import { Fragment, useState } from "react"
+import { Close32 } from "@carbon/icons-react"
+
 import WorkspaceSettings from "../components/WorkspaceSettings"
 import AccountSettings from "../components/AccountSettings"
 
@@ -27,7 +28,7 @@ export default function SettingsModal({ button, styling, user, workspace }) {
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="fixed  inset-0 z-10 overflow-y-auto"
+          className="fixed inset-0 z-10 overflow-y-auto"
           onClose={() => {
             setIsOpen(false)
           }}
@@ -90,7 +91,7 @@ export default function SettingsModal({ button, styling, user, workspace }) {
                         ))}
                         <button className="rounded-md p-2 inline-flex  items-center justify-center text-gray-500 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                           <span className="sr-only">Close menu</span>
-                          <XIcon
+                          <Close32
                             className="h-6 w-6"
                             aria-hidden="true"
                             onClick={() => {
@@ -101,12 +102,10 @@ export default function SettingsModal({ button, styling, user, workspace }) {
                       </Tab.List>
                     </Dialog.Title>
 
-                    {/* Workspace tab */}
                     <Tab.Panels className="mt-2 mb-0">
                       <Tab.Panel key="workspace-panel" className="">
                         <WorkspaceSettings workspace={workspace} setIsOpen={setIsOpen} />
                       </Tab.Panel>
-                      {/* Account tab */}
                       <Tab.Panel key="account-panel" className="">
                         <AccountSettings user={user} setIsOpen={setIsOpen} />
                       </Tab.Panel>

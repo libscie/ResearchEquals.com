@@ -29,7 +29,6 @@ export default passportAuth(({ ctx, req, res }) => ({
                 id: ctx.session.$publicData.workspaceId,
               },
               data: {
-                name: params.name,
                 orcid: params.orcid,
               },
             })
@@ -37,7 +36,6 @@ export default passportAuth(({ ctx, req, res }) => ({
             await index.partialUpdateObjects([
               {
                 objectID: workspace.id,
-                name: params.name,
                 orcid: params.orcid,
               },
             ])

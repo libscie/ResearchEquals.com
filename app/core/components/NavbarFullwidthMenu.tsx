@@ -100,9 +100,7 @@ const FullWidthMenu = () => {
               <img
                 className="h-8 w-8 rounded-full hover:outline-none hover:ring-2 hover:ring-offset-2 hover:ring-indigo-500"
                 src={currentWorkspace.avatar!}
-                alt={`Avatar of ${
-                  currentWorkspace.name ? currentWorkspace.name : currentWorkspace.handle
-                }`}
+                alt={`Avatar of ${currentWorkspace.handle}`}
               />
             </Menu.Button>
           </div>
