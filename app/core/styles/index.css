@@ -40,3 +40,7 @@
 .uploadcare--panel {
   font-family: "Noto Sans Display", sans-serif;
 }
+
+.uploadcare--button_primary {
+  background-color: #574cfa;
+}
