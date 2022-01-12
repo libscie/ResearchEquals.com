@@ -12,6 +12,7 @@ import ModuleCard from "../core/components/ModuleCard"
 import { useMediaPredicate } from "react-media-hook"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import generateSignature from "../signature"
+import LayoutLoader from "app/core/components/LayoutLoader"
 
 export async function getServerSideProps(context) {
   // Expires in 30 minutes
@@ -130,15 +131,17 @@ const DraftsPage = ({ expire, signature }) => {
     <>
       <Navbar />
       <main className="flex relative">
-        <Suspense fallback="Loading...">
-          <DraftsContents expire={expire} signature={signature} />
-        </Suspense>
+        <DraftsContents expire={expire} signature={signature} />
       </main>
     </>
   )
 }
 
 DraftsPage.authenticate = true
-DraftsPage.getLayout = (page) => <Layout title="R=Drafts">{page}</Layout>
+DraftsPage.getLayout = (page) => (
+  <Layout title="R= Drafts">
+    <LayoutLoader page={page} />
+  </Layout>
+)
 
 export default DraftsPage

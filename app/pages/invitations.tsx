@@ -16,6 +16,7 @@ import acceptInvitation from "../authorship/mutations/acceptInvitation"
 import removeInvitation from "../authorship/mutations/removeInvitation"
 import { useCurrentWorkspace } from "../core/hooks/useCurrentWorkspace"
 import { useMediaPredicate } from "react-media-hook"
+import LayoutLoader from "app/core/components/LayoutLoader"
 
 const Invitations = () => {
   const session = useSession()
@@ -127,15 +128,17 @@ const InvitationsPage: BlitzPage = () => {
     <>
       <Navbar />
       <main className="flex relative">
-        <Suspense fallback="Loading...">
-          <Invitations />
-        </Suspense>
+        <Invitations />
       </main>
     </>
   )
 }
 
 InvitationsPage.authenticate = true
-InvitationsPage.getLayout = (page) => <Layout title="Invitations">{page}</Layout>
+InvitationsPage.getLayout = (page) => (
+  <Layout title="R= Invitations">
+    <LayoutLoader page={page} />
+  </Layout>
+)
 
 export default InvitationsPage
