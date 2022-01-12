@@ -33,6 +33,10 @@
   display: none;
 }
 
+.uploadcare--powered-by {
+  display: none;
+}
+
 .uploadcare--panel {
   font-family: "Noto Sans Display", sans-serif;
 }
