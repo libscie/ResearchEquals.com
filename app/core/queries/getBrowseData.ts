@@ -21,6 +21,7 @@ export default async function getBrowseData({ skip = 0, take = 100 }) {
         ...paginateArgs,
         where: {
           published: true,
+          prefix: "10.53962",
         },
         orderBy: [
           {
