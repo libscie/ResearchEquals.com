@@ -2,6 +2,7 @@ import { BlitzPage, Link, Routes } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import Navbar from "../core/components/Navbar"
 import Footer from "../core/components/Footer"
+import LayoutLoader from "app/core/components/LayoutLoader"
 
 const Imprint: BlitzPage = () => {
   const page = "Imprint"
@@ -63,6 +64,10 @@ const Imprint: BlitzPage = () => {
 }
 
 Imprint.suppressFirstRenderFlicker = true
-Imprint.getLayout = (page) => <Layout title="Imprint">{page}</Layout>
+Imprint.getLayout = (page) => (
+  <Layout title="Imprint">
+    <LayoutLoader>{page}</LayoutLoader>
+  </Layout>
+)
 
 export default Imprint
