@@ -13,6 +13,7 @@ import FeedPagination from "../core/components/FeedPagination"
 import generateSignature from "app/signature"
 import WhoToFollow from "../core/components/WhoToFollow"
 import LayoutLoader from "../core/components/LayoutLoader"
+import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
 
 const ITEMS_PER_PAGE = 5
 
@@ -32,6 +33,7 @@ export async function getServerSideProps(context) {
 const DashboardContent = ({ expire, signature }) => {
   const session = useSession()
   const query = useRouterQuery()
+  const [ownWorkspace, { refetch: refetchWorkspace }] = useQuery(getCurrentWorkspace, null)
   const [data, { refetch }] = useQuery(getDashboardData, { session })
   const router = useRouter()
   const page = Number(router.query.page) || 0
@@ -91,7 +93,12 @@ const DashboardContent = ({ expire, signature }) => {
             </dl>
             {data.followableWorkspaces.length > 0 ? (
               <div className="hidden lg:inline">
-                <WhoToFollow data={data} refetch={refetch} refetchFeed={refetchFeed} />
+                <WhoToFollow
+                  data={data}
+                  workspace={ownWorkspace}
+                  refetch={refetch}
+                  refetchFeed={refetchWorkspace}
+                />
               </div>
             ) : (
               ""
@@ -161,7 +168,12 @@ const DashboardContent = ({ expire, signature }) => {
             </div>
             {data.followableWorkspaces.length > 0 ? (
               <div className="inline lg:hidden mb-16">
-                <WhoToFollow data={data} refetch={refetch} refetchFeed={refetchFeed} />
+                <WhoToFollow
+                  data={data}
+                  workspace={ownWorkspace}
+                  refetch={refetch}
+                  refetchFeed={refetchWorkspace}
+                />
               </div>
             ) : (
               ""
