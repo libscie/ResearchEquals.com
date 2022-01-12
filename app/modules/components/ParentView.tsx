@@ -1,8 +1,8 @@
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
-import { XIcon } from "@heroicons/react/outline"
 import { Link, Routes } from "blitz"
 import moment from "moment"
+import { Close32 } from "@carbon/icons-react"
 
 import ModuleCard from "../../core/components/ModuleCard"
 
@@ -78,7 +78,7 @@ const FollowsFromView = ({ module }) => {
                             onClick={() => setFollowsFromOpen(false)}
                           >
                             <span className="sr-only">Close panel</span>
-                            <XIcon className="h-6 w-6" aria-hidden="true" />
+                            <Close32 className="h-6 w-6" aria-hidden="true" />
                           </button>
                         </div>
                       </div>

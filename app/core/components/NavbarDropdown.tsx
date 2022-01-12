@@ -1,29 +1,22 @@
 import { Fragment, useState } from "react"
-import { Listbox, Transition, Dialog } from "@headlessui/react"
-import { Link, Routes, useMutation, useSession, useQuery, useRouter } from "blitz"
-import { Suspense } from "react"
-import { CheckIcon, MenuIcon, PlusSmIcon, SelectorIcon } from "@heroicons/react/solid"
-import { Close32, Menu32 } from "@carbon/icons-react"
-import { useCurrentUser } from "../hooks/useCurrentUser"
-import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
+import { Transition, Dialog } from "@headlessui/react"
+import { Link, Routes, useMutation } from "blitz"
+import { Add32, Close32, Menu32 } from "@carbon/icons-react"
 import logout from "../../auth/mutations/logout"
 import SettingsModal from "../modals/settings"
-import changeSessionWorkspace from "../../workspaces/mutations/changeSessionWorkspace"
-import getDrafts from "../queries/getDrafts"
 import ResearchEqualsLogo from "./ResearchEqualsLogo"
-import { BellIcon } from "@heroicons/react/outline"
 import QuickDraft from "../../modules/components/QuickDraft"
-import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 import DropdownNotificationModal from "../modals/DropdownNotificationModal"
 
-const DropdownContents = () => {
-  const currentUser = useCurrentUser()
-  const currentWorkspace = useCurrentWorkspace()
+const DropdownContents = ({
+  currentUser,
+  currentWorkspace,
+  router,
+  invitedModules,
+  drafts,
+  refetchFn,
+}) => {
   const [logoutMutation] = useMutation(logout)
-  const session = useSession()
-  const router = useRouter()
-  const [invitedModules] = useQuery(getInvitedModules, { session })
-  const [drafts] = useQuery(getDrafts, { session })
 
   if (currentUser && currentWorkspace) {
     return (
@@ -32,7 +25,7 @@ const DropdownContents = () => {
           <QuickDraft
             buttonText={
               <>
-                <PlusSmIcon
+                <Add32
                   className="inline w-4 h-4 fill-current text-indigo-500 dark:text-gray-400"
                   aria-hidden="true"
                 />
@@ -40,6 +33,7 @@ const DropdownContents = () => {
               </>
             }
             buttonStyle="w-full py-2 bg-indigo-50 dark:bg-gray-800 text-indigo-700 dark:text-gray-200  border border-transparent text-sm leading-5 font-normal rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:border dark:border-gray-400 dark:hover:bg-gray-700"
+            refetchFn={refetchFn}
           />
           <Link href={Routes.Dashboard()}>
             <button className="group w-full text-left block rounded-md px-2 py-2 text-gray-900 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 text-base leading-5 font-normal">
@@ -128,7 +122,14 @@ const DropdownContents = () => {
   }
 }
 
-const NavbarDropdown = () => {
+const NavbarDropdown = ({
+  currentUser,
+  currentWorkspace,
+  router,
+  invitedModules,
+  drafts,
+  refetchFn,
+}) => {
   let [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -152,7 +153,7 @@ const NavbarDropdown = () => {
             }}
           >
             <span className="sr-only">Open menu</span>
-            <MenuIcon className="block h-6 w-6 text-gray-400 dark:text-gray-200 hover:bg-gray-100 hover:text-gray-500 dark:hover:bg-gray-800 rounded-md focus:ring-2 focus:ring-offset-0 focus:ring-gray-200" />
+            <Menu32 className="block h-6 w-6 text-gray-400 dark:text-gray-200 hover:bg-gray-100 hover:text-gray-500 dark:hover:bg-gray-800 rounded-md focus:ring-2 focus:ring-offset-0 focus:ring-gray-200" />
           </button>
         </>
       )}
@@ -209,9 +210,14 @@ const NavbarDropdown = () => {
                   </div>
                 </Dialog.Title>
                 <div className="items-center justify-between">
-                  <Suspense fallback="Loading...">
-                    <DropdownContents />
-                  </Suspense>
+                  <DropdownContents
+                    currentUser={currentUser}
+                    currentWorkspace={currentWorkspace}
+                    router={router}
+                    invitedModules={invitedModules}
+                    drafts={drafts}
+                    refetchFn={refetchFn}
+                  />
                 </div>
               </div>
             </Transition.Child>

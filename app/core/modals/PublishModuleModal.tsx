@@ -1,10 +1,10 @@
 import { useMutation, useRouter } from "blitz"
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
+import { CheckmarkOutline32 } from "@carbon/icons-react"
 
 import publishModule from "../../modules/mutations/publishModule"
 import toast from "react-hot-toast"
-import { CheckCircleIcon } from "@heroicons/react/outline"
 
 export default function PublishModule({ module, user, workspace }) {
   let [isOpen, setIsOpen] = useState(false)
@@ -25,7 +25,7 @@ export default function PublishModule({ module, user, workspace }) {
     <>
       <div className="rounded-md bg-green-50 dark:bg-green-800 w-full p-2 flex my-4">
         <div className="flex-shrink-0 inline-block align-middle">
-          <CheckCircleIcon
+          <CheckmarkOutline32
             className="stroke-current h-5 w-5 text-green-500 dark:text-green-200 inline-block align-middle"
             aria-hidden="true"
           />

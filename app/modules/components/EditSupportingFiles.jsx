@@ -1,8 +1,8 @@
 import { useMutation } from "blitz"
 import { Widget } from "@uploadcare/react-widget"
 import { useRef } from "react"
-import { PlusSmIcon } from "@heroicons/react/solid"
 import toast from "react-hot-toast"
+import { Add32 } from "@carbon/icons-react"
 
 import addSupporting from "../mutations/addSupporting"
 import getSupportingFiles from "../mutations/getSupportingFiles"
@@ -53,34 +53,32 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit, user, workspace, expire
               widgetApi.current.openDialog()
             }}
           >
-            <PlusSmIcon className="w-4 h-4" aria-hidden="true" /> Add Supporting File(s)
-            {moduleEdit.supporting ? (
-              <Widget
-                publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
-                secureSignature={signature}
-                secureExpire={expire}
-                ref={widgetApi}
-                validators={validators}
-                previewStep
-                multiple
-                multipleMax={10}
-                clearable
-                onChange={updateSupporting}
-              />
+            <Widget
+              publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
+              secureSignature={signature}
+              secureExpire={expire}
+              ref={widgetApi}
+              validators={validators}
+              previewStep
+              multiple
+              multipleMax={10}
+              clearable
+              onChange={updateSupporting}
+            />
             ) : (
-              <Widget
-                publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
-                secureSignature={signature}
-                secureExpire={expire}
-                ref={widgetApi}
-                validators={validators}
-                previewStep
-                multiple
-                multipleMax={10}
-                clearable
-                onChange={updateSupporting}
-              />
-            )}
+            <Widget
+              publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
+              secureSignature={signature}
+              secureExpire={expire}
+              ref={widgetApi}
+              validators={validators}
+              previewStep
+              multiple
+              multipleMax={10}
+              clearable
+              onChange={updateSupporting}
+            />
+            )
           </button>
         </>
       ) : (

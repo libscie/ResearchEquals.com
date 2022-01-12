@@ -1,22 +1,10 @@
-import getInvitedModules from "app/workspaces/queries/getInvitedModules"
-import { Link, Routes, useQuery, useSession, useRouter } from "blitz"
-
-import { useCurrentUser } from "../hooks/useCurrentUser"
-import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
-import getDrafts from "../queries/getDrafts"
+import { Link, Routes } from "blitz"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
 
-const NavTabs = () => {
-  const currentUser = useCurrentUser()
-  const session = useSession()
-  const currentWorkspace = useCurrentWorkspace()
-  const router = useRouter()
-  const [drafts] = useQuery(getDrafts, { session })
-  const [invitations] = useQuery(getInvitedModules, { session })
-
+const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invitations }) => {
   let tabs
   if (currentWorkspace) {
     tabs = [

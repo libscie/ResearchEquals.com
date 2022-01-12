@@ -1,9 +1,8 @@
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
-import { CheckIcon, XIcon } from "@heroicons/react/outline"
 import { DragDropContext, Droppable, DroppableProvided } from "react-beautiful-dnd"
 import { Link, Routes, useMutation } from "blitz"
-import { TrashCan24 } from "@carbon/icons-react"
+import { Checkmark32, Close32, TrashCan24 } from "@carbon/icons-react"
 
 import updateAuthorRank from "../../authorship/mutations/updateAuthorRank"
 import AuthorList from "../../core/components/AuthorList"
@@ -64,7 +63,7 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                           onClick={() => setOpen(false)}
                         >
                           <span className="sr-only">Close panel</span>
-                          <XIcon className="h-6 w-6" aria-hidden="true" />
+                          <Close32 className="h-6 w-6" aria-hidden="true" />
                         </button>
                       </div>
                     </div>
@@ -124,7 +123,7 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                         setOpen(false)
                       }}
                     >
-                      <XIcon
+                      <Close32
                         className="w-4 h-4 fill-current text-red-500 pt-1"
                         aria-hidden="true"
                       />
@@ -137,7 +136,7 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                         setOpen(false)
                       }}
                     >
-                      <CheckIcon
+                      <Checkmark32
                         className="w-4 h-4 stroke-current text-green-500 pt-1"
                         aria-hidden="true"
                       />

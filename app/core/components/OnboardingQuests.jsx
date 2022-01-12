@@ -1,8 +1,8 @@
 import { useMutation, useQuery } from "blitz"
 import { Widget } from "@uploadcare/react-widget"
 import { useRef } from "react"
-import { MailIcon, UserCircleIcon, UserIcon, VariableIcon, XIcon } from "@heroicons/react/outline"
 import { Formik, Form } from "formik"
+import { Email32, UserAvatar32, User32, Parameter32 } from "@carbon/icons-react"
 
 import SettingsModal from "../modals/settings"
 import changeAvatar from "../../workspaces/mutations/changeAvatar"
@@ -14,7 +14,7 @@ const OnboardingQuests = ({ data, expire, signature }) => {
   return (
     <>
       <OnboardingEmail data={data.user.emailIsVerified} />
-      <OnboardingOrcid data={data.workspace.orcid} />
+      {/* <OnboardingOrcid data={data.workspace.orcid} /> */}
       <OnboardingAvatar data={data.workspace} expire={expire} signature={signature} />
       <OnboardingProfile data={data} />
       <OnboardingDraft data={data.workspace} />
@@ -35,7 +35,7 @@ const OnboardingEmail = ({ data }) => {
         >
           <div className="flex flex-grow">
             <div className="">
-              <MailIcon
+              <Email32
                 className="h-5 w-5 text-yellow-400 dark:text-yellow-200"
                 aria-hidden="true"
               />
@@ -135,7 +135,7 @@ const OnboardingProfile = ({ data }) => {
         >
           <div className="flex flex-grow">
             <div className="">
-              <UserIcon className="h-5 w-5 text-pink-400 dark:text-pink-200" aria-hidden="true" />
+              <User32 className="h-5 w-5 text-pink-400 dark:text-pink-200" aria-hidden="true" />
             </div>
             <div className="ml-3 flex-1 md:flex text-pink-800 dark:text-pink-200">
               <p className="text-sm mr-2">
@@ -183,7 +183,7 @@ const OnboardingAvatar = ({ data, expire, signature }) => {
         >
           <div className="flex flex-grow">
             <div className="">
-              <UserCircleIcon
+              <UserAvatar32
                 className="h-5 w-5 text-indigo-400 dark:text-indigo-200"
                 aria-hidden="true"
               />
@@ -246,7 +246,7 @@ const OnboardingDraft = ({ data }) => {
         >
           <div className="flex flex-grow">
             <div className="">
-              <VariableIcon
+              <Parameter32
                 className="h-5 w-5 text-purple-400 dark:text-purple-200"
                 aria-hidden="true"
               />

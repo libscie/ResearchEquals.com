@@ -1,34 +1,22 @@
-import { Link, Routes, useMutation, useSession, useRouter, useQuery } from "blitz"
-import { Listbox, Menu, Popover, Transition } from "@headlessui/react"
-import { Fragment, useState } from "react"
-import { PlusSmIcon, CogIcon } from "@heroicons/react/solid"
-import moment from "moment"
+import { Link, Routes, useMutation } from "blitz"
+import { Menu, Popover, Transition } from "@headlessui/react"
+import { Fragment } from "react"
+import { Add32, Settings32, Notification32, NotificationNew32 } from "@carbon/icons-react"
 
-import { useCurrentUser } from "../hooks/useCurrentUser"
-import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
 import logout from "../../auth/mutations/logout"
 import SettingsModal from "../modals/settings"
 import QuickDraft from "../../modules/components/QuickDraft"
-import getInvitedModules from "../../workspaces/queries/getInvitedModules"
-import { BellIcon } from "@heroicons/react/outline"
 import InvitationNotification from "./InvitationNotification"
 
-const FullWidthMenu = () => {
-  const currentUser = useCurrentUser()
-  const session = useSession()
-  const router = useRouter()
-  const currentWorkspace = useCurrentWorkspace()
-  const [invitedModules] = useQuery(getInvitedModules, { session })
+const FullWidthMenu = ({
+  currentUser,
+  session,
+  router,
+  currentWorkspace,
+  invitedModules,
+  refetchFn,
+}) => {
   const [logoutMutation] = useMutation(logout)
-
-  // Match the selected state with the session workspace
-  const [selected, setSelected] = useState(
-    currentUser?.memberships.filter((membership) => {
-      if (membership.workspace.id === session.workspaceId) {
-        return membership
-      }
-    })[0]
-  )
 
   if (currentUser && currentWorkspace) {
     return (
@@ -45,18 +33,9 @@ const FullWidthMenu = () => {
               >
                 <span className="sr-only">View notifications</span>
                 {invitedModules.length > 0 ? (
-                  <div className="relative">
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                    <svg
-                      className="absolute top-0 right-0 h-2 w-2 text-gray-400 dark:text-gray-400"
-                      fill="currentColor"
-                      viewBox="0 0 8 8"
-                    >
-                      <circle cx={4} cy={4} r={3} />
-                    </svg>
-                  </div>
+                  <NotificationNew32 className="h-6 w-6" aria-hidden="true" />
                 ) : (
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
+                  <Notification32 className="h-6 w-6" aria-hidden="true" />
                 )}
               </Popover.Button>
               <Transition
@@ -85,7 +64,7 @@ const FullWidthMenu = () => {
         <SettingsModal
           styling="ml-1 flex-shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
           button={
-            <CogIcon
+            <Settings32
               className="h-6 w-6 text-gray-400 hover:text-gray-500 rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               aria-hidden="true"
             />
@@ -135,7 +114,7 @@ const FullWidthMenu = () => {
         <QuickDraft
           buttonText={
             <>
-              <PlusSmIcon
+              <Add32
                 className="w-4 h-4 fill-current text-indigo-500 dark:text-gray-400"
                 aria-hidden="true"
               />
@@ -143,6 +122,7 @@ const FullWidthMenu = () => {
             </>
           }
           buttonStyle="bg-indigo-50 dark:bg-gray-800 text-indigo-700 dark:text-gray-200 ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-normal rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:border dark:border-gray-400 dark:hover:bg-gray-700"
+          refetchFn={refetchFn}
         />
       </div>
     )

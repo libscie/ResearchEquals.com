@@ -34,9 +34,17 @@ export default async function getSignature({ session }) {
     },
     orderBy: [
       {
-        updatedAt: "asc",
+        updatedAt: "desc",
       },
     ],
+    include: {
+      type: true,
+      authors: {
+        include: {
+          workspace: true,
+        },
+      },
+    },
   })
 
   const invitedModules = await db.module.findMany({
@@ -55,10 +63,14 @@ export default async function getSignature({ session }) {
       },
     ],
     include: {
+      type: true,
       authors: {
         where: {
           workspaceId: session.workspaceId,
           acceptedInvitation: null,
+        },
+        include: {
+          workspace: true,
         },
       },
     },

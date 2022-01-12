@@ -2,11 +2,11 @@ import React, { useRef } from "react"
 import { Link, useMutation, useSession } from "blitz"
 import toast from "react-hot-toast"
 import { Draggable } from "react-beautiful-dnd"
+import { Checkmark32, Subtract32, Draggable32 } from "@carbon/icons-react"
 
 import acceptInvitation from "../../authorship/mutations/acceptInvitation"
 import removeInvitation from "../../authorship/mutations/removeInvitation"
 import approveAuthorship from "../../authorship/mutations/approveAuthorship"
-import { CheckIcon, DotsVerticalIcon, MinusSmIcon } from "@heroicons/react/solid"
 
 function AuthorList({
   authors,
@@ -40,7 +40,7 @@ function AuthorList({
                 <div className="mr-2 flex">
                   <div>
                     <span className="inline-block h-full align-middle"></span>
-                    <DotsVerticalIcon
+                    <Draggable32
                       className="fill-current text-gray-400 w-5 h-5 inline-block align-middle"
                       aria-hidden="true"
                     />
@@ -125,12 +125,12 @@ function AuthorList({
                     >
                       {author.readyToPublish ? (
                         <span className="flex mx-2">
-                          <CheckIcon className="w-4 h-4 fill-current" aria-hidden="true" />
+                          <Checkmark32 className="w-4 h-4 fill-current" aria-hidden="true" />
                           Approved
                         </span>
                       ) : (
                         <span className="flex mx-2">
-                          <MinusSmIcon
+                          <Subtract32
                             className="w-4 h-4 fill-current text-gray-500 dark:text-gray-400"
                             aria-hidden="true"
                           />

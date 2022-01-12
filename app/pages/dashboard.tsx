@@ -1,15 +1,6 @@
-import {
-  Link,
-  Routes,
-  useMutation,
-  useSession,
-  useQuery,
-  useRouter,
-  usePaginatedQuery,
-  useRouterQuery,
-} from "blitz"
+import { Link, useSession, useQuery, useRouter, usePaginatedQuery, useRouterQuery } from "blitz"
 import Layout from "app/core/layouts/Layout"
-import React, { Suspense, useEffect } from "react"
+import React, { useEffect } from "react"
 import toast from "react-hot-toast"
 import moment from "moment"
 
@@ -18,9 +9,12 @@ import Navbar from "../core/components/Navbar"
 import OnboardingQuests from "../core/components/OnboardingQuests"
 import getFeed from "../workspaces/queries/getFeed"
 import ModuleCard from "../core/components/ModuleCard"
-import FollowButton from "app/workspaces/components/FollowButton"
 import FeedPagination from "../core/components/FeedPagination"
 import generateSignature from "app/signature"
+import WhoToFollow from "../core/components/WhoToFollow"
+import LayoutLoader from "../core/components/LayoutLoader"
+import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
+import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 
 const ITEMS_PER_PAGE = 5
 
@@ -37,11 +31,16 @@ export async function getServerSideProps(context) {
   }
 }
 
-const DashboardContent = ({ expire, signature }) => {
-  const session = useSession()
-  const query = useRouterQuery()
-  const [data, { refetch }] = useQuery(getDashboardData, { session })
-  const router = useRouter()
+const DashboardContent = ({
+  expire,
+  signature,
+  query,
+  ownWorkspace,
+  router,
+  data,
+  refetch,
+  refetchWorkspace,
+}) => {
   const page = Number(router.query.page) || 0
   const [{ modules, hasMore, count }, { refetch: refetchFeed }] = usePaginatedQuery(getFeed, {
     orderBy: { id: "asc" },
@@ -99,7 +98,12 @@ const DashboardContent = ({ expire, signature }) => {
             </dl>
             {data.followableWorkspaces.length > 0 ? (
               <div className="hidden lg:inline">
-                <WhoToFollow data={data} refetch={refetch} refetchFeed={refetchFeed} />
+                <WhoToFollow
+                  data={data}
+                  workspace={ownWorkspace}
+                  refetch={refetch}
+                  refetchFeed={refetchWorkspace}
+                />
               </div>
             ) : (
               ""
@@ -169,7 +173,12 @@ const DashboardContent = ({ expire, signature }) => {
             </div>
             {data.followableWorkspaces.length > 0 ? (
               <div className="inline lg:hidden mb-16">
-                <WhoToFollow data={data} refetch={refetch} refetchFeed={refetchFeed} />
+                <WhoToFollow
+                  data={data}
+                  workspace={ownWorkspace}
+                  refetch={refetch}
+                  refetchFeed={refetchWorkspace}
+                />
               </div>
             ) : (
               ""
@@ -184,58 +193,46 @@ const DashboardContent = ({ expire, signature }) => {
 }
 
 const Dashboard = ({ expire, signature }) => {
+  const currentUser = useCurrentUser()
+  const session = useSession()
+  const query = useRouterQuery()
+  const [ownWorkspace, { refetch: refetchWorkspace }] = useQuery(getCurrentWorkspace, null)
+  const router = useRouter()
+  const [data, { refetch }] = useQuery(getDashboardData, { session })
+
   return (
     <>
-      <Navbar />
+      <Navbar
+        currentUser={currentUser}
+        session={session}
+        currentWorkspace={ownWorkspace}
+        router={router}
+        drafts={data.draftModules}
+        invitations={data.invitedModules}
+        refetchFn={refetch}
+      />
       <main className="max-w-7xl lg:max-w-full mx-auto max-h-full h-full">
-        <Suspense fallback="Loading...">
-          <DashboardContent expire={expire} signature={signature} />
-        </Suspense>
+        <DashboardContent
+          expire={expire}
+          signature={signature}
+          query={query}
+          ownWorkspace={ownWorkspace}
+          router={router}
+          data={data}
+          refetch={refetch}
+          refetchWorkspace={refetchWorkspace}
+        />
       </main>
-    </>
-  )
-}
-
-const WhoToFollow = ({ data, refetch, refetchFeed }) => {
-  const refetchFn = () => {
-    refetch()
-    refetchFeed()
-  }
-
-  return (
-    <>
-      <h2 className="text-2xl font-medium my-2">Who to follow</h2>
-      {data.followableWorkspaces.map((author) => (
-        <>
-          <li className="py-2 flex">
-            <div className="mr-2">
-              <img
-                src={author.avatar}
-                alt={`Avatar of ${author.handle}`}
-                className="w-10 h-10 rounded-full inline-block h-full align-middle"
-              />
-            </div>
-            <Link href={Routes.HandlePage({ handle: author.handle })}>
-              <a className="flex-grow">
-                <span className="inline-block h-full align-middle"></span>
-                <p className="text-gray-700 dark:text-gray-200 text-sm leading-4 font-normal my-auto inline-block align-middle">
-                  {author.firstName} {author.lastName}
-                  <p className="text-gray-500 dark:text-gray-400 text-xs leading-4 font-normal">
-                    @{author.handle}
-                  </p>
-                </p>
-              </a>
-            </Link>
-            <FollowButton author={author} refetchFn={refetchFn} />
-          </li>
-        </>
-      ))}
     </>
   )
 }
 
 Dashboard.authenticate = true
 Dashboard.suppressFirstRenderFlicker = true
-Dashboard.getLayout = (page) => <Layout title="Dashboard">{page}</Layout>
+Dashboard.getLayout = (page) => (
+  <Layout title="Dashboard">
+    <LayoutLoader>{page}</LayoutLoader>
+  </Layout>
+)
 
 export default Dashboard

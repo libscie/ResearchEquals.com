@@ -1,4 +1,4 @@
-import { useSession, useQuery, useRouterQuery, Router } from "blitz"
+import { useSession, useQuery, useRouterQuery, Router, useRouter } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import { Suspense, useEffect, useState } from "react"
 import { ProgressBarRound32 } from "@carbon/icons-react"
@@ -12,6 +12,8 @@ import ModuleCard from "../core/components/ModuleCard"
 import { useMediaPredicate } from "react-media-hook"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import generateSignature from "../signature"
+import LayoutLoader from "app/core/components/LayoutLoader"
+import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 
 export async function getServerSideProps(context) {
   // Expires in 30 minutes
@@ -26,13 +28,10 @@ export async function getServerSideProps(context) {
   }
 }
 
-const DraftsContents = ({ expire, signature }) => {
-  const currentWorkspace = useCurrentWorkspace()
-  const session = useSession()
+const DraftsContents = ({ expire, signature, currentWorkspace, session, user }) => {
   const [currentModule, setModule] = useState<any>(undefined)
   const [inboxOpen, setInboxOpen] = useState(true)
   const [drafts] = useQuery(getDrafts, { session })
-  const user = useCurrentUser()
   const query = useRouterQuery()
   const biggerWindow = useMediaPredicate("(min-width: 1024px)")
 
@@ -126,19 +125,42 @@ const DraftsContents = ({ expire, signature }) => {
 }
 
 const DraftsPage = ({ expire, signature }) => {
+  const currentUser = useCurrentUser()
+  const session = useSession()
+  const currentWorkspace = useCurrentWorkspace()
+  const router = useRouter()
+  const [drafts, { refetch }] = useQuery(getDrafts, { session })
+  const [invitations] = useQuery(getInvitedModules, { session })
+
   return (
     <>
-      <Navbar />
+      <Navbar
+        currentUser={currentUser}
+        session={session}
+        currentWorkspace={currentWorkspace}
+        router={router}
+        drafts={drafts}
+        invitations={invitations}
+        refetchFn={refetch}
+      />
       <main className="flex relative">
-        <Suspense fallback="Loading...">
-          <DraftsContents expire={expire} signature={signature} />
-        </Suspense>
+        <DraftsContents
+          expire={expire}
+          signature={signature}
+          currentWorkspace={currentWorkspace}
+          session={session}
+          user={currentUser}
+        />
       </main>
     </>
   )
 }
 
 DraftsPage.authenticate = true
-DraftsPage.getLayout = (page) => <Layout title="R=Drafts">{page}</Layout>
+DraftsPage.getLayout = (page) => (
+  <Layout title="R= Drafts">
+    <LayoutLoader>{page}</LayoutLoader>
+  </Layout>
+)
 
 export default DraftsPage
