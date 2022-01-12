@@ -149,7 +149,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
           <span className="inline-block h-full align-middle"> </span>
           <p className="inline-block align-middle">
             {!workspace!.orcid && workspace.workspaceType === "Individual" ? (
-              <Link href="api/auth/orcid">
+              <Link href="/api/auth/orcid">
                 <button className="flex py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500 mb-1">
                   Connect your ORCID
                 </button>
