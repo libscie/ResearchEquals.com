@@ -14,11 +14,21 @@ const contributors = (authors) => {
         elements: [
           {
             type: "element",
+            name: "given_name",
+            elements: [
+              {
+                type: "text",
+                text: author.firstName,
+              },
+            ],
+          },
+          {
+            type: "element",
             name: "surname",
             elements: [
               {
                 type: "text",
-                text: author.name,
+                text: author.lastName,
               },
             ],
           },

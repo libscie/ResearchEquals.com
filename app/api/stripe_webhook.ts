@@ -83,7 +83,8 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
         title: module!.title,
         authors: module!.authors!.map((author) => {
           const js = {
-            name: author.workspace?.name,
+            firstName: author.workspace?.firstName,
+            lastName: author.workspace?.lastName,
             orcid: author.workspace?.orcid,
           }
 
@@ -99,7 +100,7 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
                     reference.publishedWhere === "ResearchEquals"
                       ? reference.authors.map((author) => {
                           const authJs = {
-                            name: author.workspace?.name,
+                            name: `${author.workspace?.firstName} ${author.workspace?.lastName}`,
                             orcid: `https://orcid.org/${author!.workspace!.orcid}`,
                           }
 
