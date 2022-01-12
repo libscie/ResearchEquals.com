@@ -1,9 +1,6 @@
-import { Link, Routes, useQuery } from "blitz"
-import { Suspense } from "react"
-import { ProgressBarRound32 } from "@carbon/icons-react"
+import { Link, Routes, useQuery, useSession, useRouter } from "blitz"
 import { getAlgoliaResults } from "@algolia/autocomplete-js"
 import algoliasearch from "algoliasearch"
-import { Blog32 } from "@carbon/icons-react"
 import SearchResultWorkspace from "./SearchResultWorkspace"
 import SearchResultModule from "./SearchResultModule"
 import ResearchEqualsLogo from "./ResearchEqualsLogo"
@@ -12,11 +9,21 @@ import Autocomplete from "./Autocomplete"
 import NavbarFullwidthMenu from "./NavbarFullwidthMenu"
 import NavbarDropdown from "./NavbarDropdown"
 import NavbarTabs from "./NavbarTabs"
-import router from "next/router"
+import getInvitedModules from "app/workspaces/queries/getInvitedModules"
+import { useCurrentUser } from "../hooks/useCurrentUser"
+import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
+import getDrafts from "../queries/getDrafts"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
 const Navbar = () => {
+  const currentUser = useCurrentUser()
+  const session = useSession()
+  const currentWorkspace = useCurrentWorkspace()
+  const router = useRouter()
+  const [drafts] = useQuery(getDrafts, { session })
+  const [invitations] = useQuery(getInvitedModules, { session })
+
   return (
     <>
       <div className="w-full bg-white dark:bg-gray-900 mx-auto px-4 sm:px-6 lg:px-8 z-50 border-b dark:border-gray-600 border-gray-100">
@@ -94,30 +101,31 @@ const Navbar = () => {
             </div>
           </div>
           <div className="flex items-center md:absolute md:right-0 md:inset-y-0 lg:hidden">
-            <Suspense
-              fallback={
-                <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
-                  <ProgressBarRound32 className="animate-spin text-white dark:text-white" />
-                </div>
-              }
-            >
-              <NavbarDropdown />
-            </Suspense>
+            <NavbarDropdown
+              currentUser={currentUser}
+              currentWorkspace={currentWorkspace}
+              router={router}
+              invitedModules={invitations}
+              drafts={drafts}
+            />
           </div>
-          <Suspense
-            fallback={
-              <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
-                <ProgressBarRound32 className="animate-spin text-white dark:text-white" />
-              </div>
-            }
-          >
-            <NavbarFullwidthMenu />
-          </Suspense>
+          <NavbarFullwidthMenu
+            currentUser={currentUser}
+            session={session}
+            router={router}
+            currentWorkspace={currentWorkspace}
+            invitedModules={invitations}
+          />
         </div>
       </div>
-      <Suspense fallback="">
-        <NavbarTabs />
-      </Suspense>
+      <NavbarTabs
+        currentUser={currentUser}
+        currentWorkspace={currentWorkspace}
+        session={session}
+        router={router}
+        drafts={drafts}
+        invitations={invitations}
+      />
     </>
   )
 }

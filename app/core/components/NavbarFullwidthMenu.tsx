@@ -1,34 +1,15 @@
 import { Link, Routes, useMutation, useSession, useRouter, useQuery } from "blitz"
-import { Listbox, Menu, Popover, Transition } from "@headlessui/react"
-import { Fragment, useState } from "react"
+import { Menu, Popover, Transition } from "@headlessui/react"
+import { Fragment } from "react"
 import { PlusSmIcon, CogIcon } from "@heroicons/react/solid"
-import moment from "moment"
-
-import { useCurrentUser } from "../hooks/useCurrentUser"
-import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
 import logout from "../../auth/mutations/logout"
 import SettingsModal from "../modals/settings"
 import QuickDraft from "../../modules/components/QuickDraft"
-import getInvitedModules from "../../workspaces/queries/getInvitedModules"
 import { BellIcon } from "@heroicons/react/outline"
 import InvitationNotification from "./InvitationNotification"
 
-const FullWidthMenu = () => {
-  const currentUser = useCurrentUser()
-  const session = useSession()
-  const router = useRouter()
-  const currentWorkspace = useCurrentWorkspace()
-  const [invitedModules] = useQuery(getInvitedModules, { session })
+const FullWidthMenu = ({ currentUser, session, router, currentWorkspace, invitedModules }) => {
   const [logoutMutation] = useMutation(logout)
-
-  // Match the selected state with the session workspace
-  const [selected, setSelected] = useState(
-    currentUser?.memberships.filter((membership) => {
-      if (membership.workspace.id === session.workspaceId) {
-        return membership
-      }
-    })[0]
-  )
 
   if (currentUser && currentWorkspace) {
     return (
