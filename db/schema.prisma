@@ -86,21 +86,29 @@ model Authorship {
 }
 
 model Workspace {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  handle    String   @unique
-  avatar    String?
-  name      String?
-  bio       String?
-  pronouns  String?  @db.VarChar(20)
-  url       String?
-  orcid     String?  @unique
+  id            Int           @id @default(autoincrement())
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  workspaceType WorkspaceType @default(Individual)
+  handle        String        @unique
+  avatar        String?
+  firstName     String?
+  lastName      String?
+  name          String?
+  bio           String?
+  pronouns      String?       @db.VarChar(20)
+  url           String?
+  orcid         String?       @unique
 
   members     Membership[]
   authorships Authorship[]
   following   Workspace[]  @relation("WorkspaceToWorkspace")
   followers   Workspace[]  @relation("WorkspaceToWorkspace")
+}
+
+enum WorkspaceType {
+  Individual
+  Group
 }
 
 model Membership {
