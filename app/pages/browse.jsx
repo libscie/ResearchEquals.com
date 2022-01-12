@@ -158,7 +158,7 @@ Browse.getLayout = (page) => (
       </>
     }
   >
-    <LayoutLoader page={page} />
+    <LayoutLoader>{page}</LayoutLoader>
   </Layout>
 )
 
