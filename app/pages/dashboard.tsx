@@ -76,10 +76,7 @@ const DashboardContent = ({ expire, signature }) => {
           {/* Column 1 */}
           <div className="lg:w-1/4 p-4">
             <div className="my-0">
-              <h1 className="text-4xl font-medium">
-                Welcome back,{" "}
-                {data.workspace!.name ? data.workspace!.name : "@" + data.workspace!.handle}!
-              </h1>
+              <h1 className="text-4xl font-medium">Welcome back, @{data.workspace!.handle}!</h1>
             </div>
             <dl className="mt-2 flex text-gray-900 dark:text-gray-200  overflow-hidden shadow dark:border rounded border-gray-100 dark:border-gray-600 divide-gray-100 dark:divide-gray-600 md:grid-cols-3 divide-x">
               {stats.map((item) => (
@@ -214,7 +211,7 @@ const WhoToFollow = ({ data, refetch, refetchFeed }) => {
             <div className="mr-2">
               <img
                 src={author.avatar}
-                alt={`Avatar of ${author.name ? author.name : author.handle}`}
+                alt={`Avatar of ${author.handle}`}
                 className="w-10 h-10 rounded-full inline-block h-full align-middle"
               />
             </div>
@@ -222,7 +219,7 @@ const WhoToFollow = ({ data, refetch, refetchFeed }) => {
               <a className="flex-grow">
                 <span className="inline-block h-full align-middle"></span>
                 <p className="text-gray-700 dark:text-gray-200 text-sm leading-4 font-normal my-auto inline-block align-middle">
-                  {author.name}
+                  {author.firstName} {author.lastName}
                   <p className="text-gray-500 dark:text-gray-400 text-xs leading-4 font-normal">
                     @{author.handle}
                   </p>

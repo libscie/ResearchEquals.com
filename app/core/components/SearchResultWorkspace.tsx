@@ -10,7 +10,7 @@ const SearchResultWorkspace = ({ item }) => {
         </div>
         <div>
           <p className="text-gray-900 dark:text-gray-200 text-sm leading-4 font-normal">
-            {item.name}
+            {item.firstName} {item.lastName}
           </p>
           <p className="text-gray-500 dark:text-gray-400 text-xs leading-4 font-normal">
             @{item.handle}

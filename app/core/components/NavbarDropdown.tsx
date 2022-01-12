@@ -73,16 +73,14 @@ const DropdownContents = () => {
             <div className="mr-2">
               <img
                 src={currentWorkspace!.avatar!}
-                alt={`Avatar of ${
-                  currentWorkspace.name ? currentWorkspace.name : currentWorkspace.handle
-                }`}
+                alt={`Avatar of ${currentWorkspace.handle}`}
                 className="w-10 h-10 rounded-full inline-block h-full align-middle"
               />
             </div>
             <div className="flex-grow">
               <span className="inline-block h-full align-middle"></span>
               <p className="text-gray-700 dark:text-gray-200 text-sm leading-4 font-normal my-auto inline-block align-middle">
-                {currentWorkspace.name}
+                {currentWorkspace.firstName} {currentWorkspace.lastName}
                 <p className="text-gray-500 dark:text-gray-400 text-xs leading-4 font-normal">
                   @{currentWorkspace.handle}
                 </p>

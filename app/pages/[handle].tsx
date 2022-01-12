@@ -44,10 +44,10 @@ export const getServerSideProps = async ({ params }) => {
 const HandlePage = ({ workspace }) => {
   return (
     <Layout
-      title={`R=${workspace.name || workspace.handle}`}
+      title={`R=${workspace.firstName} (${workspace.handle})}`}
       headChildren={
         <>
-          <meta property="og:title" content={workspace.name || workspace.handle} />
+          <meta property="og:title" content={workspace.firstName || workspace.handle} />
           {workspace.bio ? <meta property="og:description" content={workspace.bio} /> : ""}
         </>
       }
@@ -63,7 +63,8 @@ const HandlePage = ({ workspace }) => {
               <div className="flex-grow ml-4">
                 <span className="inline-block h-full align-middle"> </span>
                 <p className="inline-block align-middle text-base leading-6 font-medium text-gray-900 dark:text-gray-200">
-                  {workspace.name ? workspace.name : ""}{" "}
+                  {workspace.firstName ? workspace.firstName : ""}{" "}
+                  {workspace.lastName ? workspace.lastName : ""}{" "}
                   {workspace.pronouns ? (
                     <span className="text-gray-500 dark:text-gray-200">({workspace.pronouns})</span>
                   ) : (
@@ -163,7 +164,7 @@ const HandlePage = ({ workspace }) => {
                       </p>
                     }
                     title="Following"
-                    name={workspace.name || workspace.handle}
+                    name={workspace.firstName + workspace.lastName || workspace.handle}
                     authors={workspace.following}
                   />
                 </Suspense>

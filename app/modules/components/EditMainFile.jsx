@@ -33,7 +33,7 @@ const EditMainFile = ({
           moduleId={moduleEdit.id}
           setQueryData={setQueryData}
         />
-      ) : user.emailIsVerified && workspace.orcid ? (
+      ) : user.emailIsVerified ? (
         <>
           <button
             type="button"
@@ -77,7 +77,7 @@ const EditMainFile = ({
         </>
       ) : (
         <p className="text-xs leading-4 font-normal text-gray-900 dark:text-gray-200 my-2">
-          Please verify email and connect your ORCID to upload files.
+          Please verify email to upload files.
         </p>
       )}
     </>
