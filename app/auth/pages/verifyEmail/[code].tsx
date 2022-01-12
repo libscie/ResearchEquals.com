@@ -7,6 +7,9 @@ const VerifyMail: BlitzPage = () => {
   const code = useParam("code", "string")
   const [verifyEmail] = useMutation(verifyEmailMutation)
   const [error, setError] = useState(false)
+  const userId = useRouterQuery().userId
+
+  console.log(userId)
 
   useEffect(() => {
     if (!code) {
@@ -15,7 +18,7 @@ const VerifyMail: BlitzPage = () => {
 
     Router.prefetch("/")
 
-    verifyEmail({ code }).then((success) => {
+    verifyEmail({ code, userId }).then((success) => {
       if (success) {
         Router.replace("/")
       } else {
@@ -54,7 +57,6 @@ const VerifyMail: BlitzPage = () => {
   )
 }
 
-VerifyMail.authenticate = true
 VerifyMail.getLayout = (page) => <Layout title="Verifying Email ...">{page}</Layout>
 
 export default VerifyMail
