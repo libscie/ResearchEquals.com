@@ -79,7 +79,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
   const session = useSession()
   const currentWorkspace = useCurrentWorkspace()
   const router = useRouter()
-  const [drafts] = useQuery(getDrafts, { session })
+  const [drafts, { refetch }] = useQuery(getDrafts, { session })
   const [invitations] = useQuery(getInvitedModules, { session })
 
   return (
@@ -91,6 +91,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
         router={router}
         drafts={drafts}
         invitations={invitations}
+        refetchFn={refetch}
       />
       <main className="max-w-7xl sm:mx-auto my-4 mx-4">
         <div className="w-full flex">

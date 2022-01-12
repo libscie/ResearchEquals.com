@@ -51,7 +51,6 @@ const DashboardContent = ({
   const goToPage = (number) => router.push({ query: { page: number } })
   const goToNextPage = () => router.push({ query: { page: page + 1 } })
 
-  console.log(data)
   const stats = [
     {
       name: "Drafts",
@@ -210,6 +209,7 @@ const Dashboard = ({ expire, signature }) => {
         router={router}
         drafts={data.draftModules}
         invitations={data.invitedModules}
+        refetchFn={refetch}
       />
       <main className="max-w-7xl lg:max-w-full mx-auto max-h-full h-full">
         <DashboardContent

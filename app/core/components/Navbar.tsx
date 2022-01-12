@@ -9,14 +9,18 @@ import Autocomplete from "./Autocomplete"
 import NavbarFullwidthMenu from "./NavbarFullwidthMenu"
 import NavbarDropdown from "./NavbarDropdown"
 import NavbarTabs from "./NavbarTabs"
-import getInvitedModules from "app/workspaces/queries/getInvitedModules"
-import { useCurrentUser } from "../hooks/useCurrentUser"
-import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
-import getDrafts from "../queries/getDrafts"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
-const Navbar = ({ currentUser, session, currentWorkspace, router, drafts, invitations }) => {
+const Navbar = ({
+  currentUser,
+  session,
+  currentWorkspace,
+  router,
+  drafts,
+  invitations,
+  refetchFn,
+}) => {
   return (
     <>
       <div className="w-full bg-white dark:bg-gray-900 mx-auto px-4 sm:px-6 lg:px-8 z-50 border-b dark:border-gray-600 border-gray-100">
@@ -100,6 +104,7 @@ const Navbar = ({ currentUser, session, currentWorkspace, router, drafts, invita
               router={router}
               invitedModules={invitations}
               drafts={drafts}
+              refetchFn={refetchFn}
             />
           </div>
           <NavbarFullwidthMenu
@@ -108,6 +113,7 @@ const Navbar = ({ currentUser, session, currentWorkspace, router, drafts, invita
             router={router}
             currentWorkspace={currentWorkspace}
             invitedModules={invitations}
+            refetchFn={refetchFn}
           />
         </div>
       </div>

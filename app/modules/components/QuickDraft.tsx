@@ -9,7 +9,7 @@ import { Checkmark32, Close32, HelpFilled32 } from "@carbon/icons-react"
 
 import createModule from "../mutations/createModule"
 
-const QuickDraft = ({ buttonText, buttonStyle }) => {
+const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
   const [openCreate, setCreateOpen] = useState(false)
   const [moduleTypes] = useQuery(getTypes, undefined)
   const [licenses] = useQuery(getLicenses, undefined)
@@ -39,6 +39,7 @@ const QuickDraft = ({ buttonText, buttonStyle }) => {
           licenseId: parseInt(values.license),
           authors: [],
         })
+        refetchFn()
         setCreateOpen(false)
         formikReset()
       } catch (error) {

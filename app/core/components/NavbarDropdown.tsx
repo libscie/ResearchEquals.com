@@ -8,7 +8,14 @@ import ResearchEqualsLogo from "./ResearchEqualsLogo"
 import QuickDraft from "../../modules/components/QuickDraft"
 import DropdownNotificationModal from "../modals/DropdownNotificationModal"
 
-const DropdownContents = ({ currentUser, currentWorkspace, router, invitedModules, drafts }) => {
+const DropdownContents = ({
+  currentUser,
+  currentWorkspace,
+  router,
+  invitedModules,
+  drafts,
+  refetchFn,
+}) => {
   const [logoutMutation] = useMutation(logout)
 
   if (currentUser && currentWorkspace) {
@@ -26,6 +33,7 @@ const DropdownContents = ({ currentUser, currentWorkspace, router, invitedModule
               </>
             }
             buttonStyle="w-full py-2 bg-indigo-50 dark:bg-gray-800 text-indigo-700 dark:text-gray-200  border border-transparent text-sm leading-5 font-normal rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:border dark:border-gray-400 dark:hover:bg-gray-700"
+            refetchFn={refetchFn}
           />
           <Link href={Routes.Dashboard()}>
             <button className="group w-full text-left block rounded-md px-2 py-2 text-gray-900 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 text-base leading-5 font-normal">
@@ -114,7 +122,14 @@ const DropdownContents = ({ currentUser, currentWorkspace, router, invitedModule
   }
 }
 
-const NavbarDropdown = ({ currentUser, currentWorkspace, router, invitedModules, drafts }) => {
+const NavbarDropdown = ({
+  currentUser,
+  currentWorkspace,
+  router,
+  invitedModules,
+  drafts,
+  refetchFn,
+}) => {
   let [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -201,6 +216,7 @@ const NavbarDropdown = ({ currentUser, currentWorkspace, router, invitedModules,
                     router={router}
                     invitedModules={invitedModules}
                     drafts={drafts}
+                    refetchFn={refetchFn}
                   />
                 </div>
               </div>

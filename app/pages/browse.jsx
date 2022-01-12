@@ -136,7 +136,7 @@ const Browse = () => {
   const session = useSession()
   const currentWorkspace = useCurrentWorkspace()
   const router = useRouter()
-  const [drafts] = useQuery(getDrafts, { session })
+  const [drafts, { refetch }] = useQuery(getDrafts, { session })
   const [invitations] = useQuery(getInvitedModules, { session })
 
   return (
@@ -148,6 +148,7 @@ const Browse = () => {
         router={router}
         drafts={drafts}
         invitations={invitations}
+        refetchFn={refetch}
       />
       <BrowseContent />
       <Footer />

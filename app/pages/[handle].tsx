@@ -51,7 +51,7 @@ const Handle = ({ workspace }) => {
   const currentWorkspace = useCurrentWorkspace()
   const [ownWorkspace, { refetch }] = useQuery(getCurrentWorkspace, null)
   const router = useRouter()
-  const [drafts] = useQuery(getDrafts, { session })
+  const [drafts, { refetch: refetchDrafts }] = useQuery(getDrafts, { session })
   const [invitations] = useQuery(getInvitedModules, { session })
 
   return (
@@ -63,6 +63,7 @@ const Handle = ({ workspace }) => {
         router={router}
         drafts={drafts}
         invitations={invitations}
+        refetchFn={refetchDrafts}
       />
       <div className="lg:flex max-w-full mx-4">
         <div className="w-full lg:w-1/2 xl:w-1/3">

@@ -66,7 +66,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
   const session = useSession()
   const currentWorkspace = useCurrentWorkspace()
   const router = useRouter()
-  const [drafts] = useQuery(getDrafts, { session })
+  const [drafts, { refetch }] = useQuery(getDrafts, { session })
   const [invitations] = useQuery(getInvitedModules, { session })
 
   const freeLicenses = licenses.filter((license) => license.price === 0)
@@ -81,6 +81,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
         router={router}
         drafts={drafts}
         invitations={invitations}
+        refetchFn={refetch}
       />
       <main className="lg:relative bg-white dark:bg-gray-900">
         <div className="" id="hero">

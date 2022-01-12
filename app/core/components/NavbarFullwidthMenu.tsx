@@ -1,4 +1,4 @@
-import { Link, Routes, useMutation, useSession, useRouter, useQuery } from "blitz"
+import { Link, Routes, useMutation } from "blitz"
 import { Menu, Popover, Transition } from "@headlessui/react"
 import { Fragment } from "react"
 import { Add32, Settings32, Notification32, NotificationNew32 } from "@carbon/icons-react"
@@ -8,7 +8,14 @@ import SettingsModal from "../modals/settings"
 import QuickDraft from "../../modules/components/QuickDraft"
 import InvitationNotification from "./InvitationNotification"
 
-const FullWidthMenu = ({ currentUser, session, router, currentWorkspace, invitedModules }) => {
+const FullWidthMenu = ({
+  currentUser,
+  session,
+  router,
+  currentWorkspace,
+  invitedModules,
+  refetchFn,
+}) => {
   const [logoutMutation] = useMutation(logout)
 
   if (currentUser && currentWorkspace) {
@@ -115,6 +122,7 @@ const FullWidthMenu = ({ currentUser, session, router, currentWorkspace, invited
             </>
           }
           buttonStyle="bg-indigo-50 dark:bg-gray-800 text-indigo-700 dark:text-gray-200 ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-normal rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:border dark:border-gray-400 dark:hover:bg-gray-700"
+          refetchFn={refetchFn}
         />
       </div>
     )
