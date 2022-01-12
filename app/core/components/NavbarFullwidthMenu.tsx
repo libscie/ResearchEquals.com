@@ -1,11 +1,11 @@
 import { Link, Routes, useMutation, useSession, useRouter, useQuery } from "blitz"
 import { Menu, Popover, Transition } from "@headlessui/react"
 import { Fragment } from "react"
-import { PlusSmIcon, CogIcon } from "@heroicons/react/solid"
+import { Add32, Settings32, Notification32, NotificationNew32 } from "@carbon/icons-react"
+
 import logout from "../../auth/mutations/logout"
 import SettingsModal from "../modals/settings"
 import QuickDraft from "../../modules/components/QuickDraft"
-import { BellIcon } from "@heroicons/react/outline"
 import InvitationNotification from "./InvitationNotification"
 
 const FullWidthMenu = ({ currentUser, session, router, currentWorkspace, invitedModules }) => {
@@ -26,18 +26,9 @@ const FullWidthMenu = ({ currentUser, session, router, currentWorkspace, invited
               >
                 <span className="sr-only">View notifications</span>
                 {invitedModules.length > 0 ? (
-                  <div className="relative">
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                    <svg
-                      className="absolute top-0 right-0 h-2 w-2 text-gray-400 dark:text-gray-400"
-                      fill="currentColor"
-                      viewBox="0 0 8 8"
-                    >
-                      <circle cx={4} cy={4} r={3} />
-                    </svg>
-                  </div>
+                  <NotificationNew32 className="h-6 w-6" aria-hidden="true" />
                 ) : (
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
+                  <Notification32 className="h-6 w-6" aria-hidden="true" />
                 )}
               </Popover.Button>
               <Transition
@@ -66,7 +57,7 @@ const FullWidthMenu = ({ currentUser, session, router, currentWorkspace, invited
         <SettingsModal
           styling="ml-1 flex-shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
           button={
-            <CogIcon
+            <Settings32
               className="h-6 w-6 text-gray-400 hover:text-gray-500 rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               aria-hidden="true"
             />
@@ -116,7 +107,7 @@ const FullWidthMenu = ({ currentUser, session, router, currentWorkspace, invited
         <QuickDraft
           buttonText={
             <>
-              <PlusSmIcon
+              <Add32
                 className="w-4 h-4 fill-current text-indigo-500 dark:text-gray-400"
                 aria-hidden="true"
               />

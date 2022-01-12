@@ -5,9 +5,7 @@ import toast from "react-hot-toast"
 
 import useCurrentModule from "../queries/useCurrentModule"
 import ViewFiles from "./ViewFiles"
-import { Maximize24 } from "@carbon/icons-react"
-import { ArrowNarrowLeftIcon } from "@heroicons/react/solid"
-import { UserAddIcon } from "@heroicons/react/outline"
+import { ArrowLeft32, Maximize24, UserFollow32 } from "@carbon/icons-react"
 import acceptInvitation from "app/authorship/mutations/acceptInvitation"
 import removeInvitation from "app/authorship/mutations/removeInvitation"
 import MetadataImmutable from "./MetadataImmutable"
@@ -39,7 +37,7 @@ const ModuleInvitation = ({
       <div className="rounded-md bg-blue-50 dark:bg-blue-800 w-full p-2 lg:flex my-4">
         <div className="flex-grow flex my-2 lg:my-0">
           <div className="flex-shrink-0 inline-block align-middle">
-            <UserAddIcon
+            <UserFollow32
               className="stroke-current h-5 w-5 text-blue-500 dark:text-blue-200 inline-block align-middle"
               aria-hidden="true"
             />
@@ -109,7 +107,7 @@ const ModuleInvitation = ({
             }}
           >
             <label className="sr-only">Go full screen</label>
-            <ArrowNarrowLeftIcon
+            <ArrowLeft32
               className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600"
               aria-hidden="true"
             />

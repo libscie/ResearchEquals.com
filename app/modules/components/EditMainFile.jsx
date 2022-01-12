@@ -2,10 +2,10 @@ import { useMutation } from "blitz"
 import { Widget } from "@uploadcare/react-widget"
 import { useRef } from "react"
 import toast from "react-hot-toast"
+import { Add32 } from "@carbon/icons-react"
 
 import addMain from "../mutations/addMain"
 import EditMainFileDisplay from "../../core/components/EditMainFileDisplay"
-import { PlusSmIcon } from "@heroicons/react/solid"
 import { fileSizeLimit, fileTypeLimit } from "../../core/utils/fileTypeLimit"
 
 const validators = [fileTypeLimit, fileSizeLimit]
@@ -42,7 +42,7 @@ const EditMainFile = ({
               widgetApi.current.openDialog()
             }}
           >
-            <PlusSmIcon className="w-4 h-4" aria-hidden="true" /> Add Main File
+            <Add32 className="w-4 h-4" aria-hidden="true" /> Add Main File
             <Widget
               publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
               secureSignature={signature}

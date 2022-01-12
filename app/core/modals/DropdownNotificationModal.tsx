@@ -1,6 +1,5 @@
-import { BellIcon } from "@heroicons/react/outline"
 import { Listbox, Transition, Dialog } from "@headlessui/react"
-import { Close32, Menu32 } from "@carbon/icons-react"
+import { Close32, Menu32, NotificationNew32, Notification32 } from "@carbon/icons-react"
 
 import { Fragment, useState } from "react"
 import ResearchEqualsLogo from "../components/ResearchEqualsLogo"
@@ -21,20 +20,17 @@ const DropdownNotificationModal = ({ invitedModules }) => {
         disabled={invitedModules.length === 0}
       >
         <span className="inline-block h-full align-middle"></span>
-        <BellIcon
-          className="inline-block align-middle stroke-current text-gray-400 h-6 w-6"
-          aria-hidden="true"
-        />
+
         {invitedModules.length > 0 ? (
-          <svg
-            className="absolute top-0 right-0 h-10 w-10 text-gray-400 dark:text-gray-400"
-            fill="currentColor"
-            viewBox="0 0 40 40"
-          >
-            <circle cx={30} cy={10} r={3} />
-          </svg>
+          <NotificationNew32
+            className="inline-block align-middle stroke-current text-gray-400 h-6 w-6"
+            aria-hidden="true"
+          />
         ) : (
-          ""
+          <Notification32
+            className="inline-block align-middle stroke-current text-gray-400 h-6 w-6"
+            aria-hidden="true"
+          />
         )}
       </button>
       <Transition appear show={isOpen} as={Fragment}>

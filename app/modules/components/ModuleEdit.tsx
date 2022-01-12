@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import algoliasearch from "algoliasearch"
 import { z } from "zod"
 import { getAlgoliaResults } from "@algolia/autocomplete-js"
-import { Edit24, EditOff24, Save32 } from "@carbon/icons-react"
+import { ArrowLeft32, Edit24, EditOff24, Save32 } from "@carbon/icons-react"
 import { Prisma } from "prisma"
 import { useFormik } from "formik"
 import { Maximize24, TrashCan24 } from "@carbon/icons-react"
@@ -20,7 +20,6 @@ import editModuleScreen from "../mutations/editModuleScreen"
 import EditSupportingFileDisplay from "../../core/components/EditSupportingFileDisplay"
 import MetadataView from "./MetadataView"
 import SearchResultModule from "../../core/components/SearchResultModule"
-import { ArrowNarrowLeftIcon } from "@heroicons/react/solid"
 import MetadataEdit from "./MetadataEdit"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import addReference from "../mutations/addReference"
@@ -119,7 +118,7 @@ const ModuleEdit = ({
             }}
           >
             <label className="sr-only">Go full screen</label>
-            <ArrowNarrowLeftIcon
+            <ArrowLeft32
               className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600"
               aria-hidden="true"
             />

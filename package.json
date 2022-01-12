@@ -33,7 +33,6 @@
     "@chatra/chatra": "1.0.3",
     "@floating-ui/dom": "0.1.7",
     "@headlessui/react": "1.4.0",
-    "@heroicons/react": "1.0.4",
     "@mdx-js/loader": "2.0.0-rc.2",
     "@mdx-js/react": "2.0.0-rc.2",
     "@prisma/client": "2.29.1",

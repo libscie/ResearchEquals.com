@@ -4,11 +4,11 @@ import moment from "moment"
 import toast from "react-hot-toast"
 import algoliasearch from "algoliasearch"
 import { getAlgoliaResults } from "@algolia/autocomplete-js"
+import { Add32 } from "@carbon/icons-react"
 
 import addAuthor from "../mutations/addAuthor"
 import AuthorAvatarsNew from "./AuthorAvatarsNew"
 import SearchResultWorkspace from "../../core/components/SearchResultWorkspace"
-import { PlusSmIcon } from "@heroicons/react/solid"
 import { useState } from "react"
 import ManageAuthors from "./ManageAuthors"
 import FollowsFromSearch from "./FollowsFromSearch"
@@ -137,7 +137,7 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
                   setAddAuthors(true)
                 }}
               >
-                <PlusSmIcon
+                <Add32
                   className="fill-current text-gray-500 dark:text-gray-200 w-4 h-4 dark:hover:text-gray-400"
                   aria-hidden="true"
                 />
