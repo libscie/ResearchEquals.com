@@ -78,7 +78,7 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit, user, workspace, expire
               clearable
               onChange={updateSupporting}
             />
-            )}
+            )
           </button>
         </>
       ) : (
