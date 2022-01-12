@@ -6,22 +6,29 @@ import { useFormik } from "formik"
 import { z } from "zod"
 import { Checkmark32, Close32, Renew32 } from "@carbon/icons-react"
 import toast from "react-hot-toast"
-import { CheckIcon, XIcon } from "@heroicons/react/solid"
 import ReactTooltip from "react-tooltip"
+import changeLastName from "../../workspaces/mutations/changeLastName"
+import changeFirstName from "../../workspaces/mutations/changeFirstName"
 
 const WorkspaceSettings = ({ workspace, setIsOpen }) => {
-  const [changeBioMutation, { isSuccess: bioChanged }] = useMutation(changeBio)
+  const [changeFirstNameMutation] = useMutation(changeFirstName)
+  const [changeLastNameMutation] = useMutation(changeLastName)
+  const [changeBioMutation] = useMutation(changeBio)
   const [changePronounsMutation, { isSuccess: pronounsChanged }] = useMutation(changePronouns)
   const [changeUrlMutation, { isSuccess: urlChanged }] = useMutation(changeUrl)
 
   const formik = useFormik({
     initialValues: {
+      firstName: workspace.firstName,
+      lastName: workspace.lastName,
       bio: workspace.bio,
       pronouns: workspace.pronouns,
       profileUrl: workspace.url,
     },
     validate: validateZodSchema(
       z.object({
+        firstName: z.any(),
+        lastName: z.any(),
         bio: z.any(),
         pronouns: z.any(),
         profileUrl: z.any(),
@@ -29,6 +36,42 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
     ),
     onSubmit: async (values) => {
       try {
+        if (values.firstName !== workspace.firstName) {
+          try {
+            z.string().parse(values.firstName)
+            toast.promise(
+              changeFirstNameMutation({
+                firstName: values.firstName,
+              }),
+              {
+                loading: "Saving...",
+                success: "Updated first name",
+                error: "Hmm that didn't work first name...",
+              }
+            )
+          } catch (error) {
+            toast.error("First name needs to be a string")
+          }
+        }
+
+        if (values.lastName !== workspace.lastName) {
+          try {
+            z.string().parse(values.lastName)
+            toast.promise(
+              changeLastNameMutation({
+                lastName: values.lastName,
+              }),
+              {
+                loading: "Saving...",
+                success: "Updated last name",
+                error: "Hmm that didn't work...",
+              }
+            )
+          } catch (error) {
+            toast.error("Last name needs to be a string")
+          }
+        }
+
         if (values.bio !== workspace.bio) {
           try {
             z.string().parse(values.bio)
@@ -139,6 +182,40 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         </div>
       </div>
       <form onSubmit={formik.handleSubmit}>
+        <div className="my-4 text-gray-900 dark:text-gray-200 px-2">
+          <label htmlFor="firstName" className="my-1 block text-sm font-medium">
+            First Name
+          </label>
+          <div className="mt-1 text-gray-900 dark:text-gray-200">
+            <input
+              id="firstName"
+              type="firstName"
+              autoComplete="firstName"
+              className="bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+              {...formik.getFieldProps("firstName")}
+            />
+            {formik.touched.firstName && formik.errors.firstName ? (
+              <div className="font-normal text-sm">{formik.errors.firstName}</div>
+            ) : null}
+          </div>
+        </div>
+        <div className="my-4 text-gray-900 dark:text-gray-200 px-2">
+          <label htmlFor="lastName" className="my-1 block text-sm font-medium">
+            Last Name
+          </label>
+          <div className="mt-1 text-gray-900 dark:text-gray-200">
+            <input
+              id="lastName"
+              type="lastName"
+              autoComplete="lastName"
+              className="bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+              {...formik.getFieldProps("lastName")}
+            />
+            {formik.touched.lastName && formik.errors.lastName ? (
+              <div className="font-normal text-sm">{formik.errors.lastName}</div>
+            ) : null}
+          </div>
+        </div>
         <div className="my-4 text-gray-900 dark:text-gray-200 px-2">
           <label htmlFor="bio" className="my-1 block text-sm font-medium">
             Bio
