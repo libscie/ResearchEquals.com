@@ -14,8 +14,8 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
   const [changeFirstNameMutation] = useMutation(changeFirstName)
   const [changeLastNameMutation] = useMutation(changeLastName)
   const [changeBioMutation] = useMutation(changeBio)
-  const [changePronounsMutation, { isSuccess: pronounsChanged }] = useMutation(changePronouns)
-  const [changeUrlMutation, { isSuccess: urlChanged }] = useMutation(changeUrl)
+  const [changePronounsMutation] = useMutation(changePronouns)
+  const [changeUrlMutation] = useMutation(changeUrl)
 
   const formik = useFormik({
     initialValues: {
@@ -184,7 +184,10 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
       <form onSubmit={formik.handleSubmit}>
         <div className="my-4 text-gray-900 dark:text-gray-200 px-2">
           <label htmlFor="firstName" className="my-1 block text-sm font-medium">
-            First Name
+            First Name{" "}
+            {formik.touched.firstName && formik.errors.firstName
+              ? " - " + formik.errors.firstName
+              : null}
           </label>
           <div className="mt-1 text-gray-900 dark:text-gray-200">
             <input
@@ -194,14 +197,14 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               className="bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
               {...formik.getFieldProps("firstName")}
             />
-            {formik.touched.firstName && formik.errors.firstName ? (
-              <div className="font-normal text-sm">{formik.errors.firstName}</div>
-            ) : null}
           </div>
         </div>
         <div className="my-4 text-gray-900 dark:text-gray-200 px-2">
           <label htmlFor="lastName" className="my-1 block text-sm font-medium">
-            Last Name
+            Last Name{" "}
+            {formik.touched.lastName && formik.errors.lastName
+              ? " - " + formik.errors.lastName
+              : null}
           </label>
           <div className="mt-1 text-gray-900 dark:text-gray-200">
             <input
@@ -211,14 +214,11 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               className="bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
               {...formik.getFieldProps("lastName")}
             />
-            {formik.touched.lastName && formik.errors.lastName ? (
-              <div className="font-normal text-sm">{formik.errors.lastName}</div>
-            ) : null}
           </div>
         </div>
         <div className="my-4 text-gray-900 dark:text-gray-200 px-2">
           <label htmlFor="bio" className="my-1 block text-sm font-medium">
-            Bio
+            Bio {formik.touched.bio && formik.errors.bio ? " - " + formik.errors.bio : null}
           </label>
           <div className="mt-1">
             <textarea
@@ -228,14 +228,14 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               {...formik.getFieldProps("bio")}
               defaultValue={workspace.bio}
             />
-            {formik.touched.bio && formik.errors.bio ? (
-              <div className="font-normal text-sm">{formik.errors.bio}</div>
-            ) : null}
           </div>
         </div>
         <div className="my-4 text-gray-900 dark:text-gray-200 px-2">
           <label htmlFor="pronouns" className="my-1 block text-sm font-medium">
-            Pronouns
+            Pronouns{" "}
+            {formik.touched.pronouns && formik.errors.pronouns
+              ? " - " + formik.errors.pronouns
+              : null}
           </label>
           <div className="mt-1 text-gray-900 dark:text-gray-200">
             <input
@@ -245,16 +245,15 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               className="bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
               {...formik.getFieldProps("pronouns")}
             />
-            {formik.touched.pronouns && formik.errors.pronouns ? (
-              <div className="font-normal text-sm">{formik.errors.pronouns}</div>
-            ) : null}
           </div>
         </div>
         <div className="my-4 text-gray-900 dark:text-gray-200 px-2">
           <label htmlFor="profileUrl" className="my-1 block text-sm font-medium">
-            Profile URL
+            Profile URL{" "}
+            {formik.touched.profileUrl && formik.errors.profileUrl
+              ? " - " + formik.errors.profileUrl
+              : null}
           </label>
-
           <div className="mt-1">
             <input
               id="profileUrl"
@@ -263,9 +262,6 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               className=" bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded  placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
               {...formik.getFieldProps("profileUrl")}
             />
-            {formik.touched.profileUrl && formik.errors.profileUrl ? (
-              <div className="font-normal text-sm">{formik.errors.profileUrl}</div>
-            ) : null}
           </div>
         </div>
 
