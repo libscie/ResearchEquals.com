@@ -3,7 +3,7 @@ import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 
 import deleteUser from "app/users/mutations/deleteUser"
-import { TrashIcon } from "@heroicons/react/solid"
+import { TrashCan32 } from "@carbon/icons-react"
 
 export default function DeleteModal() {
   let [isOpen, setIsOpen] = useState(false)
@@ -35,7 +35,7 @@ export default function DeleteModal() {
             className="flex py-2 px-4 bg-red-50 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
             onClick={openModal}
           >
-            <TrashIcon className="w-5 h-5 fill-current text-red-500" aria-hidden="true" />
+            <TrashCan32 className="w-5 h-5 fill-current text-red-500" aria-hidden="true" />
             Delete
           </button>
         </div>

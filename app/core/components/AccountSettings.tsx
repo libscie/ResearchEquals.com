@@ -1,17 +1,15 @@
 import changePassword from "app/auth/mutations/changePassword"
 import changeEmail from "app/users/mutations/changeEmail"
-import changeBio from "app/workspaces/mutations/changeBio"
-import changePronouns from "app/workspaces/mutations/changePronouns"
-import changeUrl from "app/workspaces/mutations/changeUrl"
-import { Link, useMutation, validateZodSchema } from "blitz"
+import { useMutation, validateZodSchema } from "blitz"
 import { useFormik } from "formik"
 import toast from "react-hot-toast"
 import { z } from "zod"
+import { Checkmark32, Close32 } from "@carbon/icons-react"
+
 import DeleteModal from "../modals/delete"
-import { CheckIcon, XIcon } from "@heroicons/react/solid"
 
 const WorkspaceSettings = ({ user, setIsOpen }) => {
-  const [changePasswordMutation, { isSuccess: passwordChanged }] = useMutation(changePassword)
+  const [changePasswordMutation] = useMutation(changePassword)
   const [changeEmailMutation] = useMutation(changeEmail)
 
   const formik = useFormik({
@@ -171,7 +169,7 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
                 setIsOpen(false)
               }}
             >
-              <XIcon className="w-4 h-4 fill-current text-red-500 pt-1" aria-hidden="true" />
+              <Close32 className="w-4 h-4 fill-current text-red-500 pt-1" aria-hidden="true" />
               Cancel
             </button>
           </div>
@@ -179,7 +177,7 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
             type="submit"
             className="flex mr-4 py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
           >
-            <CheckIcon className="w-4 h-4 fill-current text-green-500 pt-1" aria-hidden="true" />
+            <Checkmark32 className="w-4 h-4 fill-current text-green-500 pt-1" aria-hidden="true" />
             Save
           </button>
         </div>

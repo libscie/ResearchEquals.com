@@ -4,7 +4,7 @@ import changeUrl from "app/workspaces/mutations/changeUrl"
 import { Link, useMutation, validateZodSchema } from "blitz"
 import { useFormik } from "formik"
 import { z } from "zod"
-import { Renew32 } from "@carbon/icons-react"
+import { Checkmark32, Close32, Renew32 } from "@carbon/icons-react"
 import toast from "react-hot-toast"
 import { CheckIcon, XIcon } from "@heroicons/react/solid"
 import ReactTooltip from "react-tooltip"
@@ -202,7 +202,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
                 setIsOpen(false)
               }}
             >
-              <XIcon className="w-4 h-4 fill-current text-red-500 pt-1" aria-hidden="true" />
+              <Close32 className="w-4 h-4 fill-current text-red-500 pt-1" aria-hidden="true" />
               Cancel
             </button>
           </div>
@@ -210,7 +210,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
             type="submit"
             className="flex mr-4 py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
           >
-            <CheckIcon className="w-4 h-4 fill-current text-green-500 pt-1" aria-hidden="true" />
+            <Checkmark32 className="w-4 h-4 fill-current text-green-500 pt-1" aria-hidden="true" />
             Save
           </button>
         </div>
