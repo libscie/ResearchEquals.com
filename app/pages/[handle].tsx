@@ -44,7 +44,7 @@ export const getServerSideProps = async ({ params }) => {
 const HandlePage = ({ workspace }) => {
   return (
     <Layout
-      title={`R=${workspace.firstName} (${workspace.handle})}`}
+      title={`R=${workspace.firstName} (${workspace.handle})`}
       headChildren={
         <>
           <meta property="og:title" content={workspace.firstName || workspace.handle} />
