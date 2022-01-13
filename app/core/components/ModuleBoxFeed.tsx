@@ -30,7 +30,7 @@ const ModuleBoxFeed = ({ modules, fetchNextPage, hasNextPage, isFetchingNextPage
                           className={`flex flex-col module ${
                             i % 2 === 0
                               ? "bg-indigo-600 dark:bg-indigo-600"
-                              : "bg-purple-600 dark:bg-purple-600"
+                              : "bg-purple-600 dark:bg-indigo-50"
                           } cursor-pointer p-4 text-white`}
                         >
                           <h2 className="text-base font-normal leading-5 flex-grow mb-2">
@@ -47,22 +47,22 @@ const ModuleBoxFeed = ({ modules, fetchNextPage, hasNextPage, isFetchingNextPage
                 ))}
               </div>
             </Fragment>
-            <div className="text-center my-4">
-              <button
-                onClick={() => fetchNextPage()}
-                disabled={!hasNextPage || !!isFetchingNextPage}
-                className="whitespace-nowrap text-sm leading-5 font-normal text-indigo-700 dark:text-gray-200 bg-indigo-100 hover:bg-indigo-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-0 dark:border dark:border-gray-600 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500"
-              >
-                {isFetchingNextPage
-                  ? "Loading more..."
-                  : hasNextPage
-                  ? "Load more"
-                  : "Nothing more to load"}
-              </button>
-            </div>
           </>
         ))
       )}
+      <div className="text-center my-4">
+        <button
+          onClick={() => fetchNextPage()}
+          disabled={!hasNextPage || !!isFetchingNextPage}
+          className="whitespace-nowrap text-sm leading-5 font-normal text-indigo-700 dark:text-gray-200 bg-indigo-100 hover:bg-indigo-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-0 dark:border dark:border-gray-600 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500"
+        >
+          {isFetchingNextPage
+            ? "Loading more..."
+            : hasNextPage
+            ? "Load more"
+            : "Nothing more to load"}
+        </button>
+      </div>
     </>
   )
 }
