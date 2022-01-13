@@ -1,4 +1,13 @@
-import { Link, useSession, useQuery, useRouter, usePaginatedQuery, useRouterQuery } from "blitz"
+import {
+  Link,
+  useSession,
+  useQuery,
+  useRouter,
+  usePaginatedQuery,
+  useRouterQuery,
+  useInfiniteQuery,
+  Routes,
+} from "blitz"
 import Layout from "app/core/layouts/Layout"
 import React, { useEffect } from "react"
 import toast from "react-hot-toast"
@@ -16,6 +25,8 @@ import WhoToFollow from "../core/components/WhoToFollow"
 import LayoutLoader from "../core/components/LayoutLoader"
 import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
+import AuthorAvatarsNew from "app/modules/components/AuthorAvatarsNew"
+import ModuleBoxFeed from "app/core/components/ModuleBoxFeed"
 
 const ITEMS_PER_PAGE = 5
 
@@ -47,11 +58,10 @@ const DashboardContent = ({
   refetchWorkspace,
 }) => {
   const page = Number(router.query.page) || 0
-  const [{ modules, hasMore, count }, { refetch: refetchFeed }] = usePaginatedQuery(getFeed, {
-    orderBy: { id: "asc" },
-    skip: ITEMS_PER_PAGE * page,
-    take: ITEMS_PER_PAGE,
-  })
+  const [modules, { isFetching, isFetchingNextPage, fetchNextPage, hasNextPage }] =
+    useInfiniteQuery(getFeed, (page = { take: 20, skip: 0 }) => page, {
+      getNextPageParam: (lastPage) => lastPage.nextPage,
+    })
   const goToPreviousPage = () => router.push({ query: { page: page - 1 } })
   const goToPage = (number) => router.push({ query: { page: number } })
   const goToNextPage = () => router.push({ query: { page: page + 1 } })
@@ -155,61 +165,12 @@ const DashboardContent = ({
           {/* Column 2 */}
           <div className="flex w-full flex-col px-4">
             <div className="my-2">
-              {modules.length > 0 ? (
-                <>
-                  <div className="rounded-t-md border border-gray-300 dark:border-gray-600 mt-8 divide-y divide-gray-300 dark:divide-gray-600">
-                    <h1 className="text-xs leading-4 font-medium mx-4 my-2 text-gray-500 dark:text-gray-400 ">
-                      Latest modules from the authors you follow
-                    </h1>
-                    <ul role="list" className="divide-y divide-gray-300 dark:divide-gray-600">
-                      {modules.map((module) => (
-                        <>
-                          <li
-                            onClick={() => {
-                              router.push(`/modules/${module.suffix}`)
-                            }}
-                            className="cursor-pointer"
-                          >
-                            <ModuleCard
-                              type={module.type.name}
-                              title={module.title}
-                              status={`DOI: 10.53962/${module.suffix}`}
-                              time={moment(module.publishedAt).fromNow()}
-                              timeText="Published"
-                              authors={module.authors}
-                            />
-                          </li>
-                        </>
-                      ))}
-                    </ul>
-                  </div>
-                  <FeedPagination
-                    ITEMS_PER_PAGE={ITEMS_PER_PAGE}
-                    page={page}
-                    count={count}
-                    goToPreviousPage={goToPreviousPage}
-                    goToPage={goToPage}
-                    goToNextPage={goToNextPage}
-                    hasMore={hasMore}
-                  />
-                </>
-              ) : (
-                <div className="flex flex-col flex-grow relative w-full border-2 border-gray-1000 border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500  my-4 h-auto">
-                  <div className="table flex-grow w-full">
-                    <div className="sm:table-cell w-1/4 h-28"></div>
-                    <span className="mx-auto table-cell align-middle text-sm leading-4 font-medium">
-                      {data.followableWorkspaces.length > 0 ? (
-                        <>
-                          <div>Following people will help fill your feed</div>
-                        </>
-                      ) : (
-                        <></>
-                      )}
-                    </span>
-                    <div className="hidden sm:table-cell w-1/4"></div>
-                  </div>
-                </div>
-              )}
+              <ModuleBoxFeed
+                modules={modules}
+                fetchNextPage={fetchNextPage}
+                hasNextPage={hasNextPage}
+                isFetchingNextPage={isFetchingNextPage}
+              />
             </div>
             {data.followableWorkspaces.length > 0 ? (
               <div className="mb-16">
