@@ -181,7 +181,7 @@ const Dashboard = ({ expire, signature }) => {
   const [ownWorkspace, { refetch: refetchWorkspace }] = useQuery(getCurrentWorkspace, null)
   const router = useRouter()
   // TODO: Add user select
-  const [data, { refetch }] = useQuery(getDashboardData, { session, changeDays: 100 })
+  const [data, { refetch }] = useQuery(getDashboardData, { session, changeDays: 7 })
 
   return (
     <>

@@ -16,7 +16,7 @@ const UnfollowButton = ({ author, refetchFn }) => {
               followedId: author.id,
             }),
             {
-              loading: "Saving...",
+              loading: "Following...",
               success: "Following",
               error: "Hmm that didn't work...",
             }
