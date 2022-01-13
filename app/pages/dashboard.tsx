@@ -1,34 +1,19 @@
-import {
-  Link,
-  useSession,
-  useQuery,
-  useRouter,
-  usePaginatedQuery,
-  useRouterQuery,
-  useInfiniteQuery,
-  Routes,
-} from "blitz"
+import { Link, useSession, useQuery, useRouter, useRouterQuery, useInfiniteQuery } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import React, { useEffect } from "react"
 import toast from "react-hot-toast"
-import moment from "moment"
 import { ArrowUp32, ArrowDown32 } from "@carbon/icons-react"
 
 import getDashboardData from "../core/queries/getDashboardData"
 import Navbar from "../core/components/Navbar"
 import OnboardingQuests from "../core/components/OnboardingQuests"
 import getFeed from "../workspaces/queries/getFeed"
-import ModuleCard from "../core/components/ModuleCard"
-import FeedPagination from "../core/components/FeedPagination"
 import generateSignature from "app/signature"
 import WhoToFollow from "../core/components/WhoToFollow"
 import LayoutLoader from "../core/components/LayoutLoader"
 import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
-import AuthorAvatarsNew from "app/modules/components/AuthorAvatarsNew"
 import ModuleBoxFeed from "app/core/components/ModuleBoxFeed"
-
-const ITEMS_PER_PAGE = 5
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -57,14 +42,10 @@ const DashboardContent = ({
   refetch,
   refetchWorkspace,
 }) => {
-  const page = Number(router.query.page) || 0
   const [modules, { isFetching, isFetchingNextPage, fetchNextPage, hasNextPage }] =
     useInfiniteQuery(getFeed, (page = { take: 20, skip: 0 }) => page, {
       getNextPageParam: (lastPage) => lastPage.nextPage,
     })
-  const goToPreviousPage = () => router.push({ query: { page: page - 1 } })
-  const goToPage = (number) => router.push({ query: { page: number } })
-  const goToNextPage = () => router.push({ query: { page: page + 1 } })
 
   const stats = [
     {
