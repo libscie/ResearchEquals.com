@@ -31,7 +31,7 @@ const OnboardingEmail = ({ data }) => {
       {!data ? (
         <div
           key="orcid-onboarding-quest"
-          className="onboarding flex flex-col bg-yellow-50 dark:bg-yellow-900 p-4 my-2 lg:my-0 sm:mr-2 w-full border-l-4 border-yellow-400 dark:border-yellow-200 rounded-r"
+          className="onboarding flex flex-col bg-yellow-50 dark:bg-yellow-900 p-4 my-2 lg:my-0 w-full border-l-4 border-yellow-400 dark:border-yellow-200 rounded-r"
         >
           <div className="flex flex-grow">
             <div className="">
@@ -85,7 +85,7 @@ const OnboardingOrcid = ({ data }) => {
       {!data ? (
         <div
           key="orcid-onboarding-quest"
-          className="onboarding flex flex-col bg-green-50 dark:bg-green-900 p-4 my-2 lg:my-0 sm:mr-2 w-full border-l-4 border-green-400 dark:border-green-200 rounded-r"
+          className="onboarding flex flex-col bg-green-50 dark:bg-green-900 p-4 my-2 lg:my-0 w-full border-l-4 border-green-400 dark:border-green-200 rounded-r"
         >
           <div className="flex flex-grow">
             <div className="">
@@ -131,7 +131,7 @@ const OnboardingProfile = ({ data }) => {
       {!data.workspace.bio ? (
         <div
           key="onboarding profile-onboarding-quest"
-          className="onboarding flex flex-col bg-pink-50 dark:bg-pink-900 p-4 my-2 lg:my-0 sm:mr-2 w-full border-l-4 border-pink-400 dark:border-pink-200 rounded-r"
+          className="onboarding flex flex-col bg-pink-50 dark:bg-pink-900 p-4 my-2 lg:my-0 w-full border-l-4 border-pink-400 dark:border-pink-200 rounded-r"
         >
           <div className="flex flex-grow">
             <div className="">
@@ -179,7 +179,7 @@ const OnboardingAvatar = ({ data, expire, signature }) => {
       {!data.avatar.match(/ucarecdn/g) ? (
         <div
           key="avatar-onboarding-quest"
-          className="onboarding flex flex-col bg-indigo-50 dark:bg-indigo-900 p-4 my-2 lg:my-0 sm:mr-2 w-full border-l-4 border-indigo-400 dark:border-indigo-200 rounded-r"
+          className="onboarding flex flex-col bg-indigo-50 dark:bg-indigo-900 p-4 my-2 lg:my-0 w-full border-l-4 border-indigo-400 dark:border-indigo-200 rounded-r"
         >
           <div className="flex flex-grow">
             <div className="">
@@ -242,7 +242,7 @@ const OnboardingDraft = ({ data }) => {
       {!data.authorships.length > 0 ? (
         <div
           key="draft-onboarding-quest"
-          className="onboarding flex flex-col bg-purple-50 dark:bg-purple-900 p-4 my-2 lg:my-0 sm:mr-2 w-full border-l-4 border-purple-400 dark:border-purple-200 rounded-r"
+          className="onboarding flex flex-col bg-purple-50 dark:bg-purple-900 p-4 my-2 lg:my-0 w-full border-l-4 border-purple-400 dark:border-purple-200 rounded-r"
         >
           <div className="flex flex-grow">
             <div className="">
