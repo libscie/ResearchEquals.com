@@ -2,18 +2,18 @@ import Footer from "app/core/components/Footer"
 import Navbar from "app/core/components/Navbar"
 import Layout from "app/core/layouts/Layout"
 import getBrowseGraphData from "app/core/queries/getBrowseGraphData"
-import { Link, Routes, useInfiniteQuery, useQuery, useRouter, useSession } from "blitz"
+import { useInfiniteQuery, useQuery, useRouter, useSession, Link } from "blitz"
 import moment from "moment"
 import React from "react"
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 
 import getBrowseData from "../core/queries/getBrowseData"
-import AuthorAvatarsNew from "../modules/components/AuthorAvatarsNew"
 import LayoutLoader from "../core/components/LayoutLoader"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import getDrafts from "app/core/queries/getDrafts"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
+import ModuleBoxFeed from "app/core/components/ModuleBoxFeed"
 import getBrowseWorkspaceData from "../core/queries/getBrowseWorkspaceData"
 import getBrowseWorkspaceGraphData from "../core/queries/getBrowseWorkspaceGraphData"
 
@@ -100,48 +100,12 @@ const BrowseContent = () => {
           </AreaChart>
         </ResponsiveContainer>
       </div>
-      {modulePages.map((page, i) => (
-        <React.Fragment key={i}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 my-4">
-            {page.modules.map((module) => (
-              <>
-                <>
-                  <Link href={Routes.ModulePage({ suffix: module.suffix })}>
-                    <a
-                      className={`flex flex-col module ${
-                        i % 2 === 0
-                          ? "bg-indigo-600 dark:bg-indigo-600"
-                          : "bg-purple-600 dark:bg-purple-600"
-                      } cursor-pointer p-4 text-white`}
-                    >
-                      <h2 className="text-base font-normal leading-5 flex-grow mb-2">
-                        {module.title}
-                      </h2>
-                      <span className="w-full flex">
-                        <span className="flex-grow align-text-bottom text-gray-300"></span>
-                        <AuthorAvatarsNew authors={module.authors} />
-                      </span>
-                    </a>
-                  </Link>
-                </>
-              </>
-            ))}
-          </div>
-        </React.Fragment>
-      ))}
-      <div className="text-center my-4">
-        <button
-          onClick={() => fetchNextPage()}
-          disabled={!hasNextPage || !!isFetchingNextPage}
-          className="whitespace-nowrap text-sm leading-5 font-normal text-indigo-700 dark:text-gray-200 bg-indigo-100 hover:bg-indigo-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-0 dark:border dark:border-gray-600 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500"
-        >
-          {isFetchingNextPage
-            ? "Loading more modules..."
-            : hasNextPage
-            ? "Load more modules"
-            : "No more modules to load"}
-        </button>
-      </div>
+      <ModuleBoxFeed
+        modules={modulePages}
+        fetchNextPage={fetchNextPage}
+        hasNextPage={hasNextPage}
+        isFetchingNextPage={isFetchingNextPage}
+      />
     </div>
   )
 }

@@ -1,6 +1,9 @@
 import db from "db"
 
-export default async function getSignature({ session }) {
+const itemCounter = (array, item) =>
+  array.flat(Infinity).filter((currentItem) => currentItem == item).length
+
+export default async function getSignature({ session, changeDays }) {
   const user = await db.user.findFirst({
     where: {
       id: session.userId!,
@@ -17,6 +20,7 @@ export default async function getSignature({ session }) {
       id: session.workspaceId!,
     },
     include: {
+      followers: true,
       following: true,
       authorships: true,
     },
@@ -47,6 +51,26 @@ export default async function getSignature({ session }) {
     },
   })
 
+  const draftRecent = draftModules.map((draft) => {
+    const datetime = new Date()
+    const now = datetime.getTime()
+    const xTimeAgo = now - changeDays * 24 * 60 * 60 * 1000
+    const twoTimeAgo = xTimeAgo - changeDays * 24 * 60 * 60 * 1000
+    const draftUpdate = new Date(draft.updatedAt)
+
+    if (xTimeAgo < draftUpdate.getTime()) {
+      return "short"
+    } else if (twoTimeAgo > draftUpdate.getTime() && xTimeAgo < draftUpdate.getTime()) {
+      return "long"
+    } else {
+      return "-"
+    }
+  })
+
+  const draftPercentage = Math.round(
+    (itemCounter(draftRecent, "short") / itemCounter(draftRecent, "long") - 1) * 100
+  )
+
   const invitedModules = await db.module.findMany({
     where: {
       published: false,
@@ -76,6 +100,26 @@ export default async function getSignature({ session }) {
     },
   })
 
+  const invitedRecent = invitedModules.map((draft) => {
+    const datetime = new Date()
+    const now = datetime.getTime()
+    const xTimeAgo = now - changeDays * 24 * 60 * 60 * 1000
+    const twoTimeAgo = xTimeAgo - changeDays * 24 * 60 * 60 * 1000
+    const draftUpdate = new Date(draft.updatedAt)
+
+    if (xTimeAgo < draftUpdate.getTime()) {
+      return "short"
+    } else if (twoTimeAgo > draftUpdate.getTime() && xTimeAgo < draftUpdate.getTime()) {
+      return "long"
+    } else {
+      return "-"
+    }
+  })
+
+  const invitedPercentage = Math.round(
+    (itemCounter(invitedRecent, "short") / itemCounter(invitedRecent, "long") - 1) * 100
+  )
+
   const modules = await db.module.findMany({
     where: {
       published: true,
@@ -93,6 +137,42 @@ export default async function getSignature({ session }) {
       },
     },
   })
+
+  const myPublishedModules = await db.module.findMany({
+    where: {
+      published: true,
+      authors: {
+        some: {
+          workspaceId: session.workspaceId,
+          acceptedInvitation: true,
+        },
+      },
+    },
+    orderBy: [
+      {
+        updatedAt: "desc",
+      },
+    ],
+  })
+
+  const modulesRecent = myPublishedModules.map((draft) => {
+    const datetime = new Date()
+    const now = datetime.getTime()
+    const xTimeAgo = now - changeDays * 24 * 60 * 60 * 1000
+    const twoTimeAgo = xTimeAgo - changeDays * 24 * 60 * 60 * 1000
+    const draftUpdate = new Date(draft.publishedAt!)
+
+    if (xTimeAgo < draftUpdate.getTime()) {
+      return "short"
+    } else if (twoTimeAgo < draftUpdate.getTime() && xTimeAgo > draftUpdate.getTime()) {
+      return "long"
+    } else {
+      return "-"
+    }
+  })
+  const modulesPercentage = Math.round(
+    (itemCounter(modulesRecent, "short") / itemCounter(modulesRecent, "long") - 1) * 100
+  )
 
   const workspaces = await db.workspace.findMany({
     orderBy: [
@@ -114,8 +194,12 @@ export default async function getSignature({ session }) {
     user,
     workspace,
     draftModules,
+    draftPercentage,
     invitedModules,
+    invitedPercentage,
     modules,
+    myPublishedModules,
+    modulesPercentage,
     workspaces,
     followableWorkspaces,
   }

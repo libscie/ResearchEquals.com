@@ -61,12 +61,7 @@ const AuthorPanel = ({ buttonText, title, authors, name }) => {
                     <ul className="relative flex-1 divide-y divide-gray-400 dark:divide-gray-600">
                       {authors.map((author) => (
                         <>
-                          <li
-                            className="py-2 px-2 flex"
-                            onClick={() => {
-                              setPanelOpen(false)
-                            }}
-                          >
+                          <li className="py-2 px-2 flex">
                             <div className="mr-2">
                               <img
                                 src={author.avatar}
@@ -74,7 +69,12 @@ const AuthorPanel = ({ buttonText, title, authors, name }) => {
                                 className="w-10 h-10 rounded-full inline-block h-full align-middle"
                               />
                             </div>
-                            <div className="flex-grow">
+                            <div
+                              className="flex-grow"
+                              onClick={() => {
+                                setPanelOpen(false)
+                              }}
+                            >
                               <span className="inline-block h-full align-middle"></span>
                               <Link href={Routes.HandlePage({ handle: author.handle })}>
                                 <a className="text-gray-700 dark:text-gray-200 text-sm leading-4 font-normal my-auto inline-block align-middle">
