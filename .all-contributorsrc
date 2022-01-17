@@ -15,6 +15,15 @@
         "test",
         "userTesting"
       ]
+    },
+    {
+      "login": "nathan-at-jisc",
+      "name": "Nathan Sainsbury",
+      "avatar_url": "https://avatars.githubusercontent.com/u/58425475?v=4",
+      "profile": "https://github.com/nathan-at-jisc",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
