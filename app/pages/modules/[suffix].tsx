@@ -164,6 +164,15 @@ const Module = ({ module, mainFile, supportingRaw }) => {
                 id="moduleNext"
               />
             </button>
+            <Xarrows
+              start="moduleCurrent"
+              end="moduleNext"
+              showHead={false}
+              dashness
+              color={arrowColor}
+              startAnchor="auto"
+              endAnchor="left"
+            />
           </>
         ) : (
           ""
@@ -201,15 +210,6 @@ const Module = ({ module, mainFile, supportingRaw }) => {
         <Xarrows
           start="moduleCurrent"
           end="moduleAdd"
-          showHead={false}
-          dashness
-          color={arrowColor}
-          startAnchor="auto"
-          endAnchor="left"
-        />
-        <Xarrows
-          start="moduleCurrent"
-          end="moduleNext"
           showHead={false}
           dashness
           color={arrowColor}
