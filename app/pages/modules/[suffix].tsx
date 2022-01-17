@@ -93,7 +93,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
         invitations={invitations}
         refetchFn={refetch}
       />
-      <main className="max-w-7xl sm:mx-auto my-4 mx-4">
+      <main className="max-w-7xl xl:mx-auto my-4 mx-4">
         <div className="w-full flex">
           {/* Push all menu bars to the right */}
           <div className="flex-grow"></div>
