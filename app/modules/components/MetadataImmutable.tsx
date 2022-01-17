@@ -49,7 +49,7 @@ const MetadataImmutable = ({ module }) => {
             <span className="flex-grow"></span>
           </div>
           <span className="sm:flex-grow"></span>
-          <div className="flex sm:contents">
+          <div className="flex sm:contents mt-2 sm:mt-0">
             <span className="flex-grow sm:hidden"></span>
             <Suspense fallback="">
               <ViewAuthors module={module} button={<>test</>} />
