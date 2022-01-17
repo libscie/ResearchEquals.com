@@ -10,7 +10,6 @@ let config = {
       buttonText: "#fff",
       buttonBg: "#574cfa",
     },
-    buttonPosition: "bc",
   },
   ID: "vZo7KBf3WqmQPPasZ",
 }

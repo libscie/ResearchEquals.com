@@ -1,5 +1,5 @@
 import { Prisma } from "prisma"
-import { Link, NotFoundError, Routes, useQuery, useRouter, useSession } from "blitz"
+import { Link, NotFoundError, Routes, useMutation, useQuery, useRouter, useSession } from "blitz"
 import { AddAlt32, NextFilled32, PreviousFilled32 } from "@carbon/icons-react"
 import Xarrows, { useXarrow, Xwrapper } from "react-xarrows"
 import { useEffect, useState } from "react"
@@ -17,6 +17,8 @@ import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import { useMediaPredicate } from "react-media-hook"
 import ChildPanel from "../../modules/components/ChildPanel"
 import ParentPanel from "app/modules/components/ParentPanel"
+import toast from "react-hot-toast"
+import createNextModule from "../../modules/mutations/createNextModule"
 
 export async function getServerSideProps(context) {
   const module = await db.module.findFirst({
@@ -91,6 +93,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
   const biggerWindow = useMediaPredicate("(min-width: 1536px)")
   const [previousOpen, setPreviousOpen] = useState(false)
   const [leadsToOpen, setLeadsToOpen] = useState(false)
+  const [createNextModuleMutation] = useMutation(createNextModule)
 
   const updateXarrow = useXarrow()
   let arrowColor
@@ -117,62 +120,100 @@ const Module = ({ module, mainFile, supportingRaw }) => {
         refetchFn={refetch}
       />
       <Xwrapper>
-        {module.parents.length > 0 ? (
-          <div className="fixed bottom-2 2xl:bottom-1/2 left-2">
-            <button
-              onClick={() => {
-                setPreviousOpen(true)
-              }}
-            >
-              <PreviousFilled32 className="w-10 h-10 2xl:w-8 2xl:h-8" id="modulePrevious" />
-            </button>
-            <Xarrows
-              start="moduleCurrent"
-              end="modulePrevious"
-              showHead={false}
-              dashness
-              color={arrowColor}
-              startAnchor="auto"
-              endAnchor="right"
+        <div className="fixed bottom-2 2xl:bottom-1/2 right-2 shadow-2xl">
+          {module.parents.length > 0 ? (
+            <div className="2xl:fixed bottom-2 2xl:bottom-1/2 2xl:left-2">
+              <button
+                onClick={() => {
+                  setPreviousOpen(true)
+                }}
+              >
+                <PreviousFilled32
+                  className=" bg-white dark:bg-gray-900 rounded-full w-10 h-10 "
+                  id="modulePrevious"
+                />
+              </button>
+              <Xarrows
+                start="moduleCurrent"
+                end="modulePrevious"
+                showHead={false}
+                dashness
+                color={arrowColor}
+                startAnchor="auto"
+                endAnchor="right"
+              />
+            </div>
+          ) : (
+            ""
+          )}
+          {module.children.length > 0 ? (
+            <>
+              <button
+                className="block my-2"
+                onClick={() => {
+                  setLeadsToOpen(true)
+                }}
+              >
+                <NextFilled32
+                  className="bg-white dark:bg-gray-900 rounded-full w-10 h-10"
+                  id="moduleNext"
+                />
+              </button>
+              <Xarrows
+                start="moduleCurrent"
+                end="moduleNext"
+                showHead={false}
+                dashness
+                color={arrowColor}
+                startAnchor="auto"
+                endAnchor="left"
+              />
+            </>
+          ) : (
+            ""
+          )}
+          <button
+            onClick={async () => {
+              toast.promise(
+                createNextModuleMutation({
+                  title: module.title,
+                  description: module.description,
+                  typeId: module.type.id,
+                  licenseId: module.license.id,
+                }),
+                {
+                  loading: "Creating draft...",
+                  success: (data) => {
+                    return (
+                      <>
+                        Next step created.
+                        <Link href={`/drafts?suffix=${data}`}>
+                          <a className="underline ml-1">View draft.</a>
+                        </Link>
+                      </>
+                    )
+                  },
+                  error: "Sign up to do this",
+                }
+              )
+            }}
+          >
+            <AddAlt32
+              className="bg-white dark:bg-gray-900 rounded-full w-10 h-10 "
+              id="moduleAdd"
             />
-          </div>
-        ) : (
-          ""
-        )}
-        {module.children.length > 0 ? (
-          <div className="fixed bottom-2 2xl:bottom-1/2 right-2">
-            <button
-              onClick={() => {
-                setLeadsToOpen(true)
-              }}
-            >
-              <NextFilled32 className="w-10 h-10 2xl:w-8 2xl:h-8" id="moduleNext" />
-            </button>
-            <button>
-              <AddAlt32 className="w-10 h-10 2xl:w-8 2xl:h-8 2xl:my-8" id="moduleAdd" />
-            </button>
-            <Xarrows
-              start="moduleCurrent"
-              end="moduleNext"
-              showHead={false}
-              dashness
-              color={arrowColor}
-              startAnchor="auto"
-              endAnchor="left"
-            />
-            <Xarrows
-              start="moduleCurrent"
-              end="moduleAdd"
-              showHead={false}
-              dashness
-              color={arrowColor}
-              startAnchor="auto"
-              endAnchor="left"
-            />
-          </div>
-        ) : (
-          ""
-        )}
+          </button>
+
+          <Xarrows
+            start="moduleCurrent"
+            end="moduleAdd"
+            showHead={false}
+            dashness
+            color={arrowColor}
+            startAnchor="auto"
+            endAnchor="left"
+          />
+        </div>
         <article className="max-w-7xl xl:mx-auto my-4 mx-4">
           <MetadataImmutable module={module} />
           {mainFile.name ? (
