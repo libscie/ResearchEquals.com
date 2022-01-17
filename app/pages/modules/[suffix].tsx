@@ -120,7 +120,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
         refetchFn={refetch}
       />
       <Xwrapper>
-        <div className="fixed bottom-2 2xl:bottom-1/2 right-2 shadow-2xl">
+        <div className="fixed bottom-2 2xl:bottom-1/2 right-2 bg-white dark:bg-gray-900 rounded-full">
           {module.parents.length > 0 ? (
             <div className="2xl:fixed bottom-2 2xl:bottom-1/2 2xl:left-2">
               <button
