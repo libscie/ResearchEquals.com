@@ -44,3 +44,43 @@
 .uploadcare--button_primary {
   background-color: #574cfa;
 }
+
+.coc h1 {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  text-align: center;
+  margin: 0.5rem;
+}
+
+.coc h2 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  text-align: left;
+}
+
+.coc h3 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  text-align: left;
+  margin: 0.5rem 0 0.5rem 0;
+  text-decoration: underline;
+}
+
+.coc p {
+  margin: 1rem 0 1rem 0;
+}
+
+.coc ul {
+  list-style-type: circle;
+  list-style-position: outside;
+  margin-left: 2rem;
+}
+
+.coc table {
+  margin: auto;
+  width: 100%;
+}
+
+.coc a {
+  text-decoration: underline;
+}

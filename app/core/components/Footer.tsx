@@ -43,7 +43,11 @@ const Footer = () => {
               </a>
             </Link>
           </p>
-
+          <p>
+            <Link href="/coc">
+              <a className="hover:bg-indigo-600 hover:text-white">Code of Conduct</a>
+            </Link>
+          </p>
           <p>
             <Link href={Routes.Imprint()}>
               <a className="hover:bg-indigo-600 hover:text-white">Imprint</a>
