@@ -36,12 +36,7 @@ const MetadataImmutable = ({ module }) => {
           </Link>
         </div>
       </div>
-      <div
-        className="module bg-indigo-600 text-white my-4"
-        style={{ padding: "1px" }}
-        id="moduleCurrent"
-      >
-        {/* <div className="module bg-white dark:bg-gray-900 border-0 border-gray-100 dark:border-gray-600 divide-y divide-gray-100 dark:divide-gray-600"> */}
+      <div className="module bg-indigo-600 text-white my-4 py-2 px-4" id="moduleCurrent">
         <div className="py-4 px-2 min-h-32">
           <p className="text-sm leading-4 font-normal ">{module.type.name}</p>
           <h1 className="text-xl leading-6 font-medium ">{module.title}</h1>
