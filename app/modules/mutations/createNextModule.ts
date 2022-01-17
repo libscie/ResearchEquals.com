@@ -4,7 +4,7 @@ import generateSuffix from "./generateSuffix"
 
 export default resolver.pipe(
   resolver.authorize(),
-  async ({ title, description, typeId, licenseId }, ctx) => {
+  async ({ title, description, parentId, typeId, licenseId }, ctx) => {
     const authorInvitations = [
       {
         workspaceId: ctx.session.$publicData.workspaceId,
@@ -24,6 +24,11 @@ export default resolver.pipe(
         },
         license: {
           connect: { id: licenseId },
+        },
+        parents: {
+          connect: {
+            id: parentId,
+          },
         },
         authors: {
           create: authorInvitations,
