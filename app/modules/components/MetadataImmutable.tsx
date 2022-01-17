@@ -3,7 +3,6 @@ import moment from "moment"
 
 import AuthorAvatarsNew from "./AuthorAvatarsNew"
 import ViewAuthors from "./ViewAuthors"
-import ParentChildView from "./ParentChildView"
 import { Suspense } from "react"
 
 const MetadataImmutable = ({ module }) => {
