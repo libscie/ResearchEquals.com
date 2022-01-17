@@ -19,7 +19,7 @@ export default resolver.pipe(async (_, ctx: Ctx) => {
     sendEmailWithTemplate(user!.email!, "welcome", {
       handle: user!.email!,
       days: 30,
-      verify_email_url: url`/verifyEmail/${emailCode}`,
+      verify_email_url: url`/verifyEmail/${emailCode}?userId=${user!.id}`,
     }),
   ])
 
