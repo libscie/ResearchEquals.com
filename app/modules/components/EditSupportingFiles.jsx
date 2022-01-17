@@ -44,7 +44,7 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit, user, workspace, expire
 
   return (
     <>
-      {user.emailIsVerified && workspace.orcid ? (
+      {user.emailIsVerified ? (
         <>
           <button
             type="button"
@@ -83,7 +83,7 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit, user, workspace, expire
         </>
       ) : (
         <p className="text-xs leading-4 font-normal text-gray-900 dark:text-gray-200 my-2">
-          Please verify email and connect your ORCID to upload files.
+          Please verify email to upload files.
         </p>
       )}
     </>
