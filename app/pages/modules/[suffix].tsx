@@ -1,5 +1,8 @@
 import { Prisma } from "prisma"
 import { Link, NotFoundError, Routes, useQuery, useRouter, useSession } from "blitz"
+import { AddAlt32, NextFilled32, PreviousFilled32 } from "@carbon/icons-react"
+import Xarrows, { useXarrow, Xwrapper } from "react-xarrows"
+import { useEffect, useState } from "react"
 
 import Layout from "../../core/layouts/Layout"
 import db from "db"
@@ -11,6 +14,9 @@ import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 import getDrafts from "app/core/queries/getDrafts"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
+import { useMediaPredicate } from "react-media-hook"
+import ChildPanel from "../../modules/components/ChildPanel"
+import ParentPanel from "app/modules/components/ParentPanel"
 
 export async function getServerSideProps(context) {
   const module = await db.module.findFirst({
@@ -81,6 +87,23 @@ const Module = ({ module, mainFile, supportingRaw }) => {
   const router = useRouter()
   const [drafts, { refetch }] = useQuery(getDrafts, { session })
   const [invitations] = useQuery(getInvitedModules, { session })
+  const prefersDarkMode = useMediaPredicate("(prefers-color-scheme: dark)")
+  const biggerWindow = useMediaPredicate("(min-width: 1536px)")
+  const [previousOpen, setPreviousOpen] = useState(false)
+  const [leadsToOpen, setLeadsToOpen] = useState(false)
+
+  const updateXarrow = useXarrow()
+  let arrowColor
+  if (biggerWindow) {
+    arrowColor = prefersDarkMode ? "white" : "#0f172a"
+  } else {
+    arrowColor = "transparent"
+  }
+
+  useEffect(() => {
+    window.addEventListener("scroll", updateXarrow, { passive: true })
+    return () => window.removeEventListener("scroll", updateXarrow)
+  })
 
   return (
     <>
@@ -93,97 +116,161 @@ const Module = ({ module, mainFile, supportingRaw }) => {
         invitations={invitations}
         refetchFn={refetch}
       />
-      <main className="max-w-7xl xl:mx-auto my-4 mx-4">
-        <div className="w-full flex">
-          {/* Push all menu bars to the right */}
-          <div className="flex-grow"></div>
-          <div>{/* Space for menu bar items */}</div>
-        </div>
-        <MetadataImmutable module={module} />
-        {mainFile.name ? (
-          <div className="my-8">
-            <h2 className="">Main file</h2>
-            <ViewFiles name={mainFile.name} size={mainFile.size} url={mainFile.cdnUrl} />
+      <Xwrapper>
+        {module.parents.length > 0 ? (
+          <div className="fixed bottom-2 2xl:bottom-1/2 left-2">
+            <button
+              onClick={() => {
+                setPreviousOpen(true)
+              }}
+            >
+              <PreviousFilled32 className="w-10 h-10 2xl:w-8 2xl:h-8" id="modulePrevious" />
+            </button>
+            <Xarrows
+              start="moduleCurrent"
+              end="modulePrevious"
+              showHead={false}
+              dashness
+              color={arrowColor}
+              startAnchor="auto"
+              endAnchor="right"
+            />
           </div>
         ) : (
           ""
         )}
-        {supportingRaw.files.length > 0 ? (
-          <div className="my-8">
-            <h2>Supporting file(s)</h2>
-            {supportingRaw.files.map((file) => (
-              <>
-                <ViewFiles
-                  name={file.original_filename}
-                  size={file.size}
-                  url={file.original_file_url}
-                />
-              </>
-            ))}
+        {module.children.length > 0 ? (
+          <div className="fixed bottom-2 2xl:bottom-1/2 right-2">
+            <button
+              onClick={() => {
+                setLeadsToOpen(true)
+              }}
+            >
+              <NextFilled32 className="w-10 h-10 2xl:w-8 2xl:h-8" id="moduleNext" />
+            </button>
+            <button>
+              <AddAlt32 className="w-10 h-10 2xl:w-8 2xl:h-8 2xl:my-8" id="moduleAdd" />
+            </button>
+            <Xarrows
+              start="moduleCurrent"
+              end="moduleNext"
+              showHead={false}
+              dashness
+              color={arrowColor}
+              startAnchor="auto"
+              endAnchor="left"
+            />
+            <Xarrows
+              start="moduleCurrent"
+              end="moduleAdd"
+              showHead={false}
+              dashness
+              color={arrowColor}
+              startAnchor="auto"
+              endAnchor="left"
+            />
           </div>
         ) : (
           ""
         )}
-        {module.references.length > 0 ? (
-          <div className="my-3">
-            <h2>Reference list</h2>
-            <ol className="list-decimal list-inside my-4 text-normal">
-              {module.references.map((reference) => (
-                <>
-                  <li>
-                    {reference.publishedWhere === "ResearchEquals" ? (
-                      <>
-                        {reference.authors.map((author, index) => (
+        <article className="max-w-7xl xl:mx-auto my-4 mx-4">
+          <MetadataImmutable module={module} />
+          {mainFile.name ? (
+            <div className="my-8">
+              <h2 className="text-lg">Main file</h2>
+              <ViewFiles name={mainFile.name} size={mainFile.size} url={mainFile.cdnUrl} />
+            </div>
+          ) : (
+            ""
+          )}
+          <div className="md:grid grid-cols-2 gap-x-4 mb-28">
+            {supportingRaw.files.length > 0 ? (
+              <div className="">
+                <h2 className="text-lg">Supporting file(s)</h2>
+                {supportingRaw.files.map((file) => (
+                  <>
+                    <ViewFiles
+                      name={file.original_filename}
+                      size={file.size}
+                      url={file.original_file_url}
+                    />
+                  </>
+                ))}
+              </div>
+            ) : (
+              ""
+            )}
+            {module.references.length > 0 ? (
+              <div className="">
+                <h2 className="text-lg">Reference list</h2>
+                <ol className="list-decimal list-outside my-4 text-normal pl-6">
+                  {module.references.map((reference) => (
+                    <>
+                      <li className="my-2">
+                        {reference.publishedWhere === "ResearchEquals" ? (
                           <>
-                            <Link href={Routes.HandlePage({ handle: author!.workspace!.handle })}>
-                              <a target="_blank">
-                                {author!.workspace!.firstName} {author!.workspace!.lastName}
-                              </a>
-                            </Link>
-                            {index === reference.authors.length - 1 ? "" : ", "}
-                          </>
-                        ))}
-                      </>
-                    ) : (
-                      <>
-                        {reference!.authorsRaw!["object"] ? (
-                          <>
-                            {reference!.authorsRaw!["object"].map((author, index) => (
+                            {reference.authors.map((author, index) => (
                               <>
-                                {index === 3
-                                  ? "[...]"
-                                  : index > 3
-                                  ? ""
-                                  : author.given && author.family
-                                  ? `${author.given} ${author.family}`
-                                  : `${author.name}`}
-                                {index === reference!.authorsRaw!["object"].length - 1 || index > 2
-                                  ? ""
-                                  : ", "}
+                                <Link
+                                  href={Routes.HandlePage({ handle: author!.workspace!.handle })}
+                                >
+                                  <a target="_blank">
+                                    {author!.workspace!.lastName}, {author!.workspace!.firstName}
+                                  </a>
+                                </Link>
+                                {index === reference.authors.length - 1 ? "" : "; "}
                               </>
                             ))}
                           </>
                         ) : (
                           <>
-                            <p className="italic">{reference.publishedWhere}</p>
+                            {reference!.authorsRaw!["object"] ? (
+                              <>
+                                {reference!.authorsRaw!["object"].map((author, index) => (
+                                  <>
+                                    {index === 3
+                                      ? "[...]"
+                                      : index > 3
+                                      ? ""
+                                      : author.given && author.family
+                                      ? `${author.family}, ${author.given}`
+                                      : `${author.name}`}
+                                    {index === reference!.authorsRaw!["object"].length - 1 ||
+                                    index > 2
+                                      ? ""
+                                      : "; "}
+                                  </>
+                                ))}
+                              </>
+                            ) : (
+                              <>
+                                <p className="italic">{reference.publishedWhere}</p>
+                              </>
+                            )}
                           </>
-                        )}
-                      </>
-                    )}{" "}
-                    ({reference.publishedAt?.toISOString().substr(0, 10)}). {reference.title}.{" "}
-                    <Link href={reference.url!}>
-                      <a target="_blank underline">{reference.url}</a>
-                    </Link>
-                    . <span className="italic">{reference.publishedWhere}</span>
-                  </li>
-                </>
-              ))}
-            </ol>
+                        )}{" "}
+                        ({reference.publishedAt?.toISOString().substr(0, 4)}).{" "}
+                        <span className="font-semibold">{reference.title}</span>
+                        {reference.title.endsWith("." ? "" : ".")}{" "}
+                        <Link href={reference.url!}>
+                          <a target="_blank">
+                            <span className="underline">{reference.url}</span>
+                          </a>
+                        </Link>
+                        . <span className="italic">{reference.publishedWhere}</span>.
+                      </li>
+                    </>
+                  ))}
+                </ol>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
-        ) : (
-          ""
-        )}
-      </main>
+          <ParentPanel openObject={previousOpen} openFunction={setPreviousOpen} module={module} />
+          <ChildPanel openObject={leadsToOpen} openFunction={setLeadsToOpen} module={module} />
+        </article>
+      </Xwrapper>
     </>
   )
 }
