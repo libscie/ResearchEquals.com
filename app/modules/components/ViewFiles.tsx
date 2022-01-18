@@ -6,7 +6,7 @@ const ViewFiles = ({ name, size, url }) => {
     <div className="flex my-2">
       <a
         href={url}
-        className="flex-grow flex border rounded border-gray-100 dark:border-gray-600 shadow-sm px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 text-xs leading-4 font-normal text-gray-900 dark:text-gray-200 mr-1"
+        className="flex-grow flex border rounded border-gray-100 dark:border-gray-600 shadow-sm px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm leading-4 font-normal text-gray-900 dark:text-gray-200 mr-1"
         target="_blank"
         download
         rel="noreferrer"
