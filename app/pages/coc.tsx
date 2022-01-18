@@ -1,6 +1,7 @@
-import { BlitzPage, useQuery, useRouter, useSession } from "blitz"
+import { BlitzPage, Link, useQuery, useRouter, useSession } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import Markdown from "markdown-it"
+import { SendAltFilled32 } from "@carbon/icons-react"
 
 import Navbar from "../core/components/Navbar"
 import Footer from "../core/components/Footer"
@@ -100,12 +101,12 @@ have a no-barriers reporting standard, and we actively encourage reports to our 
 Internal coordinators are always available, external coordinators are available if you feel there is a conflict in reporting to someone embedded within the space (e.g., about the person themselves, issues with our Liberate Science organizing).
 
 
-| Who               | Pronouns          | Email                              |
-|-------------------|-------------------|------------------------------------|
-| Vinodh Ilangovan  | They/them, he/him | [vinodh.ilangovan@gmail.com](vinodh.ilangovan@gmail.com)         |
-| Rachael Ainsworth | She/her           | [rachael.ainsworth@manchester.ac.uk](rachael.ainsworth@manchester.ac.uk) |
-| Julia Lowndes     | She/her           | [juliaslowndes@gmail.com](juliaslowndes@gmail.com)            |
-| Chris Hartgerink  | He/him            | [chris@libscie.org](chris@libscie.org)                  |
+| Who (alphabetical order)               | Pronouns          |
+|-------------------|-------------------|
+| [Chris Hartgerink](mailto:chris@libscie.org)  | He/him            |
+| [Julia Lowndes](mailto:juliaslowndes@gmail.com)     | She/her           |
+| [Rachael Ainsworth](mailto:rachael.ainsworth@manchester.ac.uk) | She/her |
+| [Vinodh Ilangovan](mailto:vinodh.ilangovan@gmail.com)  | They/them, he/him |
 
 To achieve a space where everyone can be present and contribute, our protocol is set up to, if reasonably possible, grow past the issues that occur *if people are willing to*.
 
@@ -173,6 +174,7 @@ Synopses of appeals will also be posted to the [Liberate Science Blog](https://b
 const md = new Markdown()
 
 const CodeOfConduct: BlitzPage = () => {
+  const datetime = new Date()
   const currentUser = useCurrentUser()
   const session = useSession()
   const currentWorkspace = useCurrentWorkspace()
@@ -192,11 +194,36 @@ const CodeOfConduct: BlitzPage = () => {
         refetchFn={refetch}
       />
       <main className="lg:relative bg-white dark:bg-gray-900">
-        <div className="mx-4">
-          <div
-            className="coc max-w-3xl mx-auto pt-10 text-black dark:text-white md:p-0 md:pt-10 my-8"
-            dangerouslySetInnerHTML={{ __html: md.render(cocMarkdown) }}
-          ></div>
+        <div className="mx-4 lg:mx-auto max-w-3xl text-black dark:text-white my-8">
+          <div className="onboarding flex flex-col bg-yellow-50 dark:bg-yellow-900 p-4 my-2 lg:my-0 w-full border-l-4 border-yellow-400 dark:border-yellow-200 rounded-r">
+            <div className="flex flex-grow">
+              <div className="">
+                <SendAltFilled32
+                  className="h-5 w-5 text-yellow-400 dark:text-yellow-200"
+                  aria-hidden="true"
+                />
+              </div>
+              <div className="ml-3 flex-1 md:flex text-yellow-800 dark:text-yellow-200">
+                <p className="text-sm mr-2">
+                  <span className="font-bold">Submit a report</span>{" "}
+                  <span>Reports are treated as confidential documents.</span>
+                </p>
+              </div>
+            </div>
+            <div className="block text-right text-yellow-700 dark:text-yellow-200">
+              <Link
+                href={`mailto:coc@libscie.org?subject=[${datetime
+                  .toISOString()
+                  .substr(
+                    0,
+                    10
+                  )}] Code of Conduct report&body=Dear%20Code%20of%20Conduct%20committee%2C%0A%0AI%20would%20like%20to%20submit%20a%20code%20of%20conduct%20report%20regarding%20%5Breported%20person's%20name%2Fdescription%2C%20organizations%20also%20allowed%5D.%0A%0A%5Bdescription%20of%20the%20incident%5D%20%0A%0AThis%20happened%20on%20%5Bdate%20and%20time%5D%20at%20%5Blocation%5D.%20%0A%0AMy%20name%20is%20%5Breporter%20name%5D%20and%20you%20can%20reach%20me%20at%20%5Bcontact%20info%5D.%20%0A%0AAdditional%20witnesses%20for%20this%20report%20are%3A%20%5Boptional%20witness%20information%5D.%0A%0AKind%20regards`}
+              >
+                <a className="mt-3 text-sm md:mt-0 md:ml-6 underline">Email report</a>
+              </Link>
+            </div>
+          </div>
+          <div className="coc " dangerouslySetInnerHTML={{ __html: md.render(cocMarkdown) }}></div>
         </div>
       </main>
       <Footer />
