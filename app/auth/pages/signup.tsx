@@ -177,6 +177,15 @@ const SignupPage: BlitzPage = () => {
                   >
                     Terms of use
                   </a>
+                </Link>{" "}
+                and{" "}
+                <Link href="/privacy">
+                  <a
+                    target="_blank"
+                    className="text-gray-700  dark:text-gray-100 underline focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500"
+                  >
+                    Privacy policy
+                  </a>
                 </Link>
               </p>
             </div>
