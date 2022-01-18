@@ -31,16 +31,12 @@ const Footer = () => {
           <hr className="w-20 mt-4 mb-4 border-t-0 bg-gradient-to-r from-indigo-300 to-indigo-600 bg-yellow-400 h-0.5 " />
           <p>
             <Link href="/terms">
-              <a className="hover:bg-indigo-600 hover:text-white" target="_blank">
-                Terms
-              </a>
+              <a className="hover:bg-indigo-600 hover:text-white">Terms</a>
             </Link>
           </p>
           <p>
             <Link href="/privacy">
-              <a className="hover:bg-indigo-600 hover:text-white" target="_blank">
-                Privacy policy
-              </a>
+              <a className="hover:bg-indigo-600 hover:text-white">Privacy policy</a>
             </Link>
           </p>
           <p>
