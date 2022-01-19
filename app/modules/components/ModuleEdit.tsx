@@ -36,6 +36,7 @@ const ModuleEdit = ({
   inboxOpen,
   expire,
   signature,
+  setModule,
 }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [addAuthors, setAddAuthors] = useState(false)
@@ -361,7 +362,7 @@ const ModuleEdit = ({
         </ol>
       </div>
       <div className="text-center">
-        <DeleteModuleModal module={module} />
+        <DeleteModuleModal module={module} setModule={setModule} />
       </div>
     </div>
   )

@@ -46,12 +46,17 @@ const DraftsContents = ({ expire, signature, currentWorkspace, session, user }) 
   }, [])
 
   return (
-    <div className="w-screen flex divide-x divide-gray-100 dark:divide-gray-600">
+    <div
+      className="w-screen flex divide-x divide-gray-100 dark:divide-gray-600"
+      style={{
+        height: biggerWindow ? "calc(100vh - 73px - 55px)" : "100%",
+      }}
+    >
       <div
         className={`${
           !inboxOpen ? "hidden" : "inline"
-        } w-full lg:w-80 divide-y-0 divide-gray-100 dark:divide-gray-600`}
-        style={{ minHeight: "calc(100vh - 74px - 54px)" }}
+        } float-left w-full lg:w-80 divide-y-0 divide-gray-100 dark:divide-gray-600 overflow-y-auto`}
+        // style={{ minHeight: "calc(100vh - 74px - 54px)" }}
       >
         <h1 className="lg:hidden text-lg leading-7 font-medium text-gray-900 dark:text-gray-200 px-4 sm:px-6 lg:px-8 py-4 border-b lg:border-b-0 border-gray-100 dark:border-gray-600">
           Drafts
@@ -82,7 +87,11 @@ const DraftsContents = ({ expire, signature, currentWorkspace, session, user }) 
       </div>
       {drafts.length > 0 ? (
         <>
-          <div className={`${inboxOpen ? "hidden lg:inline" : "inline"} flex-grow w-2/3`}>
+          <div
+            className={`${
+              inboxOpen ? "hidden lg:inline" : "inline"
+            } flex-grow w-2/3 float-right overflow-y-auto`}
+          >
             {currentModule ? (
               <Suspense
                 fallback={
@@ -93,6 +102,7 @@ const DraftsContents = ({ expire, signature, currentWorkspace, session, user }) 
               >
                 <ModuleEdit
                   user={user}
+                  setModule={setModule}
                   workspace={currentWorkspace}
                   module={currentModule}
                   isAuthor={true}
