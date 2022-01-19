@@ -8,6 +8,8 @@ import { Prisma } from "prisma"
 import { useFormik } from "formik"
 import { Maximize24, TrashCan24 } from "@carbon/icons-react"
 import toast from "react-hot-toast"
+import { PreviousFilled32 } from "@carbon/icons-react"
+import Xarrows from "react-xarrows"
 
 import EditMainFile from "./EditMainFile"
 import EditSupportingFiles from "./EditSupportingFiles"
@@ -24,6 +26,8 @@ import MetadataEdit from "./MetadataEdit"
 import addReference from "../mutations/addReference"
 import createReferenceModule from "../mutations/createReferenceModule"
 import deleteReference from "../mutations/deleteReference"
+import { useMediaPredicate } from "react-media-hook"
+import addParent from "../mutations/addParent"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
@@ -41,6 +45,7 @@ const ModuleEdit = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [addAuthors, setAddAuthors] = useState(false)
+  const [addParentMutation] = useMutation(addParent)
 
   const [moduleEdit, { refetch, setQueryData }] = useQuery(
     useCurrentModule,
@@ -55,7 +60,9 @@ const ModuleEdit = ({
   const [deleteReferenceMutation] = useMutation(deleteReference)
   const [createReferenceMutation] = useMutation(createReferenceModule)
   const [editModuleScreenMutation] = useMutation(editModuleScreen)
-
+  const prefersDarkMode = useMediaPredicate("(prefers-color-scheme: dark)")
+  const biggerWindow = useMediaPredicate("(min-width: 1536px)")
+  const arrowColor = prefersDarkMode ? "white" : "#0f172a"
   const formik = useFormik({
     initialValues: {
       type: moduleEdit!.type.id.toString(),
@@ -101,7 +108,7 @@ const ModuleEdit = ({
         <></>
       )}
       {/* Menu bar */}
-      <div className="w-full flex">
+      <div className="w-full flex mb-28">
         {inboxOpen ? (
           <button
             onClick={() => {
@@ -125,8 +132,57 @@ const ModuleEdit = ({
           </button>
         )}
         {/* Push all menu bars to the right */}
-        <div className="flex-grow"></div>
-        <div>
+        <div className="flex-grow mx-4">
+          <button
+            className="flex px-2 mx-auto py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-sm leading-4 font-normal shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700 my-2"
+            onClick={() => {
+              alert(true)
+            }}
+          >
+            Links to {moduleEdit?.parents.length} previous steps
+          </button>
+          <div className="max-w-md mx-auto">
+            <span id="previousStep">
+              <Autocomplete
+                className="h-full max-w-2xl"
+                openOnFocus={true}
+                defaultActiveItemId="0"
+                getSources={({ query }) => [
+                  {
+                    sourceId: "products",
+                    async onSelect(params) {
+                      const { item, setQuery } = params
+                      // TODO: Add toast
+                      const updatedMod = await addParentMutation({
+                        currentId: module?.id,
+                        connectId: item.objectID,
+                      })
+                      setQueryData(updatedMod)
+                    },
+                    getItems() {
+                      return getAlgoliaResults({
+                        searchClient,
+                        queries: [
+                          {
+                            indexName: `${process.env.ALGOLIA_PREFIX}_modules`,
+                            query,
+                          },
+                        ],
+                      })
+                    },
+                    templates: {
+                      item({ item, components }) {
+                        // TODO: Need to update search results per Algolia index
+                        return <SearchResultModule item={item} />
+                      },
+                    },
+                  },
+                ]}
+              />
+            </span>
+          </div>
+        </div>
+        <div className="items-middle pt-8">
           {isEditing ? (
             <EditOff24
               className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600"
@@ -144,28 +200,39 @@ const ModuleEdit = ({
               aria-label="Start editing mode"
             />
           )}
-          {/* <span className="inline-block h-full align-middle"> </span> */}
-          {/* <DocumentPdf32 className="inline-block align-middle" /> */}
         </div>
       </div>
-
+      <div className="relative">
+        <Xarrows
+          start="currentStep"
+          end="previousStep"
+          showHead={false}
+          dashness
+          color={arrowColor}
+          startAnchor={{ position: "auto", offset: { x: -20 } }}
+          endAnchor={{ position: "auto", offset: { x: 20 } }}
+        />
+      </div>
       {/* Display editable form or display content */}
-      {isEditing ? (
-        <MetadataEdit
-          module={moduleEdit}
-          addAuthors={addAuthors}
-          setQueryData={setQueryData}
-          setAddAuthors={setAddAuthors}
-          setIsEditing={setIsEditing}
-        />
-      ) : (
-        <MetadataView
-          module={moduleEdit}
-          addAuthors={addAuthors}
-          setQueryData={setQueryData}
-          setAddAuthors={setAddAuthors}
-        />
-      )}
+      <div className="relative" id="currentStep">
+        {isEditing ? (
+          <MetadataEdit
+            module={moduleEdit}
+            addAuthors={addAuthors}
+            setQueryData={setQueryData}
+            setAddAuthors={setAddAuthors}
+            setIsEditing={setIsEditing}
+          />
+        ) : (
+          <MetadataView
+            module={moduleEdit}
+            addAuthors={addAuthors}
+            setQueryData={setQueryData}
+            setAddAuthors={setAddAuthors}
+          />
+        )}
+      </div>
+
       <div className="my-4">
         <h2 className="text-lg leading-4 text-gray-500 dark:text-gray-200 my-2">Main file</h2>
         <EditMainFile
@@ -388,3 +455,6 @@ const ModuleEdit = ({
 }
 
 export default ModuleEdit
+function addParentMutation(arg0: { currentId: any; connectId: any }) {
+  throw new Error("Function not implemented.")
+}
