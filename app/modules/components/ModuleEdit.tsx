@@ -29,6 +29,7 @@ import deleteReference from "../mutations/deleteReference"
 import { useMediaPredicate } from "react-media-hook"
 import addParent from "../mutations/addParent"
 import ParentPanel from "./ParentPanel"
+import ManageParents from "./ManageParents"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
@@ -136,10 +137,11 @@ const ModuleEdit = ({
         {/* Push all menu bars to the right */}
         <div className="flex-grow mx-4">
           <button
-            className="flex px-2 mx-auto py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-sm leading-4 font-normal shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700 my-2"
+            className="flex px-2 mx-auto py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-sm leading-4 font-normal shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700 my-2 disabled:opacity-50"
             onClick={() => {
               setPreviousOpen(true)
             }}
+            disabled={moduleEdit?.parents.length === 0}
           >
             Links to {moduleEdit?.parents.length} previous steps
           </button>
@@ -452,7 +454,12 @@ const ModuleEdit = ({
       <div className="text-center">
         <DeleteModuleModal module={module} setModule={setModule} fetchDrafts={fetchDrafts} />
       </div>
-      <ParentPanel openObject={previousOpen} openFunction={setPreviousOpen} module={moduleEdit} />
+      <ManageParents
+        open={previousOpen}
+        setOpen={setPreviousOpen}
+        moduleEdit={moduleEdit}
+        setQueryData={setQueryData}
+      />
     </div>
   )
 }

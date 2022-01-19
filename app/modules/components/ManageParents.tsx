@@ -39,22 +39,22 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
         <div className="absolute inset-0 overflow-hidden">
           <Dialog.Overlay className="fixed inset-0 bg-gray-900 bg-opacity-25 transition-opacity" />
 
-          <div className="fixed inset-y-0 right-0 pl-10 max-w-full flex">
+          <div className="fixed inset-y-0 left-0 pr-10 max-w-full flex">
             <Transition.Child
               as={Fragment}
               enter="transform transition ease-in-out duration-500 sm:duration-700"
-              enterFrom="translate-x-full"
+              enterFrom="-translate-x-full"
               enterTo="translate-x-0"
               leave="transform transition ease-in-out duration-500 sm:duration-700"
               leaveFrom="translate-x-0"
-              leaveTo="translate-x-full"
+              leaveTo="-translate-x-full"
             >
               <div className="w-screen max-w-xs">
                 <div className="min-h-0 flex-1 flex flex-col pt-6 overflow-y-auto h-full dark:divide-gray-600 bg-white dark:bg-gray-900 shadow-xl">
                   <div className="px-4 sm:px-6">
                     <div className="flex items-start justify-between">
                       <Dialog.Title className="text-lg font-medium text-gray-900 dark:text-white">
-                        Manage parent modules
+                        Linked previous steps
                       </Dialog.Title>
                       <div className="ml-3 h-7 flex items-center">
                         <button
@@ -69,9 +69,7 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                     </div>
                   </div>
                   <div className="mt-6 px-4 sm:px-6 text-sm leading-5 font-normal border-b border-gray-400 dark:border-gray-600 pb-4 dark:text-white">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit.
-                    Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id,
-                    mattis vel, nisi.
+                    These are the previous steps your work links to.
                   </div>
                   {/* Replace with your content */}
 
