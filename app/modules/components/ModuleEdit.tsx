@@ -102,8 +102,9 @@ const ModuleEdit = ({
   return (
     <div className="p-5 max-w-7xl mx-auto overflow-y-auto text-base">
       {/* Publish module */}
-      {moduleEdit!.authors.filter((author) => author.readyToPublish !== true).length === 0 &&
-      Object.keys(moduleEdit!.main!).length !== 0 ? (
+      {(moduleEdit!.authors.filter((author) => author.readyToPublish !== true).length === 0 &&
+        Object.keys(moduleEdit!.main!).length !== 0) ||
+      moduleEdit!.authors.length === 1 ? (
         <PublishModuleModal module={moduleEdit} user={user} workspace={workspace} />
       ) : (
         <></>
