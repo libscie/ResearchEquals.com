@@ -79,6 +79,24 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                     {moduleEdit.parents.map((module) => (
                       <>
                         <div className="flex">
+                          <Link
+                            href={
+                              module.prefix === process.env.DOI_PREFIX
+                                ? Routes.ModulePage({ suffix: module.suffix })
+                                : `https://doi.org/${module.prefix}/${module.suffix}`
+                            }
+                          >
+                            <a target="_blank" className="flex-grow">
+                              <ModuleCard
+                                type={module.type.name}
+                                title={module.title}
+                                status={`${module.prefix}/${module.suffix}`}
+                                time={moment(module.publishedAt).fromNow()}
+                                timeText="Published"
+                                authors={module.authors}
+                              />
+                            </a>
+                          </Link>
                           <button
                             className="px-2 hover:bg-gray-50 dark:hover:bg-gray-800"
                             onClick={async () => {
@@ -98,18 +116,6 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                               aria-hidden="true"
                             />
                           </button>
-                          <Link href={Routes.ModulePage({ suffix: module.suffix })}>
-                            <a target="_blank">
-                              <ModuleCard
-                                type={module.type.name}
-                                title={module.title}
-                                status={`${module.prefix}/${module.suffix}`}
-                                time={moment(module.publishedAt).fromNow()}
-                                timeText="Published"
-                                authors={module.authors}
-                              />
-                            </a>
-                          </Link>
                         </div>
                       </>
                     ))}
