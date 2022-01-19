@@ -98,15 +98,25 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                           <button
                             className="px-2 hover:bg-gray-50 dark:hover:bg-gray-800"
                             onClick={async () => {
-                              const updatedMod = await deleteParentMutation({
-                                currentId: moduleEdit.id,
-                                disconnectId: module.id,
-                              })
-                              setQueryData(updatedMod)
-                              toast(`Removed parent: ${module.title}`, { icon: "🗑" })
-                              if (updatedMod.parents.length === 0) {
-                                setOpen(false)
-                              }
+                              toast.promise(
+                                deleteParentMutation({
+                                  currentId: moduleEdit.id,
+                                  disconnectId: module.id,
+                                }),
+                                {
+                                  loading: "Removing...",
+                                  success: (data) => {
+                                    setQueryData(data)
+
+                                    if (data.parents.length === 0) {
+                                      setOpen(false)
+                                    }
+
+                                    return `Removed link to: "${module.title}"`
+                                  },
+                                  error: "That link is not going anywhere...",
+                                }
+                              )
                             }}
                           >
                             <TrashCan24

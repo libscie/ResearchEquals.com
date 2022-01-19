@@ -157,11 +157,21 @@ const ModuleEdit = ({
                     async onSelect(params) {
                       const { item, setQuery } = params
                       // TODO: Add toast
-                      const updatedMod = await addParentMutation({
-                        currentId: module?.id,
-                        connectId: item.objectID,
-                      })
-                      setQueryData(updatedMod)
+                      toast.promise(
+                        addParentMutation({
+                          currentId: module?.id,
+                          connectId: item.objectID,
+                        }),
+                        {
+                          loading: "Adding link...",
+                          success: (data) => {
+                            setQueryData(data)
+
+                            return `Linked to: "${item.name}"`
+                          },
+                          error: "Failed to add link...",
+                        }
+                      )
                     },
                     getItems() {
                       return getAlgoliaResults({
