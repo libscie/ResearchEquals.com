@@ -75,9 +75,11 @@ export default function DeleteModule({ module, setModule, fetchDrafts }) {
                           error: "Something went wrong...",
                         })
                         .then(fetchDrafts)
-                      router.push("/drafts")
-                      setModule(undefined)
-                      closeModal()
+                        .then(() => {
+                          router.push("/drafts")
+                          setModule(undefined)
+                          closeModal()
+                        })
                     }}
                   >
                     Delete
