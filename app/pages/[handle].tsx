@@ -9,16 +9,16 @@ import Navbar from "../core/components/Navbar"
 import getHandleFeed from "../workspaces/queries/getHandleFeed"
 import ModuleCard from "../core/components/ModuleCard"
 import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
-import SettingsModal from "../core/modals/settings"
 import HandlePanel from "../modules/components/HandlePanel"
-import UnfollowButton from "../workspaces/components/UnfollowButton"
-import FollowButton from "../workspaces/components/FollowButton"
 import FeedPagination from "../core/components/FeedPagination"
 import LayoutLoader from "../core/components/LayoutLoader"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import getDrafts from "app/core/queries/getDrafts"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
+import generateSignature from "app/signature"
+import FollowHandleButton from "../core/components/FollowHandleButton"
+import HandleAvatar from "../core/components/HandleAvatar"
 
 const ITEMS_PER_PAGE = 10
 
@@ -42,10 +42,14 @@ export const getServerSideProps = async ({ params }) => {
     }
   }
 
-  return { props: { workspace } }
+  // Expires in 30 minutes
+  const expire = Math.round(Date.now() / 1000) + 60 * 30
+  const signature = generateSignature(process.env.UPLOADCARE_SECRET_KEY, expire.toString())
+
+  return { props: { workspace, expire, signature } }
 }
 
-const Handle = ({ workspace }) => {
+const Handle = ({ workspace, expire, signature }) => {
   const currentUser = useCurrentUser()
   const session = useSession()
   const currentWorkspace = useCurrentWorkspace()
@@ -53,6 +57,7 @@ const Handle = ({ workspace }) => {
   const router = useRouter()
   const [drafts, { refetch: refetchDrafts }] = useQuery(getDrafts, { session })
   const [invitations] = useQuery(getInvitedModules, { session })
+  const params = useParams()
 
   return (
     <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-200 h-full">
@@ -69,10 +74,13 @@ const Handle = ({ workspace }) => {
         <div className="w-full lg:w-1/2 xl:w-1/3">
           <div className="lg:sticky lg:top-8">
             <div className="flex my-8 lg:mr-8">
-              <img
-                src={workspace.avatar}
-                className="rounded-full h-28 w-28 max-h-28 max-w-28 border border-2 border-gray-900 dark:border-white"
-                alt={`Avatar of ${workspace.handle}`}
+              <HandleAvatar
+                params={params}
+                refetch={refetch}
+                workspace={workspace}
+                ownWorkspace={ownWorkspace}
+                expire={expire}
+                signature={signature}
               />
               <div className="flex-grow ml-4">
                 <span className="inline-block h-full align-middle"> </span>
@@ -92,6 +100,7 @@ const Handle = ({ workspace }) => {
               {workspace ? (
                 <div>
                   <FollowHandleButton
+                    params={params}
                     currentUser={currentUser}
                     workspace={workspace}
                     ownWorkspace={ownWorkspace}
@@ -197,10 +206,10 @@ const Handle = ({ workspace }) => {
   )
 }
 
-const HandlePage = ({ workspace }) => {
+const HandlePage = ({ workspace, expire, signature }) => {
   return (
     <Layout
-      title={`R=${workspace.handle}`}
+      title={`R= ${workspace.handle}`}
       headChildren={
         <>
           <meta property="og:title" content={workspace.firstName || workspace.handle} />
@@ -209,41 +218,13 @@ const HandlePage = ({ workspace }) => {
       }
     >
       <LayoutLoader>
-        <Handle workspace={workspace} />
+        <Handle workspace={workspace} expire={expire} signature={signature} />
       </LayoutLoader>
     </Layout>
   )
 }
 
 export default HandlePage
-
-const FollowHandleButton = ({ currentUser, workspace, ownWorkspace, refetch }) => {
-  const params = useParams()
-  return (
-    <>
-      {ownWorkspace ? (
-        ownWorkspace!.handle === params.handle ? (
-          <>
-            <span className="inline-block h-full align-middle"></span>
-            <SettingsModal
-              button="Edit Profile"
-              styling="py-2 px-4 shadow-sm text-sm leading-4 font-medium bg-indigo-100 dark:bg-gray-800 hover:bg-indigo-200 dark:hover:bg-gray-700 text-indigo-700 dark:text-gray-200 rounded dark:border dark:border-gray-600 inline-block align-middle focus:outline-none focus:ring-2 focus:ring-offset-0   focus:ring-indigo-500"
-              user={currentUser}
-              workspace={ownWorkspace}
-            />
-          </>
-        ) : ownWorkspace?.following.filter((follows) => follows.handle === params.handle).length ===
-          0 ? (
-          <FollowButton author={workspace} refetchFn={refetch} />
-        ) : (
-          <UnfollowButton author={workspace} refetchFn={refetch} />
-        )
-      ) : (
-        ""
-      )}
-    </>
-  )
-}
 
 const HandleFeed = ({ handle }) => {
   const router = useRouter()
