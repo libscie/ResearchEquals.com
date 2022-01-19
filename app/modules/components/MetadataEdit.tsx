@@ -146,7 +146,7 @@ const MetadataEdit = ({ module, addAuthors, setQueryData, setAddAuthors, setIsEd
           <div className="flex sm:inline">
             <span className="flex-grow"></span>
 
-            <AuthorAvatarsNew authors={module.authors} />
+            <AuthorAvatarsNew authors={module.authors} size="h-6 w-6" toDisplay={4} />
             <span className="flex-grow"></span>
           </div>
           <span className="sm:flex-grow"></span>

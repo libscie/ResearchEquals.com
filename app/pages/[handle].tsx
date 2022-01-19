@@ -243,9 +243,10 @@ const HandleFeed = ({ handle }) => {
       {modules.length > 0 ? (
         <>
           <div className="rounded-t-md border border-gray-300 dark:border-gray-600 mt-8 divide-y divide-gray-300 dark:divide-gray-600">
-            <h1 className="text-sm leading-4 font-medium mx-4 my-2 text-gray-500 dark:text-gray-400 ">
-              Published modules
-            </h1>
+            <div className="flex text-sm leading-4 font-medium mx-4 my-2 text-gray-500 dark:text-gray-400 ">
+              <h1 className="flex-grow">{modules.length} published modules</h1>
+              <p className="">Most to least recent</p>
+            </div>
             <ul role="list" className="divide-y divide-gray-300 dark:divide-gray-600">
               {modules.map((module) => (
                 <>
@@ -255,14 +256,16 @@ const HandleFeed = ({ handle }) => {
                     }}
                     className="cursor-pointer"
                   >
-                    <ModuleCard
-                      type={module.type.name}
-                      title={module.title}
-                      status={`DOI: 10.53962/${module.suffix}`}
-                      time={moment(module.publishedAt).fromNow()}
-                      timeText="Published"
-                      authors={module.authors}
-                    />
+                    <a className="w-full text-left focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500">
+                      <ModuleCard
+                        type={module.type.name}
+                        title={module.title}
+                        status={`DOI: 10.53962/${module.suffix}`}
+                        time={moment(module.publishedAt).fromNow()}
+                        timeText="Published"
+                        authors={module.authors}
+                      />
+                    </a>
                   </li>
                 </>
               ))}
