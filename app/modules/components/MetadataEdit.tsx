@@ -69,11 +69,18 @@ const MetadataEdit = ({ module, addAuthors, setQueryData, setAddAuthors, setIsEd
         onSubmit={formik.handleSubmit}
       >
         <div className="lg:flex text-center divide-y lg:divide-y-0 lg:divide-x divide-gray-100 dark:divide-gray-600 text-gray-500 dark:text-gray-200 dark:bg-gray-800 text-xs leading-4 font-normal">
-          <div className="flex-grow py-2">Last updated: {moment(module.updatedAt).fromNow()}</div>
           <div className="flex-grow py-2">
-            DOI upon publish:{" "}
-            <span className="text-gray-300 dark:text-gray-600">{`${module.prefix}/${module.suffix}`}</span>
+            <span className="inline-block h-full align-middle"> </span>
+            <span className="">Last updated: {moment(module.updatedAt).fromNow()}</span>
           </div>
+          <div className="flex-grow py-2">
+            <span className="inline-block h-full align-middle"> </span>
+            <span className="">
+              DOI upon publish:{" "}
+              <span className="text-gray-300 dark:text-gray-600">{`${module.prefix}/${module.suffix}`}</span>
+            </span>
+          </div>
+
           <div className="flex-grow py-1">
             <label htmlFor="license">License: </label>
             <select
@@ -97,10 +104,6 @@ const MetadataEdit = ({ module, addAuthors, setQueryData, setAddAuthors, setIsEd
             ) : null}
           </div>
         </div>
-        <div className="py-1 px-2 bg-white dark:bg-gray-800">
-          <FollowsFromSearch module={module} setQueryData={setQueryData} />
-        </div>
-
         <div className="py-4 px-2 min-h-32">
           <p className="text-xs leading-4 font-normal text-gray-500 dark:text-white">
             <label htmlFor="type" className="sr-only">
