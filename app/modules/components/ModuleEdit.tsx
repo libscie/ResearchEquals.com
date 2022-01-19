@@ -8,7 +8,6 @@ import { Prisma } from "prisma"
 import { useFormik } from "formik"
 import { Maximize24, TrashCan24 } from "@carbon/icons-react"
 import toast from "react-hot-toast"
-import { PreviousFilled32 } from "@carbon/icons-react"
 import Xarrows from "react-xarrows"
 
 import EditMainFile from "./EditMainFile"
@@ -28,7 +27,6 @@ import createReferenceModule from "../mutations/createReferenceModule"
 import deleteReference from "../mutations/deleteReference"
 import { useMediaPredicate } from "react-media-hook"
 import addParent from "../mutations/addParent"
-import ParentPanel from "./ParentPanel"
 import ManageParents from "./ManageParents"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
@@ -156,7 +154,6 @@ const ModuleEdit = ({
                     sourceId: "products",
                     async onSelect(params) {
                       const { item, setQuery } = params
-                      // TODO: Add toast
                       toast.promise(
                         addParentMutation({
                           currentId: module?.id,
@@ -312,7 +309,6 @@ const ModuleEdit = ({
                   async onSelect(params) {
                     const { item, setQuery } = params
                     if (item.suffix) {
-                      // TODO: Add reference
                       toast.promise(
                         addReferenceMutation({
                           currentId: moduleEdit?.id,
@@ -475,6 +471,3 @@ const ModuleEdit = ({
 }
 
 export default ModuleEdit
-function addParentMutation(arg0: { currentId: any; connectId: any }) {
-  throw new Error("Function not implemented.")
-}

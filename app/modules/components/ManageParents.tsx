@@ -1,36 +1,14 @@
-import { Fragment, useState } from "react"
+import { Fragment } from "react"
 import { Dialog, Transition } from "@headlessui/react"
-import { DragDropContext, Droppable, DroppableProvided } from "react-beautiful-dnd"
 import { Link, Routes, useMutation } from "blitz"
 import { Checkmark32, Close32, TrashCan24 } from "@carbon/icons-react"
 
-import updateAuthorRank from "../../authorship/mutations/updateAuthorRank"
-import AuthorList from "../../core/components/AuthorList"
 import ModuleCard from "app/core/components/ModuleCard"
 import moment from "moment"
 import deleteParent from "../mutations/deleteParent"
 import toast from "react-hot-toast"
 
-// https://www.npmjs.com/package/array-move
-function arrayMoveMutable(array, fromIndex, toIndex) {
-  const startIndex = fromIndex < 0 ? array.length + fromIndex : fromIndex
-
-  if (startIndex >= 0 && startIndex < array.length) {
-    const endIndex = toIndex < 0 ? array.length + toIndex : toIndex
-
-    const [item] = array.splice(fromIndex, 1)
-    array.splice(endIndex, 0, item)
-  }
-}
-
-function arrayMoveImmutable(array, fromIndex, toIndex) {
-  array = [...array]
-  arrayMoveMutable(array, fromIndex, toIndex)
-  return array
-}
-
 const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
-  const [parentState, setParentState] = useState(moduleEdit!.parents)
   const [deleteParentMutation] = useMutation(deleteParent)
 
   return (
