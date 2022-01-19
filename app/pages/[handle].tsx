@@ -69,7 +69,11 @@ const Handle = ({ workspace }) => {
         <div className="w-full lg:w-1/2 xl:w-1/3">
           <div className="lg:sticky lg:top-8">
             <div className="flex my-8 lg:mr-8">
-              <img src={workspace.avatar} className="rounded-full h-28 w-28 max-h-28 max-w-28" />
+              <img
+                src={workspace.avatar}
+                className="rounded-full h-28 w-28 max-h-28 max-w-28 border border-2 border-gray-900 dark:border-white"
+                alt={`Avatar of ${workspace.handle}`}
+              />
               <div className="flex-grow ml-4">
                 <span className="inline-block h-full align-middle"> </span>
                 <p className="inline-block align-middle text-base leading-6 font-medium text-gray-900 dark:text-gray-200">
