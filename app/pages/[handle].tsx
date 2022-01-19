@@ -68,9 +68,7 @@ const Handle = ({ workspace }) => {
       <div className="lg:flex max-w-full mx-4">
         <div className="w-full lg:w-1/2 xl:w-1/3">
           <div className="flex my-8 lg:mr-8">
-            <div className="w-14 h-14">
-              <img src={workspace.avatar} className="rounded-full h-14 w-14 max-h-14 max-w-14" />
-            </div>
+            <img src={workspace.avatar} className="rounded-full h-14 w-14 max-h-14 max-w-14" />
             <div className="flex-grow ml-4">
               <span className="inline-block h-full align-middle"> </span>
               <p className="inline-block align-middle text-base leading-6 font-medium text-gray-900 dark:text-gray-200">
