@@ -31,7 +31,7 @@ export async function getServerSideProps(context) {
 const DraftsContents = ({ expire, signature, currentWorkspace, session, user }) => {
   const [currentModule, setModule] = useState<any>(undefined)
   const [inboxOpen, setInboxOpen] = useState(true)
-  const [drafts] = useQuery(getDrafts, { session })
+  const [drafts, { refetch: getDraftsAgain }] = useQuery(getDrafts, { session })
   const query = useRouterQuery()
   const biggerWindow = useMediaPredicate("(min-width: 1024px)")
 
@@ -103,6 +103,7 @@ const DraftsContents = ({ expire, signature, currentWorkspace, session, user }) 
                 <ModuleEdit
                   user={user}
                   setModule={setModule}
+                  fetchDrafts={getDraftsAgain}
                   workspace={currentWorkspace}
                   module={currentModule}
                   isAuthor={true}

@@ -37,6 +37,7 @@ const ModuleEdit = ({
   expire,
   signature,
   setModule,
+  fetchDrafts,
 }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [addAuthors, setAddAuthors] = useState(false)
@@ -166,9 +167,7 @@ const ModuleEdit = ({
         />
       )}
       <div className="my-4">
-        <h2 className="text-xs leading-4 font-semibold text-gray-500 dark:text-gray-200 my-2">
-          Main file
-        </h2>
+        <h2 className="text-lg leading-4 text-gray-500 dark:text-gray-200 my-2">Main file</h2>
         <EditMainFile
           mainFile={mainFile}
           setQueryData={setQueryData}
@@ -179,190 +178,210 @@ const ModuleEdit = ({
           signature={signature}
         />
       </div>
+      <div className="md:grid grid-cols-2 gap-x-4 mb-28">
+        {/* Supporting files */}
+        <div className="my-3">
+          <h2 className="text-lg leading-4 text-gray-500 dark:text-gray-200 my-2">
+            Supporting file(s)
+          </h2>
+          {supportingRaw.files.length > 0 ? (
+            <>
+              {supportingRaw.files.map((file) => (
+                <>
+                  <EditSupportingFileDisplay
+                    name={file.original_filename}
+                    size={file.size}
+                    url={file.original_file_url}
+                    uuid={file.uuid}
+                    moduleId={moduleEdit!.id}
+                    setQueryData={setQueryData}
+                  />
+                </>
+              ))}
+            </>
+          ) : (
+            <></>
+          )}
+          <EditSupportingFiles
+            setQueryData={setQueryData}
+            moduleEdit={moduleEdit}
+            user={user}
+            workspace={workspace}
+            expire={expire}
+            signature={signature}
+          />
+        </div>
 
-      {/* Supporting files */}
-      <div className="my-3">
-        <h2 className="text-xs leading-4 font-semibold text-gray-500 dark:text-gray-200 my-2">
-          Supporting file(s)
-        </h2>
-        {supportingRaw.files.length > 0 ? (
-          <>
-            {supportingRaw.files.map((file) => (
-              <>
-                <EditSupportingFileDisplay
-                  name={file.original_filename}
-                  size={file.size}
-                  url={file.original_file_url}
-                  uuid={file.uuid}
-                  moduleId={moduleEdit!.id}
-                  setQueryData={setQueryData}
-                />
-              </>
-            ))}
-          </>
-        ) : (
-          <></>
-        )}
-        <EditSupportingFiles
-          setQueryData={setQueryData}
-          moduleEdit={moduleEdit}
-          user={user}
-          workspace={workspace}
-          expire={expire}
-          signature={signature}
-        />
-      </div>
+        {/* PLACEHOLDER References */}
+        <div className="my-3">
+          <h2 className="text-lg leading-4 text-gray-500 dark:text-gray-200 my-2">
+            Reference list
+          </h2>
+          <label htmlFor="search" className="sr-only">
+            Search references
+          </label>
+          <div>
+            <Autocomplete
+              className="h-full"
+              openOnFocus={true}
+              defaultActiveItemId="0"
+              getSources={({ query }) => [
+                {
+                  sourceId: "products",
+                  async onSelect(params) {
+                    const { item, setQuery } = params
+                    if (item.suffix) {
+                      // TODO: Add reference
+                      toast.promise(
+                        addReferenceMutation({
+                          currentId: moduleEdit?.id,
+                          connectId: item.objectID,
+                        }),
+                        {
+                          loading: "Adding reference...",
+                          success: (data) => {
+                            setQueryData(data)
 
-      {/* PLACEHOLDER References */}
-      <div className="my-3">
-        <h2 className="text-xs leading-4 font-semibold text-gray-500 dark:text-gray-200 my-2">
-          Reference list
-        </h2>
-        <label htmlFor="search" className="sr-only">
-          Search references
-        </label>
-        <Autocomplete
-          className="h-full"
-          openOnFocus={true}
-          defaultActiveItemId="0"
-          getSources={({ query }) => [
-            {
-              sourceId: "products",
-              async onSelect(params) {
-                const { item, setQuery } = params
-                if (item.suffix) {
-                  // TODO: Add reference
-                  const updatedModule = await addReferenceMutation({
-                    currentId: moduleEdit?.id,
-                    connectId: item.objectID,
-                  })
-
-                  setQueryData(updatedModule)
-                }
-              },
-              getItems() {
-                return getAlgoliaResults({
-                  searchClient,
-                  queries: [
-                    {
-                      indexName: `${process.env.ALGOLIA_PREFIX}_modules`,
-                      query,
-                    },
-                  ],
-                })
-              },
-              templates: {
-                item({ item, components }) {
-                  return (
-                    <>
-                      {item.__autocomplete_indexName.match(/_modules/g) ? (
-                        <SearchResultModule item={item} />
-                      ) : (
-                        ""
-                      )}
-                    </>
-                  )
-                },
-                noResults() {
-                  return (
-                    <>
-                      {/* https://www.crossref.org/blog/dois-and-matching-regular-expressions/ */}
-                      {query.match(/^10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i) ? (
+                            return "Added reference!"
+                          },
+                          error: "Failed to add reference...",
+                        }
+                      )
+                    }
+                  },
+                  getItems() {
+                    return getAlgoliaResults({
+                      searchClient,
+                      queries: [
+                        {
+                          indexName: `${process.env.ALGOLIA_PREFIX}_modules`,
+                          query,
+                        },
+                      ],
+                    })
+                  },
+                  templates: {
+                    item({ item, components }) {
+                      return (
                         <>
-                          <button
-                            className="text-gray-900 dark:text-gray-200 text-sm leading-4 font-normal"
-                            onClick={async () => {
-                              toast.promise(createReferenceMutation({ doi: query }), {
-                                loading: "Searching...",
-                                success: "Reference added!",
-                                error: "Could not add reference.",
-                              })
-                            }}
-                          >
-                            Click here to add {query} to ResearchEquals database
-                          </button>
+                          {item.__autocomplete_indexName.match(/_modules/g) ? (
+                            <SearchResultModule item={item} />
+                          ) : (
+                            ""
+                          )}
+                        </>
+                      )
+                    },
+                    noResults() {
+                      return (
+                        <>
+                          {/* https://www.crossref.org/blog/dois-and-matching-regular-expressions/ */}
+                          {query.match(/^10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i) ? (
+                            <>
+                              <button
+                                className="text-gray-900 dark:text-gray-200 text-sm leading-4 font-normal"
+                                onClick={async () => {
+                                  toast.promise(createReferenceMutation({ doi: query }), {
+                                    loading: "Searching...",
+                                    success: "Reference added!",
+                                    error: "Could not add reference.",
+                                  })
+                                }}
+                              >
+                                Click here to add {query} to ResearchEquals database
+                              </button>
+                            </>
+                          ) : (
+                            <p className="text-gray-900 dark:text-gray-200 text-sm leading-4 font-normal">
+                              Input a DOI to add
+                            </p>
+                          )}
+                        </>
+                      )
+                    },
+                  },
+                },
+              ]}
+            />
+          </div>
+          <ol className="list-decimal list-inside my-4 text-normal">
+            {moduleEdit?.references!.map((reference) => (
+              <>
+                <li>
+                  <button className="mx-2">
+                    <TrashCan24
+                      className="w-6 h-6 fill-current text-red-500 inline-block align-middle"
+                      onClick={async () => {
+                        toast.promise(
+                          deleteReferenceMutation({
+                            currentId: moduleEdit?.id,
+                            disconnectId: reference.id,
+                          }),
+                          {
+                            loading: "Deleting reference...",
+                            success: (data) => {
+                              setQueryData(data)
+                              return `Removed reference: "${reference.title}"`
+                            },
+                            error: "Failed to delete reference...",
+                          }
+                        )
+                      }}
+                      aria-label="Delete reference"
+                    />
+                  </button>
+                  {reference.publishedWhere === "ResearchEquals" ? (
+                    <>
+                      {reference.authors.map((author, index) => (
+                        <>
+                          <Link href={Routes.HandlePage({ handle: author!.workspace!.handle })}>
+                            <a target="_blank">
+                              {author!.workspace!.firstName} {author!.workspace!.lastName}
+                            </a>
+                          </Link>
+                          {index === reference.authors.length - 1 ? "" : ", "}
+                        </>
+                      ))}
+                    </>
+                  ) : (
+                    <>
+                      {reference!.authorsRaw!["object"] ? (
+                        <>
+                          {reference!.authorsRaw!["object"].map((author, index) => (
+                            <>
+                              {index === 3
+                                ? "[...]"
+                                : index > 3
+                                ? ""
+                                : author.given && author.family
+                                ? `${author.given} ${author.family}`
+                                : `${author.name}`}
+                              {index === reference!.authorsRaw!["object"].length - 1 || index > 2
+                                ? ""
+                                : ", "}
+                            </>
+                          ))}
                         </>
                       ) : (
-                        <p className="text-gray-900 dark:text-gray-200 text-sm leading-4 font-normal">
-                          Input a DOI to add
-                        </p>
+                        <>
+                          <p className="italic">{reference.publishedWhere}</p>
+                        </>
                       )}
                     </>
-                  )
-                },
-              },
-            },
-          ]}
-        />
-        <ol className="list-decimal list-inside my-4 text-normal">
-          {moduleEdit?.references!.map((reference) => (
-            <>
-              <li>
-                <button className="mx-2">
-                  <TrashCan24
-                    className="w-6 h-6 fill-current text-red-500 inline-block align-middle"
-                    onClick={async () => {
-                      const updatedModule = await deleteReferenceMutation({
-                        currentId: moduleEdit?.id,
-                        disconnectId: reference.id,
-                      })
-
-                      setQueryData(updatedModule)
-                    }}
-                    aria-label="Delete reference"
-                  />
-                </button>
-                {reference.publishedWhere === "ResearchEquals" ? (
-                  <>
-                    {reference.authors.map((author, index) => (
-                      <>
-                        <Link href={Routes.HandlePage({ handle: author!.workspace!.handle })}>
-                          <a target="_blank">
-                            {author!.workspace!.firstName} {author!.workspace!.lastName}
-                          </a>
-                        </Link>
-                        {index === reference.authors.length - 1 ? "" : ", "}
-                      </>
-                    ))}
-                  </>
-                ) : (
-                  <>
-                    {reference!.authorsRaw!["object"] ? (
-                      <>
-                        {reference!.authorsRaw!["object"].map((author, index) => (
-                          <>
-                            {index === 3
-                              ? "[...]"
-                              : index > 3
-                              ? ""
-                              : author.given && author.family
-                              ? `${author.given} ${author.family}`
-                              : `${author.name}`}
-                            {index === reference!.authorsRaw!["object"].length - 1 || index > 2
-                              ? ""
-                              : ", "}
-                          </>
-                        ))}
-                      </>
-                    ) : (
-                      <>
-                        <p className="italic">{reference.publishedWhere}</p>
-                      </>
-                    )}
-                  </>
-                )}{" "}
-                ({reference.publishedAt?.toISOString().substr(0, 10)}). {reference.title}.{" "}
-                <Link href={reference.url!}>
-                  <a target="_blank underline">{reference.url}</a>
-                </Link>
-                . <span className="italic">{reference.publishedWhere}</span>
-              </li>
-            </>
-          ))}
-        </ol>
+                  )}{" "}
+                  ({reference.publishedAt?.toISOString().substr(0, 10)}). {reference.title}.{" "}
+                  <Link href={reference.url!}>
+                    <a target="_blank underline">{reference.url}</a>
+                  </Link>
+                  . <span className="italic">{reference.publishedWhere}</span>
+                </li>
+              </>
+            ))}
+          </ol>
+        </div>
       </div>
       <div className="text-center">
-        <DeleteModuleModal module={module} setModule={setModule} />
+        <DeleteModuleModal module={module} setModule={setModule} fetchDrafts={fetchDrafts} />
       </div>
     </div>
   )
