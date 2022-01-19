@@ -83,7 +83,7 @@ const DashboardContent = ({
           <div className="p-4">
             <div className="my-0">
               <h1 className="text-4xl font-medium text-center">
-                Welcome back,{" "}
+                Welcome,{" "}
                 {data.workspace.firstName && data.workspace.lastName
                   ? `${data.workspace.firstName} ${data.workspace.lastName}`
                   : `@${data.workspace!.handle}`}
