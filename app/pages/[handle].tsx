@@ -176,7 +176,7 @@ const Handle = ({ workspace }) => {
                     </p>
                   }
                   title="Following"
-                  name={workspace.firstName + workspace.lastName || workspace.handle}
+                  name={workspace.firstName + " " + workspace.lastName || workspace.handle}
                   authors={workspace.following}
                 />
               ) : (
@@ -258,7 +258,7 @@ const HandleFeed = ({ handle }) => {
       {modules.length > 0 ? (
         <>
           <div className="rounded-t-md border border-gray-300 dark:border-gray-600 mt-8 divide-y divide-gray-300 dark:divide-gray-600">
-            <h1 className="text-xs leading-4 font-medium mx-4 my-2 text-gray-500 dark:text-gray-400 ">
+            <h1 className="text-sm leading-4 font-medium mx-4 my-2 text-gray-500 dark:text-gray-400 ">
               Published modules
             </h1>
             <ul role="list" className="divide-y divide-gray-300 dark:divide-gray-600">

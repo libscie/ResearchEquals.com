@@ -24,17 +24,17 @@ const AuthorPanel = ({ buttonText, title, authors, name }) => {
           <div className="absolute inset-0 overflow-hidden">
             <Dialog.Overlay className="fixed inset-0 bg-gray-900 bg-opacity-25 transition-opacity" />
 
-            <div className="fixed inset-y-0 right-0 pl-10 max-w-full flex">
+            <div className="fixed inset-y-0 left-0 pr-10 max-w-full flex">
               <Transition.Child
                 as={Fragment}
                 enter="transform transition ease-in-out duration-500 sm:duration-700"
-                enterFrom="translate-x-full"
+                enterFrom="-translate-x-full"
                 enterTo="translate-x-0"
                 leave="transform transition ease-in-out duration-500 sm:duration-700"
                 leaveFrom="translate-x-0"
-                leaveTo="translate-x-full"
+                leaveTo="-translate-x-full"
               >
-                <div className="w-screen max-w-xs">
+                <div className="w-screen max-w-screen sm:max-w-lg">
                   <div className="min-h-0 flex-1 flex flex-col py-6 overflow-y-auto h-full dark:divide-gray-600 bg-white dark:bg-gray-900 shadow-xl">
                     <div className="px-4 sm:px-6">
                       <div className="flex items-start justify-between">
@@ -62,42 +62,42 @@ const AuthorPanel = ({ buttonText, title, authors, name }) => {
                       {authors.map((author) => (
                         <>
                           <li className="py-2 px-2 flex">
-                            <div className="mr-2">
-                              <img
-                                src={author.avatar}
-                                alt={`Avatar of ${author.handle}`}
-                                className="w-10 h-10 rounded-full inline-block h-full align-middle"
-                              />
-                            </div>
+                            <img
+                              src={author.avatar}
+                              alt={`Avatar of ${author.handle}`}
+                              className="w-14 h-14 max-w-14 max-h-14 mr-2 rounded-full inline-block h-full align-middle"
+                            />
                             <div
-                              className="flex-grow"
+                              className="hidden xs:flex flex-grow"
                               onClick={() => {
                                 setPanelOpen(false)
                               }}
                             >
                               <span className="inline-block h-full align-middle"></span>
                               <Link href={Routes.HandlePage({ handle: author.handle })}>
-                                <a className="text-gray-700 dark:text-gray-200 text-sm leading-4 font-normal my-auto inline-block align-middle">
-                                  {author.name}
+                                <a className="text-gray-700 dark:text-gray-200 text-sm leading-4 font-normal my-auto inline-block align-middle overflow-hidden overflow-ellipsis">
+                                  {author.firstName} {author.lastName}
                                   <p className="text-gray-500 dark:text-gray-400 text-xs leading-4 font-normal">
                                     @{author.handle}
                                   </p>
                                 </a>
                               </Link>
                             </div>
-                            {ownWorkspace ? (
-                              ownWorkspace!.handle === author.handle ? (
-                                ""
-                              ) : ownWorkspace!.following.filter(
-                                  (follow) => follow.handle === author.handle
-                                ).length > 0 ? (
-                                <UnfollowButton author={author} refetchFn={refetch} />
+                            <div>
+                              {ownWorkspace ? (
+                                ownWorkspace!.handle === author.handle ? (
+                                  ""
+                                ) : ownWorkspace!.following.filter(
+                                    (follow) => follow.handle === author.handle
+                                  ).length > 0 ? (
+                                  <UnfollowButton author={author} refetchFn={refetch} />
+                                ) : (
+                                  <FollowButton author={author} refetchFn={refetch} />
+                                )
                               ) : (
-                                <FollowButton author={author} refetchFn={refetch} />
-                              )
-                            ) : (
-                              ""
-                            )}
+                                ""
+                              )}
+                            </div>
                           </li>
                         </>
                       ))}
