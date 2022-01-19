@@ -12,17 +12,9 @@ const FeedPagination = ({
   return (
     <>
       <div className="flex my-1  max-w-screen">
-        <div className="hidden flex-1 sm:flex items-center justify-between">
-          <p className="text-sm leading-5 font-normal text-gray-700 dark:text-gray-200">
-            Showing <span className="font-medium">{ITEMS_PER_PAGE * page + 1}</span> to{" "}
-            <span className="font-medium">
-              {ITEMS_PER_PAGE + page > count ? count : ITEMS_PER_PAGE + page}
-            </span>{" "}
-            of <span className="font-medium">{count}</span> results
-          </p>
-        </div>
+        <div className="hidden flex-1 sm:flex items-center justify-between"></div>
         <nav
-          className="relative z-0 inline-flex rounded-md border border-gray-300 dark:border-gray-600 -space-x-px divide-x divide-gray-300 dark:divide-gray-600"
+          className="relative z-0 inline-flex rounded-md border border-gray-300 dark:border-gray-600 -space-x-px divide-x divide-gray-300 dark:divide-gray-600 mx-auto mb-8"
           aria-label="Pagination"
         >
           <button
