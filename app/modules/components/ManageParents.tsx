@@ -1,36 +1,14 @@
-import { Fragment, useState } from "react"
+import { Fragment } from "react"
 import { Dialog, Transition } from "@headlessui/react"
-import { DragDropContext, Droppable, DroppableProvided } from "react-beautiful-dnd"
 import { Link, Routes, useMutation } from "blitz"
 import { Checkmark32, Close32, TrashCan24 } from "@carbon/icons-react"
 
-import updateAuthorRank from "../../authorship/mutations/updateAuthorRank"
-import AuthorList from "../../core/components/AuthorList"
 import ModuleCard from "app/core/components/ModuleCard"
 import moment from "moment"
 import deleteParent from "../mutations/deleteParent"
 import toast from "react-hot-toast"
 
-// https://www.npmjs.com/package/array-move
-function arrayMoveMutable(array, fromIndex, toIndex) {
-  const startIndex = fromIndex < 0 ? array.length + fromIndex : fromIndex
-
-  if (startIndex >= 0 && startIndex < array.length) {
-    const endIndex = toIndex < 0 ? array.length + toIndex : toIndex
-
-    const [item] = array.splice(fromIndex, 1)
-    array.splice(endIndex, 0, item)
-  }
-}
-
-function arrayMoveImmutable(array, fromIndex, toIndex) {
-  array = [...array]
-  arrayMoveMutable(array, fromIndex, toIndex)
-  return array
-}
-
 const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
-  const [parentState, setParentState] = useState(moduleEdit!.parents)
   const [deleteParentMutation] = useMutation(deleteParent)
 
   return (
@@ -39,22 +17,22 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
         <div className="absolute inset-0 overflow-hidden">
           <Dialog.Overlay className="fixed inset-0 bg-gray-900 bg-opacity-25 transition-opacity" />
 
-          <div className="fixed inset-y-0 right-0 pl-10 max-w-full flex">
+          <div className="fixed inset-y-0 left-0 pr-10 max-w-full flex">
             <Transition.Child
               as={Fragment}
               enter="transform transition ease-in-out duration-500 sm:duration-700"
-              enterFrom="translate-x-full"
+              enterFrom="-translate-x-full"
               enterTo="translate-x-0"
               leave="transform transition ease-in-out duration-500 sm:duration-700"
               leaveFrom="translate-x-0"
-              leaveTo="translate-x-full"
+              leaveTo="-translate-x-full"
             >
               <div className="w-screen max-w-xs">
                 <div className="min-h-0 flex-1 flex flex-col pt-6 overflow-y-auto h-full dark:divide-gray-600 bg-white dark:bg-gray-900 shadow-xl">
                   <div className="px-4 sm:px-6">
                     <div className="flex items-start justify-between">
                       <Dialog.Title className="text-lg font-medium text-gray-900 dark:text-white">
-                        Manage parent modules
+                        Linked previous steps
                       </Dialog.Title>
                       <div className="ml-3 h-7 flex items-center">
                         <button
@@ -69,9 +47,7 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                     </div>
                   </div>
                   <div className="mt-6 px-4 sm:px-6 text-sm leading-5 font-normal border-b border-gray-400 dark:border-gray-600 pb-4 dark:text-white">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit.
-                    Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id,
-                    mattis vel, nisi.
+                    These are the previous steps your work links to.
                   </div>
                   {/* Replace with your content */}
 
@@ -79,27 +55,14 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                     {moduleEdit.parents.map((module) => (
                       <>
                         <div className="flex">
-                          <button
-                            className="px-2 hover:bg-gray-50 dark:hover:bg-gray-800"
-                            onClick={async () => {
-                              const updatedMod = await deleteParentMutation({
-                                currentId: moduleEdit.id,
-                                disconnectId: module.id,
-                              })
-                              setQueryData(updatedMod)
-                              toast(`Removed parent: ${module.title}`, { icon: "🗑" })
-                              if (updatedMod.parents.length === 0) {
-                                setOpen(false)
-                              }
-                            }}
+                          <Link
+                            href={
+                              module.prefix === process.env.DOI_PREFIX
+                                ? Routes.ModulePage({ suffix: module.suffix })
+                                : `https://doi.org/${module.prefix}/${module.suffix}`
+                            }
                           >
-                            <TrashCan24
-                              className="w-4 h-4 fill-current text-red-500 inline-block align-middle"
-                              aria-hidden="true"
-                            />
-                          </button>
-                          <Link href={Routes.ModulePage({ suffix: module.suffix })}>
-                            <a target="_blank">
+                            <a target="_blank" className="flex-grow">
                               <ModuleCard
                                 type={module.type.name}
                                 title={module.title}
@@ -110,6 +73,35 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                               />
                             </a>
                           </Link>
+                          <button
+                            className="px-2 hover:bg-gray-50 dark:hover:bg-gray-800"
+                            onClick={async () => {
+                              toast.promise(
+                                deleteParentMutation({
+                                  currentId: moduleEdit.id,
+                                  disconnectId: module.id,
+                                }),
+                                {
+                                  loading: "Removing...",
+                                  success: (data) => {
+                                    setQueryData(data)
+
+                                    if (data.parents.length === 0) {
+                                      setOpen(false)
+                                    }
+
+                                    return `Removed link to: "${module.title}"`
+                                  },
+                                  error: "That link is not going anywhere...",
+                                }
+                              )
+                            }}
+                          >
+                            <TrashCan24
+                              className="w-4 h-4 fill-current text-red-500 inline-block align-middle"
+                              aria-hidden="true"
+                            />
+                          </button>
                         </div>
                       </>
                     ))}

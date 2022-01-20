@@ -10,14 +10,14 @@ import getSignature from "../../auth/queries/getSignature"
 import QuickDraft from "../../modules/components/QuickDraft"
 import resendVerification from "../../auth/mutations/resendVerification"
 
-const OnboardingQuests = ({ data, expire, signature }) => {
+const OnboardingQuests = ({ data, expire, signature, refetch }) => {
   return (
     <>
       <OnboardingEmail data={data.user.emailIsVerified} />
       {/* <OnboardingOrcid data={data.workspace.orcid} /> */}
       <OnboardingAvatar data={data.workspace} expire={expire} signature={signature} />
       <OnboardingProfile data={data} />
-      <OnboardingDraft data={data.workspace} />
+      <OnboardingDraft data={data.workspace} refetch={refetch} />
     </>
   )
 }
@@ -236,7 +236,7 @@ const OnboardingAvatar = ({ data, expire, signature }) => {
   )
 }
 
-const OnboardingDraft = ({ data }) => {
+const OnboardingDraft = ({ data, refetch }) => {
   return (
     <>
       {!data.authorships.length > 0 ? (
@@ -270,6 +270,7 @@ const OnboardingDraft = ({ data }) => {
                   </>
                 }
                 buttonStyle="whitespace-nowrap font-medium hover:text-blue-600 underline"
+                refetchFn={refetch}
               />
             </p>
           </div>

@@ -32,11 +32,6 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit, user, workspace, expire
           error: "Uh-oh this is embarassing.",
         }
       )
-      // const updatedModule = await addSupportingMutation({
-      //   id: moduleEdit.id,
-      //   newFiles: newFiles.files,
-      // })
-      // setQueryData(updatedModule)
     } catch (err) {
       alert(err)
     }
@@ -53,6 +48,7 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit, user, workspace, expire
               widgetApi.current.openDialog()
             }}
           >
+            <Add32 className="w-4 h-4" aria-hidden="true" /> Add Supporting File(s)
             <Widget
               publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
               secureSignature={signature}
@@ -65,20 +61,6 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit, user, workspace, expire
               clearable
               onChange={updateSupporting}
             />
-            ) : (
-            <Widget
-              publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
-              secureSignature={signature}
-              secureExpire={expire}
-              ref={widgetApi}
-              validators={validators}
-              previewStep
-              multiple
-              multipleMax={10}
-              clearable
-              onChange={updateSupporting}
-            />
-            )
           </button>
         </>
       ) : (

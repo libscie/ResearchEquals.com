@@ -83,7 +83,7 @@ const DashboardContent = ({
           <div className="p-4">
             <div className="my-0">
               <h1 className="text-4xl font-medium text-center">
-                Welcome back,{" "}
+                Welcome,{" "}
                 {data.workspace.firstName && data.workspace.lastName
                   ? `${data.workspace.firstName} ${data.workspace.lastName}`
                   : `@${data.workspace!.handle}`}
@@ -91,7 +91,12 @@ const DashboardContent = ({
               </h1>
             </div>
             <div className="lg:flex w-full mt-4 gap-2">
-              <OnboardingQuests data={data} expire={expire} signature={signature} />
+              <OnboardingQuests
+                data={data}
+                expire={expire}
+                signature={signature}
+                refetch={refetchWorkspace}
+              />
             </div>
             <dl className="mt-2 flex text-gray-900 dark:text-gray-200  overflow-hidden shadow dark:border rounded border-gray-100 dark:border-gray-600 divide-gray-100 dark:divide-gray-600 md:grid-cols-3 divide-x">
               {stats.map((item) => (
