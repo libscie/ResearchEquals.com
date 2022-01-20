@@ -1,0 +1,35 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "psobrakseaton",
+      "name": "Patrick Sobrak-Seaton",
+      "avatar_url": "https://avatars.githubusercontent.com/u/28573875?v=4",
+      "profile": "http://sobrakseaton.com",
+      "contributions": [
+        "design",
+        "test",
+        "userTesting"
+      ]
+    },
+    {
+      "login": "nathan-at-jisc",
+      "name": "Nathan Sainsbury",
+      "avatar_url": "https://avatars.githubusercontent.com/u/58425475?v=4",
+      "profile": "https://github.com/nathan-at-jisc",
+      "contributions": [
+        "bug"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "ResearchEquals.com",
+  "projectOwner": "libscie",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
