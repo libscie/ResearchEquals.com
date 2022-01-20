@@ -45,7 +45,11 @@ const MetadataImmutable = ({ module }) => {
         <div className="px-1 py-1 sm:flex place-items-center sm:place-items-left">
           <div className="flex sm:inline">
             <span className="flex-grow"></span>
-            <AuthorAvatarsNew authors={module.authors} />
+            <AuthorAvatarsNew
+              authors={module.authors}
+              size="h-12 w-12"
+              toDisplay={module.authors.length}
+            />
             <span className="flex-grow"></span>
           </div>
           <span className="sm:flex-grow"></span>

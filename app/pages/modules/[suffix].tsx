@@ -51,6 +51,9 @@ export async function getServerSideProps(context) {
       license: true,
       type: true,
       parents: {
+        where: {
+          published: true,
+        },
         include: {
           type: true,
           authors: {
@@ -61,6 +64,9 @@ export async function getServerSideProps(context) {
         },
       },
       children: {
+        where: {
+          published: true,
+        },
         include: {
           type: true,
           authors: {

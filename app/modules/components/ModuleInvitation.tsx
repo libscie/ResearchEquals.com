@@ -1,14 +1,17 @@
-import { useQuery, useMutation } from "blitz"
+import { useQuery, useMutation, Link, Routes } from "blitz"
 import { useState } from "react"
 import { Prisma } from "prisma"
 import toast from "react-hot-toast"
+import Xarrows from "react-xarrows"
 
 import useCurrentModule from "../queries/useCurrentModule"
 import ViewFiles from "./ViewFiles"
 import { ArrowLeft32, Maximize24, UserFollow32 } from "@carbon/icons-react"
 import acceptInvitation from "app/authorship/mutations/acceptInvitation"
 import removeInvitation from "app/authorship/mutations/removeInvitation"
-import MetadataImmutable from "./MetadataImmutable"
+import MetadataInvite from "./MetadataInvite"
+import ParentPanel from "./ParentPanel"
+import { useMediaPredicate } from "react-media-hook"
 
 const ModuleInvitation = ({
   user,
@@ -26,7 +29,10 @@ const ModuleInvitation = ({
   )
   const [acceptMutation] = useMutation(acceptInvitation)
   const [declineMutation] = useMutation(removeInvitation)
+  const [previousOpen, setPreviousOpen] = useState(false)
+  const prefersDarkMode = useMediaPredicate("(prefers-color-scheme: dark)")
 
+  const arrowColor = prefersDarkMode ? "white" : "#0f172a"
   const mainFile = moduleEdit!.main as Prisma.JsonObject
   const supportingRaw = moduleEdit!.supporting as Prisma.JsonObject
 
@@ -65,7 +71,6 @@ const ModuleInvitation = ({
                 }
               )
               refetch()
-              // TODO: Move to next invitation on the list
               setModule(undefined)
             }}
           >
@@ -74,14 +79,19 @@ const ModuleInvitation = ({
           <button
             className="text-blue-500 dark:text-blue-200 text-xs leading-4 font-normal mx-2"
             onClick={async () => {
-              await declineMutation({
-                id: module.authors.filter((author) => author.workspaceId === workspace.id)[0].id,
-                suffix: module.suffix,
-              })
+              await toast.promise(
+                declineMutation({
+                  id: module.authors.filter((author) => author.workspaceId === workspace.id)[0].id,
+                  suffix: module.suffix,
+                }),
+                {
+                  loading: "Declining...",
+                  success: "Declined invitation",
+                  error: "Hmm that didn't work...",
+                }
+              )
               refetch()
               setModule(undefined)
-
-              toast("Declined invitation", { icon: "👋" })
             }}
           >
             Decline
@@ -89,7 +99,7 @@ const ModuleInvitation = ({
         </div>
       </div>
       {/* Menu bar */}
-      <div className="w-full flex">
+      <div className="w-full flex mb-12">
         {inboxOpen ? (
           <button
             onClick={() => {
@@ -113,37 +123,121 @@ const ModuleInvitation = ({
           </button>
         )}
         {/* Push all menu bars to the right */}
-        <div className="flex-grow"></div>
-        <div></div>
+        <div className="flex-grow mx-4">
+          <button
+            className="flex px-2 mx-auto py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-sm leading-4 font-normal shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700 my-2 disabled:opacity-50"
+            onClick={() => {
+              setPreviousOpen(true)
+            }}
+            disabled={moduleEdit?.parents.length === 0}
+            id="modulePrevious"
+          >
+            Links to {moduleEdit?.parents.length} previous steps
+          </button>
+        </div>
       </div>
-
-      <MetadataImmutable module={moduleEdit} />
+      <MetadataInvite module={moduleEdit} />
+      <Xarrows
+        start="moduleCurrent"
+        end="modulePrevious"
+        showHead={false}
+        dashness
+        color={arrowColor}
+        startAnchor="auto"
+        endAnchor="auto"
+      />
       {mainFile.name ? (
         <div className="my-8">
-          <h2 className="">Main file</h2>
+          <h2 className="text-lg">Main file</h2>
           <ViewFiles name={mainFile.name} size={mainFile.size} url={mainFile.cdnUrl} />
         </div>
       ) : (
         ""
       )}
-      {/* Supporting files */}
-      {supportingRaw.files.length > 0 ? (
-        <div className="my-8">
-          <h2>Supporting file(s)</h2>
-          {supportingRaw.files.map((file) => (
-            <>
-              <ViewFiles
-                name={file.original_filename}
-                size={file.size}
-                url={file.original_file_url}
-              />
-            </>
-          ))}
-        </div>
-      ) : (
-        ""
-      )}
-      {/* TODO: References */}
+      <div className="md:grid grid-cols-2 gap-x-4 mb-28">
+        {/* Supporting files */}
+        {supportingRaw.files.length > 0 ? (
+          <div className="">
+            <h2 className="text-lg">Supporting file(s)</h2>
+            {supportingRaw.files.map((file) => (
+              <>
+                <ViewFiles
+                  name={file.original_filename}
+                  size={file.size}
+                  url={file.original_file_url}
+                />
+              </>
+            ))}
+          </div>
+        ) : (
+          ""
+        )}
+        {/* TODO: References */}
+        {moduleEdit!.references.length > 0 ? (
+          <div className="">
+            <h2 className="text-lg">Reference list</h2>
+            <ol className="list-decimal list-outside my-4 text-normal pl-6">
+              {moduleEdit!.references.map((reference) => (
+                <>
+                  <li className="my-2">
+                    {reference.publishedWhere === "ResearchEquals" ? (
+                      <>
+                        {reference.authors.map((author, index) => (
+                          <>
+                            <Link href={Routes.HandlePage({ handle: author!.workspace!.handle })}>
+                              <a target="_blank">
+                                {author!.workspace!.lastName}, {author!.workspace!.firstName}
+                              </a>
+                            </Link>
+                            {index === reference.authors.length - 1 ? "" : "; "}
+                          </>
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        {reference!.authorsRaw!["object"] ? (
+                          <>
+                            {reference!.authorsRaw!["object"].map((author, index) => (
+                              <>
+                                {index === 3
+                                  ? "[...]"
+                                  : index > 3
+                                  ? ""
+                                  : author.given && author.family
+                                  ? `${author.family}, ${author.given}`
+                                  : `${author.name}`}
+                                {index === reference!.authorsRaw!["object"].length - 1 || index > 2
+                                  ? ""
+                                  : "; "}
+                              </>
+                            ))}
+                          </>
+                        ) : (
+                          <>
+                            <p className="italic">{reference.publishedWhere}</p>
+                          </>
+                        )}
+                      </>
+                    )}{" "}
+                    ({reference.publishedAt?.toISOString().substr(0, 4)}).{" "}
+                    <span className="font-semibold">{reference.title}</span>
+                    {reference.title.endsWith("." ? "" : ".")}{" "}
+                    <Link href={reference.url!}>
+                      <a target="_blank">
+                        <span className="underline">{reference.url}</span>
+                      </a>
+                    </Link>
+                    . <span className="italic">{reference.publishedWhere}</span>.
+                  </li>
+                </>
+              ))}
+            </ol>
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
+      <ParentPanel openObject={previousOpen} openFunction={setPreviousOpen} module={moduleEdit} />
     </div>
   )
 }

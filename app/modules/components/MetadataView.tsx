@@ -22,7 +22,7 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
   return (
     <div className="module bg-gray-100 dark:bg-gray-600 my-4" style={{ padding: "1px" }}>
       <div className="module bg-white dark:bg-gray-900 border-0 border-gray-100 dark:border-gray-600 divide-y divide-gray-100 dark:divide-gray-600">
-        <div className="lg:flex text-center divide-y lg:divide-y-0 lg:divide-x divide-gray-100 dark:divide-gray-600 text-gray-500 dark:text-gray-200 dark:bg-gray-800 text-xs leading-4 font-normal">
+        <div className="lg:flex text-center divide-y lg:divide-y-0 lg:divide-x divide-gray-100 dark:divide-gray-600 text-gray-500 dark:text-gray-200 dark:bg-gray-800 text-sm leading-4 font-normal">
           <div className="flex-grow py-2">Last updated: {moment(module.updatedAt).fromNow()}</div>
           <div className="flex-grow py-2">
             DOI upon publish:{" "}
@@ -35,14 +35,11 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
             </Link>
           </div>
         </div>
-        <div className="py-1 px-2 bg-white dark:bg-gray-800">
-          <FollowsFromSearch module={module} setQueryData={setQueryData} />
-        </div>
         <div className="py-4 px-2 min-h-32">
-          <p className="text-xs leading-4 font-normal text-gray-500 dark:text-white">
+          <p className="text-sm leading-4 font-normal text-gray-500 dark:text-white">
             {module.type.name}
           </p>
-          <p className="text-base leading-6 font-medium text-gray-900 dark:text-white">
+          <p className="text-xl leading-6 font-medium  text-gray-900 dark:text-white">
             {module.title}
           </p>
         </div>
@@ -51,7 +48,7 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
           <div className="flex sm:inline">
             <span className="flex-grow"></span>
 
-            <AuthorAvatarsNew authors={module.authors} />
+            <AuthorAvatarsNew authors={module.authors} size="h-12 w-12" toDisplay={4} />
             <span className="flex-grow"></span>
           </div>
           <span className="sm:flex-grow"></span>
@@ -132,7 +129,7 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
               </>
             ) : (
               <button
-                className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-xs leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700"
+                className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-sm leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700"
                 onClick={() => {
                   setAddAuthors(true)
                 }}
@@ -146,7 +143,7 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
             )}
 
             <button
-              className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-xs leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700"
+              className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-sm leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700"
               onClick={() => {
                 setManageAuthorsOpen(true)
               }}
@@ -163,7 +160,7 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
           </div>
         </div>
         {/* Description section */}
-        <div className="text-xs leading-4 font-normal pt-4 pl-2 pr-4 pb-2">
+        <div className="text-base leading-6 font-normal pt-4 pl-2 pr-4 pb-2">
           {module.description}
         </div>
       </div>

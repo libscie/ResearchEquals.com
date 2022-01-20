@@ -51,7 +51,7 @@ const ParentPanel = ({ openObject, openFunction, module }) => {
                         <>
                           <li className="">
                             <Link href={`https://doi.org/${child.prefix}/${child.suffix}`}>
-                              <a>
+                              <a target="_blank">
                                 <ModuleCard
                                   type={child.type.name}
                                   title={child.title}
