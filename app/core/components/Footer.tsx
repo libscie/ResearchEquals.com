@@ -1,5 +1,5 @@
 import { Link, Routes } from "blitz"
-import { LogoGithub32, LogoTwitter32 } from "@carbon/icons-react"
+import { LogoDiscord32, LogoGithub32, LogoTwitter32 } from "@carbon/icons-react"
 import LibscieLogo from "./LibscieLogo"
 
 const Footer = () => {
@@ -97,6 +97,16 @@ const Footer = () => {
         </div>
         <div className="w-10/12 sm:w-full text-sm  mt-4 sm:mt-0">
           <h3 className="mb-4 font-bold text-sm">Follow</h3>
+          <p>
+            <Link href="https://discord.gg/ZweVw5pBGQ">
+              <a className="flex align-middle" target="_blank">
+                <LogoDiscord32 className="max-h-4 w-auto m-1" aria-hidden="true" />
+                <span className="hover:bg-indigo-600 text-black dark:text-white hover:text-white">
+                  Discord
+                </span>
+              </a>
+            </Link>
+          </p>
           <p>
             <Link href="https://github.com/libscie/ResearchEquals.com">
               <a className="flex align-middle" target="_blank">
