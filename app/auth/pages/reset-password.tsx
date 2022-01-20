@@ -1,24 +1,14 @@
-import {
-  BlitzPage,
-  useRouterQuery,
-  Link,
-  useMutation,
-  Routes,
-  validateZodSchema,
-  AuthenticationError,
-} from "blitz"
+import { BlitzPage, useRouterQuery, Link, useMutation, Routes, validateZodSchema } from "blitz"
 import Layout from "app/core/layouts/Layout"
-import { LabeledTextField } from "app/core/components/LabeledTextField"
-import { Form, FORM_ERROR } from "app/core/components/Form"
-import { ResetPassword } from "app/auth/validations"
 import resetPassword from "app/auth/mutations/resetPassword"
 import ResearchEqualsLogo from "app/core/components/ResearchEqualsLogo"
 import { z } from "zod"
 import { useFormik } from "formik"
+import toast from "react-hot-toast"
 
 const ResetPasswordPage: BlitzPage = () => {
   const query = useRouterQuery()
-  const [resetPasswordMutation, { isSuccess }] = useMutation(resetPassword)
+  const [resetPasswordMutation] = useMutation(resetPassword)
 
   const formik = useFormik({
     initialValues: {
@@ -28,16 +18,24 @@ const ResetPasswordPage: BlitzPage = () => {
     },
     validate: validateZodSchema(
       z.object({
-        password: z.string(),
-        passwordConfirmation: z.string(),
+        password: z.string().min(10),
+        passwordConfirmation: z.string().min(10),
       })
     ),
     onSubmit: async (values) => {
-      try {
-        await resetPasswordMutation(values)
-      } catch (error) {
-        // TODO: Add better error logging
-        alert(error.toString())
+      if (values.password !== values.passwordConfirmation) {
+        toast.error("Passwords do not match")
+      } else {
+        try {
+          toast.promise(resetPasswordMutation(values), {
+            loading: "Resetting...",
+            success: "Reset!",
+            error: "Reset unsuccessful",
+          })
+        } catch (error) {
+          // TODO: Add better error logging
+          alert(error.toString())
+        }
       }
     },
   })
@@ -45,16 +43,23 @@ const ResetPasswordPage: BlitzPage = () => {
   return (
     <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <ResearchEqualsLogo />
+        <Link href={Routes.Home()}>
+          <a>
+            <ResearchEqualsLogo />
+          </a>
+        </Link>
         <h1 className="mt-6 text-center text-3xl font-extrabold ">Reset password</h1>
-        <div className="bg-white dark:bg-gray-800 shadow rounded py-4 px-6 my-8  mx-auto">
+        <div className="bg-white dark:bg-gray-800 shadow rounded py-4 px-6 my-8 mx-auto">
           <form onSubmit={formik.handleSubmit}>
-            <div className="my-4">
+            <div className="">
               <label
                 htmlFor="password"
-                className=" my-1 block text-sm font-medium text-gray-700 dark:text-gray-100"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-100"
               >
-                New password
+                New password{" "}
+                {formik.touched.password && formik.errors.password
+                  ? " - " + formik.errors.password
+                  : null}
               </label>
               <div className="mt-1">
                 <input
@@ -65,9 +70,6 @@ const ResetPasswordPage: BlitzPage = () => {
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 dark:bg-gray-800 dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
                   {...formik.getFieldProps("password")}
                 />
-                {formik.touched.password && formik.errors.password ? (
-                  <div className="font-normal text-sm">{formik.errors.password}</div>
-                ) : null}
               </div>
             </div>
             <div className="my-4">
@@ -75,7 +77,10 @@ const ResetPasswordPage: BlitzPage = () => {
                 htmlFor="password"
                 className=" my-1 block text-sm font-medium text-gray-700 dark:text-gray-100"
               >
-                Repeat new password
+                Repeat new password{" "}
+                {formik.touched.passwordConfirmation && formik.errors.passwordConfirmation
+                  ? " - " + formik.errors.passwordConfirmation
+                  : null}
               </label>
               <div className="mt-1">
                 <input
@@ -86,16 +91,13 @@ const ResetPasswordPage: BlitzPage = () => {
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 dark:bg-gray-800 dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
                   {...formik.getFieldProps("passwordConfirmation")}
                 />
-                {formik.touched.passwordConfirmation && formik.errors.passwordConfirmation ? (
-                  <div className="font-normal text-sm">{formik.errors.passwordConfirmation}</div>
-                ) : null}
               </div>
             </div>
             <button
               type="submit"
               className="w-full px-3 py-2 border text-medium border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Log in
+              Reset and log in
             </button>
           </form>
         </div>
@@ -104,7 +106,7 @@ const ResetPasswordPage: BlitzPage = () => {
   )
 }
 
-ResetPasswordPage.redirectAuthenticatedTo = "/"
+ResetPasswordPage.redirectAuthenticatedTo = "/dashboard"
 ResetPasswordPage.getLayout = (page) => <Layout title="Reset Your Password">{page}</Layout>
 
 export default ResetPasswordPage

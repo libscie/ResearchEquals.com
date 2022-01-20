@@ -32,6 +32,18 @@ export default resolver.pipe(resolver.authorize(), async ({ id, uuid }) => {
   const updatedModule = await db.module.findFirst({
     where: { id },
     include: {
+      references: {
+        include: {
+          authors: {
+            include: {
+              workspace: true,
+            },
+          },
+        },
+        orderBy: {
+          title: "asc",
+        },
+      },
       authors: {
         include: {
           workspace: true,
@@ -39,7 +51,26 @@ export default resolver.pipe(resolver.authorize(), async ({ id, uuid }) => {
       },
       license: true,
       type: true,
-      parents: true,
+      parents: {
+        include: {
+          type: true,
+          authors: {
+            include: {
+              workspace: true,
+            },
+          },
+        },
+      },
+      children: {
+        include: {
+          type: true,
+          authors: {
+            include: {
+              workspace: true,
+            },
+          },
+        },
+      },
     },
   })
 

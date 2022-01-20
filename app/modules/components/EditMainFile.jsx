@@ -1,13 +1,24 @@
-import { useQuery, useMutation } from "blitz"
+import { useMutation } from "blitz"
 import { Widget } from "@uploadcare/react-widget"
 import { useRef } from "react"
+import toast from "react-hot-toast"
+import { Add32 } from "@carbon/icons-react"
 
-import getSignature from "../../auth/queries/getSignature"
 import addMain from "../mutations/addMain"
 import EditMainFileDisplay from "../../core/components/EditMainFileDisplay"
+import { fileSizeLimit, fileTypeLimit } from "../../core/utils/fileTypeLimit"
 
-const EditMainFile = ({ mainFile, setQueryData, moduleEdit }) => {
-  const [uploadSecret] = useQuery(getSignature, undefined)
+const validators = [fileTypeLimit, fileSizeLimit]
+
+const EditMainFile = ({
+  mainFile,
+  setQueryData,
+  moduleEdit,
+  user,
+  workspace,
+  expire,
+  signature,
+}) => {
   const widgetApi = useRef()
   const [addMainMutation] = useMutation(addMain)
 
@@ -22,31 +33,41 @@ const EditMainFile = ({ mainFile, setQueryData, moduleEdit }) => {
           moduleId={moduleEdit.id}
           setQueryData={setQueryData}
         />
-      ) : (
+      ) : user.emailIsVerified ? (
         <>
           <button
             type="button"
-            className="inline-flex items-center px-6 py-3 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-xs leading-4 font-normal shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700"
             onClick={() => {
               widgetApi.current.openDialog()
             }}
           >
-            Upload file
+            <Add32 className="w-4 h-4" aria-hidden="true" /> Add Main File
             <Widget
               publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
-              // secureSignature={uploadSecret.signature}
-              // secureExpire={uploadSecret.expire}
+              secureSignature={signature}
+              secureExpire={expire}
               ref={widgetApi}
               previewStep
+              validators={validators}
               clearable
               onChange={async (info) => {
+                // TODO: Only store upon save
                 try {
-                  // TODO: Only store upon save
-                  const updatedModule = await addMainMutation({
-                    id: moduleEdit?.id,
-                    json: info,
-                  })
-                  setQueryData(updatedModule)
+                  toast.promise(
+                    addMainMutation({
+                      id: moduleEdit?.id,
+                      json: info,
+                    }),
+                    {
+                      loading: "Uploading...",
+                      success: (data) => {
+                        setQueryData(data)
+                        return "Uploaded!"
+                      },
+                      error: "Uh-oh this is embarassing.",
+                    }
+                  )
                 } catch (err) {
                   alert(err)
                 }
@@ -54,6 +75,10 @@ const EditMainFile = ({ mainFile, setQueryData, moduleEdit }) => {
             />
           </button>
         </>
+      ) : (
+        <p className="text-xs leading-4 font-normal text-gray-900 dark:text-gray-200 my-2">
+          Please verify email to upload files.
+        </p>
       )}
     </>
   )

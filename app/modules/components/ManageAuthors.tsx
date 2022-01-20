@@ -1,36 +1,39 @@
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
-import { XIcon } from "@heroicons/react/outline"
 import { DragDropContext, Droppable, DroppableProvided } from "react-beautiful-dnd"
 import { useMutation } from "blitz"
-import toast from "react-hot-toast"
-import algoliasearch from "algoliasearch"
-import { getAlgoliaResults } from "@algolia/autocomplete-js"
+import { Checkmark32, Close32 } from "@carbon/icons-react"
 
-import Autocomplete from "../../core/components/Autocomplete"
-import addAuthor from "../mutations/addAuthor"
 import updateAuthorRank from "../../authorship/mutations/updateAuthorRank"
 import AuthorList from "../../core/components/AuthorList"
-import SearchResultWorkspace from "../../core/components/SearchResultWorkspace"
 
-const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
+// https://www.npmjs.com/package/array-move
+function arrayMoveMutable(array, fromIndex, toIndex) {
+  const startIndex = fromIndex < 0 ? array.length + fromIndex : fromIndex
+
+  if (startIndex >= 0 && startIndex < array.length) {
+    const endIndex = toIndex < 0 ? array.length + toIndex : toIndex
+
+    const [item] = array.splice(fromIndex, 1)
+    array.splice(endIndex, 0, item)
+  }
+}
+
+function arrayMoveImmutable(array, fromIndex, toIndex) {
+  array = [...array]
+  arrayMoveMutable(array, fromIndex, toIndex)
+  return array
+}
 
 const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
   const [authorState, setAuthorState] = useState(moduleEdit!.authors)
-  const [addAuthorMutation] = useMutation(addAuthor)
   const [updateAuthorRankMutation] = useMutation(updateAuthorRank)
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog
-        as="div"
-        className="fixed inset-0 overflow-hidden"
-        onClose={() => {
-          console.log("dont")
-        }}
-      >
+      <Dialog as="div" className="fixed inset-0 overflow-hidden" onClose={setOpen}>
         <div className="absolute inset-0 overflow-hidden">
-          <Dialog.Overlay className="absolute inset-0" />
+          <Dialog.Overlay className="fixed inset-0 bg-gray-900 bg-opacity-25 transition-opacity" />
 
           <div className="fixed inset-y-0 right-0 pl-10 max-w-full flex">
             <Transition.Child
@@ -42,154 +45,125 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
               leaveFrom="translate-x-0"
               leaveTo="translate-x-full"
             >
-              <div className="w-screen max-w-md">
-                <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
+              <div className="w-screen max-w-xs">
+                <div className="min-h-0 flex-1 flex flex-col pt-6 overflow-y-auto h-full dark:divide-gray-600 bg-white dark:bg-gray-900 shadow-xl">
                   <div className="px-4 sm:px-6">
                     <div className="flex items-start justify-between">
-                      <Dialog.Title className="text-lg font-medium text-gray-900">
+                      <Dialog.Title className="text-lg font-medium text-gray-900 dark:text-white">
                         Manage authors
                       </Dialog.Title>
                       <div className="ml-3 h-7 flex items-center">
                         <button
                           type="button"
-                          className="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                          className="rounded-md text-gray-400 dark:text-gray-200 hover:text-gray-500 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                           onClick={() => setOpen(false)}
                         >
                           <span className="sr-only">Close panel</span>
-                          <XIcon className="h-6 w-6" aria-hidden="true" />
+                          <Close32 className="h-6 w-6" aria-hidden="true" />
                         </button>
                       </div>
                     </div>
                   </div>
-                  <div className="mt-6 relative flex-1 px-4 sm:px-6">
-                    {/* Replace with your content */}
-                    <DragDropContext
-                      onDragEnd={async (result) => {
-                        const { destination, source, draggableId } = result
-                        // If no destination, do nothing
-                        if (!destination) {
-                          return
-                        }
-                        // If destination and source are equivalent, do nothing
-                        if (
-                          destination.droppableId === source.droppableId &&
-                          destination.index === source.index
-                        ) {
-                          return
-                        }
+                  <div className="mt-6 px-4 sm:px-6 text-sm leading-5 font-normal border-b border-gray-400 dark:border-gray-600 pb-4 dark:text-white">
+                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit.
+                    Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id,
+                    mattis vel, nisi.
+                  </div>
+                  {/* Replace with your content */}
+                  <DragDropContext
+                    onDragEnd={async (result) => {
+                      const { destination, source, draggableId } = result
+                      // If no destination, do nothing
+                      if (!destination) {
+                        return
+                      }
+                      // If destination and source are equivalent, do nothing
+                      if (
+                        destination.droppableId === source.droppableId &&
+                        destination.index === source.index
+                      ) {
+                        return
+                      }
+                      console.log("It hits here")
+                      // There is a mistake in the updating
+                      console.log(
+                        arrayMoveMutable(moduleEdit!.authors, source.index, destination.index)
+                      )
 
-                        // const newAuthorState = Array.from(moduleEdit!.authors)
-                        console.log(moduleEdit!.authors)
-                        moduleEdit!.authors.splice(source.index, 1)
-                        moduleEdit!.authors.splice(
-                          destination.index,
-                          0,
-                          authorState.filter((author) => {
-                            return author.workspaceId === parseInt(draggableId)
-                          })[0]!
-                        )
+                      let i = 0
+                      console.log(moduleEdit!.authors)
+                      moduleEdit!.authors.map((author) => {
+                        author.authorshipRank = i
+                        i += 1
+                      })
 
-                        let i = 0
-                        console.log(moduleEdit!.authors)
-                        moduleEdit!.authors.map((author) => {
-                          author.authorshipRank = i
-                          i += 1
+                      // Update database
+                      console.log(moduleEdit!.authors)
+                      moduleEdit!.authors.map(async (author) => {
+                        const updatedModule = await updateAuthorRankMutation({
+                          id: author.id,
+                          rank: author.authorshipRank,
+                          suffix: moduleEdit!.suffix,
                         })
-
-                        // Update database
-                        console.log(moduleEdit!.authors)
-                        moduleEdit!.authors.map(async (author) => {
-                          const updatedModule = await updateAuthorRankMutation({
-                            id: author.id,
-                            rank: author.authorshipRank,
-                            suffix: moduleEdit!.suffix,
-                          })
-                          console.log(`Updated ${author.id} to rank ${author.authorshipRank}`)
-                          setQueryData(updatedModule!)
-                        })
+                        console.log(`Updated ${author.id} to rank ${author.authorshipRank}`)
+                        setQueryData(updatedModule!)
+                      })
+                    }}
+                  >
+                    <Droppable droppableId="authors-ranking">
+                      {(provided: DroppableProvided) => (
+                        <ul
+                          className="relative flex-1 divide-y divide-gray-400 dark:divide-gray-600"
+                          ref={provided.innerRef}
+                          {...provided.droppableProps}
+                        >
+                          <AuthorList
+                            authors={moduleEdit.authors}
+                            setAuthorState={setQueryData}
+                            suffix={moduleEdit!.suffix}
+                          />
+                          {provided.placeholder}
+                        </ul>
+                      )}
+                    </Droppable>
+                  </DragDropContext>
+                  {/* /End replace */}
+                  <div className="flex-shrink-0 px-4 py-4 flex justify-end border-t border-gray-400 dark:border-gray-600">
+                    <button
+                      type="button"
+                      className="flex mx-4 py-2 px-4 bg-red-50 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
+                      onClick={() => {
+                        setOpen(false)
                       }}
                     >
-                      <div className="flex flex-col">
-                        <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                          <div className="py-2 align-middle inline-block sm:px-6 lg:px-8 w-full">
-                            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                              <table className="divide-y divide-gray-200 w-full">
-                                <thead className="bg-gray-50">
-                                  <tr>
-                                    <th
-                                      scope="col"
-                                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                    >
-                                      Name
-                                    </th>
-                                  </tr>
-                                </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
-                                  <tr>
-                                    <Autocomplete
-                                      openOnFocus={true}
-                                      defaultActiveItemId="0"
-                                      getSources={({ query }) => [
-                                        {
-                                          sourceId: "products",
-                                          async onSelect(params) {
-                                            const { item, setQuery } = params
-                                            try {
-                                              const updatedModule = await addAuthorMutation({
-                                                authorId: item.objectID,
-                                                moduleId: moduleEdit!.id,
-                                              })
-                                              toast.success("Author invited")
-                                              setQueryData(updatedModule)
-                                            } catch (error) {
-                                              toast.error("Something went wrong")
-                                            }
-                                            setQuery("")
-                                          },
-                                          getItems() {
-                                            return getAlgoliaResults({
-                                              searchClient,
-                                              queries: [
-                                                {
-                                                  indexName: `${process.env.ALGOLIA_PREFIX}_workspaces`,
-                                                  query,
-                                                },
-                                              ],
-                                            })
-                                          },
-                                          templates: {
-                                            item({ item, components }) {
-                                              return <SearchResultWorkspace item={item} />
-                                            },
-                                          },
-                                        },
-                                      ]}
-                                    />
-                                  </tr>
-                                  <Droppable droppableId="authors-ranking">
-                                    {(provided: DroppableProvided) => (
-                                      <tr
-                                        ref={provided.innerRef}
-                                        {...provided.droppableProps}
-                                        style={{ height: `${moduleEdit!.authors.length * 72}px` }}
-                                      >
-                                        <AuthorList
-                                          authors={moduleEdit!.authors}
-                                          setAuthorState={setQueryData}
-                                          suffix={moduleEdit!.suffix}
-                                        />
-                                        {provided.placeholder}
-                                      </tr>
-                                    )}
-                                  </Droppable>
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </DragDropContext>
-                    {/* /End replace */}
+                      <Close32
+                        className="w-4 h-4 fill-current text-red-500 pt-1"
+                        aria-hidden="true"
+                      />
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="flex py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
+                      onClick={() => {
+                        // authorState.map(async (author) => {
+                        //   const updatedModule = await updateAuthorRankMutation({
+                        //     id: author.id,
+                        //     rank: author.authorshipRank,
+                        //     suffix: moduleEdit!.suffix,
+                        //   })
+                        //   console.log(`Updated ${author.id} to rank ${author.authorshipRank}`)
+                        //   setQueryData(updatedModule!)
+                        // })
+                        setOpen(false)
+                      }}
+                    >
+                      <Checkmark32
+                        className="w-4 h-4 stroke-current text-green-500 pt-1"
+                        aria-hidden="true"
+                      />
+                      Save
+                    </button>
                   </div>
                 </div>
               </div>

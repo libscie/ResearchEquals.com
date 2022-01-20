@@ -26,7 +26,7 @@ export default resolver.pipe(
             role: "OWNER",
             workspace: {
               create: {
-                handle,
+                handle: handle.toLowerCase(),
                 avatar: `https://eu.ui-avatars.com/api/?rounded=true&background=${hexColor}&name=${handle}`,
               },
             },
@@ -48,7 +48,7 @@ export default resolver.pipe(
       sendEmailWithTemplate(email, "welcome", {
         handle: handle,
         days: 14,
-        verify_email_url: url`/verifyEmail/${emailCode}`,
+        verify_email_url: url`/verifyEmail/${emailCode}?userId=${user.id}`,
       }),
       ctx.session.$create({
         userId: user.id,

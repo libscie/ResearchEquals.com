@@ -4,14 +4,15 @@ import {
   InferGetStaticPropsType,
   Link,
   Routes,
-  useMutation,
-  validateZodSchema,
+  useQuery,
+  useRouter,
+  useRouterQuery,
+  useSession,
 } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import {
   CurrencyEuro32,
   Checkmark24,
-  CheckmarkFilled24,
   Favorite32,
   CircleStrokeGlyph,
   TableSplit32,
@@ -22,23 +23,25 @@ import {
   TextAlignLeft32,
   Video32,
   CircleFillGlyph,
-  LogoTwitter32,
-  LogoGithub32,
 } from "@carbon/icons-react"
-import { ChevronRightIcon } from "@heroicons/react/solid"
 import Xarrows from "react-xarrows"
 import { useMediaPredicate } from "react-media-hook"
-import { useFormik } from "formik"
 import ReactTooltip from "react-tooltip"
 
 import Navbar from "../core/components/Navbar"
 import db from "db"
-import { z } from "zod"
-import releaselist from "../users/mutations/releaselist"
 import Footer from "../core/components/Footer"
+import LayoutLoader from "../core/components/LayoutLoader"
+import { useCurrentUser } from "app/core/hooks/useCurrentUser"
+import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
+import getDrafts from "app/core/queries/getDrafts"
+import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const licenses = await db.license.findMany({
+    where: {
+      source: "ResearchEquals",
+    },
     orderBy: [
       {
         price: "asc",
@@ -59,113 +62,59 @@ export const getStaticProps: GetStaticProps = async (context) => {
 const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const prefersDarkMode = useMediaPredicate("(prefers-color-scheme: dark)")
   const biggerWindow = useMediaPredicate("(min-width: 640px)")
+  const currentUser = useCurrentUser()
+  const session = useSession()
+  const currentWorkspace = useCurrentWorkspace()
+  const router = useRouter()
+  const [drafts, { refetch }] = useQuery(getDrafts, { session })
+  const [invitations] = useQuery(getInvitedModules, { session })
 
-  const [releaseMutation, { isSuccess }] = useMutation(releaselist)
   const freeLicenses = licenses.filter((license) => license.price === 0)
   const payToClose = licenses.filter((license) => license.price > 0)
 
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-    },
-    validate: validateZodSchema(
-      z.object({
-        email: z.string().email(),
-      })
-    ),
-    onSubmit: async (values) => {
-      try {
-        await releaseMutation({ email: values.email })
-      } catch (error) {
-        if (error.code === "P2002" && error.meta?.target?.includes("email")) {
-          alert("This email is already being used")
-        } else {
-          alert(error.toString())
-        }
-      }
-    },
-  })
-
   return (
     <>
-      <Navbar />
+      <Navbar
+        currentUser={currentUser}
+        session={session}
+        currentWorkspace={currentWorkspace}
+        router={router}
+        drafts={drafts}
+        invitations={invitations}
+        refetchFn={refetch}
+      />
       <main className="lg:relative bg-white dark:bg-gray-900">
         <div className="" id="hero">
           <div className="pt-8 overflow-hidden sm:pt-12 lg:relative lg:py-32">
             <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:gap-24">
               <div>
                 <div className="mt-20">
-                  <div>
-                    <a href="#" className="inline-flex space-x-4">
-                      <span className="rounded bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 tracking-wide uppercase">
-                        Coming up
-                      </span>
-                      <span className="inline-flex items-center text-sm font-medium text-indigo-600 space-x-1">
-                        <span>Launching February 1st, 2022</span>
-                        <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
-                      </span>
-                    </a>
-                  </div>
                   <div className="mt-6 sm:max-w-xl leading-5">
                     <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight sm:text-5xl">
                       Step by step publishing of{" "}
                       <span className="text-indigo-600 my-2">your research</span>
                     </h1>
-                    {/* <p className="mt-6 text-xl text-gray-800 dark:text-gray-50">
-                      For your entire research journey, no matter the output.
-                    </p> */}
                     <p className="my-4 text-xl text-gray-800 dark:text-gray-50">
-                      A new publishing format: Research modules. Only on ResearchEquals.com
+                      A new publishing format: Research modules.
                     </p>
+                    <Link href={Routes.SignupPage()}>
+                      <a className="whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base leading-5 font-normal text-white bg-indigo-600 hover:bg-indigo-700">
+                        Get started
+                      </a>
+                    </Link>
+                    <Link href="/browse">
+                      <a className="mx-4 whitespace-nowrap leading-5 font-normal text-indigo-700 dark:text-gray-200 bg-indigo-100 hover:bg-indigo-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-0 dark:border dark:border-gray-600 px-4 py-2 rounded-md">
+                        Browse modules
+                      </a>
+                    </Link>
                   </div>
-                  {/* TODO: Replace with formik form */}
-                  <form
-                    onSubmit={formik.handleSubmit}
-                    className="mt-12 sm:max-w-lg sm:w-full sm:flex"
-                  >
-                    <div className="min-w-0 flex-1">
-                      <label htmlFor="email" className="sr-only">
-                        Email address
-                      </label>
-                      <input
-                        id="email"
-                        type="email"
-                        required
-                        className="block w-full border border-gray-300 bg-transparent rounded-md px-5 py-3 text-base text-gray-900 dark:text-white placeholder-gray-500 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        placeholder="Enter your email"
-                        {...formik.getFieldProps("email")}
-                      />
-                      {formik.touched.email && formik.errors.email ? (
-                        <div className="font-normal text-sm">{formik.errors.email}</div>
-                      ) : null}
-                    </div>
-                    <div className="my-8 sm:mt-0 sm:ml-3">
-                      {isSuccess ? (
-                        <button
-                          type="submit"
-                          disabled
-                          className="block w-full rounded-md border border-transparent px-5 py-3 bg-green-600 text-base font-medium text-white shadow focus:outline-none focus:ring-2 focus:ring-offset-2 sm:px-10 text-center"
-                        >
-                          <CheckmarkFilled24 className="text-center" />
-                        </button>
-                      ) : (
-                        <button
-                          type="submit"
-                          data-splitbee-event="Release list"
-                          className="block w-full rounded-md border border-transparent px-5 py-3 bg-indigo-600 text-base font-medium text-white shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:px-10"
-                        >
-                          Keep me updated
-                        </button>
-                      )}
-                    </div>
-                  </form>
                 </div>
               </div>
             </div>
-            <div className="sm:mx-auto sm:max-w-3xl sm:px-6">
+            <div className="sm:mx-auto sm:max-w-3xl sm:px-6 min-h-full py-12 sm:py-16">
               <div className="py-12 sm:relative sm:mt-12 sm:py-16 lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
                 <div className="hidden sm:block"></div>
-                <div className="relative pl-4 max-w-full sm:max-w-full sm:mx-auto sm:px-0 lg:max-w-none lg:h-full lg:pl-12">
+                <div className="relative pl-4 max-w-full sm:max-w-full sm:mx-auto sm:px-0 lg:max-w-none lg:pl-12">
                   <div className="grid grid-cols-4 sm:grid-cols-4 grid-flow-row gap-16 z-50">
                     <div></div>
                     <div
@@ -371,7 +320,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                 Publish each step
               </h2>
               <p className="my-2 text-lg">
-                You produce outputs at every research step. Why let vital parts go unpublished?
+                You produce vital outputs at every research step. Why let steps go unpublished?
               </p>
               <p className="my-2 text-lg">
                 Publish your text, data, code, or anything else you struggle to publish in articles.
@@ -409,19 +358,17 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                   </p>
                   <ul role="list" className="my-4 space-y-4">
                     {freeLicenses.map((license) => (
-                      <>
-                        <li key="feature-01" className="flex space-x-3 text-lg">
-                          <Checkmark24
-                            className="stroke-current stroke-2 fill-current flex-shrink-0 h-6 w-6 text-white"
-                            aria-hidden="true"
-                          />
-                          <Link href={license.url}>
-                            <a target="_blank" className="">
-                              {license.name}
-                            </a>
-                          </Link>
-                        </li>
-                      </>
+                      <li key={license.id} className="flex space-x-3 text-lg">
+                        <Checkmark24
+                          className="stroke-current stroke-2 fill-current flex-shrink-0 h-6 w-6 text-white"
+                          aria-hidden="true"
+                        />
+                        <Link href={license.url}>
+                          <a target="_blank" className="">
+                            {license.name}
+                          </a>
+                        </Link>
+                      </li>
                     ))}
                   </ul>
                 </>
@@ -439,19 +386,17 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                   <p className="my-2 text-lg">Need more restrictive licenses?</p>
                   <ul role="list" className="my-4 space-y-4">
                     {payToClose.map((license) => (
-                      <>
-                        <li className="flex space-x-3 text-lg">
-                          <CurrencyEuro32
-                            className="stroke-current stroke-2 fill-current flex-shrink-0 h-6 w-6 text-white"
-                            aria-hidden="true"
-                          />
-                          <Link href={license.url}>
-                            <a target="_blank" className="">
-                              {license.price / 100} - {license.name}
-                            </a>
-                          </Link>
-                        </li>
-                      </>
+                      <li className="flex space-x-3 text-lg" key={license.id}>
+                        <CurrencyEuro32
+                          className="stroke-current stroke-2 fill-current flex-shrink-0 h-6 w-6 text-white"
+                          aria-hidden="true"
+                        />
+                        <Link href={license.url}>
+                          <a target="_blank" className="">
+                            {license.price / 100} - {license.name}
+                          </a>
+                        </Link>
+                      </li>
                     ))}
                   </ul>
                 </>
@@ -465,9 +410,6 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
               <h2 className="text-2xl font-extrabold text-white dark:text-gray-50 sm:text-5xl sm:tracking-tight lg:text-6xl my-4 mr-4">
                 Publish on your terms
               </h2>
-              {/* TODO: Calls to action */}
-              {/* <button>Sign up</button> */}
-              {/* <button>Book a demo</button> */}
               <div className="flex">
                 <div className="flex-grow"></div>
                 <div className="">
@@ -500,47 +442,21 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                     Your outputs
                   </div>
                 </div>
+
                 <div className="flex-grow"></div>
               </div>
-              <div className="flex">
+              <div className="flex my-4">
                 <div className="flex-grow"></div>
-                <form onSubmit={formik.handleSubmit} className="mt-6 sm:max-w-lg sm:w-full sm:flex">
-                  <div className="min-w-0 flex-1">
-                    <label htmlFor="email" className="sr-only">
-                      Email address
-                    </label>
-                    <input
-                      id="email"
-                      type="email"
-                      required
-                      className="block w-full border border-gray-300 bg-white dark:bg-gray-900 rounded-md px-5 py-3 text-base text-gray-900 dark:text-white placeholder-gray-500 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                      placeholder="Enter your email"
-                      {...formik.getFieldProps("email")}
-                    />
-                    {formik.touched.email && formik.errors.email ? (
-                      <div className="font-normal text-sm">{formik.errors.email}</div>
-                    ) : null}
-                  </div>
-                  <div className="my-8 sm:mt-0 sm:ml-3">
-                    {isSuccess ? (
-                      <button
-                        type="submit"
-                        disabled
-                        className="block w-full rounded-md border border-transparent px-5 py-3 bg-green-600 text-base font-medium text-white shadow focus:outline-none focus:ring-2 focus:ring-offset-2 sm:px-10 text-center"
-                      >
-                        <CheckmarkFilled24 className="text-center" />
-                      </button>
-                    ) : (
-                      <button
-                        type="submit"
-                        data-splitbee-event="Release list"
-                        className="block w-full rounded-md border border-transparent px-5 py-3 bg-white text-base font-medium text-indigo-600 shadow hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:px-10"
-                      >
-                        Keep me updated
-                      </button>
-                    )}
-                  </div>
-                </form>
+                <Link href={Routes.SignupPage()}>
+                  <a className="whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base leading-5 font-normal text-white bg-green-600 hover:bg-green-800">
+                    Get started
+                  </a>
+                </Link>
+                <Link href="/browse">
+                  <a className="mx-4 whitespace-nowrap leading-5 font-normal text-indigo-700 dark:text-gray-200 bg-indigo-100 hover:bg-indigo-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-0 dark:border dark:border-gray-600 px-4 py-2 rounded-md">
+                    Browse modules
+                  </a>
+                </Link>
                 <div className="flex-grow"></div>
               </div>
             </div>
@@ -553,6 +469,26 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
 }
 
 Home.suppressFirstRenderFlicker = true
-Home.getLayout = (page) => <Layout title="Home">{page}</Layout>
+Home.getLayout = (page) => (
+  <Layout
+    title="ResearchEquals.com"
+    headChildren={
+      <>
+        <meta property="og:title" content="ResearchEquals.com" />
+        <meta
+          property="og:description"
+          content="Step by step publishing of your research, with a new publishing format: Research modules."
+        />
+        <meta property="og:image" content="https://og-images.herokuapp.com/api/researchequals" />
+        <meta
+          property="og:image:alt"
+          content="Screenshot of the homepage of ResearchEquals.com, including the description and a sign up button for release updates."
+        />
+      </>
+    }
+  >
+    <LayoutLoader>{page}</LayoutLoader>
+  </Layout>
+)
 
 export default Home

@@ -1,12 +1,10 @@
-import { AuthenticationError, BlitzPage, useMutation, validateZodSchema } from "blitz"
+import { BlitzPage, Link, Routes, useMutation, validateZodSchema } from "blitz"
 import Layout from "app/core/layouts/Layout"
-import { LabeledTextField } from "app/core/components/LabeledTextField"
-import { Form, FORM_ERROR } from "app/core/components/Form"
-import { ForgotPassword } from "app/auth/validations"
 import forgotPassword from "app/auth/mutations/forgotPassword"
 import ResearchEqualsLogo from "app/core/components/ResearchEqualsLogo"
 import { useFormik } from "formik"
 import { z } from "zod"
+import toast from "react-hot-toast"
 
 const ForgotPasswordPage: BlitzPage = () => {
   const [forgotPasswordMutation, { isSuccess }] = useMutation(forgotPassword)
@@ -22,7 +20,11 @@ const ForgotPasswordPage: BlitzPage = () => {
     ),
     onSubmit: async (values) => {
       try {
-        await forgotPasswordMutation(values)
+        toast.promise(forgotPasswordMutation(values), {
+          loading: "Loading...",
+          success: "Success!",
+          error: "That did not work",
+        })
       } catch (error) {
         alert(error.toString())
       }
@@ -32,26 +34,31 @@ const ForgotPasswordPage: BlitzPage = () => {
   return (
     <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <ResearchEqualsLogo />
+        <Link href={Routes.Home()}>
+          <a>
+            <ResearchEqualsLogo />
+          </a>
+        </Link>
         <h1 className="mt-6 text-center text-3xl font-extrabold ">Forgot your password?</h1>
         {isSuccess ? (
-          <div className="bg-white dark:bg-gray-800 shadow rounded py-4 px-6 my-8  mx-auto">
-            <div className="my-4">
-              <p className=" my-1 block text-sm font-medium text-gray-700 dark:text-gray-100">
+          <div className="bg-white dark:bg-gray-800 shadow rounded py-4 px-6 my-8 mx-auto">
+            <div>
+              <p className="block text-sm font-medium text-gray-700 dark:text-gray-100">
                 If your email is in our system, you will receive instructions to reset your password
                 shortly.
               </p>
             </div>
           </div>
         ) : (
-          <div className="bg-white dark:bg-gray-800 shadow rounded py-4 px-6 my-8  mx-auto">
+          <div className="bg-white dark:bg-gray-800 shadow rounded py-4 px-6 my-8 mx-auto">
             <form onSubmit={formik.handleSubmit}>
-              <div className="my-4">
+              <div className="mb-4">
                 <label
                   htmlFor="email"
                   className=" my-1 block text-sm font-medium text-gray-700 dark:text-gray-100"
                 >
-                  Email address
+                  Email address{" "}
+                  {formik.touched.email && formik.errors.email ? " - " + formik.errors.email : null}
                 </label>
                 <div className="mt-1">
                   <input
@@ -63,9 +70,6 @@ const ForgotPasswordPage: BlitzPage = () => {
                     placeholder="you@email.com"
                     {...formik.getFieldProps("email")}
                   />
-                  {formik.touched.email && formik.errors.email ? (
-                    <div className="font-normal text-sm">{formik.errors.email}</div>
-                  ) : null}
                 </div>
               </div>
               <button

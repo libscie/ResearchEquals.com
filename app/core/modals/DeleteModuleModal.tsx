@@ -2,8 +2,9 @@ import { useMutation, useRouter } from "blitz"
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import deleteModule from "app/modules/mutations/deleteModule"
+import toast from "react-hot-toast"
 
-export default function DeleteModule({ module }) {
+export default function DeleteModule({ module, setModule, fetchDrafts }) {
   let [isOpen, setIsOpen] = useState(false)
   const [deleteModuleMutation] = useMutation(deleteModule)
   const router = useRouter()
@@ -18,7 +19,10 @@ export default function DeleteModule({ module }) {
 
   return (
     <>
-      <button className="px-4 py-2 bg-red-500 text-white hover:bg-red-300" onClick={openModal}>
+      <button
+        className="mx-4 py-2 px-4 bg-red-100 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm leading-4 font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
+        onClick={openModal}
+      >
         Delete module
       </button>
       <Transition appear show={isOpen} as={Fragment}>
@@ -33,7 +37,7 @@ export default function DeleteModule({ module }) {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+              <Dialog.Overlay className="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity" />
             </Transition.Child>
 
             {/* This element is to trick the browser into centering the modal contents. */}
@@ -49,12 +53,12 @@ export default function DeleteModule({ module }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                  Confirm
+              <div className="inline-block rounded w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform shadow-xl text-gray-900 dark:text-gray-200 bg-white dark:bg-gray-900 dark:border border-gray-300 dark:border-gray-600">
+                <Dialog.Title as="h3" className="text-lg font-medium leading-6">
+                  Confirm module deletion
                 </Dialog.Title>
                 <div className="mt-2">
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm">
                     The module will be deleted once you verify. No co-author approval is needed to
                     do this.
                   </p>
@@ -62,17 +66,27 @@ export default function DeleteModule({ module }) {
                 <div className="mt-4">
                   <button
                     type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 mr-4"
+                    className="inline-flex mr-2 py-2 px-4 bg-red-50 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
                     onClick={async () => {
-                      await deleteModuleMutation({ id: module.id })
-                      router.push("/dashboard")
+                      toast
+                        .promise(deleteModuleMutation({ id: module.id }), {
+                          loading: "Deleting...",
+                          success: "Deleted!",
+                          error: "Something went wrong...",
+                        })
+                        .then(fetchDrafts)
+                        .then(() => {
+                          router.push("/drafts")
+                          setModule(undefined)
+                          closeModal()
+                        })
                     }}
                   >
                     Delete
                   </button>
                   <button
                     type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500"
+                    className="py-2 px-4 bg-indigo-100 dark:bg-gray-800 text-indigo-700 dark:text-gray-200 hover:bg-indigo-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500"
                     onClick={closeModal}
                   >
                     Cancel
