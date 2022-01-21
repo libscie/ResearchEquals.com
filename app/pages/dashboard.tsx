@@ -75,6 +75,11 @@ const DashboardContent = ({
     }
   }, [])
 
+  const refetchAll = () => {
+    refetch()
+    refetchWorkspace()
+  }
+
   if (data) {
     return (
       <>
@@ -95,7 +100,7 @@ const DashboardContent = ({
                 data={data}
                 expire={expire}
                 signature={signature}
-                refetch={refetchWorkspace}
+                refetch={refetchAll}
               />
             </div>
             <dl className="mt-2 flex text-gray-900 dark:text-gray-200  overflow-hidden shadow dark:border rounded border-gray-100 dark:border-gray-600 divide-gray-100 dark:divide-gray-600 md:grid-cols-3 divide-x">
