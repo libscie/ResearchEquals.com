@@ -18,7 +18,7 @@
           "minInstances": 1,
           "maxInstances": 1,
           "buildCommand": "npm run build",
-          "startCommand": "npm rebuild blitz && npm run start:production",
+          "startCommand": "npm run start:production",
           "envVariables": {
             "APP_ENV": "production",
             "DOI_PREFIX": {
