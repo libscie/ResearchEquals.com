@@ -1,4 +1,12 @@
-import { Link, useSession, useQuery, useRouter, useRouterQuery, useInfiniteQuery } from "blitz"
+import {
+  Link,
+  useSession,
+  useQuery,
+  useRouter,
+  useRouterQuery,
+  useInfiniteQuery,
+  Routes,
+} from "blitz"
 import Layout from "app/core/layouts/Layout"
 import React, { useEffect } from "react"
 import toast from "react-hot-toast"
@@ -52,20 +60,24 @@ const DashboardContent = ({
       name: "Drafts",
       stat: data.draftModules.length,
       change: data.draftPercentage,
+      to: Routes.DraftsPage(),
     },
     {
       name: "Invitations",
       stat: data.invitedModules.length,
       change: data.invitedPercentage,
+      to: Routes.InvitationsPage(),
     },
     {
       name: "Modules",
       stat: data.myPublishedModules.length,
       change: data.modulesPercentage,
+      to: Routes.HandlePage({ handle: ownWorkspace.handle }),
     },
     {
       name: "Followers",
       stat: data.workspace.followers.length,
+      to: "#",
     },
   ]
 
@@ -101,9 +113,9 @@ const DashboardContent = ({
             <dl className="mt-2 flex text-gray-900 dark:text-gray-200  overflow-hidden shadow dark:border rounded border-gray-100 dark:border-gray-600 divide-gray-100 dark:divide-gray-600 md:grid-cols-3 divide-x">
               {stats.map((item) => (
                 <>
-                  <Link href={`/${item.name.toLowerCase()}`}>
+                  <Link href={item.to}>
                     <button
-                      className="px-4 py-5 sm:p-6 flex-grow hover:bg-gray-50 dark:hover:bg-gray-800 text-left"
+                      className="px-4 py-5 sm:p-6 flex-grow hover:bg-gray-50 dark:hover:bg-gray-800 text-left disabled:opacity-50"
                       disabled={item.stat === 0}
                     >
                       <dt className="text-base font-normal">{item.name}</dt>
