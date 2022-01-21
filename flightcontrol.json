@@ -24,6 +24,9 @@
             "DOI_PREFIX": {
               "fromParameterStore": "DOI_PREFIX"
             },
+            "PORT": {
+              "fromParameterStore": "PORT"
+            },
             "DATABASE_URL": {
               "fromParameterStore": "DATABASE_URL"
             },
