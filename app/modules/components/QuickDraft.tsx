@@ -82,7 +82,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
-                <div className="w-screen max-w-xs">
+                <div className="w-screen max-w-xs  border-l border-gray-400 dark:border-gray-600">
                   <form
                     onSubmit={formik.handleSubmit}
                     className="h-full divide-y divide-gray-400 dark:divide-gray-600 flex flex-col bg-white dark:bg-gray-900 shadow-xl"
