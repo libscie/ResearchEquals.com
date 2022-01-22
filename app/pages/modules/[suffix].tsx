@@ -325,10 +325,11 @@ const Module = ({ module, mainFile, supportingRaw }) => {
 const ModulePage = ({ module }) => {
   const mainFile = module!.main as Prisma.JsonObject
   const supportingRaw = module!.supporting as Prisma.JsonObject
+  console.log(module.license.name)
 
   return (
     <Layout
-      title={`R=${module.title}`}
+      title={`R= ${module.title}`}
       headChildren={
         <>
           <meta property="og:title" content={module.title} />
@@ -337,6 +338,16 @@ const ModulePage = ({ module }) => {
             <meta property="og:description" content={module.description} />
           ) : (
             ""
+          )}
+          {module.license.name == "All rights reserved" ? (
+            <meta name="robots" content="max-snippet:120" />
+          ) : (
+            <meta name="robots" content="max-snippet:-1" />
+          )}
+          {module.license.name == "All rights reserved" ? (
+            <meta name="tdm-reservation" content="1" />
+          ) : (
+            <meta name="tdm-reservation" content="0" />
           )}
         </>
       }
