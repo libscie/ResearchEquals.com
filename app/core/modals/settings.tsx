@@ -4,6 +4,7 @@ import { Close32 } from "@carbon/icons-react"
 
 import WorkspaceSettings from "../components/WorkspaceSettings"
 import AccountSettings from "../components/AccountSettings"
+import InfoSettings from "../components/InfoSettings"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -11,7 +12,7 @@ function classNames(...classes) {
 
 export default function SettingsModal({ button, styling, user, workspace }) {
   let [isOpen, setIsOpen] = useState(false)
-  let [categories] = useState(["Workspace", "Account"])
+  let [categories] = useState(["Workspace", "Account", "About"])
 
   return (
     <>
@@ -108,6 +109,9 @@ export default function SettingsModal({ button, styling, user, workspace }) {
                       </Tab.Panel>
                       <Tab.Panel key="account-panel" className="">
                         <AccountSettings user={user} setIsOpen={setIsOpen} />
+                      </Tab.Panel>
+                      <Tab.Panel key="info-panel" className="">
+                        <InfoSettings setIsOpen={setIsOpen} />
                       </Tab.Panel>
                     </Tab.Panels>
                   </Tab.Group>
