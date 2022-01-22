@@ -50,7 +50,7 @@ const ModuleEdit = ({
   const [moduleEdit, { refetch, setQueryData }] = useQuery(
     useCurrentModule,
     { suffix: module.suffix },
-    { refetchOnWindowFocus: true }
+    { refetchOnWindowFocus: false }
   )
 
   const mainFile = moduleEdit!.main as Prisma.JsonObject
