@@ -65,9 +65,9 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
                     </div>
                   </div>
                   <div className="mt-6 px-4 sm:px-6 text-sm leading-5 font-normal border-b border-gray-400 dark:border-gray-600 pb-4 dark:text-white">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit.
-                    Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id,
-                    mattis vel, nisi.
+                    Here you can manage your current and invited co-authors. Everyone needs to
+                    approve the module before it can be published. You can rearrange authors by
+                    dragging and dropping them.
                   </div>
                   {/* Replace with your content */}
                   <DragDropContext
