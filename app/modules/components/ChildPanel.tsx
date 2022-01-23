@@ -1,6 +1,6 @@
 import { Fragment } from "react"
 import { Dialog, Transition } from "@headlessui/react"
-import { Link } from "blitz"
+import { Link, Routes } from "blitz"
 import moment from "moment"
 import { Close32 } from "@carbon/icons-react"
 import ModuleCard from "../../core/components/ModuleCard"
@@ -50,18 +50,33 @@ const ChildPanel = ({ openObject, openFunction, module }) => {
                       {module.children.map((child) => (
                         <>
                           <li className="">
-                            <Link href={`https://doi.org/${child.prefix}/${child.suffix}`}>
-                              <a>
-                                <ModuleCard
-                                  type={child.type.name}
-                                  title={child.title}
-                                  status={`${child.prefix}/${child.suffix}`}
-                                  time={moment(child.publishedAt).fromNow()}
-                                  timeText="Published"
-                                  authors={child.authors}
-                                />
-                              </a>
-                            </Link>
+                            {child.publishedWhere === "ResearchEquals" ? (
+                              <Link href={Routes.ModulePage({ suffix: child.suffix })}>
+                                <a target="_blank">
+                                  <ModuleCard
+                                    type={child.type.name}
+                                    title={child.title}
+                                    status={`${child.prefix}/${child.suffix}`}
+                                    time={moment(child.publishedAt).fromNow()}
+                                    timeText="Published"
+                                    authors={child.authors}
+                                  />
+                                </a>
+                              </Link>
+                            ) : (
+                              <Link href={`https://doi.org/${child.prefix}/${child.suffix}`}>
+                                <a target="_blank">
+                                  <ModuleCard
+                                    type={child.type.name}
+                                    title={child.title}
+                                    status={`${child.prefix}/${child.suffix}`}
+                                    time={moment(child.publishedAt).fromNow()}
+                                    timeText="Published"
+                                    authors={child.authors}
+                                  />
+                                </a>
+                              </Link>
+                            )}
                           </li>
                         </>
                       ))}

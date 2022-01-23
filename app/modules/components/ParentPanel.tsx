@@ -50,18 +50,33 @@ const ParentPanel = ({ openObject, openFunction, module }) => {
                       {module.parents.map((child) => (
                         <>
                           <li className="">
-                            <Link href={`https://doi.org/${child.prefix}/${child.suffix}`}>
-                              <a target="_blank">
-                                <ModuleCard
-                                  type={child.type.name}
-                                  title={child.title}
-                                  status={`${child.prefix}/${child.suffix}`}
-                                  time={moment(child.publishedAt).fromNow()}
-                                  timeText="Published"
-                                  authors={child.authors}
-                                />
-                              </a>
-                            </Link>
+                            {child.publishedWhere === "ResearchEquals" ? (
+                              <Link href={Routes.ModulePage({ suffix: child.suffix })}>
+                                <a target="_blank">
+                                  <ModuleCard
+                                    type={child.type.name}
+                                    title={child.title}
+                                    status={`${child.prefix}/${child.suffix}`}
+                                    time={moment(child.publishedAt).fromNow()}
+                                    timeText="Published"
+                                    authors={child.authors}
+                                  />
+                                </a>
+                              </Link>
+                            ) : (
+                              <Link href={`https://doi.org/${child.prefix}/${child.suffix}`}>
+                                <a target="_blank">
+                                  <ModuleCard
+                                    type={child.type.name}
+                                    title={child.title}
+                                    status={`${child.prefix}/${child.suffix}`}
+                                    time={moment(child.publishedAt).fromNow()}
+                                    timeText="Published"
+                                    authors={child.authors}
+                                  />
+                                </a>
+                              </Link>
+                            )}
                           </li>
                         </>
                       ))}
