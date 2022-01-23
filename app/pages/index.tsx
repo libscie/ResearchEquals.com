@@ -344,7 +344,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
           <div className="sm:flex">
             <div
               id="publish-free"
-              className="module bg-green-600 p-4 mx-2 xs:mr-28 sm:mr-28 lg:mr-96 h-full"
+              className="module bg-green-600 p-4 mx-2 sm:mr-28 lg:mr-96 h-full"
             >
               {freeLicenses.length > 0 ? (
                 <>

@@ -1,15 +1,21 @@
-import { Fragment } from "react"
+import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
-import { Link, Routes } from "blitz"
-import moment from "moment"
+import { Link, Routes, useQuery } from "blitz"
+import FollowButton from "app/workspaces/components/FollowButton"
+import UnfollowButton from "app/workspaces/components/UnfollowButton"
 import { Close32 } from "@carbon/icons-react"
-import ModuleCard from "../../core/components/ModuleCard"
 
-const ChildPanel = ({ openObject, openFunction, module }) => {
+const ViewFollowers = ({
+  viewAuthorsOpen,
+  setViewAuthorsOpen,
+  followers,
+  ownWorkspace,
+  refetch,
+}) => {
   return (
     <>
-      <Transition.Root show={openObject} as={Fragment}>
-        <Dialog as="div" className="fixed inset-0 overflow-hidden" onClose={openFunction}>
+      <Transition.Root show={viewAuthorsOpen} as={Fragment}>
+        <Dialog as="div" className="fixed inset-0 overflow-hidden" onClose={setViewAuthorsOpen}>
           <div className="absolute inset-0 overflow-hidden">
             <Dialog.Overlay className="fixed inset-0 bg-gray-900 bg-opacity-25 transition-opacity" />
 
@@ -28,13 +34,13 @@ const ChildPanel = ({ openObject, openFunction, module }) => {
                     <div className="px-4 sm:px-6">
                       <div className="flex items-start justify-between">
                         <Dialog.Title className="text-lg font-medium text-gray-900 dark:text-white">
-                          Next steps
+                          Followers
                         </Dialog.Title>
                         <div className="ml-3 h-7 flex items-center">
                           <button
                             type="button"
                             className="rounded-md text-gray-400 dark:text-gray-200 hover:text-gray-500 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                            onClick={() => openFunction(false)}
+                            onClick={() => setViewAuthorsOpen(false)}
                           >
                             <span className="sr-only">Close panel</span>
                             <Close32 className="h-6 w-6" aria-hidden="true" />
@@ -43,39 +49,43 @@ const ChildPanel = ({ openObject, openFunction, module }) => {
                       </div>
                     </div>
                     <div className="mt-6 px-4 sm:px-6 text-sm leading-5 font-normal border-b border-gray-400 dark:border-gray-600 pb-4 dark:text-white">
-                      These are the next steps people took in this research journey.
+                      These are the profiles that are currently following your work.
                     </div>
                     {/* Replace with your content */}
                     <ul className="relative flex-1 divide-y divide-gray-400 dark:divide-gray-600">
-                      {module.children.map((child) => (
+                      {followers.map((author) => (
                         <>
-                          <li className="">
-                            {child.publishedWhere === "ResearchEquals" ? (
-                              <Link href={Routes.ModulePage({ suffix: child.suffix })}>
-                                <a target="_blank">
-                                  <ModuleCard
-                                    type={child.type.name}
-                                    title={child.title}
-                                    status={`${child.prefix}/${child.suffix}`}
-                                    time={moment(child.publishedAt).fromNow()}
-                                    timeText="Published"
-                                    authors={child.authors}
-                                  />
+                          <li className="py-2 px-2 flex">
+                            <div className="mr-2 flex">
+                              <img
+                                src={author!.avatar}
+                                alt={`Avatar of ${author!.handle}`}
+                                className="w-10 h-10 rounded-full inline-block h-full align-middle"
+                              />
+                            </div>
+                            <div className="flex-grow">
+                              <span className="inline-block h-full align-middle"></span>
+                              <Link href={Routes.HandlePage({ handle: author.handle })}>
+                                <a className="text-gray-700 dark:text-gray-200 text-sm leading-4 font-normal my-auto inline-block align-middle">
+                                  {author!.firstName} {author!.lastName}
+                                  <p className="text-gray-500 dark:text-gray-400 text-xs leading-4 font-normal">
+                                    @{author!.handle}
+                                  </p>
                                 </a>
                               </Link>
+                            </div>
+                            {ownWorkspace ? (
+                              ownWorkspace!.handle === author.handle ? (
+                                ""
+                              ) : ownWorkspace!.following.filter(
+                                  (follow) => follow.handle === author.handle
+                                ).length > 0 ? (
+                                <UnfollowButton author={author} refetchFn={refetch} />
+                              ) : (
+                                <FollowButton author={author} refetchFn={refetch} />
+                              )
                             ) : (
-                              <Link href={`https://doi.org/${child.prefix}/${child.suffix}`}>
-                                <a target="_blank">
-                                  <ModuleCard
-                                    type={child.type.name}
-                                    title={child.title}
-                                    status={`${child.prefix}/${child.suffix}`}
-                                    time={moment(child.publishedAt).fromNow()}
-                                    timeText="Published"
-                                    authors={child.authors}
-                                  />
-                                </a>
-                              </Link>
+                              ""
                             )}
                           </li>
                         </>
@@ -93,4 +103,4 @@ const ChildPanel = ({ openObject, openFunction, module }) => {
   )
 }
 
-export default ChildPanel
+export default ViewFollowers

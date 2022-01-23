@@ -9,6 +9,7 @@ import { useFormik } from "formik"
 import { Maximize24, TrashCan24 } from "@carbon/icons-react"
 import toast from "react-hot-toast"
 import Xarrows from "react-xarrows"
+import Chatra from "@chatra/chatra"
 
 import EditMainFile from "./EditMainFile"
 import EditSupportingFiles from "./EditSupportingFiles"
@@ -98,6 +99,14 @@ const ModuleEdit = ({
     formik.setFieldValue("description", moduleEdit!.description)
     formik.setFieldValue("license", moduleEdit!.license!.id.toString())
   }, [moduleEdit])
+
+  useEffect(() => {
+    if (previousOpen) {
+      Chatra("hide")
+    } else {
+      Chatra("show")
+    }
+  })
 
   return (
     <div className="p-5 max-w-7xl mx-auto overflow-y-auto text-base">

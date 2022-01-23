@@ -47,7 +47,9 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                     </div>
                   </div>
                   <div className="mt-6 px-4 sm:px-6 text-sm leading-5 font-normal border-b border-gray-400 dark:border-gray-600 pb-4 dark:text-white">
-                    These are the previous steps your work links to.
+                    These are the previous steps your work links to. You can delete the connection
+                    by clicking the delete icon. This action does not delete the previous step
+                    itself.
                   </div>
                   {/* Replace with your content */}
 

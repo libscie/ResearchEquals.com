@@ -105,7 +105,7 @@ function AuthorList({
                               setAuthorState(data)
                               return "Version approved for publication"
                             },
-                            error: "Uh-oh this is embarassing.",
+                            error: "Uh-oh something went wrong.",
                           }
                         )
                       }
