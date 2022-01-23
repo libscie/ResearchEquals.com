@@ -55,7 +55,11 @@ export default resolver.pipe(
               },
             },
           },
-          orderBy,
+          orderBy: [
+            {
+              publishedAt: "desc",
+            },
+          ],
           include: {
             authors: {
               include: { workspace: true },
