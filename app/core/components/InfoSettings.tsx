@@ -7,6 +7,7 @@ import { z } from "zod"
 import {
   LogoDiscord32,
   LogoGithub32,
+  LogoLinkedin32,
   LogoTwitter32,
   Checkmark32,
   Close32,
@@ -21,11 +22,24 @@ const InfoSettings = ({ setIsOpen }) => {
         <h2 className="my-1 block text-sm font-medium  text-gray-900 dark:text-gray-200">
           Powered by
         </h2>
+
         <Link href="https://libscie.org">
           <a target="_blank">
             <LibscieLogo styling="mx-auto" />
           </a>
         </Link>
+        <p className="flex text-sm text-center mx-auto my-2 text-indigo-600 dark:text-indigo-500  gap-x-2">
+          <div className="flex-grow"></div>
+          <div className="hover:bg-indigo-600 text-black dark:text-white hover:text-white mx-auto">
+            <Link href="https://www.linkedin.com/company/30120661">
+              <a className="flex align-middle" target="_blank">
+                <LogoLinkedin32 className="max-h-4 w-auto mt-1 mr-1" aria-hidden="true" />
+                LinkedIn
+              </a>
+            </Link>
+          </div>
+          <div className="flex-grow"></div>
+        </p>
         <hr className="w-20 border-t-0 bg-gradient-to-r from-indigo-300 to-indigo-600 bg-yellow-400 h-0.5 mx-auto my-4" />
         <h2 className="my-1 block text-sm font-medium  text-gray-900 dark:text-gray-200">About</h2>
         <p>An open access publishing platform for all your research outputs. </p>
@@ -35,10 +49,7 @@ const InfoSettings = ({ setIsOpen }) => {
           <div className="mx-2 hover:bg-indigo-600 text-black dark:text-white hover:text-white">
             <Link href="https://discord.gg/ZweVw5pBGQ">
               <a className="flex align-middle" target="_blank">
-                <LogoDiscord32
-                  className="text-gray-900 dark:text-white max-h-4 w-auto mt-1 mr-1"
-                  aria-hidden="true"
-                />
+                <LogoDiscord32 className="max-h-4 w-auto mt-1 mr-1" aria-hidden="true" />
                 Discord
               </a>
             </Link>
@@ -46,10 +57,7 @@ const InfoSettings = ({ setIsOpen }) => {
           <div className="mx-2 hover:bg-indigo-600 text-black dark:text-white hover:text-white">
             <Link href="https://github.com/libscie/ResearchEquals.com">
               <a className="flex align-middle" target="_blank">
-                <LogoGithub32
-                  className="text-gray-900 dark:text-white max-h-4 w-auto mt-1 mr-1"
-                  aria-hidden="true"
-                />
+                <LogoGithub32 className="max-h-4 w-auto mt-1 mr-1" aria-hidden="true" />
                 GitHub
               </a>
             </Link>
@@ -57,10 +65,7 @@ const InfoSettings = ({ setIsOpen }) => {
           <div className="mx-2 hover:bg-indigo-600 text-black dark:text-white hover:text-white">
             <Link href="https://twitter.com/ResearchEquals">
               <a className="flex align-middle" target="_blank">
-                <LogoTwitter32
-                  className="text-gray-900 dark:text-white max-h-4 w-auto mt-1 mr-1"
-                  aria-hidden="true"
-                />
+                <LogoTwitter32 className="max-h-4 w-auto mt-1 mr-1" aria-hidden="true" />
                 Twitter
               </a>
             </Link>
