@@ -186,7 +186,7 @@ const MetadataEdit = ({ module, addAuthors, setQueryData, setAddAuthors, setIsEd
                                   setQueryData(data)
                                   return "Author invited"
                                 },
-                                error: "Uh-oh this is embarassing.",
+                                error: "Uh-oh something went wrong.",
                               }
                             )
                             // const updatedModule = await addAuthorMutation({
