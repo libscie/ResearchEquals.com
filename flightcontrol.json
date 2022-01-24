@@ -1,0 +1,41 @@
+{
+  "environments": [
+    {
+      "id": "production",
+      "name": "Production",
+      "region": "eu-central-1",
+      "source": {
+        "branch": "main"
+      },
+      "services": [
+        {
+          "id": "researchequals",
+          "name": "researchequals",
+          "type": "fargate",
+          "cpu": 0.25,
+          "memory": 512,
+          "domain": "researchequals.com",
+          "minInstances": 1,
+          "maxInstances": 1,
+          "buildCommand": "npm run build",
+          "startCommand": "npm run start:production",
+          "envVariables": {
+            "APP_ENV": "production",
+            "DOI_PREFIX": {
+              "fromParameterStore": "DOI_PREFIX"
+            },
+            "PORT": {
+              "fromParameterStore": "PORT"
+            },
+            "DATABASE_URL": {
+              "fromParameterStore": "DATABASE_URL"
+            },
+            "SESSION_SECRET_KEY": {
+              "fromParameterStore": "SESSION_SECRET_KEY"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

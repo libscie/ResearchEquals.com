@@ -1,7 +1,11 @@
 # ResearchEquals.com <img src="https://pbs.twimg.com/profile_images/1457432990661890059/OXxEMPhf_400x400.jpg" align="right" height="64" />
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
+
 [![Discord online](https://img.shields.io/discord/933331539276759070?label=discord&style=flat-square)](https://discord.gg/ZweVw5pBGQ)
 
 [ResearchEquals.com](https://researchequals.com) is a research module server, where researchers can publish building blocks of research and link them together in chronological order.
@@ -38,6 +42,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="http://sobrakseaton.com"><img src="https://avatars.githubusercontent.com/u/28573875?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Patrick Sobrak-Seaton</b></sub></a><br /><a href="#design-psobrakseaton" title="Design">🎨</a> <a href="https://github.com/libscie/ResearchEquals.com/commits?author=psobrakseaton" title="Tests">⚠️</a> <a href="#userTesting-psobrakseaton" title="User Testing">📓</a></td>
     <td align="center"><a href="https://github.com/nathan-at-jisc"><img src="https://avatars.githubusercontent.com/u/58425475?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nathan Sainsbury</b></sub></a><br /><a href="https://github.com/libscie/ResearchEquals.com/issues?q=author%3Anathan-at-jisc" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/Senficon"><img src="https://avatars.githubusercontent.com/u/762381?v=4?s=100" width="100px;" alt=""/><br /><sub><b>senficon</b></sub></a><br /><a href="#ideas-senficon" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
