@@ -33,6 +33,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "ab-ioi",
+      "name": "ab-ioi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/98346737?v=4",
+      "profile": "https://github.com/ab-ioi",
+      "contributions": [
+        "userTesting"
+      ]
     }
   ],
   "contributorsPerLine": 7,
