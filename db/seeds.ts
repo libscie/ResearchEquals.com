@@ -6,6 +6,7 @@ import generateSuffix from "../app/modules/mutations/generateSuffix"
 
 const client = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_ADMIN_KEY!)
 const algIndex = client.initIndex(`${process.env.ALGOLIA_PREFIX}_workspaces`)
+const modIndex = client.initIndex(`${process.env.ALGOLIA_PREFIX}_modules`)
 
 /*
  * This seed function is executed when you run `blitz db seed`.
@@ -204,10 +205,11 @@ const seed = async () => {
 
     let datetime
     let suffix
+    let module
     for (let index = 0; index < 10; index++) {
       datetime = Date.now()
       suffix = await generateSuffix(undefined)
-      await db.module.create({
+      module = await db.module.create({
         data: {
           prefix: "10.53962",
           suffix: await generateSuffix(undefined),
@@ -269,6 +271,21 @@ const seed = async () => {
             ],
           },
         },
+        include: {
+          type: true,
+          license: true,
+        },
+      })
+      await modIndex.saveObject({
+        objectID: module.id,
+        doi: `${process.env.DOI_PREFIX}/${module.suffix}`,
+        suffix: module.suffix,
+        license: module.license?.url,
+        type: module.type.name,
+        // It's called name and not title to improve Algolia search
+        name: module.title,
+        description: module.description,
+        publishedAt: module.publishedAt,
       })
     }
   }
