@@ -4,7 +4,7 @@ import generateSuffix from "./generateSuffix"
 
 export default resolver.pipe(
   resolver.authorize(),
-  async ({ title, description, typeId, licenseId, authors }, ctx) => {
+  async ({ title, description, typeId, licenseId, authors, displayColor }, ctx) => {
     const authorInvitations = authors.map((author) => {
       return {
         workspaceId: author,
@@ -22,6 +22,7 @@ export default resolver.pipe(
       data: {
         prefix: process.env.DOI_PREFIX,
         suffix: await generateSuffix(undefined),
+        displayColor,
         title,
         description,
         type: {

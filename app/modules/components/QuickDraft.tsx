@@ -21,6 +21,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
       main: "",
       type: "",
       license: "",
+      displayColor: "#574cfa",
     },
     validate: validateZodSchema(
       z.object({
@@ -28,6 +29,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
         description: z.string(),
         type: z.string().min(1),
         license: z.string().min(1),
+        displayColor: z.string().min(1),
       })
     ),
     onSubmit: async (values) => {
@@ -38,6 +40,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
           typeId: parseInt(values.type),
           licenseId: parseInt(values.license),
           authors: [],
+          displayColor: values.displayColor,
         })
         refetchFn()
         setCreateOpen(false)
@@ -54,6 +57,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
     formik.setFieldValue("main", "")
     formik.setFieldValue("type", "")
     formik.setFieldValue("license", "")
+    formik.setFieldValue("displayColor", "#574cfa")
   }
 
   return (
@@ -106,13 +110,11 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                         </div>
                       </div>
                       <div className="mt-6 px-4 sm:px-6 text-sm leading-5 font-normal border-b border-gray-500 dark:border-gray-500 pb-4 dark:text-white">
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus
-                        hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel,
-                        dapibus id, mattis vel, nisi.
+                        What are you working on right now? Anything you create here, you can change
+                        before publishing.
                       </div>
-                      <div className="mt-6 relative flex-1 px-4 sm:px-6">
+                      <div className="relative flex-1 px-4 sm:px-6">
                         {/* Replace with your content */}
-
                         <div className="my-4">
                           <label
                             htmlFor="title"
@@ -138,7 +140,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             htmlFor="description"
                             className="my-1 block text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
                           >
-                            Description{" "}
+                            Summary{" "}
                             {formik.touched.description && formik.errors.description
                               ? " - " + formik.errors.description
                               : null}
@@ -162,6 +164,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             {formik.touched.type && formik.errors.type
                               ? " - " + formik.errors.type
                               : null}
+                            <p className="text-xs">Missing something? Let us know in the chat!</p>
                           </label>
                           <div className="mt-1">
                             <select
@@ -208,6 +211,47 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                                   </option>
                                 </>
                               ))}
+                            </select>
+                          </div>
+                        </div>
+                        <div className="my-4">
+                          <label
+                            htmlFor="displayColor"
+                            className="flex my-1 text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
+                          >
+                            Display color{" "}
+                            {formik.touched.displayColor && formik.errors.displayColor
+                              ? " - " + formik.errors.displayColor
+                              : null}
+                          </label>
+                          <div className="mt-1">
+                            <select
+                              id="displayColor"
+                              required
+                              className="appearance-none block w-full px-3 py-2 border border-gray-400 bg-white dark:bg-transparent dark:border-gray-600 dark:text-gray-200 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500 font-normal text-sm"
+                              {...formik.getFieldProps("displayColor")}
+                            >
+                              <option
+                                value="#574cfa"
+                                className="text-white"
+                                style={{ backgroundColor: "#574cfa" }}
+                              >
+                                Purple
+                              </option>
+                              <option
+                                value="#059669"
+                                className="text-white"
+                                style={{ backgroundColor: "#059669" }}
+                              >
+                                Green
+                              </option>
+                              <option
+                                value="#db2777"
+                                className="text-white"
+                                style={{ backgroundColor: "#db2777" }}
+                              >
+                                Red
+                              </option>
                             </select>
                           </div>
                         </div>
