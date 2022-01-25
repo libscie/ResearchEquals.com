@@ -299,8 +299,6 @@ const ModuleEdit = ({
             signature={signature}
           />
         </div>
-
-        {/* PLACEHOLDER References */}
         <div className="my-3">
           <h2 className="text-lg leading-4 text-gray-500 dark:text-gray-200 my-2">
             Reference list
@@ -391,7 +389,7 @@ const ModuleEdit = ({
               ]}
             />
           </div>
-          <ol className="list-decimal list-inside my-4 text-normal">
+          <ol className="list-decimal list-outside my-4 pl-4 text-normal">
             {moduleEdit?.references!.map((reference) => (
               <>
                 <li>
@@ -423,10 +421,10 @@ const ModuleEdit = ({
                         <>
                           <Link href={Routes.HandlePage({ handle: author!.workspace!.handle })}>
                             <a target="_blank">
-                              {author!.workspace!.firstName} {author!.workspace!.lastName}
+                              {author!.workspace!.lastName}, {author!.workspace!.firstName}
                             </a>
                           </Link>
-                          {index === reference.authors.length - 1 ? "" : ", "}
+                          {index === reference.authors.length - 1 ? "" : "; "}
                         </>
                       ))}
                     </>
@@ -441,11 +439,11 @@ const ModuleEdit = ({
                                 : index > 3
                                 ? ""
                                 : author.given && author.family
-                                ? `${author.given} ${author.family}`
+                                ? `${author.family}, ${author.given}`
                                 : `${author.name}`}
                               {index === reference!.authorsRaw!["object"].length - 1 || index > 2
                                 ? ""
-                                : ", "}
+                                : "; "}
                             </>
                           ))}
                         </>
@@ -456,11 +454,21 @@ const ModuleEdit = ({
                       )}
                     </>
                   )}{" "}
-                  ({reference.publishedAt?.toISOString().substr(0, 10)}). {reference.title}.{" "}
-                  <Link href={reference.url!}>
-                    <a target="_blank underline">{reference.url}</a>
+                  ({reference.publishedAt?.toISOString().substr(0, 4)}).{" "}
+                  <span className="font-semibold">{reference.title}</span>
+                  {reference.title.endsWith("." ? "" : ".")}{" "}
+                  <Link
+                    href={
+                      reference.publishedWhere === "ResearchEquals"
+                        ? Routes.ModulePage({ suffix: reference.suffix! })
+                        : reference.url!
+                    }
+                  >
+                    <a target="_blank">
+                      <span className="underline">{reference.url}</span>
+                    </a>
                   </Link>
-                  . <span className="italic">{reference.publishedWhere}</span>
+                  . <span className="italic">{reference.publishedWhere}</span>.
                 </li>
               </>
             ))}

@@ -300,7 +300,13 @@ const Module = ({ module, mainFile, supportingRaw }) => {
                       ({reference.publishedAt?.toISOString().substr(0, 4)}).{" "}
                       <span className="font-semibold">{reference.title}</span>
                       {reference.title.endsWith("." ? "" : ".")}{" "}
-                      <Link href={reference.url!}>
+                      <Link
+                        href={
+                          reference.publishedWhere === "ResearchEquals"
+                            ? Routes.ModulePage({ suffix: reference.suffix })
+                            : reference.url!
+                        }
+                      >
                         <a target="_blank">
                           <span className="underline">{reference.url}</span>
                         </a>
