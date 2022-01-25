@@ -10,14 +10,19 @@ import getSignature from "../../auth/queries/getSignature"
 import QuickDraft from "../../modules/components/QuickDraft"
 import resendVerification from "../../auth/mutations/resendVerification"
 
-const OnboardingQuests = ({ data, expire, signature }) => {
+const OnboardingQuests = ({ data, expire, signature, refetch }) => {
   return (
     <>
       <OnboardingEmail data={data.user.emailIsVerified} />
       {/* <OnboardingOrcid data={data.workspace.orcid} /> */}
-      <OnboardingAvatar data={data.workspace} expire={expire} signature={signature} />
+      <OnboardingAvatar
+        data={data.workspace}
+        expire={expire}
+        signature={signature}
+        refetch={refetch}
+      />
       <OnboardingProfile data={data} />
-      <OnboardingDraft data={data.workspace} />
+      <OnboardingDraft data={data.workspace} refetch={refetch} />
     </>
   )
 }
@@ -169,7 +174,7 @@ const OnboardingProfile = ({ data }) => {
   )
 }
 
-const OnboardingAvatar = ({ data, expire, signature }) => {
+const OnboardingAvatar = ({ data, expire, signature, refetch }) => {
   const [changeAvatarMutation] = useMutation(changeAvatar)
   const [uploadSecret] = useQuery(getSignature, undefined)
   const widgetApi = useRef()
@@ -221,6 +226,7 @@ const OnboardingAvatar = ({ data, expire, signature }) => {
                     await changeAvatarMutation({
                       avatar: info.cdnUrl,
                     })
+                    refetch()
                   } catch (err) {
                     alert(err)
                   }
@@ -236,7 +242,7 @@ const OnboardingAvatar = ({ data, expire, signature }) => {
   )
 }
 
-const OnboardingDraft = ({ data }) => {
+const OnboardingDraft = ({ data, refetch }) => {
   return (
     <>
       {!data.authorships.length > 0 ? (
@@ -270,6 +276,7 @@ const OnboardingDraft = ({ data }) => {
                   </>
                 }
                 buttonStyle="whitespace-nowrap font-medium hover:text-blue-600 underline"
+                refetchFn={refetch}
               />
             </p>
           </div>

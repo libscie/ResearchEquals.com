@@ -5,6 +5,9 @@ module.exports = {
   darkMode: "media", // or 'media' or 'class'
   theme: {
     extend: {
+      screens: {
+        xs: "340px",
+      },
       fontFamily: {
         sans: ["Noto Sans Display", "system-ui"],
       },

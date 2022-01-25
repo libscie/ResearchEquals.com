@@ -82,7 +82,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
-                <div className="w-screen max-w-xs">
+                <div className="w-screen max-w-xs  border-l border-gray-400 dark:border-gray-600">
                   <form
                     onSubmit={formik.handleSubmit}
                     className="h-full divide-y divide-gray-400 dark:divide-gray-600 flex flex-col bg-white dark:bg-gray-900 shadow-xl"
@@ -118,7 +118,10 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             htmlFor="title"
                             className="my-1 block text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
                           >
-                            Title
+                            Title{" "}
+                            {formik.touched.title && formik.errors.title
+                              ? " - " + formik.errors.title
+                              : null}
                           </label>
                           <div className="mt-1">
                             <input
@@ -128,9 +131,6 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                               className="appearance-none block w-full px-3 py-2 border border-gray-400 bg-white dark:bg-transparent dark:border-gray-600 dark:text-gray-200 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500 font-normal text-sm "
                               {...formik.getFieldProps("title")}
                             />
-                            {formik.touched.title && formik.errors.title ? (
-                              <div className="font-normal text-sm">{formik.errors.title}</div>
-                            ) : null}
                           </div>
                         </div>
                         <div className="my-4">
@@ -138,7 +138,10 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             htmlFor="description"
                             className="my-1 block text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
                           >
-                            Description
+                            Description{" "}
+                            {formik.touched.description && formik.errors.description
+                              ? " - " + formik.errors.description
+                              : null}
                           </label>
                           <div className="mt-1">
                             <textarea
@@ -147,9 +150,6 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                               className="appearance-none block w-full px-3 py-2 border border-gray-400 bg-white dark:bg-transparent dark:border-gray-600 dark:text-gray-200 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500 font-normal text-sm "
                               {...formik.getFieldProps("description")}
                             />
-                            {formik.touched.description && formik.errors.description ? (
-                              <div className="font-normal text-sm">{formik.errors.description}</div>
-                            ) : null}
                           </div>
                         </div>
                         {/* Content type */}
@@ -158,7 +158,10 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             htmlFor="type"
                             className="my-1 block text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
                           >
-                            Module type
+                            Module type{" "}
+                            {formik.touched.type && formik.errors.type
+                              ? " - " + formik.errors.type
+                              : null}
                           </label>
                           <div className="mt-1">
                             <select
@@ -176,9 +179,6 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                                 </>
                               ))}
                             </select>
-                            {formik.touched.type && formik.errors.type ? (
-                              <div className="font-normal text-sm">{formik.errors.type}</div>
-                            ) : null}
                           </div>
                         </div>
                         {/* License */}
@@ -187,7 +187,10 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             htmlFor="license"
                             className="flex my-1 text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
                           >
-                            License
+                            License{" "}
+                            {formik.touched.license && formik.errors.license
+                              ? " - " + formik.errors.license
+                              : null}
                           </label>
                           <div className="mt-1">
                             <select
@@ -206,9 +209,6 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                                 </>
                               ))}
                             </select>
-                            {formik.touched.license && formik.errors.license ? (
-                              <div className="font-normal text-sm">{formik.errors.license}</div>
-                            ) : null}
                           </div>
                         </div>
                         {/* /End replace */}

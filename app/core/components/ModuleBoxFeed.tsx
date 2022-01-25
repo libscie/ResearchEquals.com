@@ -38,7 +38,11 @@ const ModuleBoxFeed = ({ modules, fetchNextPage, hasNextPage, isFetchingNextPage
                           </h2>
                           <span className="w-full flex">
                             <span className="flex-grow align-text-bottom text-gray-300"></span>
-                            <AuthorAvatarsNew authors={module.authors} />
+                            <AuthorAvatarsNew
+                              authors={module.authors}
+                              size="h-6 w-6"
+                              toDisplay={4}
+                            />
                           </span>
                         </a>
                       </Link>

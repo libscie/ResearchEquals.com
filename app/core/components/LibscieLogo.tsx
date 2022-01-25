@@ -1,4 +1,4 @@
-const LibscieLogo = () => {
+const LibscieLogo = ({ styling = "" }) => {
   return (
     <svg
       width="200"
@@ -6,7 +6,7 @@ const LibscieLogo = () => {
       viewBox="0 0 200 50"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="fill-current text-gray-900 dark:text-gray-200"
+      className={`fill-current text-gray-900 dark:text-gray-200 ${styling}`}
     >
       <path
         fillRule="evenodd"

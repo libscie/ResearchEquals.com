@@ -45,7 +45,7 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
               leaveFrom="translate-x-0"
               leaveTo="translate-x-full"
             >
-              <div className="w-screen max-w-xs">
+              <div className="w-screen max-w-xs  border-l border-gray-400 dark:border-gray-600">
                 <div className="min-h-0 flex-1 flex flex-col pt-6 overflow-y-auto h-full dark:divide-gray-600 bg-white dark:bg-gray-900 shadow-xl">
                   <div className="px-4 sm:px-6">
                     <div className="flex items-start justify-between">
@@ -65,9 +65,9 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
                     </div>
                   </div>
                   <div className="mt-6 px-4 sm:px-6 text-sm leading-5 font-normal border-b border-gray-400 dark:border-gray-600 pb-4 dark:text-white">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit.
-                    Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id,
-                    mattis vel, nisi.
+                    Here you can manage your current and invited co-authors. Everyone needs to
+                    approve the module before it can be published. You can rearrange authors by
+                    dragging and dropping them.
                   </div>
                   {/* Replace with your content */}
                   <DragDropContext

@@ -25,9 +25,14 @@ const EditSupportingFileDisplay = ({ name, size, url, uuid, moduleId, setQueryDa
           <TrashCan24
             className="w-6 h-6 fill-current text-red-500 inline-block align-middle"
             onClick={async () => {
-              const updatedModule = await deleteMutation({ id: moduleId, uuid })
-              toast(`Removed ${name}`, { icon: "🗑" })
-              setQueryData(updatedModule)
+              toast.promise(deleteMutation({ id: moduleId, uuid }), {
+                loading: "Deleting...",
+                success: (data) => {
+                  setQueryData(data)
+                  return `Removed ${name}`
+                },
+                error: "Something went wrong...",
+              })
             }}
             aria-label="Delete file"
           />

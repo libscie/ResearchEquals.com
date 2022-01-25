@@ -95,7 +95,7 @@ export default function PublishModule({ module, user, workspace }) {
                           await toast.promise(publishModuleMutation({ id: module.id }), {
                             loading: "Publishing...",
                             success: "Published!",
-                            error: "Uh-oh this is embarassing.",
+                            error: "Uh-oh something went wrong.",
                           })
                           router.push(`/modules/${module.suffix}`)
                         }}

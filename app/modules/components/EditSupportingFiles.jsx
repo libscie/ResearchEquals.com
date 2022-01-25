@@ -29,14 +29,9 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit, user, workspace, expire
             setQueryData(data)
             return "Uploaded!"
           },
-          error: "Uh-oh this is embarassing.",
+          error: "Uh-oh something went wrong.",
         }
       )
-      // const updatedModule = await addSupportingMutation({
-      //   id: moduleEdit.id,
-      //   newFiles: newFiles.files,
-      // })
-      // setQueryData(updatedModule)
     } catch (err) {
       alert(err)
     }
@@ -44,7 +39,7 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit, user, workspace, expire
 
   return (
     <>
-      {user.emailIsVerified && workspace.orcid ? (
+      {user.emailIsVerified ? (
         <>
           <button
             type="button"
@@ -53,6 +48,7 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit, user, workspace, expire
               widgetApi.current.openDialog()
             }}
           >
+            <Add32 className="w-4 h-4" aria-hidden="true" /> Add Supporting File(s)
             <Widget
               publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
               secureSignature={signature}
@@ -65,25 +61,11 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit, user, workspace, expire
               clearable
               onChange={updateSupporting}
             />
-            ) : (
-            <Widget
-              publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
-              secureSignature={signature}
-              secureExpire={expire}
-              ref={widgetApi}
-              validators={validators}
-              previewStep
-              multiple
-              multipleMax={10}
-              clearable
-              onChange={updateSupporting}
-            />
-            )
           </button>
         </>
       ) : (
         <p className="text-xs leading-4 font-normal text-gray-900 dark:text-gray-200 my-2">
-          Please verify email and connect your ORCID to upload files.
+          Please verify email to upload files.
         </p>
       )}
     </>
