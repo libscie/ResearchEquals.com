@@ -36,13 +36,18 @@ export default CronJob(
           userId: user.id,
         },
       })
+      // delete sessions
+      await db.session.deleteMany({
+        where: {
+          userId: user.id,
+        },
+      })
       // delete user
       await db.user.delete({
         where: {
           id: user.id,
         },
       })
-      // TODO: Remove remnant sessions
     })
 
     //  TODO: Remove workspaces without memberships and authorships
