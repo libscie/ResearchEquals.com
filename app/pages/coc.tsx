@@ -1,7 +1,7 @@
 import { BlitzPage, Link, useQuery, useRouter, useSession } from "blitz"
 import Layout from "app/core/layouts/Layout"
-import Markdown from "markdown-it"
 import { SendAltFilled32 } from "@carbon/icons-react"
+import Markdown from "markdown-it"
 
 import Navbar from "../core/components/Navbar"
 import Footer from "../core/components/Footer"
