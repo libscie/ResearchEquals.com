@@ -222,7 +222,6 @@ const OnboardingAvatar = ({ data, expire, signature, refetch }) => {
                 clearable
                 onChange={async (info) => {
                   try {
-                    console.log(JSON.stringify(info))
                     await changeAvatarMutation({
                       avatar: info.cdnUrl,
                     })
