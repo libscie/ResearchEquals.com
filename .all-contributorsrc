@@ -98,6 +98,15 @@
       "contributions": [
         "userTesting"
       ]
+    },
+    {
+      "login": "samteplitzky",
+      "name": "Sam Teplitzky",
+      "avatar_url": "https://avatars.githubusercontent.com/u/13663076?v=4",
+      "profile": "https://github.com/samteplitzky",
+      "contributions": [
+        "userTesting"
+      ]
     }
   ],
   "contributorsPerLine": 7,
