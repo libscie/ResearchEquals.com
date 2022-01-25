@@ -14,6 +14,7 @@ import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import generateSignature from "../signature"
 import LayoutLoader from "app/core/components/LayoutLoader"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
+import Ripple from "../core/components/Ripple"
 
 export async function getServerSideProps(context) {
   // Expires in 30 minutes
@@ -96,7 +97,7 @@ const DraftsContents = ({ expire, signature, currentWorkspace, session, user }) 
               <Suspense
                 fallback={
                   <div className="mx-auto my-auto">
-                    <ProgressBarRound32 className="animate-spin text-white dark:text-white" />
+                    <Ripple />
                   </div>
                 }
               >
