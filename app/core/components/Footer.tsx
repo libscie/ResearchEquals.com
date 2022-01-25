@@ -30,17 +30,13 @@ const Footer = () => {
           </p>
           <hr className="w-20 mt-4 mb-4 border-t-0 bg-gradient-to-r from-indigo-300 to-indigo-600 bg-yellow-400 h-0.5 " />
           <p>
-            <Link href="https://libscie.notion.site/Terms-researchequals-com-c6a3f7eac4ce4bb2a748c23076acf6e4">
-              <a className="hover:bg-indigo-600 hover:text-white" target="_blank">
-                Terms
-              </a>
+            <Link href="/terms">
+              <a className="hover:bg-indigo-600 hover:text-white">Terms</a>
             </Link>
           </p>
           <p>
-            <Link href="https://www.notion.so/libscie/Terms-researchequals-com-c6a3f7eac4ce4bb2a748c23076acf6e4#8cb6d40e1f8443e0a62ec326e2f819a3">
-              <a className="hover:bg-indigo-600 hover:text-white" target="_blank">
-                Data policy
-              </a>
+            <Link href="/privacy">
+              <a className="hover:bg-indigo-600 hover:text-white">Privacy policy</a>
             </Link>
           </p>
           <p>
