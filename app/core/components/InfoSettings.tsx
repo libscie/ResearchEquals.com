@@ -47,7 +47,7 @@ const InfoSettings = ({ setIsOpen }) => {
         <p className="flex text-sm text-center mx-auto my-2 text-indigo-600 dark:text-indigo-500  gap-x-2">
           <div className="flex-grow"></div>
           <div className="mx-2 hover:bg-indigo-600 text-black dark:text-white hover:text-white">
-            <Link href="https://discord.gg/ZweVw5pBGQ">
+            <Link href="https://discord.gg/SefsGJWWSw">
               <a className="flex align-middle" target="_blank">
                 <LogoDiscord32 className="max-h-4 w-auto mt-1 mr-1" aria-hidden="true" />
                 Discord
