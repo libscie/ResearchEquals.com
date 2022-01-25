@@ -51,6 +51,17 @@
       "contributions": [
         "a11y"
       ]
+    },
+    {
+      "login": "nsunami",
+      "name": "Nami Sunami",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17035406?v=4",
+      "profile": "http://naoyukisunami.com",
+      "contributions": [
+        "translation",
+        "design",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
