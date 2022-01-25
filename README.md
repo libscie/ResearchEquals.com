@@ -2,7 +2,7 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors-)
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
@@ -44,6 +44,14 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/nathan-at-jisc"><img src="https://avatars.githubusercontent.com/u/58425475?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nathan Sainsbury</b></sub></a><br /><a href="https://github.com/libscie/ResearchEquals.com/issues?q=author%3Anathan-at-jisc" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/Senficon"><img src="https://avatars.githubusercontent.com/u/762381?v=4?s=100" width="100px;" alt=""/><br /><sub><b>senficon</b></sub></a><br /><a href="#ideas-senficon" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/ab-ioi"><img src="https://avatars.githubusercontent.com/u/98346737?v=4?s=100" width="100px;" alt=""/><br /><sub><b>ab-ioi</b></sub></a><br /><a href="#userTesting-ab-ioi" title="User Testing">📓</a></td>
+    <td align="center"><a href="https://github.com/InquisitiveVi"><img src="https://avatars.githubusercontent.com/u/23527107?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Vinodh Ilangovan</b></sub></a><br /><a href="#a11y-InquisitiveVi" title="Accessibility">️️️️♿️</a></td>
+    <td align="center"><a href="http://naoyukisunami.com"><img src="https://avatars.githubusercontent.com/u/17035406?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nami Sunami</b></sub></a><br /><a href="#translation-nsunami" title="Translation">🌍</a> <a href="#design-nsunami" title="Design">🎨</a> <a href="#ideas-nsunami" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://internethealthreport.org"><img src="https://avatars.githubusercontent.com/u/22150791?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Solana</b></sub></a><br /><a href="#translation-Solanasaurus" title="Translation">🌍</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/kaodro"><img src="https://avatars.githubusercontent.com/u/22129061?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kasia</b></sub></a><br /><a href="#translation-kaodro" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://github.com/coglebed"><img src="https://avatars.githubusercontent.com/u/73071333?v=4?s=100" width="100px;" alt=""/><br /><sub><b>coglebed</b></sub></a><br /><a href="#translation-coglebed" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://github.com/AerynThrace"><img src="https://avatars.githubusercontent.com/u/51057483?v=4?s=100" width="100px;" alt=""/><br /><sub><b>AerynThrace</b></sub></a><br /><a href="#userTesting-AerynThrace" title="User Testing">📓</a></td>
   </tr>
 </table>
 
