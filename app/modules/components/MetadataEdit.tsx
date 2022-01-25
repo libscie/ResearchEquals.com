@@ -33,6 +33,7 @@ const MetadataEdit = ({ module, addAuthors, setQueryData, setAddAuthors, setIsEd
       title: module.title,
       description: module.description,
       license: module.license?.id.toString(),
+      displayColor: module.displayColor,
     },
     validate: validateZodSchema(
       z.object({
@@ -40,6 +41,7 @@ const MetadataEdit = ({ module, addAuthors, setQueryData, setAddAuthors, setIsEd
         title: z.string().max(300),
         description: z.string(),
         license: z.string().min(1),
+        displayColor: z.string().min(1),
       })
     ),
     onSubmit: async (values) => {
@@ -49,6 +51,7 @@ const MetadataEdit = ({ module, addAuthors, setQueryData, setAddAuthors, setIsEd
         title: values.title,
         description: values.description,
         licenseId: parseInt(values.license),
+        displayColor: values.displayColor,
       })
       setQueryData(updatedModule)
       setIsEditing(false)
@@ -60,6 +63,7 @@ const MetadataEdit = ({ module, addAuthors, setQueryData, setAddAuthors, setIsEd
     formik.setFieldValue("title", module.title)
     formik.setFieldValue("description", module.description)
     formik.setFieldValue("license", module.license!.id.toString())
+    formik.setFieldValue("displayColor", module.displayColor)
   }, [module])
 
   return (
@@ -263,7 +267,7 @@ const MetadataEdit = ({ module, addAuthors, setQueryData, setAddAuthors, setIsEd
         {/* Description section */}
         <div className="text-sm leading-4 font-normal pt-4 pl-2 pr-4 pb-2">
           <label htmlFor="description" className="sr-only block text-sm font-medium text-gray-700">
-            Description
+            Summary
           </label>
           <div className="mt-1">
             <textarea
@@ -275,6 +279,35 @@ const MetadataEdit = ({ module, addAuthors, setQueryData, setAddAuthors, setIsEd
             {formik.touched.description && formik.errors.description ? (
               <div>{formik.errors.description}</div>
             ) : null}
+          </div>
+        </div>
+        <div className="px-2 py-2">
+          <label
+            htmlFor="displayColor"
+            className="flex my-1 text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
+          >
+            Display color{" "}
+            {formik.touched.displayColor && formik.errors.displayColor
+              ? " - " + formik.errors.displayColor
+              : null}
+          </label>
+          <div className="mt-1">
+            <select
+              id="displayColor"
+              required
+              className="appearance-none block w-full px-3 py-2 border border-gray-400 bg-white dark:bg-transparent dark:border-gray-600 dark:text-gray-200 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500 font-normal text-sm"
+              {...formik.getFieldProps("displayColor")}
+            >
+              <option value="#574cfa" className="text-white" style={{ backgroundColor: "#574cfa" }}>
+                Purple
+              </option>
+              <option value="#059669" className="text-white" style={{ backgroundColor: "#059669" }}>
+                Green
+              </option>
+              <option value="#db2777" className="text-white" style={{ backgroundColor: "#db2777" }}>
+                Red
+              </option>
+            </select>
           </div>
         </div>
         <div className="px-2 py-2 flex">

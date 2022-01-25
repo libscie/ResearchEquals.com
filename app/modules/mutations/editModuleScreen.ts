@@ -3,7 +3,7 @@ import db from "db"
 
 export default resolver.pipe(
   resolver.authorize(),
-  async ({ id, typeId, title, description, licenseId }) => {
+  async ({ id, typeId, title, description, licenseId, displayColor }) => {
     const module = await db.module.update({
       where: { id },
       data: {
@@ -14,6 +14,7 @@ export default resolver.pipe(
         },
         title,
         description,
+        displayColor,
         license: {
           connect: {
             id: licenseId,

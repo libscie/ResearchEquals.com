@@ -16,6 +16,7 @@ model Module {
   id             Int       @id @default(autoincrement())
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
+  displayColor   String    @default("#574cfa")
   published      Boolean   @default(false)
   publishedAt    DateTime?
   publishedWhere String?

@@ -27,11 +27,8 @@ const ModuleBoxFeed = ({ modules, fetchNextPage, hasNextPage, isFetchingNextPage
                     <>
                       <Link href={Routes.ModulePage({ suffix: module.suffix })}>
                         <a
-                          className={`flex flex-col module ${
-                            i % 2 === 0
-                              ? "bg-indigo-600 dark:bg-indigo-600"
-                              : "bg-purple-600 dark:bg-indigo-50"
-                          } cursor-pointer p-4 text-white`}
+                          className="flex flex-col module cursor-pointer p-4 text-white"
+                          style={{ backgroundColor: module.displayColor }}
                         >
                           <h2 className="text-base font-normal leading-5 flex-grow mb-2">
                             {module.title}
