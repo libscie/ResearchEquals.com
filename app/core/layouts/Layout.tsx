@@ -68,9 +68,9 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
       >
         Essential cookies are required for security purposes. Optional cookies for live chat can be
         declined or accepted. See also our{" "}
-        <Link href="https://www.notion.so/libscie/Terms-researchequals-com-c6a3f7eac4ce4bb2a748c23076acf6e4#8cb6d40e1f8443e0a62ec326e2f819a3">
+        <Link href="/privacy">
           <a className="hover:no-underline hover:text-white underline" target="_blank">
-            Data policy
+            Privacy policy
           </a>
         </Link>
         .
