@@ -80,6 +80,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "coglebed",
+      "name": "coglebed",
+      "avatar_url": "https://avatars.githubusercontent.com/u/73071333?v=4",
+      "profile": "https://github.com/coglebed",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
