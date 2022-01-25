@@ -325,7 +325,6 @@ const Module = ({ module, mainFile, supportingRaw }) => {
 const ModulePage = ({ module }) => {
   const mainFile = module!.main as Prisma.JsonObject
   const supportingRaw = module!.supporting as Prisma.JsonObject
-  console.log(module.license.name)
 
   return (
     <Layout

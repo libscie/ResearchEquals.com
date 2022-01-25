@@ -189,8 +189,6 @@ const seed = async () => {
         },
       })
 
-      console.log(user.memberships[0].workspace)
-
       user!.memberships!.map(async (membership) => {
         await algIndex.saveObject({
           objectID: membership.workspace.id,

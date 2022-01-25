@@ -3,8 +3,6 @@ import { Link, Routes } from "blitz"
 import { Fragment } from "react"
 
 const ModuleBoxFeed = ({ modules, fetchNextPage, hasNextPage, isFetchingNextPage }) => {
-  console.log(modules[0].count)
-
   return (
     <>
       {modules[0].count === 0 ? (
