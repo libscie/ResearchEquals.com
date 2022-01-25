@@ -103,10 +103,10 @@ Internal coordinators are always available, external coordinators are available 
 
 | Who (alphabetical order)               | Pronouns          |
 |-------------------|-------------------|
-| [Chris Hartgerink](mailto:chris@libscie.org)  | He/him            |
-| [Julia Lowndes](mailto:juliaslowndes@gmail.com)     | She/her           |
-| [Rachael Ainsworth](mailto:rachael.ainsworth@manchester.ac.uk) | She/her |
-| [Vinodh Ilangovan](mailto:vinodh.ilangovan@gmail.com)  | They/them, he/him |
+| Chris Hartgerink  | He/him            |
+| Julia Lowndes     | She/her           |
+| Rachael Ainsworth | She/her |
+| Vinodh Ilangovan  | They/them, he/him |
 
 To achieve a space where everyone can be present and contribute, our protocol is set up to, if reasonably possible, grow past the issues that occur *if people are willing to*.
 
