@@ -7,7 +7,7 @@ const Footer = () => {
 
   return (
     <footer className="w-full bg-white dark:bg-gray-900 sm:p-0 py-4">
-      <div className="sm:flex sm:max-w-7xl mx-2 xl:mx-auto text-black dark:text-white ">
+      <div className="sm:flex sm:max-w-7xl mx-4 xl:mx-auto text-black dark:text-white ">
         <div className="w-10/12 sm:w-full mb-0 sm:mb-28 mt-0 text-sm">
           <h3 className="font-bold text-base">ResearchEquals</h3>
           <p className="flex align-middle">
@@ -30,20 +30,20 @@ const Footer = () => {
           </p>
           <hr className="w-20 mt-4 mb-4 border-t-0 bg-gradient-to-r from-indigo-300 to-indigo-600 bg-yellow-400 h-0.5 " />
           <p>
-            <Link href="https://libscie.notion.site/Terms-researchequals-com-c6a3f7eac4ce4bb2a748c23076acf6e4">
-              <a className="hover:bg-indigo-600 hover:text-white" target="_blank">
-                Terms
-              </a>
+            <Link href="/terms">
+              <a className="hover:bg-indigo-600 hover:text-white">Terms</a>
             </Link>
           </p>
           <p>
-            <Link href="https://www.notion.so/libscie/Terms-researchequals-com-c6a3f7eac4ce4bb2a748c23076acf6e4#8cb6d40e1f8443e0a62ec326e2f819a3">
-              <a className="hover:bg-indigo-600 hover:text-white" target="_blank">
-                Data policy
-              </a>
+            <Link href="/privacy">
+              <a className="hover:bg-indigo-600 hover:text-white">Privacy policy</a>
             </Link>
           </p>
-
+          <p>
+            <Link href="/coc">
+              <a className="hover:bg-indigo-600 hover:text-white">Code of Conduct</a>
+            </Link>
+          </p>
           <p>
             <Link href={Routes.Imprint()}>
               <a className="hover:bg-indigo-600 hover:text-white">Imprint</a>
