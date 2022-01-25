@@ -2,7 +2,8 @@ import { Prisma } from "prisma"
 import { Link, NotFoundError, Routes, useMutation, useQuery, useRouter, useSession } from "blitz"
 import { AddAlt32, NextFilled32, PreviousFilled32 } from "@carbon/icons-react"
 import Xarrows from "react-xarrows"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import Chatra from "@chatra/chatra"
 
 import Layout from "../../core/layouts/Layout"
 import db from "db"
@@ -96,7 +97,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
   const [drafts, { refetch }] = useQuery(getDrafts, { session })
   const [invitations] = useQuery(getInvitedModules, { session })
   const prefersDarkMode = useMediaPredicate("(prefers-color-scheme: dark)")
-  const biggerWindow = useMediaPredicate("(min-width: 1536px)")
+  const biggerWindow = useMediaPredicate("(min-width: 916px)")
   const [previousOpen, setPreviousOpen] = useState(false)
   const [leadsToOpen, setLeadsToOpen] = useState(false)
   const [createNextModuleMutation] = useMutation(createNextModule)
@@ -107,6 +108,14 @@ const Module = ({ module, mainFile, supportingRaw }) => {
   } else {
     arrowColor = "transparent"
   }
+
+  useEffect(() => {
+    if (previousOpen || leadsToOpen) {
+      Chatra("hide")
+    } else {
+      Chatra("show")
+    }
+  })
 
   return (
     <>
@@ -120,7 +129,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
         refetchFn={refetch}
       />
       {module.parents.length > 0 ? (
-        <div className="hidden 2xl:inline 2xl:absolute bottom-2 2xl:top-1/3 2xl:left-2">
+        <div className="hidden modscreen:inline modscreen:absolute bottom-2 modscreen:top-1/3 modscreen:left-2">
           <button
             onClick={() => {
               setPreviousOpen(true)
@@ -144,10 +153,10 @@ const Module = ({ module, mainFile, supportingRaw }) => {
       ) : (
         ""
       )}
-      <div className="fixed 2xl:absolute bottom-2 2xl:top-1/3 right-2 rounded-full z-10 2xl:z-0">
+      <div className="fixed modscreen:absolute bottom-2 modscreen:top-1/3 right-2 rounded-full z-10 modscreen:z-0">
         {module.parents.length > 0 ? (
           <button
-            className="inline 2xl:hidden"
+            className={`${previousOpen || leadsToOpen ? "hidden" : "inline"} modscreen:hidden`}
             onClick={() => {
               setPreviousOpen(true)
             }}
@@ -160,7 +169,10 @@ const Module = ({ module, mainFile, supportingRaw }) => {
         {module.children.length > 0 ? (
           <>
             <button
-              className="block mb-2"
+              // className="block mb-2"
+              className={`${
+                (previousOpen || leadsToOpen) && !biggerWindow ? "hidden" : "block"
+              } mb-2`}
               onClick={() => {
                 setLeadsToOpen(true)
               }}
@@ -209,6 +221,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
               }
             )
           }}
+          className={`${(previousOpen || leadsToOpen) && !biggerWindow ? "hidden" : "inline"}`}
         >
           <AddAlt32 className="bg-white dark:bg-gray-900 rounded-full w-10 h-10 " id="moduleAdd" />
         </button>
@@ -223,7 +236,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
           endAnchor="left"
         />
       </div>
-      <article className="max-w-7xl xl:mx-auto my-4 mx-4">
+      <article className="max-w-3xl md:mx-auto my-4 mx-4">
         <MetadataImmutable module={module} />
         {mainFile.name ? (
           <div className="my-8">
