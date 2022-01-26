@@ -214,6 +214,18 @@ const HandlePage = ({ workspace, expire, signature }) => {
         <>
           <meta property="og:title" content={workspace.firstName || workspace.handle} />
           {workspace.bio ? <meta property="og:description" content={workspace.bio} /> : ""}
+          <meta
+            property="og:image"
+            content={`https://og-images.herokuapp.com/api/workspace?title=${
+              workspace.firstName || ""
+            } ${workspace.lastName || ""}&avatar=${workspace.avatar}&handle=${
+              workspace.handle
+            }&orcid=${workspace.orcid || ""}`}
+          />
+          <meta
+            property="og:image:alt"
+            content={`Social media sharing image of the profile for ${workspace.handle}, including the avatar, name, handle, and ORCID.`}
+          />
         </>
       }
     >

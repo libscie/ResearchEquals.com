@@ -345,6 +345,8 @@ const ModulePage = ({ module }) => {
   const mainFile = module!.main as Prisma.JsonObject
   const supportingRaw = module!.supporting as Prisma.JsonObject
 
+  const authorsOG = module.authors.map((author) => author.workspace.avatar)
+
   return (
     <Layout
       title={`R= ${module.title}`}
@@ -367,6 +369,20 @@ const ModulePage = ({ module }) => {
           ) : (
             <meta name="tdm-reservation" content="0" />
           )}
+          <meta
+            property="og:image"
+            content={`https://og-images.herokuapp.com/api/module?title=${module.title}&type=${
+              module.type.name
+            }&doi=${module.prefix}/${module.suffix}&publishedAt=${module.publishedAt
+              .toISOString()
+              .substr(0, 10)}&avatars=${encodeURIComponent(authorsOG.join(";"))}&license=${
+              module.license.name
+            }`}
+          />
+          <meta
+            property="og:image:alt"
+            content={`Social media sharing image of the research module titled ${module.title}. It includes the type of module, ${module.type.name}, the DOI, ${module.prefix}/${module.suffix}, the license, ${module.license.name}, and a set of avatars for the ${module.authors.length} authors.`}
+          />
         </>
       }
     >
