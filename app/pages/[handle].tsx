@@ -217,10 +217,10 @@ const HandlePage = ({ workspace, expire, signature }) => {
           <meta
             property="og:image"
             content={`https://og-images.herokuapp.com/api/workspace?title=${
-              workspace.firstName || ""
-            } ${workspace.lastName || ""}&avatar=${workspace.avatar}&handle=${
-              workspace.handle
-            }&orcid=${workspace.orcid || ""}`}
+              encodeURIComponent(workspace.firstName) || ""
+            } ${encodeURIComponent(workspace.lastName) || ""}&avatar=${encodeURIComponent(
+              workspace.avatar
+            )}&handle=${encodeURIComponent(workspace.handle)}&orcid=${workspace.orcid || ""}`}
           />
           <meta
             property="og:image:alt"

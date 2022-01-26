@@ -371,9 +371,11 @@ const ModulePage = ({ module }) => {
           )}
           <meta
             property="og:image"
-            content={`https://og-images.herokuapp.com/api/module?title=${module.title}&type=${
-              module.type.name
-            }&doi=${module.prefix}/${module.suffix}&publishedAt=${module.publishedAt
+            content={`https://og-images.herokuapp.com/api/module?title=${encodeURIComponent(
+              module.title
+            )}&type=${module.type.name}&doi=${module.prefix}/${
+              module.suffix
+            }&publishedAt=${module.publishedAt
               .toISOString()
               .substr(0, 10)}&avatars=${encodeURIComponent(authorsOG.join(";"))}&license=${
               module.license.name
