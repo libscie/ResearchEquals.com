@@ -107,6 +107,15 @@
       "contributions": [
         "userTesting"
       ]
+    },
+    {
+      "login": "marton-balazs-kovacs",
+      "name": "Marton Kovacs",
+      "avatar_url": "https://avatars.githubusercontent.com/u/43272864?v=4",
+      "profile": "http://metasciencelab.elte.hu/index.php/members/marton-kovacs/",
+      "contributions": [
+        "userTesting"
+      ]
     }
   ],
   "contributorsPerLine": 7,
