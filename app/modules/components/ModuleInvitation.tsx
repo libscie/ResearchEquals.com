@@ -48,7 +48,7 @@ const ModuleInvitation = ({
             />
           </div>
           <div className="ml-3 flex-grow text-blue-800 dark:text-blue-100">
-            <h3 className="text-xs leading-4 font-normal text-blue-800 dark:text-blue-100 inline-block align-middle">
+            <h3 className="text-sm leading-4 font-normal text-blue-800 dark:text-blue-100 inline-block align-middle">
               You got invited to co-author this research module! Would you like to accept or decline
               this invitation?
             </h3>
@@ -57,7 +57,7 @@ const ModuleInvitation = ({
         <div className="inline-block pl-8 lg:pl-0">
           <button
             type="button"
-            className="border rounded border-blue-500 text-blue-500 dark:border-blue-200 dark:text-blue-200 px-2 py-1.5 text-xs leading-4 font-medium hover:bg-blue-100 dark:hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-50 focus:ring-blue-600"
+            className="border rounded border-blue-500 text-blue-500 dark:border-blue-200 dark:text-blue-200 px-2 py-1.5 text-sm leading-4 font-medium hover:bg-blue-100 dark:hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-50 focus:ring-blue-600"
             onClick={async () => {
               await toast.promise(
                 acceptMutation({
@@ -77,7 +77,7 @@ const ModuleInvitation = ({
             Accept
           </button>
           <button
-            className="text-blue-500 dark:text-blue-200 text-xs leading-4 font-normal mx-2"
+            className="text-blue-500 dark:text-blue-200 text-sm leading-4 font-normal mx-2"
             onClick={async () => {
               await toast.promise(
                 declineMutation({

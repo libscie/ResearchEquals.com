@@ -84,28 +84,20 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
                       ) {
                         return
                       }
-                      console.log("It hits here")
-                      // There is a mistake in the updating
-                      console.log(
-                        arrayMoveMutable(moduleEdit!.authors, source.index, destination.index)
-                      )
 
                       let i = 0
-                      console.log(moduleEdit!.authors)
                       moduleEdit!.authors.map((author) => {
                         author.authorshipRank = i
                         i += 1
                       })
 
                       // Update database
-                      console.log(moduleEdit!.authors)
                       moduleEdit!.authors.map(async (author) => {
                         const updatedModule = await updateAuthorRankMutation({
                           id: author.id,
                           rank: author.authorshipRank,
                           suffix: moduleEdit!.suffix,
                         })
-                        console.log(`Updated ${author.id} to rank ${author.authorshipRank}`)
                         setQueryData(updatedModule!)
                       })
                     }}

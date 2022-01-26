@@ -32,7 +32,6 @@ export default async function getSignature() {
           : itemCounter(dates, date),
     })
   })
-  console.log(data)
 
   return data
 }

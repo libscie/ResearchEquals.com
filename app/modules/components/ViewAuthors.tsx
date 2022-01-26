@@ -57,9 +57,7 @@ const ViewAuthors = ({ button, module }) => {
                       </div>
                     </div>
                     <div className="mt-6 px-4 sm:px-6 text-sm leading-5 font-normal border-b border-gray-400 dark:border-gray-600 pb-4 dark:text-white">
-                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit.
-                      Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id,
-                      mattis vel, nisi.
+                      These are the authors of the module. Maybe somebody is interesting to follow?
                     </div>
                     {/* Replace with your content */}
 

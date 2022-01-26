@@ -30,7 +30,7 @@ const Imprint: BlitzPage = () => {
         refetchFn={refetch}
       />
       <main className="lg:relative bg-white dark:bg-gray-900">
-        <div className="mx-2">
+        <div className="mx-4">
           <div className="max-w-7xl mx-auto pt-10 text-black dark:text-white md:p-0 md:pt-10">
             <p className="font-bold">{page.toUpperCase()}</p>
             <hr className="w-32 mt-4 mb-4 border-t-0 bg-gradient-to-r from-indigo-400 to-indigo-600 bg-yellow-400 h-0.5 " />

@@ -42,6 +42,62 @@
       "contributions": [
         "userTesting"
       ]
+    },
+    {
+      "login": "InquisitiveVi",
+      "name": "Vinodh Ilangovan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/23527107?v=4",
+      "profile": "https://github.com/InquisitiveVi",
+      "contributions": [
+        "a11y"
+      ]
+    },
+    {
+      "login": "nsunami",
+      "name": "Nami Sunami",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17035406?v=4",
+      "profile": "http://naoyukisunami.com",
+      "contributions": [
+        "translation",
+        "design",
+        "ideas"
+      ]
+    },
+    {
+      "login": "Solanasaurus",
+      "name": "Solana",
+      "avatar_url": "https://avatars.githubusercontent.com/u/22150791?v=4",
+      "profile": "https://internethealthreport.org",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "kaodro",
+      "name": "Kasia",
+      "avatar_url": "https://avatars.githubusercontent.com/u/22129061?v=4",
+      "profile": "https://github.com/kaodro",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "coglebed",
+      "name": "coglebed",
+      "avatar_url": "https://avatars.githubusercontent.com/u/73071333?v=4",
+      "profile": "https://github.com/coglebed",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "AerynThrace",
+      "name": "AerynThrace",
+      "avatar_url": "https://avatars.githubusercontent.com/u/51057483?v=4",
+      "profile": "https://github.com/AerynThrace",
+      "contributions": [
+        "userTesting"
+      ]
     }
   ],
   "contributorsPerLine": 7,

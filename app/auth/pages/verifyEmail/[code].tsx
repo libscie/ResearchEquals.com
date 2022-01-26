@@ -9,8 +9,6 @@ const VerifyMail: BlitzPage = () => {
   const [error, setError] = useState(false)
   const userId = useRouterQuery().userId
 
-  console.log(userId)
-
   useEffect(() => {
     if (!code) {
       return

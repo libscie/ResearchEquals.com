@@ -65,7 +65,7 @@ export default resolver.pipe(
     await Promise.all([
       sendEmailWithTemplate(email, "welcome", {
         handle: handle,
-        days: 14,
+        days: 30,
         verify_email_url: url`/verifyEmail/${emailCode}?userId=${user.id}`,
       }),
       ctx.session.$create({
