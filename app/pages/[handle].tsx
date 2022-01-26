@@ -216,7 +216,15 @@ const HandlePage = ({ workspace, expire, signature }) => {
           {workspace.bio ? <meta property="og:description" content={workspace.bio} /> : ""}
           <meta
             property="og:image"
-            content={`https://og-images.herokuapp.com/api/workspace?title=${
+            content={`http://og-images.herokuapp.com/api/workspace?title=${
+              encodeURIComponent(workspace.firstName) || ""
+            } ${encodeURIComponent(workspace.lastName) || ""}&avatar=${encodeURIComponent(
+              workspace.avatar
+            )}&handle=${encodeURIComponent(workspace.handle)}&orcid=${workspace.orcid || ""}`}
+          />
+          <meta
+            property="og:image:secure_url"
+            content={`http://og-images.herokuapp.com/api/workspace?title=${
               encodeURIComponent(workspace.firstName) || ""
             } ${encodeURIComponent(workspace.lastName) || ""}&avatar=${encodeURIComponent(
               workspace.avatar
