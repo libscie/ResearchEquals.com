@@ -17,6 +17,18 @@ export default resolver.pipe(resolver.authorize(), async ({ id, newFiles }) => {
     where: { id },
     data: { supporting: supportingFiles as Prisma.JsonObject },
     include: {
+      references: {
+        include: {
+          authors: {
+            include: {
+              workspace: true,
+            },
+          },
+        },
+        orderBy: {
+          title: "asc",
+        },
+      },
       authors: {
         include: {
           workspace: true,
@@ -24,7 +36,26 @@ export default resolver.pipe(resolver.authorize(), async ({ id, newFiles }) => {
       },
       license: true,
       type: true,
-      parents: true,
+      parents: {
+        include: {
+          type: true,
+          authors: {
+            include: {
+              workspace: true,
+            },
+          },
+        },
+      },
+      children: {
+        include: {
+          type: true,
+          authors: {
+            include: {
+              workspace: true,
+            },
+          },
+        },
+      },
     },
   })
 

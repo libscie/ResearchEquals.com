@@ -1,17 +1,36 @@
-import { BlitzPage, Link, Routes } from "blitz"
+import { BlitzPage, Link, Routes, useQuery, useRouter, useSession } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import Navbar from "../core/components/Navbar"
 import Footer from "../core/components/Footer"
+import LayoutLoader from "app/core/components/LayoutLoader"
+import { useCurrentUser } from "app/core/hooks/useCurrentUser"
+import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
+import getDrafts from "app/core/queries/getDrafts"
+import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 
 const Imprint: BlitzPage = () => {
   const page = "Imprint"
   const title = "Who runs this website?"
+  const currentUser = useCurrentUser()
+  const session = useSession()
+  const currentWorkspace = useCurrentWorkspace()
+  const router = useRouter()
+  const [drafts, { refetch }] = useQuery(getDrafts, { session })
+  const [invitations] = useQuery(getInvitedModules, { session })
 
   return (
     <>
-      <Navbar />
+      <Navbar
+        currentUser={currentUser}
+        session={session}
+        currentWorkspace={currentWorkspace}
+        router={router}
+        drafts={drafts}
+        invitations={invitations}
+        refetchFn={refetch}
+      />
       <main className="lg:relative bg-white dark:bg-gray-900">
-        <div className="mx-2">
+        <div className="mx-4">
           <div className="max-w-7xl mx-auto pt-10 text-black dark:text-white md:p-0 md:pt-10">
             <p className="font-bold">{page.toUpperCase()}</p>
             <hr className="w-32 mt-4 mb-4 border-t-0 bg-gradient-to-r from-indigo-400 to-indigo-600 bg-yellow-400 h-0.5 " />
@@ -63,6 +82,10 @@ const Imprint: BlitzPage = () => {
 }
 
 Imprint.suppressFirstRenderFlicker = true
-Imprint.getLayout = (page) => <Layout title="Imprint">{page}</Layout>
+Imprint.getLayout = (page) => (
+  <Layout title="Imprint">
+    <LayoutLoader>{page}</LayoutLoader>
+  </Layout>
+)
 
 export default Imprint

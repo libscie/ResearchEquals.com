@@ -14,6 +14,24 @@ const index = client.initIndex(`${process.env.ALGOLIA_PREFIX}_workspaces`)
 export default resolver.pipe(
   resolver.zod(Signup),
   async ({ email, password, handle }, ctx: Ctx) => {
+    // This prevents people registering handles that are also page routes
+    const forbiddenHandles = [
+      "imprint",
+      "privacy",
+      "login",
+      "signup",
+      "browse",
+      "terms",
+      "coc",
+      "privacy",
+    ]
+
+    if (
+      forbiddenHandles.filter((forbiddenHandle) => forbiddenHandle === handle.toLowerCase())
+        .length > 0
+    ) {
+      throw Error("Handle not allowed")
+    }
     const hashedPassword = await SecurePassword.hash(password.trim())
     const hexColor = Math.floor(Math.random() * 16777215).toString(16)
     const user = await db.user.create({
@@ -26,7 +44,7 @@ export default resolver.pipe(
             role: "OWNER",
             workspace: {
               create: {
-                handle,
+                handle: handle.toLowerCase(),
                 avatar: `https://eu.ui-avatars.com/api/?rounded=true&background=${hexColor}&name=${handle}`,
               },
             },
@@ -47,8 +65,8 @@ export default resolver.pipe(
     await Promise.all([
       sendEmailWithTemplate(email, "welcome", {
         handle: handle,
-        days: 14,
-        verify_email_url: url`/verifyEmail/${emailCode}`,
+        days: 30,
+        verify_email_url: url`/verifyEmail/${emailCode}?userId=${user.id}`,
       }),
       ctx.session.$create({
         userId: user.id,

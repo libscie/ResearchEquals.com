@@ -1,89 +1,245 @@
-import { useQuery, useMutation, Link, validateZodSchema } from "blitz"
-import { useState, useEffect } from "react"
-import moment from "moment"
-import algoliasearch from "algoliasearch"
-import { Edit32, EditOff32, Save32 } from "@carbon/icons-react"
+import { useQuery, useMutation, Link, Routes } from "blitz"
+import { useState } from "react"
 import { Prisma } from "prisma"
-import useCurrentModule from "../queries/useCurrentModule"
-import MetadataView from "./MetadataView"
-import AuthorAvatars from "./AuthorAvatars"
-import ViewAuthors from "./ViewAuthors"
-import ViewFiles from "./ViewFiles"
-import FollowsFromView from "./FollowsFromView"
+import toast from "react-hot-toast"
+import Xarrows from "react-xarrows"
 
-const ModuleEdit = ({ user, module, isAuthor }) => {
-  const [isEditing, setIsEditing] = useState(false)
-  const [manageAuthorsOpen, setManageAuthorsOpen] = useState(false)
+import useCurrentModule from "../queries/useCurrentModule"
+import ViewFiles from "./ViewFiles"
+import { ArrowLeft32, Maximize24, UserFollow32 } from "@carbon/icons-react"
+import acceptInvitation from "app/authorship/mutations/acceptInvitation"
+import removeInvitation from "app/authorship/mutations/removeInvitation"
+import MetadataInvite from "./MetadataInvite"
+import ParentPanel from "./ParentPanel"
+import { useMediaPredicate } from "react-media-hook"
+
+const ModuleInvitation = ({
+  user,
+  module,
+  setModule,
+  workspace,
+  isAuthor,
+  inboxOpen,
+  setInboxOpen,
+}) => {
   const [moduleEdit, { refetch, setQueryData }] = useQuery(
     useCurrentModule,
     { suffix: module.suffix },
     { refetchOnWindowFocus: true }
   )
+  const [acceptMutation] = useMutation(acceptInvitation)
+  const [declineMutation] = useMutation(removeInvitation)
+  const [previousOpen, setPreviousOpen] = useState(false)
+  const prefersDarkMode = useMediaPredicate("(prefers-color-scheme: dark)")
 
+  const arrowColor = prefersDarkMode ? "white" : "#0f172a"
   const mainFile = moduleEdit!.main as Prisma.JsonObject
   const supportingRaw = moduleEdit!.supporting as Prisma.JsonObject
 
   return (
-    <div className="max-w-4xl mx-auto overflow-y-auto text-base">
+    <div className="p-5 max-w-7xl mx-auto overflow-y-auto text-base">
+      {/* Invitation handling */}
+      <div className="rounded-md bg-blue-50 dark:bg-blue-800 w-full p-2 lg:flex my-4">
+        <div className="flex-grow flex my-2 lg:my-0">
+          <div className="flex-shrink-0 inline-block align-middle">
+            <UserFollow32
+              className="stroke-current h-5 w-5 text-blue-500 dark:text-blue-200 inline-block align-middle"
+              aria-hidden="true"
+            />
+          </div>
+          <div className="ml-3 flex-grow text-blue-800 dark:text-blue-100">
+            <h3 className="text-sm leading-4 font-normal text-blue-800 dark:text-blue-100 inline-block align-middle">
+              You got invited to co-author this research module! Would you like to accept or decline
+              this invitation?
+            </h3>
+          </div>
+        </div>
+        <div className="inline-block pl-8 lg:pl-0">
+          <button
+            type="button"
+            className="border rounded border-blue-500 text-blue-500 dark:border-blue-200 dark:text-blue-200 px-2 py-1.5 text-sm leading-4 font-medium hover:bg-blue-100 dark:hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-50 focus:ring-blue-600"
+            onClick={async () => {
+              await toast.promise(
+                acceptMutation({
+                  id: module.authors.filter((author) => author.workspaceId === workspace.id)[0].id,
+                  suffix: module.suffix,
+                }),
+                {
+                  loading: "Saving...",
+                  success: "Accepted invitation",
+                  error: "Hmm that didn't work...",
+                }
+              )
+              refetch()
+              setModule(undefined)
+            }}
+          >
+            Accept
+          </button>
+          <button
+            className="text-blue-500 dark:text-blue-200 text-sm leading-4 font-normal mx-2"
+            onClick={async () => {
+              await toast.promise(
+                declineMutation({
+                  id: module.authors.filter((author) => author.workspaceId === workspace.id)[0].id,
+                  suffix: module.suffix,
+                }),
+                {
+                  loading: "Declining...",
+                  success: "Declined invitation",
+                  error: "Hmm that didn't work...",
+                }
+              )
+              refetch()
+              setModule(undefined)
+            }}
+          >
+            Decline
+          </button>
+        </div>
+      </div>
       {/* Menu bar */}
-      <div className="w-full flex">
+      <div className="w-full flex mb-12">
+        {inboxOpen ? (
+          <button
+            onClick={() => {
+              setInboxOpen(false)
+            }}
+          >
+            <label className="sr-only">Go full screen</label>
+            <Maximize24 className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600" />
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              setInboxOpen(true)
+            }}
+          >
+            <label className="sr-only">Go full screen</label>
+            <ArrowLeft32
+              className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600"
+              aria-hidden="true"
+            />
+          </button>
+        )}
         {/* Push all menu bars to the right */}
-        <div className="flex-grow"></div>
-        <div>
-          <span className="inline-block h-full align-middle"> </span>
+        <div className="flex-grow mx-4">
+          <button
+            className="flex px-2 mx-auto py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-sm leading-4 font-normal shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700 my-2 disabled:opacity-50"
+            onClick={() => {
+              setPreviousOpen(true)
+            }}
+            disabled={moduleEdit?.parents.length === 0}
+            id="modulePrevious"
+          >
+            Links to {moduleEdit?.parents.length} previous steps
+          </button>
         </div>
       </div>
-      {/* Last updated */}
-      <div className="text-center ">
-        Last updated: {moment(moduleEdit?.updatedAt).fromNow()} (
-        {moduleEdit?.updatedAt.toISOString()})
-      </div>
-      {/* Parents */}
-      {moduleEdit?.parents!.length! > 0 ? (
-        <div className="flex w-full max-h-8 my-2">
-          <FollowsFromView module={moduleEdit} />
-        </div>
-      ) : (
-        ""
-      )}
-      <MetadataView module={moduleEdit} />
-      {/* Authors */}
-      <div className="flex border-t border-b border-gray-800 mt-2 py-2">
-        <div className="flex-grow flex -space-x-2 relative z-0 overflow-hidden">
-          <AuthorAvatars module={module} />
-        </div>
-        {/* TODO: View Authors */}
-        <ViewAuthors button="button" module={module} />
-      </div>
-
-      {mainFile ? (
+      <MetadataInvite module={moduleEdit} />
+      <Xarrows
+        start="moduleCurrent"
+        end="modulePrevious"
+        showHead={false}
+        dashness
+        color={arrowColor}
+        startAnchor="auto"
+        endAnchor="auto"
+      />
+      {mainFile.name ? (
         <div className="my-8">
-          <h2 className="">Main file</h2>
+          <h2 className="text-lg">Main file</h2>
           <ViewFiles name={mainFile.name} size={mainFile.size} url={mainFile.cdnUrl} />
         </div>
       ) : (
         ""
       )}
-      {/* Supporting files */}
-      {supportingRaw.length > 0 ? (
-        <div className="my-8">
-          <h2>Supporting file(s)</h2>
-          {supportingRaw.files.map((file) => (
-            <>
-              <ViewFiles
-                name={file.original_filename}
-                size={file.size}
-                url={file.original_file_url}
-              />
-            </>
-          ))}
-        </div>
-      ) : (
-        ""
-      )}
-      {/* PLACEHOLDER References */}
+      <div className="md:grid grid-cols-2 gap-x-4 mb-28">
+        {/* Supporting files */}
+        {supportingRaw.files.length > 0 ? (
+          <div className="">
+            <h2 className="text-lg">Supporting file(s)</h2>
+            {supportingRaw.files.map((file) => (
+              <>
+                <ViewFiles
+                  name={file.original_filename}
+                  size={file.size}
+                  url={file.original_file_url}
+                />
+              </>
+            ))}
+          </div>
+        ) : (
+          ""
+        )}
+        {/* TODO: References */}
+        {moduleEdit!.references.length > 0 ? (
+          <div className="">
+            <h2 className="text-lg">Reference list</h2>
+            <ol className="list-decimal list-outside my-4 text-normal pl-6">
+              {moduleEdit!.references.map((reference) => (
+                <>
+                  <li className="my-2">
+                    {reference.publishedWhere === "ResearchEquals" ? (
+                      <>
+                        {reference.authors.map((author, index) => (
+                          <>
+                            <Link href={Routes.HandlePage({ handle: author!.workspace!.handle })}>
+                              <a target="_blank">
+                                {author!.workspace!.lastName}, {author!.workspace!.firstName}
+                              </a>
+                            </Link>
+                            {index === reference.authors.length - 1 ? "" : "; "}
+                          </>
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        {reference!.authorsRaw!["object"] ? (
+                          <>
+                            {reference!.authorsRaw!["object"].map((author, index) => (
+                              <>
+                                {index === 3
+                                  ? "[...]"
+                                  : index > 3
+                                  ? ""
+                                  : author.given && author.family
+                                  ? `${author.family}, ${author.given}`
+                                  : `${author.name}`}
+                                {index === reference!.authorsRaw!["object"].length - 1 || index > 2
+                                  ? ""
+                                  : "; "}
+                              </>
+                            ))}
+                          </>
+                        ) : (
+                          <>
+                            <p className="italic">{reference.publishedWhere}</p>
+                          </>
+                        )}
+                      </>
+                    )}{" "}
+                    ({reference.publishedAt?.toISOString().substr(0, 4)}).{" "}
+                    <span className="font-semibold">{reference.title}</span>
+                    {reference.title.endsWith("." ? "" : ".")}{" "}
+                    <Link href={reference.url!}>
+                      <a target="_blank">
+                        <span className="underline">{reference.url}</span>
+                      </a>
+                    </Link>
+                    . <span className="italic">{reference.publishedWhere}</span>.
+                  </li>
+                </>
+              ))}
+            </ol>
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
+      <ParentPanel openObject={previousOpen} openFunction={setPreviousOpen} module={moduleEdit} />
     </div>
   )
 }
 
-export default ModuleEdit
+export default ModuleInvitation

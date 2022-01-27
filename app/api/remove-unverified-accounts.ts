@@ -4,7 +4,7 @@ import { subDays } from "date-fns"
 
 export default CronJob(
   "api/remove-unverified-accounts", // 👈 the route that it's reachable on
-  "0 0 * * 0",
+  "0 0 1 * *", // “At 00:00 on day-of-month 1.”
   async () => {
     const users = await db.user.findMany({
       where: {
@@ -36,13 +36,18 @@ export default CronJob(
           userId: user.id,
         },
       })
+      // delete sessions
+      await db.session.deleteMany({
+        where: {
+          userId: user.id,
+        },
+      })
       // delete user
       await db.user.delete({
         where: {
           id: user.id,
         },
       })
-      // TODO: Remove remnant sessions
     })
 
     //  TODO: Remove workspaces without memberships and authorships

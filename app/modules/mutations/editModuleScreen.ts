@@ -3,7 +3,7 @@ import db from "db"
 
 export default resolver.pipe(
   resolver.authorize(),
-  async ({ id, typeId, title, description, licenseId }) => {
+  async ({ id, typeId, title, description, licenseId, displayColor }) => {
     const module = await db.module.update({
       where: { id },
       data: {
@@ -14,6 +14,7 @@ export default resolver.pipe(
         },
         title,
         description,
+        displayColor,
         license: {
           connect: {
             id: licenseId,
@@ -35,7 +36,22 @@ export default resolver.pipe(
     const updatedModule = await db.module.findFirst({
       where: { id },
       include: {
+        references: {
+          include: {
+            authors: {
+              include: {
+                workspace: true,
+              },
+            },
+          },
+          orderBy: {
+            title: "asc",
+          },
+        },
         authors: {
+          orderBy: {
+            authorshipRank: "asc",
+          },
           include: {
             workspace: true,
           },
@@ -52,9 +68,19 @@ export default resolver.pipe(
             },
           },
         },
+        children: {
+          include: {
+            type: true,
+            authors: {
+              include: {
+                workspace: true,
+              },
+            },
+          },
+        },
       },
     })
 
-    return updatedModule!
+    return updatedModule
   }
 )

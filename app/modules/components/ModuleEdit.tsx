@@ -1,49 +1,70 @@
-import { useQuery, useMutation, Link, validateZodSchema } from "blitz"
+import { useQuery, useMutation, Link, validateZodSchema, Routes } from "blitz"
 import { useState, useEffect } from "react"
-import moment from "moment"
 import algoliasearch from "algoliasearch"
 import { z } from "zod"
 import { getAlgoliaResults } from "@algolia/autocomplete-js"
-import { Edit32, EditOff32, Save32 } from "@carbon/icons-react"
+import { ArrowLeft32, Edit24, EditOff24 } from "@carbon/icons-react"
 import { Prisma } from "prisma"
 import { useFormik } from "formik"
+import { Maximize24, TrashCan24 } from "@carbon/icons-react"
+import toast from "react-hot-toast"
+import Xarrows from "react-xarrows"
+import Chatra from "@chatra/chatra"
 
 import EditMainFile from "./EditMainFile"
-import ManageAuthors from "./ManageAuthors"
 import EditSupportingFiles from "./EditSupportingFiles"
 
 import DeleteModuleModal from "../../core/modals/DeleteModuleModal"
 import useCurrentModule from "../queries/useCurrentModule"
 import Autocomplete from "../../core/components/Autocomplete"
 import PublishModuleModal from "../../core/modals/PublishModuleModal"
-import addParent from "../mutations/addParent"
-import getTypes from "../../core/queries/getTypes"
-import getLicenses from "app/core/queries/getLicenses"
 import editModuleScreen from "../mutations/editModuleScreen"
 import EditSupportingFileDisplay from "../../core/components/EditSupportingFileDisplay"
 import MetadataView from "./MetadataView"
-import AuthorAvatars from "./AuthorAvatars"
 import SearchResultModule from "../../core/components/SearchResultModule"
+import MetadataEdit from "./MetadataEdit"
+import addReference from "../mutations/addReference"
+import createReferenceModule from "../mutations/createReferenceModule"
+import deleteReference from "../mutations/deleteReference"
+import { useMediaPredicate } from "react-media-hook"
+import addParent from "../mutations/addParent"
+import ManageParents from "./ManageParents"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
-const ModuleEdit = ({ user, module, isAuthor }) => {
+const ModuleEdit = ({
+  user,
+  workspace,
+  module,
+  isAuthor,
+  setInboxOpen,
+  inboxOpen,
+  expire,
+  signature,
+  setModule,
+  fetchDrafts,
+}) => {
   const [isEditing, setIsEditing] = useState(false)
-  const [manageAuthorsOpen, setManageAuthorsOpen] = useState(false)
+  const [addAuthors, setAddAuthors] = useState(false)
+  const [addParentMutation] = useMutation(addParent)
+
   const [moduleEdit, { refetch, setQueryData }] = useQuery(
     useCurrentModule,
     { suffix: module.suffix },
-    { refetchOnWindowFocus: true }
+    { refetchOnWindowFocus: false }
   )
-  const [moduleTypes] = useQuery(getTypes, undefined)
-  const [licenses] = useQuery(getLicenses, undefined)
 
   const mainFile = moduleEdit!.main as Prisma.JsonObject
   const supportingRaw = moduleEdit!.supporting as Prisma.JsonObject
 
-  const [addParentMutation] = useMutation(addParent)
+  const [addReferenceMutation] = useMutation(addReference)
+  const [deleteReferenceMutation] = useMutation(deleteReference)
+  const [createReferenceMutation] = useMutation(createReferenceModule)
   const [editModuleScreenMutation] = useMutation(editModuleScreen)
+  const prefersDarkMode = useMediaPredicate("(prefers-color-scheme: dark)")
+  const [previousOpen, setPreviousOpen] = useState(false)
 
+  const arrowColor = prefersDarkMode ? "white" : "#0f172a"
   const formik = useFormik({
     initialValues: {
       type: moduleEdit!.type.id.toString(),
@@ -79,235 +100,390 @@ const ModuleEdit = ({ user, module, isAuthor }) => {
     formik.setFieldValue("license", moduleEdit!.license!.id.toString())
   }, [moduleEdit])
 
-  return (
-    <div className="max-w-4xl mx-auto overflow-y-auto text-base">
-      {/* Menu bar */}
-      <div className="w-full flex">
-        {/* Push all menu bars to the right */}
-        <div className="flex-grow"></div>
-        <div>
-          <span className="inline-block h-full align-middle"> </span>
+  useEffect(() => {
+    if (previousOpen) {
+      Chatra("hide")
+    } else {
+      Chatra("show")
+    }
+  })
 
+  return (
+    <div className="p-5 max-w-7xl mx-auto overflow-y-auto text-base">
+      {/* Publish module */}
+      {(moduleEdit!.authors.filter((author) => author.readyToPublish !== true).length === 0 &&
+        Object.keys(moduleEdit!.main!).length !== 0) ||
+      (moduleEdit!.authors.length === 1 && moduleEdit!.main!["name"]) ? (
+        <PublishModuleModal module={moduleEdit} user={user} workspace={workspace} />
+      ) : (
+        <></>
+      )}
+      {/* Menu bar */}
+      <div className="w-full flex mb-28">
+        {inboxOpen ? (
+          <button
+            onClick={() => {
+              setInboxOpen(false)
+            }}
+          >
+            <label className="sr-only">Go full screen</label>
+            <Maximize24 className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600" />
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              setInboxOpen(true)
+            }}
+          >
+            <label className="sr-only">Go full screen</label>
+            <ArrowLeft32
+              className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600"
+              aria-hidden="true"
+            />
+          </button>
+        )}
+        {/* Push all menu bars to the right */}
+        <div className="flex-grow mx-4">
+          <button
+            className="flex px-2 mx-auto py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-sm leading-4 font-normal shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700 my-2 disabled:opacity-50"
+            onClick={() => {
+              setPreviousOpen(true)
+            }}
+            disabled={moduleEdit?.parents.length === 0}
+          >
+            Links to {moduleEdit?.parents.length} previous steps
+          </button>
+          <div className="max-w-md mx-auto">
+            <span id="previousStep">
+              <Autocomplete
+                className="h-full max-w-2xl"
+                openOnFocus={true}
+                defaultActiveItemId="0"
+                getSources={({ query }) => [
+                  {
+                    sourceId: "products",
+                    async onSelect(params) {
+                      const { item, setQuery } = params
+                      toast.promise(
+                        addParentMutation({
+                          currentId: module?.id,
+                          connectId: item.objectID,
+                        }),
+                        {
+                          loading: "Adding link...",
+                          success: (data) => {
+                            setQueryData(data)
+
+                            return `Linked to: "${item.name}"`
+                          },
+                          error: "Failed to add link...",
+                        }
+                      )
+                    },
+                    getItems() {
+                      return getAlgoliaResults({
+                        searchClient,
+                        queries: [
+                          {
+                            indexName: `${process.env.ALGOLIA_PREFIX}_modules`,
+                            query,
+                          },
+                        ],
+                      })
+                    },
+                    templates: {
+                      item({ item, components }) {
+                        // TODO: Need to update search results per Algolia index
+                        return <SearchResultModule item={item} />
+                      },
+                    },
+                  },
+                ]}
+              />
+            </span>
+          </div>
+        </div>
+        <div className="items-middle pt-8">
           {isEditing ? (
-            <EditOff32
-              className="inline-block align-middle"
+            <EditOff24
+              className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600"
               onClick={() => {
                 setIsEditing(false)
               }}
+              aria-label="End editing mode without saving"
             />
           ) : (
-            <Edit32
-              className="inline-block align-middle"
+            <Edit24
+              className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600"
               onClick={() => {
                 setIsEditing(true)
               }}
+              aria-label="Start editing mode"
             />
           )}
-          {/* <span className="inline-block h-full align-middle"> </span> */}
-          {/* <DocumentPdf32 className="inline-block align-middle" /> */}
         </div>
       </div>
-      {/* Last updated */}
-      <div className="text-center ">
-        Last updated: {moment(moduleEdit?.updatedAt).fromNow()} (
-        {moduleEdit?.updatedAt.toISOString()})
-      </div>
-      {/* Parents */}
-      <div className="flex w-full max-h-8 my-2">
-        <span>
-          Follows from:{" "}
-          <span className="bg-gray-200 sgroup-hover:bg-gray-200 ml-auto inline-block py-0.5 px-3 text-xs rounded-full">
-            {moduleEdit?.parents ? moduleEdit?.parents.length : "0"}
-          </span>
-        </span>
-        <Autocomplete
-          className="h-full"
-          openOnFocus={true}
-          defaultActiveItemId="0"
-          getSources={({ query }) => [
-            {
-              sourceId: "products",
-              async onSelect(params) {
-                const { item, setQuery } = params
-                const updatedMod = await addParentMutation({
-                  currentId: moduleEdit?.id,
-                  connectId: item.objectID,
-                })
-                setQueryData(updatedMod)
-              },
-              getItems() {
-                return getAlgoliaResults({
-                  searchClient,
-                  queries: [
-                    {
-                      indexName: `${process.env.ALGOLIA_PREFIX}_modules`,
-                      query,
-                    },
-                  ],
-                })
-              },
-              templates: {
-                item({ item, components }) {
-                  // TODO: Need to update search results per Algolia index
-                  return <SearchResultModule item={item} />
-                },
-              },
-            },
-          ]}
+      <div className="relative">
+        <Xarrows
+          start="currentStep"
+          end="previousStep"
+          showHead={false}
+          dashness
+          color={arrowColor}
+          startAnchor={{ position: "auto", offset: { x: -20 } }}
+          endAnchor={{ position: "auto", offset: { x: 20 } }}
         />
       </div>
       {/* Display editable form or display content */}
-      {isEditing ? (
-        <div className="my-8">
-          <form onSubmit={formik.handleSubmit}>
-            <div className="my-2">
-              <label htmlFor="type" className="sr-only">
-                Module type
-              </label>
-              <select
-                className="rounded my-1 bg-gray-300 dark:bg-gray-300"
-                id="type"
-                {...formik.getFieldProps("type")}
-              >
-                <option value="">--Please choose a module type--</option>
-                {moduleTypes.map((type) => (
-                  <>
-                    <option value={type.id}>{type.name}</option>
-                  </>
-                ))}
-              </select>
-              {formik.touched.type && formik.errors.type ? <div>{formik.errors.type}</div> : null}
-            </div>
-            <div className="my-2">
-              <label htmlFor="title" className="sr-only block text-sm font-medium text-gray-700">
-                Title
-              </label>
-              <div className="mt-1">
-                <textarea
-                  rows={2}
-                  id="title"
-                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-500 bg-gray-300 dark:bg-gray-300 rounded-md"
-                  {...formik.getFieldProps("title")}
-                />
-                {formik.touched.title && formik.errors.title ? (
-                  <div>{formik.errors.title}</div>
-                ) : null}
-              </div>
-            </div>
-            <div className="my-2">
-              <label
-                htmlFor="description"
-                className="sr-only block text-sm font-medium text-gray-700"
-              >
-                Description
-              </label>
-              <div className="mt-1">
-                <textarea
-                  rows={8}
-                  id="description"
-                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-500  bg-gray-300 dark:bg-gray-300 rounded-md"
-                  {...formik.getFieldProps("description")}
-                />
-                {formik.touched.description && formik.errors.description ? (
-                  <div>{formik.errors.description}</div>
-                ) : null}
-              </div>
-            </div>
-            <div className="my-2">
-              <label htmlFor="license" className="sr-only">
-                License
-              </label>
-              <select
-                className="rounded my-1 bg-gray-300 dark:bg-gray-300"
-                id="license"
-                {...formik.getFieldProps("license")}
-              >
-                <option value="">--Please choose a license--</option>
-                {licenses.map((license) => (
-                  <>
-                    <option value={license.id}>
-                      {license.name} ({license.price > 0 ? `${license.price / 100}EUR` : "Free"})
-                    </option>
-                  </>
-                ))}
-              </select>
-              {formik.touched.license && formik.errors.license ? (
-                <div>{formik.errors.license}</div>
-              ) : null}
-            </div>
-            <button
-              type="submit"
-              className="my-2 inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md bg-gray-300 dark:bg-gray-300 text-gray-900 dark:text-gray-900  hover:bg-indigo-300 border border-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Save
-              <Save32 className="ml-2 -mr-0.5 h-4 w-4" aria-hidden="true" />
-            </button>
-          </form>
-        </div>
-      ) : (
-        <MetadataView module={moduleEdit} />
-      )}
-      {/* Authors */}
-      <div className="flex border-t border-b border-gray-800 mt-2 py-2">
-        <div className="flex-grow flex -space-x-2 relative z-0 overflow-hidden">
-          <AuthorAvatars module={module} />
-        </div>
-        <ManageAuthors
-          open={manageAuthorsOpen}
-          setOpen={setManageAuthorsOpen}
-          moduleEdit={moduleEdit}
+      <div className="relative" id="currentStep">
+        {isEditing ? (
+          <MetadataEdit
+            module={moduleEdit}
+            addAuthors={addAuthors}
+            setQueryData={setQueryData}
+            setAddAuthors={setAddAuthors}
+            setIsEditing={setIsEditing}
+          />
+        ) : (
+          <MetadataView
+            module={moduleEdit}
+            addAuthors={addAuthors}
+            setQueryData={setQueryData}
+            setAddAuthors={setAddAuthors}
+          />
+        )}
+      </div>
+
+      <div className="my-4">
+        <h2 className="text-lg leading-4 text-gray-500 dark:text-gray-200 my-2">Main file</h2>
+        <EditMainFile
+          mainFile={mainFile}
           setQueryData={setQueryData}
+          moduleEdit={moduleEdit}
+          user={user}
+          workspace={workspace}
+          expire={expire}
+          signature={signature}
         />
-        <button
-          type="button"
-          className="inline-flex items-center h-8  px-6 py-3 border border-transparent  font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          onClick={() => {
-            setManageAuthorsOpen(true)
-          }}
-        >
-          Manage authors
-        </button>
       </div>
+      <div className="md:grid grid-cols-2 gap-x-4 mb-28">
+        {/* Supporting files */}
+        <div className="my-3">
+          <h2 className="text-lg leading-4 text-gray-500 dark:text-gray-200 my-2">
+            Supporting file(s)
+          </h2>
+          {supportingRaw.files.length > 0 ? (
+            <>
+              {supportingRaw.files.map((file) => (
+                <>
+                  <EditSupportingFileDisplay
+                    name={file.original_filename}
+                    size={file.size}
+                    url={file.original_file_url}
+                    uuid={file.uuid}
+                    moduleId={moduleEdit!.id}
+                    setQueryData={setQueryData}
+                  />
+                </>
+              ))}
+            </>
+          ) : (
+            <></>
+          )}
+          <EditSupportingFiles
+            setQueryData={setQueryData}
+            moduleEdit={moduleEdit}
+            user={user}
+            workspace={workspace}
+            expire={expire}
+            signature={signature}
+          />
+        </div>
+        <div className="my-3">
+          <h2 className="text-lg leading-4 text-gray-500 dark:text-gray-200 my-2">
+            Reference list
+          </h2>
+          <label htmlFor="search" className="sr-only">
+            Search references
+          </label>
+          <div>
+            <Autocomplete
+              className="h-full"
+              openOnFocus={true}
+              defaultActiveItemId="0"
+              getSources={({ query }) => [
+                {
+                  sourceId: "products",
+                  async onSelect(params) {
+                    const { item, setQuery } = params
+                    if (item.suffix) {
+                      toast.promise(
+                        addReferenceMutation({
+                          currentId: moduleEdit?.id,
+                          connectId: item.objectID,
+                        }),
+                        {
+                          loading: "Adding reference...",
+                          success: (data) => {
+                            setQueryData(data)
 
-      <div className="my-8">
-        <h2 className="">Main file</h2>
-        <EditMainFile mainFile={mainFile} setQueryData={setQueryData} moduleEdit={moduleEdit} />
-      </div>
-
-      {/* Supporting files */}
-      <div className="my-8">
-        <h2>Supporting file(s)</h2>
-        {supportingRaw.files.length > 0 ? (
-          <>
-            {supportingRaw.files.map((file) => (
+                            return "Added reference!"
+                          },
+                          error: "Failed to add reference...",
+                        }
+                      )
+                    }
+                  },
+                  getItems() {
+                    return getAlgoliaResults({
+                      searchClient,
+                      queries: [
+                        {
+                          indexName: `${process.env.ALGOLIA_PREFIX}_modules`,
+                          query,
+                        },
+                      ],
+                    })
+                  },
+                  templates: {
+                    item({ item, components }) {
+                      return (
+                        <>
+                          {item.__autocomplete_indexName.match(/_modules/g) ? (
+                            <SearchResultModule item={item} />
+                          ) : (
+                            ""
+                          )}
+                        </>
+                      )
+                    },
+                    noResults() {
+                      return (
+                        <>
+                          {/* https://www.crossref.org/blog/dois-and-matching-regular-expressions/ */}
+                          {query.match(/^10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i) ? (
+                            <>
+                              <button
+                                className="text-gray-900 dark:text-gray-200 text-sm leading-4 font-normal"
+                                onClick={async () => {
+                                  toast.promise(createReferenceMutation({ doi: query }), {
+                                    loading: "Searching...",
+                                    success: "Reference added!",
+                                    error: "Could not add reference.",
+                                  })
+                                }}
+                              >
+                                Click here to add {query} to ResearchEquals database
+                              </button>
+                            </>
+                          ) : (
+                            <p className="text-gray-900 dark:text-gray-200 text-sm leading-4 font-normal">
+                              Input a DOI to add
+                            </p>
+                          )}
+                        </>
+                      )
+                    },
+                  },
+                },
+              ]}
+            />
+          </div>
+          <ol className="list-decimal list-outside my-4 pl-4 text-normal">
+            {moduleEdit?.references!.map((reference) => (
               <>
-                <EditSupportingFileDisplay
-                  name={file.original_filename}
-                  size={file.size}
-                  url={file.original_file_url}
-                  uuid={file.uuid}
-                  moduleId={moduleEdit!.id}
-                  setQueryData={setQueryData}
-                />
+                <li>
+                  <button className="mx-2">
+                    <TrashCan24
+                      className="w-6 h-6 fill-current text-red-500 inline-block align-middle"
+                      onClick={async () => {
+                        toast.promise(
+                          deleteReferenceMutation({
+                            currentId: moduleEdit?.id,
+                            disconnectId: reference.id,
+                          }),
+                          {
+                            loading: "Deleting reference...",
+                            success: (data) => {
+                              setQueryData(data)
+                              return `Removed reference: "${reference.title}"`
+                            },
+                            error: "Failed to delete reference...",
+                          }
+                        )
+                      }}
+                      aria-label="Delete reference"
+                    />
+                  </button>
+                  {reference.publishedWhere === "ResearchEquals" ? (
+                    <>
+                      {reference.authors.map((author, index) => (
+                        <>
+                          <Link href={Routes.HandlePage({ handle: author!.workspace!.handle })}>
+                            <a target="_blank">
+                              {author!.workspace!.lastName}, {author!.workspace!.firstName}
+                            </a>
+                          </Link>
+                          {index === reference.authors.length - 1 ? "" : "; "}
+                        </>
+                      ))}
+                    </>
+                  ) : (
+                    <>
+                      {reference!.authorsRaw!["object"] ? (
+                        <>
+                          {reference!.authorsRaw!["object"].map((author, index) => (
+                            <>
+                              {index === 3
+                                ? "[...]"
+                                : index > 3
+                                ? ""
+                                : author.given && author.family
+                                ? `${author.family}, ${author.given}`
+                                : `${author.name}`}
+                              {index === reference!.authorsRaw!["object"].length - 1 || index > 2
+                                ? ""
+                                : "; "}
+                            </>
+                          ))}
+                        </>
+                      ) : (
+                        <>
+                          <p className="italic">{reference.publishedWhere}</p>
+                        </>
+                      )}
+                    </>
+                  )}{" "}
+                  ({reference.publishedAt?.toISOString().substr(0, 4)}).{" "}
+                  <span className="font-semibold">{reference.title}</span>
+                  {reference.title.endsWith("." ? "" : ".")}{" "}
+                  <Link
+                    href={
+                      reference.publishedWhere === "ResearchEquals"
+                        ? Routes.ModulePage({ suffix: reference.suffix! })
+                        : reference.url!
+                    }
+                  >
+                    <a target="_blank">
+                      <span className="underline">{reference.url}</span>
+                    </a>
+                  </Link>
+                  . <span className="italic">{reference.publishedWhere}</span>.
+                </li>
               </>
             ))}
-          </>
-        ) : (
-          <></>
-        )}
-        <EditSupportingFiles setQueryData={setQueryData} moduleEdit={moduleEdit} />
+          </ol>
+        </div>
       </div>
-      {/* PLACEHOLDER References */}
       <div className="text-center">
-        {/* Publish module */}
-        {moduleEdit!.authors.filter((author) => author.readyToPublish !== true).length === 0 ? (
-          <PublishModuleModal module={module} />
-        ) : (
-          <></>
-        )}
-        {/* Delete module */}
-        <DeleteModuleModal module={module} />
+        <DeleteModuleModal module={module} setModule={setModule} fetchDrafts={fetchDrafts} />
       </div>
+      <ManageParents
+        open={previousOpen}
+        setOpen={setPreviousOpen}
+        moduleEdit={moduleEdit}
+        setQueryData={setQueryData}
+      />
     </div>
   )
 }
