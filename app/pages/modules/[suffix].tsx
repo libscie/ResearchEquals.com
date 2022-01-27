@@ -345,6 +345,8 @@ const ModulePage = ({ module }) => {
   const mainFile = module!.main as Prisma.JsonObject
   const supportingRaw = module!.supporting as Prisma.JsonObject
 
+  const authorsOG = module.authors.map((author) => author.workspace.avatar)
+
   return (
     <Layout
       title={`R= ${module.title}`}
@@ -367,6 +369,54 @@ const ModulePage = ({ module }) => {
           ) : (
             <meta name="tdm-reservation" content="0" />
           )}
+          <meta
+            property="og:image"
+            content={`http://og-images.herokuapp.com/api/module?title=${encodeURIComponent(
+              module.title
+            )}&type=${module.type.name}&doi=${module.prefix}/${
+              module.suffix
+            }&publishedAt=${module.publishedAt
+              .toISOString()
+              .substr(0, 10)}&avatars=${encodeURIComponent(authorsOG.join(";"))}&license=${
+              module.license.name
+            }`}
+          />
+          <meta
+            property="og:image:secure_url"
+            content={`http://og-images.herokuapp.com/api/module?title=${encodeURIComponent(
+              module.title
+            )}&type=${module.type.name}&doi=${module.prefix}/${
+              module.suffix
+            }&publishedAt=${module.publishedAt
+              .toISOString()
+              .substr(0, 10)}&avatars=${encodeURIComponent(authorsOG.join(";"))}&license=${
+              module.license.name
+            }`}
+          />
+          <meta
+            property="og:image:alt"
+            content={`Social media sharing image of the research module titled ${module.title}. It includes the type of module, ${module.type.name}, the DOI, ${module.prefix}/${module.suffix}, the license, ${module.license.name}, and a set of avatars for the ${module.authors.length} authors.`}
+          />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta property="twitter:domain" content="researchequals.com" />
+          <meta
+            property="twitter:url"
+            content={`https://doi.org/${module.prefix}/${module.suffix}`}
+          />
+          <meta name="twitter:title" content={module.title} />
+          <meta name="twitter:description" content={module.description} />
+          <meta
+            name="twitter:image"
+            content={`http://og-images.herokuapp.com/api/module?title=${encodeURIComponent(
+              module.title
+            )}&type=${module.type.name}&doi=${module.prefix}/${
+              module.suffix
+            }&publishedAt=${module.publishedAt
+              .toISOString()
+              .substr(0, 10)}&avatars=${encodeURIComponent(authorsOG.join(";"))}&license=${
+              module.license.name
+            }`}
+          />
         </>
       }
     >

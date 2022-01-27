@@ -214,6 +214,46 @@ const HandlePage = ({ workspace, expire, signature }) => {
         <>
           <meta property="og:title" content={workspace.firstName || workspace.handle} />
           {workspace.bio ? <meta property="og:description" content={workspace.bio} /> : ""}
+          <meta
+            property="og:image"
+            content={`http://og-images.herokuapp.com/api/workspace?title=${
+              encodeURIComponent(workspace.firstName) || ""
+            } ${encodeURIComponent(workspace.lastName) || ""}&avatar=${encodeURIComponent(
+              workspace.avatar
+            )}&handle=${encodeURIComponent(workspace.handle)}&orcid=${workspace.orcid || ""}`}
+          />
+          <meta
+            property="og:image:secure_url"
+            content={`http://og-images.herokuapp.com/api/workspace?title=${
+              encodeURIComponent(workspace.firstName) || ""
+            } ${encodeURIComponent(workspace.lastName) || ""}&avatar=${encodeURIComponent(
+              workspace.avatar
+            )}&handle=${encodeURIComponent(workspace.handle)}&orcid=${workspace.orcid || ""}`}
+          />
+          <meta
+            property="og:image:alt"
+            content={`Social media sharing image of the profile for ${workspace.handle}, including the avatar, name, handle, and ORCID.`}
+          />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta property="twitter:domain" content="researchequals.com" />
+          <meta property="twitter:url" content={`https://researchequals.com/${workspace.handle}`} />
+          <meta
+            name="twitter:title"
+            content={
+              workspace.firstName && workspace.lastName
+                ? `${workspace.firstName} ${workspace.lastName}`
+                : workspace.handle
+            }
+          />
+          {workspace.bio ? <meta name="twitter:description" content={workspace.bio} /> : ""}
+          <meta
+            name="twitter:image"
+            content={`http://og-images.herokuapp.com/api/workspace?title=${
+              encodeURIComponent(workspace.firstName) || ""
+            } ${encodeURIComponent(workspace.lastName) || ""}&avatar=${encodeURIComponent(
+              workspace.avatar
+            )}&handle=${encodeURIComponent(workspace.handle)}&orcid=${workspace.orcid || ""}`}
+          />
         </>
       }
     >
