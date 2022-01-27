@@ -116,6 +116,15 @@
       "contributions": [
         "userTesting"
       ]
+    },
+    {
+      "login": "teleyinex",
+      "name": "Daniel Lombraña González",
+      "avatar_url": "https://avatars.githubusercontent.com/u/131838?v=4",
+      "profile": "http://daniellombrana.es",
+      "contributions": [
+        "userTesting"
+      ]
     }
   ],
   "contributorsPerLine": 7,
