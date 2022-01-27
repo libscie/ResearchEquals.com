@@ -249,12 +249,10 @@ const HandlePage = ({ workspace, expire, signature }) => {
           <meta
             name="twitter:image"
             content={`http://og-images.herokuapp.com/api/workspace?title=${
-              workspace.firstName && workspace.lastName
-                ? encodeURIComponent(workspace.firstName + " " + workspace.lastName)
-                : ""
-            }&avatar=${encodeURIComponent(workspace.avatar)}&handle=${workspace.handle}&orcid=${
-              workspace.orcid
-            }`}
+              encodeURIComponent(workspace.firstName) || ""
+            } ${encodeURIComponent(workspace.lastName) || ""}&avatar=${encodeURIComponent(
+              workspace.avatar
+            )}&handle=${encodeURIComponent(workspace.handle)}&orcid=${workspace.orcid || ""}`}
           />
         </>
       }
