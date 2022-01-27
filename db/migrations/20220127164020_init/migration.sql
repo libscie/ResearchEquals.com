@@ -1,4 +1,7 @@
 -- CreateEnum
+CREATE TYPE "WorkspaceType" AS ENUM ('Individual', 'Group');
+
+-- CreateEnum
 CREATE TYPE "MembershipRole" AS ENUM ('OWNER', 'ADMIN', 'USER');
 
 -- CreateEnum
@@ -12,6 +15,7 @@ CREATE TABLE "Module" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "displayColor" TEXT NOT NULL DEFAULT E'#574cfa',
     "published" BOOLEAN NOT NULL DEFAULT false,
     "publishedAt" TIMESTAMP(3),
     "publishedWhere" TEXT,
@@ -35,9 +39,11 @@ CREATE TABLE "Module" (
 CREATE TABLE "License" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "source" TEXT NOT NULL DEFAULT E'ResearchEquals',
     "url" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
+    "name" TEXT,
     "price" INTEGER NOT NULL DEFAULT 0,
+    "price_id" TEXT,
 
     CONSTRAINT "License_pkey" PRIMARY KEY ("id")
 );
@@ -46,7 +52,7 @@ CREATE TABLE "License" (
 CREATE TABLE "ModuleType" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "wikidata" TEXT NOT NULL,
+    "wikidata" TEXT,
     "name" TEXT NOT NULL,
 
     CONSTRAINT "ModuleType_pkey" PRIMARY KEY ("id")
@@ -71,8 +77,11 @@ CREATE TABLE "Workspace" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "workspaceType" "WorkspaceType" NOT NULL DEFAULT E'Individual',
     "handle" TEXT NOT NULL,
     "avatar" TEXT,
+    "firstName" TEXT,
+    "lastName" TEXT,
     "name" TEXT,
     "bio" TEXT,
     "pronouns" VARCHAR(20),
@@ -169,16 +178,16 @@ CREATE TABLE "_WorkspaceToWorkspace" (
 CREATE UNIQUE INDEX "Module_prefix_suffix_key" ON "Module"("prefix", "suffix");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "License_url_name_key" ON "License"("url", "name");
+CREATE UNIQUE INDEX "License_url_key" ON "License"("url");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "ModuleType_name_key" ON "ModuleType"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Authorship_moduleId_workspaceId_key" ON "Authorship"("moduleId", "workspaceId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Workspace_handle_key" ON "Workspace"("handle");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Workspace_orcid_key" ON "Workspace"("orcid");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Membership_workspaceId_invitedEmail_key" ON "Membership"("workspaceId", "invitedEmail");
