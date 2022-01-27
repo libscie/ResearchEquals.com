@@ -234,6 +234,28 @@ const HandlePage = ({ workspace, expire, signature }) => {
             property="og:image:alt"
             content={`Social media sharing image of the profile for ${workspace.handle}, including the avatar, name, handle, and ORCID.`}
           />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta property="twitter:domain" content="researchequals.com" />
+          <meta property="twitter:url" content={`https://researchequals.com/${workspace.handle}`} />
+          <meta
+            name="twitter:title"
+            content={
+              workspace.firstName && workspace.lastName
+                ? `${workspace.firstName} ${workspace.lastName}`
+                : workspace.handle
+            }
+          />
+          {workspace.bio ? <meta name="twitter:description" content={workspace.bio} /> : ""}
+          <meta
+            name="twitter:image"
+            content={`http://og-images.herokuapp.com/api/workspace?title=${
+              workspace.firstName && workspace.lastName
+                ? encodeURIComponent(workspace.firstName + " " + workspace.lastName)
+                : ""
+            }&avatar=${encodeURIComponent(workspace.avatar)}&handle=${workspace.handle}&orcid=${
+              workspace.orcid
+            }`}
+          />
         </>
       }
     >
