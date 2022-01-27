@@ -1,7 +1,7 @@
 # ResearchEquals.com <img src="https://pbs.twimg.com/profile_images/1457432990661890059/OXxEMPhf_400x400.jpg" align="right" height="64" />
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-12-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-13-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Discord online](https://img.shields.io/discord/933331539276759070?label=discord&style=flat-square)](https://discord.gg/SefsGJWWSw)
@@ -52,6 +52,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/AerynThrace"><img src="https://avatars.githubusercontent.com/u/51057483?v=4?s=100" width="100px;" alt=""/><br /><sub><b>AerynThrace</b></sub></a><br /><a href="#userTesting-AerynThrace" title="User Testing">📓</a></td>
     <td align="center"><a href="https://github.com/samteplitzky"><img src="https://avatars.githubusercontent.com/u/13663076?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Sam Teplitzky</b></sub></a><br /><a href="#userTesting-samteplitzky" title="User Testing">📓</a></td>
     <td align="center"><a href="http://metasciencelab.elte.hu/index.php/members/marton-kovacs/"><img src="https://avatars.githubusercontent.com/u/43272864?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Marton Kovacs</b></sub></a><br /><a href="#userTesting-marton-balazs-kovacs" title="User Testing">📓</a></td>
+    <td align="center"><a href="http://daniellombrana.es"><img src="https://avatars.githubusercontent.com/u/131838?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Daniel Lombraña González</b></sub></a><br /><a href="#userTesting-teleyinex" title="User Testing">📓</a></td>
   </tr>
 </table>
 
