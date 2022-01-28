@@ -37,17 +37,17 @@ const SignupPage: BlitzPage = () => {
         toast.promise(signupMutation(values), {
           loading: "Signing up...",
           success: "Success!",
-          error: "Hmm that didn't work...",
+          error: (error) => {
+            if (error.code === "P2002" && error.meta?.target?.includes("email")) {
+              return "This email is already being used"
+            } else if (error.code === "P2002" && error.meta?.target?.includes("handle")) {
+              return "This handle is already being used"
+            } else {
+              return error.toString()
+            }
+          },
         })
-      } catch (error) {
-        if (error.code === "P2002" && error.meta?.target?.includes("email")) {
-          alert("This email is already being used")
-        } else if (error.code === "P2002" && error.meta?.target?.includes("handle")) {
-          alert("This handle is already being used")
-        } else {
-          alert(error.toString())
-        }
-      }
+      } catch (error) {}
     },
   })
 
