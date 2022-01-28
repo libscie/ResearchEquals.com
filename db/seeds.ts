@@ -1,6 +1,5 @@
 import db from "db"
 import moment from "moment"
-import faker from "faker"
 import algoliasearch from "algoliasearch"
 import generateSuffix from "../app/modules/mutations/generateSuffix"
 
@@ -157,135 +156,135 @@ const seed = async () => {
       skipDuplicates: true,
     })
 
-    let user
-    for (let index = 0; index < 50; index++) {
-      user = await db.user.create({
-        data: {
-          email: faker.internet.email(),
-          role: "CUSTOMER",
-          memberships: {
-            create: [
-              {
-                role: "OWNER",
-                workspace: {
-                  create: {
-                    handle: faker.internet.userName().toLowerCase(),
-                    avatar: faker.image.abstract(),
-                    firstName: faker.name.findName(),
-                    lastName: faker.name.findName(),
-                    url: faker.internet.url(),
-                  },
-                },
-              },
-            ],
-          },
-        },
-        include: {
-          memberships: {
-            include: {
-              workspace: true,
-            },
-          },
-        },
-      })
+    //   let user
+    //   for (let index = 0; index < 50; index++) {
+    //     user = await db.user.create({
+    //       data: {
+    //         email: faker.internet.email(),
+    //         role: "CUSTOMER",
+    //         memberships: {
+    //           create: [
+    //             {
+    //               role: "OWNER",
+    //               workspace: {
+    //                 create: {
+    //                   handle: faker.internet.userName().toLowerCase(),
+    //                   avatar: faker.image.abstract(),
+    //                   firstName: faker.name.findName(),
+    //                   lastName: faker.name.findName(),
+    //                   url: faker.internet.url(),
+    //                 },
+    //               },
+    //             },
+    //           ],
+    //         },
+    //       },
+    //       include: {
+    //         memberships: {
+    //           include: {
+    //             workspace: true,
+    //           },
+    //         },
+    //       },
+    //     })
 
-      user!.memberships!.map(async (membership) => {
-        await algIndex.saveObject({
-          objectID: membership.workspace.id,
-          firstName: membership.workspace.firstName,
-          lastName: membership.workspace.lastName,
-          handle: membership.workspace.handle,
-          avatar: membership.workspace.avatar,
-          pronouns: membership.workspace.pronouns,
-        })
-      })
-    }
+    //     user!.memberships!.map(async (membership) => {
+    //       await algIndex.saveObject({
+    //         objectID: membership.workspace.id,
+    //         firstName: membership.workspace.firstName,
+    //         lastName: membership.workspace.lastName,
+    //         handle: membership.workspace.handle,
+    //         avatar: membership.workspace.avatar,
+    //         pronouns: membership.workspace.pronouns,
+    //       })
+    //     })
+    //   }
 
-    let datetime
-    let suffix
-    let module
-    for (let index = 0; index < 10; index++) {
-      datetime = Date.now()
-      suffix = await generateSuffix(undefined)
-      module = await db.module.create({
-        data: {
-          prefix: "10.53962",
-          suffix: await generateSuffix(undefined),
-          title: faker.lorem.sentence(),
-          description: faker.lorem.sentences(5 * (index + 1)),
-          published: true,
-          publishedWhere: "ResearchEquals",
-          publishedAt: faker.date.past(),
-          url: `https://doi.org/10.53962/${suffix}`,
-          main: {
-            name: faker.system.fileName(),
-            size: 603268,
-            uuid: faker.datatype.uuid(),
-            cdnUrl: faker.image.cats(),
-            isImage: true,
-            isStored: true,
-            mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            sourceInfo: { file: {}, source: "local" },
-            originalUrl: faker.image.cats(),
-            cdnUrlModifiers: null,
-            originalImageInfo: null,
-          },
-          type: {
-            connect: { id: 2 },
-          },
-          license: {
-            connect: { id: 1 },
-          },
-          authors: {
-            create: [
-              {
-                workspaceId: 1,
-                acceptedInvitation: true,
-              },
-              {
-                workspaceId: 2,
-                acceptedInvitation: true,
-              },
-              {
-                workspaceId: 3,
-                acceptedInvitation: true,
-              },
-              {
-                workspaceId: 4,
-                acceptedInvitation: true,
-              },
-              {
-                workspaceId: 5,
-                acceptedInvitation: true,
-              },
-              {
-                workspaceId: 6,
-                acceptedInvitation: true,
-              },
-              {
-                workspaceId: 7,
-                acceptedInvitation: true,
-              },
-            ],
-          },
-        },
-        include: {
-          type: true,
-          license: true,
-        },
-      })
-      await modIndex.saveObject({
-        objectID: module.id,
-        doi: `${process.env.DOI_PREFIX}/${module.suffix}`,
-        suffix: module.suffix,
-        license: module.license?.url,
-        type: module.type.name,
-        // It's called name and not title to improve Algolia search
-        name: module.title,
-        description: module.description,
-        publishedAt: module.publishedAt,
-      })
-    }
+    //   let datetime
+    //   let suffix
+    //   let module
+    //   for (let index = 0; index < 10; index++) {
+    //     datetime = Date.now()
+    //     suffix = await generateSuffix(undefined)
+    //     module = await db.module.create({
+    //       data: {
+    //         prefix: "10.53962",
+    //         suffix: await generateSuffix(undefined),
+    //         title: faker.lorem.sentence(),
+    //         description: faker.lorem.sentences(5 * (index + 1)),
+    //         published: true,
+    //         publishedWhere: "ResearchEquals",
+    //         publishedAt: faker.date.past(),
+    //         url: `https://doi.org/10.53962/${suffix}`,
+    //         main: {
+    //           name: faker.system.fileName(),
+    //           size: 603268,
+    //           uuid: faker.datatype.uuid(),
+    //           cdnUrl: faker.image.cats(),
+    //           isImage: true,
+    //           isStored: true,
+    //           mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    //           sourceInfo: { file: {}, source: "local" },
+    //           originalUrl: faker.image.cats(),
+    //           cdnUrlModifiers: null,
+    //           originalImageInfo: null,
+    //         },
+    //         type: {
+    //           connect: { id: 2 },
+    //         },
+    //         license: {
+    //           connect: { id: 1 },
+    //         },
+    //         authors: {
+    //           create: [
+    //             {
+    //               workspaceId: 1,
+    //               acceptedInvitation: true,
+    //             },
+    //             {
+    //               workspaceId: 2,
+    //               acceptedInvitation: true,
+    //             },
+    //             {
+    //               workspaceId: 3,
+    //               acceptedInvitation: true,
+    //             },
+    //             {
+    //               workspaceId: 4,
+    //               acceptedInvitation: true,
+    //             },
+    //             {
+    //               workspaceId: 5,
+    //               acceptedInvitation: true,
+    //             },
+    //             {
+    //               workspaceId: 6,
+    //               acceptedInvitation: true,
+    //             },
+    //             {
+    //               workspaceId: 7,
+    //               acceptedInvitation: true,
+    //             },
+    //           ],
+    //         },
+    //       },
+    //       include: {
+    //         type: true,
+    //         license: true,
+    //       },
+    //     })
+    //     await modIndex.saveObject({
+    //       objectID: module.id,
+    //       doi: `${process.env.DOI_PREFIX}/${module.suffix}`,
+    //       suffix: module.suffix,
+    //       license: module.license?.url,
+    //       type: module.type.name,
+    //       // It's called name and not title to improve Algolia search
+    //       name: module.title,
+    //       description: module.description,
+    //       publishedAt: module.publishedAt,
+    //     })
+    //   }
   }
 }
 
