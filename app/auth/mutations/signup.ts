@@ -16,14 +16,23 @@ export default resolver.pipe(
   async ({ email, password, handle }, ctx: Ctx) => {
     // This prevents people registering handles that are also page routes
     const forbiddenHandles = [
-      "imprint",
-      "privacy",
-      "login",
-      "signup",
+      "404",
       "browse",
-      "terms",
       "coc",
+      "dashboard",
+      "dpa",
+      "drafts",
+      "faq",
+      "forgot-password",
+      "imprint",
+      "invitations",
+      "login",
       "privacy",
+      "reset-password",
+      "right-of-withdrawal",
+      "security",
+      "signup",
+      "terms",
     ]
 
     if (
