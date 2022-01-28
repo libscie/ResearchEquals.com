@@ -137,6 +137,7 @@
     }
   ],
   "contributorsPerLine": 7,
+  "contributorsSortAlphabetically": true,
   "projectName": "ResearchEquals.com",
   "projectOwner": "libscie",
   "repoType": "github",
