@@ -1,18 +1,7 @@
 import { ReactNode, useEffect } from "react"
-import { Head, Link } from "blitz"
+import { Head, Link, Routes } from "blitz"
 import CookieConsent, { Cookies, getCookieConsentValue } from "react-cookie-consent"
 import { Toaster } from "react-hot-toast"
-import Chatra from "@chatra/chatra"
-
-let config = {
-  setup: {
-    colors: {
-      buttonText: "#fff",
-      buttonBg: "#574cfa",
-    },
-  },
-  ID: "vZo7KBf3WqmQPPasZ",
-}
 
 type LayoutProps = {
   title?: string
@@ -21,11 +10,10 @@ type LayoutProps = {
 }
 
 const Layout = ({ title, children, headChildren }: LayoutProps) => {
-  useEffect(() => {
-    if (getCookieConsentValue("researchequals-website-cookie") === "true") {
-      Chatra("init", config)
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (getCookieConsentValue("researchequals-website-cookie") === "true") {
+  //   }
+  // }, [])
 
   return (
     <>
@@ -46,6 +34,7 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
           fontSize: "1rem",
           left: "50",
           maxWidth: "100%",
+          borderTop: "1px solid #fff",
         }}
         buttonText="Accept"
         declineButtonText="Decline"
@@ -61,19 +50,16 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
           fontSize: "1rem",
         }}
         expires={150}
-        onAccept={() => {
-          Chatra("init", config)
-        }}
+        onAccept={() => {}}
         enableDeclineButton
       >
-        Essential cookies are required for security purposes. Optional cookies for live chat can be
-        declined or accepted. See also our{" "}
-        <Link href="/privacy">
+        We use cookies and local storage for essential purposes. You can withdraw your consent for
+        optional cookies at any time. See also our{" "}
+        <Link href={Routes.PrivacyPage()}>
           <a className="hover:no-underline hover:text-white underline" target="_blank">
             Privacy policy
           </a>
         </Link>
-        .
       </CookieConsent>
     </>
   )
