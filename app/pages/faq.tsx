@@ -13,7 +13,32 @@ import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 const termsMarkdown = `
 # FAQ
 
-## What files can I upload as part of a module?
+## Publishing
+
+### What payment options can I use to complete my orders?
+
+You can use a variety of payment options, among which:
+
+- Apple Pay
+- Bancontact
+- Cartes Bancaires
+- Credit card
+- EPS
+- giropay
+- Google Pay
+- iDeal
+- Klarna
+- Przelewy24
+
+Some of these payment options, such as Apple Pay and Google Pay, may only be available in certain supported browsers.
+
+### When will my module be published?
+
+As soon as you press publish! If you are publishing under a restrictive license, the publication will be completed after your payment is completed.
+
+## Research modules
+
+### What files can I upload as part of a module?
 
 You may upload any file with an Open File Format. This includes common files such as PDFs, Word files, and many more. Want to ensure a specific file can be uploaded? Ask us on [info@libscie.org](mailto:info@libscie.org).
 
