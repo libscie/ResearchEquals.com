@@ -181,50 +181,50 @@ The Parties shall set out in Annex III all other elements to be provided by the 
 
 ## List of parties
 
-Controller(s): [Identity and contact details of the controller(s), and, where applicable, of the controller's data protection officer]
+**Controller(s):** *[Identity and contact details of the controller(s), and, where applicable, of the controller's data protection officer]*
 
-The User as defined in the Agreement above.
+The User as defined in [the Agreement](https://researchequals.com/terms) above.
 
-Processor(s): [Identity and contact details of the processor(s) and, where applicable, of the processor's data protection officer]
+**Processor(s):** *[Identity and contact details of the processor(s) and, where applicable, of the processor's data protection officer]*
 
-LibScie as defined in the Agreement above.
+LibScie as defined in [the Agreement](https://researchequals.com/terms) above.
 
 
 # ANNEX II
 
 ## Description of the processing
 
-Categories of data subjects whose personal data is processed
+*Categories of data subjects whose personal data is processed*
 
 -	Any data subjects whose data is part of the Content uploaded and Research Modules published by the User.
 
-Categories of personal data processed
+*Categories of personal data processed*
 
 -	Any categories of personal data contained in the Content and Research Modules
 
-Sensitive data processed (if applicable) and applied restrictions or safeguards that fully take into consideration the nature of the data and the risks involved, such as for instance strict purpose limitation, access restrictions (including access only for staff having followed specialised training), keeping a record of access to the data, restrictions for onward transfers or additional security measures.
+*Sensitive data processed (if applicable) and applied restrictions or safeguards that fully take into consideration the nature of the data and the risks involved, such as for instance strict purpose limitation, access restrictions (including access only for staff having followed specialised training), keeping a record of access to the data, restrictions for onward transfers or additional security measures.*
 
 -	The categories of personal data may include sensitive data depending on the Content uploaded by the User. Since LibScie has no knowledge of the specific categories processed it lies in the User's responsibility to ensure that the safeguards are sufficient to process the specific categories of personal date.
 
-Nature of the processing
+*Nature of the processing*
 
 -	Any processing necessary to fulfil the contractual purposes. Especially collection, storage, disclosure and dissemination and making publicly available as well as anonymization and/or deletion.
 
-Purpose(s) for which the personal data is processed on behalf of the controller
+*Purpose(s) for which the personal data is processed on behalf of the controller*
 
 -	Publishing the Content as Research Modules on the Platform and making them available to the public.
 
-Duration of the processing
+*Duration of the processing*
 
 -	The rules of the Agreement regarding the Term and Termination apply.
 
-For processing by (sub-) processors, also specify subject matter, nature and duration of the processing
+*For processing by (sub-) processors, also specify subject matter, nature and duration of the processing*
  
 # ANNEX III
 
-Technical and organisational measures including technical and organisational measures to ensure the security of the data
+## Technical and organisational measures including technical and organisational measures to ensure the security of the data
 
-Please find a description of our most recent technical and organizational measures under […].
+Please find a description of our most recent technical and organizational measures under [https://researchequals.com/security](https://researchequals.com/security).
 
 # ANNEX IV
 
