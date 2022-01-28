@@ -33,7 +33,6 @@ export default resolver.pipe(
       throw Error("Handle not allowed")
     }
     const hashedPassword = await SecurePassword.hash(password.trim())
-    const hexColor = Math.floor(Math.random() * 16777215).toString(16)
     const user = await db.user.create({
       data: {
         email: email.toLowerCase().trim(),
@@ -45,7 +44,7 @@ export default resolver.pipe(
             workspace: {
               create: {
                 handle: handle.toLowerCase(),
-                avatar: `https://eu.ui-avatars.com/api/?rounded=true&background=${hexColor}&name=${handle}`,
+                avatar: `https://eu.ui-avatars.com/api/?rounded=true&background=574cfa&color=ffffff&name=${handle}`,
               },
             },
           },
