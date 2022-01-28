@@ -67,11 +67,11 @@ In cases where research purposes may provide exception to these rules, the User 
     1. A non-exclusive, non-transferable, worldwide right to copy the Content and to make all adaptions necessary to import the Content onto the Platform;
     2. Making the Content available to be viewed on or downloaded from the Platform by other Users;
     3. A non-exclusive, transferable, worldwide right to copy the Content, display the Content in public and to make the Content perceivable to the public as well as publicly available on the platform; and
-    4. A perpetual, non-exclusive, transferable, worldwide right to copy and analyze the Content as well as make all necessary adaptions to it for LibScie’s own business purposes.
+    4. A perpetual, non-exclusive, transferable, worldwide right to copy and analyze the Content as well as make all necessary adaptions to it for LibScie's own business purposes.
 
 6. The User warrants that the User is entitled and has the full right and legal authority to enter into this Agreement and to grant all necessary rights and licenses and that by doing so neither the User nor LibScie will infringe the rights of any third party. If the User is only a co-creator of the Content, the User warrants that the User has the permission of all other co-creators to grant LibScie all rights pursuant to this Section 5. The User will name all co-creators in the respective fields on the Platform.
-7. The User understands that a published Research Module will be constantly available on the Platform independent of the User having an active account. The deletion of a Re-search Module is only possible under very special and very rare circumstances and only after due scientific process.
-8. Depending on the type of license the User chooses, the following rules apply additional-ly. The license that the User grants to LibScie under Section 5.1.2 remains untouched by this choice.
+7. The User understands that a published Research Module will be constantly available on the Platform independent of the User having an active account. The deletion of a Research Module is only possible under very special and very rare circumstances and only after due scientific process.
+8. Depending on the type of license the User chooses, the following rules apply additionally. The license that the User grants to LibScie under Section 5.1.2 remains untouched by this choice.
 
 ### 5.2 Licensing for free under CC0 and CC BY 4.0 (“Zero Cost”)
 
@@ -94,7 +94,7 @@ In cases where research purposes may provide exception to these rules, the User 
 
 ## 7. Term and Termination
 
-1. The term of this Agreement commences with the User’s registration. Both parties can terminate the Agreement with effect to the end of each month by sending a termina-tion notice at least in written form (email to suffice). The User can delete their Account at any time. Deleting the Account will not affect published Research Modules on the Platform and Workspaces linked to these Modules.
+1. The term of this Agreement commences with the User's registration. Both parties can terminate the Agreement with effect to the end of each month by sending a termination notice at least in written form (email to suffice). The User can delete their Account at any time. Deleting the Account will not affect published Research Modules on the Platform and Workspaces linked to these Modules.
 2. The right of both parties to terminate this Agreement for good cause shall remain unaffected.
 3. The licenses granted by the User to LibScie as well as the publication of the metadata of the Research Module on the Platform shall remain unaffected by the termination.
 
@@ -111,18 +111,18 @@ If the User is a Consumer and chooses a Pay to Close License model, the statutor
 
 1. LibScie shall be liable in accordance with the statutory provisions.
 2. The User is responsible for ensuring the routine backup of User data, in particular the Content uploaded onto the Platform. Irrespective of Sections 9.1 to 9.6 of these Terms, if the User suffers damages that result from the loss of data, LibScie shall in each case only be liable for such damages that could not have been avoided by carrying out data backups of all relevant data in regular intervals.
-3. The User agrees to indemnify, defend and hold LibScie, its officers, directors, agents, affiliates, distribution partners, licensors and suppliers harmless from and against any and all claims, actions, proceedings, costs, liabilities, losses and expenses (including, but not limited to, reasonable attorneys’ fees) (collectively, “Claims”) suffered or incurred by such indemnified parties resulting from or arising out of any actual or alleged breach of the User’s obligations, warranties and guarantees under these Terms or violation of any third party’s rights, provided that the breach or violation in question was or would have been a culpable breach or violation. LibScie shall inform the User without delay of any such Claim, and will provide the User with any reasonably available information on the Claim to facilitate the User’s cooperation in defending against the Claim. The User shall cooperate as fully as reasonably required in the defense of any Claim. LibScie reserves the right, at its own expense, to assume the exclusive defense and control of any matter subject to indemnification by the User.
+3. The User agrees to indemnify, defend and hold LibScie, its officers, directors, agents, affiliates, distribution partners, licensors and suppliers harmless from and against any and all claims, actions, proceedings, costs, liabilities, losses and expenses (including, but not limited to, reasonable attorneys' fees) (collectively, “Claims”) suffered or incurred by such indemnified parties resulting from or arising out of any actual or alleged breach of the User's obligations, warranties and guarantees under these Terms or violation of any third party's rights, provided that the breach or violation in question was or would have been a culpable breach or violation. LibScie shall inform the User without delay of any such Claim, and will provide the User with any reasonably available information on the Claim to facilitate the User's cooperation in defending against the Claim. The User shall cooperate as fully as reasonably required in the defense of any Claim. LibScie reserves the right, at its own expense, to assume the exclusive defense and control of any matter subject to indemnification by the User.
 
 ## 11. Right of Withdrawal
 
-If the user acts as a Consumer, the User has a fourteen-day right of withdrawal. Regarding this right of withdrawal, please refer to [the Addendum 1](https://researchequals.com/addenda#addendum-1).
+If the user acts as a Consumer, the User has a fourteen-day right of withdrawal. Regarding this right of withdrawal, please refer to [the Addendum 1](https://researchequals.com/right-of-withdrawal).
 
 ## 12. Data Protection
 
-1. For a comprehensive information on how LibScie collects, processes or uses personal data of the User in the context of the Agreement and the usage of the Platform, please refer to LibScie’s [Privacy Policy](https://researchequals.com/privacy).
-2. Insofar as the Content, Research Modules or any other material of the User that the User provides to the Platform to make it publicly available contains personal data of third parties, the User remains the controller of such data and LibScie shall act as the User’s processor of personal data pursuant to the GDPR. For these purposes, the parties conclude the data processing agreement in [Addendum 2](https://researchequals.com/addenda#addendum-2).
+1. For a comprehensive information on how LibScie collects, processes or uses personal data of the User in the context of the Agreement and the usage of the Platform, please refer to LibScie's [Privacy Policy](https://researchequals.com/privacy).
+2. Insofar as the Content, Research Modules or any other material of the User that the User provides to the Platform to make it publicly available contains personal data of third parties, the User remains the controller of such data and LibScie shall act as the User's processor of personal data pursuant to the GDPR. For these purposes, the parties conclude the data processing agreement in [Addendum 2](https://researchequals.com/dpa).
 3. It is stated for clarification that LibScie will act as a processor only with regard to personal data included in the Content or Research Module and not with regard to the Content or Research Module as such.
-4. The parties agree that LibScie may fulfil any deletion request based on [the Data Processing Agreement](https://researchequals.com/addenda#addendum-2), especially according to its Clause 10 (d), by anonymization of the personal data included in the Content and/or Research Module instead of deleting the Content and/or Research Module itself. For the deletion of the Research Module itself Section 5 of the Terms applies.
+4. The parties agree that LibScie may fulfil any deletion request based on [the Data Processing Agreement](https://researchequals.com/dpa), especially according to its Clause 10 (d), by anonymization of the personal data included in the Content and/or Research Module instead of deleting the Content and/or Research Module itself. For the deletion of the Research Module itself Section 5 of the Terms applies.
 
 ## 13. Changes to the Terms
 
@@ -132,7 +132,7 @@ If the user acts as a Consumer, the User has a fourteen-day right of withdrawal.
 
 ## 14. Miscellaneous
 
-1. The sole place of jurisdiction for all differences arising out of or in connection with this Agreement shall be Berlin, Germany if the User is a merchant pursuant to the German Commercial Code (Handelsgesetzbuch), a legal entity of public law or a public special fund. Additionally, this shall be the case if the User’s place of residence or usual place of residence is unknown at the time of making the complaint is filed or it is moved out of the scope of the German Code of Civil Procedure after the Agreement is concluded. Statutory provisions regarding exclusive jurisdiction shall remain unaffected.
+1. The sole place of jurisdiction for all differences arising out of or in connection with this Agreement shall be Berlin, Germany if the User is a merchant pursuant to the German Commercial Code (Handelsgesetzbuch), a legal entity of public law or a public special fund. Additionally, this shall be the case if the User's place of residence or usual place of residence is unknown at the time of making the complaint is filed or it is moved out of the scope of the German Code of Civil Procedure after the Agreement is concluded. Statutory provisions regarding exclusive jurisdiction shall remain unaffected.
 2. This Agreement shall be governed and construed in accordance with the laws of the Federal Republic of Germany under exclusion of German International Private Law and the UN Convention on the International Sale of Movable Goods.
 3. If any provision of this Agreement is entirely or partly invalid or unenforceable, this shall not affect the validity and enforceability of any other provision of this Agreement. The invalid or unenforceable provision shall be regarded as replaced by such valid and enforceable provision that as closely as possible reflects the economic purpose that both parties hereto had pursued with the invalid or unenforceable provision.
 4. The European Commission provides an Online Dispute Resolution (ODR) platform for the out-of-court resolution of disputes concerning contractual obligations with consumers as it is defined in Article 4 of EU Directive No 11/2013. The platform can be accessed under [http://ec.europa.eu/consumers/odr/](http://ec.europa.eu/consumers/odr/). Neither does LibScie participates in such ODR nor does LibScie use alternative dispute resolution (ADR) procedures to resolve disputes with consumers.
@@ -151,7 +151,6 @@ Berlin, January 2022
 const md = new Markdown()
 
 const TermsPage: BlitzPage = () => {
-  const datetime = new Date()
   const currentUser = useCurrentUser()
   const session = useSession()
   const currentWorkspace = useCurrentWorkspace()
