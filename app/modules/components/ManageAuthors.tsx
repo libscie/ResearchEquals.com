@@ -1,29 +1,11 @@
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
-import { DragDropContext, Droppable, DroppableProvided } from "react-beautiful-dnd"
 import { useMutation } from "blitz"
 import { Checkmark32, Close32 } from "@carbon/icons-react"
 
 import updateAuthorRank from "../../authorship/mutations/updateAuthorRank"
 import AuthorList from "../../core/components/AuthorList"
-
-// https://www.npmjs.com/package/array-move
-function arrayMoveMutable(array, fromIndex, toIndex) {
-  const startIndex = fromIndex < 0 ? array.length + fromIndex : fromIndex
-
-  if (startIndex >= 0 && startIndex < array.length) {
-    const endIndex = toIndex < 0 ? array.length + toIndex : toIndex
-
-    const [item] = array.splice(fromIndex, 1)
-    array.splice(endIndex, 0, item)
-  }
-}
-
-function arrayMoveImmutable(array, fromIndex, toIndex) {
-  array = [...array]
-  arrayMoveMutable(array, fromIndex, toIndex)
-  return array
-}
+import toast from "react-hot-toast"
 
 const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
   const [authorState, setAuthorState] = useState(moduleEdit!.authors)
@@ -67,13 +49,13 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
                   <div className="mt-6 px-4 sm:px-6 text-sm leading-5 font-normal border-b border-gray-400 dark:border-gray-600 pb-4 dark:text-white">
                     Here you can manage your current and invited co-authors. Everyone needs to
                     approve the module before it can be published. You can rearrange authors by
-                    dragging and dropping them.
+                    clicking on the up and down arrows.
                   </div>
                   {/* Replace with your content */}
                   <ul className="relative flex-1 divide-y divide-gray-400 dark:divide-gray-600">
                     <AuthorList
-                      authors={moduleEdit.authors}
-                      setAuthorState={setQueryData}
+                      authors={authorState}
+                      setAuthorState={setAuthorState}
                       suffix={moduleEdit!.suffix}
                     />
                   </ul>
@@ -96,15 +78,16 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
                       type="submit"
                       className="flex py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
                       onClick={() => {
-                        // authorState.map(async (author) => {
-                        //   const updatedModule = await updateAuthorRankMutation({
-                        //     id: author.id,
-                        //     rank: author.authorshipRank,
-                        //     suffix: moduleEdit!.suffix,
-                        //   })
-                        //   console.log(`Updated ${author.id} to rank ${author.authorshipRank}`)
-                        //   setQueryData(updatedModule!)
-                        // })
+                        // console.log(authorState)
+                        authorState.map(async (author, index) => {
+                          const updatedModule = await updateAuthorRankMutation({
+                            id: author.id,
+                            rank: index,
+                            suffix: moduleEdit!.suffix,
+                          })
+                          setQueryData(updatedModule)
+                        })
+                        toast.success("Rearranged authors")
                         setOpen(false)
                       }}
                     >

@@ -99,11 +99,6 @@ const ModuleEdit = ({
     formik.setFieldValue("license", moduleEdit!.license!.id.toString())
   }, [moduleEdit])
 
-  console.log(
-    moduleEdit?.authors.filter(
-      (author) => !!author.workspace!.firstName || !!author.workspace!.lastName
-    )
-  )
   return (
     <div className="p-5 max-w-7xl mx-auto overflow-y-auto text-base">
       {/* Publish module */}
