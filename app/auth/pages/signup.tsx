@@ -178,7 +178,7 @@ const SignupPage: BlitzPage = () => {
                     Terms of use
                   </a>
                 </Link>{" "}
-                and{" "}
+                and to the processing of my personal data according to the{" "}
                 <Link href="/privacy">
                   <a
                     target="_blank"
@@ -231,7 +231,7 @@ const SignupPage: BlitzPage = () => {
               </Switch>
               <p className="mx-2 text-gray-500 dark:text-gray-100 font-normal text-base">
                 I agree to the{" "}
-                <Link href="https://libscie.notion.site/Code-of-Conduct-580ab64832a2478fad7d9dfad9d3da15">
+                <Link href={Routes.CodeOfConduct()}>
                   <a
                     target="_blank"
                     className="text-gray-700 dark:text-gray-100 underline focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500"

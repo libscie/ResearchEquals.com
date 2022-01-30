@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react"
 import getLicenses from "app/core/queries/getLicenses"
 import getTypes from "app/core/queries/getTypes"
-import { useMutation, useQuery, validateZodSchema } from "blitz"
+import { Link, useMutation, useQuery, validateZodSchema } from "blitz"
 import { useFormik } from "formik"
 import { Fragment, useState } from "react"
 import { z } from "zod"
@@ -164,7 +164,12 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             {formik.touched.type && formik.errors.type
                               ? " - " + formik.errors.type
                               : null}
-                            <p className="text-xs">Missing something? Let us know in the chat!</p>
+                            <p className="text-xs">
+                              Missing something?{" "}
+                              <Link href="mailto:info@libscie.org?subject=Missing module type">
+                                <a className="underline">Let us know!</a>
+                              </Link>
+                            </p>
                           </label>
                           <div className="mt-1">
                             <select
@@ -207,7 +212,10 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                                 <>
                                   <option value={license.id} className="text-gray-900">
                                     {license.name} (
-                                    {license.price > 0 ? `${license.price / 100}EUR` : "Free"})
+                                    {license.price > 0
+                                      ? `${license.price / 100}EUR incl. VAT`
+                                      : "Free"}
+                                    )
                                   </option>
                                 </>
                               ))}
