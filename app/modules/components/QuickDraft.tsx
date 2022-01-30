@@ -1,19 +1,21 @@
 import { Dialog, Transition } from "@headlessui/react"
 import getLicenses from "app/core/queries/getLicenses"
 import getTypes from "app/core/queries/getTypes"
-import { Link, useMutation, useQuery, validateZodSchema } from "blitz"
+import { Link, useMutation, useQuery, validateZodSchema, useRouter } from "blitz"
 import { useFormik } from "formik"
 import { Fragment, useState } from "react"
 import { z } from "zod"
 import { Checkmark32, Close32, HelpFilled32 } from "@carbon/icons-react"
 
 import createModule from "../mutations/createModule"
+import toast from "react-hot-toast"
 
 const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
   const [openCreate, setCreateOpen] = useState(false)
   const [moduleTypes] = useQuery(getTypes, undefined)
   const [licenses] = useQuery(getLicenses, undefined)
   const [createModuleMutation] = useMutation(createModule)
+  const router = useRouter()
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -33,21 +35,44 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
       })
     ),
     onSubmit: async (values) => {
-      try {
-        await createModuleMutation({
+      toast.promise(
+        createModuleMutation({
           title: values.title,
           description: values.description,
           typeId: parseInt(values.type),
           licenseId: parseInt(values.license),
           authors: [],
           displayColor: values.displayColor,
-        })
-        refetchFn()
-        setCreateOpen(false)
-        formikReset()
-      } catch (error) {
-        alert(error.toString())
-      }
+        }),
+        {
+          loading: "Creating draft...",
+          success: (data) => {
+            refetchFn()
+            setCreateOpen(false)
+            formikReset()
+            router.push(`/drafts?suffix=${data}`)
+            return "Created!"
+          },
+          error: (error) => {
+            return error
+          },
+        }
+      )
+      // try {
+      //   await createModuleMutation({
+      //     title: values.title,
+      //     description: values.description,
+      //     typeId: parseInt(values.type),
+      //     licenseId: parseInt(values.license),
+      //     authors: [],
+      //     displayColor: values.displayColor,
+      //   })
+      //   refetchFn()
+      //   setCreateOpen(false)
+      //   formikReset()
+      // } catch (error) {
+      //   alert(error.toString())
+      // }
     },
   })
 
