@@ -12,6 +12,16 @@ export default resolver.pipe(resolver.authorize(), async ({ id, newFiles }) => {
   newFiles.map((newFile) => {
     supportingFiles.files.push(newFile)
   })
+
+  // Force all authors to reapprove for publishing
+  await db.authorship.updateMany({
+    where: {
+      moduleId: id,
+    },
+    data: {
+      readyToPublish: false,
+    },
+  })
   // 3. write the data into the module
   const updatedModule = await db.module.update({
     where: { id },
