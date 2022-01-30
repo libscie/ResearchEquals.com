@@ -290,7 +290,7 @@ const DpaPage: BlitzPage = () => {
 
 DpaPage.suppressFirstRenderFlicker = true
 DpaPage.getLayout = (page) => (
-  <Layout title="R= Addenda">
+  <Layout title="R= Data Processing Agreement">
     <LayoutLoader>{page}</LayoutLoader>
   </Layout>
 )

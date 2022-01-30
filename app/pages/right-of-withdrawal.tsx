@@ -81,7 +81,7 @@ const RightOfWithdrawalPage: BlitzPage = () => {
 
 RightOfWithdrawalPage.suppressFirstRenderFlicker = true
 RightOfWithdrawalPage.getLayout = (page) => (
-  <Layout title="R= Addenda">
+  <Layout title="R= Right of withdrawal">
     <LayoutLoader>{page}</LayoutLoader>
   </Layout>
 )

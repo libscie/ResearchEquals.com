@@ -166,13 +166,11 @@ We use the service Splitbee provided by Tobias Lins e.U. Alserbachstraße 10 109
 
 You can opt-out by enabling the Do Not Track functionality in your browser.
 
-
 `
 
 const md = new Markdown()
 
 const PrivacyPage: BlitzPage = () => {
-  const datetime = new Date()
   const currentUser = useCurrentUser()
   const session = useSession()
   const currentWorkspace = useCurrentWorkspace()

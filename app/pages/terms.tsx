@@ -184,7 +184,7 @@ const TermsPage: BlitzPage = () => {
 
 TermsPage.suppressFirstRenderFlicker = true
 TermsPage.getLayout = (page) => (
-  <Layout title="R= Terms of use">
+  <Layout title="R= Terms">
     <LayoutLoader>{page}</LayoutLoader>
   </Layout>
 )
