@@ -70,55 +70,13 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
                     dragging and dropping them.
                   </div>
                   {/* Replace with your content */}
-                  <DragDropContext
-                    onDragEnd={async (result) => {
-                      const { destination, source, draggableId } = result
-                      // If no destination, do nothing
-                      if (!destination) {
-                        return
-                      }
-                      // If destination and source are equivalent, do nothing
-                      if (
-                        destination.droppableId === source.droppableId &&
-                        destination.index === source.index
-                      ) {
-                        return
-                      }
-
-                      let i = 0
-                      moduleEdit!.authors.map((author) => {
-                        author.authorshipRank = i
-                        i += 1
-                      })
-
-                      // Update database
-                      moduleEdit!.authors.map(async (author) => {
-                        const updatedModule = await updateAuthorRankMutation({
-                          id: author.id,
-                          rank: author.authorshipRank,
-                          suffix: moduleEdit!.suffix,
-                        })
-                        setQueryData(updatedModule!)
-                      })
-                    }}
-                  >
-                    <Droppable droppableId="authors-ranking">
-                      {(provided: DroppableProvided) => (
-                        <ul
-                          className="relative flex-1 divide-y divide-gray-400 dark:divide-gray-600"
-                          ref={provided.innerRef}
-                          {...provided.droppableProps}
-                        >
-                          <AuthorList
-                            authors={moduleEdit.authors}
-                            setAuthorState={setQueryData}
-                            suffix={moduleEdit!.suffix}
-                          />
-                          {provided.placeholder}
-                        </ul>
-                      )}
-                    </Droppable>
-                  </DragDropContext>
+                  <ul className="relative flex-1 divide-y divide-gray-400 dark:divide-gray-600">
+                    <AuthorList
+                      authors={moduleEdit.authors}
+                      setAuthorState={setQueryData}
+                      suffix={moduleEdit!.suffix}
+                    />
+                  </ul>
                   {/* /End replace */}
                   <div className="flex-shrink-0 px-4 py-4 flex justify-end border-t border-gray-400 dark:border-gray-600">
                     <button
