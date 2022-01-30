@@ -39,6 +39,8 @@ const DraftsContents = ({ expire, signature, currentWorkspace, session, user }) 
   useEffect(() => {
     if (query.suffix) {
       setModule(drafts.filter((draft) => draft.suffix === query.suffix)[0])
+    } else {
+      setModule(drafts[0])
     }
 
     if (drafts.length === 0) {
