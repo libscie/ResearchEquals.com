@@ -141,21 +141,27 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
                 Add Authors
               </button>
             )}
+            {module.authors.length === 1 ? (
+              ""
+            ) : (
+              <>
+                <button
+                  className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-sm leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  onClick={() => {
+                    setManageAuthorsOpen(true)
+                  }}
+                >
+                  Manage Authors
+                </button>
+                <ManageAuthors
+                  open={manageAuthorsOpen}
+                  setOpen={setManageAuthorsOpen}
+                  moduleEdit={module}
+                  setQueryData={setQueryData}
+                />{" "}
+              </>
+            )}
 
-            <button
-              className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-sm leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700"
-              onClick={() => {
-                setManageAuthorsOpen(true)
-              }}
-            >
-              Manage Authors
-            </button>
-            <ManageAuthors
-              open={manageAuthorsOpen}
-              setOpen={setManageAuthorsOpen}
-              moduleEdit={module}
-              setQueryData={setQueryData}
-            />
             <span className="flex-grow sm:hidden"></span>
           </div>
         </div>
