@@ -246,7 +246,9 @@ const ModuleEdit = ({
       </div>
 
       <div className="my-4">
-        <h2 className="text-lg leading-4 text-gray-500 dark:text-gray-200 my-2">Main file</h2>
+        <h2 className="text-lg leading-4 text-gray-500 dark:text-gray-200 my-2">
+          Main file (required)
+        </h2>
         <EditMainFile
           mainFile={mainFile}
           setQueryData={setQueryData}

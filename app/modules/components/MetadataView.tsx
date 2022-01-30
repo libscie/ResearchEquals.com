@@ -167,6 +167,7 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
         </div>
         {/* Description section */}
         <div className="text-base leading-6 font-normal pt-4 pl-2 pr-4 pb-2">
+          <h2 className="italic">Summary</h2>
           {module.description}
         </div>
       </div>
