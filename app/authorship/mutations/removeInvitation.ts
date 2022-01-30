@@ -1,22 +1,16 @@
 import { resolver } from "blitz"
 import db from "db"
 
-export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
-  const author = await db.authorship.findFirst({
-    where: {
-      id,
-    },
-  })
-
+export default resolver.pipe(resolver.authorize(), async ({ workspaceId, moduleId }) => {
   await db.authorship.delete({
     where: {
-      id,
+      moduleId_workspaceId: { workspaceId, moduleId },
     },
   })
 
   const module = await db.module.findFirst({
     where: {
-      suffix,
+      id: moduleId,
     },
     include: {
       references: {
