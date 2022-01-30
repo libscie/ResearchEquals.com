@@ -30,7 +30,6 @@ import ReactTooltip from "react-tooltip"
 
 import Navbar from "../core/components/Navbar"
 import db from "db"
-import Footer from "../core/components/Footer"
 import LayoutLoader from "../core/components/LayoutLoader"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
@@ -463,7 +462,6 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
           </div>
         </div>
       </main>
-      <Footer />
     </>
   )
 }

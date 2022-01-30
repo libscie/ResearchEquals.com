@@ -1,4 +1,3 @@
-import Footer from "app/core/components/Footer"
 import Navbar from "app/core/components/Navbar"
 import Layout from "app/core/layouts/Layout"
 import getBrowseGraphData from "app/core/queries/getBrowseGraphData"
@@ -233,7 +232,6 @@ const Browse = () => {
       />
       <BrowseContent />
       <BrowseWorkspaces />
-      <Footer />
     </>
   )
 }
