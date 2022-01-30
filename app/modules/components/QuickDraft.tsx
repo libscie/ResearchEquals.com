@@ -218,12 +218,20 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                         <div className="my-4">
                           <label
                             htmlFor="license"
-                            className="flex my-1 text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
+                            className="my-1 text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
                           >
                             License{" "}
                             {formik.touched.license && formik.errors.license
                               ? " - " + formik.errors.license
                               : null}
+                            <p className="text-xs">
+                              Get more information about licenses{" "}
+                              <Link href="https://creativecommons.org/about/cclicenses">
+                                <a className="underline" target="_blank">
+                                  here.
+                                </a>
+                              </Link>
+                            </p>
                           </label>
                           <div className="mt-1">
                             <select
@@ -250,12 +258,13 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                         <div className="my-4">
                           <label
                             htmlFor="displayColor"
-                            className="flex my-1 text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
+                            className="my-1 text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
                           >
                             Display color{" "}
                             {formik.touched.displayColor && formik.errors.displayColor
                               ? " - " + formik.errors.displayColor
                               : null}
+                            <p className="text-xs">This is the module color upon publication.</p>
                           </label>
                           <div className="mt-1">
                             <select
