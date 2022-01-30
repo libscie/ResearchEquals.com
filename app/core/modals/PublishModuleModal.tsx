@@ -38,15 +38,15 @@ export default function PublishModule({ module, user, workspace }) {
           />
         </div>
         <div className="ml-3 flex-grow text-green-800 dark:text-green-100">
-          <h3 className="text-xs leading-4 font-normal text-green-800 dark:text-green-100 inline-block align-middle">
-            All authors approved this version for publication. Would you like to (pay and) publish
-            it now?
+          <h3 className="text-sm leading-4 font-normal text-green-800 dark:text-green-100 inline-block align-middle">
+            This module is ready for publication. Would you like to{" "}
+            {module.license.price > 0 ? "pay and" : ""} publish it now?
           </h3>
         </div>
         <div className="">
           <button
             type="button"
-            className="border rounded border-green-500 text-green-500 dark:border-green-200 dark:text-green-200 px-2 py-1.5 text-xs leading-4 font-medium hover:bg-green-100 dark:hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-50 focus:ring-green-600"
+            className="border rounded border-green-500 text-green-500 dark:border-green-200 dark:text-green-200 px-2 py-1.5 text-sm leading-4 font-medium hover:bg-green-100 dark:hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-50 focus:ring-green-600"
             onClick={openModal}
           >
             Publish module
@@ -88,7 +88,7 @@ export default function PublishModule({ module, user, workspace }) {
                 {module.license.price === 0 ? (
                   <>
                     <div className="mt-2">
-                      <p className="text-base text-gray-500">
+                      <p className="text-base text-gray-500 dark:text-gray-300">
                         Once you publish this module, you cannot delete it. You can publish this
                         module for free.
                       </p>
@@ -129,7 +129,7 @@ export default function PublishModule({ module, user, workspace }) {
                       method="POST"
                     >
                       <div className="mt-2">
-                        <p className="text-base text-gray-500">
+                        <p className="text-base text-gray-500 dark:text-gray-300">
                           Once you publish this module, you cannot delete it. Because you chose a{" "}
                           {module.license.name} license, publishing costs{" "}
                           {module.license.price / 100} euro (incl. VAT).
@@ -175,7 +175,7 @@ export default function PublishModule({ module, user, workspace }) {
                             </span>
                           </span>
                         </Switch>
-                        <p className=" mx-2 text-sm text-gray-500">
+                        <p className=" mx-2 text-sm text-gray-500 dark:text-gray-300">
                           Yes, I agree that Liberate Science GmbH publishes the content immediately
                           and irrevocably. I knowingly consent to waive my{" "}
                           <Link href="/right-of-withdrawal">
@@ -183,8 +183,7 @@ export default function PublishModule({ module, user, workspace }) {
                               right of withdrawal
                             </a>
                           </Link>{" "}
-                          by completing my purchase and the content is published under the chosen
-                          license.
+                          by completing my purchase.
                         </p>
                       </div>
                       <div className="mt-4">

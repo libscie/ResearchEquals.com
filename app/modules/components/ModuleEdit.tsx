@@ -6,7 +6,7 @@ import { getAlgoliaResults } from "@algolia/autocomplete-js"
 import { ArrowLeft32, Edit24, EditOff24 } from "@carbon/icons-react"
 import { Prisma } from "prisma"
 import { useFormik } from "formik"
-import { Maximize24, TrashCan24 } from "@carbon/icons-react"
+import { WarningSquareFilled32, Maximize24, TrashCan24 } from "@carbon/icons-react"
 import toast from "react-hot-toast"
 import Xarrows from "react-xarrows"
 
@@ -99,6 +99,11 @@ const ModuleEdit = ({
     formik.setFieldValue("license", moduleEdit!.license!.id.toString())
   }, [moduleEdit])
 
+  console.log(
+    moduleEdit?.authors.filter(
+      (author) => !!author.workspace!.firstName || !!author.workspace!.lastName
+    )
+  )
   return (
     <div className="p-5 max-w-7xl mx-auto overflow-y-auto text-base">
       {/* Publish module */}
@@ -107,7 +112,32 @@ const ModuleEdit = ({
       (moduleEdit!.authors.length === 1 && moduleEdit!.main!["name"]) ? (
         <PublishModuleModal module={moduleEdit} user={user} workspace={workspace} />
       ) : (
-        <></>
+        <>
+          <div className="rounded-md bg-orange-50 dark:bg-orange-800 w-full p-2 flex my-4">
+            <div className="flex-shrink-0 inline-block align-middle">
+              <WarningSquareFilled32
+                className="fill-current h-5 w-5 text-orange-500 dark:text-orange-200 inline-block align-middle"
+                aria-hidden="true"
+              />
+            </div>
+            <div className="ml-3 flex-grow text-orange-800 dark:text-orange-100">
+              <h3 className="text-sm leading-4 font-normal text-orange-800 dark:text-orange-100 inline-block align-middle">
+                To publish this module:
+              </h3>
+              <ol className="text-sm list-inside list-decimal">
+                {moduleEdit!.main!["name"] ? "" : <li>Add a main file</li>}
+                {moduleEdit?.authors.filter(
+                  (author) => !author.workspace!.firstName || !author.workspace!.lastName
+                ).length! > 0 ? (
+                  <li>All authors must have added their first and last name</li>
+                ) : (
+                  ""
+                )}
+                {moduleEdit!.authors.length > 1 ? <li>Get approval from all co-authors</li> : ""}
+              </ol>
+            </div>
+          </div>
+        </>
       )}
       {/* Menu bar */}
       <div className="w-full flex mb-28">
