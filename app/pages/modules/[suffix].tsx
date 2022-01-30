@@ -3,7 +3,6 @@ import { Link, NotFoundError, Routes, useMutation, useQuery, useRouter, useSessi
 import { AddAlt32, NextFilled32, PreviousFilled32 } from "@carbon/icons-react"
 import Xarrows from "react-xarrows"
 import { useEffect, useState } from "react"
-import Chatra from "@chatra/chatra"
 
 import Layout from "../../core/layouts/Layout"
 import db from "db"
@@ -108,14 +107,6 @@ const Module = ({ module, mainFile, supportingRaw }) => {
   } else {
     arrowColor = "transparent"
   }
-
-  useEffect(() => {
-    if (previousOpen || leadsToOpen) {
-      Chatra("hide")
-    } else {
-      Chatra("show")
-    }
-  })
 
   return (
     <>

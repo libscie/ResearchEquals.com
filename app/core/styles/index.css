@@ -55,6 +55,7 @@
 .coc h2 {
   font-size: 1.875rem;
   line-height: 2.25rem;
+  margin: 1rem 0 1rem 0;
   text-align: left;
 }
 
@@ -74,6 +75,16 @@
   list-style-type: circle;
   list-style-position: outside;
   margin-left: 2rem;
+}
+
+.coc ol {
+  list-style-type: decimal;
+  list-style-position: outside;
+  margin-left: 2rem;
+}
+
+.coc li {
+  margin: 0.5rem 0 0.5rem 0;
 }
 
 .coc table {
