@@ -204,7 +204,7 @@ const CodeOfConduct: BlitzPage = () => {
               </div>
               <div className="ml-3 flex-1 md:flex text-yellow-800 dark:text-yellow-200">
                 <p className="text-sm mr-2">
-                  <span className="font-bold">Submit a report</span>{" "}
+                  <span className="font-bold">Submit a report.</span>{" "}
                   <span>Reports are treated as confidential documents.</span>
                 </p>
               </div>
