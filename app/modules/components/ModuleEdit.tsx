@@ -118,7 +118,7 @@ const ModuleEdit = ({
             }}
           >
             <label className="sr-only">Go full screen</label>
-            <Maximize24 className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600" />
+            <Maximize24 className="h-6 w-6 fill-current text-gray-900 dark:text-gray-200" />
           </button>
         ) : (
           <button
@@ -128,7 +128,7 @@ const ModuleEdit = ({
           >
             <label className="sr-only">Go full screen</label>
             <ArrowLeft32
-              className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600"
+              className="h-6 w-6 fill-current text-gray-900 dark:text-gray-200"
               aria-hidden="true"
             />
           </button>
@@ -197,7 +197,7 @@ const ModuleEdit = ({
         <div className="items-middle pt-8">
           {isEditing ? (
             <EditOff24
-              className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600"
+              className="h-6 w-6 fill-current text-gray-900 dark:text-gray-200"
               onClick={() => {
                 setIsEditing(false)
               }}
@@ -205,7 +205,7 @@ const ModuleEdit = ({
             />
           ) : (
             <Edit24
-              className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600"
+              className="h-6 w-6 fill-current text-gray-900 dark:text-gray-200"
               onClick={() => {
                 setIsEditing(true)
               }}

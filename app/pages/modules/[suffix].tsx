@@ -199,6 +199,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
               {
                 loading: "Creating draft...",
                 success: (data) => {
+                  refetch()
                   return (
                     <>
                       Next step created.
