@@ -49,6 +49,11 @@ const Footer = () => {
               <a className="hover:bg-indigo-600 hover:text-white">Imprint</a>
             </Link>
           </p>
+          <p>
+            <Link href={Routes.FaqPage()}>
+              <a className="hover:bg-indigo-600 hover:text-white">FAQ</a>
+            </Link>
+          </p>
         </div>
         <div className="w-10/12 sm:w-full mt-4 sm:mt-0 sm:mx-4">
           <h3 className="mb-4 font-bold text-sm">Funders</h3>
