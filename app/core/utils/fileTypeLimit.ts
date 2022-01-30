@@ -3,6 +3,7 @@ import { FileInfo } from "@uploadcare/react-widget"
 export const fileTypeLimit = (fileInfo: FileInfo) => {
   const types = [
     "7z",
+    "gdrive",
     "apng",
     "axf",
     "b1",
