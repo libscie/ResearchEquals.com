@@ -12,11 +12,15 @@ import SearchResultWorkspace from "../../core/components/SearchResultWorkspace"
 import { useState } from "react"
 import ManageAuthors from "./ManageAuthors"
 import FollowsFromSearch from "./FollowsFromSearch"
+import removeInvitation from "app/authorship/mutations/removeInvitation"
+import ModuleEdit from "./ModuleEdit"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
 const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
   const [addAuthorMutation] = useMutation(addAuthor)
+  const [removeInvitationMutation] = useMutation(removeInvitation)
+
   const [manageAuthorsOpen, setManageAuthorsOpen] = useState(false)
 
   return (
@@ -83,10 +87,27 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
                                 loading: "Loading",
                                 success: (data) => {
                                   setQueryData(data)
-                                  return "Author invited"
+                                  return (
+                                    <>
+                                      Author invited.
+                                      <button
+                                        className="underline ml-1"
+                                        onClick={async () => {
+                                          const updatedModule = await removeInvitationMutation({
+                                            workspaceId: parseInt(item.objectID),
+                                            moduleId: module.id,
+                                          })
+                                          setQueryData(updatedModule)
+                                        }}
+                                      >
+                                        Undo invitation.
+                                      </button>
+                                    </>
+                                  )
                                 },
                                 error: "Uh-oh something went wrong.",
-                              }
+                              },
+                              { duration: 10000 }
                             )
                             // const updatedModule = await addAuthorMutation({
                             //   authorId: item.objectID,

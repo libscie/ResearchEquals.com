@@ -28,6 +28,7 @@ import deleteReference from "../mutations/deleteReference"
 import { useMediaPredicate } from "react-media-hook"
 import addParent from "../mutations/addParent"
 import ManageParents from "./ManageParents"
+import approveAuthorship from "app/authorship/mutations/approveAuthorship"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
@@ -55,6 +56,7 @@ const ModuleEdit = ({
 
   const mainFile = moduleEdit!.main as Prisma.JsonObject
   const supportingRaw = moduleEdit!.supporting as Prisma.JsonObject
+  const [approveAuthorshipMutation] = useMutation(approveAuthorship)
 
   const [addReferenceMutation] = useMutation(addReference)
   const [deleteReferenceMutation] = useMutation(deleteReference)
@@ -99,6 +101,15 @@ const ModuleEdit = ({
     formik.setFieldValue("license", moduleEdit!.license!.id.toString())
   }, [moduleEdit])
 
+  const ownAuthorship = moduleEdit?.authors.find(
+    (author) => author.workspace?.handle === workspace.handle
+  )
+
+  console.log(
+    moduleEdit?.authors.find((author) => author.workspace?.handle === workspace.handle)
+      ?.readyToPublish
+  )
+
   return (
     <div className="p-5 max-w-7xl mx-auto overflow-y-auto text-base">
       {/* Publish module */}
@@ -124,12 +135,50 @@ const ModuleEdit = ({
                 {moduleEdit?.authors.filter(
                   (author) => !author.workspace!.firstName || !author.workspace!.lastName
                 ).length! > 0 ? (
-                  <li>All authors must have added their first and last name</li>
+                  <li>All authors must add their first and last name</li>
                 ) : (
                   ""
                 )}
-                {moduleEdit!.authors.length > 1 ? <li>Get approval from all co-authors</li> : ""}
+                {!ownAuthorship?.readyToPublish && moduleEdit!.authors!.length > 1 ? (
+                  <li>
+                    <button
+                      className="text-xs my-1 leading-4 font-medium text-orange-500 dark:text-orange-200 rounded border border-orange-300 dark:border-orange-200 bg-orange shadow-sm dark:bg-orange-800 px-4 py-2 hover:bg-orange-100 dark:hover:border-orange-200 dark:hover:bg-orange-700"
+                      onClick={async () => {
+                        toast.promise(
+                          approveAuthorshipMutation({
+                            id: ownAuthorship!.id,
+                            suffix: moduleEdit!.suffix,
+                          }),
+                          {
+                            loading: "Loading",
+                            success: (data) => {
+                              setQueryData(data)
+                              return "Version approved for publication"
+                            },
+                            error: "Uh-oh something went wrong.",
+                          }
+                        )
+                      }}
+                    >
+                      Approve to publish
+                    </button>
+                  </li>
+                ) : (
+                  ""
+                )}
+                {moduleEdit!.authors.length > 1 ? (
+                  <li>Your co-authors must approve to publish</li>
+                ) : (
+                  ""
+                )}
               </ol>
+              {moduleEdit!.authors.length > 1 ? (
+                <p className="text-sm italic">
+                  Any changes made after approval will force reapproval by all authors.
+                </p>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </>
@@ -255,9 +304,7 @@ const ModuleEdit = ({
         {isEditing ? (
           <MetadataEdit
             module={moduleEdit}
-            addAuthors={addAuthors}
             setQueryData={setQueryData}
-            setAddAuthors={setAddAuthors}
             setIsEditing={setIsEditing}
           />
         ) : (
