@@ -413,6 +413,10 @@ const ModuleEdit = ({
           <h2 className="text-lg leading-4 text-gray-500 dark:text-gray-200 my-2">
             Reference list
           </h2>
+          <p className="text-xs leading-4 font-normal text-gray-900 dark:text-gray-200 my-2">
+            Add any references for your module here. You can cite published modules and objects with
+            a DOI.
+          </p>
           <label htmlFor="search" className="sr-only">
             Search references
           </label>
