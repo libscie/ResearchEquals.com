@@ -79,5 +79,5 @@ export default resolver.pipe(resolver.authorize(), async ({ doi }, ctx) => {
     publishedAt: module.publishedAt,
   })
 
-  return true
+  return module
 })

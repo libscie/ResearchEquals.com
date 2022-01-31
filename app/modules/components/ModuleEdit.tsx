@@ -433,7 +433,25 @@ const ModuleEdit = ({
                                 onClick={async () => {
                                   toast.promise(createReferenceMutation({ doi: query }), {
                                     loading: "Searching...",
-                                    success: "Reference added!",
+                                    success: (data) => {
+                                      toast.promise(
+                                        addReferenceMutation({
+                                          currentId: moduleEdit?.id,
+                                          connectId: data.id,
+                                        }),
+                                        {
+                                          loading: "Adding reference...",
+                                          success: (data) => {
+                                            setQueryData(data)
+
+                                            return "Added reference!"
+                                          },
+                                          error: "Failed to add reference...",
+                                        }
+                                      )
+
+                                      return "Reference added to database"
+                                    },
                                     error: "Could not add reference.",
                                   })
                                 }}
