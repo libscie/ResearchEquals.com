@@ -14,7 +14,7 @@
           "type": "fargate",
           "cpu": 0.25,
           "memory": 512,
-          "domain": "researchequals.com",
+          "domain": "www.researchequals.com",
           "minInstances": 1,
           "maxInstances": 1,
           "buildCommand": "npx blitz prisma migrate deploy && npx blitz db seed && npm run build",
