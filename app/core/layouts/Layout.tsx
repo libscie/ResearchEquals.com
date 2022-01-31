@@ -38,7 +38,7 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
           maxWidth: "100%",
           borderTop: "1px solid #fff",
         }}
-        buttonText="Accept"
+        buttonText="Consent"
         declineButtonText="Decline"
         cookieName="researchequals-website-cookie"
         buttonStyle={{
@@ -55,8 +55,8 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
         onAccept={() => {}}
         enableDeclineButton
       >
-        We use cookies and local storage for essential website purposes. You can withdraw your
-        consent for optional cookies at any time. See also our{" "}
+        We use cookies for essential website security purposes. You can withdraw your consent for
+        optional cookies at any time. See also our{" "}
         <Link href={Routes.PrivacyPage()}>
           <a className="hover:no-underline hover:text-white underline" target="_blank">
             Privacy policy
