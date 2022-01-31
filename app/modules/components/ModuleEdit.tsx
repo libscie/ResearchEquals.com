@@ -261,6 +261,51 @@ const ModuleEdit = ({
                         // TODO: Need to update search results per Algolia index
                         return <SearchResultModule item={item} />
                       },
+                      noResults() {
+                        return (
+                          <>
+                            {/* https://www.crossref.org/blog/dois-and-matching-regular-expressions/ */}
+                            {query.match(/^10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i) ? (
+                              <>
+                                <button
+                                  className="text-gray-900 dark:text-gray-200 text-sm leading-4 font-normal"
+                                  onClick={async () => {
+                                    toast.promise(createReferenceMutation({ doi: query }), {
+                                      loading: "Searching...",
+                                      success: (data) => {
+                                        toast.promise(
+                                          addParentMutation({
+                                            currentId: module?.id,
+                                            connectId: data.id,
+                                          }),
+                                          {
+                                            loading: "Adding link...",
+                                            success: (info) => {
+                                              setQueryData(info)
+
+                                              return `Linked to: "${data.title}"`
+                                            },
+                                            error: "Failed to add link...",
+                                          }
+                                        )
+
+                                        return "Record added to database"
+                                      },
+                                      error: "Could not add record.",
+                                    })
+                                  }}
+                                >
+                                  Click here to add {query} to ResearchEquals database
+                                </button>
+                              </>
+                            ) : (
+                              <p className="text-gray-900 dark:text-gray-200 text-sm leading-4 font-normal">
+                                Input a DOI to add
+                              </p>
+                            )}
+                          </>
+                        )
+                      },
                     },
                   },
                 ]}
