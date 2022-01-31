@@ -8,6 +8,16 @@ export default resolver.pipe(resolver.authorize(), async ({ workspaceId, moduleI
     },
   })
 
+  // Force all authors to reapprove for publishing
+  await db.authorship.updateMany({
+    where: {
+      moduleId,
+    },
+    data: {
+      readyToPublish: false,
+    },
+  })
+
   const module = await db.module.findFirst({
     where: {
       id: moduleId,
