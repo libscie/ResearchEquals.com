@@ -81,8 +81,8 @@ const ModuleInvitation = ({
             onClick={async () => {
               await toast.promise(
                 declineMutation({
-                  id: module.authors.filter((author) => author.workspaceId === workspace.id)[0].id,
-                  suffix: module.suffix,
+                  workspaceId: workspace.id,
+                  moduleId: module.id,
                 }),
                 {
                   loading: "Declining...",
