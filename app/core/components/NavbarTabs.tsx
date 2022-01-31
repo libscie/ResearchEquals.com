@@ -1,4 +1,5 @@
 import { Link, Routes } from "blitz"
+import { Undo32 } from "@carbon/icons-react"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -39,6 +40,14 @@ const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invit
         <div className="w-full text-gray-900 dark:text-gray-200 mx-auto px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900 border-b dark:border-gray-600 border-gray-100">
           <div className="hidden sm:block">
             <nav className="flex space-x-8" aria-label="Tabs">
+              <button
+                onClick={() => {
+                  router.back()
+                }}
+                className="m-2 "
+              >
+                <Undo32 />{" "}
+              </button>
               {tabs.map((tab) => (
                 <Link key={tab.name} href={tab.href}>
                   <a
