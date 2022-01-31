@@ -39,7 +39,7 @@ export default resolver.pipe(
     if (
       forbiddenHandles.filter((forbiddenHandle) => forbiddenHandle === handle.toLowerCase())
         .length > 0 ||
-      !!handle.match(/\//g)
+      !!handle.match(/\/|\?|\&|\,/g)
     ) {
       throw Error("Handle not allowed")
     }
