@@ -30,6 +30,7 @@ export default resolver.pipe(
       "privacy",
       "reset-password",
       "right-of-withdrawal",
+      "stats",
       "security",
       "signup",
       "terms",
