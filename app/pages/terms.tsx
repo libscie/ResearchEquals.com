@@ -89,7 +89,7 @@ In cases where research purposes may provide exception to these rules, the User 
 ## 6. Payment
 
 1. All prices shown on the Platform are final prices including VAT and - if applicable - transport costs.
-2. The payment is due immediately after the conclusion of contract. LibScie uses the payment provider Stripe (of Stripe Payments Europe, Ltd., 1 Grand Canal Street Lower, Grand Canal Dock, Dublin, Irland). Stripe provides several options to process the payment, including Credit Card, iDeal, Klarna, Apple Pay and Google Pay. LibScie will show the specific options on the Platform. A transfer via SEPA is not supported. The payment process may be subject to separate terms depending on the chosen option.
+2. The payment is due immediately after the conclusion of contract. LibScie uses the payment provider Stripe (of Stripe Payments Europe, Ltd., 1 Grand Canal Street Lower, Grand Canal Dock, Dublin, Ireland). Stripe provides several options to process the payment, including Credit Card, iDeal, Klarna, Apple Pay and Google Pay. LibScie will show the specific options on the Platform. A transfer via SEPA is not supported. The payment process may be subject to separate terms depending on the chosen option.
 
 ## 7. Term and Termination
 
