@@ -95,3 +95,8 @@
 .coc a {
   text-decoration: underline;
 }
+
+.coc blockquote {
+  border-left: 2px solid #574cfa;
+  padding-left: 2rem;
+}
