@@ -35,7 +35,7 @@ const FullWidthMenu = ({
                 {invitedModules.length > 0 ? (
                   <NotificationNew32 className="h-6 w-6" aria-hidden="true" />
                 ) : (
-                  <Notification32 className="h-6 w-6" aria-hidden="true" />
+                  <Notification32 className="h-6 w-6 cursor-not-allowed" aria-hidden="true" />
                 )}
               </Popover.Button>
               <Transition

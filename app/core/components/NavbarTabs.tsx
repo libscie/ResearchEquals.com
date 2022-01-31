@@ -15,11 +15,6 @@ const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invit
         current: router.asPath === Routes.Dashboard().pathname,
       },
       {
-        name: "Profile",
-        href: Routes.HandlePage({ handle: currentWorkspace!.handle }),
-        current: router.asPath === `/${currentWorkspace!.handle}`,
-      },
-      {
         name: "Drafts",
         href: Routes.DraftsPage(),
         count: drafts.length,
@@ -30,6 +25,11 @@ const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invit
         href: Routes.InvitationsPage(),
         count: invitations.length,
         current: router.asPath === Routes.InvitationsPage().pathname,
+      },
+      {
+        name: "Modules",
+        href: Routes.HandlePage({ handle: currentWorkspace!.handle }),
+        current: router.asPath === `/${currentWorkspace!.handle}`,
       },
     ]
   }
@@ -55,7 +55,7 @@ const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invit
                       tab.current
                         ? "bg-gray-100 dark:bg-gray-800"
                         : "hover:bg-gray-100 dark:hover:bg-gray-800",
-                      tab.count === 0 ? "pointer-events-none text-gray-400 dark:text-gray-700" : "",
+                      // tab.count === 0 ? "pointer-events-none text-gray-400 dark:text-gray-700" : "",
                       "group whitespace-nowrap flex my-2 py-2 px-4 text-sm leading-5 font-normal rounded-md disabled"
                     )}
                     aria-current={tab.current ? "page" : undefined}

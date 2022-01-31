@@ -40,15 +40,11 @@ const DropdownContents = ({
               Dashboard
             </button>
           </Link>
-          <Link href={Routes.HandlePage({ handle: currentWorkspace.handle })}>
-            <button className="group w-full text-left block rounded-md px-2 py-2 text-gray-900 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 text-base leading-5 font-normal">
-              Profile
-            </button>
-          </Link>
+
           <Link href={Routes.DraftsPage()}>
             <button className="group w-full text-left block rounded-md px-2 py-2 text-gray-900 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 text-base leading-5 font-normal">
               Drafts
-              <span className="bg-white dark:bg-gray-900 border border-gray-300 shadow-sm group-hover:bg-indigo-100 group-hover:text-indigo-800 dark:border-gray-600 dark:group-hover:bg-gray-700 text-gray-900 dark:text-gray-200 ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium">
+              <span className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 group-hover:bg-indigo-100 group-hover:text-indigo-800 dark:group-hover:bg-gray-700 dark:group-hover:text-gray-200 dark:border dark:border-gray-600 ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium inline-block">
                 {drafts.length}
               </span>
             </button>
@@ -56,9 +52,14 @@ const DropdownContents = ({
           <Link href={Routes.InvitationsPage()}>
             <button className="group w-full text-left block rounded-md px-2 py-2 text-gray-900 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 text-base leading-5 font-normal">
               Invitations
-              <span className="bg-white dark:bg-gray-900 border border-gray-300 shadow-sm group-hover:bg-indigo-100 group-hover:text-indigo-800 dark:border-gray-600 dark:group-hover:bg-gray-700 text-gray-900 dark:text-gray-200 ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium">
+              <span className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 group-hover:bg-indigo-100 group-hover:text-indigo-800 dark:group-hover:bg-gray-700 dark:group-hover:text-gray-200 dark:border dark:border-gray-600 ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium inline-block">
                 {invitedModules.length}
               </span>
+            </button>
+          </Link>
+          <Link href={Routes.HandlePage({ handle: currentWorkspace.handle })}>
+            <button className="group w-full text-left block rounded-md px-2 py-2 text-gray-900 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 text-base leading-5 font-normal">
+              Modules
             </button>
           </Link>
         </div>
