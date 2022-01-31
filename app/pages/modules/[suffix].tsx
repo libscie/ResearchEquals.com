@@ -1,6 +1,6 @@
 import { Prisma } from "prisma"
 import { Link, NotFoundError, Routes, useMutation, useQuery, useRouter, useSession } from "blitz"
-import { AddAlt32, NextFilled32, PreviousFilled32 } from "@carbon/icons-react"
+import { AddAlt32, Undo32, NextFilled32, PreviousFilled32 } from "@carbon/icons-react"
 import Xarrows from "react-xarrows"
 import { useEffect, useState } from "react"
 
@@ -199,7 +199,10 @@ const Module = ({ module, mainFile, supportingRaw }) => {
               {
                 loading: "Creating draft...",
                 success: (data) => {
-                  refetch()
+                  refetch().then(() => {
+                    router.push(`/drafts?suffix=${data}`)
+                  })
+
                   return (
                     <>
                       Next step created.
@@ -210,7 +213,8 @@ const Module = ({ module, mainFile, supportingRaw }) => {
                   )
                 },
                 error: "Sign up to do this",
-              }
+              },
+              { duration: 10000 }
             )
           }}
           className={`${(previousOpen || leadsToOpen) && !biggerWindow ? "hidden" : "inline"}`}
