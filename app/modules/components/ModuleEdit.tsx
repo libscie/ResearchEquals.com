@@ -131,7 +131,7 @@ const ModuleEdit = ({
                 To publish this module:
               </h3>
               <ol className="text-sm list-inside list-decimal">
-                {moduleEdit!.main!["name"] ? "" : <li>Add a main file</li>}
+                {moduleEdit!.main!["name"] ? "" : <li>Upload a main file</li>}
                 {moduleEdit?.authors.filter(
                   (author) => !author.workspace!.firstName || !author.workspace!.lastName
                 ).length! > 0 ? (

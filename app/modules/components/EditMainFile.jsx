@@ -42,7 +42,7 @@ const EditMainFile = ({
               widgetApi.current.openDialog()
             }}
           >
-            <Add32 className="w-4 h-4" aria-hidden="true" /> Add Main File
+            <Add32 className="w-4 h-4" aria-hidden="true" /> Upload Main File
             <Widget
               publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
               secureSignature={signature}
