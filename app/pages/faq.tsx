@@ -12,7 +12,9 @@ import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 const termsMarkdown = `
 # FAQ
 
-Here you can find some Frequently Asked Questions. Got a question but it is not here? [Let us know](mailto:info@libscie.org?subject=Question about ResearchEquals) and we'll get back to you!
+Here you can find some Frequently Asked Questions.
+
+Got a question but it is not answered here? Let us know by [email](mailto:info@libscie.org) or in [Discord](https://discord.gg/SefsGJWWSw) and we'll get back to you!
 
 ## General
 
