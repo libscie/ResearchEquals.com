@@ -12,7 +12,37 @@ import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 const termsMarkdown = `
 # FAQ
 
-## Publishing
+Here you can find some Frequently Asked Questions. Got a question but it is not here? [Let us know](mailto:info@libscie.org?subject=Question about ResearchEquals) and we'll get back to you!
+
+## General
+
+### Why would I publish step by step?
+
+Managing projects is a lot of work. By publishing the steps of a project, you can manage pieces of a project separately and track your work over time.
+
+### Another platform... Won't it be useless until its adopted widely?
+
+All your publications on ResearchEquals receive a DOI and are recognized research outputs today.
+
+We agree the platform will become more valuable as more people use it, and that is something that we monitor closely. You can too by viewing our real-time [stats page](https://researchequals.com/stats).
+
+### What distinguishes ResearchEquals from Zenodo or the Open Science Framework (OSF)?
+
+Zenodo and the OSF are great tools, fit for their own purposes. ResearchEquals focuses on publishing research steps, where Zenodo and the OSF still focus on managing entire projects at once.
+
+### Is there versioning in the module?
+
+Currently, we do not offer versioning for a research module.
+
+## Modules
+
+### What files can I upload as part of a module?
+
+You may upload any file with an Open File Format. This includes common files such as PDFs, Word files, and many more. Want to ensure a specific file can be uploaded? Ask us on [info@libscie.org](mailto:info@libscie.org).
+
+The maximum size is 100MB at the moment, per file.
+
+## Payment
 
 ### What payment options can I use to complete my orders?
 
@@ -33,15 +63,7 @@ Some of these payment options, such as Apple Pay and Google Pay, may only be ava
 
 ### When will my module be published?
 
-As soon as you press publish! If you are publishing under a restrictive license, the publication will be completed after your payment is completed.
-
-## Research modules
-
-### What files can I upload as part of a module?
-
-You may upload any file with an Open File Format. This includes common files such as PDFs, Word files, and many more. Want to ensure a specific file can be uploaded? Ask us on [info@libscie.org](mailto:info@libscie.org).
-
-The maximum size is 100MB at the moment, per file.
+If you are publishing under a restrictive license, the publication will be immediately completed after your payment is processed.
 
 `
 
