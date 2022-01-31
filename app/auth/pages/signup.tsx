@@ -68,7 +68,9 @@ const SignupPage: BlitzPage = () => {
                 className="text-sm block font-medium text-gray-700 dark:text-gray-100"
               >
                 Email address
-                {formik.touched.email && formik.errors.email ? " - " + formik.errors.email : null}
+                {formik.touched.email && formik.errors.email ? (
+                  <span className="text-red-500">{` - ${formik.errors.email}`}</span>
+                ) : null}
               </label>
               <div className="mt-1">
                 <input
@@ -88,10 +90,10 @@ const SignupPage: BlitzPage = () => {
                 htmlFor="handle"
                 className="my-1 block text-sm font-medium text-gray-700 dark:text-gray-100"
               >
-                Handle
-                {formik.touched.handle && formik.errors.handle
-                  ? " - " + formik.errors.handle
-                  : null}
+                Username
+                {formik.touched.handle && formik.errors.handle ? (
+                  <span className="text-red-500">{` - ${formik.errors.handle}`}</span>
+                ) : null}
               </label>
               <div className="max-w-lg flex rounded-md shadow-sm">
                 <span className="inline-flex items-center px-3 leading-5 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 font-normal text-sm dark:bg-gray-700 dark:text-gray-300  dark:border-gray-500">
@@ -114,9 +116,9 @@ const SignupPage: BlitzPage = () => {
                 className="my-1 block text-sm font-medium text-gray-700 dark:text-gray-100"
               >
                 Password
-                {formik.touched.password && formik.errors.password
-                  ? " - " + formik.errors.password
-                  : null}
+                {formik.touched.password && formik.errors.password ? (
+                  <span className="text-red-500">{` - ${formik.errors.password}`}</span>
+                ) : null}
               </label>
               <div className="">
                 <input
