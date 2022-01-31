@@ -192,6 +192,12 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
         </div>
         <div className="px-2 py-2 flex">
           <button
+            type="submit"
+            className="flex py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
+          >
+            Save changes
+          </button>
+          <button
             type="button"
             className="flex mx-2 py-2 px-4 bg-red-50 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
             onClick={() => {
@@ -199,12 +205,6 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
             }}
           >
             Cancel changes
-          </button>
-          <button
-            type="submit"
-            className="flex py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
-          >
-            Save changes
           </button>
         </div>
       </form>

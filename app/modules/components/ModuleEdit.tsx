@@ -111,7 +111,7 @@ const ModuleEdit = ({
   )
 
   return (
-    <div className="p-5 max-w-7xl mx-auto overflow-y-auto text-base">
+    <div className="p-5 max-w-4xl mx-auto overflow-y-auto text-base">
       {/* Publish module */}
       {(moduleEdit!.authors.filter((author) => author.readyToPublish !== true).length === 0 &&
         Object.keys(moduleEdit!.main!).length !== 0) ||
@@ -131,7 +131,7 @@ const ModuleEdit = ({
                 To publish this module:
               </h3>
               <ol className="text-sm list-inside list-decimal">
-                {moduleEdit!.main!["name"] ? "" : <li>Add a main file</li>}
+                {moduleEdit!.main!["name"] ? "" : <li>Upload a main file</li>}
                 {moduleEdit?.authors.filter(
                   (author) => !author.workspace!.firstName || !author.workspace!.lastName
                 ).length! > 0 ? (
@@ -261,6 +261,51 @@ const ModuleEdit = ({
                         // TODO: Need to update search results per Algolia index
                         return <SearchResultModule item={item} />
                       },
+                      noResults() {
+                        return (
+                          <>
+                            {/* https://www.crossref.org/blog/dois-and-matching-regular-expressions/ */}
+                            {query.match(/^10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i) ? (
+                              <>
+                                <button
+                                  className="text-gray-900 dark:text-gray-200 text-sm leading-4 font-normal"
+                                  onClick={async () => {
+                                    toast.promise(createReferenceMutation({ doi: query }), {
+                                      loading: "Searching...",
+                                      success: (data) => {
+                                        toast.promise(
+                                          addParentMutation({
+                                            currentId: module?.id,
+                                            connectId: data.id,
+                                          }),
+                                          {
+                                            loading: "Adding link...",
+                                            success: (info) => {
+                                              setQueryData(info)
+
+                                              return `Linked to: "${data.title}"`
+                                            },
+                                            error: "Failed to add link...",
+                                          }
+                                        )
+
+                                        return "Record added to database"
+                                      },
+                                      error: "Could not add record.",
+                                    })
+                                  }}
+                                >
+                                  Click here to add {query} to ResearchEquals database
+                                </button>
+                              </>
+                            ) : (
+                              <p className="text-gray-900 dark:text-gray-200 text-sm leading-4 font-normal">
+                                Input a DOI to add
+                              </p>
+                            )}
+                          </>
+                        )
+                      },
                     },
                   },
                 ]}
@@ -368,6 +413,10 @@ const ModuleEdit = ({
           <h2 className="text-lg leading-4 text-gray-500 dark:text-gray-200 my-2">
             Reference list
           </h2>
+          <p className="text-xs leading-4 font-normal text-gray-900 dark:text-gray-200 my-2">
+            Add any references for your module here. You can cite published modules and objects with
+            a DOI.
+          </p>
           <label htmlFor="search" className="sr-only">
             Search references
           </label>
@@ -433,7 +482,25 @@ const ModuleEdit = ({
                                 onClick={async () => {
                                   toast.promise(createReferenceMutation({ doi: query }), {
                                     loading: "Searching...",
-                                    success: "Reference added!",
+                                    success: (data) => {
+                                      toast.promise(
+                                        addReferenceMutation({
+                                          currentId: moduleEdit?.id,
+                                          connectId: data.id,
+                                        }),
+                                        {
+                                          loading: "Adding reference...",
+                                          success: (data) => {
+                                            setQueryData(data)
+
+                                            return "Added reference!"
+                                          },
+                                          error: "Failed to add reference...",
+                                        }
+                                      )
+
+                                      return "Reference added to database"
+                                    },
                                     error: "Could not add reference.",
                                   })
                                 }}

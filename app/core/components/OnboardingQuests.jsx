@@ -258,7 +258,7 @@ const OnboardingDraft = ({ data, refetch }) => {
             </div>
             <div className="ml-3 flex-1 md:flex text-purple-800 dark:text-purple-200">
               <p className="text-sm mr-2">
-                <span className=" font-bold">Create your first module</span>{" "}
+                <span className=" font-bold">Create your first draft</span>{" "}
                 <span>
                   What are you working on today? All research steps are building blocks. Start
                   sharing your progress.

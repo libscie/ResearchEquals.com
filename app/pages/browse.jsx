@@ -4,7 +4,6 @@ import getBrowseGraphData from "app/core/queries/getBrowseGraphData"
 import { useInfiniteQuery, useQuery, useRouter, useSession, Link, Routes } from "blitz"
 import moment from "moment"
 import React from "react"
-import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 
 import getBrowseData from "../core/queries/getBrowseData"
 import LayoutLoader from "../core/components/LayoutLoader"
@@ -51,54 +50,8 @@ const BrowseContent = () => {
 
   return (
     <div className="max-w-7xl text-gray-900 dark:text-gray-200 py-16 mx-4 xl:mx-auto">
-      <h1 className="text-3xl text-center font-extrabold ">Browse recent modules</h1>
-      <div className="mx-auto text-center">
-        <ResponsiveContainer width="100%" height={250}>
-          <AreaChart
-            width={1280}
-            height={250}
-            data={graphData}
-            margin={{ top: 10, right: 0, left: 0, bottom: 0 }}
-          >
-            <defs>
-              <linearGradient id="colorModules" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#574cfa" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#574cfa" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <XAxis
-              dataKey="time"
-              domain={["dataMin", "dataMax"]}
-              name="Time"
-              tickFormatter={(unixTime) => moment(unixTime).format("YYYY-MM-DD")}
-              type="number"
-              tickLine={false}
-              axisLine={false}
-              style={{
-                fontSize: "0.8rem",
-              }}
-            />
-            <YAxis
-              dataKey="modules"
-              name="Modules"
-              tickLine={false}
-              axisLine={false}
-              style={{
-                fontSize: "0.8rem",
-              }}
-              orientation="right"
-            />
-            <Tooltip content={<CustomTooltip />} />
-            <Area
-              type="monotone"
-              dataKey="modules"
-              stroke="#574cfa"
-              fillOpacity={1}
-              fill="url(#colorModules)"
-            />
-          </AreaChart>
-        </ResponsiveContainer>
-      </div>
+      <h1 className="text-3xl text-center font-extrabold ">Recent modules</h1>
+
       <ModuleBoxFeed
         modules={modulePages}
         fetchNextPage={fetchNextPage}
@@ -118,56 +71,8 @@ const BrowseWorkspaces = () => {
 
   return (
     <div className="max-w-7xl text-gray-900 dark:text-gray-200 py-16 mx-4 xl:mx-auto">
-      <h1 className="text-3xl text-center font-extrabold ">Browse recent signups</h1>
-      <div className="mx-auto text-center">
-        <ResponsiveContainer width="100%" height={250}>
-          <AreaChart
-            width={1280}
-            height={250}
-            data={graphData}
-            margin={{ top: 10, right: 0, left: 0, bottom: 0 }}
-          >
-            <defs>
-              <linearGradient id="colorWorkspaces" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#574cfa" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#574cfa" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <XAxis
-              dataKey="time"
-              domain={["dataMin", "dataMax"]}
-              name="Time"
-              tickFormatter={(unixTime) => moment(unixTime).format("YYYY-MM-DD")}
-              type="number"
-              tickLine={false}
-              axisLine={false}
-              style={{
-                fontSize: "0.8rem",
-              }}
-              // hide={true}
-            />
-            <YAxis
-              dataKey="workspaces"
-              name="Workspaces"
-              tickLine={false}
-              axisLine={false}
-              style={{
-                fontSize: "0.8rem",
-              }}
-              orientation="right"
-              // hide={true}
-            />
-            <Tooltip content={<CustomTooltipWorkspace />} />
-            <Area
-              type="monotone"
-              dataKey="workspaces"
-              stroke="#574cfa"
-              fillOpacity={1}
-              fill="url(#colorWorkspaces)"
-            />
-          </AreaChart>
-        </ResponsiveContainer>
-      </div>
+      <h1 className="text-3xl text-center font-extrabold ">Recent signups</h1>
+
       {workspacePages.map((page, i) => (
         <React.Fragment key={i}>
           <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 gap-y-10 my-4">
@@ -230,8 +135,10 @@ const Browse = () => {
         invitations={invitations}
         refetchFn={refetch}
       />
-      <BrowseContent />
-      <BrowseWorkspaces />
+      <div className="2xl:grid grid-cols-2 2xl:mx-4">
+        <BrowseContent />
+        <BrowseWorkspaces />
+      </div>
     </>
   )
 }

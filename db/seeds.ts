@@ -41,6 +41,11 @@ const seed = async () => {
       { wikidata: "Q604733", name: "Presentation" },
       { wikidata: "Q265158", name: "Review" },
       { wikidata: "Q55107540", name: "Other" },
+      { wikidata: "Q947859", name: "Research proposal" },
+      { wikidata: "Q7397", name: "Software" },
+      { wikidata: "Q871232", name: "Editorial" },
+      { wikidata: "Q30849", name: "Blog" },
+      { wikidata: "Q60752967", name: "Preregistration" },
     ],
     skipDuplicates: true,
   })

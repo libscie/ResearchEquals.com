@@ -40,40 +40,40 @@ const Invitations = ({ currentWorkspace }) => {
         height: biggerWindow ? "calc(100vh - 73px - 55px)" : "100%",
       }}
     >
-      <div
-        className={`${
-          !inboxOpen ? "hidden" : "inline"
-        } float-left w-full lg:w-80 divide-y-0 divide-gray-100 dark:divide-gray-600 overflow-y-auto`}
-      >
-        <h1 className="lg:hidden text-lg leading-7 font-medium text-gray-900 dark:text-gray-200 px-4 sm:px-6 lg:px-8 py-4 border-b lg:border-b-0 border-gray-100 dark:border-gray-600">
-          Invitations
-        </h1>
-        <ul role="list" className="divide-y divide-gray-100 dark:divide-gray-600">
-          {invitations.map((draft) => (
-            <>
-              <li
-                onClick={() => {
-                  setModule(draft)
-                  setInboxOpen(biggerWindow)
-                  Router.push("/invitations", { query: { suffix: draft.suffix } })
-                }}
-                className="cursor-pointer"
-              >
-                <ModuleCard
-                  type={draft.type.name}
-                  title={draft.title}
-                  status="Invitation"
-                  time={moment(draft.updatedAt).fromNow()}
-                  timeText="Updated"
-                  authors={draft.authors}
-                />
-              </li>
-            </>
-          ))}
-        </ul>
-      </div>
       {invitations.length > 0 ? (
         <>
+          <div
+            className={`${
+              !inboxOpen ? "hidden" : "inline"
+            } float-left w-full lg:w-80 divide-y-0 divide-gray-100 dark:divide-gray-600 overflow-y-auto`}
+          >
+            <h1 className="lg:hidden text-lg leading-7 font-medium text-gray-900 dark:text-gray-200 px-4 sm:px-6 lg:px-8 py-4 border-b lg:border-b-0 border-gray-100 dark:border-gray-600">
+              Invitations
+            </h1>
+            <ul role="list" className="divide-y divide-gray-100 dark:divide-gray-600">
+              {invitations.map((draft) => (
+                <>
+                  <li
+                    onClick={() => {
+                      setModule(draft)
+                      setInboxOpen(biggerWindow)
+                      Router.push("/invitations", { query: { suffix: draft.suffix } })
+                    }}
+                    className="cursor-pointer"
+                  >
+                    <ModuleCard
+                      type={draft.type.name}
+                      title={draft.title}
+                      status="Invitation"
+                      time={moment(draft.updatedAt).fromNow()}
+                      timeText="Updated"
+                      authors={draft.authors}
+                    />
+                  </li>
+                </>
+              ))}
+            </ul>
+          </div>
           <div className={`${inboxOpen ? "hidden lg:inline" : "inline"} flex-grow w-2/3`}>
             {currentModule ? (
               <Suspense
@@ -99,12 +99,14 @@ const Invitations = ({ currentWorkspace }) => {
           </div>
         </>
       ) : (
-        <div className="flex flex-col flex-grow relative w-full border-2 border-gray-100 border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500  my-4 mx-4">
+        <div className="flex flex-col flex-grow relative w-full border-2 border-gray-800 dark:border-white border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500  my-4 mx-4">
           <div className="table flex-grow w-full h-full">
             <div className="sm:table-cell w-1/4 h-28"></div>
             <span className="mx-auto table-cell align-middle text-sm leading-4 font-medium">
               <>
-                <div>No invitations left. Maybe start your own module?</div>
+                <div className="mx-4">
+                  No co-author invitations received. Maybe start your own module?
+                </div>
               </>
             </span>
             <div className="hidden sm:table-cell w-1/4"></div>

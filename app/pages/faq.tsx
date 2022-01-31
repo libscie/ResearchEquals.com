@@ -10,11 +10,45 @@ import getDrafts from "app/core/queries/getDrafts"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 
 const termsMarkdown = `
-# FAQ
+## Frequently Asked Questions.
 
-## Publishing
+Got a question but it is not answered here? Let us know by [email](mailto:info@libscie.org) or in [Discord](https://discord.gg/SefsGJWWSw) and we'll get back to you!
 
-### What payment options can I use to complete my orders?
+# General
+
+### Why would I publish step by step?
+
+Managing projects is a lot of work. By publishing the steps of a project, you can manage pieces of a project separately and track your work over time. Come try it out and share your experiences!
+
+### Another platform... Won't it be useless until its adopted widely?
+
+All your publications on ResearchEquals receive a DOI and are recognized research outputs today.
+
+We agree the platform will become more valuable as more people use it, and that is something that we monitor closely. You can too by viewing our real-time [stats page](https://researchequals.com/stats) and contributing to the platform's evolution.
+
+### What distinguishes ResearchEquals from Zenodo or the Open Science Framework (OSF)?
+
+Zenodo and the OSF are great tools, fit for their own purposes. ResearchEquals focuses on publishing research steps, where Zenodo and the OSF still focus on managing entire projects at once.
+
+### Is there versioning in the module?
+
+Currently, we do not offer versioning for a research module.
+
+### What assurances are there for the content I publish with you?
+
+We are a proud member of [CrossRef](https://crossref.org). This includes [member obligations](https://www.crossref.org/documentation/metadata-stewardship/understanding-your-member-obligations/) such as archiving.
+
+# Modules
+
+### What files can I upload as part of a module?
+
+You may upload any file with an Open File Format. This includes common files such as PDFs, Word files, and many more. Want to ensure a specific file can be uploaded? Ask us on [info@libscie.org](mailto:info@libscie.org).
+
+The maximum size is 100MB at the moment, per file.
+
+# Payment
+
+#### What payment options can I use to complete my orders?
 
 You can use a variety of payment options, among which:
 
@@ -31,17 +65,23 @@ You can use a variety of payment options, among which:
 
 Some of these payment options, such as Apple Pay and Google Pay, may only be available in certain supported browsers.
 
-### When will my module be published?
+#### When will my module be published?
 
-As soon as you press publish! If you are publishing under a restrictive license, the publication will be completed after your payment is completed.
+If you are publishing under a restrictive license, the publication will be immediately completed after your payment is processed.
 
-## Research modules
+# Liberate Science GmbH
 
-### What files can I upload as part of a module?
+### Why are you building ResearchEquals?
 
-You may upload any file with an Open File Format. This includes common files such as PDFs, Word files, and many more. Want to ensure a specific file can be uploaded? Ask us on [info@libscie.org](mailto:info@libscie.org).
+The following quote is from [our manifesto](https://libscie.org/blog/liberate-science-manifesto)
 
-The maximum size is 100MB at the moment, per file.
+> We seek to distribute knowledge, such that what it enables becomes distributed too.
+
+In other words, we want to give researchers the tools to publish with agency, and consumers to be able to access the knowledge they are seeking. Our journey led us to build a radically different publishing platform - ResearchEquals - to that end.
+
+### What's a GmbH?
+
+A GmbH is a limited liability company. We are committed to staying independent and have signed contracts with early supporting members to ensure the company stays in the hands of the workers.
 
 `
 

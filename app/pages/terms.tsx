@@ -14,7 +14,7 @@ const termsMarkdown = `
 
 ## 1. Scope and Applicability
 
-Liberate Science GmbH, Ebertystraße 44, 10249 Berlin, Germany ("LibScie" or "we/us/our") provides an online publishing platform for Research Modules that is accessible under [https://researchequals.com](https://researchequals.com) (the "Platform").
+Liberate Science GmbH, Ebertystraße 44, 10249 Berlin, Germany ("LibScie" or "we/us/our") provides an online publishing platform for Research Modules that is accessible under [https://researchequals.com](https://researchequals.com) (the "Platform"). The ResearchEquals logo is a [Pentagram](https://pentagram.de/de/projekte/) design.
 
 These Terms of Use ("the Terms") guide the legal relationship between LibScie and the User ("the Agreement") and apply to all (especially legal binding) actions of the User and LibScie on or in connection with the Platform, including the registration of a User Account on the Platform.
 

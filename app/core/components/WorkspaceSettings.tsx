@@ -227,6 +227,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               id="pronouns"
               type="pronouns"
               autoComplete="pronouns"
+              placeholder="they/them"
               className="bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
               {...formik.getFieldProps("pronouns")}
             />
@@ -244,6 +245,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               id="profileUrl"
               type="url"
               autoComplete="profileUrl"
+              placeholder="https://twitter.com/you"
               className=" bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded  placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
               {...formik.getFieldProps("profileUrl")}
             />

@@ -6,12 +6,12 @@ import {
   Routes,
   useQuery,
   useRouter,
-  useRouterQuery,
   useSession,
 } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import {
   CurrencyEuro32,
+  Save32,
   Checkmark24,
   Favorite32,
   CircleStrokeGlyph,
@@ -35,6 +35,7 @@ import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import getDrafts from "app/core/queries/getDrafts"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
+import { useRef } from "react"
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const licenses = await db.license.findMany({
@@ -96,11 +97,14 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                     <p className="my-4 text-xl text-gray-800 dark:text-gray-50">
                       A new publishing format: Research modules.
                     </p>
-                    <Link href={Routes.SignupPage()}>
-                      <a className="whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base leading-5 font-normal text-white bg-indigo-600 hover:bg-indigo-700">
-                        Get started
-                      </a>
-                    </Link>
+                    <button
+                      className="whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base leading-5 font-normal text-white bg-indigo-600 hover:bg-indigo-700 scroll-smooth"
+                      onClick={() => {
+                        document!.getElementById("step-module")!.scrollIntoView()
+                      }}
+                    >
+                      Get started
+                    </button>
                     <Link href="/browse">
                       <a className="mx-4 whitespace-nowrap leading-5 font-normal text-indigo-700 dark:text-gray-200 bg-indigo-100 hover:bg-indigo-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-0 dark:border dark:border-gray-600 px-4 py-2 rounded-md">
                         Browse modules
@@ -319,10 +323,13 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                 Publish each step
               </h2>
               <p className="my-2 text-lg">
-                You produce vital outputs at every research step. Why let steps go unpublished?
+                You produce vital outputs at every research step. Why let them go unpublished?
               </p>
               <p className="my-2 text-lg">
                 Publish your text, data, code, or anything else you struggle to publish in articles.
+              </p>
+              <p className="my-2 text-lg">
+                Each step gets a DOI. Link them all together to document a journey.
               </p>
             </div>
           </div>
@@ -434,8 +441,8 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                     Your co-authors
                   </div>
                   <div className="flex space-x-3 text-lg mr-4">
-                    <div
-                      className="module-small fill-current bg-white flex-shrink-0 h-6 w-6 text-white mr-2"
+                    <Save32
+                      className=" fill-current flex-shrink-0 h-6 w-6 text-white mr-2"
                       aria-hidden="true"
                     />
                     Your outputs
@@ -448,7 +455,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                 <div className="flex-grow"></div>
                 <Link href={Routes.SignupPage()}>
                   <a className="whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base leading-5 font-normal text-white bg-green-600 hover:bg-green-800">
-                    Get started
+                    Sign up
                   </a>
                 </Link>
                 <Link href="/browse">
