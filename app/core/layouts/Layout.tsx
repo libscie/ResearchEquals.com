@@ -2,6 +2,7 @@ import { ReactNode, useEffect } from "react"
 import { Head, Link, Routes } from "blitz"
 import CookieConsent, { Cookies, getCookieConsentValue } from "react-cookie-consent"
 import { Toaster } from "react-hot-toast"
+import Footer from "../components/Footer"
 
 type LayoutProps = {
   title?: string
@@ -27,6 +28,7 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
       <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
         <div className="flex-grow">{children}</div>
       </div>
+      <Footer />
       <CookieConsent
         location="bottom"
         style={{

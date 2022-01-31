@@ -12,11 +12,15 @@ import SearchResultWorkspace from "../../core/components/SearchResultWorkspace"
 import { useState } from "react"
 import ManageAuthors from "./ManageAuthors"
 import FollowsFromSearch from "./FollowsFromSearch"
+import removeInvitation from "app/authorship/mutations/removeInvitation"
+import ModuleEdit from "./ModuleEdit"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
 const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
   const [addAuthorMutation] = useMutation(addAuthor)
+  const [removeInvitationMutation] = useMutation(removeInvitation)
+
   const [manageAuthorsOpen, setManageAuthorsOpen] = useState(false)
 
   return (
@@ -83,10 +87,27 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
                                 loading: "Loading",
                                 success: (data) => {
                                   setQueryData(data)
-                                  return "Author invited"
+                                  return (
+                                    <>
+                                      Author invited.
+                                      <button
+                                        className="underline ml-1"
+                                        onClick={async () => {
+                                          const updatedModule = await removeInvitationMutation({
+                                            workspaceId: parseInt(item.objectID),
+                                            moduleId: module.id,
+                                          })
+                                          setQueryData(updatedModule)
+                                        }}
+                                      >
+                                        Undo invitation.
+                                      </button>
+                                    </>
+                                  )
                                 },
                                 error: "Uh-oh something went wrong.",
-                              }
+                              },
+                              { duration: 10000 }
                             )
                             // const updatedModule = await addAuthorMutation({
                             //   authorId: item.objectID,
@@ -141,26 +162,33 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
                 Add Authors
               </button>
             )}
+            {module.authors.length === 1 ? (
+              ""
+            ) : (
+              <>
+                <button
+                  className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-sm leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  onClick={() => {
+                    setManageAuthorsOpen(true)
+                  }}
+                >
+                  Manage Authors
+                </button>
+                <ManageAuthors
+                  open={manageAuthorsOpen}
+                  setOpen={setManageAuthorsOpen}
+                  moduleEdit={module}
+                  setQueryData={setQueryData}
+                />{" "}
+              </>
+            )}
 
-            <button
-              className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-sm leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700"
-              onClick={() => {
-                setManageAuthorsOpen(true)
-              }}
-            >
-              Manage Authors
-            </button>
-            <ManageAuthors
-              open={manageAuthorsOpen}
-              setOpen={setManageAuthorsOpen}
-              moduleEdit={module}
-              setQueryData={setQueryData}
-            />
             <span className="flex-grow sm:hidden"></span>
           </div>
         </div>
         {/* Description section */}
         <div className="text-base leading-6 font-normal pt-4 pl-2 pr-4 pb-2">
+          <h2 className="italic">Summary</h2>
           {module.description}
         </div>
       </div>

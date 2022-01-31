@@ -1,31 +1,18 @@
-import Autocomplete from "app/core/components/Autocomplete"
-import { Link, useMutation, useQuery, validateZodSchema } from "blitz"
+import { useMutation, useQuery, validateZodSchema } from "blitz"
 import moment from "moment"
-import toast from "react-hot-toast"
 import algoliasearch from "algoliasearch"
-import { getAlgoliaResults } from "@algolia/autocomplete-js"
-import { Add32, Save32 } from "@carbon/icons-react"
-import addAuthor from "../mutations/addAuthor"
 import AuthorAvatarsNew from "./AuthorAvatarsNew"
-import SearchResultWorkspace from "../../core/components/SearchResultWorkspace"
-import { useEffect, useState } from "react"
-import ManageAuthors from "./ManageAuthors"
+import { useEffect } from "react"
 import { useFormik } from "formik"
 import { z } from "zod"
 import editModuleScreen from "../mutations/editModuleScreen"
 import getTypes from "../../core/queries/getTypes"
 import getLicenses from "app/core/queries/getLicenses"
-import FollowsFromSearch from "./FollowsFromSearch"
 
-const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
-
-const MetadataEdit = ({ module, addAuthors, setQueryData, setAddAuthors, setIsEditing }) => {
-  const [addAuthorMutation] = useMutation(addAuthor)
+const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
   const [editModuleScreenMutation] = useMutation(editModuleScreen)
   const [moduleTypes] = useQuery(getTypes, undefined)
   const [licenses] = useQuery(getLicenses, undefined)
-
-  const [manageAuthorsOpen, setManageAuthorsOpen] = useState(false)
 
   const formik = useFormik({
     initialValues: {
@@ -156,113 +143,6 @@ const MetadataEdit = ({ module, addAuthors, setQueryData, setAddAuthors, setIsEd
             <AuthorAvatarsNew authors={module.authors} size="h-12 w-12" toDisplay={4} />
             <span className="flex-grow"></span>
           </div>
-          <span className="sm:flex-grow"></span>
-          <div className="flex sm:contents">
-            <span className="flex-grow sm:hidden"></span>
-
-            {addAuthors ? (
-              <>
-                <div className="w-28 sm:w-56 h-full">
-                  <Autocomplete
-                    openOnFocus={true}
-                    defaultActiveItemId="0"
-                    getSources={({ query }) => [
-                      {
-                        sourceId: "products",
-                        async onSelect(params) {
-                          const { item, setQuery } = params
-                          try {
-                            toast.promise(
-                              addAuthorMutation({
-                                authorId: item.objectID,
-                                moduleId: module.id,
-                                authorshipRank:
-                                  Math.max.apply(
-                                    Math,
-                                    module.authors.map(function (o) {
-                                      return o.authorshipRank
-                                    })
-                                  ) + 1,
-                              }),
-                              {
-                                loading: "Loading",
-                                success: (data) => {
-                                  setQueryData(data)
-                                  return "Author invited"
-                                },
-                                error: "Uh-oh something went wrong.",
-                              }
-                            )
-                            // const updatedModule = await addAuthorMutation({
-                            //   authorId: item.objectID,
-                            //   moduleId: module.id,
-                            //   authorshipRank:
-                            //     Math.max.apply(
-                            //       Math,
-                            //       module.authors.map(function (o) {
-                            //         return o.authorshipRank
-                            //       })
-                            //     ) + 1,
-                            // })
-                            // toast.success("Author invited")
-                            // setQueryData(updatedModule)
-                          } catch (error) {
-                            toast.error("Something went wrong")
-                          }
-                          setQuery("")
-                        },
-                        getItems() {
-                          return getAlgoliaResults({
-                            searchClient,
-                            queries: [
-                              {
-                                indexName: `${process.env.ALGOLIA_PREFIX}_workspaces`,
-                                query,
-                              },
-                            ],
-                          })
-                        },
-                        templates: {
-                          item({ item, components }) {
-                            return <SearchResultWorkspace item={item} />
-                          },
-                        },
-                      },
-                    ]}
-                  />
-                </div>
-              </>
-            ) : (
-              <button
-                className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-sm leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700"
-                onClick={() => {
-                  setAddAuthors(true)
-                }}
-              >
-                <Add32
-                  className="fill-current text-gray-500 dark:text-gray-200 w-4 h-4 dark:hover:text-gray-400"
-                  aria-hidden="true"
-                />
-                Add Authors
-              </button>
-            )}
-
-            <button
-              className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-sm leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700"
-              onClick={() => {
-                setManageAuthorsOpen(true)
-              }}
-            >
-              Manage Authors
-            </button>
-            <ManageAuthors
-              open={manageAuthorsOpen}
-              setOpen={setManageAuthorsOpen}
-              moduleEdit={module}
-              setQueryData={setQueryData}
-            />
-            <span className="flex-grow sm:hidden"></span>
-          </div>
         </div>
         {/* Description section */}
         <div className="text-sm leading-4 font-normal pt-4 pl-2 pr-4 pb-2">
@@ -312,12 +192,6 @@ const MetadataEdit = ({ module, addAuthors, setQueryData, setAddAuthors, setIsEd
         </div>
         <div className="px-2 py-2 flex">
           <button
-            type="submit"
-            className="flex py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
-          >
-            Save changes
-          </button>
-          <button
             type="button"
             className="flex mx-2 py-2 px-4 bg-red-50 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
             onClick={() => {
@@ -325,6 +199,12 @@ const MetadataEdit = ({ module, addAuthors, setQueryData, setAddAuthors, setIsEd
             }}
           >
             Cancel changes
+          </button>
+          <button
+            type="submit"
+            className="flex py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
+          >
+            Save changes
           </button>
         </div>
       </form>

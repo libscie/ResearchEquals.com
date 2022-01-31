@@ -6,7 +6,7 @@ import { getAlgoliaResults } from "@algolia/autocomplete-js"
 import { ArrowLeft32, Edit24, EditOff24 } from "@carbon/icons-react"
 import { Prisma } from "prisma"
 import { useFormik } from "formik"
-import { Maximize24, TrashCan24 } from "@carbon/icons-react"
+import { WarningSquareFilled32, Maximize24, TrashCan24 } from "@carbon/icons-react"
 import toast from "react-hot-toast"
 import Xarrows from "react-xarrows"
 
@@ -28,6 +28,7 @@ import deleteReference from "../mutations/deleteReference"
 import { useMediaPredicate } from "react-media-hook"
 import addParent from "../mutations/addParent"
 import ManageParents from "./ManageParents"
+import approveAuthorship from "app/authorship/mutations/approveAuthorship"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
@@ -55,6 +56,7 @@ const ModuleEdit = ({
 
   const mainFile = moduleEdit!.main as Prisma.JsonObject
   const supportingRaw = moduleEdit!.supporting as Prisma.JsonObject
+  const [approveAuthorshipMutation] = useMutation(approveAuthorship)
 
   const [addReferenceMutation] = useMutation(addReference)
   const [deleteReferenceMutation] = useMutation(deleteReference)
@@ -99,6 +101,15 @@ const ModuleEdit = ({
     formik.setFieldValue("license", moduleEdit!.license!.id.toString())
   }, [moduleEdit])
 
+  const ownAuthorship = moduleEdit?.authors.find(
+    (author) => author.workspace?.handle === workspace.handle
+  )
+
+  console.log(
+    moduleEdit?.authors.find((author) => author.workspace?.handle === workspace.handle)
+      ?.readyToPublish
+  )
+
   return (
     <div className="p-5 max-w-7xl mx-auto overflow-y-auto text-base">
       {/* Publish module */}
@@ -107,7 +118,70 @@ const ModuleEdit = ({
       (moduleEdit!.authors.length === 1 && moduleEdit!.main!["name"]) ? (
         <PublishModuleModal module={moduleEdit} user={user} workspace={workspace} />
       ) : (
-        <></>
+        <>
+          <div className="rounded-md bg-orange-50 dark:bg-orange-800 w-full p-2 flex my-4">
+            <div className="flex-shrink-0 inline-block align-middle">
+              <WarningSquareFilled32
+                className="fill-current h-5 w-5 text-orange-500 dark:text-orange-200 inline-block align-middle"
+                aria-hidden="true"
+              />
+            </div>
+            <div className="ml-3 flex-grow text-orange-800 dark:text-orange-100">
+              <h3 className="text-sm leading-4 font-normal text-orange-800 dark:text-orange-100 inline-block align-middle">
+                To publish this module:
+              </h3>
+              <ol className="text-sm list-inside list-decimal">
+                {moduleEdit!.main!["name"] ? "" : <li>Add a main file</li>}
+                {moduleEdit?.authors.filter(
+                  (author) => !author.workspace!.firstName || !author.workspace!.lastName
+                ).length! > 0 ? (
+                  <li>All authors must add their first and last name</li>
+                ) : (
+                  ""
+                )}
+                {!ownAuthorship?.readyToPublish && moduleEdit!.authors!.length > 1 ? (
+                  <li>
+                    <button
+                      className="text-xs my-1 leading-4 font-medium text-orange-500 dark:text-orange-200 rounded border border-orange-300 dark:border-orange-200 bg-orange shadow-sm dark:bg-orange-800 px-4 py-2 hover:bg-orange-100 dark:hover:border-orange-200 dark:hover:bg-orange-700"
+                      onClick={async () => {
+                        toast.promise(
+                          approveAuthorshipMutation({
+                            id: ownAuthorship!.id,
+                            suffix: moduleEdit!.suffix,
+                          }),
+                          {
+                            loading: "Loading",
+                            success: (data) => {
+                              setQueryData(data)
+                              return "Version approved for publication"
+                            },
+                            error: "Uh-oh something went wrong.",
+                          }
+                        )
+                      }}
+                    >
+                      Approve to publish
+                    </button>
+                  </li>
+                ) : (
+                  ""
+                )}
+                {moduleEdit!.authors.length > 1 ? (
+                  <li>Your co-authors must approve to publish</li>
+                ) : (
+                  ""
+                )}
+              </ol>
+              {moduleEdit!.authors.length > 1 ? (
+                <p className="text-sm italic">
+                  Any changes made after approval will force reapproval by all authors.
+                </p>
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
+        </>
       )}
       {/* Menu bar */}
       <div className="w-full flex mb-28">
@@ -118,7 +192,7 @@ const ModuleEdit = ({
             }}
           >
             <label className="sr-only">Go full screen</label>
-            <Maximize24 className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600" />
+            <Maximize24 className="h-6 w-6 fill-current text-gray-900 dark:text-gray-200" />
           </button>
         ) : (
           <button
@@ -128,7 +202,7 @@ const ModuleEdit = ({
           >
             <label className="sr-only">Go full screen</label>
             <ArrowLeft32
-              className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600"
+              className="h-6 w-6 fill-current text-gray-900 dark:text-gray-200"
               aria-hidden="true"
             />
           </button>
@@ -197,7 +271,7 @@ const ModuleEdit = ({
         <div className="items-middle pt-8">
           {isEditing ? (
             <EditOff24
-              className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600"
+              className="h-6 w-6 fill-current text-gray-900 dark:text-gray-200"
               onClick={() => {
                 setIsEditing(false)
               }}
@@ -205,7 +279,7 @@ const ModuleEdit = ({
             />
           ) : (
             <Edit24
-              className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600"
+              className="h-6 w-6 fill-current text-gray-900 dark:text-gray-200"
               onClick={() => {
                 setIsEditing(true)
               }}
@@ -230,9 +304,7 @@ const ModuleEdit = ({
         {isEditing ? (
           <MetadataEdit
             module={moduleEdit}
-            addAuthors={addAuthors}
             setQueryData={setQueryData}
-            setAddAuthors={setAddAuthors}
             setIsEditing={setIsEditing}
           />
         ) : (
@@ -246,7 +318,9 @@ const ModuleEdit = ({
       </div>
 
       <div className="my-4">
-        <h2 className="text-lg leading-4 text-gray-500 dark:text-gray-200 my-2">Main file</h2>
+        <h2 className="text-lg leading-4 text-gray-500 dark:text-gray-200 my-2">
+          Main file (required)
+        </h2>
         <EditMainFile
           mainFile={mainFile}
           setQueryData={setQueryData}

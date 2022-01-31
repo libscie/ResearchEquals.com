@@ -1,19 +1,21 @@
 import { Dialog, Transition } from "@headlessui/react"
 import getLicenses from "app/core/queries/getLicenses"
 import getTypes from "app/core/queries/getTypes"
-import { useMutation, useQuery, validateZodSchema } from "blitz"
+import { Link, useMutation, useQuery, validateZodSchema, useRouter } from "blitz"
 import { useFormik } from "formik"
 import { Fragment, useState } from "react"
 import { z } from "zod"
 import { Checkmark32, Close32, HelpFilled32 } from "@carbon/icons-react"
 
 import createModule from "../mutations/createModule"
+import toast from "react-hot-toast"
 
 const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
   const [openCreate, setCreateOpen] = useState(false)
   const [moduleTypes] = useQuery(getTypes, undefined)
   const [licenses] = useQuery(getLicenses, undefined)
   const [createModuleMutation] = useMutation(createModule)
+  const router = useRouter()
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -33,21 +35,44 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
       })
     ),
     onSubmit: async (values) => {
-      try {
-        await createModuleMutation({
+      toast.promise(
+        createModuleMutation({
           title: values.title,
           description: values.description,
           typeId: parseInt(values.type),
           licenseId: parseInt(values.license),
           authors: [],
           displayColor: values.displayColor,
-        })
-        refetchFn()
-        setCreateOpen(false)
-        formikReset()
-      } catch (error) {
-        alert(error.toString())
-      }
+        }),
+        {
+          loading: "Creating draft...",
+          success: (data) => {
+            refetchFn()
+            setCreateOpen(false)
+            formikReset()
+            router.push(`/drafts?suffix=${data}`)
+            return "Created!"
+          },
+          error: (error) => {
+            return error
+          },
+        }
+      )
+      // try {
+      //   await createModuleMutation({
+      //     title: values.title,
+      //     description: values.description,
+      //     typeId: parseInt(values.type),
+      //     licenseId: parseInt(values.license),
+      //     authors: [],
+      //     displayColor: values.displayColor,
+      //   })
+      //   refetchFn()
+      //   setCreateOpen(false)
+      //   formikReset()
+      // } catch (error) {
+      //   alert(error.toString())
+      // }
     },
   })
 
@@ -164,7 +189,12 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             {formik.touched.type && formik.errors.type
                               ? " - " + formik.errors.type
                               : null}
-                            <p className="text-xs">Missing something? Let us know in the chat!</p>
+                            <p className="text-xs">
+                              Missing something?{" "}
+                              <Link href="mailto:info@libscie.org?subject=Missing module type">
+                                <a className="underline">Let us know!</a>
+                              </Link>
+                            </p>
                           </label>
                           <div className="mt-1">
                             <select
@@ -188,12 +218,20 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                         <div className="my-4">
                           <label
                             htmlFor="license"
-                            className="flex my-1 text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
+                            className="my-1 text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
                           >
                             License{" "}
                             {formik.touched.license && formik.errors.license
                               ? " - " + formik.errors.license
                               : null}
+                            <p className="text-xs">
+                              Get more information about licenses{" "}
+                              <Link href="https://creativecommons.org/about/cclicenses">
+                                <a className="underline" target="_blank">
+                                  here.
+                                </a>
+                              </Link>
+                            </p>
                           </label>
                           <div className="mt-1">
                             <select
@@ -207,7 +245,10 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                                 <>
                                   <option value={license.id} className="text-gray-900">
                                     {license.name} (
-                                    {license.price > 0 ? `${license.price / 100}EUR` : "Free"})
+                                    {license.price > 0
+                                      ? `${license.price / 100}EUR incl. VAT`
+                                      : "Free"}
+                                    )
                                   </option>
                                 </>
                               ))}
@@ -217,12 +258,13 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                         <div className="my-4">
                           <label
                             htmlFor="displayColor"
-                            className="flex my-1 text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
+                            className="my-1 text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
                           >
                             Display color{" "}
                             {formik.touched.displayColor && formik.errors.displayColor
                               ? " - " + formik.errors.displayColor
                               : null}
+                            <p className="text-xs">This is the module color upon publication.</p>
                           </label>
                           <div className="mt-1">
                             <select

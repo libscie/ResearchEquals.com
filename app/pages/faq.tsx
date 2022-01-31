@@ -3,7 +3,6 @@ import Layout from "app/core/layouts/Layout"
 import Markdown from "markdown-it"
 
 import Navbar from "../core/components/Navbar"
-import Footer from "../core/components/Footer"
 import LayoutLoader from "app/core/components/LayoutLoader"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
@@ -72,7 +71,6 @@ const FaqPage: BlitzPage = () => {
           <div className="coc" dangerouslySetInnerHTML={{ __html: md.render(termsMarkdown) }}></div>
         </div>
       </main>
-      <Footer />
     </>
   )
 }

@@ -8,6 +8,16 @@ export default resolver.pipe(resolver.authorize(), async ({ id, json }) => {
     data: { main: json as Prisma.JsonObject },
   })
 
+  // Force all authors to reapprove for publishing
+  await db.authorship.updateMany({
+    where: {
+      moduleId: id,
+    },
+    data: {
+      readyToPublish: false,
+    },
+  })
+
   const updatedModule = await db.module.findFirst({
     where: { id },
     include: {

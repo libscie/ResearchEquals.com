@@ -10,6 +10,16 @@ export default resolver.pipe(resolver.authorize(), async ({ id, uuid }) => {
   let supportingFiles = module!.supporting as Prisma.JsonObject
   supportingFiles.files = supportingFiles.files.filter((file) => file.uuid !== uuid)
 
+  // Force all authors to reapprove for publishing
+  await db.authorship.updateMany({
+    where: {
+      moduleId: id,
+    },
+    data: {
+      readyToPublish: false,
+    },
+  })
+
   const updatedModule = await db.module.update({
     where: { id },
     data: {

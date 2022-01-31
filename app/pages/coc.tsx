@@ -4,7 +4,6 @@ import { SendAltFilled32 } from "@carbon/icons-react"
 import Markdown from "markdown-it"
 
 import Navbar from "../core/components/Navbar"
-import Footer from "../core/components/Footer"
 import LayoutLoader from "app/core/components/LayoutLoader"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
@@ -205,7 +204,7 @@ const CodeOfConduct: BlitzPage = () => {
               </div>
               <div className="ml-3 flex-1 md:flex text-yellow-800 dark:text-yellow-200">
                 <p className="text-sm mr-2">
-                  <span className="font-bold">Submit a report</span>{" "}
+                  <span className="font-bold">Submit a report.</span>{" "}
                   <span>Reports are treated as confidential documents.</span>
                 </p>
               </div>
@@ -226,7 +225,6 @@ const CodeOfConduct: BlitzPage = () => {
           <div className="coc " dangerouslySetInnerHTML={{ __html: md.render(cocMarkdown) }}></div>
         </div>
       </main>
-      <Footer />
     </>
   )
 }

@@ -7,7 +7,7 @@ const Footer = () => {
 
   return (
     <footer className="w-full bg-white dark:bg-gray-900 sm:p-0 py-4">
-      <div className="sm:flex sm:max-w-7xl mx-4 xl:mx-auto text-black dark:text-white ">
+      <div className="sm:flex sm:max-w-7xl mx-4 pt-8 xl:mx-auto text-black dark:text-white ">
         <div className="w-10/12 sm:w-full mb-0 sm:mb-28 mt-0 text-sm">
           <h3 className="font-bold text-base">ResearchEquals</h3>
           <p className="flex align-middle">

@@ -9,7 +9,7 @@ export default resolver.pipe(
       {
         workspaceId: ctx.session.$publicData.workspaceId,
         acceptedInvitation: true,
-        authorshipRank: 1,
+        authorshipRank: 0,
       },
     ]
 

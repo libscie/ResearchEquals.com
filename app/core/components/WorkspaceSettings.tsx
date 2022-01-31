@@ -118,7 +118,9 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               {
                 loading: "Saving...",
                 success: "Updated URL",
-                error: "Hmm that didn't work...",
+                error: (e) => {
+                  return `Error: ${e}`
+                },
               }
             )
           } catch (error) {
