@@ -161,6 +161,15 @@
       "contributions": [
         "infra"
       ]
+    },
+    {
+      "login": "Ponjimon",
+      "name": "Simon",
+      "avatar_url": "https://avatars.githubusercontent.com/u/770632?v=4",
+      "profile": "https://simon.events",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
