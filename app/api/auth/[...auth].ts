@@ -15,7 +15,7 @@ export default passportAuth(({ ctx, req, res }) => ({
         // This strategy can only be used to add the ORCID to a workspace (right now)
         // Not used to login (yet)
         {
-          sandbox: process.env.ORCID_CLIENT_SANDBOX,
+          sandbox: process.env.ORCID_CLIENT_SANDBOX === "true",
           clientID: process.env.ORCID_CLIENT_ID,
           clientSecret: process.env.ORCID_CLIENT_SECRET,
           callbackURL: `${process.env.APP_ORIGIN}/api/auth/orcid/callback`,

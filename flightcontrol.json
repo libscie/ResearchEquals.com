@@ -44,7 +44,7 @@
             },
             "DOI_PREFIX": "10.53962",
             "ORCID_CLIENT_ID": { "fromParameterStore": "ORCID_CLIENT_ID" },
-            "ORCID_CLIENT_SANDBOX": false,
+            "ORCID_CLIENT_SANDBOX": "false",
             "ORCID_CLIENT_SECRET": {
               "fromParameterStore": "ORCID_CLIENT_SECRET"
             },
