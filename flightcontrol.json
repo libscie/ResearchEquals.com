@@ -52,7 +52,7 @@
               "fromParameterStore": "POSTMARK_TOKEN"
             },
             "PORT": "3000",
-            "MAIL_FROM": "no-reply@researchequals.com",
+            "MAIL_FROM": "no-reply@libscie.org",
             "QUIRREL_BASE_URL": "https://researchequals.com/",
             "QUIRREL_ENCRYPTION_SECRET": {
               "fromParameterStore": "QUIRREL_ENCRYPTION_SECRET"
