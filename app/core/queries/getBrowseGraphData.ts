@@ -11,6 +11,7 @@ export default async function getSignature() {
   const modules = await db.module.findMany({
     where: {
       published: true,
+      prefix: process.env.DOI_PREFIX,
     },
     orderBy: [
       {
