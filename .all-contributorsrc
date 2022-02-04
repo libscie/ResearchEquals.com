@@ -171,6 +171,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "kaveh1000",
+      "name": "Kaveh Bazargan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4387243?v=4",
+      "profile": "http://htp://www.rivervalleytechnologies.com",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
