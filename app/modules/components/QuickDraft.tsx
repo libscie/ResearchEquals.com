@@ -186,9 +186,9 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             className="my-1 block text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
                           >
                             Module type{" "}
-                            {formik.touched.type && formik.errors.type
-                              ? " - " + formik.errors.type
-                              : null}
+                            {formik.touched.type && formik.errors.type ? (
+                              <span className="text-red-500">- Required</span>
+                            ) : null}
                             <p className="text-xs">
                               Missing something?{" "}
                               <Link href="mailto:info@libscie.org?subject=Missing module type">
@@ -221,9 +221,9 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             className="my-1 text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
                           >
                             License{" "}
-                            {formik.touched.license && formik.errors.license
-                              ? " - " + formik.errors.license
-                              : null}
+                            {formik.touched.license && formik.errors.license ? (
+                              <span className="text-red-500">- Required</span>
+                            ) : null}
                             <p className="text-xs">
                               Get more information about licenses{" "}
                               <Link href="https://creativecommons.org/about/cclicenses">
