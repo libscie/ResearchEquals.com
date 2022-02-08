@@ -1,8 +1,8 @@
 import { Prisma } from "prisma"
 import { Link, NotFoundError, Routes, useMutation, useQuery, useRouter, useSession } from "blitz"
-import { AddAlt32, Undo32, NextFilled32, PreviousFilled32 } from "@carbon/icons-react"
+import { AddAlt32, NextFilled32, PreviousFilled32 } from "@carbon/icons-react"
 import Xarrows from "react-xarrows"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 import Layout from "../../core/layouts/Layout"
 import db from "db"
@@ -348,6 +348,16 @@ const ModulePage = ({ module }) => {
       title={`R= ${module.title}`}
       headChildren={
         <>
+          <script type="application/ld+json">{`
+           {
+             "@context": "https://schema.org",
+             "identifier": "${module.prefix}/${module.suffix}",
+             "@type": "CreativeWork",
+             "title": "${module.title}",
+             "description": "${module.description}",
+             "url": "https://doi.org/${module.prefix}/${module.suffix}"
+           }
+          `}</script>
           <meta property="og:title" content={module.title} />
           <meta property="og:url" content={`https://doi.org/${module.prefix}/${module.suffix}`} />
           {module.description ? (
