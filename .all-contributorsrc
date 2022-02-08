@@ -180,6 +180,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "ThomasFKJorna",
+      "name": "Thomas F. K. Jorna",
+      "avatar_url": "https://avatars.githubusercontent.com/u/21983833?v=4",
+      "profile": "http://tefkah.com",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
