@@ -138,6 +138,7 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
     name: publishedModule.title,
     description: publishedModule.description,
     publishedAt: publishedModule.publishedAt,
+    displayColor: publishedModule.displayColor,
   })
 
   return true
