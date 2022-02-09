@@ -77,6 +77,7 @@ export default resolver.pipe(resolver.authorize(), async ({ doi }, ctx) => {
     name: module.title,
     description: module.description,
     publishedAt: module.publishedAt,
+    displayColor: module.displayColor,
   })
 
   return module

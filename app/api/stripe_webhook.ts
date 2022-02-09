@@ -174,6 +174,7 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
         name: publishedModule.title,
         description: publishedModule.description,
         publishedAt: publishedModule.publishedAt,
+        displayColor: publishedModule.displayColor,
       })
       console.log(`[STRIPE WEBHOOK]: Publication complete; type ${event.type}, id: ${event.id}.`)
 
