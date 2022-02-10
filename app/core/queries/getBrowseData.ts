@@ -33,6 +33,9 @@ export default async function getBrowseData({ skip = 0, take = 100 }) {
             include: {
               workspace: true,
             },
+            orderBy: {
+              authorshipRank: "asc",
+            },
           },
         },
       }),

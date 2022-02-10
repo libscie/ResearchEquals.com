@@ -60,6 +60,9 @@ export async function getServerSideProps(context) {
             include: {
               workspace: true,
             },
+            orderBy: {
+              authorshipRank: "asc",
+            },
           },
         },
       },
@@ -72,6 +75,9 @@ export async function getServerSideProps(context) {
           authors: {
             include: {
               workspace: true,
+            },
+            orderBy: {
+              authorshipRank: "asc",
             },
           },
         },

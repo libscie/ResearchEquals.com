@@ -105,11 +105,6 @@ const ModuleEdit = ({
     (author) => author.workspace?.handle === workspace.handle
   )
 
-  console.log(
-    moduleEdit?.authors.find((author) => author.workspace?.handle === workspace.handle)
-      ?.readyToPublish
-  )
-
   return (
     <div className="p-5 max-w-4xl mx-auto overflow-y-auto text-base">
       {/* Publish module */}
@@ -135,11 +130,14 @@ const ModuleEdit = ({
                 {moduleEdit?.authors.filter(
                   (author) => !author.workspace!.firstName || !author.workspace!.lastName
                 ).length! > 0 ? (
-                  <li>All authors must add their first and last name</li>
+                  <li>All authors must add their author name</li>
                 ) : (
                   ""
                 )}
-                {!ownAuthorship?.readyToPublish && moduleEdit!.authors!.length > 1 ? (
+                {!ownAuthorship?.readyToPublish &&
+                ownAuthorship?.workspace?.firstName &&
+                ownAuthorship?.workspace?.lastName &&
+                moduleEdit!.authors!.length > 1 ? (
                   <li>
                     <button
                       className="text-xs my-1 leading-4 font-medium text-orange-500 dark:text-orange-200 rounded border border-orange-300 dark:border-orange-200 bg-orange shadow-sm dark:bg-orange-800 px-4 py-2 hover:bg-orange-100 dark:hover:border-orange-200 dark:hover:bg-orange-700"
@@ -164,7 +162,7 @@ const ModuleEdit = ({
                     </button>
                   </li>
                 ) : (
-                  ""
+                  <li>You must add your author name</li>
                 )}
                 {moduleEdit!.authors.length > 1 ? (
                   <li>Your co-authors must approve to publish</li>

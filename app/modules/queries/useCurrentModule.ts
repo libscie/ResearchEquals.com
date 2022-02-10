@@ -33,6 +33,9 @@ export default async function getCurrentWorkspace({ suffix }) {
             include: {
               workspace: true,
             },
+            orderBy: {
+              authorshipRank: "asc",
+            },
           },
         },
       },
@@ -42,6 +45,9 @@ export default async function getCurrentWorkspace({ suffix }) {
           authors: {
             include: {
               workspace: true,
+            },
+            orderBy: {
+              authorshipRank: "asc",
             },
           },
         },

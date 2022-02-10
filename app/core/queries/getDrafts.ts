@@ -22,6 +22,9 @@ export default async function getSignature({ session }) {
         include: {
           workspace: true,
         },
+        orderBy: {
+          authorshipRank: "asc",
+        },
       },
     },
   })
