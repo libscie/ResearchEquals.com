@@ -7,7 +7,7 @@ const Ripple = () => {
         height="45"
         viewBox="0 0 45 45"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-1/5 h-1/5 stroke-current text-gray-900 dark:text-gray-200 mx-auto mt-[40vh]"
+        className="mx-auto mt-[40vh] h-1/5 w-1/5 stroke-current text-gray-900 dark:text-gray-200"
       >
         <g fill="none" fillRule="evenodd" transform="translate(1 1)" strokeWidth="2">
           <circle cx="22" cy="22" r="6" strokeOpacity="0">

@@ -8,7 +8,7 @@ import { Suspense } from "react"
 const MetadataImmutable = ({ module }) => {
   return (
     <>
-      <div className="lg:flex text-center text-sm leading-4 font-normal">
+      <div className="text-center text-sm font-normal leading-4 lg:flex">
         <div className="flex-grow py-2">
           {module.published ? (
             <>Published: {module.publishedAt.toISOString().substring(0, 10)}</>
@@ -37,16 +37,16 @@ const MetadataImmutable = ({ module }) => {
         </div>
       </div>
       <div
-        className="module text-white my-4 py-2 px-4"
+        className="module my-4 py-2 px-4 text-white"
         id="moduleCurrent"
         style={{ backgroundColor: module.displayColor }}
       >
-        <div className="py-4 px-2 min-h-32">
-          <p className="text-sm leading-4 font-normal ">{module.type.name}</p>
-          <h1 className="text-xl leading-6 font-medium ">{module.title}</h1>
+        <div className="min-h-32 py-4 px-2">
+          <p className="text-sm font-normal leading-4 ">{module.type.name}</p>
+          <h1 className="text-xl font-medium leading-6 ">{module.title}</h1>
         </div>
         {/* Authors section */}
-        <div className="px-1 py-1 sm:flex place-items-center sm:place-items-left">
+        <div className="sm:place-items-left place-items-center px-1 py-1 sm:flex">
           <div className="flex sm:inline">
             <span className="flex-grow"></span>
             <AuthorAvatarsNew
@@ -57,7 +57,7 @@ const MetadataImmutable = ({ module }) => {
             <span className="flex-grow"></span>
           </div>
           <span className="sm:flex-grow"></span>
-          <div className="flex sm:contents mt-2 sm:mt-0">
+          <div className="mt-2 flex sm:mt-0 sm:contents">
             <span className="flex-grow sm:hidden"></span>
             <Suspense fallback="">
               <ViewAuthors module={module} button={<>test</>} />
@@ -66,7 +66,7 @@ const MetadataImmutable = ({ module }) => {
           </div>
         </div>
         {/* Description section */}
-        <div className="text-base leading-6 font-normal pt-4 pl-2 pr-4 pb-2">
+        <div className="pt-4 pl-2 pr-4 pb-2 text-base font-normal leading-6">
           <h2 className="italic">Summary</h2>
           {module.description}
         </div>

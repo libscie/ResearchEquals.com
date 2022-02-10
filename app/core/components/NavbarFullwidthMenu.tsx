@@ -27,7 +27,7 @@ const FullWidthMenu = ({
               <Popover.Button
                 className={`
                 ${open ? "" : "text-opacity-90"}
-                mx-0 flex-shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+                mx-0 flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
                 ${invitedModules.length > 0 ? "" : "pointer-events-none"}
                 `}
               >
@@ -47,7 +47,7 @@ const FullWidthMenu = ({
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-0 translate-y-1"
               >
-                <Popover.Panel className="absolute z-10 max-w-72 w-72 bg-white dark:bg-gray-800 rounded-md ring-1 ring-gray-400 dark:ring-gray-600 ring-opacity-5 dark:ring-opacity-100 px-4 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0 shadow-lg">
+                <Popover.Panel className="max-w-72 absolute left-1/2 z-10 mt-3 w-72 -translate-x-1/2 transform rounded-md bg-white px-4 shadow-lg ring-1 ring-gray-400 ring-opacity-5 dark:bg-gray-800 dark:ring-gray-600 dark:ring-opacity-100 sm:px-0">
                   <ul className="divide-y dark:divide-gray-600">
                     {invitedModules.map((invited) => (
                       <>
@@ -65,19 +65,19 @@ const FullWidthMenu = ({
           styling="ml-1 flex-shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
           button={
             <Settings32
-              className="h-6 w-6 text-gray-400 hover:text-gray-500 rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="flex h-6 w-6 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               aria-hidden="true"
             />
           }
           user={currentUser}
           workspace={currentWorkspace}
         />
-        <Menu as="div" className="flex-shrink-0 relative ml-2">
+        <Menu as="div" className="relative ml-2 flex-shrink-0">
           <div>
-            <Menu.Button className="rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <Menu.Button className="flex rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
               <span className="sr-only">Open user menu</span>
               <img
-                className="h-8 w-8 rounded-full hover:outline-none hover:ring-2 hover:ring-offset-2 hover:ring-indigo-500"
+                className="h-8 w-8 rounded-full hover:outline-none hover:ring-2 hover:ring-indigo-500 hover:ring-offset-2"
                 src={currentWorkspace.avatar!}
                 alt={`Avatar of ${currentWorkspace.handle}`}
               />
@@ -92,14 +92,14 @@ const FullWidthMenu = ({
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="origin-top-right absolute z-10 right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black dark:ring-gray-600 ring-opacity-5 dark:ring-opacity-100 py-1 focus:outline-none">
+            <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-800 dark:ring-gray-600 dark:ring-opacity-100">
               <Menu.Item key="dropdown-logout">
                 {({ active }) => (
                   <button
                     className={`${
-                      active ? "bg-gray-100 dark:bg-gray-700 text-gray-900 " : "text-gray-500"
+                      active ? "bg-gray-100 text-gray-900 dark:bg-gray-700 " : "text-gray-500"
                     }
-               w-full block py-2 px-4 text-left text-sm leading-5 font-normal dark:text-gray-200`}
+               block w-full py-2 px-4 text-left text-sm font-normal leading-5 dark:text-gray-200`}
                     onClick={async () => {
                       await logoutMutation()
                     }}
@@ -115,7 +115,7 @@ const FullWidthMenu = ({
           buttonText={
             <>
               <Add32
-                className="w-4 h-4 fill-current text-indigo-500 dark:text-gray-400"
+                className="h-4 w-4 fill-current text-indigo-500 dark:text-gray-400"
                 aria-hidden="true"
               />
               Draft
@@ -130,12 +130,12 @@ const FullWidthMenu = ({
     return (
       <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
         <Link href={Routes.LoginPage()}>
-          <a className="whitespace-nowrap text-sm leading-5 font-normal text-indigo-700 dark:text-gray-200 bg-indigo-100 hover:bg-indigo-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-0 dark:border dark:border-gray-600 px-4 py-2 rounded">
+          <a className="whitespace-nowrap rounded border-0 bg-indigo-100 px-4 py-2 text-sm font-normal leading-5 text-indigo-700 hover:bg-indigo-200 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">
             Log in
           </a>
         </Link>
         <Link href={Routes.SignupPage()}>
-          <a className="ml-2 2xl:ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm leading-5 font-normal text-white bg-indigo-600 hover:bg-indigo-700">
+          <a className="ml-2 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-normal leading-5 text-white shadow-sm hover:bg-indigo-700 2xl:ml-8">
             Create account
           </a>
         </Link>

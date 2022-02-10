@@ -15,7 +15,7 @@ const HandleAvatar = ({ params, workspace, ownWorkspace, expire, signature, refe
           <>
             <img
               src={workspace.avatar}
-              className="rounded-full h-28 w-28 max-h-28 max-w-28 border border-2 border-gray-900 dark:border-white hover:border-4 hover:border-indigo-600 hover:cursor-pointer"
+              className="max-w-28 h-28 max-h-28 w-28 rounded-full border border-2 border-gray-900 hover:cursor-pointer hover:border-4 hover:border-indigo-600 dark:border-white"
               alt={`Avatar of ${workspace.handle}`}
               onClick={() => {
                 widgetApi.current.openDialog()
@@ -54,7 +54,7 @@ const HandleAvatar = ({ params, workspace, ownWorkspace, expire, signature, refe
           <>
             <img
               src={workspace.avatar}
-              className="rounded-full h-28 w-28 max-h-28 max-w-28 border border-2 border-gray-900 dark:border-white "
+              className="max-w-28 h-28 max-h-28 w-28 rounded-full border border-2 border-gray-900 dark:border-white "
               alt={`Avatar of ${workspace.handle}`}
             />
           </>
@@ -63,7 +63,7 @@ const HandleAvatar = ({ params, workspace, ownWorkspace, expire, signature, refe
         <>
           <img
             src={workspace.avatar}
-            className="rounded-full h-28 w-28 max-h-28 max-w-28 border border-2 border-gray-900 dark:border-white "
+            className="max-w-28 h-28 max-h-28 w-28 rounded-full border border-2 border-gray-900 dark:border-white "
             alt={`Avatar of ${workspace.handle}`}
           />
         </>

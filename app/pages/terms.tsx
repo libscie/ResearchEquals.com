@@ -168,8 +168,8 @@ const TermsPage: BlitzPage = () => {
         invitations={invitations}
         refetchFn={refetch}
       />
-      <main className="lg:relative bg-white dark:bg-gray-900">
-        <div className="mx-4 lg:mx-auto max-w-3xl text-black dark:text-white my-8">
+      <main className="bg-white dark:bg-gray-900 lg:relative">
+        <div className="mx-4 my-8 max-w-3xl text-black dark:text-white lg:mx-auto">
           <div
             className="coc "
             dangerouslySetInnerHTML={{ __html: md.render(termsMarkdown) }}

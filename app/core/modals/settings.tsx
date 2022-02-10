@@ -48,7 +48,7 @@ export default function SettingsModal({ button, styling, user, workspace }) {
 
             {/* This element is to trick the browser into centering the modal contents. */}
             <span
-              className="hidden sm:inline-block h-screen max-h-screen align-middle"
+              className="hidden h-screen max-h-screen align-middle sm:inline-block"
               aria-hidden="true"
             >
               &#8203;
@@ -62,24 +62,24 @@ export default function SettingsModal({ button, styling, user, workspace }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-full min-h-screen sm:min-h-full  sm:w-auto sm:min-w-120 sm:max-w-120  text-left align-middle transition-all transform rounded bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 shadow text-gray-900">
+              <div className="sm:min-w-120 sm:max-w-120 inline-block min-h-screen  w-full transform rounded  border border-gray-300 bg-white text-left align-middle text-gray-900 shadow transition-all dark:border-gray-600 dark:bg-gray-900 sm:min-h-full sm:w-auto">
                 <div className="sm:w-120">
                   <Tab.Group>
                     <Dialog.Title
                       as="div"
-                      className="text-sm leading-5 font-normal text-gray-900 dark:text-gray-200 sticky top-0 border-b border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 rounded-t"
+                      className="sticky top-0 rounded-t border-b border-gray-300 bg-white text-sm font-normal leading-5 text-gray-900 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-200"
                     >
-                      <h1 className="p-2 sm:hidden text-lg leading-7 font-medium text-gray-900 dark:text-gray-200 px-2">
+                      <h1 className="p-2 px-2 text-lg font-medium leading-7 text-gray-900 dark:text-gray-200 sm:hidden">
                         Settings
                       </h1>
-                      <Tab.List className="flex p-1 space-x-1 z-10 bg-white dark:bg-gray-900 rounded-t">
+                      <Tab.List className="z-10 flex space-x-1 rounded-t bg-white p-1 dark:bg-gray-900">
                         {categories.map((category) => (
                           <Tab
                             key={category}
                             className={({ selected }) =>
                               classNames(
                                 "w-full py-2",
-                                "focus:outline-none focus:ring-2 ring-offset-2 ring-offset-indigo-400 ring-transparent ring-opacity-60 rounded",
+                                "rounded ring-transparent ring-opacity-60 ring-offset-2 ring-offset-indigo-400 focus:outline-none focus:ring-2",
                                 selected
                                   ? "bg-gray-100 dark:bg-gray-800"
                                   : "hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -89,7 +89,7 @@ export default function SettingsModal({ button, styling, user, workspace }) {
                             {category}
                           </Tab>
                         ))}
-                        <button className="rounded-md p-2 inline-flex  items-center justify-center text-gray-500 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                        <button className="inline-flex items-center justify-center  rounded-md p-2 text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 dark:text-gray-500 dark:hover:text-gray-300">
                           <span className="sr-only">Close menu</span>
                           <Close32
                             className="h-6 w-6"

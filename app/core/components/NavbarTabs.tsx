@@ -37,7 +37,7 @@ const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invit
   if (currentUser && currentWorkspace) {
     return (
       <>
-        <div className="w-full text-gray-900 dark:text-gray-200 mx-auto px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900 border-b dark:border-gray-600 border-gray-100">
+        <div className="mx-auto w-full border-b border-gray-100 bg-white px-4 text-gray-900 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-200 sm:px-6 lg:px-8">
           <div className="hidden sm:block">
             <nav className="flex space-x-8" aria-label="Tabs">
               <button
@@ -56,7 +56,7 @@ const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invit
                         ? "bg-gray-100 dark:bg-gray-800"
                         : "hover:bg-gray-100 dark:hover:bg-gray-800",
                       // tab.count === 0 ? "pointer-events-none text-gray-400 dark:text-gray-700" : "",
-                      "group whitespace-nowrap flex my-2 py-2 px-4 text-sm leading-5 font-normal rounded-md disabled"
+                      "group disabled my-2 flex whitespace-nowrap rounded-md py-2 px-4 text-sm font-normal leading-5"
                     )}
                     aria-current={tab.current ? "page" : undefined}
                   >
@@ -65,9 +65,9 @@ const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invit
                       <span
                         className={classNames(
                           tab.current
-                            ? "bg-indigo-100 text-indigo-800 dark:bg-gray-700 dark:text-gray-200 dark:border dark:border-gray-600"
-                            : "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 group-hover:bg-indigo-100 group-hover:text-indigo-800 dark:group-hover:bg-gray-700 dark:group-hover:text-gray-200 dark:border dark:border-gray-600",
-                          "hidden ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium md:inline-block"
+                            ? "bg-indigo-100 text-indigo-800 dark:border dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
+                            : "bg-gray-100 text-gray-800 group-hover:bg-indigo-100 group-hover:text-indigo-800 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:group-hover:bg-gray-700 dark:group-hover:text-gray-200",
+                          "ml-3 hidden rounded-full py-0.5 px-2.5 text-xs font-medium md:inline-block"
                         )}
                       >
                         {tab.count}

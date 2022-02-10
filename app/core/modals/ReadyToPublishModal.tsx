@@ -19,7 +19,7 @@ export default function ReadyToPublish({ module }) {
   return (
     <>
       <button
-        className="px-4 py-2 bg-indigo-500 text-white hover:bg-indigo-300"
+        className="bg-indigo-500 px-4 py-2 text-white hover:bg-indigo-300"
         onClick={openModal}
         // async () => {
         //   await publishMutation({ id: module.id })
@@ -56,7 +56,7 @@ export default function ReadyToPublish({ module }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+              <div className="my-8 inline-block w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
                   Confirm
                 </Dialog.Title>
@@ -74,7 +74,7 @@ export default function ReadyToPublish({ module }) {
                 <div className="mt-4">
                   <button
                     type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 mr-4"
+                    className="mr-4 inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                     onClick={async () => {
                       await publishMutation({ id: module.id })
                       router.reload()
@@ -85,7 +85,7 @@ export default function ReadyToPublish({ module }) {
                   </button>
                   <button
                     type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500"
+                    className="inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
                     onClick={closeModal}
                   >
                     Cancel

@@ -54,12 +54,12 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
   }, [module])
 
   return (
-    <div className="module bg-gray-100 dark:bg-gray-600 my-4" style={{ padding: "1px" }}>
+    <div className="module my-4 bg-gray-100 dark:bg-gray-600" style={{ padding: "1px" }}>
       <form
-        className="module bg-white dark:bg-gray-900 border-0 border-gray-100 dark:border-gray-600 divide-y divide-gray-100 dark:divide-gray-600"
+        className="module divide-y divide-gray-100 border-0 border-gray-100 bg-white dark:divide-gray-600 dark:border-gray-600 dark:bg-gray-900"
         onSubmit={formik.handleSubmit}
       >
-        <div className="lg:flex text-center divide-y lg:divide-y-0 lg:divide-x divide-gray-100 dark:divide-gray-600 text-gray-500 dark:text-gray-200 dark:bg-gray-800 text-sm leading-4 font-normal">
+        <div className="divide-y divide-gray-100 text-center text-sm font-normal leading-4 text-gray-500 dark:divide-gray-600 dark:bg-gray-800 dark:text-gray-200 lg:flex lg:divide-y-0 lg:divide-x">
           <div className="flex-grow py-2">
             <span className="inline-block h-full align-middle"> </span>
             <span className="">Last updated: {moment(module.updatedAt).fromNow()}</span>
@@ -75,7 +75,7 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
           <div className="flex-grow py-1">
             <label htmlFor="license">License: </label>
             <select
-              className="rounded bg-transparent text-sm leading-4 font-normal border border-gray-300 dark:border-gray-600"
+              className="rounded border border-gray-300 bg-transparent text-sm font-normal leading-4 dark:border-gray-600"
               id="license"
               {...formik.getFieldProps("license")}
             >
@@ -95,13 +95,13 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
             ) : null}
           </div>
         </div>
-        <div className="py-4 px-2 min-h-32">
-          <p className="text-sm leading-4 font-normal text-gray-900 dark:text-white">
+        <div className="min-h-32 py-4 px-2">
+          <p className="text-sm font-normal leading-4 text-gray-900 dark:text-white">
             <label htmlFor="type" className="sr-only">
               Module type
             </label>
             <select
-              className="border-gray-300 dark:border-gray-600 rounded bg-transparent text-sm leading-4 font-normal"
+              className="rounded border-gray-300 bg-transparent text-sm font-normal leading-4 dark:border-gray-600"
               id="type"
               {...formik.getFieldProps("type")}
             >
@@ -118,7 +118,7 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
             </select>
             {formik.touched.type && formik.errors.type ? <div>{formik.errors.type}</div> : null}
           </p>
-          <p className="text-xl leading-6 font-medium text-gray-900 dark:text-white">
+          <p className="text-xl font-medium leading-6 text-gray-900 dark:text-white">
             <label htmlFor="title" className="sr-only block text-sm font-medium text-gray-700">
               Title
             </label>
@@ -126,7 +126,7 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
               <textarea
                 rows={2}
                 id="title"
-                className="border-gray-300 dark:border-gray-600 bg-transparent shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border  rounded-md"
+                className="block w-full rounded-md border border-gray-300 bg-transparent shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-600  sm:text-sm"
                 {...formik.getFieldProps("title")}
               />
               {formik.touched.title && formik.errors.title ? (
@@ -136,7 +136,7 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
           </p>
         </div>
         {/* Authors section */}
-        <div className="px-1 py-1 sm:flex place-items-center sm:place-items-left">
+        <div className="sm:place-items-left place-items-center px-1 py-1 sm:flex">
           <div className="flex sm:inline">
             <span className="flex-grow"></span>
 
@@ -145,7 +145,7 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
           </div>
         </div>
         {/* Description section */}
-        <div className="text-sm leading-4 font-normal pt-4 pl-2 pr-4 pb-2">
+        <div className="pt-4 pl-2 pr-4 pb-2 text-sm font-normal leading-4">
           <label htmlFor="description" className="sr-only block text-sm font-medium text-gray-700">
             Summary
           </label>
@@ -153,7 +153,7 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
             <textarea
               rows={8}
               id="description"
-              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 dark:border-gray-600 bg-transparent rounded-md"
+              className="block w-full rounded-md border border-gray-300 bg-transparent shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-600 sm:text-sm"
               {...formik.getFieldProps("description")}
             />
             {formik.touched.description && formik.errors.description ? (
@@ -164,7 +164,7 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
         <div className="px-2 py-2">
           <label
             htmlFor="displayColor"
-            className="flex my-1 text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
+            className="my-1 flex text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
           >
             Display color{" "}
             {formik.touched.displayColor && formik.errors.displayColor
@@ -175,7 +175,7 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
             <select
               id="displayColor"
               required
-              className="appearance-none block w-full px-3 py-2 border border-gray-400 bg-white dark:bg-transparent dark:border-gray-600 dark:text-gray-200 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500 font-normal text-sm"
+              className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-400 bg-white px-3 py-2 text-sm font-normal placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border-gray-600 dark:bg-transparent dark:text-gray-200"
               {...formik.getFieldProps("displayColor")}
             >
               <option value="#574cfa" className="text-white" style={{ backgroundColor: "#574cfa" }}>
@@ -190,16 +190,16 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
             </select>
           </div>
         </div>
-        <div className="px-2 py-2 flex">
+        <div className="flex px-2 py-2">
           <button
             type="submit"
-            className="flex py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
+            className="flex rounded-md bg-green-50 py-2 px-4 text-sm font-medium text-green-700 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-green-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
           >
             Save changes
           </button>
           <button
             type="button"
-            className="flex mx-2 py-2 px-4 bg-red-50 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
+            className="mx-2 flex rounded-md bg-red-50 py-2 px-4 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
             onClick={() => {
               setIsEditing(false)
             }}

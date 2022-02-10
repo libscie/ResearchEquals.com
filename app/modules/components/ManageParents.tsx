@@ -17,7 +17,7 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
         <div className="absolute inset-0 overflow-hidden">
           <Dialog.Overlay className="fixed inset-0 bg-gray-900 bg-opacity-25 transition-opacity" />
 
-          <div className="fixed inset-y-0 left-0 pr-10 max-w-full flex">
+          <div className="fixed inset-y-0 left-0 flex max-w-full pr-10">
             <Transition.Child
               as={Fragment}
               enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -28,16 +28,16 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
               leaveTo="-translate-x-full"
             >
               <div className="w-screen max-w-xs  border-r border-gray-400 dark:border-gray-600">
-                <div className="min-h-0 flex-1 flex flex-col pt-6 overflow-y-auto h-full dark:divide-gray-600 bg-white dark:bg-gray-900 shadow-xl">
+                <div className="flex h-full min-h-0 flex-1 flex-col overflow-y-auto bg-white pt-6 shadow-xl dark:divide-gray-600 dark:bg-gray-900">
                   <div className="px-4 sm:px-6">
                     <div className="flex items-start justify-between">
                       <Dialog.Title className="text-lg font-medium text-gray-900 dark:text-white">
                         Linked previous steps
                       </Dialog.Title>
-                      <div className="ml-3 h-7 flex items-center">
+                      <div className="ml-3 flex h-7 items-center">
                         <button
                           type="button"
-                          className="rounded-md text-gray-400 dark:text-gray-200 hover:text-gray-500 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                          className="rounded-md text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-white"
                           onClick={() => setOpen(false)}
                         >
                           <span className="sr-only">Close panel</span>
@@ -46,7 +46,7 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="mt-6 px-4 sm:px-6 text-sm leading-5 font-normal border-b border-gray-400 dark:border-gray-600 pb-4 dark:text-white">
+                  <div className="mt-6 border-b border-gray-400 px-4 pb-4 text-sm font-normal leading-5 dark:border-gray-600 dark:text-white sm:px-6">
                     These are the previous steps your work links to. You can delete the connection
                     by clicking the delete icon. This action does not delete the previous step
                     itself.
@@ -100,7 +100,7 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                             }}
                           >
                             <TrashCan24
-                              className="w-4 h-4 fill-current text-red-500 inline-block align-middle"
+                              className="inline-block h-4 w-4 fill-current align-middle text-red-500"
                               aria-hidden="true"
                             />
                           </button>
@@ -109,29 +109,29 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                     ))}
                   </ul>
                   {/* /End replace */}
-                  <div className="flex-shrink-0 px-4 py-4 flex justify-end border-t border-gray-400 dark:border-gray-600">
+                  <div className="flex flex-shrink-0 justify-end border-t border-gray-400 px-4 py-4 dark:border-gray-600">
                     <button
                       type="button"
-                      className="flex mx-4 py-2 px-4 bg-red-50 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
+                      className="mx-4 flex rounded-md bg-red-50 py-2 px-4 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                       onClick={() => {
                         setOpen(false)
                       }}
                     >
                       <Close32
-                        className="w-4 h-4 fill-current text-red-500 pt-1"
+                        className="h-4 w-4 fill-current pt-1 text-red-500"
                         aria-hidden="true"
                       />
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      className="flex py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
+                      className="flex rounded-md bg-green-50 py-2 px-4 text-sm font-medium text-green-700 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-green-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                       onClick={() => {
                         setOpen(false)
                       }}
                     >
                       <Checkmark32
-                        className="w-4 h-4 stroke-current text-green-500 pt-1"
+                        className="h-4 w-4 stroke-current pt-1 text-green-500"
                         aria-hidden="true"
                       />
                       Save

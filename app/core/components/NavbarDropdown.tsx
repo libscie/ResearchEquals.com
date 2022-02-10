@@ -21,12 +21,12 @@ const DropdownContents = ({
   if (currentUser && currentWorkspace) {
     return (
       <>
-        <div className="mt-3 pt-0 pb-2 px-4 space-y-1 border-b border-gray-200 dark:border-gray-600">
+        <div className="mt-3 space-y-1 border-b border-gray-200 px-4 pt-0 pb-2 dark:border-gray-600">
           <QuickDraft
             buttonText={
               <>
                 <Add32
-                  className="inline w-4 h-4 fill-current text-indigo-500 dark:text-gray-400"
+                  className="inline h-4 w-4 fill-current text-indigo-500 dark:text-gray-400"
                   aria-hidden="true"
                 />
                 Quick Draft
@@ -36,47 +36,47 @@ const DropdownContents = ({
             refetchFn={refetchFn}
           />
           <Link href={Routes.Dashboard()}>
-            <button className="group w-full text-left block rounded-md px-2 py-2 text-gray-900 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 text-base leading-5 font-normal">
+            <button className="group block w-full rounded-md px-2 py-2 text-left text-base font-normal leading-5 text-gray-900 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800">
               Dashboard
             </button>
           </Link>
 
           <Link href={Routes.DraftsPage()}>
-            <button className="group w-full text-left block rounded-md px-2 py-2 text-gray-900 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 text-base leading-5 font-normal">
+            <button className="group block w-full rounded-md px-2 py-2 text-left text-base font-normal leading-5 text-gray-900 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800">
               Drafts
-              <span className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 group-hover:bg-indigo-100 group-hover:text-indigo-800 dark:group-hover:bg-gray-700 dark:group-hover:text-gray-200 dark:border dark:border-gray-600 ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium inline-block">
+              <span className="ml-3 inline-block rounded-full bg-gray-100 py-0.5 px-2.5 text-xs font-medium text-gray-800 group-hover:bg-indigo-100 group-hover:text-indigo-800 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:group-hover:bg-gray-700 dark:group-hover:text-gray-200">
                 {drafts.length}
               </span>
             </button>
           </Link>
           <Link href={Routes.InvitationsPage()}>
-            <button className="group w-full text-left block rounded-md px-2 py-2 text-gray-900 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 text-base leading-5 font-normal">
+            <button className="group block w-full rounded-md px-2 py-2 text-left text-base font-normal leading-5 text-gray-900 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800">
               Invitations
-              <span className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 group-hover:bg-indigo-100 group-hover:text-indigo-800 dark:group-hover:bg-gray-700 dark:group-hover:text-gray-200 dark:border dark:border-gray-600 ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium inline-block">
+              <span className="ml-3 inline-block rounded-full bg-gray-100 py-0.5 px-2.5 text-xs font-medium text-gray-800 group-hover:bg-indigo-100 group-hover:text-indigo-800 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:group-hover:bg-gray-700 dark:group-hover:text-gray-200">
                 {invitedModules.length}
               </span>
             </button>
           </Link>
           <Link href={Routes.HandlePage({ handle: currentWorkspace.handle })}>
-            <button className="group w-full text-left block rounded-md px-2 py-2 text-gray-900 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 text-base leading-5 font-normal">
+            <button className="group block w-full rounded-md px-2 py-2 text-left text-base font-normal leading-5 text-gray-900 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800">
               Modules
             </button>
           </Link>
         </div>
-        <div className="mt-3 pt-0 pb-2 px-4 space-y-1">
-          <li className="py-2 px-2 flex">
+        <div className="mt-3 space-y-1 px-4 pt-0 pb-2">
+          <li className="flex py-2 px-2">
             <div className="mr-2">
               <img
                 src={currentWorkspace!.avatar!}
                 alt={`Avatar of ${currentWorkspace.handle}`}
-                className="w-10 h-10 rounded-full inline-block h-full align-middle"
+                className="inline-block h-10 h-full w-10 rounded-full align-middle"
               />
             </div>
             <div className="flex-grow">
               <span className="inline-block h-full align-middle"></span>
-              <p className="text-gray-700 dark:text-gray-200 text-sm leading-4 font-normal my-auto inline-block align-middle">
+              <p className="my-auto inline-block align-middle text-sm font-normal leading-4 text-gray-700 dark:text-gray-200">
                 {currentWorkspace.firstName} {currentWorkspace.lastName}
-                <p className="text-gray-500 dark:text-gray-400 text-xs leading-4 font-normal">
+                <p className="text-xs font-normal leading-4 text-gray-500 dark:text-gray-400">
                   @{currentWorkspace.handle}
                 </p>
               </p>
@@ -92,7 +92,7 @@ const DropdownContents = ({
             />
           </Link>
           <button
-            className="w-full text-left block rounded-md px-2 py-2 text-gray-500 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 text-base leading-5 font-normal"
+            className="block w-full rounded-md px-2 py-2 text-left text-base font-normal leading-5 text-gray-500 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-700"
             onClick={async () => {
               router.push("/")
               await logoutMutation()
@@ -108,12 +108,12 @@ const DropdownContents = ({
       <>
         <div className="px-5 pb-2">
           <Link href={Routes.LoginPage()}>
-            <button className="w-full block rounded-md py-2 px-0 text-sm leading-5 font-normal text-indigo-700 dark:text-gray-200 bg-indigo-100 hover:bg-indigo-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-0 dark:border dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <button className="block w-full rounded-md border-0 bg-indigo-100 py-2 px-0 text-sm font-normal leading-5 text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">
               Log in
             </button>
           </Link>
           <Link href={Routes.SignupPage()}>
-            <button className="w-full my-1 block rounded-md py-2 px-0 text-sm leading-5 font-normal text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <button className="my-1 block w-full rounded-md bg-indigo-600 py-2 px-0 text-sm font-normal leading-5 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
               Create account
             </button>
           </Link>
@@ -148,13 +148,13 @@ const NavbarDropdown = ({
       ) : (
         <>
           <button
-            className="rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+            className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-white"
             onClick={() => {
               setIsOpen(true)
             }}
           >
             <span className="sr-only">Open menu</span>
-            <Menu32 className="block h-6 w-6 text-gray-400 dark:text-gray-200 hover:bg-gray-100 hover:text-gray-500 dark:hover:bg-gray-800 rounded-md focus:ring-2 focus:ring-offset-0 focus:ring-gray-200" />
+            <Menu32 className="block h-6 w-6 rounded-md text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:ring-2 focus:ring-gray-200 focus:ring-offset-0 dark:text-gray-200 dark:hover:bg-gray-800" />
           </button>
         </>
       )}
@@ -189,16 +189,16 @@ const NavbarDropdown = ({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-full my-0 overflow-hidden text-left align-middle transition-all transform bg-white dark:bg-gray-900 shadow-xl border-b dark:border-gray-600">
-                <Dialog.Title as="h1" className="text-lg font-medium leading-6 text-gray-900 m-5">
-                  <div className="pt-0 pb-0 px-0">
+              <div className="my-0 inline-block w-full transform overflow-hidden border-b bg-white text-left align-middle shadow-xl transition-all dark:border-gray-600 dark:bg-gray-900">
+                <Dialog.Title as="h1" className="m-5 text-lg font-medium leading-6 text-gray-900">
+                  <div className="px-0 pt-0 pb-0">
                     <div className="flex items-center justify-between">
                       <div>
                         <ResearchEqualsLogo />
                       </div>
                       <div className="-mr-2">
                         <button
-                          className="rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                          className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-white"
                           onClick={() => {
                             setIsOpen(false)
                           }}

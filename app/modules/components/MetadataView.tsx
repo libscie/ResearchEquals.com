@@ -24,9 +24,9 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
   const [manageAuthorsOpen, setManageAuthorsOpen] = useState(false)
 
   return (
-    <div className="module bg-gray-100 dark:bg-gray-600 my-4" style={{ padding: "1px" }}>
-      <div className="module bg-white dark:bg-gray-900 border-0 border-gray-100 dark:border-gray-600 divide-y divide-gray-100 dark:divide-gray-600">
-        <div className="lg:flex text-center divide-y lg:divide-y-0 lg:divide-x divide-gray-100 dark:divide-gray-600 text-gray-500 dark:text-gray-200 dark:bg-gray-800 text-sm leading-4 font-normal">
+    <div className="module my-4 bg-gray-100 dark:bg-gray-600" style={{ padding: "1px" }}>
+      <div className="module divide-y divide-gray-100 border-0 border-gray-100 bg-white dark:divide-gray-600 dark:border-gray-600 dark:bg-gray-900">
+        <div className="divide-y divide-gray-100 text-center text-sm font-normal leading-4 text-gray-500 dark:divide-gray-600 dark:bg-gray-800 dark:text-gray-200 lg:flex lg:divide-y-0 lg:divide-x">
           <div className="flex-grow py-2">Last updated: {moment(module.updatedAt).fromNow()}</div>
           <div className="flex-grow py-2">
             DOI upon publish:{" "}
@@ -39,16 +39,16 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
             </Link>
           </div>
         </div>
-        <div className="py-4 px-2 min-h-32">
-          <p className="text-sm leading-4 font-normal text-gray-500 dark:text-white">
+        <div className="min-h-32 py-4 px-2">
+          <p className="text-sm font-normal leading-4 text-gray-500 dark:text-white">
             {module.type.name}
           </p>
-          <p className="text-xl leading-6 font-medium  text-gray-900 dark:text-white">
+          <p className="text-xl font-medium leading-6  text-gray-900 dark:text-white">
             {module.title}
           </p>
         </div>
         {/* Authors section */}
-        <div className="px-1 py-1 sm:flex place-items-center sm:place-items-left">
+        <div className="sm:place-items-left place-items-center px-1 py-1 sm:flex">
           <div className="flex sm:inline">
             <span className="flex-grow"></span>
 
@@ -61,7 +61,7 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
 
             {addAuthors ? (
               <>
-                <div className="w-28 sm:w-56 h-full">
+                <div className="h-full w-28 sm:w-56">
                   <Autocomplete
                     openOnFocus={true}
                     defaultActiveItemId="0"
@@ -91,7 +91,7 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
                                     <>
                                       Author invited.
                                       <button
-                                        className="underline ml-1"
+                                        className="ml-1 underline"
                                         onClick={async () => {
                                           const updatedModule = await removeInvitationMutation({
                                             workspaceId: parseInt(item.objectID),
@@ -150,13 +150,13 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
               </>
             ) : (
               <button
-                className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-sm leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700"
+                className="mx-1 flex rounded border border-gray-300 px-2 py-2 text-sm font-normal leading-4 text-gray-700 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                 onClick={() => {
                   setAddAuthors(true)
                 }}
               >
                 <Add32
-                  className="fill-current text-gray-500 dark:text-gray-200 w-4 h-4 dark:hover:text-gray-400"
+                  className="h-4 w-4 fill-current text-gray-500 dark:text-gray-200 dark:hover:text-gray-400"
                   aria-hidden="true"
                 />
                 Add Authors
@@ -167,7 +167,7 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
             ) : (
               <>
                 <button
-                  className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-sm leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="mx-1 flex rounded border border-gray-300 px-2 py-2 text-sm font-normal leading-4 text-gray-700 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                   onClick={() => {
                     setManageAuthorsOpen(true)
                   }}
@@ -187,7 +187,7 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
           </div>
         </div>
         {/* Description section */}
-        <div className="text-base leading-6 font-normal pt-4 pl-2 pr-4 pb-2">
+        <div className="pt-4 pl-2 pr-4 pb-2 text-base font-normal leading-6">
           <h2 className="italic">Summary</h2>
           {module.description}
         </div>

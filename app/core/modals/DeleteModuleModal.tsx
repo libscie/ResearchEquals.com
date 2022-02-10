@@ -20,7 +20,7 @@ export default function DeleteModule({ module, setModule, fetchDrafts }) {
   return (
     <>
       <button
-        className="mx-4 py-2 px-4 bg-red-100 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm leading-4 font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
+        className="mx-4 rounded-md bg-red-100 py-2 px-4 text-sm font-medium leading-4 text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
         onClick={openModal}
       >
         Delete module
@@ -53,7 +53,7 @@ export default function DeleteModule({ module, setModule, fetchDrafts }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block rounded w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform shadow-xl text-gray-900 dark:text-gray-200 bg-white dark:bg-gray-900 dark:border border-gray-300 dark:border-gray-600">
+              <div className="my-8 inline-block w-full max-w-md transform overflow-hidden rounded border-gray-300 bg-white p-6 text-left align-middle text-gray-900 shadow-xl transition-all dark:border dark:border-gray-600 dark:bg-gray-900 dark:text-gray-200">
                 <Dialog.Title as="h3" className="text-lg font-medium leading-6">
                   Confirm module deletion
                 </Dialog.Title>
@@ -66,7 +66,7 @@ export default function DeleteModule({ module, setModule, fetchDrafts }) {
                 <div className="mt-4">
                   <button
                     type="button"
-                    className="inline-flex mr-2 py-2 px-4 bg-red-50 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
+                    className="mr-2 inline-flex rounded-md bg-red-50 py-2 px-4 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                     onClick={async () => {
                       toast
                         .promise(deleteModuleMutation({ id: module.id }), {
@@ -86,7 +86,7 @@ export default function DeleteModule({ module, setModule, fetchDrafts }) {
                   </button>
                   <button
                     type="button"
-                    className="py-2 px-4 bg-indigo-100 dark:bg-gray-800 text-indigo-700 dark:text-gray-200 hover:bg-indigo-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500"
+                    className="rounded-md bg-indigo-100 py-2 px-4 text-sm font-medium text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                     onClick={closeModal}
                   >
                     Cancel

@@ -101,7 +101,7 @@ const DashboardContent = ({
           {/* Column 1 */}
           <div className="p-4">
             <div className="my-0">
-              <h1 className="text-4xl font-medium text-center">
+              <h1 className="text-center text-4xl font-medium">
                 Welcome,{" "}
                 {data.workspace.firstName && data.workspace.lastName
                   ? `${data.workspace.firstName} ${data.workspace.lastName}`
@@ -109,7 +109,7 @@ const DashboardContent = ({
                 !
               </h1>
             </div>
-            <div className="lg:flex w-full mt-4 gap-2">
+            <div className="mt-4 w-full gap-2 lg:flex">
               <OnboardingQuests
                 data={data}
                 expire={expire}
@@ -117,20 +117,20 @@ const DashboardContent = ({
                 refetch={refetchAll}
               />
             </div>
-            <dl className="mt-2 flex text-gray-900 dark:text-gray-200  overflow-hidden shadow dark:border rounded border-gray-100 dark:border-gray-600 divide-gray-100 dark:divide-gray-600 md:grid-cols-3 divide-x">
+            <dl className="mt-2 flex divide-x divide-gray-100  overflow-hidden rounded border-gray-100 text-gray-900 shadow dark:divide-gray-600 dark:border dark:border-gray-600 dark:text-gray-200 md:grid-cols-3">
               {stats.map((item) => {
                 if (item.name === "Followers") {
                   return (
                     <>
                       <button
-                        className="px-4 py-5 sm:p-6 flex-grow hover:bg-gray-50 dark:hover:bg-gray-800 text-left disabled:opacity-50"
+                        className="flex-grow px-4 py-5 text-left hover:bg-gray-50 disabled:opacity-50 dark:hover:bg-gray-800 sm:p-6"
                         disabled={item.stat === 0}
                         onClick={() => {
                           setViewFollowers(true)
                         }}
                       >
                         <dt className="text-base font-normal">{item.name}</dt>
-                        <dd className="mt-1 flex justify-between items-baseline md:block lg:flex">
+                        <dd className="mt-1 flex items-baseline justify-between md:block lg:flex">
                           <div className="flex items-baseline text-2xl font-semibold text-indigo-600 dark:text-indigo-200">
                             {item.stat}
                             {item.change ? (
@@ -146,12 +146,12 @@ const DashboardContent = ({
                               >
                                 {item.change > 0 ? (
                                   <ArrowUp32
-                                    className="self-center flex-shrink-0 h-5 w-5 text-green-500"
+                                    className="h-5 w-5 flex-shrink-0 self-center text-green-500"
                                     aria-hidden="true"
                                   />
                                 ) : (
                                   <ArrowDown32
-                                    className="self-center flex-shrink-0 h-5 w-5 text-red-500"
+                                    className="h-5 w-5 flex-shrink-0 self-center text-red-500"
                                     aria-hidden="true"
                                   />
                                 )}
@@ -173,11 +173,11 @@ const DashboardContent = ({
                     <>
                       <Link href={item.to}>
                         <button
-                          className="px-4 py-5 sm:p-6 flex-grow hover:bg-gray-50 dark:hover:bg-gray-800 text-left disabled:opacity-50"
+                          className="flex-grow px-4 py-5 text-left hover:bg-gray-50 disabled:opacity-50 dark:hover:bg-gray-800 sm:p-6"
                           disabled={item.stat === 0}
                         >
                           <dt className="text-base font-normal">{item.name}</dt>
-                          <dd className="mt-1 flex justify-between items-baseline md:block lg:flex">
+                          <dd className="mt-1 flex items-baseline justify-between md:block lg:flex">
                             <div className="flex items-baseline text-2xl font-semibold text-indigo-600 dark:text-indigo-200">
                               {item.stat}
                               {item.change ? (
@@ -193,12 +193,12 @@ const DashboardContent = ({
                                 >
                                   {item.change > 0 ? (
                                     <ArrowUp32
-                                      className="self-center flex-shrink-0 h-5 w-5 text-green-500"
+                                      className="h-5 w-5 flex-shrink-0 self-center text-green-500"
                                       aria-hidden="true"
                                     />
                                   ) : (
                                     <ArrowDown32
-                                      className="self-center flex-shrink-0 h-5 w-5 text-red-500"
+                                      className="h-5 w-5 flex-shrink-0 self-center text-red-500"
                                       aria-hidden="true"
                                     />
                                   )}
@@ -278,7 +278,7 @@ const Dashboard = ({ expire, signature }) => {
         invitations={data.invitedModules}
         refetchFn={refetch}
       />
-      <main className="max-w-7xl mx-auto">
+      <main className="mx-auto max-w-7xl">
         <DashboardContent
           expire={expire}
           signature={signature}

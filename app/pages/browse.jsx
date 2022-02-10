@@ -18,7 +18,7 @@ import getBrowseWorkspaceGraphData from "../core/queries/getBrowseWorkspaceGraph
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="custom-tooltip bg-white dark:bg-gray-900 shadow-xl border dark:border-gray-600 rounded p-2 border-b bgborder-gray-400">
+      <div className="custom-tooltip bgborder-gray-400 rounded border border-b bg-white p-2 shadow-xl dark:border-gray-600 dark:bg-gray-900">
         <p className="label">{`${moment(label).format("YYYY-MM-DD")}`}</p>
         <p>Total modules: {`${payload[0].value}`}</p>
       </div>
@@ -31,7 +31,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 const CustomTooltipWorkspace = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="custom-tooltip bg-white dark:bg-gray-900 shadow-xl border dark:border-gray-600 rounded p-2 border-b bgborder-gray-400">
+      <div className="custom-tooltip bgborder-gray-400 rounded border border-b bg-white p-2 shadow-xl dark:border-gray-600 dark:bg-gray-900">
         <p className="label">{`${moment(label).format("YYYY-MM-DD")}`}</p>
         <p>Total signups: {`${payload[0].value}`}</p>
       </div>
@@ -49,8 +49,8 @@ const BrowseContent = () => {
   const [graphData] = useQuery(getBrowseGraphData, undefined)
 
   return (
-    <div className="max-w-7xl text-gray-900 dark:text-gray-200 py-16 mx-4 xl:mx-auto">
-      <h1 className="text-3xl text-center font-extrabold ">Recent modules</h1>
+    <div className="mx-4 max-w-7xl py-16 text-gray-900 dark:text-gray-200 xl:mx-auto">
+      <h1 className="text-center text-3xl font-extrabold ">Recent modules</h1>
 
       <ModuleBoxFeed
         modules={modulePages}
@@ -70,12 +70,12 @@ const BrowseWorkspaces = () => {
   const [graphData] = useQuery(getBrowseWorkspaceGraphData, undefined)
 
   return (
-    <div className="max-w-7xl text-gray-900 dark:text-gray-200 py-16 mx-4 xl:mx-auto">
-      <h1 className="text-3xl text-center font-extrabold ">Recent signups</h1>
+    <div className="mx-4 max-w-7xl py-16 text-gray-900 dark:text-gray-200 xl:mx-auto">
+      <h1 className="text-center text-3xl font-extrabold ">Recent signups</h1>
 
       {workspacePages.map((page, i) => (
         <React.Fragment key={i}>
-          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 gap-y-10 my-4">
+          <div className="my-4 grid grid-cols-2 gap-4 gap-y-10 md:grid-cols-3 xl:grid-cols-4">
             {page.workspaces.map((workspace) => (
               <>
                 <>
@@ -84,9 +84,9 @@ const BrowseWorkspaces = () => {
                       <img
                         src={workspace.avatar}
                         alt={`Avatar of ${workspace.handle}`}
-                        className="h-28 w-28 rounded-full mx-auto"
+                        className="mx-auto h-28 w-28 rounded-full"
                       />
-                      <p className="mx-auto text-center my-2">
+                      <p className="mx-auto my-2 text-center">
                         {workspace.firstName && workspace.lastName
                           ? `${workspace.firstName} ${workspace.lastName}`
                           : `@${workspace.handle}`}{" "}
@@ -99,11 +99,11 @@ const BrowseWorkspaces = () => {
           </div>
         </React.Fragment>
       ))}
-      <div className="text-center my-4">
+      <div className="my-4 text-center">
         <button
           onClick={() => fetchNextPage()}
           disabled={!hasNextPage || !!isFetchingNextPage}
-          className="whitespace-nowrap text-sm leading-5 font-normal text-indigo-700 dark:text-gray-200 bg-indigo-100 hover:bg-indigo-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-0 dark:border dark:border-gray-600 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500"
+          className="whitespace-nowrap rounded border-0 bg-indigo-100 px-4 py-2 text-sm font-normal leading-5 text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
         >
           {isFetchingNextPage
             ? "Loading more authors..."
@@ -135,7 +135,7 @@ const Browse = () => {
         invitations={invitations}
         refetchFn={refetch}
       />
-      <div className="2xl:grid grid-cols-2 2xl:mx-4">
+      <div className="grid-cols-2 2xl:mx-4 2xl:grid">
         <BrowseContent />
         <BrowseWorkspaces />
       </div>

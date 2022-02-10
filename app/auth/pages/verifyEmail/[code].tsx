@@ -26,12 +26,12 @@ const VerifyMail: BlitzPage = () => {
   }, [code, setError, verifyEmail])
 
   return (
-    <div className="flex justify-center items-center mt-8">
+    <div className="mt-8 flex items-center justify-center">
       {error ? (
         "An Error ocurred"
       ) : (
         <svg
-          className="animate-spin -ml-1 mr-3 h-10 w-10 text-orange-500"
+          className="-ml-1 mr-3 h-10 w-10 animate-spin text-orange-500"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"

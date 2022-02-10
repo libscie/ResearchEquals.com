@@ -111,7 +111,7 @@ const ModuleEdit = ({
   )
 
   return (
-    <div className="p-5 max-w-4xl mx-auto overflow-y-auto text-base">
+    <div className="mx-auto max-w-4xl overflow-y-auto p-5 text-base">
       {/* Publish module */}
       {(moduleEdit!.authors.filter((author) => author.readyToPublish !== true).length === 0 &&
         Object.keys(moduleEdit!.main!).length !== 0) ||
@@ -119,18 +119,18 @@ const ModuleEdit = ({
         <PublishModuleModal module={moduleEdit} user={user} workspace={workspace} />
       ) : (
         <>
-          <div className="rounded-md bg-orange-50 dark:bg-orange-800 w-full p-2 flex my-4">
-            <div className="flex-shrink-0 inline-block align-middle">
+          <div className="my-4 flex w-full rounded-md bg-orange-50 p-2 dark:bg-orange-800">
+            <div className="inline-block flex-shrink-0 align-middle">
               <WarningSquareFilled32
-                className="fill-current h-5 w-5 text-orange-500 dark:text-orange-200 inline-block align-middle"
+                className="inline-block h-5 w-5 fill-current align-middle text-orange-500 dark:text-orange-200"
                 aria-hidden="true"
               />
             </div>
             <div className="ml-3 flex-grow text-orange-800 dark:text-orange-100">
-              <h3 className="text-sm leading-4 font-normal text-orange-800 dark:text-orange-100 inline-block align-middle">
+              <h3 className="inline-block align-middle text-sm font-normal leading-4 text-orange-800 dark:text-orange-100">
                 To publish this module:
               </h3>
-              <ol className="text-sm list-inside list-decimal">
+              <ol className="list-inside list-decimal text-sm">
                 {moduleEdit!.main!["name"] ? "" : <li>Upload a main file</li>}
                 {moduleEdit?.authors.filter(
                   (author) => !author.workspace!.firstName || !author.workspace!.lastName
@@ -142,7 +142,7 @@ const ModuleEdit = ({
                 {!ownAuthorship?.readyToPublish && moduleEdit!.authors!.length > 1 ? (
                   <li>
                     <button
-                      className="text-xs my-1 leading-4 font-medium text-orange-500 dark:text-orange-200 rounded border border-orange-300 dark:border-orange-200 bg-orange shadow-sm dark:bg-orange-800 px-4 py-2 hover:bg-orange-100 dark:hover:border-orange-200 dark:hover:bg-orange-700"
+                      className="bg-orange my-1 rounded border border-orange-300 px-4 py-2 text-xs font-medium leading-4 text-orange-500 shadow-sm hover:bg-orange-100 dark:border-orange-200 dark:bg-orange-800 dark:text-orange-200 dark:hover:border-orange-200 dark:hover:bg-orange-700"
                       onClick={async () => {
                         toast.promise(
                           approveAuthorshipMutation({
@@ -184,7 +184,7 @@ const ModuleEdit = ({
         </>
       )}
       {/* Menu bar */}
-      <div className="w-full flex mb-28">
+      <div className="mb-28 flex w-full">
         {inboxOpen ? (
           <button
             onClick={() => {
@@ -208,9 +208,9 @@ const ModuleEdit = ({
           </button>
         )}
         {/* Push all menu bars to the right */}
-        <div className="flex-grow mx-4">
+        <div className="mx-4 flex-grow">
           <button
-            className="flex px-2 mx-auto py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-sm leading-4 font-normal shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700 my-2 disabled:opacity-50"
+            className="mx-auto my-2 flex rounded border border-gray-300 px-2 py-2 text-sm font-normal leading-4 text-gray-700 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:border-gray-400 dark:hover:bg-gray-700"
             onClick={() => {
               setPreviousOpen(true)
             }}
@@ -218,7 +218,7 @@ const ModuleEdit = ({
           >
             Links to {moduleEdit?.parents.length} previous steps
           </button>
-          <div className="max-w-md mx-auto">
+          <div className="mx-auto max-w-md">
             <span id="previousStep">
               <Autocomplete
                 className="h-full max-w-2xl"
@@ -268,7 +268,7 @@ const ModuleEdit = ({
                             {query.match(/^10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i) ? (
                               <>
                                 <button
-                                  className="text-gray-900 dark:text-gray-200 text-sm leading-4 font-normal"
+                                  className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200"
                                   onClick={async () => {
                                     toast.promise(createReferenceMutation({ doi: query }), {
                                       loading: "Searching...",
@@ -299,7 +299,7 @@ const ModuleEdit = ({
                                 </button>
                               </>
                             ) : (
-                              <p className="text-gray-900 dark:text-gray-200 text-sm leading-4 font-normal">
+                              <p className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200">
                                 Input a DOI to add
                               </p>
                             )}
@@ -363,7 +363,7 @@ const ModuleEdit = ({
       </div>
 
       <div className="my-4">
-        <h2 className="text-lg leading-4 text-gray-500 dark:text-gray-200 my-2">
+        <h2 className="my-2 text-lg leading-4 text-gray-500 dark:text-gray-200">
           Main file (required)
         </h2>
         <EditMainFile
@@ -376,10 +376,10 @@ const ModuleEdit = ({
           signature={signature}
         />
       </div>
-      <div className="md:grid grid-cols-2 gap-x-4 mb-28">
+      <div className="mb-28 grid-cols-2 gap-x-4 md:grid">
         {/* Supporting files */}
         <div className="my-3">
-          <h2 className="text-lg leading-4 text-gray-500 dark:text-gray-200 my-2">
+          <h2 className="my-2 text-lg leading-4 text-gray-500 dark:text-gray-200">
             Supporting file(s)
           </h2>
           {supportingRaw.files.length > 0 ? (
@@ -410,10 +410,10 @@ const ModuleEdit = ({
           />
         </div>
         <div className="my-3">
-          <h2 className="text-lg leading-4 text-gray-500 dark:text-gray-200 my-2">
+          <h2 className="my-2 text-lg leading-4 text-gray-500 dark:text-gray-200">
             Reference list
           </h2>
-          <p className="text-xs leading-4 font-normal text-gray-900 dark:text-gray-200 my-2">
+          <p className="my-2 text-xs font-normal leading-4 text-gray-900 dark:text-gray-200">
             Add any references for your module here. You can cite published modules and objects with
             a DOI.
           </p>
@@ -478,7 +478,7 @@ const ModuleEdit = ({
                           {query.match(/^10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i) ? (
                             <>
                               <button
-                                className="text-gray-900 dark:text-gray-200 text-sm leading-4 font-normal"
+                                className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200"
                                 onClick={async () => {
                                   toast.promise(createReferenceMutation({ doi: query }), {
                                     loading: "Searching...",
@@ -509,7 +509,7 @@ const ModuleEdit = ({
                               </button>
                             </>
                           ) : (
-                            <p className="text-gray-900 dark:text-gray-200 text-sm leading-4 font-normal">
+                            <p className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200">
                               Input a DOI to add
                             </p>
                           )}
@@ -521,13 +521,13 @@ const ModuleEdit = ({
               ]}
             />
           </div>
-          <ol className="list-decimal list-outside my-4 pl-4 text-normal">
+          <ol className="text-normal my-4 list-outside list-decimal pl-4">
             {moduleEdit?.references!.map((reference) => (
               <>
                 <li>
                   <button className="mx-2">
                     <TrashCan24
-                      className="w-6 h-6 fill-current text-red-500 inline-block align-middle"
+                      className="inline-block h-6 w-6 fill-current align-middle text-red-500"
                       onClick={async () => {
                         toast.promise(
                           deleteReferenceMutation({
