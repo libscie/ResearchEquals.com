@@ -146,8 +146,8 @@ const OnboardingProfile = ({ data }) => {
               <p className="mr-2 text-sm">
                 <span className=" font-bold">Add your info</span>{" "}
                 <span>
-                  Make sure people know who you are. Add your bio, pronouns, and a link to your
-                  website.
+                  Make sure people know who you are. Add your author name, bio, pronouns, and a link
+                  to your website.
                 </span>
               </p>
             </div>

@@ -169,7 +169,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
       <form onSubmit={formik.handleSubmit}>
         <div className="my-4 px-2 text-gray-900 dark:text-gray-200">
           <label htmlFor="firstName" className="my-1 block text-sm font-medium">
-            First Name{" "}
+            Author First Name{" "}
             {formik.touched.firstName && formik.errors.firstName
               ? " - " + formik.errors.firstName
               : null}
@@ -186,7 +186,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         </div>
         <div className="my-4 px-2 text-gray-900 dark:text-gray-200">
           <label htmlFor="lastName" className="my-1 block text-sm font-medium">
-            Last Name{" "}
+            Author Last Name{" "}
             {formik.touched.lastName && formik.errors.lastName
               ? " - " + formik.errors.lastName
               : null}

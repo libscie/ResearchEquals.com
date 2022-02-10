@@ -22,6 +22,9 @@ export default async function getInvitedModules({ session }) {
         include: {
           workspace: true,
         },
+        orderBy: {
+          authorshipRank: "asc",
+        },
       },
     },
   })

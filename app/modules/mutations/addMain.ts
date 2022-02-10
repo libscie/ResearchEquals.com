@@ -47,6 +47,9 @@ export default resolver.pipe(resolver.authorize(), async ({ id, json }) => {
             include: {
               workspace: true,
             },
+            orderBy: {
+              authorshipRank: "asc",
+            },
           },
         },
       },
@@ -56,6 +59,9 @@ export default resolver.pipe(resolver.authorize(), async ({ id, json }) => {
           authors: {
             include: {
               workspace: true,
+            },
+            orderBy: {
+              authorshipRank: "asc",
             },
           },
         },

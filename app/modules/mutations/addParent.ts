@@ -36,6 +36,9 @@ export default resolver.pipe(resolver.authorize(), async ({ currentId, connectId
             include: {
               workspace: true,
             },
+            orderBy: {
+              authorshipRank: "asc",
+            },
           },
         },
       },
@@ -45,6 +48,9 @@ export default resolver.pipe(resolver.authorize(), async ({ currentId, connectId
           authors: {
             include: {
               workspace: true,
+            },
+            orderBy: {
+              authorshipRank: "asc",
             },
           },
         },

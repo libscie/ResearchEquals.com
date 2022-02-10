@@ -11,18 +11,6 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
     },
   })
 
-  // Force all authors to reapprove for publishing
-  await db.authorship.updateMany({
-    where: {
-      module: {
-        suffix,
-      },
-    },
-    data: {
-      readyToPublish: false,
-    },
-  })
-
   const module = await db.module.findFirst({
     where: {
       suffix,
@@ -54,6 +42,9 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
             include: {
               workspace: true,
             },
+            orderBy: {
+              authorshipRank: "asc",
+            },
           },
         },
       },
@@ -63,6 +54,9 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
           authors: {
             include: {
               workspace: true,
+            },
+            orderBy: {
+              authorshipRank: "asc",
             },
           },
         },
