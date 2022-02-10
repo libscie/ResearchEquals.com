@@ -62,6 +62,9 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
             include: {
               workspace: true,
             },
+            orderBy: {
+              authorshipRank: "asc",
+            },
           },
           references: {
             include: {
