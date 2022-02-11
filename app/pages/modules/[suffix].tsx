@@ -340,6 +340,18 @@ const Module = ({ module, mainFile, supportingRaw }) => {
         <ParentPanel openObject={previousOpen} openFunction={setPreviousOpen} module={module} />
         <ChildPanel openObject={leadsToOpen} openFunction={setLeadsToOpen} module={module} />
       </article>
+      <Helmet>
+        <script className="structured-data-list" type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            identifier: `${module.prefix}/${module.suffix}`,
+            "@type": "CreativeWork",
+            name: `${module.title}`,
+            description: `${module.description}`,
+            url: `https://doi.org/${module.prefix}/${module.suffix}`,
+          })}
+        </script>
+      </Helmet>
     </>
   )
 }
@@ -355,18 +367,6 @@ const ModulePage = ({ module }) => {
       title={`R= ${module.title}`}
       headChildren={
         <>
-          <Helmet>
-            <script type="application/ld+json">
-              {JSON.stringify({
-                "@context": "https://schema.org",
-                identifier: `${module.prefix}/${module.suffix}`,
-                "@type": "CreativeWork",
-                name: `${module.title}`,
-                description: `${module.description}`,
-                url: `https://doi.org/${module.prefix}/${module.suffix}`,
-              })}
-            </script>
-          </Helmet>
           <meta property="og:title" content={module.title} />
           <meta property="og:url" content={`https://doi.org/${module.prefix}/${module.suffix}`} />
           {module.description ? (
