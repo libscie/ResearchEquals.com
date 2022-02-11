@@ -28,9 +28,14 @@ export default async function getSignature() {
   })
 
   let data = [] as any
+  data.push({
+    time: 1643616000000,
+    modules: 0,
+  })
   const uniqDates = dates.filter(onlyUnique)
   uniqDates.forEach((date, index) => {
     const epochTime = new Date(date!)
+    console.log(epochTime.getTime())
     data.push({
       time: epochTime.getTime(),
       modules:
