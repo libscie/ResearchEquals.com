@@ -36,11 +36,12 @@ ResearchEquals is a Liberate Science GmbH project, which is funded by the Shuttl
 
 ### How is ResearchEquals different from Octopus? Isn't it the same?
 
-We get that question a lot! Octopus is indeed similar. The main difference is that:
-- R= allows you to link any steps together, Octopus has a specific order of events
-- R= allows for a wide variety of steps (focus on provenance), Octopus has 8 specific ones (focused on empirical cycles mostly)
-So in that sense it's a flavor difference mostly - plus of course that R= is ready today and Octopus is a bit unclear on where it's at as you indicate as well.
+We get that question a lot! Octopus is indeed similar. The main differences are:
 
+- ResearchEquals allows you to link any steps together, Octopus has a specific order of events
+- ResearchEquals allows for a wide variety of steps (focus on provenance), Octopus has 8 specific ones (focused on empirical cycles mostly)
+
+It's a flavor difference mostly. Like onion rings and calamari.
 
 ### What assurances are there for the content I publish with you?
 
@@ -118,8 +119,8 @@ const FaqPage: BlitzPage = () => {
         invitations={invitations}
         refetchFn={refetch}
       />
-      <main className="lg:relative bg-white dark:bg-gray-900">
-        <div className="mx-4 lg:mx-auto max-w-3xl text-black dark:text-white my-8">
+      <main className="bg-white dark:bg-gray-900 lg:relative">
+        <div className="mx-4 my-8 max-w-3xl text-black dark:text-white lg:mx-auto">
           <div className="coc" dangerouslySetInnerHTML={{ __html: md.render(termsMarkdown) }}></div>
         </div>
       </main>
