@@ -23,10 +23,10 @@ const Navbar = ({
 }) => {
   return (
     <>
-      <div className="w-full bg-white dark:bg-gray-900 mx-auto px-4 sm:px-6 lg:px-8 z-50 border-b dark:border-gray-600 border-gray-100">
-        <div className="relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8">
-          <div className="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
-            <div className="flex-shrink-0 flex items-center my-2">
+      <div className="z-50 mx-auto w-full border-b border-gray-100 bg-white px-4 dark:border-gray-600 dark:bg-gray-900 sm:px-6 lg:px-8">
+        <div className="relative flex justify-between lg:gap-8 xl:grid xl:grid-cols-12">
+          <div className="flex md:absolute md:inset-y-0 md:left-0 lg:static xl:col-span-2">
+            <div className="my-2 flex flex-shrink-0 items-center">
               <Link href={Routes.Home()}>
                 <a>
                   <ResearchEqualsLogo />
@@ -35,7 +35,7 @@ const Navbar = ({
             </div>
           </div>
           <div className="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6">
-            <div className="flex items-center px-6 py-4 md:max-w-3xl md:mx-auto lg:max-w-none lg:mx-0 xl:px-0">
+            <div className="flex items-center px-6 py-4 md:mx-auto md:max-w-3xl lg:mx-0 lg:max-w-none xl:px-0">
               <div className="flex-grow"></div>
               <div className="w-full">
                 <label htmlFor="search" className="sr-only">
@@ -97,7 +97,7 @@ const Navbar = ({
               <div className="flex-grow"></div>
             </div>
           </div>
-          <div className="flex items-center md:absolute md:right-0 md:inset-y-0 lg:hidden">
+          <div className="flex items-center md:absolute md:inset-y-0 md:right-0 lg:hidden">
             <NavbarDropdown
               currentUser={currentUser}
               currentWorkspace={currentWorkspace}

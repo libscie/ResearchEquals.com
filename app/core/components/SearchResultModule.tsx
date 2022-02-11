@@ -1,7 +1,7 @@
 const SearchResultModule = ({ item }) => {
   return (
     <>
-      <div className="flex mx-1 my-1">
+      <div className="mx-1 my-1 flex">
         <div className="mr-2">
           <svg
             width="32"
@@ -15,10 +15,10 @@ const SearchResultModule = ({ item }) => {
           </svg>
         </div>
         <div>
-          <p className="text-gray-500 dark:text-gray-400 text-xs leading-4 font-normal">
+          <p className="text-xs font-normal leading-4 text-gray-500 dark:text-gray-400">
             {item.type}
           </p>
-          <p className="text-gray-900 dark:text-gray-200 text-sm leading-4 font-normal">
+          <p className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200">
             {item.name}
           </p>
         </div>

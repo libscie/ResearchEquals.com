@@ -28,14 +28,14 @@ const Imprint: BlitzPage = () => {
         invitations={invitations}
         refetchFn={refetch}
       />
-      <main className="lg:relative bg-white dark:bg-gray-900">
+      <main className="bg-white dark:bg-gray-900 lg:relative">
         <div className="mx-4">
-          <div className="max-w-7xl mx-auto pt-10 text-black dark:text-white md:p-0 md:pt-10">
+          <div className="mx-auto max-w-7xl pt-10 text-black dark:text-white md:p-0 md:pt-10">
             <p className="font-bold">{page.toUpperCase()}</p>
-            <hr className="w-32 mt-4 mb-4 border-t-0 bg-gradient-to-r from-indigo-400 to-indigo-600 bg-yellow-400 h-0.5 " />
+            <hr className="mt-4 mb-4 h-0.5 w-32 border-t-0 bg-yellow-400 bg-gradient-to-r from-indigo-400 to-indigo-600 " />
             <article>
-              <h1 className="font-black text-5xl sm:text-6xl">{title}</h1>
-              <div role="doc-subtitle" className="max-w-2xl text-2xl mt-2">
+              <h1 className="text-5xl font-black sm:text-6xl">{title}</h1>
+              <div role="doc-subtitle" className="mt-2 max-w-2xl text-2xl">
                 <>
                   <p>
                     <Link href="https://libscie.org">
@@ -48,8 +48,8 @@ const Imprint: BlitzPage = () => {
               </div>
             </article>
           </div>
-          <div className="text-black dark:text-white max-w-7xl sm:mx-auto pt-4 pb-8">
-            <h2 className="font-bold text-xl mt-4">CEO</h2>
+          <div className="max-w-7xl pt-4 pb-8 text-black dark:text-white sm:mx-auto">
+            <h2 className="mt-4 text-xl font-bold">CEO</h2>
             <p>Chris Hartgerink, PhD</p>
             <p>
               <a
@@ -67,7 +67,7 @@ const Imprint: BlitzPage = () => {
                 info@libscie.org
               </a>
             </p>
-            <h2 className="font-bold text-xl mt-4">Registration</h2>
+            <h2 className="mt-4 text-xl font-bold">Registration</h2>
             <p>Amtsgericht Charlottenburg (Berlin)</p>
             <p>HRB 211 450</p>
             <p>VAT ID DE326772207</p>

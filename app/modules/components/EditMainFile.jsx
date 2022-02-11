@@ -37,12 +37,12 @@ const EditMainFile = ({
         <>
           <button
             type="button"
-            className="flex px-2 py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-xs leading-4 font-normal shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700"
+            className="flex rounded border border-gray-300 px-2 py-2 text-xs font-normal leading-4 text-gray-700 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:border-gray-400 dark:hover:bg-gray-700"
             onClick={() => {
               widgetApi.current.openDialog()
             }}
           >
-            <Add32 className="w-4 h-4" aria-hidden="true" /> Upload Main File
+            <Add32 className="h-4 w-4" aria-hidden="true" /> Upload Main File
             <Widget
               publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
               secureSignature={signature}
@@ -76,7 +76,7 @@ const EditMainFile = ({
           </button>
         </>
       ) : (
-        <p className="text-xs leading-4 font-normal text-gray-900 dark:text-gray-200 my-2">
+        <p className="my-2 text-xs font-normal leading-4 text-gray-900 dark:text-gray-200">
           Please verify email to upload files.
         </p>
       )}

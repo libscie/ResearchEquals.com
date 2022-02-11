@@ -138,21 +138,21 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
 
   return (
     <>
-      <div className="flex my-4 p-2">
+      <div className="my-4 flex p-2">
         <div>
           <img
             src={workspace!.avatar}
             width={120}
             height={120}
-            className="rounded-full h-14 w-14 max-h-14 max-w-14"
+            className="max-w-14 h-14 max-h-14 w-14 rounded-full"
           />
         </div>
-        <div className="flex-grow ml-2 text-gray-900 dark:text-gray-200">
+        <div className="ml-2 flex-grow text-gray-900 dark:text-gray-200">
           <span className="inline-block h-full align-middle"> </span>
           <p className="inline-block align-middle">
             {!workspace!.orcid ? (
               <Link href="/api/auth/orcid">
-                <button className="flex py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500 mb-1">
+                <button className="mb-1 flex rounded-md bg-green-50 py-2 px-4 text-sm font-medium text-green-700 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-green-500 dark:hover:border-gray-400 dark:hover:bg-gray-700">
                   Connect your ORCID
                 </button>
               </Link>
@@ -162,12 +162,12 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
                 <p className="flex text-sm font-medium">{workspace!.orcid}</p>
               </>
             )}
-            <p className="text-sm leading-4 font-normal">@{workspace.handle}</p>
+            <p className="text-sm font-normal leading-4">@{workspace.handle}</p>
           </p>
         </div>
       </div>
       <form onSubmit={formik.handleSubmit}>
-        <div className="my-4 text-gray-900 dark:text-gray-200 px-2">
+        <div className="my-4 px-2 text-gray-900 dark:text-gray-200">
           <label htmlFor="firstName" className="my-1 block text-sm font-medium">
             Author First Name{" "}
             {formik.touched.firstName && formik.errors.firstName
@@ -179,12 +179,12 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               id="firstName"
               type="firstName"
               autoComplete="firstName"
-              className="bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+              className="placeholder-font-normal block w-11/12 appearance-none rounded border border-gray-300 bg-transparent px-3 py-2 text-sm font-normal placeholder-gray-400 focus:border-indigo-500 focus:outline-none  focus:ring-indigo-500 dark:border-gray-600 "
               {...formik.getFieldProps("firstName")}
             />
           </div>
         </div>
-        <div className="my-4 text-gray-900 dark:text-gray-200 px-2">
+        <div className="my-4 px-2 text-gray-900 dark:text-gray-200">
           <label htmlFor="lastName" className="my-1 block text-sm font-medium">
             Author Last Name{" "}
             {formik.touched.lastName && formik.errors.lastName
@@ -196,12 +196,12 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               id="lastName"
               type="lastName"
               autoComplete="lastName"
-              className="bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+              className="placeholder-font-normal block w-11/12 appearance-none rounded border border-gray-300 bg-transparent px-3 py-2 text-sm font-normal placeholder-gray-400 focus:border-indigo-500 focus:outline-none  focus:ring-indigo-500 dark:border-gray-600 "
               {...formik.getFieldProps("lastName")}
             />
           </div>
         </div>
-        <div className="my-4 text-gray-900 dark:text-gray-200 px-2">
+        <div className="my-4 px-2 text-gray-900 dark:text-gray-200">
           <label htmlFor="bio" className="my-1 block text-sm font-medium">
             Bio {formik.touched.bio && formik.errors.bio ? " - " + formik.errors.bio : null}
           </label>
@@ -209,13 +209,13 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
             <textarea
               rows={4}
               id="bio"
-              className="bg-transparent focus:ring-indigo-500 focus:border-indigo-500 block w-11/12 sm:text-sm border border-gray-300 dark:border-gray-600  text-gray-900 dark:text-gray-200 rounded"
+              className="block w-11/12 rounded border border-gray-300 bg-transparent text-gray-900 focus:border-indigo-500 focus:ring-indigo-500  dark:border-gray-600 dark:text-gray-200 sm:text-sm"
               {...formik.getFieldProps("bio")}
               defaultValue={workspace.bio}
             />
           </div>
         </div>
-        <div className="my-4 text-gray-900 dark:text-gray-200 px-2">
+        <div className="my-4 px-2 text-gray-900 dark:text-gray-200">
           <label htmlFor="pronouns" className="my-1 block text-sm font-medium">
             Pronouns{" "}
             {formik.touched.pronouns && formik.errors.pronouns
@@ -228,12 +228,12 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               type="pronouns"
               autoComplete="pronouns"
               placeholder="they/them"
-              className="bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+              className="placeholder-font-normal block w-11/12 appearance-none rounded border border-gray-300 bg-transparent px-3 py-2 text-sm font-normal placeholder-gray-400 focus:border-indigo-500 focus:outline-none  focus:ring-indigo-500 dark:border-gray-600 "
               {...formik.getFieldProps("pronouns")}
             />
           </div>
         </div>
-        <div className="my-4 text-gray-900 dark:text-gray-200 px-2">
+        <div className="my-4 px-2 text-gray-900 dark:text-gray-200">
           <label htmlFor="profileUrl" className="my-1 block text-sm font-medium">
             Profile URL{" "}
             {formik.touched.profileUrl && formik.errors.profileUrl
@@ -246,31 +246,31 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               type="url"
               autoComplete="profileUrl"
               placeholder="https://twitter.com/you"
-              className=" bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded  placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+              className=" placeholder-font-normal block w-11/12 appearance-none rounded border border-gray-300 bg-transparent px-3 py-2  text-sm font-normal placeholder-gray-400 focus:border-indigo-500 focus:outline-none  focus:ring-indigo-500 dark:border-gray-600 "
               {...formik.getFieldProps("profileUrl")}
             />
           </div>
         </div>
 
-        <div className="absolute right-0 w-full sm:sticky flex bottom-0 py-2 bg-white dark:bg-gray-900 border-t border-gray-300 dark:border-gray-600 text-right">
+        <div className="absolute right-0 bottom-0 flex w-full border-t border-gray-300 bg-white py-2 text-right dark:border-gray-600 dark:bg-gray-900 sm:sticky">
           <span className="flex-grow"></span>
           <div className="">
             <button
               type="reset"
-              className="flex mx-4 py-2 px-4 bg-red-50 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
+              className="mx-4 flex rounded-md bg-red-50 py-2 px-4 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
               onClick={() => {
                 setIsOpen(false)
               }}
             >
-              <Close32 className="w-4 h-4 fill-current text-red-500 pt-1" aria-hidden="true" />
+              <Close32 className="h-4 w-4 fill-current pt-1 text-red-500" aria-hidden="true" />
               Cancel
             </button>
           </div>
           <button
             type="submit"
-            className="flex mr-4 py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
+            className="mr-4 flex rounded-md bg-green-50 py-2 px-4 text-sm font-medium text-green-700 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-green-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
           >
-            <Checkmark32 className="w-4 h-4 fill-current text-green-500 pt-1" aria-hidden="true" />
+            <Checkmark32 className="h-4 w-4 fill-current pt-1 text-green-500" aria-hidden="true" />
             Save
           </button>
         </div>

@@ -6,14 +6,14 @@ const Footer = () => {
   const date = new Date()
 
   return (
-    <footer className="w-full bg-white dark:bg-gray-900 sm:p-0 py-4">
-      <div className="sm:flex sm:max-w-7xl mx-4 pt-8 xl:mx-auto text-black dark:text-white ">
-        <div className="w-10/12 sm:w-full mb-0 sm:mb-28 mt-0 text-sm">
-          <h3 className="font-bold text-base">ResearchEquals</h3>
+    <footer className="w-full bg-white py-4 dark:bg-gray-900 sm:p-0">
+      <div className="mx-4 pt-8 text-black dark:text-white sm:flex sm:max-w-7xl xl:mx-auto ">
+        <div className="mb-0 mt-0 w-10/12 text-sm sm:mb-28 sm:w-full">
+          <h3 className="text-base font-bold">ResearchEquals</h3>
           <p className="flex align-middle">
             {date.getFullYear()}
             <svg
-              className="fill-current text-black dark:text-white max-h-4 w-auto m-1"
+              className="m-1 max-h-4 w-auto fill-current text-black dark:text-white"
               height="100px"
               width="100px"
               xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +28,7 @@ const Footer = () => {
               <a target="_blank">CC0</a>
             </Link>
           </p>
-          <hr className="w-20 mt-4 mb-4 border-t-0 bg-gradient-to-r from-indigo-300 to-indigo-600 bg-yellow-400 h-0.5 " />
+          <hr className="mt-4 mb-4 h-0.5 w-20 border-t-0 bg-yellow-400 bg-gradient-to-r from-indigo-300 to-indigo-600 " />
           <p>
             <Link href="/terms">
               <a className="hover:bg-indigo-600 hover:text-white">Terms</a>
@@ -55,8 +55,8 @@ const Footer = () => {
             </Link>
           </p>
         </div>
-        <div className="w-10/12 sm:w-full mt-4 sm:mt-0 sm:mx-4">
-          <h3 className="mb-4 font-bold text-sm">Funders</h3>
+        <div className="mt-4 w-10/12 sm:mx-4 sm:mt-0 sm:w-full">
+          <h3 className="mb-4 text-sm font-bold">Funders</h3>
           <p className="mt-4 mb-4">
             <Link href="https://shuttleworthfoundation.org">
               <a target="_blank">
@@ -92,7 +92,7 @@ const Footer = () => {
             </Link>
           </p>
         </div>
-        <div className="w-10/12 sm:w-full text-sm mt-4 sm:mt-0 sm:mx-4">
+        <div className="mt-4 w-10/12 text-sm sm:mx-4 sm:mt-0 sm:w-full">
           <h3 className="mb-4 font-bold">Powered by</h3>
           <Link href="https://libscie.org">
             <a target="_blank">
@@ -100,13 +100,13 @@ const Footer = () => {
             </a>
           </Link>
         </div>
-        <div className="w-10/12 sm:w-full text-sm  mt-4 sm:mt-0">
-          <h3 className="mb-4 font-bold text-sm">Follow</h3>
+        <div className="mt-4 w-10/12 text-sm  sm:mt-0 sm:w-full">
+          <h3 className="mb-4 text-sm font-bold">Follow</h3>
           <p>
             <Link href="https://discord.gg/SefsGJWWSw">
               <a className="flex align-middle" target="_blank">
-                <LogoDiscord32 className="max-h-4 w-auto m-1" aria-hidden="true" />
-                <span className="hover:bg-indigo-600 text-black dark:text-white hover:text-white">
+                <LogoDiscord32 className="m-1 max-h-4 w-auto" aria-hidden="true" />
+                <span className="text-black hover:bg-indigo-600 hover:text-white dark:text-white">
                   Discord
                 </span>
               </a>
@@ -115,8 +115,8 @@ const Footer = () => {
           <p>
             <Link href="https://github.com/libscie/ResearchEquals.com">
               <a className="flex align-middle" target="_blank">
-                <LogoGithub32 className="max-h-4 w-auto m-1" aria-hidden="true" />
-                <span className="hover:bg-indigo-600 text-black dark:text-white hover:text-white">
+                <LogoGithub32 className="m-1 max-h-4 w-auto" aria-hidden="true" />
+                <span className="text-black hover:bg-indigo-600 hover:text-white dark:text-white">
                   GitHub
                 </span>
               </a>
@@ -125,9 +125,9 @@ const Footer = () => {
           <p>
             <Link href="https://twitter.com/ResearchEquals">
               <a className="flex align-middle" target="_blank">
-                <LogoTwitter32 className="max-h-4 w-auto m-1" />
+                <LogoTwitter32 className="m-1 max-h-4 w-auto" />
                 <span
-                  className="hover:bg-indigo-600 text-black dark:text-white hover:text-white"
+                  className="text-black hover:bg-indigo-600 hover:text-white dark:text-white"
                   aria-hidden="true"
                 >
                   Twitter

@@ -83,22 +83,22 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
         invitations={invitations}
         refetchFn={refetch}
       />
-      <main className="lg:relative bg-white dark:bg-gray-900">
+      <main className="bg-white dark:bg-gray-900 lg:relative">
         <div className="" id="hero">
-          <div className="pt-8 overflow-hidden sm:pt-12 lg:relative lg:py-32">
-            <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:gap-24">
+          <div className="overflow-hidden pt-8 sm:pt-12 lg:relative lg:py-32">
+            <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-24 lg:px-8">
               <div>
                 <div className="mt-20">
-                  <div className="mt-6 sm:max-w-xl leading-5">
-                    <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight sm:text-5xl">
+                  <div className="mt-6 leading-5 sm:max-w-xl">
+                    <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
                       Step by step publishing of{" "}
-                      <span className="text-indigo-600 my-2">your research</span>
+                      <span className="my-2 text-indigo-600">your research</span>
                     </h1>
                     <p className="my-4 text-xl text-gray-800 dark:text-gray-50">
                       A new publishing format: Research modules.
                     </p>
                     <button
-                      className="whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base leading-5 font-normal text-white bg-indigo-600 hover:bg-indigo-700 scroll-smooth"
+                      className="inline-flex items-center justify-center scroll-smooth whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-normal leading-5 text-white shadow-sm hover:bg-indigo-700"
                       onClick={() => {
                         document!.getElementById("step-module")!.scrollIntoView()
                       }}
@@ -106,7 +106,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                       Get started
                     </button>
                     <Link href="/browse">
-                      <a className="mx-4 whitespace-nowrap leading-5 font-normal text-indigo-700 dark:text-gray-200 bg-indigo-100 hover:bg-indigo-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-0 dark:border dark:border-gray-600 px-4 py-2 rounded-md">
+                      <a className="mx-4 whitespace-nowrap rounded-md border-0 bg-indigo-100 px-4 py-2 font-normal leading-5 text-indigo-700 hover:bg-indigo-200 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">
                         Browse modules
                       </a>
                     </Link>
@@ -114,20 +114,20 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                 </div>
               </div>
             </div>
-            <div className="sm:mx-auto sm:max-w-3xl sm:px-6 min-h-full py-12 sm:py-16">
+            <div className="min-h-full py-12 sm:mx-auto sm:max-w-3xl sm:px-6 sm:py-16">
               <div className="py-12 sm:relative sm:mt-12 sm:py-16 lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
                 <div className="hidden sm:block"></div>
-                <div className="relative pl-4 max-w-full sm:max-w-full sm:mx-auto sm:px-0 lg:max-w-none lg:pl-12">
-                  <div className="grid grid-cols-4 sm:grid-cols-4 grid-flow-row gap-16 z-50">
+                <div className="relative max-w-full pl-4 sm:mx-auto sm:max-w-full sm:px-0 lg:max-w-none lg:pl-12">
+                  <div className="z-50 grid grid-flow-row grid-cols-4 gap-16 sm:grid-cols-4">
                     <div></div>
                     <div
                       id="step-1"
-                      className="module text-white bg-pink-600 w-28 h-28 md:w-28 md:h-28  text-center"
+                      className="module h-28 w-28 bg-pink-600 text-center text-white md:h-28  md:w-28"
                     >
                       <span className="inline-block h-full align-middle"></span>
                       <CircleStrokeGlyph
                         id="step-1-button"
-                        className="inline-block align-middle stroke-current stroke-2 fill-current text-white justify-middle w-6 h-6"
+                        className="justify-middle inline-block h-6 w-6 fill-current stroke-current stroke-2 align-middle text-white"
                       />
                     </div>
                     <div></div>
@@ -136,23 +136,23 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                     <div></div>
                     <div
                       id="step-2"
-                      className="module text-white bg-indigo-600 w-28 h-28 md:w-28 md:h-28  text-center"
+                      className="module h-28 w-28 bg-indigo-600 text-center text-white md:h-28  md:w-28"
                     >
                       <span className="inline-block h-full align-middle"></span>
                       <CircleFillGlyph
                         id="step-2-button"
-                        className="inline-block align-middle stroke-current stroke-2 fill-current text-white justify-middle w-6 h-6"
+                        className="justify-middle inline-block h-6 w-6 fill-current stroke-current stroke-2 align-middle text-white"
                       />
                     </div>
                     <div></div>
                     <div
                       id="step-3"
-                      className="module text-white bg-green-600 w-28 h-28 md:w-28 md:h-28  text-center"
+                      className="module h-28 w-28 bg-green-600 text-center text-white md:h-28  md:w-28"
                     >
                       <span className="inline-block h-full align-middle"></span>
                       <CircleFillGlyph
                         id="step-3-button"
-                        className="inline-block align-middle stroke-current stroke-2 fill-current text-white justify-middle w-6 h-6"
+                        className="justify-middle inline-block h-6 w-6 fill-current stroke-current stroke-2 align-middle text-white"
                       />
                     </div>
                   </div>
@@ -273,15 +273,15 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
           endAnchor="top"
         />
         {/* Modular explanations */}
-        <div className="xl:mx-auto sm:max-w-7xl max-w-full pt-16 mx-6 lg:text-left text-white">
+        <div className="mx-6 max-w-full pt-16 text-white sm:max-w-7xl lg:text-left xl:mx-auto">
           <div className="flex">
-            <div className="hidden sm:inline relative text-center">
-              <div className="grid grid-cols-3 gap-8 w-full h-full fill-current  text-gray-900 dark:text-white text-center">
+            <div className="relative hidden text-center sm:inline">
+              <div className="grid h-full w-full grid-cols-3 gap-8 fill-current  text-center text-gray-900 dark:text-white">
                 <Terminal32
                   data-tip
                   data-for="codeTip"
                   id="code-module"
-                  className="opacity-40 w-16 h-16"
+                  className="h-16 w-16 opacity-40"
                 />
                 <ReactTooltip id="codeTip" place="top" effect="solid">
                   Code
@@ -293,7 +293,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                   data-tip
                   data-for="textTip"
                   id="text-module"
-                  className="opacity-40 w-12 h-12"
+                  className="h-12 w-12 opacity-40"
                 />
                 <ReactTooltip id="textTip" place="top" effect="solid">
                   Text
@@ -310,16 +310,16 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                   data-tip
                   data-for="tableTip"
                   id="data-module"
-                  className="opacity-40 w-24 h-24"
+                  className="h-24 w-24 opacity-40"
                 />
                 <ReactTooltip id="tableTip" place="top" effect="solid">
                   Data
                 </ReactTooltip>
               </div>
             </div>
-            <div className="hidden sm:inline w-4/6"></div>
-            <div id="step-module" className="module bg-indigo-600 dark:bg-indigo-600 p-4">
-              <h2 className="text-2xl font-extrabold text-white dark:text-gray-50 sm:text-5xl sm:tracking-tight lg:text-6xl my-4">
+            <div className="hidden w-4/6 sm:inline"></div>
+            <div id="step-module" className="module bg-indigo-600 p-4 dark:bg-indigo-600">
+              <h2 className="my-4 text-2xl font-extrabold text-white dark:text-gray-50 sm:text-5xl sm:tracking-tight lg:text-6xl">
                 Publish each step
               </h2>
               <p className="my-2 text-lg">
@@ -333,10 +333,10 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
               </p>
             </div>
           </div>
-          <div className="mx-auto max-w-7xl w-full pt-16 pb-20 lg:py-48 lg:text-left text-white">
+          <div className="mx-auto w-full max-w-7xl pt-16 pb-20 text-white lg:py-48 lg:text-left">
             <div className="flex">
               <div id="document-steps" className="module bg-indigo-600 p-4">
-                <h2 className="text-2xl font-extrabold text-white dark:text-gray-50 sm:text-5xl sm:tracking-tight lg:text-6xl my-4">
+                <h2 className="my-4 text-2xl font-extrabold text-white dark:text-gray-50 sm:text-5xl sm:tracking-tight lg:text-6xl">
                   Wherever your research takes you
                 </h2>
                 <p className="my-2 text-lg">
@@ -344,29 +344,29 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                 </p>
                 <p className="my-2 text-lg">Document it, learn from it - no matter the output.</p>
               </div>
-              <div className="hidden sm:inline w-4/6"></div>
+              <div className="hidden w-4/6 sm:inline"></div>
             </div>
           </div>
           <div className="sm:flex">
             <div
               id="publish-free"
-              className="module bg-green-600 p-4 mx-2 sm:mr-28 lg:mr-96 h-full"
+              className="module mx-2 h-full bg-green-600 p-4 sm:mr-28 lg:mr-96"
             >
               {freeLicenses.length > 0 ? (
                 <>
-                  <h2 className="text-2xl font-extrabold text-white dark:text-gray-50 sm:text-5xl sm:tracking-tight lg:text-6xl my-4">
+                  <h2 className="my-4 text-2xl font-extrabold text-white dark:text-gray-50 sm:text-5xl sm:tracking-tight lg:text-6xl">
                     Zero cost
                   </h2>
-                  <p className="flex my-2 text-lg">
+                  <p className="my-2 flex text-lg">
                     We{" "}
-                    <Favorite32 className="fill-current stroke-current stroke-2 text-white mx-2 w-6 h-6" />{" "}
+                    <Favorite32 className="mx-2 h-6 w-6 fill-current stroke-current stroke-2 text-white" />{" "}
                     open access, so we made it free.
                   </p>
                   <ul role="list" className="my-4 space-y-4">
                     {freeLicenses.map((license) => (
                       <li key={license.id} className="flex space-x-3 text-lg">
                         <Checkmark24
-                          className="stroke-current stroke-2 fill-current flex-shrink-0 h-6 w-6 text-white"
+                          className="h-6 w-6 flex-shrink-0 fill-current stroke-current stroke-2 text-white"
                           aria-hidden="true"
                         />
                         <Link href={license.url}>
@@ -383,10 +383,10 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
               )}
             </div>
             <div></div>
-            <div id="pay-to-close" className="module bg-pink-600 p-4 mx-2 my-16">
+            <div id="pay-to-close" className="module mx-2 my-16 bg-pink-600 p-4">
               {payToClose.length > 0 ? (
                 <>
-                  <h2 className="text-2xl text-white font-extrabold sm:text-5xl sm:tracking-tight lg:text-6xl my-4">
+                  <h2 className="my-4 text-2xl font-extrabold text-white sm:text-5xl sm:tracking-tight lg:text-6xl">
                     Pay to close
                   </h2>
                   <p className="my-2 text-lg">Need more restrictive licenses?</p>
@@ -394,7 +394,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                     {payToClose.map((license) => (
                       <li className="flex space-x-3 text-lg" key={license.id}>
                         <CurrencyEuro32
-                          className="stroke-current stroke-2 fill-current flex-shrink-0 h-6 w-6 text-white"
+                          className="h-6 w-6 flex-shrink-0 fill-current stroke-current stroke-2 text-white"
                           aria-hidden="true"
                         />
                         <Link href={license.url}>
@@ -411,38 +411,38 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
               )}
             </div>
           </div>
-          <div className="mx-auto lg:w-4/6 pt-16 pb-20 text-center lg:py-48 lg:text-center text-white">
+          <div className="mx-auto pt-16 pb-20 text-center text-white lg:w-4/6 lg:py-48 lg:text-center">
             <div id="final-call" className=" module bg-indigo-600 p-4">
-              <h2 className="text-2xl font-extrabold text-white dark:text-gray-50 sm:text-5xl sm:tracking-tight lg:text-6xl my-4 mr-4">
+              <h2 className="my-4 mr-4 text-2xl font-extrabold text-white dark:text-gray-50 sm:text-5xl sm:tracking-tight lg:text-6xl">
                 Publish on your terms
               </h2>
               <div className="flex">
                 <div className="flex-grow"></div>
                 <div className="">
-                  <div className="flex space-x-3 text-lg mr-4">
+                  <div className="mr-4 flex space-x-3 text-lg">
                     <Language32
-                      className=" fill-current flex-shrink-0 h-6 w-6 text-white mr-2"
+                      className=" mr-2 h-6 w-6 flex-shrink-0 fill-current text-white"
                       aria-hidden="true"
                     />
                     Your language
                   </div>
-                  <div className="flex space-x-3 text-lg mr-4">
+                  <div className="mr-4 flex space-x-3 text-lg">
                     <Alarm32
-                      className=" fill-current flex-shrink-0 h-6 w-6 text-white mr-2"
+                      className=" mr-2 h-6 w-6 flex-shrink-0 fill-current text-white"
                       aria-hidden="true"
                     />
                     Your timeline
                   </div>
-                  <div className="flex space-x-3 text-lg mr-4">
+                  <div className="mr-4 flex space-x-3 text-lg">
                     <Events32
-                      className=" fill-current flex-shrink-0 h-6 w-6 text-white mr-2"
+                      className=" mr-2 h-6 w-6 flex-shrink-0 fill-current text-white"
                       aria-hidden="true"
                     />
                     Your co-authors
                   </div>
-                  <div className="flex space-x-3 text-lg mr-4">
+                  <div className="mr-4 flex space-x-3 text-lg">
                     <Save32
-                      className=" fill-current flex-shrink-0 h-6 w-6 text-white mr-2"
+                      className=" mr-2 h-6 w-6 flex-shrink-0 fill-current text-white"
                       aria-hidden="true"
                     />
                     Your outputs
@@ -451,15 +451,15 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
 
                 <div className="flex-grow"></div>
               </div>
-              <div className="flex my-4">
+              <div className="my-4 flex">
                 <div className="flex-grow"></div>
                 <Link href={Routes.SignupPage()}>
-                  <a className="whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base leading-5 font-normal text-white bg-green-600 hover:bg-green-800">
+                  <a className="inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-normal leading-5 text-white shadow-sm hover:bg-green-800">
                     Sign up
                   </a>
                 </Link>
                 <Link href="/browse">
-                  <a className="mx-4 whitespace-nowrap leading-5 font-normal text-indigo-700 dark:text-gray-200 bg-indigo-100 hover:bg-indigo-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-0 dark:border dark:border-gray-600 px-4 py-2 rounded-md">
+                  <a className="mx-4 whitespace-nowrap rounded-md border-0 bg-indigo-100 px-4 py-2 font-normal leading-5 text-indigo-700 hover:bg-indigo-200 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">
                     Browse modules
                   </a>
                 </Link>

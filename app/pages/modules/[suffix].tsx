@@ -126,14 +126,14 @@ const Module = ({ module, mainFile, supportingRaw }) => {
         refetchFn={refetch}
       />
       {module.parents.length > 0 ? (
-        <div className="hidden modscreen:inline modscreen:absolute bottom-2 modscreen:top-1/3 modscreen:left-2">
+        <div className="bottom-2 hidden modscreen:absolute modscreen:top-1/3 modscreen:left-2 modscreen:inline">
           <button
             onClick={() => {
               setPreviousOpen(true)
             }}
           >
             <PreviousFilled32
-              className="bg-white dark:bg-gray-900 rounded-full w-10 h-10 "
+              className="h-10 w-10 rounded-full bg-white dark:bg-gray-900 "
               id="modulePrevious"
             />
           </button>
@@ -150,7 +150,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
       ) : (
         ""
       )}
-      <div className="fixed modscreen:absolute bottom-2 modscreen:top-1/3 right-2 rounded-full z-10 modscreen:z-0">
+      <div className="fixed bottom-2 right-2 z-10 rounded-full modscreen:absolute modscreen:top-1/3 modscreen:z-0">
         {module.parents.length > 0 ? (
           <button
             className={`${previousOpen || leadsToOpen ? "hidden" : "inline"} modscreen:hidden`}
@@ -158,7 +158,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
               setPreviousOpen(true)
             }}
           >
-            <PreviousFilled32 className="bg-white dark:bg-gray-900 rounded-full w-10 h-10 " />
+            <PreviousFilled32 className="h-10 w-10 rounded-full bg-white dark:bg-gray-900 " />
           </button>
         ) : (
           ""
@@ -175,7 +175,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
               }}
             >
               <NextFilled32
-                className="bg-white dark:bg-gray-900 rounded-full w-10 h-10"
+                className="h-10 w-10 rounded-full bg-white dark:bg-gray-900"
                 id="moduleNext"
               />
             </button>
@@ -213,7 +213,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
                     <>
                       Next step created.
                       <Link href={`/drafts?suffix=${data}`}>
-                        <a className="underline ml-1">View draft.</a>
+                        <a className="ml-1 underline">View draft.</a>
                       </Link>
                     </>
                   )
@@ -225,7 +225,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
           }}
           className={`${(previousOpen || leadsToOpen) && !biggerWindow ? "hidden" : "inline"}`}
         >
-          <AddAlt32 className="bg-white dark:bg-gray-900 rounded-full w-10 h-10 " id="moduleAdd" />
+          <AddAlt32 className="h-10 w-10 rounded-full bg-white dark:bg-gray-900 " id="moduleAdd" />
         </button>
 
         <Xarrows
@@ -238,7 +238,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
           endAnchor="left"
         />
       </div>
-      <article className="max-w-3xl md:mx-auto my-4 mx-4">
+      <article className="my-4 mx-4 max-w-3xl md:mx-auto">
         <MetadataImmutable module={module} />
         {mainFile.name ? (
           <div className="my-8">
@@ -248,7 +248,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
         ) : (
           ""
         )}
-        <div className="md:grid grid-cols-2 gap-x-4 mb-28">
+        <div className="mb-28 grid-cols-2 gap-x-4 md:grid">
           {supportingRaw.files.length > 0 ? (
             <div className="">
               <h2 className="text-lg">Supporting file(s)</h2>
@@ -268,7 +268,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
           {module.references.length > 0 ? (
             <div className="">
               <h2 className="text-lg">Reference list</h2>
-              <ol className="list-decimal list-outside my-4 text-normal pl-6">
+              <ol className="text-normal my-4 list-outside list-decimal pl-6">
                 {module.references.map((reference) => (
                   <>
                     <li className="my-2">

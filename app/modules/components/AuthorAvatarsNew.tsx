@@ -3,14 +3,14 @@ import { Link, Routes } from "blitz"
 const AuthorAvatarsNew = ({ authors, size, toDisplay }) => {
   return (
     <>
-      <div className="flex -space-x-1 relative z-0 overflow-hidden p-1">
+      <div className="relative z-0 flex -space-x-1 overflow-hidden p-1">
         {authors.map((author, index) => (
           <>
             {index < toDisplay ? (
               <Link href={Routes.HandlePage({ handle: author.workspace.handle })}>
                 <a target="_blank">
                   <img
-                    className={`relative inline-block ${size} rounded-full ring-1 ring-white dark:ring-gray-800 transition ease-in-out hover:scale-110`}
+                    className={`relative inline-block ${size} rounded-full ring-1 ring-white transition ease-in-out hover:scale-110 dark:ring-gray-800`}
                     src={author.workspace.avatar}
                     alt={`Avatar of ${author.workspace.handle}`}
                     style={{ zIndex: 100 - index }}

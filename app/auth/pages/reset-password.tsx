@@ -41,7 +41,7 @@ const ResetPasswordPage: BlitzPage = () => {
   })
 
   return (
-    <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
+    <div className="flex min-h-screen flex-col justify-center bg-gray-100 py-12 text-gray-900 dark:bg-gray-900 dark:text-white sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Link href={Routes.Home()}>
           <a>
@@ -49,7 +49,7 @@ const ResetPasswordPage: BlitzPage = () => {
           </a>
         </Link>
         <h1 className="mt-6 text-center text-3xl font-extrabold ">Reset password</h1>
-        <div className="bg-white dark:bg-gray-800 shadow rounded py-4 px-6 my-8 mx-auto">
+        <div className="my-8 mx-auto rounded bg-white py-4 px-6 shadow dark:bg-gray-800">
           <form onSubmit={formik.handleSubmit}>
             <div className="">
               <label
@@ -67,7 +67,7 @@ const ResetPasswordPage: BlitzPage = () => {
                   type="password"
                   autoComplete="password"
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 dark:bg-gray-800 dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+                  className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-sm font-normal placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500  dark:border-gray-500 dark:bg-gray-800 "
                   {...formik.getFieldProps("password")}
                 />
               </div>
@@ -88,14 +88,14 @@ const ResetPasswordPage: BlitzPage = () => {
                   type="password"
                   autoComplete="passwordConfirmation"
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 dark:bg-gray-800 dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+                  className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-sm font-normal placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500  dark:border-gray-500 dark:bg-gray-800 "
                   {...formik.getFieldProps("passwordConfirmation")}
                 />
               </div>
             </div>
             <button
               type="submit"
-              className="w-full px-3 py-2 border text-medium border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="text-medium w-full rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               Reset and log in
             </button>

@@ -97,11 +97,11 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
         {/* Create module */}
       </button>
       <Transition.Root show={openCreate} as={Fragment}>
-        <Dialog as="div" className="fixed inset-0 overflow-hidden z-10" onClose={setCreateOpen}>
+        <Dialog as="div" className="fixed inset-0 z-10 overflow-hidden" onClose={setCreateOpen}>
           <div className="absolute inset-0 overflow-hidden">
             <Dialog.Overlay className="fixed inset-0 bg-gray-900 bg-opacity-25 transition-opacity" />
 
-            <div className="fixed inset-y-0 right-0 pl-10 max-w-full flex">
+            <div className="fixed inset-y-0 right-0 flex max-w-full pl-10">
               <Transition.Child
                 as={Fragment}
                 enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -114,18 +114,18 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                 <div className="w-screen max-w-sm  border-l border-gray-400 dark:border-gray-600">
                   <form
                     onSubmit={formik.handleSubmit}
-                    className="h-full divide-y divide-gray-400 dark:divide-gray-600 flex flex-col bg-white dark:bg-gray-900 shadow-xl"
+                    className="flex h-full flex-col divide-y divide-gray-400 bg-white shadow-xl dark:divide-gray-600 dark:bg-gray-900"
                   >
-                    <div className="min-h-0 flex-1 flex flex-col py-6 overflow-y-auto">
+                    <div className="flex min-h-0 flex-1 flex-col overflow-y-auto py-6">
                       <div className="px-4 sm:px-6">
                         <div className="flex items-start justify-between">
                           <Dialog.Title className="text-lg font-medium text-gray-900 dark:text-white">
                             Quick draft
                           </Dialog.Title>
-                          <div className="ml-3 h-7 flex items-center">
+                          <div className="ml-3 flex h-7 items-center">
                             <button
                               type="button"
-                              className="rounded-md text-gray-400 dark:text-gray-200 hover:text-gray-500 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                              className="rounded-md text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-white"
                               onClick={() => setCreateOpen(false)}
                             >
                               <span className="sr-only">Close panel</span>
@@ -134,7 +134,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                           </div>
                         </div>
                       </div>
-                      <div className="mt-6 px-4 sm:px-6 text-sm leading-5 font-normal border-b border-gray-500 dark:border-gray-500 pb-4 dark:text-white">
+                      <div className="mt-6 border-b border-gray-500 px-4 pb-4 text-sm font-normal leading-5 dark:border-gray-500 dark:text-white sm:px-6">
                         What are you working on right now? Anything you create here, you can change
                         before publishing.
                       </div>
@@ -143,7 +143,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                         <div className="my-4">
                           <label
                             htmlFor="title"
-                            className="my-1 block text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
+                            className="my-1 block text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
                           >
                             Title{" "}
                             {formik.touched.title && formik.errors.title
@@ -155,7 +155,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                               id="title"
                               type="title"
                               required
-                              className="appearance-none block w-full px-3 py-2 border border-gray-400 bg-white dark:bg-transparent dark:border-gray-600 dark:text-gray-200 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500 font-normal text-sm "
+                              className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-400 bg-white px-3 py-2 text-sm font-normal placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border-gray-600 dark:bg-transparent dark:text-gray-200 "
                               {...formik.getFieldProps("title")}
                             />
                           </div>
@@ -163,7 +163,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                         <div className="my-4">
                           <label
                             htmlFor="description"
-                            className="my-1 block text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
+                            className="my-1 block text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
                           >
                             Summary{" "}
                             {formik.touched.description && formik.errors.description
@@ -174,7 +174,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             <textarea
                               rows={4}
                               id="description"
-                              className="appearance-none block w-full px-3 py-2 border border-gray-400 bg-white dark:bg-transparent dark:border-gray-600 dark:text-gray-200 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500 font-normal text-sm "
+                              className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-400 bg-white px-3 py-2 text-sm font-normal placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border-gray-600 dark:bg-transparent dark:text-gray-200 "
                               {...formik.getFieldProps("description")}
                             />
                           </div>
@@ -183,7 +183,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                         <div className="my-4">
                           <label
                             htmlFor="type"
-                            className="my-1 block text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
+                            className="my-1 block text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
                           >
                             Module type{" "}
                             {formik.touched.type && formik.errors.type ? (
@@ -200,7 +200,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             <select
                               id="type"
                               required
-                              className="appearance-none block w-full px-3 py-2 border border-gray-400 bg-white dark:bg-transparent dark:border-gray-600 dark:text-gray-200 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500 font-normal text-sm "
+                              className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-400 bg-white px-3 py-2 text-sm font-normal placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border-gray-600 dark:bg-transparent dark:text-gray-200 "
                               {...formik.getFieldProps("type")}
                             >
                               <option className="text-gray-900" value=""></option>
@@ -218,7 +218,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                         <div className="my-4">
                           <label
                             htmlFor="license"
-                            className="my-1 text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
+                            className="my-1 text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
                           >
                             License{" "}
                             {formik.touched.license && formik.errors.license ? (
@@ -237,7 +237,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             <select
                               id="license"
                               required
-                              className="appearance-none block w-full px-3 py-2 border border-gray-400 bg-white dark:bg-transparent dark:border-gray-600 dark:text-gray-200 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500 font-normal text-sm "
+                              className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-400 bg-white px-3 py-2 text-sm font-normal placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border-gray-600 dark:bg-transparent dark:text-gray-200 "
                               {...formik.getFieldProps("license")}
                             >
                               <option className="text-gray-900" value=""></option>
@@ -258,7 +258,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                         <div className="my-4">
                           <label
                             htmlFor="displayColor"
-                            className="my-1 text-sm leading-5 font-medium text-gray-700 dark:text-gray-200"
+                            className="my-1 text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
                           >
                             Display color{" "}
                             {formik.touched.displayColor && formik.errors.displayColor
@@ -270,7 +270,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             <select
                               id="displayColor"
                               required
-                              className="appearance-none block w-full px-3 py-2 border border-gray-400 bg-white dark:bg-transparent dark:border-gray-600 dark:text-gray-200 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500 font-normal text-sm"
+                              className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-400 bg-white px-3 py-2 text-sm font-normal placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border-gray-600 dark:bg-transparent dark:text-gray-200"
                               {...formik.getFieldProps("displayColor")}
                             >
                               <option
@@ -300,27 +300,27 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                         {/* /End replace */}
                       </div>
                     </div>
-                    <div className="flex-shrink-0 px-4 py-4 flex justify-end">
+                    <div className="flex flex-shrink-0 justify-end px-4 py-4">
                       <button
                         type="button"
-                        className="flex mx-4 py-2 px-4 bg-red-50 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
+                        className="mx-4 flex rounded-md bg-red-50 py-2 px-4 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                         onClick={() => {
                           setCreateOpen(false)
                           formikReset()
                         }}
                       >
                         <Close32
-                          className="w-4 h-4 fill-current text-red-500 pt-1"
+                          className="h-4 w-4 fill-current pt-1 text-red-500"
                           aria-hidden="true"
                         />
                         Cancel
                       </button>
                       <button
                         type="submit"
-                        className="flex py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
+                        className="flex rounded-md bg-green-50 py-2 px-4 text-sm font-medium text-green-700 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-green-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                       >
                         <Checkmark32
-                          className="w-4 h-4 fill-current text-green-500 pt-1"
+                          className="h-4 w-4 fill-current pt-1 text-green-500"
                           aria-hidden="true"
                         />
                         Save

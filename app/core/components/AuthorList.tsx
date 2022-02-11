@@ -33,9 +33,9 @@ function AuthorList({
   return (
     <>
       {authors.map((author, index) => (
-        <li className="py-2 px-2 flex" key={`author-${author.workspace.handle}`}>
+        <li className="flex py-2 px-2" key={`author-${author.workspace.handle}`}>
           <div className="mr-2 flex">
-            <div className="flex flex-col mr-2">
+            <div className="mr-2 flex flex-col">
               <button
                 onClick={() => {
                   setAuthorState(arrayMoveImmutable(authors, index, index - 1))
@@ -43,7 +43,7 @@ function AuthorList({
                 disabled={index === 0}
                 className="disabled:opacity-0"
               >
-                <ChevronUp32 className="w-5 h-5 text-gray-400" />
+                <ChevronUp32 className="h-5 w-5 text-gray-400" />
               </button>
               <button
                 onClick={() => {
@@ -52,7 +52,7 @@ function AuthorList({
                 disabled={index === authors.length - 1}
                 className="disabled:opacity-0"
               >
-                <ChevronDown32 className="w-5 h-5 text-gray-400" />
+                <ChevronDown32 className="h-5 w-5 text-gray-400" />
               </button>
             </div>
             <Link href={Routes.HandlePage({ handle: author.workspace.handle })}>
@@ -60,16 +60,16 @@ function AuthorList({
                 <img
                   src={author!.workspace!.avatar}
                   alt={`Avatar of ${author!.workspace!.handle}`}
-                  className="w-10 h-10 rounded-full inline-block h-full align-middle hover:scale-110 transition ease-in-out"
+                  className="inline-block h-10 h-full w-10 rounded-full align-middle transition ease-in-out hover:scale-110"
                 />
               </a>
             </Link>
           </div>
           <div className="flex-grow">
             <span className="inline-block h-full align-middle"></span>
-            <p className="text-gray-700 dark:text-gray-200 text-sm leading-4 font-normal my-auto inline-block align-middle">
+            <p className="my-auto inline-block align-middle text-sm font-normal leading-4 text-gray-700 dark:text-gray-200">
               {author!.workspace!.firstName} {author!.workspace!.lastName}
-              <span className="block text-gray-500 dark:text-gray-400 text-xs leading-4 font-normal">
+              <span className="block text-xs font-normal leading-4 text-gray-500 dark:text-gray-400">
                 @{author!.workspace!.handle}
               </span>
             </p>
@@ -77,21 +77,21 @@ function AuthorList({
           <div>
             {author.readyToPublish ? (
               <span
-                className={`text-xs flex py-2 mx-2 leading-4 font-medium h-1 my-auto align-middle ${
+                className={`mx-2 my-auto flex h-1 py-2 align-middle text-xs font-medium leading-4 ${
                   author.readyToPublish ? "text-green-500" : "text-gray-500 dark:text-gray-400"
                 }`}
               >
-                <Checkmark32 className="w-4 h-4 fill-current" aria-hidden="true" />
+                <Checkmark32 className="h-4 w-4 fill-current" aria-hidden="true" />
                 Approved
               </span>
             ) : (
               <span
-                className={`text-xs flex py-2 mx-2 leading-4 font-medium h-1 my-auto align-middle ${
+                className={`mx-2 my-auto flex h-1 py-2 align-middle text-xs font-medium leading-4 ${
                   author.readyToPublish ? "text-green-500" : "text-gray-500 dark:text-gray-400"
                 }`}
               >
                 <Subtract32
-                  className="w-4 h-4 fill-current text-gray-500 dark:text-gray-400"
+                  className="h-4 w-4 fill-current text-gray-500 dark:text-gray-400"
                   aria-hidden="true"
                 />
                 Pending

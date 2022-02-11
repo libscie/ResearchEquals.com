@@ -24,7 +24,7 @@ const AuthorPanel = ({ buttonText, title, authors, name }) => {
           <div className="absolute inset-0 overflow-hidden">
             <Dialog.Overlay className="fixed inset-0 bg-gray-900 bg-opacity-25 transition-opacity" />
 
-            <div className="fixed inset-y-0 left-0 pr-10 max-w-full flex">
+            <div className="fixed inset-y-0 left-0 flex max-w-full pr-10">
               <Transition.Child
                 as={Fragment}
                 enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -34,17 +34,17 @@ const AuthorPanel = ({ buttonText, title, authors, name }) => {
                 leaveFrom="translate-x-0"
                 leaveTo="-translate-x-full"
               >
-                <div className="w-screen max-w-screen sm:max-w-lg  border-l border-gray-400 dark:border-gray-600">
-                  <div className="min-h-0 flex-1 flex flex-col py-6 overflow-y-auto h-full dark:divide-gray-600 bg-white dark:bg-gray-900 shadow-xl">
+                <div className="max-w-screen w-screen border-l  border-gray-400 dark:border-gray-600 sm:max-w-lg">
+                  <div className="flex h-full min-h-0 flex-1 flex-col overflow-y-auto bg-white py-6 shadow-xl dark:divide-gray-600 dark:bg-gray-900">
                     <div className="px-4 sm:px-6">
                       <div className="flex items-start justify-between">
                         <Dialog.Title className="text-lg font-medium text-gray-900 dark:text-white">
                           {title}
                         </Dialog.Title>
-                        <div className="ml-3 h-7 flex items-center">
+                        <div className="ml-3 flex h-7 items-center">
                           <button
                             type="button"
-                            className="rounded-md text-gray-400 dark:text-gray-200 hover:text-gray-500 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            className="rounded-md text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-white"
                             onClick={() => setPanelOpen(false)}
                           >
                             <span className="sr-only">Close panel</span>
@@ -53,7 +53,7 @@ const AuthorPanel = ({ buttonText, title, authors, name }) => {
                         </div>
                       </div>
                     </div>
-                    <div className="mt-6 px-4 sm:px-6 text-sm leading-5 font-normal border-b border-gray-400 dark:border-gray-600 pb-4 dark:text-white">
+                    <div className="mt-6 border-b border-gray-400 px-4 pb-4 text-sm font-normal leading-5 dark:border-gray-600 dark:text-white sm:px-6">
                       These are the authors {name} is following. Maybe there is somebody in this
                       list you find interesting?
                     </div>
@@ -61,23 +61,23 @@ const AuthorPanel = ({ buttonText, title, authors, name }) => {
                     <ul className="relative flex-1 divide-y divide-gray-400 dark:divide-gray-600">
                       {authors.map((author) => (
                         <>
-                          <li className="py-2 px-2 flex">
+                          <li className="flex py-2 px-2">
                             <img
                               src={author.avatar}
                               alt={`Avatar of ${author.handle}`}
-                              className="w-14 h-14 max-w-14 max-h-14 mr-2 rounded-full inline-block h-full align-middle"
+                              className="max-w-14 mr-2 inline-block h-14 h-full max-h-14 w-14 rounded-full align-middle"
                             />
                             <div
-                              className="hidden xs:flex flex-grow"
+                              className="hidden flex-grow xs:flex"
                               onClick={() => {
                                 setPanelOpen(false)
                               }}
                             >
                               <span className="inline-block h-full align-middle"></span>
                               <Link href={Routes.HandlePage({ handle: author.handle })}>
-                                <a className="text-gray-700 dark:text-gray-200 text-sm leading-4 font-normal my-auto inline-block align-middle overflow-hidden overflow-ellipsis">
+                                <a className="my-auto inline-block overflow-hidden overflow-ellipsis align-middle text-sm font-normal leading-4 text-gray-700 dark:text-gray-200">
                                   {author.firstName} {author.lastName}
-                                  <p className="text-gray-500 dark:text-gray-400 text-xs leading-4 font-normal">
+                                  <p className="text-xs font-normal leading-4 text-gray-500 dark:text-gray-400">
                                     @{author.handle}
                                   </p>
                                 </a>

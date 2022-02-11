@@ -6,13 +6,13 @@ const ModuleBoxFeed = ({ modules, fetchNextPage, hasNextPage, isFetchingNextPage
   return (
     <>
       {modules[0].count === 0 ? (
-        <div className="flex flex-col flex-grow relative w-full border-2 border-gray-1000 border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500  my-4 h-auto">
-          <div className="table flex-grow w-full">
-            <div className="sm:table-cell w-1/4 h-28"></div>
-            <span className="mx-auto table-cell align-middle text-sm leading-4 font-medium">
+        <div className="border-gray-1000 relative my-4 flex h-auto w-full flex-grow flex-col rounded-lg border-2 border-dashed text-center focus:outline-none focus:ring-2  focus:ring-indigo-500 focus:ring-offset-2">
+          <div className="table w-full flex-grow">
+            <div className="h-28 w-1/4 sm:table-cell"></div>
+            <span className="mx-auto table-cell align-middle text-sm font-medium leading-4">
               Following people will help fill your feed
             </span>
-            <div className="hidden sm:table-cell w-1/4"></div>
+            <div className="hidden w-1/4 sm:table-cell"></div>
           </div>
         </div>
       ) : (
@@ -20,19 +20,19 @@ const ModuleBoxFeed = ({ modules, fetchNextPage, hasNextPage, isFetchingNextPage
           {modules.map((page, i) => (
             <>
               <Fragment key={i}>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 my-4">
+                <div className="my-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
                   {page.modules.map((module) => (
                     <>
                       <>
                         <Link href={Routes.ModulePage({ suffix: module.suffix })}>
                           <a
-                            className="flex flex-col module cursor-pointer p-4 text-white"
+                            className="module flex cursor-pointer flex-col p-4 text-white"
                             style={{ backgroundColor: module.displayColor }}
                           >
-                            <h2 className="text-base font-normal leading-5 flex-grow mb-2">
+                            <h2 className="mb-2 flex-grow text-base font-normal leading-5">
                               {module.title}
                             </h2>
-                            <span className="w-full flex">
+                            <span className="flex w-full">
                               <span className="flex-grow align-text-bottom text-gray-300"></span>
                               <AuthorAvatarsNew
                                 authors={module.authors}
@@ -49,11 +49,11 @@ const ModuleBoxFeed = ({ modules, fetchNextPage, hasNextPage, isFetchingNextPage
               </Fragment>
             </>
           ))}
-          <div className="text-center my-4">
+          <div className="my-4 text-center">
             <button
               onClick={() => fetchNextPage()}
               disabled={!hasNextPage || !!isFetchingNextPage}
-              className="whitespace-nowrap text-sm leading-5 font-normal text-indigo-700 dark:text-gray-200 bg-indigo-100 hover:bg-indigo-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-0 dark:border dark:border-gray-600 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500"
+              className="whitespace-nowrap rounded border-0 bg-indigo-100 px-4 py-2 text-sm font-normal leading-5 text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
             >
               {isFetchingNextPage
                 ? "Loading more..."

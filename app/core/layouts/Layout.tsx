@@ -25,7 +25,7 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
         <script data-respect-dnt data-no-cookie async src="https://cdn.splitbee.io/sb.js"></script>
         {headChildren}
       </Head>
-      <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+      <div className="flex min-h-screen flex-col bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
         <div className="flex-grow">{children}</div>
       </div>
       <Footer />
@@ -58,7 +58,7 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
         We use cookies for essential website security purposes. You can withdraw your consent for
         optional cookies at any time. See also our{" "}
         <Link href={Routes.PrivacyPage()}>
-          <a className="hover:no-underline hover:text-white underline" target="_blank">
+          <a className="underline hover:text-white hover:no-underline" target="_blank">
             Privacy policy
           </a>
         </Link>

@@ -19,7 +19,7 @@ import getBrowseWorkspaceGraphData from "../core/queries/getBrowseWorkspaceGraph
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="custom-tooltip bg-white dark:bg-gray-900 shadow-xl border dark:border-gray-600 rounded p-2 border-b bgborder-gray-400">
+      <div className="custom-tooltip bgborder-gray-400 rounded border border-b bg-white p-2 shadow-xl dark:border-gray-600 dark:bg-gray-900">
         <p className="label">{`${moment(label).format("YYYY-MM-DD")}`}</p>
         <p>Total modules: {`${payload[0].value}`}</p>
       </div>
@@ -32,7 +32,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 const CustomTooltipWorkspace = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="custom-tooltip bg-white dark:bg-gray-900 shadow-xl border dark:border-gray-600 rounded p-2 border-b bgborder-gray-400">
+      <div className="custom-tooltip bgborder-gray-400 rounded border border-b bg-white p-2 shadow-xl dark:border-gray-600 dark:bg-gray-900">
         <p className="label">{`${moment(label).format("YYYY-MM-DD")}`}</p>
         <p>Total signups: {`${payload[0].value}`}</p>
       </div>
@@ -46,8 +46,8 @@ const BrowseContent = () => {
   const [graphData] = useQuery(getBrowseGraphData, undefined)
 
   return (
-    <div className="max-w-xl text-gray-900 dark:text-gray-200 py-16 mx-4">
-      <h2 className="text-3xl text-center font-extrabold ">Published modules</h2>
+    <div className="mx-4 max-w-xl py-16 text-gray-900 dark:text-gray-200">
+      <h2 className="text-center text-3xl font-extrabold ">Published modules</h2>
       <div className="mx-auto text-center">
         <ResponsiveContainer width="100%" height={250}>
           <AreaChart
@@ -107,8 +107,8 @@ const BrowseWorkspaces = () => {
   const [graphData] = useQuery(getBrowseWorkspaceGraphData, undefined)
 
   return (
-    <div className=" text-gray-900 dark:text-gray-200 py-16 mx-4">
-      <h2 className="text-3xl text-center font-extrabold ">Signups</h2>
+    <div className=" mx-4 py-16 text-gray-900 dark:text-gray-200">
+      <h2 className="text-center text-3xl font-extrabold ">Signups</h2>
       <div className="mx-auto text-center">
         <ResponsiveContainer width="100%" height={250}>
           <AreaChart
@@ -181,10 +181,10 @@ const Stats = () => {
         invitations={invitations}
         refetchFn={refetch}
       />
-      <h1 className="max-w-7xl mx-auto my-8 text-center font-black text-5xl sm:text-6xl">
+      <h1 className="mx-auto my-8 max-w-7xl text-center text-5xl font-black sm:text-6xl">
         Real-time statistics
       </h1>
-      <div className="max-w-7xl xl:grid grid-cols-2 mx-auto">
+      <div className="mx-auto max-w-7xl grid-cols-2 xl:grid">
         <BrowseContent />
         <BrowseWorkspaces />
       </div>

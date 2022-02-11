@@ -192,9 +192,9 @@ const CodeOfConduct: BlitzPage = () => {
         invitations={invitations}
         refetchFn={refetch}
       />
-      <main className="lg:relative bg-white dark:bg-gray-900">
-        <div className="mx-4 lg:mx-auto max-w-3xl text-black dark:text-white my-8">
-          <div className="onboarding flex flex-col bg-yellow-50 dark:bg-yellow-900 p-4 my-2 lg:my-0 w-full border-l-4 border-yellow-400 dark:border-yellow-200 rounded-r">
+      <main className="bg-white dark:bg-gray-900 lg:relative">
+        <div className="mx-4 my-8 max-w-3xl text-black dark:text-white lg:mx-auto">
+          <div className="onboarding my-2 flex w-full flex-col rounded-r border-l-4 border-yellow-400 bg-yellow-50 p-4 dark:border-yellow-200 dark:bg-yellow-900 lg:my-0">
             <div className="flex flex-grow">
               <div className="">
                 <SendAltFilled32
@@ -202,8 +202,8 @@ const CodeOfConduct: BlitzPage = () => {
                   aria-hidden="true"
                 />
               </div>
-              <div className="ml-3 flex-1 md:flex text-yellow-800 dark:text-yellow-200">
-                <p className="text-sm mr-2">
+              <div className="ml-3 flex-1 text-yellow-800 dark:text-yellow-200 md:flex">
+                <p className="mr-2 text-sm">
                   <span className="font-bold">Submit a report.</span>{" "}
                   <span>Reports are treated as confidential documents.</span>
                 </p>
@@ -218,7 +218,7 @@ const CodeOfConduct: BlitzPage = () => {
                     10
                   )}] Code of Conduct report&body=Dear%20Code%20of%20Conduct%20committee%2C%0A%0AI%20would%20like%20to%20submit%20a%20code%20of%20conduct%20report%20regarding%20%5Breported%20person's%20name%2Fdescription%2C%20organizations%20also%20allowed%5D.%0A%0A%5Bdescription%20of%20the%20incident%5D%20%0A%0AThis%20happened%20on%20%5Bdate%20and%20time%5D%20at%20%5Blocation%5D.%20%0A%0AMy%20name%20is%20%5Breporter%20name%5D%20and%20you%20can%20reach%20me%20at%20%5Bcontact%20info%5D.%20%0A%0AAdditional%20witnesses%20for%20this%20report%20are%3A%20%5Boptional%20witness%20information%5D.%0A%0AKind%20regards`}
               >
-                <a className="mt-3 text-sm md:mt-0 md:ml-6 underline">Email report</a>
+                <a className="mt-3 text-sm underline md:mt-0 md:ml-6">Email report</a>
               </Link>
             </div>
           </div>

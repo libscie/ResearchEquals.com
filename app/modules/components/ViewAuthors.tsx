@@ -15,7 +15,7 @@ const ViewAuthors = ({ button, module }) => {
     <>
       <button
         type="button"
-        className="flex px-2 py-2 border bg-gray-300 dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-sm leading-4 font-normal shadow-sm mx-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700"
+        className="mx-1 flex rounded border border-gray-300 bg-gray-300 px-2 py-2 text-sm font-normal leading-4 text-gray-700 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:border-gray-400 dark:hover:bg-gray-700"
         onClick={() => {
           setViewAuthorsOpen(true)
         }}
@@ -27,7 +27,7 @@ const ViewAuthors = ({ button, module }) => {
           <div className="absolute inset-0 overflow-hidden">
             <Dialog.Overlay className="fixed inset-0 bg-gray-900 bg-opacity-25 transition-opacity" />
 
-            <div className="fixed inset-y-0 right-0 pl-10 max-w-full flex">
+            <div className="fixed inset-y-0 right-0 flex max-w-full pl-10">
               <Transition.Child
                 as={Fragment}
                 enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -38,16 +38,16 @@ const ViewAuthors = ({ button, module }) => {
                 leaveTo="translate-x-full"
               >
                 <div className="w-screen max-w-xs  border-l border-gray-400 dark:border-gray-600">
-                  <div className="min-h-0 flex-1 flex flex-col pt-6 overflow-y-auto h-full dark:divide-gray-600 bg-white dark:bg-gray-900 shadow-xl">
+                  <div className="flex h-full min-h-0 flex-1 flex-col overflow-y-auto bg-white pt-6 shadow-xl dark:divide-gray-600 dark:bg-gray-900">
                     <div className="px-4 sm:px-6">
                       <div className="flex items-start justify-between">
                         <Dialog.Title className="text-lg font-medium text-gray-900 dark:text-white">
                           Module Authors
                         </Dialog.Title>
-                        <div className="ml-3 h-7 flex items-center">
+                        <div className="ml-3 flex h-7 items-center">
                           <button
                             type="button"
-                            className="rounded-md text-gray-400 dark:text-gray-200 hover:text-gray-500 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            className="rounded-md text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-white"
                             onClick={() => setViewAuthorsOpen(false)}
                           >
                             <span className="sr-only">Close panel</span>
@@ -56,7 +56,7 @@ const ViewAuthors = ({ button, module }) => {
                         </div>
                       </div>
                     </div>
-                    <div className="mt-6 px-4 sm:px-6 text-sm leading-5 font-normal border-b border-gray-400 dark:border-gray-600 pb-4 dark:text-white">
+                    <div className="mt-6 border-b border-gray-400 px-4 pb-4 text-sm font-normal leading-5 dark:border-gray-600 dark:text-white sm:px-6">
                       These are the authors of the module. Maybe somebody is interesting to follow?
                     </div>
                     {/* Replace with your content */}
@@ -64,23 +64,23 @@ const ViewAuthors = ({ button, module }) => {
                     <ul className="relative flex-1 divide-y divide-gray-400 dark:divide-gray-600">
                       {module.authors.map((author) => (
                         <>
-                          <li className="py-2 px-2 flex">
+                          <li className="flex py-2 px-2">
                             <div className="mr-2 flex">
                               <img
                                 src={author!.workspace!.avatar}
                                 alt={`Avatar of ${author!.workspace!.handle}`}
-                                className="w-10 h-10 rounded-full inline-block h-full align-middle"
+                                className="inline-block h-10 h-full w-10 rounded-full align-middle"
                               />
                             </div>
                             <div className="flex-grow">
                               <span className="inline-block h-full align-middle"></span>
                               <Link href={Routes.HandlePage({ handle: author.workspace.handle })}>
                                 <a
-                                  className="text-gray-700 dark:text-gray-200 text-sm leading-4 font-normal my-auto inline-block align-middle"
+                                  className="my-auto inline-block align-middle text-sm font-normal leading-4 text-gray-700 dark:text-gray-200"
                                   target="_blank"
                                 >
                                   {author!.workspace!.firstName} {author!.workspace!.lastName}
-                                  <p className="text-gray-500 dark:text-gray-400 text-xs leading-4 font-normal">
+                                  <p className="text-xs font-normal leading-4 text-gray-500 dark:text-gray-400">
                                     @{author!.workspace!.handle}
                                   </p>
                                 </a>

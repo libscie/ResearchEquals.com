@@ -6,8 +6,8 @@ const LayoutLoader = ({ children }) => {
     <Suspense
       fallback={
         <>
-          <div className="h-screen bg-white dark:bg-gray-900 align-middle">
-            <div className="w-full h-full inline-block align-middle ">
+          <div className="h-screen bg-white align-middle dark:bg-gray-900">
+            <div className="inline-block h-full w-full align-middle ">
               <Ripple />
             </div>
           </div>

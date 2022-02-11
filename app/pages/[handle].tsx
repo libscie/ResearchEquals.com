@@ -60,7 +60,7 @@ const Handle = ({ workspace, expire, signature }) => {
   const params = useParams()
 
   return (
-    <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-200 h-full">
+    <div className="h-full bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-200">
       <Navbar
         currentUser={currentUser}
         session={session}
@@ -70,10 +70,10 @@ const Handle = ({ workspace, expire, signature }) => {
         invitations={invitations}
         refetchFn={refetchDrafts}
       />
-      <div className="lg:flex max-w-full mx-4">
+      <div className="mx-4 max-w-full lg:flex">
         <div className="w-full lg:w-1/2 xl:w-1/3">
           <div className="lg:sticky lg:top-8">
-            <div className="flex my-8 lg:mr-8">
+            <div className="my-8 flex lg:mr-8">
               <HandleAvatar
                 params={params}
                 refetch={refetch}
@@ -82,9 +82,9 @@ const Handle = ({ workspace, expire, signature }) => {
                 expire={expire}
                 signature={signature}
               />
-              <div className="flex-grow ml-4">
+              <div className="ml-4 flex-grow">
                 <span className="inline-block h-full align-middle"> </span>
-                <p className="inline-block align-middle text-base leading-6 font-medium text-gray-900 dark:text-gray-200">
+                <p className="inline-block align-middle text-base font-medium leading-6 text-gray-900 dark:text-gray-200">
                   {workspace.firstName ? workspace.firstName : ""}{" "}
                   {workspace.lastName ? workspace.lastName : ""}{" "}
                   {workspace.pronouns ? (
@@ -92,7 +92,7 @@ const Handle = ({ workspace, expire, signature }) => {
                   ) : (
                     ""
                   )}
-                  <p className="text-base leading-6 font-medium text-gray-500 dark:text-gray-200">
+                  <p className="text-base font-medium leading-6 text-gray-500 dark:text-gray-200">
                     @{workspace.handle}
                   </p>
                 </p>
@@ -111,23 +111,23 @@ const Handle = ({ workspace, expire, signature }) => {
                 ""
               )}
             </div>
-            <div className="my-4 text-sm leading-4 font-normal text-gray-900 dark:text-gray-200 w-11/12">
+            <div className="my-4 w-11/12 text-sm font-normal leading-4 text-gray-900 dark:text-gray-200">
               {workspace.bio}
             </div>
 
             <div>
-              <p className="flex text-sm leading-4 font-normal text-gray-500 dark:text-gray-200">
+              <p className="flex text-sm font-normal leading-4 text-gray-500 dark:text-gray-200">
                 <p>
                   <span className="inline-block h-full align-middle"> </span>
                   <Calendar32
-                    className="w-4 h-4 inline-block align-middle mr-1 text-gray-700 dark:text-gray-400"
+                    className="mr-1 inline-block h-4 w-4 align-middle text-gray-700 dark:text-gray-400"
                     aria-hidden="true"
                   />
                   Signed up {moment(workspace.createdAt).fromNow()}
                 </p>
               </p>
               {workspace.orcid ? (
-                <p className="flex my-2 text-sm leading-4 font-normal text-gray-500 dark:text-gray-200">
+                <p className="my-2 flex text-sm font-normal leading-4 text-gray-500 dark:text-gray-200">
                   <p>
                     <span className="inline-block h-full align-middle"> </span>
                     <svg
@@ -135,14 +135,14 @@ const Handle = ({ workspace, expire, signature }) => {
                       height="20"
                       viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
-                      className="w-4 h-4 inline-block align-middle mr-1 fill-current text-gray-700 dark:text-gray-400"
+                      className="mr-1 inline-block h-4 w-4 fill-current align-middle text-gray-700 dark:text-gray-400"
                     >
                       <path d="M12.6007 8.01734C12.3707 7.91001 12.1533 7.838 11.9473 7.804C11.742 7.76868 11.4127 7.752 10.9567 7.752H9.77266V12.6793H10.9867C11.46 12.6793 11.828 12.6467 12.0907 12.582C12.3533 12.5173 12.572 12.436 12.7473 12.336C12.9227 12.2367 13.0833 12.1147 13.2293 11.9687C13.6967 11.494 13.9307 10.8953 13.9307 10.1713C13.9307 9.45998 13.6907 8.87932 13.21 8.42998C13.0327 8.26331 12.8287 8.12531 12.6007 8.0173V8.01734ZM10 2C5.58134 2 2 5.582 2 10C2 14.418 5.58134 18 10 18C14.4187 18 18 14.418 18 10C18 5.582 14.4187 2 10 2ZM7.34399 13.5327H6.39598V6.908H7.34399V13.5327ZM6.86934 6.21601C6.51001 6.21601 6.21734 5.92534 6.21734 5.564C6.21734 5.20534 6.50933 4.91268 6.86934 4.91268C7.23 4.91268 7.522 5.20467 7.522 5.564C7.52129 5.926 7.23 6.21601 6.86934 6.21601ZM14.656 11.4933C14.4853 11.898 14.242 12.254 13.9253 12.5607C13.6033 12.878 13.2287 13.1153 12.8013 13.2767C12.5514 13.374 12.3227 13.44 12.114 13.474C11.9047 13.5067 11.5067 13.5227 10.918 13.5227H8.82269V6.908H11.056C11.958 6.908 12.67 7.04201 13.1954 7.31267C13.72 7.58266 14.1367 7.98134 14.4467 8.50534C14.7567 9.03001 14.912 9.60268 14.912 10.2213C14.9128 10.6653 14.826 11.0893 14.656 11.4933H14.656Z" />
                     </svg>
                     <Link href={`https://orcid.org/${workspace.orcid}`}>
                       <a
                         target="_blank"
-                        className="underline text-sm leading-4 font-normal text-gray-500 dark:text-gray-200"
+                        className="text-sm font-normal leading-4 text-gray-500 underline dark:text-gray-200"
                       >
                         {workspace.orcid}
                       </a>
@@ -153,17 +153,17 @@ const Handle = ({ workspace, expire, signature }) => {
                 <></>
               )}
               {workspace.url ? (
-                <p className="flex my-2 text-sm leading-4 font-normal text-gray-500 dark:text-gray-200">
+                <p className="my-2 flex text-sm font-normal leading-4 text-gray-500 dark:text-gray-200">
                   <p>
                     <span className="inline-block h-full align-middle"> </span>
                     <Link32
-                      className="w-4 h-4 inline-block align-middle mr-1 text-gray-700 dark:text-gray-400"
+                      className="mr-1 inline-block h-4 w-4 align-middle text-gray-700 dark:text-gray-400"
                       aria-hidden="true"
                     />
                     <Link href={workspace.url}>
                       <a
                         target="_blank"
-                        className="underline text-sm leading-4 font-normal text-gray-500 dark:text-gray-200"
+                        className="text-sm font-normal leading-4 text-gray-500 underline dark:text-gray-200"
                       >
                         {workspace.url}
                       </a>
@@ -176,11 +176,11 @@ const Handle = ({ workspace, expire, signature }) => {
               {workspace.following.length > 0 ? (
                 <HandlePanel
                   buttonText={
-                    <p className="flex text-sm leading-4 font-normal text-gray-500 dark:text-gray-200 underline">
+                    <p className="flex text-sm font-normal leading-4 text-gray-500 underline dark:text-gray-200">
                       <p>
                         <span className="inline-block h-full align-middle"> </span>
                         <UserFollow32
-                          className="w-4 h-4 inline-block align-middle mr-1 text-gray-700 dark:text-gray-400"
+                          className="mr-1 inline-block h-4 w-4 align-middle text-gray-700 dark:text-gray-400"
                           aria-hidden="true"
                         />
                         Following{" "}
@@ -282,8 +282,8 @@ const HandleFeed = ({ handle }) => {
     <>
       {modules.length > 0 ? (
         <>
-          <div className="rounded-t-md border border-gray-300 dark:border-gray-600 mt-8 divide-y divide-gray-300 dark:divide-gray-600">
-            <div className="flex text-sm leading-4 font-medium mx-4 my-2 text-gray-500 dark:text-gray-400 ">
+          <div className="mt-8 divide-y divide-gray-300 rounded-t-md border border-gray-300 dark:divide-gray-600 dark:border-gray-600">
+            <div className="mx-4 my-2 flex text-sm font-medium leading-4 text-gray-500 dark:text-gray-400 ">
               <h1 className="flex-grow">{modules.length} published modules</h1>
               <p className="">Most to least recent</p>
             </div>
@@ -296,7 +296,7 @@ const HandleFeed = ({ handle }) => {
                     }}
                     className="cursor-pointer"
                   >
-                    <a className="w-full text-left focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500">
+                    <a className="w-full text-left focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0">
                       <ModuleCard
                         type={module.type.name}
                         title={module.title}
@@ -322,13 +322,13 @@ const HandleFeed = ({ handle }) => {
           />
         </>
       ) : (
-        <div className="flex mt-8 flex-col flex-grow relative w-full border-2 border-gray-500 dark:border-gray-400 border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 h-28">
-          <div className="table flex-grow w-full">
-            <div className="hidden sm:table-cell w-1/4"></div>
-            <span className="mx-auto table-cell align-middle leading-normal text-sm font-medium text-gray-500 dark:text-gray-400">
+        <div className="relative mt-8 flex h-28 w-full flex-grow flex-col rounded-lg border-2 border-dashed border-gray-500 text-center focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-gray-400">
+          <div className="table w-full flex-grow">
+            <div className="hidden w-1/4 sm:table-cell"></div>
+            <span className="mx-auto table-cell align-middle text-sm font-medium leading-normal text-gray-500 dark:text-gray-400">
               Nothing published yet
             </span>
-            <div className="hidden sm:table-cell w-1/4"></div>
+            <div className="hidden w-1/4 sm:table-cell"></div>
           </div>
         </div>
       )}

@@ -52,7 +52,7 @@ const SignupPage: BlitzPage = () => {
   })
 
   return (
-    <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
+    <div className="flex min-h-screen flex-col justify-center bg-gray-100 py-12 text-gray-900 dark:bg-gray-900 dark:text-white sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Link href={Routes.Home()}>
           <a>
@@ -60,12 +60,12 @@ const SignupPage: BlitzPage = () => {
           </a>
         </Link>
         <h1 className="mt-6 text-center text-3xl font-extrabold ">Join ResearchEquals</h1>
-        <div className="bg-white dark:bg-gray-800 shadow rounded py-4 px-6 my-8">
+        <div className="my-8 rounded bg-white py-4 px-6 shadow dark:bg-gray-800">
           <form onSubmit={formik.handleSubmit}>
             <div className="">
               <label
                 htmlFor="email"
-                className="text-sm block font-medium text-gray-700 dark:text-gray-100"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-100"
               >
                 Email address
                 {formik.touched.email && formik.errors.email ? (
@@ -78,7 +78,7 @@ const SignupPage: BlitzPage = () => {
                   type="email"
                   autoComplete="email"
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 dark:bg-gray-800 dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+                  className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-sm font-normal placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500  dark:border-gray-500 dark:bg-gray-800 "
                   placeholder="you@email.com"
                   {...formik.getFieldProps("email")}
                 />
@@ -95,8 +95,8 @@ const SignupPage: BlitzPage = () => {
                   <span className="text-red-500">{` - ${formik.errors.handle}`}</span>
                 ) : null}
               </label>
-              <div className="max-w-lg flex rounded-md shadow-sm">
-                <span className="inline-flex items-center px-3 leading-5 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 font-normal text-sm dark:bg-gray-700 dark:text-gray-300  dark:border-gray-500">
+              <div className="flex max-w-lg rounded-md shadow-sm">
+                <span className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm font-normal leading-5 text-gray-500 dark:border-gray-500 dark:bg-gray-700  dark:text-gray-300">
                   researchequals.com/
                 </span>
                 <input
@@ -104,7 +104,7 @@ const SignupPage: BlitzPage = () => {
                   id="handle"
                   autoComplete="handle"
                   required
-                  className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300 font-normal text-sm dark:bg-gray-800 dark:border-gray-500"
+                  className="block w-full min-w-0 flex-1 rounded-none rounded-r-md border-gray-300 text-sm font-normal focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-500 dark:bg-gray-800 sm:text-sm"
                   {...formik.getFieldProps("handle")}
                 />
               </div>
@@ -125,57 +125,57 @@ const SignupPage: BlitzPage = () => {
                   id="password"
                   type="password"
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:text-gray-100 dark:bg-gray-800 dark:border-gray-500"
+                  className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 dark:border-gray-500 dark:bg-gray-800 dark:text-gray-100 sm:text-sm"
                   {...formik.getFieldProps("password")}
                 />
               </div>
             </div>
-            <div className="flex my-4">
+            <div className="my-4 flex">
               <Switch
                 checked={termsAccepted}
                 onChange={setTermsAccepted}
                 className={classNames(
                   termsAccepted ? "bg-indigo-600" : "bg-gray-200 dark:bg-gray-700",
-                  "relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500"
+                  "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0"
                 )}
               >
                 <span className="sr-only">Use setting</span>
                 <span
                   className={classNames(
                     termsAccepted ? "translate-x-5" : "translate-x-0",
-                    "pointer-events-none relative inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"
+                    "pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
                   )}
                 >
                   <span
                     className={classNames(
                       termsAccepted
-                        ? "opacity-0 ease-out duration-100"
-                        : "opacity-100 ease-in duration-200",
-                      "absolute inset-0 h-full w-full flex items-center justify-center transition-opacity"
+                        ? "opacity-0 duration-100 ease-out"
+                        : "opacity-100 duration-200 ease-in",
+                      "absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
                     )}
                     aria-hidden="true"
                   >
-                    <Close32 className="h-3 w-3 text-gray-400 stroke-2 stroke-current" />
+                    <Close32 className="h-3 w-3 stroke-current stroke-2 text-gray-400" />
                   </span>
                   <span
                     className={classNames(
                       termsAccepted
-                        ? "opacity-100 ease-in duration-200"
-                        : "opacity-0 ease-out duration-100",
-                      "absolute inset-0 h-full w-full flex items-center justify-center transition-opacity"
+                        ? "opacity-100 duration-200 ease-in"
+                        : "opacity-0 duration-100 ease-out",
+                      "absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
                     )}
                     aria-hidden="true"
                   >
-                    <Checkmark32 className="h-3 w-3 text-indigo-600 stroke-2 stroke-current" />
+                    <Checkmark32 className="h-3 w-3 stroke-current stroke-2 text-indigo-600" />
                   </span>
                 </span>
               </Switch>
-              <p className="mx-2 text-gray-500 dark:text-gray-100 font-normal text-base">
+              <p className="mx-2 text-base font-normal text-gray-500 dark:text-gray-100">
                 I agree to the{" "}
                 <Link href="/terms">
                   <a
                     target="_blank"
-                    className="text-gray-700  dark:text-gray-100 underline focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500"
+                    className="text-gray-700  underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:text-gray-100"
                   >
                     Terms of use
                   </a>
@@ -184,59 +184,59 @@ const SignupPage: BlitzPage = () => {
                 <Link href="/privacy">
                   <a
                     target="_blank"
-                    className="text-gray-700  dark:text-gray-100 underline focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500"
+                    className="text-gray-700  underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:text-gray-100"
                   >
                     Privacy policy
                   </a>
                 </Link>
               </p>
             </div>
-            <div className="flex my-4">
+            <div className="my-4 flex">
               <Switch
                 checked={cocAccepted}
                 onChange={setCocAccepted}
                 className={classNames(
                   cocAccepted ? "bg-indigo-600" : "bg-gray-200 dark:bg-gray-700",
-                  "relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500"
+                  "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0"
                 )}
               >
                 <span className="sr-only">Use setting</span>
                 <span
                   className={classNames(
                     cocAccepted ? "translate-x-5" : "translate-x-0",
-                    "pointer-events-none relative inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"
+                    "pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
                   )}
                 >
                   <span
                     className={classNames(
                       cocAccepted
-                        ? "opacity-0 ease-out duration-100"
-                        : "opacity-100 ease-in duration-200",
-                      "absolute inset-0 h-full w-full flex items-center justify-center transition-opacity"
+                        ? "opacity-0 duration-100 ease-out"
+                        : "opacity-100 duration-200 ease-in",
+                      "absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
                     )}
                     aria-hidden="true"
                   >
-                    <Close32 className="h-3 w-3 text-gray-400 stroke-2 stroke-current" />
+                    <Close32 className="h-3 w-3 stroke-current stroke-2 text-gray-400" />
                   </span>
                   <span
                     className={classNames(
                       cocAccepted
-                        ? "opacity-100 ease-in duration-200"
-                        : "opacity-0 ease-out duration-100",
-                      "absolute inset-0 h-full w-full flex items-center justify-center transition-opacity"
+                        ? "opacity-100 duration-200 ease-in"
+                        : "opacity-0 duration-100 ease-out",
+                      "absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
                     )}
                     aria-hidden="true"
                   >
-                    <Checkmark32 className="h-3 w-3 text-indigo-600 stroke-2 stroke-current" />
+                    <Checkmark32 className="h-3 w-3 stroke-current stroke-2 text-indigo-600" />
                   </span>
                 </span>
               </Switch>
-              <p className="mx-2 text-gray-500 dark:text-gray-100 font-normal text-base">
+              <p className="mx-2 text-base font-normal text-gray-500 dark:text-gray-100">
                 I agree to the{" "}
                 <Link href={Routes.CodeOfConduct()}>
                   <a
                     target="_blank"
-                    className="text-gray-700 dark:text-gray-100 underline focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500"
+                    className="text-gray-700 underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:text-gray-100"
                   >
                     Code of Conduct
                   </a>
@@ -247,14 +247,14 @@ const SignupPage: BlitzPage = () => {
               <button
                 type="submit"
                 data-splitbee-event="Sign up"
-                className="w-full px-3 py-2 border text-medium border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent focus:ring-indigo-500"
+                className="text-medium w-full rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-transparent"
               >
                 Sign up
               </button>
             ) : (
               <button
                 type="submit"
-                className="w-full px-3 py-2 border text-medium border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+                className="text-medium w-full rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50"
                 disabled
               >
                 Sign up

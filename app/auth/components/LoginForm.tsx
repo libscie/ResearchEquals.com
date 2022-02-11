@@ -32,7 +32,7 @@ export const LoginForm = (props: LoginFormProps) => {
     },
   })
   return (
-    <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
+    <div className="flex min-h-screen flex-col justify-center bg-gray-100 py-12 text-gray-900 dark:bg-gray-900 dark:text-white sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Link href={Routes.Home()}>
           <a>
@@ -40,7 +40,7 @@ export const LoginForm = (props: LoginFormProps) => {
           </a>
         </Link>
         <h1 className="mt-6 text-center text-3xl font-extrabold ">Log in to ResearchEquals</h1>
-        <div className="bg-white dark:bg-gray-800 shadow rounded py-4 px-6 my-8 mx-auto">
+        <div className="my-8 mx-auto rounded bg-white py-4 px-6 shadow dark:bg-gray-800">
           <form onSubmit={formik.handleSubmit}>
             <div className="">
               <label
@@ -56,7 +56,7 @@ export const LoginForm = (props: LoginFormProps) => {
                   type="email"
                   autoComplete="email"
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 dark:bg-gray-800 dark:border-gray-500 rounded-md shadow-sm placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+                  className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-sm font-normal placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500  dark:border-gray-500 dark:bg-gray-800 "
                   placeholder="you@email.com"
                   {...formik.getFieldProps("email")}
                 />
@@ -78,29 +78,29 @@ export const LoginForm = (props: LoginFormProps) => {
                   id="password"
                   type="password"
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:text-gray-100 dark:bg-gray-800 dark:border-gray-500"
+                  className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 dark:border-gray-500 dark:bg-gray-800 dark:text-gray-100 sm:text-sm"
                   {...formik.getFieldProps("password")}
                 />
               </div>
             </div>
-            <div className="text-indigo-600 dark:text-gray-200 text-center my-4 font-medium text-sm">
+            <div className="my-4 text-center text-sm font-medium text-indigo-600 dark:text-gray-200">
               <Link href={Routes.ForgotPasswordPage()}>
-                <a className="underline focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500">
+                <a className="underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0">
                   Forgot your password?
                 </a>
               </Link>
             </div>
             <button
               type="submit"
-              className="w-full px-3 py-2 border text-medium border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="text-medium w-full rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               Log in
             </button>
           </form>
-          <div className="text-gray-900 dark:text-white text-center mt-4 font-medium text-sm">
+          <div className="mt-4 text-center text-sm font-medium text-gray-900 dark:text-white">
             Do not have an account?{" "}
             <Link href={Routes.SignupPage()}>
-              <a className="text-indigo-600 dark:text-gray-200 underline focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500">
+              <a className="text-indigo-600 underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:text-gray-200">
                 Sign up
               </a>
             </Link>

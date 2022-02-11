@@ -72,13 +72,13 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
             Email address{" "}
             {formik.touched.email && formik.errors.email ? " - " + formik.errors.email : null}
           </label>
-          <div className="mt-1 max-w-11/12">
+          <div className="max-w-11/12 mt-1">
             <input
               id="email"
-              className="bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300  text-gray-900 dark:text-gray-200 dark:border-gray-600 rounded-md placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+              className="placeholder-font-normal block w-11/12 appearance-none rounded-md border border-gray-300 bg-transparent  px-3 py-2 text-sm font-normal text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500  dark:border-gray-600 dark:text-gray-200 "
               {...formik.getFieldProps("email")}
             />
-            <p className="text-xs text-gray-900 dark:text-gray-200 my-1">
+            <p className="my-1 text-xs text-gray-900 dark:text-gray-200">
               Upon changing your email address, you will need to verify it before being able to
               publish again.
             </p>
@@ -99,7 +99,7 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
               id="currentPassword"
               type="password"
               autoComplete="password"
-              className="bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300  text-gray-900 dark:text-gray-200 dark:border-gray-600 rounded-md placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+              className="placeholder-font-normal block w-11/12 appearance-none rounded-md border border-gray-300 bg-transparent  px-3 py-2 text-sm font-normal text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500  dark:border-gray-600 dark:text-gray-200 "
               {...formik.getFieldProps("currentPassword")}
             />
           </div>
@@ -121,7 +121,7 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
             <input
               id="newPassword"
               type="password"
-              className="bg-transparent appearance-none block w-11/12 px-2 py-2 border border-gray-300  text-gray-900 dark:text-gray-200  dark:border-gray-600 rounded-md placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+              className="placeholder-font-normal block w-11/12 appearance-none rounded-md border border-gray-300 bg-transparent  px-2 py-2  text-sm font-normal text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500  dark:border-gray-600 dark:text-gray-200 "
               {...formik.getFieldProps("newPassword")}
             />
           </div>
@@ -140,34 +140,34 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
             <input
               id="newRepeat"
               type="password"
-              className="bg-transparent appearance-none block w-11/12 px-3 py-2 border border-gray-300  text-gray-900 dark:text-gray-200 dark:border-gray-600 rounded-md placeholder-gray-400 placeholder-font-normal focus:outline-none focus:ring-indigo-500 focus:border-indigo-500  font-normal text-sm "
+              className="placeholder-font-normal block w-11/12 appearance-none rounded-md border border-gray-300 bg-transparent  px-3 py-2 text-sm font-normal text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500  dark:border-gray-600 dark:text-gray-200 "
               {...formik.getFieldProps("newRepeat")}
             />
           </div>
         </div>
-        <div className="px-2 my-2">
+        <div className="my-2 px-2">
           <DeleteModal />
         </div>
 
-        <div className="absolute right-0 w-full sm:sticky flex bottom-0 py-2 bg-white dark:bg-gray-900 border-t border-gray-300 dark:border-gray-600 text-right">
+        <div className="absolute right-0 bottom-0 flex w-full border-t border-gray-300 bg-white py-2 text-right dark:border-gray-600 dark:bg-gray-900 sm:sticky">
           <span className="flex-grow"></span>
           <div className="">
             <button
               type="reset"
-              className="flex mx-4 py-2 px-4 bg-red-50 dark:bg-gray-800 text-red-700 dark:text-red-500 hover:bg-red-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-red-500"
+              className="mx-4 flex rounded-md bg-red-50 py-2 px-4 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
               onClick={() => {
                 setIsOpen(false)
               }}
             >
-              <Close32 className="w-4 h-4 fill-current text-red-500 pt-1" aria-hidden="true" />
+              <Close32 className="h-4 w-4 fill-current pt-1 text-red-500" aria-hidden="true" />
               Cancel
             </button>
           </div>
           <button
             type="submit"
-            className="flex mr-4 py-2 px-4 bg-green-50 dark:bg-gray-800 text-green-700 dark:text-green-500 hover:bg-green-200 dark:hover:bg-gray-700 dark:border dark:border-gray-600 dark:hover:border-gray-400 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500"
+            className="mr-4 flex rounded-md bg-green-50 py-2 px-4 text-sm font-medium text-green-700 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-green-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
           >
-            <Checkmark32 className="w-4 h-4 fill-current text-green-500 pt-1" aria-hidden="true" />
+            <Checkmark32 className="h-4 w-4 fill-current pt-1 text-green-500" aria-hidden="true" />
             Save
           </button>
         </div>

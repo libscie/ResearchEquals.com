@@ -37,18 +37,18 @@ const ModuleInvitation = ({
   const supportingRaw = moduleEdit!.supporting as Prisma.JsonObject
 
   return (
-    <div className="p-5 max-w-7xl mx-auto overflow-y-auto text-base">
+    <div className="mx-auto max-w-7xl overflow-y-auto p-5 text-base">
       {/* Invitation handling */}
-      <div className="rounded-md bg-blue-50 dark:bg-blue-800 w-full p-2 lg:flex my-4">
-        <div className="flex-grow flex my-2 lg:my-0">
-          <div className="flex-shrink-0 inline-block align-middle">
+      <div className="my-4 w-full rounded-md bg-blue-50 p-2 dark:bg-blue-800 lg:flex">
+        <div className="my-2 flex flex-grow lg:my-0">
+          <div className="inline-block flex-shrink-0 align-middle">
             <UserFollow32
-              className="stroke-current h-5 w-5 text-blue-500 dark:text-blue-200 inline-block align-middle"
+              className="inline-block h-5 w-5 stroke-current align-middle text-blue-500 dark:text-blue-200"
               aria-hidden="true"
             />
           </div>
           <div className="ml-3 flex-grow text-blue-800 dark:text-blue-100">
-            <h3 className="text-sm leading-4 font-normal text-blue-800 dark:text-blue-100 inline-block align-middle">
+            <h3 className="inline-block align-middle text-sm font-normal leading-4 text-blue-800 dark:text-blue-100">
               You got invited to co-author this research module! Would you like to accept or decline
               this invitation?
             </h3>
@@ -57,7 +57,7 @@ const ModuleInvitation = ({
         <div className="inline-block pl-8 lg:pl-0">
           <button
             type="button"
-            className="border rounded border-blue-500 text-blue-500 dark:border-blue-200 dark:text-blue-200 px-2 py-1.5 text-sm leading-4 font-medium hover:bg-blue-100 dark:hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-50 focus:ring-blue-600"
+            className="rounded border border-blue-500 px-2 py-1.5 text-sm font-medium leading-4 text-blue-500 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-blue-50 dark:border-blue-200 dark:text-blue-200 dark:hover:bg-blue-900"
             onClick={async () => {
               await toast.promise(
                 acceptMutation({
@@ -77,7 +77,7 @@ const ModuleInvitation = ({
             Accept
           </button>
           <button
-            className="text-blue-500 dark:text-blue-200 text-sm leading-4 font-normal mx-2"
+            className="mx-2 text-sm font-normal leading-4 text-blue-500 dark:text-blue-200"
             onClick={async () => {
               await toast.promise(
                 declineMutation({
@@ -99,7 +99,7 @@ const ModuleInvitation = ({
         </div>
       </div>
       {/* Menu bar */}
-      <div className="w-full flex mb-12">
+      <div className="mb-12 flex w-full">
         {inboxOpen ? (
           <button
             onClick={() => {
@@ -123,9 +123,9 @@ const ModuleInvitation = ({
           </button>
         )}
         {/* Push all menu bars to the right */}
-        <div className="flex-grow mx-4">
+        <div className="mx-4 flex-grow">
           <button
-            className="flex px-2 mx-auto py-2 border dark:bg-gray-800 border-gray-300 dark:border-gray-600 dark:hover:border-gray-400 text-gray-700 dark:text-gray-200 rounded text-sm leading-4 font-normal shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700 my-2 disabled:opacity-50"
+            className="mx-auto my-2 flex rounded border border-gray-300 px-2 py-2 text-sm font-normal leading-4 text-gray-700 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:border-gray-400 dark:hover:bg-gray-700"
             onClick={() => {
               setPreviousOpen(true)
             }}
@@ -154,7 +154,7 @@ const ModuleInvitation = ({
       ) : (
         ""
       )}
-      <div className="md:grid grid-cols-2 gap-x-4 mb-28">
+      <div className="mb-28 grid-cols-2 gap-x-4 md:grid">
         {/* Supporting files */}
         {supportingRaw.files.length > 0 ? (
           <div className="">
@@ -176,7 +176,7 @@ const ModuleInvitation = ({
         {moduleEdit!.references.length > 0 ? (
           <div className="">
             <h2 className="text-lg">Reference list</h2>
-            <ol className="list-decimal list-outside my-4 text-normal pl-6">
+            <ol className="text-normal my-4 list-outside list-decimal pl-6">
               {moduleEdit!.references.map((reference) => (
                 <>
                   <li className="my-2">

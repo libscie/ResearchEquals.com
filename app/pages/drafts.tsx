@@ -51,7 +51,7 @@ const DraftsContents = ({ expire, signature, currentWorkspace, session, user }) 
   return (
     <>
       <div
-        className="w-screen flex divide-x divide-gray-100 dark:divide-gray-600"
+        className="flex w-screen divide-x divide-gray-100 dark:divide-gray-600"
         style={{
           height: biggerWindow ? "calc(100vh - 73px - 55px)" : "100%",
         }}
@@ -61,10 +61,10 @@ const DraftsContents = ({ expire, signature, currentWorkspace, session, user }) 
             <div
               className={`${
                 !inboxOpen ? "hidden" : "inline"
-              } float-left w-full lg:w-80 divide-y-0 divide-gray-100 dark:divide-gray-600 overflow-y-auto`}
+              } float-left w-full divide-y-0 divide-gray-100 overflow-y-auto dark:divide-gray-600 lg:w-80`}
               // style={{ minHeight: "calc(100vh - 74px - 54px)" }}
             >
-              <h1 className="lg:hidden text-lg leading-7 font-medium text-gray-900 dark:text-gray-200 px-4 sm:px-6 lg:px-8 py-4 border-b lg:border-b-0 border-gray-100 dark:border-gray-600">
+              <h1 className="border-b border-gray-100 px-4 py-4 text-lg font-medium leading-7 text-gray-900 dark:border-gray-600 dark:text-gray-200 sm:px-6 lg:hidden lg:border-b-0 lg:px-8">
                 Drafts
               </h1>
               <ul role="list" className="divide-y divide-gray-100 dark:divide-gray-600">
@@ -94,7 +94,7 @@ const DraftsContents = ({ expire, signature, currentWorkspace, session, user }) 
             <div
               className={`${
                 inboxOpen ? "hidden lg:inline" : "inline"
-              } flex-grow w-2/3 float-right overflow-y-auto`}
+              } float-right w-2/3 flex-grow overflow-y-auto`}
             >
               {currentModule ? (
                 <Suspense
@@ -123,15 +123,15 @@ const DraftsContents = ({ expire, signature, currentWorkspace, session, user }) 
             </div>
           </>
         ) : (
-          <div className="flex flex-col flex-grow relative w-full border-2 border-gray-800 dark:border-white border-dashed rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500  my-4 mx-4">
-            <div className="table flex-grow w-full h-full">
-              <div className="sm:table-cell w-1/4 h-28"></div>
-              <span className="mx-auto table-cell align-middle text-sm leading-4 font-medium">
+          <div className="relative my-4 mx-4 flex w-full flex-grow flex-col rounded-lg border-2 border-dashed border-gray-800 text-center focus:outline-none focus:ring-2 focus:ring-indigo-500  focus:ring-offset-2 dark:border-white">
+            <div className="table h-full w-full flex-grow">
+              <div className="h-28 w-1/4 sm:table-cell"></div>
+              <span className="mx-auto table-cell align-middle text-sm font-medium leading-4">
                 <>
                   <div className="mx-4">No drafts left. Maybe start a new one?</div>
                 </>
               </span>
-              <div className="hidden sm:table-cell w-1/4"></div>
+              <div className="hidden w-1/4 sm:table-cell"></div>
             </div>
           </div>
         )}
@@ -159,7 +159,7 @@ const DraftsPage = ({ expire, signature }) => {
         invitations={invitations}
         refetchFn={refetch}
       />
-      <main className="flex relative">
+      <main className="relative flex">
         <DraftsContents
           expire={expire}
           signature={signature}
