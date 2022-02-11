@@ -29,6 +29,7 @@ import { useMediaPredicate } from "react-media-hook"
 import addParent from "../mutations/addParent"
 import ManageParents from "./ManageParents"
 import approveAuthorship from "app/authorship/mutations/approveAuthorship"
+import SettingsModal from "../../core/modals/settings"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
@@ -127,10 +128,16 @@ const ModuleEdit = ({
               </h3>
               <ol className="list-inside list-decimal text-sm">
                 {moduleEdit!.main!["name"] ? "" : <li>Upload a main file</li>}
-                {moduleEdit?.authors.filter(
-                  (author) => !author.workspace!.firstName || !author.workspace!.lastName
-                ).length! > 0 ? (
-                  <li>All authors must add their author name</li>
+                {!ownAuthorship?.workspace?.firstName || !ownAuthorship?.workspace?.lastName ? (
+                  <li>
+                    You must add your author names in{" "}
+                    <SettingsModal
+                      styling="whitespace-nowrap font-medium hover:text-blue-600 underline"
+                      button={<>settings</>}
+                      user={user}
+                      workspace={workspace}
+                    />
+                  </li>
                 ) : (
                   ""
                 )}
@@ -162,7 +169,7 @@ const ModuleEdit = ({
                     </button>
                   </li>
                 ) : (
-                  <li>You must add your author name</li>
+                  ""
                 )}
                 {moduleEdit!.authors.length > 1 ? (
                   <li>Your co-authors must approve to publish</li>
