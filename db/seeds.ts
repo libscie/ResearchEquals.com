@@ -39,7 +39,7 @@ const seed = async () => {
       { wikidata: "Q333291", name: "Abstract", schema: "CreativeWork" },
       { wikidata: "Q1318295", name: "Narrative", schema: "CreativeWork" },
       { wikidata: "Q604733", name: "Presentation", schema: "CreativeWork" },
-      { wikidata: "Q265158", name: "Review", schema: "CreativeWork" },
+      { wikidata: "Q265158", name: "Review", schema: "Review" },
       { wikidata: "Q55107540", name: "Other", schema: "CreativeWork" },
       { wikidata: "Q947859", name: "Research proposal", schema: "CreativeWork" },
       { wikidata: "Q7397", name: "Software", schema: "SoftwareApplication" },
