@@ -30,9 +30,18 @@ We agree the platform will become more valuable as more people use it, and that 
 
 Zenodo and the OSF are great tools, fit for their own purposes. ResearchEquals focuses on publishing research steps, where Zenodo and the OSF still focus on managing entire projects at once.
 
-### Is there versioning in the module?
+### How is ResearchEquals financed?
 
-Currently, we do not offer versioning for a research module.
+ResearchEquals is a Liberate Science GmbH project, which is funded by the Shuttleworth Foundation until the end of 2022. The Pay to Close model is our first product, but we have plans for other models that are also in line with the open philosophy. We won't mend words: We are on our journey to become financially self sustaining and time will tell whether we succeed. You can contribute to that success too!
+
+### How is ResearchEquals different from Octopus? Isn't it the same?
+
+We get that question a lot! Octopus is indeed similar. The main differences are:
+
+- ResearchEquals allows you to link any steps together, Octopus has a specific order of events
+- ResearchEquals allows for a wide variety of steps (focus on provenance), Octopus has 8 specific ones (focused on empirical cycles mostly)
+
+It's a flavor difference mostly. Like onion rings and calamari.
 
 ### What assurances are there for the content I publish with you?
 
@@ -45,6 +54,10 @@ We are a proud member of [CrossRef](https://crossref.org). This includes [member
 You may upload any file with an Open File Format. This includes common files such as PDFs, Word files, and many more. Want to ensure a specific file can be uploaded? Ask us on [info@libscie.org](mailto:info@libscie.org).
 
 The maximum size is 100MB at the moment, per file.
+
+### Is there versioning in the module?
+
+Currently, we do not offer versioning for a research module.
 
 # Payment
 
