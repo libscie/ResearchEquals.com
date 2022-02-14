@@ -93,6 +93,21 @@ const FullWidthMenu = ({
             leaveTo="transform opacity-0 scale-95"
           >
             <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-800 dark:ring-gray-600 dark:ring-opacity-100">
+              <Menu.Item key="dropdown-profile">
+                {({ active }) => (
+                  <button
+                    className={`${
+                      active ? "bg-gray-100 text-gray-900 dark:bg-gray-700 " : "text-gray-500"
+                    }
+               block w-full py-2 px-4 text-left text-sm font-normal leading-5 dark:text-gray-200`}
+                    onClick={async () => {
+                      router.push(Routes.HandlePage({ handle: currentWorkspace.handle }))
+                    }}
+                  >
+                    Profile
+                  </button>
+                )}
+              </Menu.Item>
               <Menu.Item key="dropdown-logout">
                 {({ active }) => (
                   <button
