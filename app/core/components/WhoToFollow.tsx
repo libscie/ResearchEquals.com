@@ -39,6 +39,13 @@ const WhoToFollow = ({ data, workspace, refetch, refetchFeed }) => {
           </li>
         </>
       ))}
+      <div className="my-4 text-center">
+        <Link href="/browse">
+          <button className="whitespace-nowrap rounded border-0 bg-indigo-100 px-4 py-2 text-sm font-normal leading-5 text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">
+            Find more authors
+          </button>
+        </Link>
+      </div>{" "}
     </>
   )
 }
