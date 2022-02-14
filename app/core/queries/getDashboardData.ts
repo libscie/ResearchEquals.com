@@ -134,6 +134,9 @@ export default async function getSignature({ session, changeDays }) {
         include: {
           workspace: true,
         },
+        orderBy: {
+          authorshipRank: "asc",
+        },
       },
     },
   })
