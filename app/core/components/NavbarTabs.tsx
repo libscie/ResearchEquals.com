@@ -10,6 +10,11 @@ const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invit
   if (currentWorkspace) {
     tabs = [
       {
+        name: "Browse",
+        href: Routes.Browse(),
+        current: router.asPath === Routes.Browse().pathname,
+      },
+      {
         name: "Dashboard",
         href: Routes.Dashboard(),
         current: router.asPath === Routes.Dashboard().pathname,
@@ -27,7 +32,7 @@ const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invit
         current: router.asPath === Routes.InvitationsPage().pathname,
       },
       {
-        name: "Modules",
+        name: "My Modules",
         href: Routes.HandlePage({ handle: currentWorkspace!.handle }),
         current: router.asPath === `/${currentWorkspace!.handle}`,
       },

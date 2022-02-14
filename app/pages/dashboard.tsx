@@ -71,7 +71,7 @@ const DashboardContent = ({
       to: Routes.InvitationsPage(),
     },
     {
-      name: "Modules",
+      name: "My Modules",
       stat: data.myPublishedModules.length,
       change: data.modulesPercentage,
       to: Routes.HandlePage({ handle: ownWorkspace.handle }),
