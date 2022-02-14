@@ -111,7 +111,10 @@ const ModuleEdit = ({
       {/* Publish module */}
       {(moduleEdit!.authors.filter((author) => author.readyToPublish !== true).length === 0 &&
         Object.keys(moduleEdit!.main!).length !== 0) ||
-      (moduleEdit!.authors.length === 1 && moduleEdit!.main!["name"]) ? (
+      (moduleEdit!.authors.length === 1 &&
+        moduleEdit!.main!["name"] &&
+        ownAuthorship?.workspace?.firstName) ||
+      ownAuthorship?.workspace?.lastName ? (
         <PublishModuleModal module={moduleEdit} user={user} workspace={workspace} />
       ) : (
         <>
