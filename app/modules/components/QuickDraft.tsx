@@ -5,7 +5,7 @@ import { Link, useMutation, useQuery, validateZodSchema, useRouter } from "blitz
 import { useFormik } from "formik"
 import { Fragment, useState } from "react"
 import { z } from "zod"
-import { Checkmark32, Close32, HelpFilled32 } from "@carbon/icons-react"
+import { Checkmark32, Close32, InformationSquareFilled32 } from "@carbon/icons-react"
 
 import createModule from "../mutations/createModule"
 import toast from "react-hot-toast"
@@ -218,21 +218,26 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                         <div className="my-4">
                           <label
                             htmlFor="license"
-                            className="my-1 text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
+                            className="my-1 flex text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
                           >
                             License{" "}
+                            <Link href="https://creativecommons.org/about/cclicenses">
+                              <a target="_blank">
+                                <InformationSquareFilled32 className="h-5 w-5 fill-current text-gray-700 dark:text-gray-200" />
+                              </a>
+                            </Link>
                             {formik.touched.license && formik.errors.license ? (
                               <span className="text-red-500">- Required</span>
                             ) : null}
-                            <p className="text-xs">
-                              Get more information about licenses{" "}
-                              <Link href="https://creativecommons.org/about/cclicenses">
-                                <a className="underline" target="_blank">
-                                  here.
-                                </a>
-                              </Link>
-                            </p>
                           </label>
+                          <p className="text-xs">
+                            Get more information about licenses{" "}
+                            <Link href="https://creativecommons.org/about/cclicenses">
+                              <a className="underline" target="_blank">
+                                here.
+                              </a>
+                            </Link>
+                          </p>
                           <div className="mt-1">
                             <select
                               id="license"
