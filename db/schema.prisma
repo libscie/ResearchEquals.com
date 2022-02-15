@@ -64,6 +64,7 @@ model ModuleType {
   createdAt DateTime @default(now())
   wikidata  String?
   name      String   @unique
+  schema    String   @default("CreativeWork")
   Module    Module[]
 }
 
