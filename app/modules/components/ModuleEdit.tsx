@@ -272,12 +272,12 @@ const ModuleEdit = ({
                         return (
                           <>
                             {/* https://www.crossref.org/blog/dois-and-matching-regular-expressions/ */}
-                            {query.match(/^10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i) ? (
+                            {query.match(/10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i) ? (
                               <>
                                 <button
                                   className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200"
                                   onClick={async () => {
-                                    toast.promise(createReferenceMutation({ doi: query }), {
+                                    toast.promise(createReferenceMutation({ doi: query.match(/10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i) }), {
                                       loading: "Searching...",
                                       success: (data) => {
                                         toast.promise(
@@ -302,7 +302,7 @@ const ModuleEdit = ({
                                     })
                                   }}
                                 >
-                                  Click here to add {query} to ResearchEquals database
+                                  Click here to add {query.match(/10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i)} to ResearchEquals database
                                 </button>
                               </>
                             ) : (
