@@ -103,7 +103,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                         document!.getElementById("step-module")!.scrollIntoView()
                       }}
                     >
-                      Get started
+                      Learn more
                     </button>
                     <Link href="/browse">
                       <a className="mx-4 whitespace-nowrap rounded-md border-0 bg-indigo-100 px-4 py-2 font-normal leading-5 text-indigo-700 hover:bg-indigo-200 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">
@@ -340,7 +340,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                   Wherever your research takes you
                 </h2>
                 <p className="my-2 text-lg">
-                  Forking paths, failed experiments, it is all part of our research journeys.
+                  Forking paths, inconclusive experiments, it is all part of our research journeys.
                 </p>
                 <p className="my-2 text-lg">Document it, learn from it - no matter the output.</p>
               </div>

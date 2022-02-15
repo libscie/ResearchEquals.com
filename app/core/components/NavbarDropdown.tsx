@@ -29,12 +29,17 @@ const DropdownContents = ({
                   className="inline h-4 w-4 fill-current text-indigo-500 dark:text-gray-400"
                   aria-hidden="true"
                 />
-                Quick Draft
+                Draft
               </>
             }
             buttonStyle="w-full py-2 bg-indigo-50 dark:bg-gray-800 text-indigo-700 dark:text-gray-200  border border-transparent text-sm leading-5 font-normal rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:border dark:border-gray-400 dark:hover:bg-gray-700"
             refetchFn={refetchFn}
           />
+          <Link href={Routes.Browse()}>
+            <button className="group block w-full rounded-md px-2 py-2 text-left text-base font-normal leading-5 text-gray-900 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800">
+              Browse
+            </button>
+          </Link>
           <Link href={Routes.Dashboard()}>
             <button className="group block w-full rounded-md px-2 py-2 text-left text-base font-normal leading-5 text-gray-900 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800">
               Dashboard
@@ -59,7 +64,7 @@ const DropdownContents = ({
           </Link>
           <Link href={Routes.HandlePage({ handle: currentWorkspace.handle })}>
             <button className="group block w-full rounded-md px-2 py-2 text-left text-base font-normal leading-5 text-gray-900 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800">
-              Modules
+              My Modules
             </button>
           </Link>
         </div>
