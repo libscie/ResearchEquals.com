@@ -17,6 +17,7 @@ export default resolver.pipe(
     // This prevents people registering handles that are also page routes
     const forbiddenHandles = [
       "404",
+      "admin",
       "browse",
       "coc",
       "dashboard",
