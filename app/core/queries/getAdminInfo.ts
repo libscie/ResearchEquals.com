@@ -6,5 +6,18 @@ export default resolver.pipe(resolver.authorize(), async (input, ctx: Ctx) => {
   // Only authorize the SUPERADMIN role for this
   ctx.session.$authorize("SUPERADMIN")
 
-  return true
+  const modules = await db.module.findMany({
+    where: {
+      published: true,
+    },
+    include: {
+      type: true,
+      license: true,
+    },
+    orderBy: {
+      publishedAt: "desc",
+    },
+  })
+
+  return modules
 })
