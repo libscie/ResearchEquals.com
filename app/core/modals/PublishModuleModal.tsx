@@ -30,15 +30,15 @@ export default function PublishModule({ module, user, workspace }) {
 
   return (
     <>
-      <div className="my-4 flex w-full rounded-md bg-green-50 p-2 dark:bg-green-800">
+      <div className="my-4 flex w-full rounded-md bg-emerald-50 p-2 dark:bg-emerald-800">
         <div className="inline-block flex-shrink-0 align-middle">
           <CheckmarkOutline32
-            className="inline-block h-5 w-5 stroke-current align-middle text-green-500 dark:text-green-200"
+            className="inline-block h-5 w-5 stroke-current align-middle text-emerald-500 dark:text-emerald-200"
             aria-hidden="true"
           />
         </div>
-        <div className="ml-3 flex-grow text-green-800 dark:text-green-100">
-          <h3 className="inline-block align-middle text-sm font-normal leading-4 text-green-800 dark:text-green-100">
+        <div className="ml-3 flex-grow text-emerald-800 dark:text-emerald-100">
+          <h3 className="inline-block align-middle text-sm font-normal leading-4 text-emerald-800 dark:text-emerald-100">
             This module is ready for publication. Would you like to{" "}
             {module.license.price > 0 ? "pay and" : ""} publish it now?
           </h3>
@@ -46,7 +46,7 @@ export default function PublishModule({ module, user, workspace }) {
         <div className="">
           <button
             type="button"
-            className="rounded border border-green-500 px-2 py-1.5 text-sm font-medium leading-4 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50 dark:border-green-200 dark:text-green-200 dark:hover:bg-green-900"
+            className="rounded border border-emerald-500 px-2 py-1.5 text-sm font-medium leading-4 text-emerald-500 hover:bg-emerald-100 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:ring-offset-2 focus:ring-offset-emerald-50 dark:border-emerald-200 dark:text-emerald-200 dark:hover:bg-emerald-900"
             onClick={openModal}
           >
             Publish module
@@ -97,7 +97,7 @@ export default function PublishModule({ module, user, workspace }) {
                       <button
                         type="button"
                         data-splitbee-event={`Publish module ${publishCount}`}
-                        className="mr-2 inline-flex justify-center rounded-md bg-green-50 py-2 px-4 text-sm font-medium text-green-700 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-green-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+                        className="mr-2 inline-flex justify-center rounded-md bg-emerald-50 py-2 px-4 text-sm font-medium text-emerald-700 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-emerald-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                         onClick={async () => {
                           await toast.promise(publishModuleMutation({ id: module.id }), {
                             loading: "Publishing...",
@@ -140,8 +140,8 @@ export default function PublishModule({ module, user, workspace }) {
                           checked={waiver}
                           onChange={setWaiver}
                           className={classNames(
-                            waiver ? "bg-green-600" : "bg-gray-200 dark:bg-gray-700",
-                            "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-0"
+                            waiver ? "bg-emerald-600" : "bg-gray-200 dark:bg-gray-700",
+                            "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0"
                           )}
                         >
                           <span className="sr-only">Waive right to withdrawal</span>
@@ -171,7 +171,7 @@ export default function PublishModule({ module, user, workspace }) {
                               )}
                               aria-hidden="true"
                             >
-                              <Checkmark32 className="h-3 w-3 stroke-current stroke-2 text-green-600" />
+                              <Checkmark32 className="h-3 w-3 stroke-current stroke-2 text-emerald-600" />
                             </span>
                           </span>
                         </Switch>
@@ -191,7 +191,7 @@ export default function PublishModule({ module, user, workspace }) {
                           type="submit"
                           role="link"
                           data-splitbee-event={`Publish module ${publishCount}`}
-                          className="mr-2 inline-flex justify-center rounded-md bg-green-50 py-2 px-4 text-sm font-medium text-green-700 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-green-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+                          className="mr-2 inline-flex justify-center rounded-md bg-emerald-50 py-2 px-4 text-sm font-medium text-emerald-700 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-emerald-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                           disabled={!waiver}
                         >
                           Pay and Publish

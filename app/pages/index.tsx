@@ -147,7 +147,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                     <div></div>
                     <div
                       id="step-3"
-                      className="module h-28 w-28 bg-green-600 text-center text-white md:h-28  md:w-28"
+                      className="module h-28 w-28 bg-emerald-600 text-center text-white md:h-28  md:w-28"
                     >
                       <span className="inline-block h-full align-middle"></span>
                       <CircleFillGlyph
@@ -350,7 +350,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
           <div className="sm:flex">
             <div
               id="publish-free"
-              className="module mx-2 h-full bg-green-600 p-4 sm:mr-28 lg:mr-96"
+              className="module mx-2 h-full bg-emerald-600 p-4 sm:mr-28 lg:mr-96"
             >
               {freeLicenses.length > 0 ? (
                 <>
@@ -454,7 +454,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
               <div className="my-4 flex">
                 <div className="flex-grow"></div>
                 <Link href={Routes.SignupPage()}>
-                  <a className="inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-normal leading-5 text-white shadow-sm hover:bg-green-800">
+                  <a className="inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-emerald-600 px-4 py-2 text-base font-normal leading-5 text-white shadow-sm hover:bg-emerald-800">
                     Sign up
                   </a>
                 </Link>

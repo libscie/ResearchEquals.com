@@ -290,6 +290,13 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                                 className="text-white"
                                 style={{ backgroundColor: "#059669" }}
                               >
+                                Emerald
+                              </option>
+                              <option
+                                value="#16a34a"
+                                className="text-white"
+                                style={{ backgroundColor: "#16a34a" }}
+                              >
                                 Green
                               </option>
                               <option
@@ -297,7 +304,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                                 className="text-white"
                                 style={{ backgroundColor: "#db2777" }}
                               >
-                                Red
+                                Pink
                               </option>
                             </select>
                           </div>
@@ -322,10 +329,10 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                       </button>
                       <button
                         type="submit"
-                        className="flex rounded-md bg-green-50 py-2 px-4 text-sm font-medium text-green-700 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-green-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+                        className="flex rounded-md bg-emerald-50 py-2 px-4 text-sm font-medium text-emerald-700 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-emerald-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                       >
                         <Checkmark32
-                          className="h-4 w-4 fill-current pt-1 text-green-500"
+                          className="h-4 w-4 fill-current pt-1 text-emerald-500"
                           aria-hidden="true"
                         />
                         Save

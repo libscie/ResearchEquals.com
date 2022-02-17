@@ -139,14 +139,14 @@ const DashboardContent = ({
                                   item.change === Infinity
                                     ? "hidden"
                                     : item.change > 0
-                                    ? "text-green-700 dark:text-green-500"
+                                    ? "text-emerald-700 dark:text-emerald-500"
                                     : "text-red-700 dark:text-red-500",
                                   "ml-2 flex items-baseline text-sm font-semibold"
                                 )}
                               >
                                 {item.change > 0 ? (
                                   <ArrowUp32
-                                    className="h-5 w-5 flex-shrink-0 self-center text-green-500"
+                                    className="h-5 w-5 flex-shrink-0 self-center text-emerald-500"
                                     aria-hidden="true"
                                   />
                                 ) : (
@@ -186,14 +186,14 @@ const DashboardContent = ({
                                     item.change === Infinity
                                       ? "hidden"
                                       : item.change > 0
-                                      ? "text-green-700 dark:text-green-500"
+                                      ? "text-emerald-700 dark:text-emerald-500"
                                       : "text-red-700 dark:text-red-500",
                                     "ml-2 flex items-baseline text-sm font-semibold"
                                   )}
                                 >
                                   {item.change > 0 ? (
                                     <ArrowUp32
-                                      className="h-5 w-5 flex-shrink-0 self-center text-green-500"
+                                      className="h-5 w-5 flex-shrink-0 self-center text-emerald-500"
                                       aria-hidden="true"
                                     />
                                   ) : (

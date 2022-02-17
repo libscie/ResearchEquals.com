@@ -78,7 +78,7 @@ function AuthorList({
             {author.readyToPublish ? (
               <span
                 className={`mx-2 my-auto flex h-1 py-2 align-middle text-xs font-medium leading-4 ${
-                  author.readyToPublish ? "text-green-500" : "text-gray-500 dark:text-gray-400"
+                  author.readyToPublish ? "text-emerald-500" : "text-gray-500 dark:text-gray-400"
                 }`}
               >
                 <Checkmark32 className="h-4 w-4 fill-current" aria-hidden="true" />
@@ -87,7 +87,7 @@ function AuthorList({
             ) : (
               <span
                 className={`mx-2 my-auto flex h-1 py-2 align-middle text-xs font-medium leading-4 ${
-                  author.readyToPublish ? "text-green-500" : "text-gray-500 dark:text-gray-400"
+                  author.readyToPublish ? "text-emerald-500" : "text-gray-500 dark:text-gray-400"
                 }`}
               >
                 <Subtract32
