@@ -60,7 +60,7 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
                     />
                   </ul>
                   {/* /End replace */}
-                  <div className="flex flex-shrink-0 justify-end border-t border-gray-400 px-4 py-4 dark:border-gray-600">
+                  <div className="flex shrink-0 justify-end border-t border-gray-400 px-4 py-4 dark:border-gray-600">
                     <button
                       type="button"
                       className="mx-4 flex rounded-md bg-red-50 py-2 px-4 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
@@ -76,7 +76,7 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
                     </button>
                     <button
                       type="submit"
-                      className="flex rounded-md bg-green-50 py-2 px-4 text-sm font-medium text-green-700 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-green-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+                      className="flex rounded-md bg-emerald-50 py-2 px-4 text-sm font-medium text-emerald-700 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-emerald-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                       onClick={() => {
                         // console.log(authorState)
                         authorState.map(async (author, index) => {
@@ -92,7 +92,7 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
                       }}
                     >
                       <Checkmark32
-                        className="h-4 w-4 stroke-current pt-1 text-green-500"
+                        className="h-4 w-4 stroke-current pt-1 text-emerald-500"
                         aria-hidden="true"
                       />
                       Save

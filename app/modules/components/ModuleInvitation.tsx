@@ -41,7 +41,7 @@ const ModuleInvitation = ({
       {/* Invitation handling */}
       <div className="my-4 w-full rounded-md bg-blue-50 p-2 dark:bg-blue-800 lg:flex">
         <div className="my-2 flex flex-grow lg:my-0">
-          <div className="inline-block flex-shrink-0 align-middle">
+          <div className="inline-block shrink-0 align-middle">
             <UserFollow32
               className="inline-block h-5 w-5 stroke-current align-middle text-blue-500 dark:text-blue-200"
               aria-hidden="true"

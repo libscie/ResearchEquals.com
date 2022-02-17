@@ -32,7 +32,7 @@ const Imprint: BlitzPage = () => {
         <div className="mx-4">
           <div className="mx-auto max-w-7xl pt-10 text-black dark:text-white md:p-0 md:pt-10">
             <p className="font-bold">{page.toUpperCase()}</p>
-            <hr className="mt-4 mb-4 h-0.5 w-32 border-t-0 bg-yellow-400 bg-gradient-to-r from-indigo-400 to-indigo-600 " />
+            <hr className="mt-4 mb-4 h-0.5 w-32 border-t-0 bg-amber-400 bg-gradient-to-r from-indigo-400 to-indigo-600 " />
             <article>
               <h1 className="text-5xl font-black sm:text-6xl">{title}</h1>
               <div role="doc-subtitle" className="mt-2 max-w-2xl text-2xl">

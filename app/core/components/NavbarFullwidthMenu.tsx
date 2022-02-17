@@ -27,7 +27,7 @@ const FullWidthMenu = ({
               <Popover.Button
                 className={`
                 ${open ? "" : "text-opacity-90"}
-                mx-0 flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
+                mx-0 shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
                 ${invitedModules.length > 0 ? "" : "pointer-events-none"}
                 `}
               >
@@ -62,7 +62,7 @@ const FullWidthMenu = ({
         </Popover>
         <span className="sr-only">Open settings</span>
         <SettingsModal
-          styling="ml-1 flex-shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
+          styling="ml-1 shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
           button={
             <Settings32
               className="flex h-6 w-6 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -72,7 +72,7 @@ const FullWidthMenu = ({
           user={currentUser}
           workspace={currentWorkspace}
         />
-        <Menu as="div" className="relative ml-2 flex-shrink-0">
+        <Menu as="div" className="relative ml-2 shrink-0">
           <div>
             <Menu.Button className="flex rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
               <span className="sr-only">Open user menu</span>

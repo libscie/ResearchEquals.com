@@ -118,7 +118,7 @@ const ModuleEdit = ({
       ) : (
         <>
           <div className="my-4 flex w-full rounded-md bg-orange-50 p-2 dark:bg-orange-800">
-            <div className="inline-block flex-shrink-0 align-middle">
+            <div className="inline-block shrink-0 align-middle">
               <WarningSquareFilled32
                 className="inline-block h-5 w-5 fill-current align-middle text-orange-500 dark:text-orange-200"
                 aria-hidden="true"

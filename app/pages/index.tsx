@@ -147,7 +147,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                     <div></div>
                     <div
                       id="step-3"
-                      className="module h-28 w-28 bg-green-600 text-center text-white md:h-28  md:w-28"
+                      className="module h-28 w-28 bg-emerald-600 text-center text-white md:h-28  md:w-28"
                     >
                       <span className="inline-block h-full align-middle"></span>
                       <CircleFillGlyph
@@ -350,7 +350,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
           <div className="sm:flex">
             <div
               id="publish-free"
-              className="module mx-2 h-full bg-green-600 p-4 sm:mr-28 lg:mr-96"
+              className="module mx-2 h-full bg-emerald-600 p-4 sm:mr-28 lg:mr-96"
             >
               {freeLicenses.length > 0 ? (
                 <>
@@ -366,7 +366,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                     {freeLicenses.map((license) => (
                       <li key={license.id} className="flex space-x-3 text-lg">
                         <Checkmark24
-                          className="h-6 w-6 flex-shrink-0 fill-current stroke-current stroke-2 text-white"
+                          className="h-6 w-6 shrink-0 fill-current stroke-current stroke-2 text-white"
                           aria-hidden="true"
                         />
                         <Link href={license.url}>
@@ -394,7 +394,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                     {payToClose.map((license) => (
                       <li className="flex space-x-3 text-lg" key={license.id}>
                         <CurrencyEuro32
-                          className="h-6 w-6 flex-shrink-0 fill-current stroke-current stroke-2 text-white"
+                          className="h-6 w-6 shrink-0 fill-current stroke-current stroke-2 text-white"
                           aria-hidden="true"
                         />
                         <Link href={license.url}>
@@ -421,28 +421,28 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                 <div className="">
                   <div className="mr-4 flex space-x-3 text-lg">
                     <Language32
-                      className=" mr-2 h-6 w-6 flex-shrink-0 fill-current text-white"
+                      className=" mr-2 h-6 w-6 shrink-0 fill-current text-white"
                       aria-hidden="true"
                     />
                     Your language
                   </div>
                   <div className="mr-4 flex space-x-3 text-lg">
                     <Alarm32
-                      className=" mr-2 h-6 w-6 flex-shrink-0 fill-current text-white"
+                      className=" mr-2 h-6 w-6 shrink-0 fill-current text-white"
                       aria-hidden="true"
                     />
                     Your timeline
                   </div>
                   <div className="mr-4 flex space-x-3 text-lg">
                     <Events32
-                      className=" mr-2 h-6 w-6 flex-shrink-0 fill-current text-white"
+                      className=" mr-2 h-6 w-6 shrink-0 fill-current text-white"
                       aria-hidden="true"
                     />
                     Your co-authors
                   </div>
                   <div className="mr-4 flex space-x-3 text-lg">
                     <Save32
-                      className=" mr-2 h-6 w-6 flex-shrink-0 fill-current text-white"
+                      className=" mr-2 h-6 w-6 shrink-0 fill-current text-white"
                       aria-hidden="true"
                     />
                     Your outputs
@@ -454,7 +454,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
               <div className="my-4 flex">
                 <div className="flex-grow"></div>
                 <Link href={Routes.SignupPage()}>
-                  <a className="inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-normal leading-5 text-white shadow-sm hover:bg-green-800">
+                  <a className="inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-emerald-600 px-4 py-2 text-base font-normal leading-5 text-white shadow-sm hover:bg-emerald-800">
                     Sign up
                   </a>
                 </Link>
