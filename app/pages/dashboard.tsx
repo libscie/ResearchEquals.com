@@ -146,12 +146,12 @@ const DashboardContent = ({
                               >
                                 {item.change > 0 ? (
                                   <ArrowUp32
-                                    className="h-5 w-5 flex-shrink-0 self-center text-emerald-500"
+                                    className="h-5 w-5 shrink-0 self-center text-emerald-500"
                                     aria-hidden="true"
                                   />
                                 ) : (
                                   <ArrowDown32
-                                    className="h-5 w-5 flex-shrink-0 self-center text-red-500"
+                                    className="h-5 w-5 shrink-0 self-center text-red-500"
                                     aria-hidden="true"
                                   />
                                 )}
@@ -193,12 +193,12 @@ const DashboardContent = ({
                                 >
                                   {item.change > 0 ? (
                                     <ArrowUp32
-                                      className="h-5 w-5 flex-shrink-0 self-center text-emerald-500"
+                                      className="h-5 w-5 shrink-0 self-center text-emerald-500"
                                       aria-hidden="true"
                                     />
                                   ) : (
                                     <ArrowDown32
-                                      className="h-5 w-5 flex-shrink-0 self-center text-red-500"
+                                      className="h-5 w-5 shrink-0 self-center text-red-500"
                                       aria-hidden="true"
                                     />
                                   )}

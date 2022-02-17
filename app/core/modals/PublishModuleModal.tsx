@@ -31,7 +31,7 @@ export default function PublishModule({ module, user, workspace }) {
   return (
     <>
       <div className="my-4 flex w-full rounded-md bg-emerald-50 p-2 dark:bg-emerald-800">
-        <div className="inline-block flex-shrink-0 align-middle">
+        <div className="inline-block shrink-0 align-middle">
           <CheckmarkOutline32
             className="inline-block h-5 w-5 stroke-current align-middle text-emerald-500 dark:text-emerald-200"
             aria-hidden="true"
@@ -141,7 +141,7 @@ export default function PublishModule({ module, user, workspace }) {
                           onChange={setWaiver}
                           className={classNames(
                             waiver ? "bg-emerald-600" : "bg-gray-200 dark:bg-gray-700",
-                            "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0"
+                            "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0"
                           )}
                         >
                           <span className="sr-only">Waive right to withdrawal</span>

@@ -366,7 +366,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                     {freeLicenses.map((license) => (
                       <li key={license.id} className="flex space-x-3 text-lg">
                         <Checkmark24
-                          className="h-6 w-6 flex-shrink-0 fill-current stroke-current stroke-2 text-white"
+                          className="h-6 w-6 shrink-0 fill-current stroke-current stroke-2 text-white"
                           aria-hidden="true"
                         />
                         <Link href={license.url}>
@@ -394,7 +394,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                     {payToClose.map((license) => (
                       <li className="flex space-x-3 text-lg" key={license.id}>
                         <CurrencyEuro32
-                          className="h-6 w-6 flex-shrink-0 fill-current stroke-current stroke-2 text-white"
+                          className="h-6 w-6 shrink-0 fill-current stroke-current stroke-2 text-white"
                           aria-hidden="true"
                         />
                         <Link href={license.url}>
@@ -421,28 +421,28 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                 <div className="">
                   <div className="mr-4 flex space-x-3 text-lg">
                     <Language32
-                      className=" mr-2 h-6 w-6 flex-shrink-0 fill-current text-white"
+                      className=" mr-2 h-6 w-6 shrink-0 fill-current text-white"
                       aria-hidden="true"
                     />
                     Your language
                   </div>
                   <div className="mr-4 flex space-x-3 text-lg">
                     <Alarm32
-                      className=" mr-2 h-6 w-6 flex-shrink-0 fill-current text-white"
+                      className=" mr-2 h-6 w-6 shrink-0 fill-current text-white"
                       aria-hidden="true"
                     />
                     Your timeline
                   </div>
                   <div className="mr-4 flex space-x-3 text-lg">
                     <Events32
-                      className=" mr-2 h-6 w-6 flex-shrink-0 fill-current text-white"
+                      className=" mr-2 h-6 w-6 shrink-0 fill-current text-white"
                       aria-hidden="true"
                     />
                     Your co-authors
                   </div>
                   <div className="mr-4 flex space-x-3 text-lg">
                     <Save32
-                      className=" mr-2 h-6 w-6 flex-shrink-0 fill-current text-white"
+                      className=" mr-2 h-6 w-6 shrink-0 fill-current text-white"
                       aria-hidden="true"
                     />
                     Your outputs
