@@ -247,16 +247,16 @@ const OnboardingDraft = ({ data, refetch }) => {
       {!data.authorships.length > 0 ? (
         <div
           key="draft-onboarding-quest"
-          className="onboarding my-2 flex w-full flex-col rounded-r border-l-4 border-purple-400 bg-purple-50 p-4 dark:border-purple-200 dark:bg-purple-900 lg:my-0"
+          className="onboarding my-2 flex w-full flex-col rounded-r border-l-4 border-violet-400 bg-violet-50 p-4 dark:border-violet-200 dark:bg-violet-900 lg:my-0"
         >
           <div className="flex flex-grow">
             <div className="">
               <Parameter32
-                className="h-5 w-5 text-purple-400 dark:text-purple-200"
+                className="h-5 w-5 text-violet-400 dark:text-violet-200"
                 aria-hidden="true"
               />
             </div>
-            <div className="ml-3 flex-1 text-purple-800 dark:text-purple-200 md:flex">
+            <div className="ml-3 flex-1 text-violet-800 dark:text-violet-200 md:flex">
               <p className="mr-2 text-sm">
                 <span className=" font-bold">Create your first draft</span>{" "}
                 <span>
@@ -266,7 +266,7 @@ const OnboardingDraft = ({ data, refetch }) => {
               </p>
             </div>
           </div>
-          <div className="block text-right text-purple-700 dark:text-purple-200">
+          <div className="block text-right text-violet-700 dark:text-violet-200">
             <p className="mt-3 text-sm md:mt-0 md:ml-6">
               <QuickDraft
                 buttonText={
