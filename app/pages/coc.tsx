@@ -194,22 +194,22 @@ const CodeOfConduct: BlitzPage = () => {
       />
       <main className="bg-white dark:bg-gray-900 lg:relative">
         <div className="mx-4 my-8 max-w-3xl text-black dark:text-white lg:mx-auto">
-          <div className="onboarding my-2 flex w-full flex-col rounded-r border-l-4 border-yellow-400 bg-yellow-50 p-4 dark:border-yellow-200 dark:bg-yellow-900 lg:my-0">
+          <div className="onboarding my-2 flex w-full flex-col rounded-r border-l-4 border-amber-400 bg-amber-50 p-4 dark:border-amber-200 dark:bg-amber-900 lg:my-0">
             <div className="flex flex-grow">
               <div className="">
                 <SendAltFilled32
-                  className="h-5 w-5 text-yellow-400 dark:text-yellow-200"
+                  className="h-5 w-5 text-amber-400 dark:text-amber-200"
                   aria-hidden="true"
                 />
               </div>
-              <div className="ml-3 flex-1 text-yellow-800 dark:text-yellow-200 md:flex">
+              <div className="ml-3 flex-1 text-amber-800 dark:text-amber-200 md:flex">
                 <p className="mr-2 text-sm">
                   <span className="font-bold">Submit a report.</span>{" "}
                   <span>Reports are treated as confidential documents.</span>
                 </p>
               </div>
             </div>
-            <div className="block text-right text-yellow-700 dark:text-yellow-200">
+            <div className="block text-right text-amber-700 dark:text-amber-200">
               <Link
                 href={`mailto:coc@libscie.org?subject=[${datetime
                   .toISOString()

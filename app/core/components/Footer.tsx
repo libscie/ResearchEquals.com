@@ -28,7 +28,7 @@ const Footer = () => {
               <a target="_blank">CC0</a>
             </Link>
           </p>
-          <hr className="mt-4 mb-4 h-0.5 w-20 border-t-0 bg-yellow-400 bg-gradient-to-r from-indigo-300 to-indigo-600 " />
+          <hr className="mt-4 mb-4 h-0.5 w-20 border-t-0 bg-amber-400 bg-gradient-to-r from-indigo-300 to-indigo-600 " />
           <p>
             <Link href="/terms">
               <a className="hover:bg-indigo-600 hover:text-white">Terms</a>

@@ -36,23 +36,20 @@ const OnboardingEmail = ({ data }) => {
       {!data ? (
         <div
           key="orcid-onboarding-quest"
-          className="onboarding my-2 flex w-full flex-col rounded-r border-l-4 border-yellow-400 bg-yellow-50 p-4 dark:border-yellow-200 dark:bg-yellow-900 lg:my-0"
+          className="onboarding my-2 flex w-full flex-col rounded-r border-l-4 border-amber-400 bg-amber-50 p-4 dark:border-amber-200 dark:bg-amber-900 lg:my-0"
         >
           <div className="flex flex-grow">
             <div className="">
-              <Email32
-                className="h-5 w-5 text-yellow-400 dark:text-yellow-200"
-                aria-hidden="true"
-              />
+              <Email32 className="h-5 w-5 text-amber-400 dark:text-amber-200" aria-hidden="true" />
             </div>
-            <div className="ml-3 flex-1 text-yellow-800 dark:text-yellow-200 md:flex">
+            <div className="ml-3 flex-1 text-amber-800 dark:text-amber-200 md:flex">
               <p className="mr-2 text-sm">
                 <span className="font-bold">Verify your email</span>{" "}
                 <span>Please check your inbox to verify your email address.</span>
               </p>
             </div>
           </div>
-          <div className="block text-right text-yellow-700 dark:text-yellow-200">
+          <div className="block text-right text-amber-700 dark:text-amber-200">
             <p className="mt-3 text-sm md:mt-0 md:ml-6">
               {isSuccess ? (
                 <p className="whitespace-nowrap font-medium  underline">Email sent!</p>
