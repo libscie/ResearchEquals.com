@@ -9,6 +9,7 @@ export default resolver.pipe(resolver.authorize(), async (input, ctx: Ctx) => {
   const modules = await db.module.findMany({
     where: {
       published: true,
+      publishedWhere: "ResearchEquals",
     },
     include: {
       type: true,
