@@ -42,7 +42,23 @@ DATABASE_URL=postgres://<username>:<password>@localhost:5432/researchequals-dev
 
 To get a fully functional development environment you need to add the environment variables as listed in `.env.example`. Please note most of these services are freemium and you can sign up for a free account.
 
+You can start your development environment with
+
+```
+npm run dev
+```
+
+which defaults to `localhost:3000`.
+
 Submitted pull requests are automatically deployed using Heroku (self-destroyed after 24 hours).
+
+### Testing Stripe
+
+If you want to develop the Stripe payment pipeline, you can activate using the following command (after installing the [`stripe-cli`](https://github.com/stripe/stripe-cli)):
+
+```
+stripe listen --forward-to localhost:3000/api/stripe_webhook
+```
 
 ## Contributors ✨
 
