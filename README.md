@@ -1,14 +1,16 @@
 # ResearchEquals.com <img src="https://pbs.twimg.com/profile_images/1457432990661890059/OXxEMPhf_400x400.jpg" align="right" height="64" />
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-22-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Discord online](https://img.shields.io/discord/933331539276759070?label=discord&style=flat-square)](https://discord.gg/SefsGJWWSw)
 
 [ResearchEquals.com](https://researchequals.com) is a research module server, where researchers can publish building blocks of research and link them together in chronological order.
 
-If you'd like to test the latest feature implementations, you can do so on our [staging version](https://researchequals-staging.herokuapp.com/). Please note that information there can be deleted at any time.
+ResearchEquals is deployed on a continuous basis using [Flightcontrol](https://flightcontrol.dev/).
 
 ## Code of Conduct
 
@@ -18,16 +20,29 @@ Our house may be different from yours, and if you find any of this unagreeable, 
 
 ## Development
 
-Please clone the repository and make sure you have [BlitzJS](blitzjs.com/) installed
+Please clone the repository and make sure you have [BlitzJS](blitzjs.com/) installed:
 
 ```
-git clone https://github.com/libscie/researchequals.com
+## Install BlitzJS if you don't have it
 npm install -g blitz --legacy-peer-deps
+
+## Clone repository
+git clone https://github.com/libscie/researchequals.com
+cd researchequals.com
+
+## Install dependencies
+npm install
 ```
 
-All pull requests are automatically deployed using Heroku (self-destroyed after 24 hours).
+Before you can run a local development version, please ensure you have a Postgres server you can create databases on. Add your preferred route to `.env.local` as such:
 
-We will be adding a more extensive contributing document shortly.
+```
+DATABASE_URL=postgres://<username>:<password>@localhost:5432/researchequals-dev
+```
+
+To get a fully functional development environment you need to add the environment variables as listed in `.env.example`. Please note most of these services are freemium and you can sign up for a free account.
+
+Submitted pull requests are automatically deployed using Heroku (self-destroyed after 24 hours).
 
 ## Contributors ✨
 
