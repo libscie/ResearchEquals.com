@@ -211,6 +211,15 @@
       "contributions": [
         "userTesting"
       ]
+    },
+    {
+      "login": "JessieLOliver",
+      "name": "Jessie L Oliver",
+      "avatar_url": "https://avatars.githubusercontent.com/u/12043988?v=4",
+      "profile": "https://orcid.org/0000-0002-3464-0247",
+      "contributions": [
+        "a11y"
+      ]
     }
   ],
   "contributorsPerLine": 7,
