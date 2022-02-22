@@ -18,6 +18,15 @@ const SignupPage: BlitzPage = () => {
   const [signupMutation] = useMutation(signup)
   const [termsAccepted, setTermsAccepted] = useState(false)
   const [cocAccepted, setCocAccepted] = useState(false)
+  const [passwordField, setPasswordField] = useState("password")
+
+  const togglePasswordField = function () => {
+    if (passwordField === "password") {
+      setPasswordField("text")
+    } else {
+      setPasswordField("password")
+    }
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -129,6 +138,7 @@ const SignupPage: BlitzPage = () => {
                   {...formik.getFieldProps("password")}
                 />
               </div>
+              <input type="checkbox" onClick={togglePasswordField}>Show Password</input>
             </div>
             <div className="my-4 flex">
               <Switch
