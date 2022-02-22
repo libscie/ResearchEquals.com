@@ -269,7 +269,9 @@ const ModuleEdit = ({
                         return <SearchResultModule item={item} />
                       },
                       noResults() {
-                        const matchedQuery = query.match(/10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i)
+                        const matchedQuery = query.match(
+                          /^((http)s?:\/\/)?((dx\.)?doi\.org\/)?(10.\d{4,9}\/[-._;()\/:A-Z0-9]+$)/i
+                        )
                         const matchedDoi = matchedQuery.slice(-1)
                         return (
                           <>
@@ -486,7 +488,9 @@ const ModuleEdit = ({
                       )
                     },
                     noResults() {
-                      const matchedQuery = query.match(/10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i)
+                      const matchedQuery = query.match(
+                        /^((http)s?:\/\/)?((dx\.)?doi\.org\/)?(10.\d{4,9}\/[-._;()\/:A-Z0-9]+$)/i
+                      )
                       const matchedDoi = matchedQuery.slice(-1)
                       return (
                         <>
