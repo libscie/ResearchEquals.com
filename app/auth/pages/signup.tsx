@@ -18,6 +18,15 @@ const SignupPage: BlitzPage = () => {
   const [signupMutation] = useMutation(signup)
   const [termsAccepted, setTermsAccepted] = useState(false)
   const [cocAccepted, setCocAccepted] = useState(false)
+  const [passwordField, setPasswordField] = useState("password")
+
+  const togglePasswordField = () => {
+    if (passwordField === "password") {
+      setPasswordField("text")
+    } else {
+      setPasswordField("password")
+    }
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -123,12 +132,20 @@ const SignupPage: BlitzPage = () => {
               <div className="">
                 <input
                   id="password"
-                  type="password"
+                  type={passwordField}
                   required
                   className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 dark:border-gray-500 dark:bg-gray-800 dark:text-gray-100 sm:text-sm"
                   {...formik.getFieldProps("password")}
                 />
               </div>
+              <input
+                type="checkbox"
+                onClick={togglePasswordField}
+                className="my-2 h-4 w-4 rounded border-gray-300 bg-gray-200 text-indigo-600 focus:ring-indigo-500 dark:bg-gray-700"
+              />
+              <span className="m-2 text-sm font-medium text-gray-700 dark:text-gray-100">
+                Show Password
+              </span>
             </div>
             <div className="my-4 flex">
               <Switch
