@@ -40,6 +40,11 @@ DATABASE_URL=postgres://<username>:<password>@localhost:5432/researchequals-dev
 
 To get a fully functional development environment you need to add the environment variables as listed in `.env.example`. Please note most of these services are freemium and you can sign up for a free account.
 
+You can seed your database with
+```
+blitz db seed
+```
+
 You can start your development environment with
 
 ```
