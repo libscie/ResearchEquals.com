@@ -19,8 +19,41 @@ export default async function getSignature() {
       },
     ],
     select: {
+      main: true,
+      supporting: true,
       publishedAt: true,
     },
+  })
+
+  // Get file extensions
+  const re = /(?:\.([^.]+))?$/
+  let mainFilenames = [] as any
+  let supportingFilenames = [] as any
+  modules.map((module) => {
+    mainFilenames.push(re.exec(module.main!["name"])![1])
+    if (module.supporting!["files"].length > 0) {
+      module.supporting!["files"].map((file) => {
+        supportingFilenames.push(re.exec(file.original_filename)![1])
+      })
+    }
+  })
+
+  const uniqMainExtensions = mainFilenames.filter(onlyUnique)
+  let mainExtensions = [] as any
+  uniqMainExtensions.forEach((date, index) => {
+    mainExtensions.push({
+      extension: date ? date : "None",
+      count: itemCounter(mainFilenames, date),
+    })
+  })
+
+  const uniqSupportingExtensions = supportingFilenames.filter(onlyUnique)
+  let supportingExtensions = [] as any
+  uniqSupportingExtensions.forEach((date, index) => {
+    supportingExtensions.push({
+      extension: date,
+      count: itemCounter(supportingFilenames, date),
+    })
   })
 
   const dates = modules.map((module) => {
@@ -31,7 +64,6 @@ export default async function getSignature() {
   const uniqDates = dates.filter(onlyUnique)
   uniqDates.forEach((date, index) => {
     const epochTime = new Date(date!)
-    console.log(epochTime.getTime())
     data.push({
       time: epochTime.getTime(),
       modules:
@@ -39,5 +71,5 @@ export default async function getSignature() {
     })
   })
 
-  return data
+  return { data, mainExtensions, supportingExtensions }
 }
