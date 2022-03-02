@@ -272,46 +272,47 @@ const ModuleEdit = ({
                         const matchedQuery = query.match(
                           /^((http)s?:\/\/)?((dx\.)?doi\.org\/)?(10.\d{4,9}\/[-._;()\/:A-Z0-9]+$)/i
                         )
-                        const matchedDoi = matchedQuery.slice(-1)
+
                         return (
                           <>
                             {/* https://www.crossref.org/blog/dois-and-matching-regular-expressions/ */}
-                            {matchedDoi ? (
+                            {matchedQuery ? (
                               <>
                                 <button
                                   className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200"
                                   onClick={async () => {
                                     toast.promise(
                                       createReferenceMutation({
-                                        doi: matchedDoi,
+                                        doi: matchedQuery.slice(-1),
                                       }),
                                       {
-                                      loading: "Searching...",
-                                      success: (data) => {
-                                        toast.promise(
-                                          addParentMutation({
-                                            currentId: module?.id,
-                                            connectId: data.id,
-                                          }),
-                                          {
-                                            loading: "Adding link...",
-                                            success: (info) => {
-                                              setQueryData(info)
+                                        loading: "Searching...",
+                                        success: (data) => {
+                                          toast.promise(
+                                            addParentMutation({
+                                              currentId: module?.id,
+                                              connectId: data.id,
+                                            }),
+                                            {
+                                              loading: "Adding link...",
+                                              success: (info) => {
+                                                setQueryData(info)
 
-                                              return `Linked to: "${data.title}"`
-                                            },
-                                            error: "Failed to add link...",
-                                          }
-                                        )
+                                                return `Linked to: "${data.title}"`
+                                              },
+                                              error: "Failed to add link...",
+                                            }
+                                          )
 
-                                        return "Record added to database"
-                                      },
-                                      error: "Could not add record.",
+                                          return "Record added to database"
+                                        },
+                                        error: "Could not add record.",
                                       }
                                     )
                                   }}
                                 >
-                                  Click here to add {matchedDoi} to ResearchEquals database
+                                  Click here to add {matchedQuery.slice(-1)} to ResearchEquals
+                                  database
                                 </button>
                               </>
                             ) : (
@@ -491,41 +492,45 @@ const ModuleEdit = ({
                       const matchedQuery = query.match(
                         /^((http)s?:\/\/)?((dx\.)?doi\.org\/)?(10.\d{4,9}\/[-._;()\/:A-Z0-9]+$)/i
                       )
-                      const matchedDoi = matchedQuery.slice(-1)
+
                       return (
                         <>
                           {/* https://www.crossref.org/blog/dois-and-matching-regular-expressions/ */}
-                          {matchedDoi ? (
+                          {matchedQuery ? (
                             <>
                               <button
                                 className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200"
                                 onClick={async () => {
-                                  toast.promise(createReferenceMutation({ doi: matchedDoi }), {
-                                    loading: "Searching...",
-                                    success: (data) => {
-                                      toast.promise(
-                                        addReferenceMutation({
-                                          currentId: moduleEdit?.id,
-                                          connectId: data.id,
-                                        }),
-                                        {
-                                          loading: "Adding reference...",
-                                          success: (data) => {
-                                            setQueryData(data)
+                                  toast.promise(
+                                    createReferenceMutation({ doi: matchedQuery.slice(-1) }),
+                                    {
+                                      loading: "Searching...",
+                                      success: (data) => {
+                                        toast.promise(
+                                          addReferenceMutation({
+                                            currentId: moduleEdit?.id,
+                                            connectId: data.id,
+                                          }),
+                                          {
+                                            loading: "Adding reference...",
+                                            success: (data) => {
+                                              setQueryData(data)
 
-                                            return "Added reference!"
-                                          },
-                                          error: "Failed to add reference...",
-                                        }
-                                      )
+                                              return "Added reference!"
+                                            },
+                                            error: "Failed to add reference...",
+                                          }
+                                        )
 
-                                      return "Reference added to database"
-                                    },
-                                    error: "Could not add reference.",
-                                  })
+                                        return "Reference added to database"
+                                      },
+                                      error: "Could not add reference.",
+                                    }
+                                  )
                                 }}
                               >
-                                Click here to add {matchedDoi} to ResearchEquals database
+                                Click here to add {matchedQuery.slice(-1)} to ResearchEquals
+                                database
                               </button>
                             </>
                           ) : (
