@@ -3,8 +3,22 @@ import Layout from "app/core/layouts/Layout"
 import getBrowseGraphData from "app/core/queries/getBrowseGraphData"
 import { useInfiniteQuery, useQuery, useRouter, useSession, Link, Routes } from "blitz"
 import moment from "moment"
+import { useMediaPredicate } from "react-media-hook"
+
 import React from "react"
-import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
+import {
+  Area,
+  AreaChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+  Radar,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+} from "recharts"
 
 import getBrowseData from "../core/queries/getBrowseData"
 import LayoutLoader from "../core/components/LayoutLoader"
@@ -42,18 +56,16 @@ const CustomTooltipWorkspace = ({ active, payload, label }) => {
   return null
 }
 
-const BrowseContent = () => {
-  const [graphData] = useQuery(getBrowseGraphData, undefined)
-
+const BrowseContent = ({ graphData }) => {
   return (
-    <div className="mx-4 max-w-xl py-16 text-gray-900 dark:text-gray-200">
+    <div className="mx-4 py-16 text-gray-900 dark:text-gray-200">
       <h2 className="text-center text-3xl font-extrabold ">Published modules</h2>
       <div className="mx-auto text-center">
         <ResponsiveContainer width="100%" height={250}>
           <AreaChart
             width={1280}
             height={250}
-            data={graphData}
+            data={graphData.data}
             margin={{ top: 10, right: 0, left: 0, bottom: 0 }}
           >
             <defs>
@@ -162,6 +174,59 @@ const BrowseWorkspaces = () => {
   )
 }
 
+const StatsExtensions = ({ graphData }) => {
+  const biggerWindow = useMediaPredicate("(min-width: 640px)")
+
+  return (
+    <>
+      <div className="mx-4 py-16 text-gray-900 dark:text-gray-200">
+        <h2 className="text-center text-3xl font-extrabold ">Main file extensions</h2>
+        <div className="mx-auto text-center ">
+          <RadarChart
+            cx={biggerWindow ? 300 : 150}
+            cy={biggerWindow ? 250 : 150}
+            outerRadius={biggerWindow ? 150 : 100}
+            width={biggerWindow ? 500 : 300}
+            height={biggerWindow ? 500 : 300}
+            data={graphData.mainExtensions}
+            className="mx-auto h-full w-full"
+          >
+            <PolarGrid />
+            <PolarAngleAxis dataKey="extension" />
+            <PolarRadiusAxis />
+            <Radar name="Main" dataKey="count" stroke="#090909" fill="#db2777" fillOpacity={0.6} />
+          </RadarChart>
+        </div>
+      </div>
+      <div className="mx-4 py-16 text-gray-900 dark:text-gray-200">
+        <h2 className="text-center text-3xl font-extrabold ">Supporting file extensions</h2>
+        <div className="mx-auto w-full text-center">
+          <RadarChart
+            cx={biggerWindow ? 300 : 150}
+            cy={biggerWindow ? 250 : 150}
+            outerRadius={biggerWindow ? 150 : 100}
+            width={biggerWindow ? 500 : 300}
+            height={biggerWindow ? 500 : 300}
+            data={graphData.supportingExtensions}
+            className="mx-auto h-full w-full"
+          >
+            <PolarGrid />
+            <PolarAngleAxis dataKey="extension" />
+            <PolarRadiusAxis />
+            <Radar
+              name="Supporting"
+              dataKey="count"
+              stroke="#090909"
+              fill="#d946ef"
+              fillOpacity={0.6}
+            />
+          </RadarChart>
+        </div>
+      </div>
+    </>
+  )
+}
+
 const Stats = () => {
   const currentUser = useCurrentUser()
   const session = useSession()
@@ -169,6 +234,7 @@ const Stats = () => {
   const router = useRouter()
   const [drafts, { refetch }] = useQuery(getDrafts, { session })
   const [invitations] = useQuery(getInvitedModules, { session })
+  const [graphData] = useQuery(getBrowseGraphData, undefined)
 
   return (
     <>
@@ -185,8 +251,9 @@ const Stats = () => {
         Real-time statistics
       </h1>
       <div className="mx-auto max-w-7xl grid-cols-2 xl:grid">
-        <BrowseContent />
+        <BrowseContent graphData={graphData} />
         <BrowseWorkspaces />
+        <StatsExtensions graphData={graphData} />
       </div>
     </>
   )

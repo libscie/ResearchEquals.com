@@ -1,8 +1,6 @@
 import Navbar from "app/core/components/Navbar"
 import Layout from "app/core/layouts/Layout"
-import getBrowseGraphData from "app/core/queries/getBrowseGraphData"
 import { useInfiniteQuery, useQuery, useRouter, useSession, Link, Routes } from "blitz"
-import moment from "moment"
 import React from "react"
 
 import getBrowseData from "../core/queries/getBrowseData"
@@ -15,38 +13,11 @@ import ModuleBoxFeed from "app/core/components/ModuleBoxFeed"
 import getBrowseWorkspaceData from "../core/queries/getBrowseWorkspaceData"
 import getBrowseWorkspaceGraphData from "../core/queries/getBrowseWorkspaceGraphData"
 
-const CustomTooltip = ({ active, payload, label }) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="custom-tooltip bgborder-gray-400 rounded border border-b bg-white p-2 shadow-xl dark:border-gray-600 dark:bg-gray-900">
-        <p className="label">{`${moment(label).format("YYYY-MM-DD")}`}</p>
-        <p>Total modules: {`${payload[0].value}`}</p>
-      </div>
-    )
-  }
-
-  return null
-}
-
-const CustomTooltipWorkspace = ({ active, payload, label }) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="custom-tooltip bgborder-gray-400 rounded border border-b bg-white p-2 shadow-xl dark:border-gray-600 dark:bg-gray-900">
-        <p className="label">{`${moment(label).format("YYYY-MM-DD")}`}</p>
-        <p>Total signups: {`${payload[0].value}`}</p>
-      </div>
-    )
-  }
-
-  return null
-}
-
 const BrowseContent = () => {
   const [modulePages, { isFetching, isFetchingNextPage, fetchNextPage, hasNextPage }] =
     useInfiniteQuery(getBrowseData, (page = { take: 20, skip: 0 }) => page, {
       getNextPageParam: (lastPage) => lastPage.nextPage,
     })
-  const [graphData] = useQuery(getBrowseGraphData, undefined)
 
   return (
     <div className="mx-4 max-w-7xl py-16 text-gray-900 dark:text-gray-200 xl:mx-auto">
