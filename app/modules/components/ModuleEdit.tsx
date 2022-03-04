@@ -269,9 +269,7 @@ const ModuleEdit = ({
                         return <SearchResultModule item={item} />
                       },
                       noResults() {
-                        const matchedQuery = query.match(
-                          /^((http)s?:\/\/)?((dx\.)?doi\.org\/)?(10.\d{4,9}\/[-._;()\/:A-Z0-9]+$)/i
-                        )
+                        const matchedQuery = query.match(/10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
 
                         return (
                           <>
@@ -283,7 +281,9 @@ const ModuleEdit = ({
                                   onClick={async () => {
                                     toast.promise(
                                       createReferenceMutation({
-                                        doi: matchedQuery.slice(-1),
+                                        doi: matchedQuery.slice(-1)[0].endsWith("/")
+                                          ? matchedQuery.slice(-1)[0].slice(0, -1)
+                                          : matchedQuery.slice(-1)[0],
                                       }),
                                       {
                                         loading: "Searching...",
@@ -489,9 +489,7 @@ const ModuleEdit = ({
                       )
                     },
                     noResults() {
-                      const matchedQuery = query.match(
-                        /^((http)s?:\/\/)?((dx\.)?doi\.org\/)?(10.\d{4,9}\/[-._;()\/:A-Z0-9]+$)/i
-                      )
+                      const matchedQuery = query.match(/10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
 
                       return (
                         <>
@@ -502,7 +500,11 @@ const ModuleEdit = ({
                                 className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200"
                                 onClick={async () => {
                                   toast.promise(
-                                    createReferenceMutation({ doi: matchedQuery.slice(-1) }),
+                                    createReferenceMutation({
+                                      doi: matchedQuery.slice(-1)[0].endsWith("/")
+                                        ? matchedQuery.slice(-1)[0].slice(0, -1)
+                                        : matchedQuery.slice(-1)[0],
+                                    }),
                                     {
                                       loading: "Searching...",
                                       success: (data) => {
