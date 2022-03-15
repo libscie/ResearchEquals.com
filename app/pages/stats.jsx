@@ -189,7 +189,7 @@ const StatsExtensions = ({ graphData }) => {
             width={biggerWindow ? 500 : 300}
             height={biggerWindow ? 500 : 300}
             data={graphData.mainExtensions}
-            className="mx-auto h-full w-full"
+            className="mx-auto h-full w-full fill-current text-gray-900 dark:text-gray-200"
           >
             <PolarGrid />
             <PolarAngleAxis dataKey="extension" />
@@ -208,7 +208,7 @@ const StatsExtensions = ({ graphData }) => {
             width={biggerWindow ? 500 : 300}
             height={biggerWindow ? 500 : 300}
             data={graphData.supportingExtensions}
-            className="mx-auto h-full w-full"
+            className="mx-auto h-full w-full fill-current text-gray-900 dark:text-gray-200"
           >
             <PolarGrid />
             <PolarAngleAxis dataKey="extension" />
