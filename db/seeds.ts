@@ -18,151 +18,361 @@ const modIndex = client.initIndex(`${process.env.ALGOLIA_PREFIX}_modules`)
  */
 const seed = async () => {
   // Always do this
-  await db.moduleType.createMany({
-    data: [
-      { wikidata: "Q131841", name: "Idea", schema: "CreativeWork" },
-      { wikidata: "Q1371819", name: "Plan", schema: "CreativeWork" },
-      { wikidata: "Q17737", name: "Theory", schema: "CreativeWork" },
-      { wikidata: "Q2412849", name: "Literature review", schema: "CreativeWork" },
-      { wikidata: "Q321703", name: "Premise", schema: "CreativeWork" },
-      { wikidata: "Q41719", name: "Hypothesis", schema: "CreativeWork" },
-      { wikidata: "Q748250", name: "Prediction", schema: "CreativeWork" },
-      { wikidata: "Q94535766", name: "Assertion", schema: "CreativeWork" },
-      { wikidata: "Q185698", name: "Methodology", schema: "CreativeWork" },
-      { wikidata: "Q82604", name: "Design", schema: "CreativeWork" },
-      { wikidata: "Q41689629", name: "Procedure", schema: "CreativeWork" },
-      { wikidata: "Q16798631", name: "Equipment", schema: "CreativeWork" },
-      { wikidata: "Q42848", name: "Data", schema: "Dataset" },
-      { wikidata: "Q1070421", name: "Script", schema: "CreativeWork" },
-      { wikidata: "Q1347572", name: "Evidence", schema: "CreativeWork" },
-      { wikidata: "Q217602", name: "Analysis", schema: "CreativeWork" },
-      { wikidata: "Q17104930", name: "Outcome", schema: "CreativeWork" },
-      { wikidata: "Q3030248", name: "Discussion", schema: "CreativeWork" },
-      { wikidata: "Q333291", name: "Abstract", schema: "CreativeWork" },
-      { wikidata: "Q1318295", name: "Narrative", schema: "CreativeWork" },
-      { wikidata: "Q604733", name: "Presentation", schema: "CreativeWork" },
-      { wikidata: "Q265158", name: "Review", schema: "Review" },
-      { wikidata: "Q55107540", name: "Other", schema: "CreativeWork" },
-      { wikidata: "Q947859", name: "Research proposal", schema: "CreativeWork" },
-      { wikidata: "Q7397", name: "Software", schema: "SoftwareApplication" },
-      { wikidata: "Q871232", name: "Editorial", schema: "CreativeWork" },
-      { wikidata: "Q30849", name: "Blog", schema: "Blog" },
-      { wikidata: "Q60752967", name: "Preregistration", schema: "CreativeWork" },
-      { wikidata: "Q429785", name: "Poster", schema: "Poster" },
-      { wikidata: "Q59094171", name: "Ethical review" },
-    ],
-    skipDuplicates: true,
-  })
+  const types = [
+    { wikidata: "Q131841", name: "Idea", schema: "CreativeWork" },
+    { wikidata: "Q1371819", name: "Plan", schema: "CreativeWork" },
+    { wikidata: "Q17737", name: "Theory", schema: "CreativeWork" },
+    { wikidata: "Q2412849", name: "Literature review", schema: "CreativeWork" },
+    { wikidata: "Q321703", name: "Premise", schema: "CreativeWork" },
+    { wikidata: "Q41719", name: "Hypothesis", schema: "CreativeWork" },
+    { wikidata: "Q748250", name: "Prediction", schema: "CreativeWork" },
+    { wikidata: "Q94535766", name: "Assertion", schema: "CreativeWork" },
+    { wikidata: "Q185698", name: "Methodology", schema: "CreativeWork" },
+    { wikidata: "Q82604", name: "Design", schema: "CreativeWork" },
+    { wikidata: "Q41689629", name: "Procedure", schema: "CreativeWork" },
+    { wikidata: "Q16798631", name: "Equipment", schema: "CreativeWork" },
+    { wikidata: "Q42848", name: "Data", schema: "Dataset" },
+    { wikidata: "Q1070421", name: "Script", schema: "CreativeWork" },
+    { wikidata: "Q1347572", name: "Evidence", schema: "CreativeWork" },
+    { wikidata: "Q217602", name: "Analysis", schema: "CreativeWork" },
+    { wikidata: "Q17104930", name: "Outcome", schema: "CreativeWork" },
+    { wikidata: "Q3030248", name: "Discussion", schema: "CreativeWork" },
+    { wikidata: "Q333291", name: "Abstract", schema: "CreativeWork" },
+    { wikidata: "Q1318295", name: "Narrative", schema: "CreativeWork" },
+    { wikidata: "Q604733", name: "Presentation", schema: "CreativeWork" },
+    { wikidata: "Q265158", name: "Review", schema: "Review" },
+    { wikidata: "Q55107540", name: "Other", schema: "CreativeWork" },
+    { wikidata: "Q947859", name: "Research proposal", schema: "CreativeWork" },
+    { wikidata: "Q7397", name: "Software", schema: "SoftwareApplication" },
+    { wikidata: "Q871232", name: "Editorial", schema: "CreativeWork" },
+    { wikidata: "Q30849", name: "Blog", schema: "Blog" },
+    { wikidata: "Q60752967", name: "Preregistration", schema: "CreativeWork" },
+    { wikidata: "Q429785", name: "Poster", schema: "Poster" },
+    { wikidata: "Q59094171", name: "Ethical review", schema: "CreativeWork" },
+  ]
+
+  // This adds the record or updates the existing one
+  for (let index = 0; index < types.length; index++) {
+    await db.moduleType.upsert({
+      where: {
+        name: types[index]!.name,
+      },
+      // This ensures  the latest update
+      update: {
+        wikidata: types[index]!.wikidata,
+        name: types[index]!.name,
+        schema: types[index]!.schema,
+      },
+      // This is the original
+      create: {
+        wikidata: types[index]!.wikidata,
+        name: types[index]!.name,
+        schema: types[index]!.schema,
+      },
+    })
+  }
 
   // Only do this in production
   if (process.env.ALGOLIA_PREFIX === "production") {
     // These are the production licenses (and prices)
-    await db.license.createMany({
-      data: [
-        {
-          url: "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
-          name: "CC0 Public Domain Dedication",
-          price: 0,
-        },
-        {
-          url: "https://creativecommons.org/licenses/by/4.0/legalcode",
-          name: "CC BY 4.0",
-          price: 0,
-        },
-        {
-          url: "https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode",
-          name: "CC BY-NC-ND 4.0",
-          price: 42999,
-          price_id: "price_1KCTCfLmgtJbKHNGKwS8Da2l",
-        },
-        {
-          url: "https://creativecommons.org/licenses/by-nc-sa/4.0/",
-          name: "CC BY-NC-SA 4.0",
-          price: 32999,
-          price_id: "price_1KCTCgLmgtJbKHNGFMFbG3zs",
-        },
-        {
-          url: "https://creativecommons.org/licenses/by-nd/4.0/legalcode",
-          name: "CC BY-ND 4.0",
-          price: 24999,
-          price_id: "price_1KCTCiLmgtJbKHNGdXWdgVY9",
-        },
-        {
-          url: "https://creativecommons.org/licenses/by-nc/4.0/legalcode",
-          name: "CC BY-NC 4.0",
-          price: 19499,
-          price_id: "price_1KCTCjLmgtJbKHNG6G1nkZYe",
-        },
-        {
-          url: "https://creativecommons.org/licenses/by-sa/4.0/legalcode",
-          name: "CC BY-SA 4.0",
-          price: 14999,
-          price_id: "price_1KCTCcLmgtJbKHNGbu2vXiYR",
-        },
-        {
-          url: "https://en.wikipedia.org/wiki/All_rights_reserved",
-          name: "All rights reserved",
-          price: 54999,
-          price_id: "price_1KCTBbLmgtJbKHNGQSZHsNO0",
-        },
-      ],
-      skipDuplicates: true,
+    // [PROD] CC0 Public Domain Dedication
+    await db.license.upsert({
+      where: {
+        url: "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 0,
+      },
+      // This is the original
+      create: {
+        url: "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
+        name: "CC0 Public Domain Dedication",
+        price: 0,
+      },
+    })
+
+    // [PROD] CC BY 4.0
+    await db.license.upsert({
+      where: {
+        url: "https://creativecommons.org/licenses/by/4.0/legalcode",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 0,
+      },
+      // This is the original
+      create: {
+        url: "https://creativecommons.org/licenses/by/4.0/legalcode",
+        name: "CC BY 4.0",
+        price: 0,
+      },
+    })
+
+    // [PROD] CC BY-NC-ND 4.0
+    await db.license.upsert({
+      where: {
+        url: "https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 42999,
+        price_id: "price_1KCTCfLmgtJbKHNGKwS8Da2l",
+      },
+      // This is the original
+      create: {
+        url: "https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode",
+        name: "CC BY-NC-ND 4.0",
+        price: 42999,
+        price_id: "price_1KCTCfLmgtJbKHNGKwS8Da2l",
+      },
+    })
+
+    // [PROD] CC BY-NC-SA 4.0
+    await db.license.upsert({
+      where: {
+        url: "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 32999,
+        price_id: "price_1KCTCgLmgtJbKHNGFMFbG3zs",
+      },
+      // This is the original
+      create: {
+        url: "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+        name: "CC BY-NC-SA 4.0",
+        price: 32999,
+        price_id: "price_1KCTCgLmgtJbKHNGFMFbG3zs",
+      },
+    })
+
+    // [PROD] CC BY-ND 4.0
+    await db.license.upsert({
+      where: {
+        url: "https://creativecommons.org/licenses/by-nd/4.0/legalcode",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 24999,
+        price_id: "price_1KCTCiLmgtJbKHNGdXWdgVY9",
+      },
+      // This is the original
+      create: {
+        url: "https://creativecommons.org/licenses/by-nd/4.0/legalcode",
+        name: "CC BY-ND 4.0",
+        price: 24999,
+        price_id: "price_1KCTCiLmgtJbKHNGdXWdgVY9",
+      },
+    })
+
+    // [PROD] CC BY-NC 4.0
+    await db.license.upsert({
+      where: {
+        url: "https://creativecommons.org/licenses/by-nc/4.0/legalcode",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 19499,
+        price_id: "price_1KCTCjLmgtJbKHNG6G1nkZYe",
+      },
+      // This is the original
+      create: {
+        url: "https://creativecommons.org/licenses/by-nc/4.0/legalcode",
+        name: "CC BY-NC 4.0",
+        price: 19499,
+        price_id: "price_1KCTCjLmgtJbKHNG6G1nkZYe",
+      },
+    })
+
+    // [PROD] CC BY-SA 4.0
+    await db.license.upsert({
+      where: {
+        url: "https://creativecommons.org/licenses/by-sa/4.0/legalcode",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 14999,
+        price_id: "price_1KCTCcLmgtJbKHNGbu2vXiYR",
+      },
+      // This is the original
+      create: {
+        url: "https://creativecommons.org/licenses/by-sa/4.0/legalcode",
+        name: "CC BY-SA 4.0",
+        price: 14999,
+        price_id: "price_1KCTCcLmgtJbKHNGbu2vXiYR",
+      },
+    })
+
+    // [PROD] All rights reserved
+    await db.license.upsert({
+      where: {
+        url: "https://en.wikipedia.org/wiki/All_rights_reserved ",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 54999,
+        price_id: "price_1KCTBbLmgtJbKHNGQSZHsNO0",
+      },
+      // This is the original
+      create: {
+        url: "https://en.wikipedia.org/wiki/All_rights_reserved ",
+        name: "All rights reserved",
+        price: 54999,
+        price_id: "price_1KCTBbLmgtJbKHNGQSZHsNO0",
+      },
     })
   }
 
   // Do this when not in production
   if (process.env.ALGOLIA_PREFIX !== "production") {
     // These are the test environment prices
-    await db.license.createMany({
-      data: [
-        {
-          url: "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
-          name: "CC0 Public Domain Dedication",
-          price: 0,
-        },
-        {
-          url: "https://creativecommons.org/licenses/by/4.0/legalcode",
-          name: "CC BY 4.0",
-          price: 0,
-        },
-        {
-          url: "https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode",
-          name: "CC BY-NC-ND 4.0",
-          price: 42999,
-          price_id: "price_1KCRaTLmgtJbKHNG9WZlp04W",
-        },
-        {
-          url: "https://creativecommons.org/licenses/by-nc-sa/4.0/",
-          name: "CC BY-NC-SA 4.0",
-          price: 32999,
-          price_id: "price_1KCRaqLmgtJbKHNGoj6TG4BQ",
-        },
-        {
-          url: "https://creativecommons.org/licenses/by-nd/4.0/legalcode",
-          name: "CC BY-ND 4.0",
-          price: 24999,
-          price_id: "price_1KCRbQLmgtJbKHNGQtGY2BtP",
-        },
-        {
-          url: "https://creativecommons.org/licenses/by-nc/4.0/legalcode",
-          name: "CC BY-NC 4.0",
-          price: 19499,
-          price_id: "price_1KCRdCLmgtJbKHNGop8lJ0r5",
-        },
-        {
-          url: "https://creativecommons.org/licenses/by-sa/4.0/legalcode",
-          name: "CC BY-SA 4.0",
-          price: 14999,
-          price_id: "price_1KCMOZLmgtJbKHNGvjMirRp0",
-        },
-        {
-          url: "https://en.wikipedia.org/wiki/All_rights_reserved ",
-          name: "All rights reserved",
-          price: 54999,
-          price_id: "price_1KCRbjLmgtJbKHNGLa8TS0aH",
-        },
-      ],
-      skipDuplicates: true,
+    // CC0 Public Domain Dedication
+    await db.license.upsert({
+      where: {
+        url: "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 0,
+      },
+      // This is the original
+      create: {
+        url: "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
+        name: "CC0 Public Domain Dedication",
+        price: 0,
+      },
+    })
+
+    // CC BY 4.0
+    await db.license.upsert({
+      where: {
+        url: "https://creativecommons.org/licenses/by/4.0/legalcode",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 0,
+      },
+      // This is the original
+      create: {
+        url: "https://creativecommons.org/licenses/by/4.0/legalcode",
+        name: "CC BY 4.0",
+        price: 0,
+      },
+    })
+
+    // CC BY-NC-ND 4.0
+    await db.license.upsert({
+      where: {
+        url: "https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 42999,
+        price_id: "price_1KCRaTLmgtJbKHNG9WZlp04W",
+      },
+      // This is the original
+      create: {
+        url: "https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode",
+        name: "CC BY-NC-ND 4.0",
+        price: 42999,
+        price_id: "price_1KCRaTLmgtJbKHNG9WZlp04W",
+      },
+    })
+
+    // CC BY-NC-SA 4.0
+    await db.license.upsert({
+      where: {
+        url: "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 32999,
+        price_id: "price_1KCRaqLmgtJbKHNGoj6TG4BQ",
+      },
+      // This is the original
+      create: {
+        url: "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+        name: "CC BY-NC-SA 4.0",
+        price: 32999,
+        price_id: "price_1KCRaqLmgtJbKHNGoj6TG4BQ",
+      },
+    })
+
+    // CC BY-ND 4.0
+    await db.license.upsert({
+      where: {
+        url: "https://creativecommons.org/licenses/by-nd/4.0/legalcode",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 24999,
+        price_id: "price_1KCRbQLmgtJbKHNGQtGY2BtP",
+      },
+      // This is the original
+      create: {
+        url: "https://creativecommons.org/licenses/by-nd/4.0/legalcode",
+        name: "CC BY-ND 4.0",
+        price: 24999,
+        price_id: "price_1KCRbQLmgtJbKHNGQtGY2BtP",
+      },
+    })
+
+    // CC BY-NC 4.0
+    await db.license.upsert({
+      where: {
+        url: "https://creativecommons.org/licenses/by-nc/4.0/legalcode",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 19499,
+        price_id: "price_1KCRdCLmgtJbKHNGop8lJ0r5",
+      },
+      // This is the original
+      create: {
+        url: "https://creativecommons.org/licenses/by-nc/4.0/legalcode",
+        name: "CC BY-NC 4.0",
+        price: 19499,
+        price_id: "price_1KCRdCLmgtJbKHNGop8lJ0r5",
+      },
+    })
+
+    // CC BY-SA 4.0
+    await db.license.upsert({
+      where: {
+        url: "https://creativecommons.org/licenses/by-sa/4.0/legalcode",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 14999,
+        price_id: "price_1KCMOZLmgtJbKHNGvjMirRp0",
+      },
+      // This is the original
+      create: {
+        url: "https://creativecommons.org/licenses/by-sa/4.0/legalcode",
+        name: "CC BY-SA 4.0",
+        price: 14999,
+        price_id: "price_1KCMOZLmgtJbKHNGvjMirRp0",
+      },
+    })
+
+    // All rights reserved
+    await db.license.upsert({
+      where: {
+        url: "https://en.wikipedia.org/wiki/All_rights_reserved ",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 54999,
+        price_id: "price_1KCRbjLmgtJbKHNGLa8TS0aH",
+      },
+      // This is the original
+      create: {
+        url: "https://en.wikipedia.org/wiki/All_rights_reserved ",
+        name: "All rights reserved",
+        price: 54999,
+        price_id: "price_1KCRbjLmgtJbKHNGLa8TS0aH",
+      },
     })
 
     let user
