@@ -18,41 +18,59 @@ const modIndex = client.initIndex(`${process.env.ALGOLIA_PREFIX}_modules`)
  */
 const seed = async () => {
   // Always do this
-  await db.moduleType.createMany({
-    data: [
-      { wikidata: "Q131841", name: "Idea", schema: "CreativeWork" },
-      { wikidata: "Q1371819", name: "Plan", schema: "CreativeWork" },
-      { wikidata: "Q17737", name: "Theory", schema: "CreativeWork" },
-      { wikidata: "Q2412849", name: "Literature review", schema: "CreativeWork" },
-      { wikidata: "Q321703", name: "Premise", schema: "CreativeWork" },
-      { wikidata: "Q41719", name: "Hypothesis", schema: "CreativeWork" },
-      { wikidata: "Q748250", name: "Prediction", schema: "CreativeWork" },
-      { wikidata: "Q94535766", name: "Assertion", schema: "CreativeWork" },
-      { wikidata: "Q185698", name: "Methodology", schema: "CreativeWork" },
-      { wikidata: "Q82604", name: "Design", schema: "CreativeWork" },
-      { wikidata: "Q41689629", name: "Procedure", schema: "CreativeWork" },
-      { wikidata: "Q16798631", name: "Equipment", schema: "CreativeWork" },
-      { wikidata: "Q42848", name: "Data", schema: "Dataset" },
-      { wikidata: "Q1070421", name: "Script", schema: "CreativeWork" },
-      { wikidata: "Q1347572", name: "Evidence", schema: "CreativeWork" },
-      { wikidata: "Q217602", name: "Analysis", schema: "CreativeWork" },
-      { wikidata: "Q17104930", name: "Outcome", schema: "CreativeWork" },
-      { wikidata: "Q3030248", name: "Discussion", schema: "CreativeWork" },
-      { wikidata: "Q333291", name: "Abstract", schema: "CreativeWork" },
-      { wikidata: "Q1318295", name: "Narrative", schema: "CreativeWork" },
-      { wikidata: "Q604733", name: "Presentation", schema: "CreativeWork" },
-      { wikidata: "Q265158", name: "Review", schema: "Review" },
-      { wikidata: "Q55107540", name: "Other", schema: "CreativeWork" },
-      { wikidata: "Q947859", name: "Research proposal", schema: "CreativeWork" },
-      { wikidata: "Q7397", name: "Software", schema: "SoftwareApplication" },
-      { wikidata: "Q871232", name: "Editorial", schema: "CreativeWork" },
-      { wikidata: "Q30849", name: "Blog", schema: "Blog" },
-      { wikidata: "Q60752967", name: "Preregistration", schema: "CreativeWork" },
-      { wikidata: "Q429785", name: "Poster", schema: "Poster" },
-      { wikidata: "Q59094171", name: "Ethical review" },
-    ],
-    skipDuplicates: true,
-  })
+  const types = [
+    { wikidata: "Q131841", name: "Idea", schema: "CreativeWork" },
+    { wikidata: "Q1371819", name: "Plan", schema: "CreativeWork" },
+    { wikidata: "Q17737", name: "Theory", schema: "CreativeWork" },
+    { wikidata: "Q2412849", name: "Literature review", schema: "CreativeWork" },
+    { wikidata: "Q321703", name: "Premise", schema: "CreativeWork" },
+    { wikidata: "Q41719", name: "Hypothesis", schema: "CreativeWork" },
+    { wikidata: "Q748250", name: "Prediction", schema: "CreativeWork" },
+    { wikidata: "Q94535766", name: "Assertion", schema: "CreativeWork" },
+    { wikidata: "Q185698", name: "Methodology", schema: "CreativeWork" },
+    { wikidata: "Q82604", name: "Design", schema: "CreativeWork" },
+    { wikidata: "Q41689629", name: "Procedure", schema: "CreativeWork" },
+    { wikidata: "Q16798631", name: "Equipment", schema: "CreativeWork" },
+    { wikidata: "Q42848", name: "Data", schema: "Dataset" },
+    { wikidata: "Q1070421", name: "Script", schema: "CreativeWork" },
+    { wikidata: "Q1347572", name: "Evidence", schema: "CreativeWork" },
+    { wikidata: "Q217602", name: "Analysis", schema: "CreativeWork" },
+    { wikidata: "Q17104930", name: "Outcome", schema: "CreativeWork" },
+    { wikidata: "Q3030248", name: "Discussion", schema: "CreativeWork" },
+    { wikidata: "Q333291", name: "Abstract", schema: "CreativeWork" },
+    { wikidata: "Q1318295", name: "Narrative", schema: "CreativeWork" },
+    { wikidata: "Q604733", name: "Presentation", schema: "CreativeWork" },
+    { wikidata: "Q265158", name: "Review", schema: "Review" },
+    { wikidata: "Q55107540", name: "Other", schema: "CreativeWork" },
+    { wikidata: "Q947859", name: "Research proposal", schema: "CreativeWork" },
+    { wikidata: "Q7397", name: "Software", schema: "SoftwareApplication" },
+    { wikidata: "Q871232", name: "Editorial", schema: "CreativeWork" },
+    { wikidata: "Q30849", name: "Blog", schema: "Blog" },
+    { wikidata: "Q60752967", name: "Preregistration", schema: "CreativeWork" },
+    { wikidata: "Q429785", name: "Poster", schema: "Poster" },
+    { wikidata: "Q59094171", name: "Ethical review", schema: "CreativeWork" },
+  ]
+
+  // This adds the record or updates the existing one
+  for (let index = 0; index < types.length; index++) {
+    await db.moduleType.upsert({
+      where: {
+        name: types[index]!.name,
+      },
+      // This ensures  the latest update
+      update: {
+        wikidata: types[index]!.wikidata,
+        name: types[index]!.name,
+        schema: types[index]!.schema,
+      },
+      // This is the original
+      create: {
+        wikidata: types[index]!.wikidata,
+        name: types[index]!.name,
+        schema: types[index]!.schema,
+      },
+    })
+  }
 
   // Only do this in production
   if (process.env.ALGOLIA_PREFIX === "production") {
