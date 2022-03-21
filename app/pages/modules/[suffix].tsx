@@ -4,6 +4,9 @@ import { AddAlt32, NextFilled32, PreviousFilled32 } from "@carbon/icons-react"
 import Xarrows from "react-xarrows"
 import { useState } from "react"
 import Helmet from "react-helmet"
+import { Viewer, Worker } from "@react-pdf-viewer/core"
+
+import "@react-pdf-viewer/core/lib/styles/index.css"
 
 import Layout from "../../core/layouts/Layout"
 import db from "db"
@@ -87,7 +90,6 @@ export async function getServerSideProps(context) {
   })
 
   if (!module) throw new NotFoundError()
-
   return {
     props: {
       module,
@@ -245,6 +247,16 @@ const Module = ({ module, mainFile, supportingRaw }) => {
           <div className="my-8">
             <h2 className="text-lg">Main file</h2>
             <ViewFiles name={mainFile.name} size={mainFile.size} url={mainFile.cdnUrl} />
+            {/* Preview PDF */}
+            {mainFile.mimeType === "application/pdf" ? (
+              <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.13.216/build/pdf.worker.min.js">
+                <div style={{ height: "750px" }} className="max-w-screen text-gray-900">
+                  <Viewer fileUrl={mainFile.cdnUrl} />
+                </div>
+              </Worker>
+            ) : (
+              ""
+            )}
           </div>
         ) : (
           ""
