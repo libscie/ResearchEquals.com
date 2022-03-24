@@ -207,7 +207,7 @@ const seed = async () => {
     // [PROD] All rights reserved
     await db.license.upsert({
       where: {
-        url: "https://en.wikipedia.org/wiki/All_rights_reserved ",
+        url: "https://en.wikipedia.org/wiki/All_rights_reserved",
       },
       // This contains the latest update, change this to update the price
       update: {
@@ -216,7 +216,7 @@ const seed = async () => {
       },
       // This is the original
       create: {
-        url: "https://en.wikipedia.org/wiki/All_rights_reserved ",
+        url: "https://en.wikipedia.org/wiki/All_rights_reserved",
         name: "All rights reserved",
         price: 54999,
         price_id: "price_1KCTBbLmgtJbKHNGQSZHsNO0",
