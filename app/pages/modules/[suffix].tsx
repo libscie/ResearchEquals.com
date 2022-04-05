@@ -247,6 +247,12 @@ const Module = ({ module, mainFile, supportingRaw }) => {
           <div className="my-8">
             <h2 className="text-lg">Main file</h2>
             <ViewFiles name={mainFile.name} size={mainFile.size} url={mainFile.cdnUrl} />
+            {/* Preview image */}
+            {mainFile.isImage ? (
+              <img src={mainFile.cdnUrl} className="mx-auto my-2 h-auto w-full" />
+            ) : (
+              ""
+            )}
             {/* Preview PDF */}
             {mainFile.mimeType === "application/pdf" ? (
               <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.13.216/build/pdf.worker.min.js">
