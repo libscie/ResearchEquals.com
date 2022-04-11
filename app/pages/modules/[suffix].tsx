@@ -281,6 +281,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
               <div className="coc">
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
+                  linkTarget="_blank"
                   components={{
                     code({ node, inline, className, children, ...props }) {
                       const match = /language-(\w+)/.exec(className || "")
