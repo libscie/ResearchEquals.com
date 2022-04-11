@@ -7,7 +7,8 @@ import Helmet from "react-helmet"
 import { Viewer, Worker } from "@react-pdf-viewer/core"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
-
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
+import { a11yLight, a11yDark } from "react-syntax-highlighter/dist/cjs/styles/prism"
 import "@react-pdf-viewer/core/lib/styles/index.css"
 
 import Layout from "../../core/layouts/Layout"
@@ -278,7 +279,36 @@ const Module = ({ module, mainFile, supportingRaw }) => {
             {/* Preview Markdown */}
             {mainFile.mimeType === "text/markdown" ? (
               <div className="coc">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>{mainFileMarkdown}</ReactMarkdown>
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    code({ node, inline, className, children, ...props }) {
+                      const match = /language-(\w+)/.exec(className || "")
+                      return !inline && match ? (
+                        <SyntaxHighlighter
+                          style={prefersDarkMode ? a11yDark : a11yLight}
+                          language={match[1]}
+                          PreTag="div"
+                          class="coc"
+                          customStyle={{
+                            backgroundColor: prefersDarkMode ? "#374151" : "#f3f4f6",
+                            padding: "0",
+                            margin: "0",
+                          }}
+                          {...props}
+                        >
+                          {String(children).replace(/\n$/, "")}
+                        </SyntaxHighlighter>
+                      ) : (
+                        <code className={className} {...props}>
+                          {children}
+                        </code>
+                      )
+                    },
+                  }}
+                >
+                  {mainFileMarkdown}
+                </ReactMarkdown>
               </div>
             ) : (
               ""
