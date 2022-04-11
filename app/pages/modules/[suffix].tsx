@@ -10,6 +10,9 @@ import remarkGfm from "remark-gfm"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { a11yLight, a11yDark } from "react-syntax-highlighter/dist/cjs/styles/prism"
 import "@react-pdf-viewer/core/lib/styles/index.css"
+import remarkMath from "remark-math"
+import rehypeKatex from "rehype-katex"
+import "katex/dist/katex.min.css" // `rehype-katex` does not import the CSS for you
 
 import Layout from "../../core/layouts/Layout"
 import db from "db"
@@ -280,7 +283,8 @@ const Module = ({ module, mainFile, supportingRaw }) => {
             {mainFile.mimeType === "text/markdown" ? (
               <div className="coc">
                 <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
+                  remarkPlugins={[remarkGfm, remarkMath]}
+                  rehypePlugins={[rehypeKatex]}
                   linkTarget="_blank"
                   components={{
                     code({ node, inline, className, children, ...props }) {
