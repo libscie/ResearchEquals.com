@@ -100,3 +100,15 @@
   border-left: 2px solid #574cfa;
   padding-left: 2rem;
 }
+
+.coc pre {
+  background-color: #f3f4f6;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+@media (prefers-color-scheme: dark) {
+  .coc pre {
+    background-color: #374151;
+  }
+}
