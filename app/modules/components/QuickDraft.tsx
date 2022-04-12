@@ -230,7 +230,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                               <span className="text-red-500">- Required</span>
                             ) : null}
                           </label>
-                          <p className="text-xs">
+                          <p className="text-xs text-gray-700 dark:text-gray-200">
                             Get more information about licenses{" "}
                             <Link href="https://creativecommons.org/about/cclicenses">
                               <a className="underline" target="_blank">
