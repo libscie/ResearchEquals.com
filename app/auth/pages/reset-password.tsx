@@ -1,14 +1,29 @@
-import { BlitzPage, useRouterQuery, Link, useMutation, Routes, validateZodSchema } from "blitz"
+import {
+  BlitzPage,
+  useRouterQuery,
+  Link,
+  useMutation,
+  Routes,
+  validateZodSchema,
+  useRouter,
+} from "blitz"
 import Layout from "app/core/layouts/Layout"
 import resetPassword from "app/auth/mutations/resetPassword"
 import ResearchEqualsLogo from "app/core/components/ResearchEqualsLogo"
 import { z } from "zod"
 import { useFormik } from "formik"
 import toast from "react-hot-toast"
+import { useEffect } from "react"
 
 const ResetPasswordPage: BlitzPage = () => {
   const query = useRouterQuery()
   const [resetPasswordMutation] = useMutation(resetPassword)
+  const router = useRouter()
+
+  // Redirect to home when no token is found
+  useEffect(() => {
+    if (!query.token) router.push("/")
+  })
 
   const formik = useFormik({
     initialValues: {
