@@ -1,7 +1,9 @@
 # ResearchEquals.com <img src="https://ucarecdn.com/6b429a46-7b66-4f4a-9f8c-13338fb438c2/RBadgegh.png" align="right" height="64" />
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-23-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Discord online](https://img.shields.io/discord/933331539276759070?label=discord&style=flat-square)](https://discord.gg/SefsGJWWSw)
@@ -41,6 +43,7 @@ DATABASE_URL=postgres://<username>:<password>@localhost:5432/researchequals-dev
 To get a fully functional development environment you need to add the environment variables as listed in `.env.example`. Please note most of these services are freemium and you can sign up for a free account.
 
 You can seed your database with
+
 ```
 blitz db seed
 ```
@@ -62,6 +65,18 @@ If you want to develop the Stripe payment pipeline, you can activate using the f
 ```
 stripe listen --forward-to localhost:3000/api/stripe_webhook
 ```
+
+## Maintainers :building_construction:
+
+These people spend their time making sure the platform is operational and improves over time. They're always available for messages of appreciation :purple_heart:
+
+<table>
+  <tr>
+    <td align="center"><a href="http://naoyukisunami.com"><img src="https://avatars.githubusercontent.com/u/17035406?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nami Sunami</b></sub></a><br /></td>
+    <td align="center"><a href="https://chjh.nl"><img src="https://avatars.githubusercontent.com/u/2946344?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Chris Hartgerink</b></sub></a><br /></td>
+  </tr>
+
+</table>
 
 ## Contributors ✨
 
