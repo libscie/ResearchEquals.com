@@ -85,6 +85,9 @@
 .aa-Autocomplete {
   height: 100%;
 }
+.aa-Autocomplete:not(:first-child) {
+  display: none;
+}
 .aa-DetachedFormContainer *,
 .aa-Panel * {
   box-sizing: border-box;
