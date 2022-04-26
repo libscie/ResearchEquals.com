@@ -165,6 +165,9 @@ We use the service Splitbee provided by Tobias Lins e.U. Alserbachstraße 10 109
 
 You can opt-out by enabling the Do Not Track functionality in your browser.
 
+### 3. Crisp
+
+We use the service Crisp provided by Crisp IM SARL 2 Boulevard de Launay, 44100 Nantes, France. Crisp helps us provide chat support and live assistance in your use of our Site. It collects certain information such as messages exchanged, activity status and datetime, IP address, device type (operating system and browser), geolocation (as based on IP), timezone, preferred language, page activity, professional life data (position, employer, business address), and guesses data from public information on Google (Avatar, Twitter/Facebook handle). Additional consent can be actively provided to process email and phone number. Any processing of personal data for these purposes is based on Art. 6 par. 1 lit. f) GDPR whereas our legitimate interest is to provide actionable assistance in the use of our Site.
 `
 
 const md = new Markdown()

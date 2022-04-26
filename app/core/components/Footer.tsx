@@ -6,7 +6,7 @@ const Footer = () => {
   const date = new Date()
 
   return (
-    <footer className="w-full bg-white py-4 dark:bg-gray-900 sm:p-0">
+    <footer className="w-full bg-white pt-4 pb-24  dark:bg-gray-900 sm:p-0">
       <div className="mx-4 pt-8 text-black dark:text-white sm:flex sm:max-w-7xl xl:mx-auto ">
         <div className="mb-0 mt-0 w-10/12 text-sm sm:mb-28 sm:w-full">
           <h3 className="text-base font-bold">ResearchEquals</h3>

@@ -79,7 +79,7 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
         enableDeclineButton
       >
         We use cookies for essential website security purposes. You can withdraw your consent for
-        optional cookies at any time. See also our{" "}
+        optional chat cookies at any time. See also our{" "}
         <Link href={Routes.PrivacyPage()}>
           <a className="underline hover:text-white hover:no-underline" target="_blank">
             Privacy policy
