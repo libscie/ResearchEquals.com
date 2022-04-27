@@ -14,11 +14,14 @@ let crispCode = `window.$crisp=[];window.CRISP_WEBSITE_ID="cb17dd6e-f56c-4c2c-a8
 
 const Layout = ({ title, children, headChildren }: LayoutProps) => {
   const [cookie, setCookie] = useState(() => <></>)
+  const [cookieAccepted, setCookieAccepted] = useState(
+    getCookieConsentValue("researchequals-website-cookie") === "true"
+  )
   useEffect(() => {
-    if (getCookieConsentValue("researchequals-website-cookie") === "true") {
+    if (cookieAccepted) {
       setCookie(<script type="text/javascript">{crispCode}</script>)
     }
-  }, [])
+  }, [cookieAccepted])
 
   return (
     <>
@@ -75,7 +78,9 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
           fontSize: "1rem",
         }}
         expires={150}
-        onAccept={() => {}}
+        onAccept={() => {
+          setCookieAccepted(true)
+        }}
         enableDeclineButton
       >
         We use cookies for essential website security purposes. You can withdraw your consent for
