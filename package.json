@@ -34,7 +34,7 @@
     "@floating-ui/dom": "0.2.0",
     "@headlessui/react": "1.4.3",
     "@prisma/client": "3.8.1",
-    "@react-pdf-viewer/core": "3.1.2",
+    "@react-pdf-viewer/core": "3.3.0",
     "@stripe/stripe-js": "1.22.0",
     "@tailwindcss/forms": "0.4.0",
     "@tailwindcss/line-clamp": "0.3.1",
