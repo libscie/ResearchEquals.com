@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import { Head, Link, Routes } from "blitz"
 import CookieConsent, { Cookies, getCookieConsentValue } from "react-cookie-consent"
 import { Toaster } from "react-hot-toast"
@@ -10,11 +10,18 @@ type LayoutProps = {
   headChildren?: ReactNode
 }
 
+let crispCode = `window.$crisp=[];window.CRISP_WEBSITE_ID="cb17dd6e-f56c-4c2c-a85f-463da113e860";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();`
+
 const Layout = ({ title, children, headChildren }: LayoutProps) => {
-  // useEffect(() => {
-  //   if (getCookieConsentValue("researchequals-website-cookie") === "true") {
-  //   }
-  // }, [])
+  const [cookie, setCookie] = useState(() => <></>)
+  const [cookieAccepted, setCookieAccepted] = useState(
+    getCookieConsentValue("researchequals-website-cookie") === "true"
+  )
+  useEffect(() => {
+    if (cookieAccepted) {
+      setCookie(<script type="text/javascript">{crispCode}</script>)
+    }
+  }, [cookieAccepted])
 
   return (
     <>
@@ -23,6 +30,17 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
         <title>{title || "ResearchEquals"}</title>
         <link rel="icon" href="/favicon-32.png" />
         <script data-respect-dnt data-no-cookie async src="https://cdn.splitbee.io/sb.js"></script>
+        {cookie}
+        {/* {cookie ? <script type="text/javascript">{crispCode}</script> : ""} */}
+        {/* <script type="text/javascript">{cookie ? crispCode : false}</script> */}
+        {/* <div
+          dangerouslySetInnerHTML={{
+            __html:
+              getCookieConsentValue("researchequals-website-cookie") !== "true"
+                ? '<script type="text/javascript"></script'
+                : '<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="cb17dd6e-f56c-4c2c-a85f-463da113e860";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>',
+          }}
+        /> */}
         {headChildren}
       </Head>
       <div className="flex min-h-screen flex-col bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
@@ -60,11 +78,13 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
           fontSize: "1rem",
         }}
         expires={150}
-        onAccept={() => {}}
+        onAccept={() => {
+          setCookieAccepted(true)
+        }}
         enableDeclineButton
       >
         We use cookies for essential website security purposes. You can withdraw your consent for
-        optional cookies at any time. See also our{" "}
+        optional chat cookies at any time. See also our{" "}
         <Link href={Routes.PrivacyPage()}>
           <a className="underline hover:text-white hover:no-underline" target="_blank">
             Privacy policy
