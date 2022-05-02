@@ -18,7 +18,7 @@
           "minInstances": 1,
           "maxInstances": 1,
           "buildCommand": "npx blitz prisma migrate deploy && npx blitz db seed && npm run build",
-          "startCommand": "quirrel ci && npm run start:production",
+          "startCommand": "quirrel ci --prod && npm run start:production",
           "envVariables": {
             "ALGOLIA_API_ADMIN_KEY": {
               "fromParameterStore": "ALGOLIA_API_ADMIN_KEY"
