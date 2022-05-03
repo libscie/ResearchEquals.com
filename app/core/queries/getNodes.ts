@@ -1,7 +1,7 @@
 import db from "db"
 
 export default async function getNodes() {
-  const nodes = await db.module.findMany({
+  const modules = await db.module.findMany({
     where: {
       published: true,
     },
@@ -12,26 +12,35 @@ export default async function getNodes() {
     ],
     include: {
       type: true,
-      // authors: {
-      //   include: {
-      //     workspace: true,
-      //   },
-      //   orderBy: {
-      //     authorshipRank: "asc",
-      //   },
-      // },
+      parents: {
+        include: {
+          type: true,
+        },
+      },
     },
   })
 
-  const nodesData = nodes.map((node) => {
+  const nodesData = modules.map((module) => {
     return {
-      id: `${node.prefix}/${node.suffix}`,
-      data: { label: `${node.prefix}/${node.suffix}`, node },
+      id: `${module.prefix}/${module.suffix}`,
+      data: { label: `${module.prefix}/${module.suffix}`, module },
       position: { x: 250, y: 250 },
     }
   })
 
-  console.log(nodesData)
+  let edgesData = [] as any
+  modules.map((module) => {
+    if (module.parents.length > 0) {
+      module.parents.map((parent) => {
+        edgesData.push({
+          id: `e${parent.prefix}/${parent.suffix}-${module.prefix}/${module.suffix}}`,
+          source: `${parent.prefix}/${parent.suffix}`,
+          target: `${module.prefix}/${module.suffix}`,
+          animated: true,
+        })
+      })
+    }
+  })
 
-  return nodesData
+  return { nodesData, edgesData }
 }
