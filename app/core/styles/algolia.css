@@ -91,6 +91,8 @@
 .aa-DetachedFormContainer *,
 .aa-Panel * {
   box-sizing: border-box;
+  z-index: 100;
+  background: inherit;
 }
 .aa-DetachedFormContainer,
 .aa-Panel {
