@@ -1,8 +1,9 @@
 import Navbar from "app/core/components/Navbar"
 import Layout from "app/core/layouts/Layout"
 import { useInfiniteQuery, useQuery, useRouter, useSession, Link, Routes } from "blitz"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useCallback } from "react"
 import ReactFlow, { Background, MiniMap, Controls } from "react-flow-renderer"
+import dagre from "dagre"
 
 import LayoutLoader from "../core/components/LayoutLoader"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
@@ -11,36 +12,43 @@ import getDrafts from "app/core/queries/getDrafts"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 import getNodes from "../core/queries/getNodes"
 
-const initialNodes = [
-  {
-    id: "10.53962/h0se-1577",
-    type: "input",
-    data: { label: "Test" },
-    position: { x: 250 - 100, y: 250 },
-  },
-  {
-    id: "10.1629/uksg.556",
-    type: "input",
+const dagreGraph = new dagre.graphlib.Graph()
+dagreGraph.setDefaultEdgeLabel(() => ({}))
 
-    data: { label: "Test" },
-    position: { x: 250 - 150, y: 250 - 50 },
-  },
-  {
-    id: "10.7551/mitpress/11087.001.0001",
-    data: { label: "Test" },
-    position: { x: 250, y: 250 },
-  },
-]
+const nodeWidth = 172
+const nodeHeight = 36
 
-const initialEdges = [
-  { id: "e1-2", source: "10.1629/uksg.556", target: "10.7551/mitpress/11087.001.0001" },
-  {
-    id: "e2-3",
-    source: "10.7551/mitpress/11087.001.0001",
-    target: "10.53962/snjp-2g0b",
-    animated: true,
-  },
-]
+const getLayoutedElements = (nodes, edges, direction = "TB") => {
+  const isHorizontal = direction === "LR"
+  dagreGraph.setGraph({ rankdir: direction })
+
+  nodes.forEach((node) => {
+    dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight })
+  })
+
+  edges.forEach((edge) => {
+    dagreGraph.setEdge(edge.source, edge.target)
+  })
+
+  dagre.layout(dagreGraph)
+
+  nodes.forEach((node) => {
+    const nodeWithPosition = dagreGraph.node(node.id)
+    node.targetPosition = isHorizontal ? "left" : "top"
+    node.sourcePosition = isHorizontal ? "right" : "bottom"
+
+    // We are shifting the dagre node position (anchor=center center) to the top left
+    // so it matches the React Flow node anchor point (top left).
+    node.position = {
+      x: nodeWithPosition.x - nodeWidth / 2,
+      y: nodeWithPosition.y - nodeHeight / 2,
+    }
+
+    return node
+  })
+
+  return { nodes, edges }
+}
 
 const Graph = () => {
   const currentUser = useCurrentUser()
@@ -48,13 +56,16 @@ const Graph = () => {
   const currentWorkspace = useCurrentWorkspace()
   const router = useRouter()
   const [drafts, { refetch }] = useQuery(getDrafts, { session })
-  const [nodesQuery] = useQuery(getNodes, undefined)
+  const [{ nodesData: nodesQuery, edgesData: edgesQuery }] = useQuery(getNodes, undefined)
   const [invitations] = useQuery(getInvitedModules, { session })
   const [nodes, setNodes] = useState([])
   const [edges, setEdges] = useState([])
 
   useEffect(() => {
-    setNodes(nodesQuery)
+    const ele = getLayoutedElements(nodesQuery, edgesQuery, "TB")
+    console.log(ele.nodes)
+    setNodes(ele.nodes)
+    setEdges(ele.edges)
   }, [])
 
   return (
@@ -70,7 +81,7 @@ const Graph = () => {
       />
       {/* <div className="grid-cols-2 2xl:mx-4 2xl:grid"> */}
       <div className="h-[90vh] w-full">
-        <ReactFlow nodes={nodes} edges={edges} fitView>
+        <ReactFlow nodes={nodes} edges={edges} panOnScroll={true} minZoom={-0.5} fitView>
           <MiniMap />
           <Controls />
           <Background />
