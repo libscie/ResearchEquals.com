@@ -25,6 +25,7 @@ export default async function getNodes() {
       id: `${module.prefix}/${module.suffix}`,
       data: { label: `${module.prefix}/${module.suffix}`, module },
       position: { x: 250, y: 250 },
+      style: { backgroundColor: module.displayColor, color: "#fff" },
     }
   })
 
