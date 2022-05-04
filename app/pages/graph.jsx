@@ -4,6 +4,7 @@ import { useInfiniteQuery, useQuery, useRouter, useSession, Link, Routes } from 
 import React, { useEffect, useState, useCallback } from "react"
 import ReactFlow, { Background, MiniMap, Controls } from "react-flow-renderer"
 import dagre from "dagre"
+import { useMediaPredicate } from "react-media-hook"
 
 import LayoutLoader from "../core/components/LayoutLoader"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
@@ -60,6 +61,7 @@ const Graph = () => {
   const [invitations] = useQuery(getInvitedModules, { session })
   const [nodes, setNodes] = useState([])
   const [edges, setEdges] = useState([])
+  const prefersDarkMode = useMediaPredicate("(prefers-color-scheme: dark)")
 
   useEffect(() => {
     const ele = getLayoutedElements(nodesQuery, edgesQuery, "TB")
@@ -81,9 +83,12 @@ const Graph = () => {
       />
       {/* <div className="grid-cols-2 2xl:mx-4 2xl:grid"> */}
       <div className="h-[90vh] w-full">
-        <ReactFlow nodes={nodes} edges={edges} panOnScroll={true} minZoom={-0.5} fitView>
-          <MiniMap />
-          <Controls />
+        <ReactFlow nodes={nodes} edges={edges} panOnScroll={true} minZoom={-0.3} fitView>
+          <MiniMap
+            style={{ backgroundColor: prefersDarkMode ? "#1e293b" : "#fff", color: "red" }}
+            nodeColor={prefersDarkMode ? "#fff" : "#000"}
+          />
+          <Controls style={{ fill: prefersDarkMode ? "#fff" : "#000" }} />
           <Background />
         </ReactFlow>
       </div>

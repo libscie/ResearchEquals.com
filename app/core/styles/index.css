@@ -112,3 +112,17 @@
     background-color: #374151;
   }
 }
+
+button.react-flow__controls-button {
+  background-color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  button.react-flow__controls-button {
+    background-color: #1e293b;
+  }
+
+  button.react-flow__controls-button:hover {
+    background-color: #334155;
+  }
+}
