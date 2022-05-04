@@ -1,10 +1,11 @@
 import Navbar from "app/core/components/Navbar"
 import Layout from "app/core/layouts/Layout"
 import { useInfiniteQuery, useQuery, useRouter, useSession, Link, Routes } from "blitz"
-import React, { useEffect, useState, useCallback } from "react"
+import React, { useEffect, useState } from "react"
 import ReactFlow, { Background, MiniMap, Controls } from "react-flow-renderer"
 import dagre from "dagre"
 import { useMediaPredicate } from "react-media-hook"
+import { Connect16 } from "@carbon/icons-react"
 
 import LayoutLoader from "../core/components/LayoutLoader"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
@@ -16,7 +17,7 @@ import getNodes from "../core/queries/getNodes"
 const dagreGraph = new dagre.graphlib.Graph()
 dagreGraph.setDefaultEdgeLabel(() => ({}))
 
-const nodeWidth = 172
+const nodeWidth = 150
 const nodeHeight = 36
 
 const getLayoutedElements = (nodes, edges, direction = "TB") => {
@@ -61,14 +62,30 @@ const Graph = () => {
   const [invitations] = useQuery(getInvitedModules, { session })
   const [nodes, setNodes] = useState([])
   const [edges, setEdges] = useState([])
+  const [onlyConnected, setOnlyConnected] = useState(true)
   const prefersDarkMode = useMediaPredicate("(prefers-color-scheme: dark)")
 
   useEffect(() => {
-    const ele = getLayoutedElements(nodesQuery, edgesQuery, "TB")
-    console.log(ele.nodes)
-    setNodes(ele.nodes)
-    setEdges(ele.edges)
-  }, [])
+    edgesQuery.forEach((edge) => {
+      edge.style = { stroke: prefersDarkMode ? "#fff" : "#000" }
+      return edge
+    })
+
+    if (onlyConnected) {
+      const x = nodesQuery.filter((node) => {
+        return edgesQuery.some((edge) => {
+          return edge.source === node.id || edge.target === node.id
+        })
+      })
+      const ele = getLayoutedElements(x, edgesQuery, "TB")
+      setNodes(ele.nodes)
+      setEdges(ele.edges)
+    } else {
+      const ele = getLayoutedElements(nodesQuery, edgesQuery, "TB")
+      setNodes(ele.nodes)
+      setEdges(ele.edges)
+    }
+  }, [onlyConnected, nodesQuery, edgesQuery, prefersDarkMode])
 
   return (
     <>
@@ -88,7 +105,18 @@ const Graph = () => {
             style={{ backgroundColor: prefersDarkMode ? "#1e293b" : "#fff", color: "red" }}
             nodeColor={prefersDarkMode ? "#fff" : "#000"}
           />
-          <Controls style={{ fill: prefersDarkMode ? "#fff" : "#000" }} />
+          <Controls style={{ fill: prefersDarkMode ? "#fff" : "#000" }}>
+            <button
+              onClick={() => {
+                setOnlyConnected(!onlyConnected)
+              }}
+              className="react-flow__controls-button react-flow__controls-interactive"
+              title="toggle connected view"
+              aria-label="toggle view to show only connected modules or all modules"
+            >
+              <Connect16 className={`${onlyConnected ? "rotate-180" : ""}`} />
+            </button>
+          </Controls>
           <Background />
         </ReactFlow>
       </div>

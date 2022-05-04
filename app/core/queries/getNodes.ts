@@ -38,6 +38,7 @@ export default async function getNodes() {
           source: `${parent.prefix}/${parent.suffix}`,
           target: `${module.prefix}/${module.suffix}`,
           animated: true,
+          // style: { stroke: "#000" },
         })
       })
     }
