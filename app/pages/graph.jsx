@@ -1,8 +1,14 @@
 import Navbar from "app/core/components/Navbar"
 import Layout from "app/core/layouts/Layout"
 import { useInfiniteQuery, useQuery, useRouter, useSession, Link, Routes } from "blitz"
-import React, { useEffect, useState } from "react"
-import ReactFlow, { Background, MiniMap, Controls } from "react-flow-renderer"
+import React, { useEffect, useState, useRef, useCallback } from "react"
+import ReactFlow, {
+  applyEdgeChanges,
+  applyNodeChanges,
+  Background,
+  MiniMap,
+  Controls,
+} from "react-flow-renderer"
 import dagre from "dagre"
 import { useMediaPredicate } from "react-media-hook"
 import { Connect16 } from "@carbon/icons-react"
@@ -85,7 +91,16 @@ const Graph = () => {
       setNodes(ele.nodes)
       setEdges(ele.edges)
     }
-  }, [onlyConnected, nodesQuery, edgesQuery, prefersDarkMode])
+  }, [onlyConnected, nodesQuery, edgesQuery, prefersDarkMode, setEdges, setNodes])
+
+  const onNodesChange = useCallback(
+    (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
+    [setNodes]
+  )
+  const onEdgesChange = useCallback(
+    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
+    [setEdges]
+  )
 
   return (
     <>
@@ -100,7 +115,19 @@ const Graph = () => {
       />
       {/* <div className="grid-cols-2 2xl:mx-4 2xl:grid"> */}
       <div className="h-[90vh] w-full">
-        <ReactFlow nodes={nodes} edges={edges} panOnScroll={true} minZoom={-0.3} fitView>
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          panOnScroll={true}
+          minZoom={-0.3}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          // onConnect={onConnect}
+          // onInit={setReactFlowInstance}
+          // onDrop={onDrop}
+          // onDragOver={onDragOver}
+          fitView
+        >
           <MiniMap
             style={{ backgroundColor: prefersDarkMode ? "#1e293b" : "#fff", color: "red" }}
             nodeColor={prefersDarkMode ? "#fff" : "#000"}
