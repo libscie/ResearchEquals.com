@@ -1,12 +1,12 @@
 import Navbar from "app/core/components/Navbar"
 import Layout from "app/core/layouts/Layout"
-import { useInfiniteQuery, useQuery, useRouter, useSession, Link, Routes } from "blitz"
-import React, { useEffect, useState, useRef, useCallback } from "react"
+import { useQuery, useRouter, useSession } from "blitz"
+import React, { useEffect, useState } from "react"
 import ReactFlow, {
-  applyEdgeChanges,
-  applyNodeChanges,
   Background,
   MiniMap,
+  useNodesState,
+  useEdgesState,
   Controls,
 } from "react-flow-renderer"
 import dagre from "dagre"
@@ -66,8 +66,8 @@ const Graph = () => {
   const [drafts, { refetch }] = useQuery(getDrafts, { session })
   const [{ nodesData: nodesQuery, edgesData: edgesQuery }] = useQuery(getNodes, undefined)
   const [invitations] = useQuery(getInvitedModules, { session })
-  const [nodes, setNodes] = useState([])
-  const [edges, setEdges] = useState([])
+  const [nodes, setNodes, onNodesChange] = useNodesState([])
+  const [edges, setEdges, onEdgesChange] = useEdgesState([])
   const [onlyConnected, setOnlyConnected] = useState(true)
   const prefersDarkMode = useMediaPredicate("(prefers-color-scheme: dark)")
 
@@ -93,15 +93,6 @@ const Graph = () => {
     }
   }, [onlyConnected, nodesQuery, edgesQuery, prefersDarkMode, setEdges, setNodes])
 
-  const onNodesChange = useCallback(
-    (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
-    [setNodes]
-  )
-  const onEdgesChange = useCallback(
-    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
-    [setEdges]
-  )
-
   return (
     <>
       <Navbar
@@ -113,7 +104,6 @@ const Graph = () => {
         invitations={invitations}
         refetchFn={refetch}
       />
-      {/* <div className="grid-cols-2 2xl:mx-4 2xl:grid"> */}
       <div className="h-[90vh] w-full">
         <ReactFlow
           nodes={nodes}
@@ -122,10 +112,6 @@ const Graph = () => {
           minZoom={-0.3}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
-          // onConnect={onConnect}
-          // onInit={setReactFlowInstance}
-          // onDrop={onDrop}
-          // onDragOver={onDragOver}
           fitView
         >
           <MiniMap

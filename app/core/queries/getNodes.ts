@@ -23,7 +23,11 @@ export default async function getNodes() {
   const nodesData = modules.map((module) => {
     return {
       id: `${module.prefix}/${module.suffix}`,
-      data: { label: `${module.prefix}/${module.suffix}`, module },
+      data: {
+        label: `${module.title.substr(0, 30)} ${module.title.length > 30 ? "[...]" : ""}`,
+        module,
+      },
+      type: module.parents.length > 0 ? "default" : "input",
       position: { x: 250, y: 250 },
       style: { backgroundColor: module.displayColor, color: "#fff" },
     }
