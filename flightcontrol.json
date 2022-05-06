@@ -43,7 +43,6 @@
               "fromParameterStore": "DATABASE_URL"
             },
             "DOI_PREFIX": "10.53962",
-            "NODE_ENV": "production",
             "ORCID_CLIENT_ID": { "fromParameterStore": "ORCID_CLIENT_ID" },
             "ORCID_CLIENT_SANDBOX": "false",
             "ORCID_CLIENT_SECRET": {
@@ -127,7 +126,6 @@
               "fromParameterStore": "DATABASE_URL"
             },
             "DOI_PREFIX": "10.53962",
-            "NODE_ENV": "production",
             "ORCID_CLIENT_ID": { "fromParameterStore": "ORCID_CLIENT_ID" },
             "ORCID_CLIENT_SANDBOX": "false",
             "ORCID_CLIENT_SECRET": {
