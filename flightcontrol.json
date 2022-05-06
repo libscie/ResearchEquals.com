@@ -84,8 +84,8 @@
       ]
     },
     {
-      "id": "production",
-      "name": "Production",
+      "id": "test quirrel",
+      "name": "Test Quirrel",
       "region": "eu-central-1",
       "source": {
         "branch": "fix/quirrel"
