@@ -53,7 +53,7 @@
             },
             "PORT": "3000",
             "MAIL_FROM": "no-reply@libscie.org",
-            "QUIRREL_BASE_URL": "https://researchequals.com/",
+            "QUIRREL_BASE_URL": "https://www.researchequals.com/",
             "QUIRREL_ENCRYPTION_SECRET": {
               "fromParameterStore": "QUIRREL_ENCRYPTION_SECRET"
             },
