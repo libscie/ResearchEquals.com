@@ -19,12 +19,16 @@ import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import getDrafts from "app/core/queries/getDrafts"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 import getNodes from "../core/queries/getNodes"
+import InputNode from "../core/components/InputNode"
+import DefaultNode from "../core/components/DefaultNode"
+
+const nodeTypes = { inputNode: InputNode, defaultNode: DefaultNode }
 
 const dagreGraph = new dagre.graphlib.Graph()
 dagreGraph.setDefaultEdgeLabel(() => ({}))
 
 const nodeWidth = 150
-const nodeHeight = 36
+const nodeHeight = 60
 
 const getLayoutedElements = (nodes, edges, direction = "TB") => {
   const isHorizontal = direction === "LR"
@@ -104,11 +108,12 @@ const Graph = () => {
         invitations={invitations}
         refetchFn={refetch}
       />
-      <div className="h-[90vh] w-full">
+      <div className="h-[85vh] w-full">
         <ReactFlow
           nodes={nodes}
           edges={edges}
           panOnScroll={true}
+          nodeTypes={nodeTypes}
           minZoom={-0.3}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
