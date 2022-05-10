@@ -18,7 +18,7 @@ const DefaultNode = ({
       style={{ backgroundColor: data?.module.displayColor }}
     />
     <div
-      className="module-medium flex h-auto max-w-[150px] bg-red-500 p-[10px] text-sm"
+      className="module-medium flex h-auto max-w-[150px] bg-red-500 p-[10px] text-sm text-white"
       style={{ backgroundColor: data?.module.displayColor, fontSize: "12px" }}
     >
       {`${data?.module.title.substr(0, 30)} ${data?.module.title.length > 30 ? "[...]" : ""}`}
