@@ -36,6 +36,11 @@ const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invit
         href: Routes.HandlePage({ handle: currentWorkspace!.handle }),
         current: router.asPath === `/${currentWorkspace!.handle}`,
       },
+      {
+        name: "Module Map",
+        href: Routes.Graph(),
+        current: router.asPath === Routes.Graph().pathname,
+      },
     ]
   }
 
