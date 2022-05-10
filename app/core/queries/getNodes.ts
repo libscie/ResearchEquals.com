@@ -27,9 +27,7 @@ export default async function getNodes() {
         label: `${module.title.substr(0, 30)} ${module.title.length > 30 ? "[...]" : ""}`,
         module,
       },
-      type: module.parents.length > 0 ? "default" : "input",
-      position: { x: 250, y: 250 },
-      style: { backgroundColor: module.displayColor, color: "#fff" },
+      type: module.parents.length > 0 ? "defaultNode" : "inputNode",
     }
   })
 
@@ -42,7 +40,6 @@ export default async function getNodes() {
           source: `${parent.prefix}/${parent.suffix}`,
           target: `${module.prefix}/${module.suffix}`,
           animated: true,
-          // style: { stroke: "#000" },
         })
       })
     }
