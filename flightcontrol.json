@@ -18,7 +18,7 @@
           "minInstances": 1,
           "maxInstances": 1,
           "buildCommand": "npx blitz prisma migrate deploy && npx blitz db seed && npm run build",
-          "startCommand": "npm run start:production",
+          "startCommand": "quirrel ci && npm run start:production",
           "envVariables": {
             "ALGOLIA_API_ADMIN_KEY": {
               "fromParameterStore": "ALGOLIA_API_ADMIN_KEY"
@@ -53,7 +53,7 @@
             },
             "PORT": "3000",
             "MAIL_FROM": "no-reply@libscie.org",
-            "QUIRREL_BASE_URL": "https://researchequals.com/",
+            "QUIRREL_BASE_URL": "https://www.researchequals.com/",
             "QUIRREL_ENCRYPTION_SECRET": {
               "fromParameterStore": "QUIRREL_ENCRYPTION_SECRET"
             },
