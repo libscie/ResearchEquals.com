@@ -123,7 +123,7 @@ const Graph = () => {
             style={{ backgroundColor: prefersDarkMode ? "#1e293b" : "#fff", color: "red" }}
             nodeColor={prefersDarkMode ? "#fff" : "#000"}
           />
-          <Controls style={{ fill: prefersDarkMode ? "#fff" : "#000" }}>
+          <Controls style={{ fill: prefersDarkMode ? "#fff" : "#000", marginBottom: "60px" }}>
             <button
               onClick={() => {
                 setOnlyConnected(!onlyConnected)
