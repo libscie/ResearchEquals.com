@@ -25,6 +25,7 @@ export default resolver.pipe(
       "drafts",
       "faq",
       "forgot-password",
+      "graph",
       "imprint",
       "invitations",
       "login",

@@ -14,6 +14,17 @@
   );
 }
 
+.module-medium {
+  --notchSize: 10px;
+  clip-path: polygon(
+    0% 0%,
+    0% 100%,
+    calc(100% - var(--notchSize)) 100%,
+    100% calc(100% - var(--notchSize)),
+    100% 0%
+  );
+}
+
 .module-small {
   --notchSize: 5px;
   clip-path: polygon(
@@ -110,5 +121,19 @@
 @media (prefers-color-scheme: dark) {
   .coc pre {
     background-color: #374151;
+  }
+}
+
+button.react-flow__controls-button {
+  background-color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  button.react-flow__controls-button {
+    background-color: #1e293b;
+  }
+
+  button.react-flow__controls-button:hover {
+    background-color: #334155;
   }
 }

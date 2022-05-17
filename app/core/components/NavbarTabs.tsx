@@ -15,6 +15,11 @@ const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invit
         current: router.asPath === Routes.Browse().pathname,
       },
       {
+        name: "Map",
+        href: Routes.Graph(),
+        current: router.asPath === Routes.Graph().pathname,
+      },
+      {
         name: "Dashboard",
         href: Routes.Dashboard(),
         current: router.asPath === Routes.Dashboard().pathname,
@@ -42,7 +47,7 @@ const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invit
   if (currentUser && currentWorkspace) {
     return (
       <>
-        <div className="mx-auto w-full border-b border-gray-100 bg-white px-4 text-gray-900 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-200 sm:px-6 lg:px-8">
+        <div className="mx-auto w-full overflow-x-auto border-b border-gray-100 bg-white px-4 text-gray-900 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-200 sm:px-6 lg:px-8">
           <div className="hidden sm:block">
             <nav className="flex space-x-8" aria-label="Tabs">
               <button
@@ -61,7 +66,7 @@ const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invit
                         ? "bg-gray-100 dark:bg-gray-800"
                         : "hover:bg-gray-100 dark:hover:bg-gray-800",
                       // tab.count === 0 ? "pointer-events-none text-gray-400 dark:text-gray-700" : "",
-                      "group disabled my-2 flex whitespace-nowrap rounded-md py-2 px-4 text-sm font-normal leading-5"
+                      "disabled group my-2 flex whitespace-nowrap rounded-md py-2 px-4 text-sm font-normal leading-5"
                     )}
                     aria-current={tab.current ? "page" : undefined}
                   >
