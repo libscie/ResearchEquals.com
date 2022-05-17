@@ -11,7 +11,7 @@ import ReactFlow, {
 } from "react-flow-renderer"
 import dagre from "dagre"
 import { useMediaPredicate } from "react-media-hook"
-import { Connect16 } from "@carbon/icons-react"
+import { Connect } from "@carbon/icons-react"
 
 import LayoutLoader from "../core/components/LayoutLoader"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
@@ -132,7 +132,7 @@ const Graph = () => {
               title="toggle connected view"
               aria-label="toggle view to show only connected modules or all modules"
             >
-              <Connect16 className={`${onlyConnected ? "rotate-180" : ""}`} />
+              <Connect size={16} className={`${onlyConnected ? "rotate-180" : ""}`} />
             </button>
           </Controls>
           <Background />

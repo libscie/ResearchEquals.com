@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import { useMutation } from "blitz"
-import { Checkmark32, Close32 } from "@carbon/icons-react"
+import { Checkmark, Close } from "@carbon/icons-react"
 
 import updateAuthorRank from "../../authorship/mutations/updateAuthorRank"
 import AuthorList from "../../core/components/AuthorList"
@@ -41,7 +41,7 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
                           onClick={() => setOpen(false)}
                         >
                           <span className="sr-only">Close panel</span>
-                          <Close32 className="h-6 w-6" aria-hidden="true" />
+                          <Close size={32} className="h-6 w-6" aria-hidden="true" />
                         </button>
                       </div>
                     </div>
@@ -68,7 +68,8 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
                         setOpen(false)
                       }}
                     >
-                      <Close32
+                      <Close
+                        size={32}
                         className="h-4 w-4 fill-current pt-1 text-red-500"
                         aria-hidden="true"
                       />
@@ -91,7 +92,8 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
                         setOpen(false)
                       }}
                     >
-                      <Checkmark32
+                      <Checkmark
+                        size={32}
                         className="h-4 w-4 stroke-current pt-1 text-emerald-500"
                         aria-hidden="true"
                       />

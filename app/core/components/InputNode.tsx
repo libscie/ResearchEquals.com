@@ -1,6 +1,6 @@
 import React, { memo } from "react"
 import { Handle, NodeProps, Position } from "react-flow-renderer"
-import { Launch16 } from "@carbon/icons-react"
+import { Launch } from "@carbon/icons-react"
 import { Link, Routes } from "blitz"
 
 // https://github.com/wbkd/react-flow/blob/main/src/components/Nodes/InputNode.tsx
@@ -21,7 +21,7 @@ const InputNode = ({ data, isConnectable, sourcePosition = Position.Bottom }: No
           }
         >
           <a target="_blank" rel="noreferrer" className="ml-2 inline-block align-middle">
-            <Launch16 />
+            <Launch size={16} />
           </a>
         </Link>
       </div>

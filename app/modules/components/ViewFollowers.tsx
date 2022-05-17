@@ -3,7 +3,7 @@ import { Dialog, Transition } from "@headlessui/react"
 import { Link, Routes, useQuery } from "blitz"
 import FollowButton from "app/workspaces/components/FollowButton"
 import UnfollowButton from "app/workspaces/components/UnfollowButton"
-import { Close32 } from "@carbon/icons-react"
+import { Close } from "@carbon/icons-react"
 
 const ViewFollowers = ({
   viewAuthorsOpen,
@@ -43,7 +43,7 @@ const ViewFollowers = ({
                             onClick={() => setViewAuthorsOpen(false)}
                           >
                             <span className="sr-only">Close panel</span>
-                            <Close32 className="h-6 w-6" aria-hidden="true" />
+                            <Close size={32} className="h-6 w-6" aria-hidden="true" />
                           </button>
                         </div>
                       </div>

@@ -2,7 +2,7 @@ import { useMutation } from "blitz"
 import { Widget } from "@uploadcare/react-widget"
 import { useRef } from "react"
 import toast from "react-hot-toast"
-import { Add32 } from "@carbon/icons-react"
+import { Add } from "@carbon/icons-react"
 
 import addMain from "../mutations/addMain"
 import EditMainFileDisplay from "../../core/components/EditMainFileDisplay"
@@ -42,7 +42,7 @@ const EditMainFile = ({
               widgetApi.current.openDialog()
             }}
           >
-            <Add32 className="h-4 w-4" aria-hidden="true" /> Upload Main File
+            <Add size={32} className="h-4 w-4" aria-hidden="true" /> Upload Main File
             <Widget
               publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
               secureSignature={signature}

@@ -10,7 +10,7 @@ import {
 import Layout from "app/core/layouts/Layout"
 import React, { useEffect, useState } from "react"
 import toast from "react-hot-toast"
-import { ArrowUp32, ArrowDown32 } from "@carbon/icons-react"
+import { ArrowUp, ArrowDown } from "@carbon/icons-react"
 
 import getDashboardData from "../core/queries/getDashboardData"
 import Navbar from "../core/components/Navbar"
@@ -145,12 +145,14 @@ const DashboardContent = ({
                                 )}
                               >
                                 {item.change > 0 ? (
-                                  <ArrowUp32
+                                  <ArrowUp
+                                    size={32}
                                     className="h-5 w-5 shrink-0 self-center text-emerald-500"
                                     aria-hidden="true"
                                   />
                                 ) : (
-                                  <ArrowDown32
+                                  <ArrowDown
+                                    size={32}
                                     className="h-5 w-5 shrink-0 self-center text-red-500"
                                     aria-hidden="true"
                                   />
@@ -192,12 +194,14 @@ const DashboardContent = ({
                                   )}
                                 >
                                   {item.change > 0 ? (
-                                    <ArrowUp32
+                                    <ArrowUp
+                                      size={32}
                                       className="h-5 w-5 shrink-0 self-center text-emerald-500"
                                       aria-hidden="true"
                                     />
                                   ) : (
-                                    <ArrowDown32
+                                    <ArrowDown
+                                      size={32}
                                       className="h-5 w-5 shrink-0 self-center text-red-500"
                                       aria-hidden="true"
                                     />

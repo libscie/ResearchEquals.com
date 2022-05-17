@@ -2,7 +2,7 @@ import { useMutation } from "blitz"
 import { Widget } from "@uploadcare/react-widget"
 import { useRef } from "react"
 import toast from "react-hot-toast"
-import { Add32 } from "@carbon/icons-react"
+import { Add } from "@carbon/icons-react"
 
 import addSupporting from "../mutations/addSupporting"
 import getSupportingFiles from "../mutations/getSupportingFiles"
@@ -48,7 +48,7 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit, user, workspace, expire
               widgetApi.current.openDialog()
             }}
           >
-            <Add32 className="h-4 w-4" aria-hidden="true" /> Add Supporting File(s)
+            <Add size={32} className="h-4 w-4" aria-hidden="true" /> Add Supporting File(s)
             <Widget
               publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
               secureSignature={signature}

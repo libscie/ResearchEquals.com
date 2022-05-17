@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react"
 import { Transition, Dialog } from "@headlessui/react"
 import { Link, Routes, useMutation } from "blitz"
-import { Add32, Close32, Menu32 } from "@carbon/icons-react"
+import { Add, Close, Menu } from "@carbon/icons-react"
 import logout from "../../auth/mutations/logout"
 import SettingsModal from "../modals/settings"
 import ResearchEqualsLogo from "./ResearchEqualsLogo"
@@ -25,7 +25,8 @@ const DropdownContents = ({
           <QuickDraft
             buttonText={
               <>
-                <Add32
+                <Add
+                  size={32}
                   className="inline h-4 w-4 fill-current text-indigo-500 dark:text-gray-400"
                   aria-hidden="true"
                 />
@@ -148,7 +149,8 @@ const NavbarDropdown = ({
       {isOpen ? (
         <>
           <span className="sr-only">Close menu</span>
-          <Close32
+          <Close
+            size={32}
             className="block h-6 w-6 text-gray-400"
             onClick={() => {
               setIsOpen(false)
@@ -164,7 +166,10 @@ const NavbarDropdown = ({
             }}
           >
             <span className="sr-only">Open menu</span>
-            <Menu32 className="block h-6 w-6 rounded-md text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:ring-2 focus:ring-gray-200 focus:ring-offset-0 dark:text-gray-200 dark:hover:bg-gray-800" />
+            <Menu
+              size={32}
+              className="block h-6 w-6 rounded-md text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:ring-2 focus:ring-gray-200 focus:ring-offset-0 dark:text-gray-200 dark:hover:bg-gray-800"
+            />
           </button>
         </>
       )}
@@ -214,7 +219,7 @@ const NavbarDropdown = ({
                           }}
                         >
                           <span className="sr-only">Close menu</span>
-                          <Close32 className="h-6 w-6" aria-hidden="true" />
+                          <Close size={32} className="h-6 w-6" aria-hidden="true" />
                         </button>
                       </div>
                     </div>
