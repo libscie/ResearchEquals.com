@@ -1,6 +1,6 @@
 import React from "react"
 import { Link, Routes, useSession } from "blitz"
-import { ChevronUp32, ChevronDown32, Checkmark32, Subtract32 } from "@carbon/icons-react"
+import { ChevronUp, ChevronDown, Checkmark, Subtract } from "@carbon/icons-react"
 
 // https://www.npmjs.com/package/array-move
 function arrayMoveMutable(array, fromIndex, toIndex) {
@@ -43,7 +43,7 @@ function AuthorList({
                 disabled={index === 0}
                 className="disabled:opacity-0"
               >
-                <ChevronUp32 className="h-5 w-5 text-gray-400" />
+                <ChevronUp size={32} className="h-5 w-5 text-gray-400" />
               </button>
               <button
                 onClick={() => {
@@ -52,7 +52,7 @@ function AuthorList({
                 disabled={index === authors.length - 1}
                 className="disabled:opacity-0"
               >
-                <ChevronDown32 className="h-5 w-5 text-gray-400" />
+                <ChevronDown size={32} className="h-5 w-5 text-gray-400" />
               </button>
             </div>
             <Link href={Routes.HandlePage({ handle: author.workspace.handle })}>
@@ -81,7 +81,7 @@ function AuthorList({
                   author.readyToPublish ? "text-emerald-500" : "text-gray-500 dark:text-gray-400"
                 }`}
               >
-                <Checkmark32 className="h-4 w-4 fill-current" aria-hidden="true" />
+                <Checkmark size={32} className="h-4 w-4 fill-current" aria-hidden="true" />
                 Approved
               </span>
             ) : (
@@ -90,7 +90,8 @@ function AuthorList({
                   author.readyToPublish ? "text-emerald-500" : "text-gray-500 dark:text-gray-400"
                 }`}
               >
-                <Subtract32
+                <Subtract
+                  size={32}
                   className="h-4 w-4 fill-current text-gray-500 dark:text-gray-400"
                   aria-hidden="true"
                 />

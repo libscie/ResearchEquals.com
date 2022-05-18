@@ -6,7 +6,7 @@ import Xarrows from "react-xarrows"
 
 import useCurrentModule from "../queries/useCurrentModule"
 import ViewFiles from "./ViewFiles"
-import { ArrowLeft32, Maximize24, UserFollow32 } from "@carbon/icons-react"
+import { ArrowLeft, Maximize, UserFollow } from "@carbon/icons-react"
 import acceptInvitation from "app/authorship/mutations/acceptInvitation"
 import removeInvitation from "app/authorship/mutations/removeInvitation"
 import MetadataInvite from "./MetadataInvite"
@@ -42,7 +42,8 @@ const ModuleInvitation = ({
       <div className="my-4 w-full rounded-md bg-blue-50 p-2 dark:bg-blue-800 lg:flex">
         <div className="my-2 flex flex-grow lg:my-0">
           <div className="inline-block shrink-0 align-middle">
-            <UserFollow32
+            <UserFollow
+              size={32}
               className="inline-block h-5 w-5 stroke-current align-middle text-blue-500 dark:text-blue-200"
               aria-hidden="true"
             />
@@ -107,7 +108,7 @@ const ModuleInvitation = ({
             }}
           >
             <label className="sr-only">Go full screen</label>
-            <Maximize24 className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600" />
+            <Maximize size={24} className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600" />
           </button>
         ) : (
           <button
@@ -116,7 +117,8 @@ const ModuleInvitation = ({
             }}
           >
             <label className="sr-only">Go full screen</label>
-            <ArrowLeft32
+            <ArrowLeft
+              size={32}
               className="h-6 w-6 fill-current text-gray-300 dark:text-gray-600"
               aria-hidden="true"
             />

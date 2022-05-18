@@ -1,7 +1,7 @@
 import { BlitzPage, useSession, useQuery, useRouterQuery, Router, useRouter } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import { Suspense, useEffect, useState } from "react"
-import { ProgressBarRound32 } from "@carbon/icons-react"
+import { ProgressBarRound } from "@carbon/icons-react"
 import moment from "moment"
 
 import Navbar from "../core/components/Navbar"
@@ -79,7 +79,10 @@ const Invitations = ({ currentWorkspace }) => {
               <Suspense
                 fallback={
                   <div className="mx-auto my-auto">
-                    <ProgressBarRound32 className="animate-spin text-white dark:text-white" />
+                    <ProgressBarRound
+                      size={32}
+                      className="animate-spin text-white dark:text-white"
+                    />
                   </div>
                 }
               >

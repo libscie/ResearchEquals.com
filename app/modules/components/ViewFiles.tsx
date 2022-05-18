@@ -1,4 +1,4 @@
-import { Download24 } from "@carbon/icons-react"
+import { Download } from "@carbon/icons-react"
 import filesize from "filesize"
 
 const ViewFiles = ({ name, size, url }) => {
@@ -17,7 +17,10 @@ const ViewFiles = ({ name, size, url }) => {
       </a>
       <p className="flex">
         <a href={url} target="_blank" download rel="noreferrer">
-          <Download24 className="inline-block h-6 w-6 fill-current align-middle text-gray-900 dark:text-gray-200" />
+          <Download
+            size={24}
+            className="inline-block h-6 w-6 fill-current align-middle text-gray-900 dark:text-gray-200"
+          />
         </a>
       </p>
     </div>

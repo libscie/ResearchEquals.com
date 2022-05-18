@@ -1,5 +1,5 @@
 import { Link, Routes } from "blitz"
-import { LogoDiscord32, LogoGithub32, LogoTwitter32 } from "@carbon/icons-react"
+import { LogoDiscord, LogoGithub, LogoTwitter } from "@carbon/icons-react"
 import LibscieLogo from "./LibscieLogo"
 
 const Footer = () => {
@@ -105,7 +105,7 @@ const Footer = () => {
           <p>
             <Link href="https://discord.gg/SefsGJWWSw">
               <a className="flex align-middle" target="_blank">
-                <LogoDiscord32 className="m-1 max-h-4 w-auto" aria-hidden="true" />
+                <LogoDiscord size={32} className="m-1 max-h-4 w-auto" aria-hidden="true" />
                 <span className="text-black hover:bg-indigo-600 hover:text-white dark:text-white">
                   Discord
                 </span>
@@ -115,7 +115,7 @@ const Footer = () => {
           <p>
             <Link href="https://github.com/libscie/ResearchEquals.com">
               <a className="flex align-middle" target="_blank">
-                <LogoGithub32 className="m-1 max-h-4 w-auto" aria-hidden="true" />
+                <LogoGithub size={32} className="m-1 max-h-4 w-auto" aria-hidden="true" />
                 <span className="text-black hover:bg-indigo-600 hover:text-white dark:text-white">
                   GitHub
                 </span>
@@ -125,7 +125,7 @@ const Footer = () => {
           <p>
             <Link href="https://twitter.com/ResearchEquals">
               <a className="flex align-middle" target="_blank">
-                <LogoTwitter32 className="m-1 max-h-4 w-auto" />
+                <LogoTwitter size={32} className="m-1 max-h-4 w-auto" />
                 <span
                   className="text-black hover:bg-indigo-600 hover:text-white dark:text-white"
                   aria-hidden="true"

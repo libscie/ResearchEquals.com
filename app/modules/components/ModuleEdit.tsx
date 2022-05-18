@@ -3,10 +3,10 @@ import { useState, useEffect } from "react"
 import algoliasearch from "algoliasearch"
 import { z } from "zod"
 import { getAlgoliaResults } from "@algolia/autocomplete-js"
-import { ArrowLeft32, Edit24, EditOff24 } from "@carbon/icons-react"
+import { ArrowLeft, Edit, EditOff } from "@carbon/icons-react"
 import { Prisma } from "prisma"
 import { useFormik } from "formik"
-import { WarningSquareFilled32, Maximize24, TrashCan24 } from "@carbon/icons-react"
+import { WarningSquareFilled, Maximize, TrashCan } from "@carbon/icons-react"
 import toast from "react-hot-toast"
 import Xarrows from "react-xarrows"
 
@@ -119,7 +119,8 @@ const ModuleEdit = ({
         <>
           <div className="my-4 flex w-full rounded-md bg-orange-50 p-2 dark:bg-orange-800">
             <div className="inline-block shrink-0 align-middle">
-              <WarningSquareFilled32
+              <WarningSquareFilled
+                size={32}
                 className="inline-block h-5 w-5 fill-current align-middle text-orange-500 dark:text-orange-200"
                 aria-hidden="true"
               />
@@ -199,7 +200,7 @@ const ModuleEdit = ({
             }}
           >
             <label className="sr-only">Go full screen</label>
-            <Maximize24 className="h-6 w-6 fill-current text-gray-900 dark:text-gray-200" />
+            <Maximize size={24} className="h-6 w-6 fill-current text-gray-900 dark:text-gray-200" />
           </button>
         ) : (
           <button
@@ -208,7 +209,8 @@ const ModuleEdit = ({
             }}
           >
             <label className="sr-only">Go full screen</label>
-            <ArrowLeft32
+            <ArrowLeft
+              size={32}
               className="h-6 w-6 fill-current text-gray-900 dark:text-gray-200"
               aria-hidden="true"
             />
@@ -332,7 +334,8 @@ const ModuleEdit = ({
         </div>
         <div className="items-middle pt-8">
           {isEditing ? (
-            <EditOff24
+            <EditOff
+              size={24}
               className="h-6 w-6 fill-current text-gray-900 dark:text-gray-200"
               onClick={() => {
                 setIsEditing(false)
@@ -340,7 +343,8 @@ const ModuleEdit = ({
               aria-label="End editing mode without saving"
             />
           ) : (
-            <Edit24
+            <Edit
+              size={24}
               className="h-6 w-6 fill-current text-gray-900 dark:text-gray-200"
               onClick={() => {
                 setIsEditing(true)
@@ -553,7 +557,8 @@ const ModuleEdit = ({
               <>
                 <li>
                   <button className="mx-2">
-                    <TrashCan24
+                    <TrashCan
+                      size={24}
                       className="inline-block h-6 w-6 fill-current align-middle text-red-500"
                       onClick={async () => {
                         toast.promise(

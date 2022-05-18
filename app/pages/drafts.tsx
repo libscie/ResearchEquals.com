@@ -1,7 +1,6 @@
 import { useSession, useQuery, useRouterQuery, Router, useRouter } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import { Suspense, useEffect, useState } from "react"
-import { ProgressBarRound32 } from "@carbon/icons-react"
 import moment from "moment"
 
 import Navbar from "../core/components/Navbar"

@@ -1,8 +1,8 @@
 import { Link, useMutation, useRouter } from "blitz"
 import { Fragment, useState } from "react"
 import { Dialog, Switch, Transition } from "@headlessui/react"
-import { CheckmarkOutline32 } from "@carbon/icons-react"
-import { Close32, Checkmark32 } from "@carbon/icons-react"
+import { CheckmarkOutline } from "@carbon/icons-react"
+import { Close, Checkmark } from "@carbon/icons-react"
 
 import publishModule from "../../modules/mutations/publishModule"
 import toast from "react-hot-toast"
@@ -32,7 +32,8 @@ export default function PublishModule({ module, user, workspace }) {
     <>
       <div className="my-4 flex w-full rounded-md bg-emerald-50 p-2 dark:bg-emerald-800">
         <div className="inline-block shrink-0 align-middle">
-          <CheckmarkOutline32
+          <CheckmarkOutline
+            size={32}
             className="inline-block h-5 w-5 stroke-current align-middle text-emerald-500 dark:text-emerald-200"
             aria-hidden="true"
           />
@@ -160,7 +161,10 @@ export default function PublishModule({ module, user, workspace }) {
                               )}
                               aria-hidden="true"
                             >
-                              <Close32 className="h-3 w-3 stroke-current stroke-2 text-gray-400" />
+                              <Close
+                                size={32}
+                                className="h-3 w-3 stroke-current stroke-2 text-gray-400"
+                              />
                             </span>
                             <span
                               className={classNames(
@@ -171,7 +175,10 @@ export default function PublishModule({ module, user, workspace }) {
                               )}
                               aria-hidden="true"
                             >
-                              <Checkmark32 className="h-3 w-3 stroke-current stroke-2 text-emerald-600" />
+                              <Checkmark
+                                size={32}
+                                className="h-3 w-3 stroke-current stroke-2 text-emerald-600"
+                              />
                             </span>
                           </span>
                         </Switch>

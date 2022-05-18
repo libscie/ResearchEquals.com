@@ -4,7 +4,7 @@ import UnfollowButton from "app/workspaces/components/UnfollowButton"
 import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
 import { Link, Routes, useQuery } from "blitz"
 import { Fragment, useState } from "react"
-import { Close32 } from "@carbon/icons-react"
+import { Close } from "@carbon/icons-react"
 
 const AuthorPanel = ({ buttonText, title, authors, name }) => {
   const [openPanel, setPanelOpen] = useState(false)
@@ -48,7 +48,7 @@ const AuthorPanel = ({ buttonText, title, authors, name }) => {
                             onClick={() => setPanelOpen(false)}
                           >
                             <span className="sr-only">Close panel</span>
-                            <Close32 className="h-6 w-6" aria-hidden="true" />
+                            <Close size={32} className="h-6 w-6" aria-hidden="true" />
                           </button>
                         </div>
                       </div>
