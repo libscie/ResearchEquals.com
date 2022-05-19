@@ -1,4 +1,4 @@
-import { Download24, TrashCan24 } from "@carbon/icons-react"
+import { Download, TrashCan } from "@carbon/icons-react"
 import { useMutation } from "blitz"
 import toast from "react-hot-toast"
 import filesize from "filesize"
@@ -22,7 +22,8 @@ const EditSupportingFileDisplay = ({ name, size, url, uuid, moduleId, setQueryDa
       </a>
       <p className="flex">
         <button className="mx-2">
-          <TrashCan24
+          <TrashCan
+            size={24}
             className="inline-block h-6 w-6 fill-current align-middle text-red-500"
             onClick={async () => {
               toast.promise(deleteMutation({ id: moduleId, uuid }), {
@@ -38,7 +39,8 @@ const EditSupportingFileDisplay = ({ name, size, url, uuid, moduleId, setQueryDa
           />
         </button>
         <a href={url} target="_blank" download rel="noreferrer">
-          <Download24
+          <Download
+            size={24}
             className="inline-block h-6 w-6 fill-current align-middle text-gray-900 dark:text-gray-200"
             aria-label="Download file"
           />

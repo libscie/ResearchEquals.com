@@ -1,5 +1,5 @@
 import { Listbox, Transition, Dialog } from "@headlessui/react"
-import { Close32, Menu32, NotificationNew32, Notification32 } from "@carbon/icons-react"
+import { Close, Menu, NotificationNew, Notification } from "@carbon/icons-react"
 
 import { Fragment, useState } from "react"
 import ResearchEqualsLogo from "../components/ResearchEqualsLogo"
@@ -22,12 +22,14 @@ const DropdownNotificationModal = ({ invitedModules }) => {
         <span className="inline-block h-full align-middle"></span>
 
         {invitedModules.length > 0 ? (
-          <NotificationNew32
+          <NotificationNew
+            size={32}
             className="inline-block h-6 w-6 stroke-current align-middle text-gray-400"
             aria-hidden="true"
           />
         ) : (
-          <Notification32
+          <Notification
+            size={32}
             className="inline-block h-6 w-6 stroke-current align-middle text-gray-400"
             aria-hidden="true"
           />
@@ -78,7 +80,7 @@ const DropdownNotificationModal = ({ invitedModules }) => {
                           }}
                         >
                           <span className="sr-only">Close menu</span>
-                          <Close32 className="h-6 w-6" aria-hidden="true" />
+                          <Close size={32} className="h-6 w-6" aria-hidden="true" />
                         </button>
                       </div>
                     </div>

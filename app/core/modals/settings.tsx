@@ -1,6 +1,6 @@
 import { Dialog, Transition, Tab } from "@headlessui/react"
 import { Fragment, useState } from "react"
-import { Close32 } from "@carbon/icons-react"
+import { Close } from "@carbon/icons-react"
 
 import WorkspaceSettings from "../components/WorkspaceSettings"
 import AccountSettings from "../components/AccountSettings"
@@ -91,7 +91,8 @@ export default function SettingsModal({ button, styling, user, workspace }) {
                         ))}
                         <button className="inline-flex items-center justify-center  rounded-md p-2 text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 dark:text-gray-500 dark:hover:text-gray-300">
                           <span className="sr-only">Close menu</span>
-                          <Close32
+                          <Close
+                            size={32}
                             className="h-6 w-6"
                             aria-hidden="true"
                             onClick={() => {

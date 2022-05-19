@@ -5,7 +5,7 @@ import { Link, useMutation, useQuery, validateZodSchema, useRouter } from "blitz
 import { useFormik } from "formik"
 import { Fragment, useState } from "react"
 import { z } from "zod"
-import { Checkmark32, Close32, InformationSquareFilled32 } from "@carbon/icons-react"
+import { Checkmark, Close, InformationSquareFilled } from "@carbon/icons-react"
 
 import createModule from "../mutations/createModule"
 import toast from "react-hot-toast"
@@ -129,7 +129,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                               onClick={() => setCreateOpen(false)}
                             >
                               <span className="sr-only">Close panel</span>
-                              <Close32 className="h-6 w-6" aria-hidden="true" />
+                              <Close size={32} className="h-6 w-6" aria-hidden="true" />
                             </button>
                           </div>
                         </div>
@@ -223,7 +223,10 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             License{" "}
                             <Link href="https://creativecommons.org/about/cclicenses">
                               <a target="_blank">
-                                <InformationSquareFilled32 className="h-5 w-5 fill-current text-gray-700 dark:text-gray-200" />
+                                <InformationSquareFilled
+                                  size={32}
+                                  className="h-5 w-5 fill-current text-gray-700 dark:text-gray-200"
+                                />
                               </a>
                             </Link>
                             {formik.touched.license && formik.errors.license ? (
@@ -321,7 +324,8 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                           formikReset()
                         }}
                       >
-                        <Close32
+                        <Close
+                          size={32}
                           className="h-4 w-4 fill-current pt-1 text-red-500"
                           aria-hidden="true"
                         />
@@ -331,7 +335,8 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                         type="submit"
                         className="flex rounded-md bg-emerald-50 py-2 px-4 text-sm font-medium text-emerald-700 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-emerald-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                       >
-                        <Checkmark32
+                        <Checkmark
+                          size={32}
                           className="h-4 w-4 fill-current pt-1 text-emerald-500"
                           aria-hidden="true"
                         />

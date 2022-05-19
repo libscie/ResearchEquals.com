@@ -1,6 +1,6 @@
 import { BlitzPage, Link, useQuery, useRouter, useSession } from "blitz"
 import Layout from "app/core/layouts/Layout"
-import { SendAltFilled32 } from "@carbon/icons-react"
+import { SendAltFilled } from "@carbon/icons-react"
 import Markdown from "markdown-it"
 
 import Navbar from "../core/components/Navbar"
@@ -197,7 +197,8 @@ const CodeOfConduct: BlitzPage = () => {
           <div className="onboarding my-2 flex w-full flex-col rounded-r border-l-4 border-amber-400 bg-amber-50 p-4 dark:border-amber-200 dark:bg-amber-900 lg:my-0">
             <div className="flex flex-grow">
               <div className="">
-                <SendAltFilled32
+                <SendAltFilled
+                  size={32}
                   className="h-5 w-5 text-amber-400 dark:text-amber-200"
                   aria-hidden="true"
                 />

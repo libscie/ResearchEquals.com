@@ -29,8 +29,8 @@
   },
   "dependencies": {
     "@algolia/autocomplete-js": "1.5.2",
-    "@carbon/icons-react": "10.45.0",
     "@faker-js/faker": "6.3.1",
+    "@carbon/icons-react": "11.3.0",
     "@floating-ui/dom": "0.2.0",
     "@headlessui/react": "1.4.3",
     "@prisma/client": "3.8.1",

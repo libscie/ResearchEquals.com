@@ -1,7 +1,7 @@
 import { Fragment } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import { Link, Routes, useMutation } from "blitz"
-import { Checkmark32, Close32, TrashCan24 } from "@carbon/icons-react"
+import { Checkmark, Close, TrashCan } from "@carbon/icons-react"
 
 import ModuleCard from "app/core/components/ModuleCard"
 import moment from "moment"
@@ -41,7 +41,7 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                           onClick={() => setOpen(false)}
                         >
                           <span className="sr-only">Close panel</span>
-                          <Close32 className="h-6 w-6" aria-hidden="true" />
+                          <Close size={32} className="h-6 w-6" aria-hidden="true" />
                         </button>
                       </div>
                     </div>
@@ -99,7 +99,8 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                               )
                             }}
                           >
-                            <TrashCan24
+                            <TrashCan
+                              size={24}
                               className="inline-block h-4 w-4 fill-current align-middle text-red-500"
                               aria-hidden="true"
                             />
@@ -117,7 +118,8 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                         setOpen(false)
                       }}
                     >
-                      <Close32
+                      <Close
+                        size={32}
                         className="h-4 w-4 fill-current pt-1 text-red-500"
                         aria-hidden="true"
                       />
@@ -130,7 +132,8 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                         setOpen(false)
                       }}
                     >
-                      <Checkmark32
+                      <Checkmark
+                        size={32}
                         className="h-4 w-4 stroke-current pt-1 text-emerald-500"
                         aria-hidden="true"
                       />

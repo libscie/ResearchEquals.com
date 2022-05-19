@@ -1,4 +1,4 @@
-import { ChevronLeft32, ChevronRight32 } from "@carbon/icons-react"
+import { ChevronLeft, ChevronRight } from "@carbon/icons-react"
 
 const FeedPagination = ({
   ITEMS_PER_PAGE,
@@ -23,7 +23,7 @@ const FeedPagination = ({
             onClick={goToPreviousPage}
           >
             <span className="sr-only">Previous</span>
-            <ChevronLeft32 className="h-5 w-5" aria-hidden="true" />
+            <ChevronLeft size={32} className="h-5 w-5" aria-hidden="true" />
           </button>
           {/* TODO: Drop middle buttons that don't fit screen */}
           {Array.from({ length: Math.ceil(count / ITEMS_PER_PAGE) }, (x, i) => i).map((pageNr) => (
@@ -51,7 +51,7 @@ const FeedPagination = ({
             onClick={goToNextPage}
           >
             <span className="sr-only">Previous</span>
-            <ChevronRight32 className="h-5 w-5" aria-hidden="true" />
+            <ChevronRight size={32} className="h-5 w-5" aria-hidden="true" />
           </button>
         </nav>
       </div>
