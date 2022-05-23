@@ -327,6 +327,21 @@ const Module = ({ module, mainFile, supportingRaw }) => {
             ) : (
               ""
             )}
+            {/* Preview Office files */}
+            {mainFile.mimeType === "application/vnd.ms-excel" ||
+            mainFile.mimeType ===
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+            mainFile.mimeType ===
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ? (
+              <iframe
+                src={`https://view.officeapps.live.com/op/embed.aspx?src=${mainFile.cdnUrl}`}
+                width="100%"
+                height="800px"
+                frameBorder="0"
+              ></iframe>
+            ) : (
+              ""
+            )}
           </div>
         ) : (
           ""
