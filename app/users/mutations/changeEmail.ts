@@ -19,9 +19,9 @@ export default resolver.pipe(resolver.authorize(), async ({ email }, ctx: Ctx) =
   // TODO Update template
   await Promise.all([
     sendEmailWithTemplate(email, "welcome", {
-      handle: "test",
+      handle: user.email,
       days: 30,
-      verify_email_url: url`/verifyEmail/${emailCode}`,
+      verify_email_url: url`/verifyEmail/${emailCode}?userId=${user.id}`,
     }),
   ])
   // TODO? Add security email to old email
