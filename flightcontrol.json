@@ -57,6 +57,13 @@
             "QUIRREL_ENCRYPTION_SECRET": {
               "fromParameterStore": "QUIRREL_ENCRYPTION_SECRET"
             },
+            "QUIRREL_MIGRATE_OLD_API_URL": "api.quirrel.dev",
+            "QUIRREL_API_URL": {
+              "fromParameterStore": "QUIRREL_API_URL"
+            },
+            "QUIRREL_MIGRATE_OLD_TOKEN": {
+              "fromParameterStore": "QUIRREL_MIGRATE_OLD_TOKEN"
+            },
             "QUIRREL_TOKEN": {
               "fromParameterStore": "QUIRREL_TOKEN"
             },
