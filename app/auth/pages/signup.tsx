@@ -4,7 +4,7 @@ import { useFormik } from "formik"
 import { z } from "zod"
 import { useState } from "react"
 import { Switch } from "@headlessui/react"
-import { Close32, Checkmark32 } from "@carbon/icons-react"
+import { Close, Checkmark } from "@carbon/icons-react"
 import toast from "react-hot-toast"
 
 import signup from "../mutations/signup"
@@ -172,7 +172,7 @@ const SignupPage: BlitzPage = () => {
                     )}
                     aria-hidden="true"
                   >
-                    <Close32 className="h-3 w-3 stroke-current stroke-2 text-gray-400" />
+                    <Close size={32} className="h-3 w-3 stroke-current stroke-2 text-gray-400" />
                   </span>
                   <span
                     className={classNames(
@@ -183,7 +183,10 @@ const SignupPage: BlitzPage = () => {
                     )}
                     aria-hidden="true"
                   >
-                    <Checkmark32 className="h-3 w-3 stroke-current stroke-2 text-indigo-600" />
+                    <Checkmark
+                      size={32}
+                      className="h-3 w-3 stroke-current stroke-2 text-indigo-600"
+                    />
                   </span>
                 </span>
               </Switch>
@@ -233,7 +236,7 @@ const SignupPage: BlitzPage = () => {
                     )}
                     aria-hidden="true"
                   >
-                    <Close32 className="h-3 w-3 stroke-current stroke-2 text-gray-400" />
+                    <Close size={32} className="h-3 w-3 stroke-current stroke-2 text-gray-400" />
                   </span>
                   <span
                     className={classNames(
@@ -244,7 +247,10 @@ const SignupPage: BlitzPage = () => {
                     )}
                     aria-hidden="true"
                   >
-                    <Checkmark32 className="h-3 w-3 stroke-current stroke-2 text-indigo-600" />
+                    <Checkmark
+                      size={32}
+                      className="h-3 w-3 stroke-current stroke-2 text-indigo-600"
+                    />
                   </span>
                 </span>
               </Switch>

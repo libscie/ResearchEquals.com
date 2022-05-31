@@ -4,7 +4,7 @@ import moment from "moment"
 import toast from "react-hot-toast"
 import algoliasearch from "algoliasearch"
 import { getAlgoliaResults } from "@algolia/autocomplete-js"
-import { Add32 } from "@carbon/icons-react"
+import { Add } from "@carbon/icons-react"
 
 import addAuthor from "../mutations/addAuthor"
 import AuthorAvatarsNew from "./AuthorAvatarsNew"
@@ -155,7 +155,8 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
                   setAddAuthors(true)
                 }}
               >
-                <Add32
+                <Add
+                  size={32}
                   className="h-4 w-4 fill-current text-gray-500 dark:text-gray-200 dark:hover:text-gray-400"
                   aria-hidden="true"
                 />

@@ -3,7 +3,7 @@ import db from "db"
 import { Link, useRouter, usePaginatedQuery, useParams, useQuery, useSession } from "blitz"
 import { Suspense } from "react"
 import moment from "moment"
-import { Calendar32, UserFollow32, Link32 } from "@carbon/icons-react"
+import { Calendar, UserFollow, Link as Link32 } from "@carbon/icons-react"
 
 import Navbar from "../core/components/Navbar"
 import getHandleFeed from "../workspaces/queries/getHandleFeed"
@@ -119,7 +119,8 @@ const Handle = ({ workspace, expire, signature }) => {
               <p className="flex text-sm font-normal leading-4 text-gray-500 dark:text-gray-200">
                 <p>
                   <span className="inline-block h-full align-middle"> </span>
-                  <Calendar32
+                  <Calendar
+                    size={32}
                     className="mr-1 inline-block h-4 w-4 align-middle text-gray-700 dark:text-gray-400"
                     aria-hidden="true"
                   />
@@ -157,6 +158,7 @@ const Handle = ({ workspace, expire, signature }) => {
                   <p>
                     <span className="inline-block h-full align-middle"> </span>
                     <Link32
+                      size={32}
                       className="mr-1 inline-block h-4 w-4 align-middle text-gray-700 dark:text-gray-400"
                       aria-hidden="true"
                     />
@@ -179,7 +181,8 @@ const Handle = ({ workspace, expire, signature }) => {
                     <p className="flex text-sm font-normal leading-4 text-gray-500 underline dark:text-gray-200">
                       <p>
                         <span className="inline-block h-full align-middle"> </span>
-                        <UserFollow32
+                        <UserFollow
+                          size={32}
                           className="mr-1 inline-block h-4 w-4 align-middle text-gray-700 dark:text-gray-400"
                           aria-hidden="true"
                         />

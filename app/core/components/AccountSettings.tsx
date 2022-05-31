@@ -4,7 +4,7 @@ import { useMutation, validateZodSchema } from "blitz"
 import { useFormik } from "formik"
 import toast from "react-hot-toast"
 import { z } from "zod"
-import { Checkmark32, Close32 } from "@carbon/icons-react"
+import { Checkmark, Close } from "@carbon/icons-react"
 
 import DeleteModal from "../modals/delete"
 
@@ -159,7 +159,11 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
                 setIsOpen(false)
               }}
             >
-              <Close32 className="h-4 w-4 fill-current pt-1 text-red-500" aria-hidden="true" />
+              <Close
+                size={32}
+                className="h-4 w-4 fill-current pt-1 text-red-500"
+                aria-hidden="true"
+              />
               Cancel
             </button>
           </div>
@@ -167,7 +171,8 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
             type="submit"
             className="mr-4 flex rounded-md bg-emerald-50 py-2 px-4 text-sm font-medium text-emerald-700 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-emerald-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
           >
-            <Checkmark32
+            <Checkmark
+              size={32}
               className="h-4 w-4 fill-current pt-1 text-emerald-500"
               aria-hidden="true"
             />

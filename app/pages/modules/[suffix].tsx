@@ -1,6 +1,6 @@
 import { Prisma } from "prisma"
 import { Link, NotFoundError, Routes, useMutation, useQuery, useRouter, useSession } from "blitz"
-import { AddAlt32, NextFilled32, PreviousFilled32 } from "@carbon/icons-react"
+import { AddAlt, NextFilled, PreviousFilled } from "@carbon/icons-react"
 import Xarrows from "react-xarrows"
 import { useEffect, useState } from "react"
 import Helmet from "react-helmet"
@@ -151,7 +151,8 @@ const Module = ({ module, mainFile, supportingRaw }) => {
               setPreviousOpen(true)
             }}
           >
-            <PreviousFilled32
+            <PreviousFilled
+              size={32}
               className="h-10 w-10 rounded-full bg-white dark:bg-gray-900 "
               id="modulePrevious"
             />
@@ -177,7 +178,10 @@ const Module = ({ module, mainFile, supportingRaw }) => {
               setPreviousOpen(true)
             }}
           >
-            <PreviousFilled32 className="h-10 w-10 rounded-full bg-white dark:bg-gray-900 " />
+            <PreviousFilled
+              size={32}
+              className="h-10 w-10 rounded-full bg-white dark:bg-gray-900 "
+            />
           </button>
         ) : (
           ""
@@ -193,7 +197,8 @@ const Module = ({ module, mainFile, supportingRaw }) => {
                 setLeadsToOpen(true)
               }}
             >
-              <NextFilled32
+              <NextFilled
+                size={32}
                 className="h-10 w-10 rounded-full bg-white dark:bg-gray-900"
                 id="moduleNext"
               />
@@ -244,7 +249,11 @@ const Module = ({ module, mainFile, supportingRaw }) => {
           }}
           className={`${(previousOpen || leadsToOpen) && !biggerWindow ? "hidden" : "inline"}`}
         >
-          <AddAlt32 className="h-10 w-10 rounded-full bg-white dark:bg-gray-900 " id="moduleAdd" />
+          <AddAlt
+            size={32}
+            className="h-10 w-10 rounded-full bg-white dark:bg-gray-900 "
+            id="moduleAdd"
+          />
         </button>
 
         <Xarrows
@@ -315,6 +324,21 @@ const Module = ({ module, mainFile, supportingRaw }) => {
                   {mainFileMarkdown}
                 </ReactMarkdown>
               </div>
+            ) : (
+              ""
+            )}
+            {/* Preview Office files */}
+            {mainFile.mimeType === "application/vnd.ms-excel" ||
+            mainFile.mimeType ===
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+            mainFile.mimeType ===
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ? (
+              <iframe
+                src={`https://view.officeapps.live.com/op/embed.aspx?src=${mainFile.cdnUrl}`}
+                width="100%"
+                height="800px"
+                frameBorder="0"
+              ></iframe>
             ) : (
               ""
             )}

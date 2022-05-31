@@ -1,7 +1,7 @@
 import { Link, Routes, useMutation } from "blitz"
 import { Menu, Popover, Transition } from "@headlessui/react"
 import { Fragment } from "react"
-import { Add32, Settings32, Notification32, NotificationNew32 } from "@carbon/icons-react"
+import { Add, Settings, Notification, NotificationNew } from "@carbon/icons-react"
 
 import logout from "../../auth/mutations/logout"
 import SettingsModal from "../modals/settings"
@@ -33,9 +33,13 @@ const FullWidthMenu = ({
               >
                 <span className="sr-only">View notifications</span>
                 {invitedModules.length > 0 ? (
-                  <NotificationNew32 className="h-6 w-6" aria-hidden="true" />
+                  <NotificationNew size={32} className="h-6 w-6" aria-hidden="true" />
                 ) : (
-                  <Notification32 className="h-6 w-6 cursor-not-allowed" aria-hidden="true" />
+                  <Notification
+                    size={32}
+                    className="h-6 w-6 cursor-not-allowed"
+                    aria-hidden="true"
+                  />
                 )}
               </Popover.Button>
               <Transition
@@ -64,7 +68,8 @@ const FullWidthMenu = ({
         <SettingsModal
           styling="ml-1 shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
           button={
-            <Settings32
+            <Settings
+              size={32}
               className="flex h-6 w-6 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               aria-hidden="true"
             />
@@ -129,7 +134,8 @@ const FullWidthMenu = ({
         <QuickDraft
           buttonText={
             <>
-              <Add32
+              <Add
+                size={32}
                 className="h-4 w-4 fill-current text-indigo-500 dark:text-gray-400"
                 aria-hidden="true"
               />

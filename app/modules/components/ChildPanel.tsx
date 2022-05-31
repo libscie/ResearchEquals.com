@@ -2,7 +2,7 @@ import { Fragment } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import { Link, Routes } from "blitz"
 import moment from "moment"
-import { Close32 } from "@carbon/icons-react"
+import { Close } from "@carbon/icons-react"
 import ModuleCard from "../../core/components/ModuleCard"
 
 const ChildPanel = ({ openObject, openFunction, module }) => {
@@ -37,7 +37,7 @@ const ChildPanel = ({ openObject, openFunction, module }) => {
                             onClick={() => openFunction(false)}
                           >
                             <span className="sr-only">Close panel</span>
-                            <Close32 className="h-6 w-6" aria-hidden="true" />
+                            <Close size={32} className="h-6 w-6" aria-hidden="true" />
                           </button>
                         </div>
                       </div>

@@ -10,19 +10,19 @@ import {
 } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import {
-  CurrencyEuro32,
-  Save32,
-  Checkmark24,
-  Favorite32,
-  CircleStrokeGlyph,
-  TableSplit32,
-  Terminal32,
-  Language32,
-  Alarm32,
-  Events32,
-  TextAlignLeft32,
-  Video32,
-  CircleFillGlyph,
+  CurrencyEuro,
+  Save,
+  Checkmark,
+  Favorite,
+  CircleStroke,
+  TableSplit,
+  Terminal,
+  Language,
+  Alarm,
+  Events,
+  TextAlignLeft,
+  Video,
+  CircleFill,
 } from "@carbon/icons-react"
 import Xarrows from "react-xarrows"
 import { useMediaPredicate } from "react-media-hook"
@@ -35,7 +35,6 @@ import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import getDrafts from "app/core/queries/getDrafts"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
-import { useRef } from "react"
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const licenses = await db.license.findMany({
@@ -125,7 +124,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                       className="module h-28 w-28 bg-pink-600 text-center text-white md:h-28  md:w-28"
                     >
                       <span className="inline-block h-full align-middle"></span>
-                      <CircleStrokeGlyph
+                      <CircleStroke
                         id="step-1-button"
                         className="justify-middle inline-block h-6 w-6 fill-current stroke-current stroke-2 align-middle text-white"
                       />
@@ -139,7 +138,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                       className="module h-28 w-28 bg-indigo-600 text-center text-white md:h-28  md:w-28"
                     >
                       <span className="inline-block h-full align-middle"></span>
-                      <CircleFillGlyph
+                      <CircleFill
                         id="step-2-button"
                         className="justify-middle inline-block h-6 w-6 fill-current stroke-current stroke-2 align-middle text-white"
                       />
@@ -150,7 +149,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                       className="module h-28 w-28 bg-emerald-600 text-center text-white md:h-28  md:w-28"
                     >
                       <span className="inline-block h-full align-middle"></span>
-                      <CircleFillGlyph
+                      <CircleFill
                         id="step-3-button"
                         className="justify-middle inline-block h-6 w-6 fill-current stroke-current stroke-2 align-middle text-white"
                       />
@@ -277,7 +276,8 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
           <div className="flex">
             <div className="relative hidden text-center sm:inline">
               <div className="grid h-full w-full grid-cols-3 gap-8 fill-current  text-center text-gray-900 dark:text-white">
-                <Terminal32
+                <Terminal
+                  size={32}
                   data-tip
                   data-for="codeTip"
                   id="code-module"
@@ -289,7 +289,8 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                 <div></div>
                 <div></div>
                 <div></div>
-                <TextAlignLeft32
+                <TextAlignLeft
+                  size={32}
                   data-tip
                   data-for="textTip"
                   id="text-module"
@@ -299,14 +300,21 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                   Text
                 </ReactTooltip>
                 <div></div>
-                <Video32 data-tip data-for="videoTip" id="video-module" className="opacity-40" />
+                <Video
+                  size={32}
+                  data-tip
+                  data-for="videoTip"
+                  id="video-module"
+                  className="opacity-40"
+                />
                 <ReactTooltip id="videoTip" place="top" effect="solid">
                   Video
                 </ReactTooltip>
                 <div></div>
                 <div></div>
                 <div></div>
-                <TableSplit32
+                <TableSplit
+                  size={32}
                   data-tip
                   data-for="tableTip"
                   id="data-module"
@@ -359,13 +367,17 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                   </h2>
                   <p className="my-2 flex text-lg">
                     We{" "}
-                    <Favorite32 className="mx-2 h-6 w-6 fill-current stroke-current stroke-2 text-white" />{" "}
+                    <Favorite
+                      size={32}
+                      className="mx-2 h-6 w-6 fill-current stroke-current stroke-2 text-white"
+                    />{" "}
                     open access, so we made it free.
                   </p>
                   <ul role="list" className="my-4 space-y-4">
                     {freeLicenses.map((license) => (
                       <li key={license.id} className="flex space-x-3 text-lg">
-                        <Checkmark24
+                        <Checkmark
+                          size={24}
                           className="h-6 w-6 shrink-0 fill-current stroke-current stroke-2 text-white"
                           aria-hidden="true"
                         />
@@ -393,7 +405,8 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                   <ul role="list" className="my-4 space-y-4">
                     {payToClose.map((license) => (
                       <li className="flex space-x-3 text-lg" key={license.id}>
-                        <CurrencyEuro32
+                        <CurrencyEuro
+                          size={32}
                           className="h-6 w-6 shrink-0 fill-current stroke-current stroke-2 text-white"
                           aria-hidden="true"
                         />
@@ -420,28 +433,32 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                 <div className="flex-grow"></div>
                 <div className="">
                   <div className="mr-4 flex space-x-3 text-lg">
-                    <Language32
+                    <Language
+                      size={32}
                       className=" mr-2 h-6 w-6 shrink-0 fill-current text-white"
                       aria-hidden="true"
                     />
                     Your language
                   </div>
                   <div className="mr-4 flex space-x-3 text-lg">
-                    <Alarm32
+                    <Alarm
+                      size={32}
                       className=" mr-2 h-6 w-6 shrink-0 fill-current text-white"
                       aria-hidden="true"
                     />
                     Your timeline
                   </div>
                   <div className="mr-4 flex space-x-3 text-lg">
-                    <Events32
+                    <Events
+                      size={32}
                       className=" mr-2 h-6 w-6 shrink-0 fill-current text-white"
                       aria-hidden="true"
                     />
                     Your co-authors
                   </div>
                   <div className="mr-4 flex space-x-3 text-lg">
-                    <Save32
+                    <Save
+                      size={32}
                       className=" mr-2 h-6 w-6 shrink-0 fill-current text-white"
                       aria-hidden="true"
                     />
