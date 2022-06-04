@@ -1,2 +1,2 @@
-release: npx blitz prisma migrate deploy && npx blitz db seed
+release: npx blitz prisma migrate deploy
 web: npm run start:production
