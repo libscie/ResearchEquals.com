@@ -30,7 +30,7 @@
   "dependencies": {
     "@algolia/autocomplete-js": "1.6.3",
     "@faker-js/faker": "6.3.1",
-    "@carbon/icons-react": "11.3.0",
+    "@carbon/icons-react": "11.4.0",
     "@floating-ui/dom": "0.5.0",
     "@headlessui/react": "1.4.3",
     "@prisma/client": "3.8.1",
