@@ -1,7 +1,7 @@
 import db from "db"
 import moment from "moment"
 import algoliasearch from "algoliasearch"
-import faker from "@faker-js/faker"
+import { faker } from "@faker-js/faker"
 
 import generateSuffix from "../app/modules/mutations/generateSuffix"
 
