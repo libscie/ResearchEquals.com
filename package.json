@@ -31,7 +31,7 @@
     "@algolia/autocomplete-js": "1.6.3",
     "@carbon/icons-react": "11.5.0",
     "@faker-js/faker": "7.2.0",
-    "@floating-ui/dom": "0.5.2",
+    "@floating-ui/dom": "0.5.3",
     "@headlessui/react": "1.6.4",
     "@prisma/client": "3.15.0",
     "@react-pdf-viewer/core": "3.4.0",
