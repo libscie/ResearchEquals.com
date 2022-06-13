@@ -55,7 +55,7 @@
     "passport-orcid": "0.0.4",
     "pdfjs-dist": "2.13.216",
     "postcss": "8.4.6",
-    "postmark": "2.8.1",
+    "postmark": "3.0.11",
     "prisma": "3.8.1",
     "quirrel": "1.8.1",
     "react": "18.1.0",
