@@ -36,7 +36,7 @@
     "@prisma/client": "3.15.1",
     "@react-pdf-viewer/core": "3.5.0",
     "@stripe/stripe-js": "1.31.0",
-    "@tailwindcss/forms": "0.5.1",
+    "@tailwindcss/forms": "0.5.2",
     "@tailwindcss/line-clamp": "0.4.0",
     "@uploadcare/react-widget": "2.1.1",
     "algoliasearch": "4.12.0",
