@@ -50,7 +50,7 @@
     "form-data": "4.0.0",
     "formik": "2.2.9",
     "husky": "8.0.1",
-    "markdown-it": "12.3.2",
+    "markdown-it": "13.0.1",
     "moment": "2.29.3",
     "passport-orcid": "0.0.4",
     "pdfjs-dist": "2.14.305",
