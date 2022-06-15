@@ -280,7 +280,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
             )}
             {/* Preview PDF */}
             {mainFile.mimeType === "application/pdf" ? (
-              <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.13.216/build/pdf.worker.min.js">
+              <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.14.305/build/pdf.worker.min.js">
                 <div style={{ height: "750px" }} className="max-w-screen text-gray-900">
                   <Viewer fileUrl={mainFile.cdnUrl} />
                 </div>
