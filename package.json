@@ -83,7 +83,7 @@
   "devDependencies": {
     "@types/react": "17.0.38",
     "lint-staged": "13.0.1",
-    "prettier": "2.7.0",
+    "prettier": "2.7.1",
     "prettier-plugin-prisma": "3.14.0",
     "prettier-plugin-tailwindcss": "0.1.11",
     "pretty-quick": "3.1.3"
