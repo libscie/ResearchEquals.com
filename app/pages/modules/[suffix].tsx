@@ -123,7 +123,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
   } else {
     arrowColor = "transparent"
   }
-
+  console.log(process.env.APP_ORIGIN)
   useEffect(() => {
     if (mainFile.mimeType === "text/markdown") {
       fetch(mainFile.cdnUrl)
@@ -271,7 +271,11 @@ const Module = ({ module, mainFile, supportingRaw }) => {
         {mainFile.name ? (
           <div className="my-8">
             <h2 className="text-lg">Main file</h2>
-            <ViewFiles name={mainFile.name} size={mainFile.size} url={mainFile.cdnUrl} />
+            <ViewFiles
+              name={mainFile.name}
+              size={mainFile.size}
+              url={`/api/modules/main/${module.suffix}`}
+            />
             {/* Preview image */}
             {mainFile.isImage ? (
               <img src={mainFile.cdnUrl} className="mx-auto my-2 h-auto w-full" />

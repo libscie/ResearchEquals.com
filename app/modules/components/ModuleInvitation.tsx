@@ -151,7 +151,11 @@ const ModuleInvitation = ({
       {mainFile.name ? (
         <div className="my-8">
           <h2 className="text-lg">Main file</h2>
-          <ViewFiles name={mainFile.name} size={mainFile.size} url={mainFile.cdnUrl} />
+          <ViewFiles
+            name={mainFile.name}
+            size={mainFile.size}
+            url={`/api/modules/main/${module.suffix}`}
+          />
         </div>
       ) : (
         ""
