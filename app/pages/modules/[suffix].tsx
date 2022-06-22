@@ -483,27 +483,11 @@ const ModulePage = ({ module }) => {
           )}
           <meta
             property="og:image"
-            content={`http://og-images.herokuapp.com/api/module?title=${encodeURIComponent(
-              module.title
-            )}&type=${module.type.name}&doi=${module.prefix}/${
-              module.suffix
-            }&publishedAt=${module.publishedAt
-              .toISOString()
-              .substr(0, 10)}&avatars=${encodeURIComponent(authorsOG.join(";"))}&license=${
-              module.license.name
-            }`}
+            content={`https://ucarecdn.com/f65e7eca-bd38-48ab-ad79-ddcafa184431/`}
           />
           <meta
             property="og:image:secure_url"
-            content={`http://og-images.herokuapp.com/api/module?title=${encodeURIComponent(
-              module.title
-            )}&type=${module.type.name}&doi=${module.prefix}/${
-              module.suffix
-            }&publishedAt=${module.publishedAt
-              .toISOString()
-              .substr(0, 10)}&avatars=${encodeURIComponent(authorsOG.join(";"))}&license=${
-              module.license.name
-            }`}
+            content={`https://ucarecdn.com/f65e7eca-bd38-48ab-ad79-ddcafa184431/`}
           />
           <meta
             property="og:image:alt"
@@ -519,15 +503,7 @@ const ModulePage = ({ module }) => {
           <meta name="twitter:description" content={module.description} />
           <meta
             name="twitter:image"
-            content={`http://og-images.herokuapp.com/api/module?title=${encodeURIComponent(
-              module.title
-            )}&type=${module.type.name}&doi=${module.prefix}/${
-              module.suffix
-            }&publishedAt=${module.publishedAt
-              .toISOString()
-              .substr(0, 10)}&avatars=${encodeURIComponent(authorsOG.join(";"))}&license=${
-              module.license.name
-            }`}
+            content={`https://ucarecdn.com/f65e7eca-bd38-48ab-ad79-ddcafa184431/`}
           />
         </>
       }

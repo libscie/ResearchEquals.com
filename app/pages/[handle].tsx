@@ -217,22 +217,8 @@ const HandlePage = ({ workspace, expire, signature }) => {
         <>
           <meta property="og:title" content={workspace.firstName || workspace.handle} />
           {workspace.bio ? <meta property="og:description" content={workspace.bio} /> : ""}
-          <meta
-            property="og:image"
-            content={`http://og-images.herokuapp.com/api/workspace?title=${
-              encodeURIComponent(workspace.firstName) || ""
-            } ${encodeURIComponent(workspace.lastName) || ""}&avatar=${encodeURIComponent(
-              workspace.avatar
-            )}&handle=${encodeURIComponent(workspace.handle)}&orcid=${workspace.orcid || ""}`}
-          />
-          <meta
-            property="og:image:secure_url"
-            content={`http://og-images.herokuapp.com/api/workspace?title=${
-              encodeURIComponent(workspace.firstName) || ""
-            } ${encodeURIComponent(workspace.lastName) || ""}&avatar=${encodeURIComponent(
-              workspace.avatar
-            )}&handle=${encodeURIComponent(workspace.handle)}&orcid=${workspace.orcid || ""}`}
-          />
+          <meta property="og:image" content={`${workspace.avatar}`} />
+          <meta property="og:image:secure_url" content={`${workspace.avatar}`} />
           <meta
             property="og:image:alt"
             content={`Social media sharing image of the profile for ${workspace.handle}, including the avatar, name, handle, and ORCID.`}
@@ -249,14 +235,7 @@ const HandlePage = ({ workspace, expire, signature }) => {
             }
           />
           {workspace.bio ? <meta name="twitter:description" content={workspace.bio} /> : ""}
-          <meta
-            name="twitter:image"
-            content={`http://og-images.herokuapp.com/api/workspace?title=${
-              encodeURIComponent(workspace.firstName) || ""
-            } ${encodeURIComponent(workspace.lastName) || ""}&avatar=${encodeURIComponent(
-              workspace.avatar
-            )}&handle=${encodeURIComponent(workspace.handle)}&orcid=${workspace.orcid || ""}`}
-          />
+          <meta name="twitter:image" content={`${workspace.avatar}`} />
         </>
       }
     >
