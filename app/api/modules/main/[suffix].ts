@@ -7,7 +7,9 @@ const handler: BlitzApiHandler = async (req, res) => {
     query: { suffix },
   } = req
 
-  const module = await db.module.findFirst({ where: { suffix: suffix?.toString() } })
+  const module = await db.module.findFirst({
+    where: { suffix: suffix?.toString(), published: true },
+  })
   return new Promise((resolve, reject) => {
     https
       .get(module?.main!["cdnUrl"], (response) => {
