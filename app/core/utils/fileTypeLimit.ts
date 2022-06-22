@@ -158,7 +158,7 @@ export const fileTypeLimit = (fileInfo: FileInfo) => {
   }
   const extension = fileInfo.name.split(".").pop()
 
-  if (extension && !types.includes(extension)) {
+  if (extension && !types.includes(extension.toLowerCase())) {
     throw new Error("fileType")
   }
 }
