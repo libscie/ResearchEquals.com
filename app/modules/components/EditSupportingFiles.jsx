@@ -29,7 +29,9 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit, user, workspace, expire
             setQueryData(data)
             return "Uploaded!"
           },
-          error: "Uh-oh something went wrong.",
+          error: (error) => {
+            return error.toString()
+          },
         }
       )
     } catch (err) {
