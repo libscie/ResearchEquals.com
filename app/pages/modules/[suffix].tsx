@@ -359,7 +359,9 @@ const Module = ({ module, mainFile, supportingRaw }) => {
                   <ViewFiles
                     name={file.original_filename}
                     size={file.size}
-                    url={file.original_file_url}
+                    url={`/api/modules/supporting/${module.suffix}/${encodeURI(
+                      file.original_filename
+                    )}`}
                   />
                 </>
               ))}
