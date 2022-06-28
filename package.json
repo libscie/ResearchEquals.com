@@ -71,6 +71,7 @@
     "react-tooltip": "4.2.21",
     "react-xarrows": "2.0.2",
     "recharts": "2.1.11",
+    "recoil": "0.7.4",
     "rehype-katex": "6.0.2",
     "remark-gfm": "3.0.1",
     "remark-math": "5.1.1",
