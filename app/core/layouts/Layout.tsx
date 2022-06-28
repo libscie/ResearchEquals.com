@@ -2,6 +2,8 @@ import { ReactNode, useEffect, useState } from "react"
 import { Head, Link, Routes } from "blitz"
 import CookieConsent, { Cookies, getCookieConsentValue } from "react-cookie-consent"
 import { Toaster } from "react-hot-toast"
+import { RecoilRoot } from "recoil"
+
 import Footer from "../components/Footer"
 
 type LayoutProps = {
@@ -43,17 +45,19 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
         /> */}
         {headChildren}
       </Head>
-      <div className="flex min-h-screen flex-col bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
-        {/* <div className="z-50 w-screen bg-red-700 py-4 text-center text-white">
+      <RecoilRoot>
+        <div className="flex min-h-screen flex-col bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
+          {/* <div className="z-50 w-screen bg-red-700 py-4 text-center text-white">
           <Link href="https://status.crossref.org/">
-            <a target="_blank" className="underline">
-              CrossRef services are interrupted.
-            </a>
+          <a target="_blank" className="underline">
+          CrossRef services are interrupted.
+          </a>
           </Link>{" "}
           Publishing not possible until resolved.
         </div> */}
-        <div className="flex-grow">{children}</div>
-      </div>
+          <div className="flex-grow">{children}</div>
+        </div>
+      </RecoilRoot>
       <Footer />
       <CookieConsent
         location="bottom"
