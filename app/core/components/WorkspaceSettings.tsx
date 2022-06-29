@@ -7,8 +7,12 @@ import { z } from "zod"
 import { Checkmark, Close, Renew } from "@carbon/icons-react"
 import toast from "react-hot-toast"
 import ReactTooltip from "react-tooltip"
+import { useRecoilState, useResetRecoilState } from "recoil"
+
 import changeLastName from "../../workspaces/mutations/changeLastName"
 import changeFirstName from "../../workspaces/mutations/changeFirstName"
+import { workspaceFirstNameAtom } from "../utils/Atoms"
+import { useEffect } from "react"
 
 const WorkspaceSettings = ({ workspace, setIsOpen }) => {
   const [changeFirstNameMutation] = useMutation(changeFirstName)
@@ -16,15 +20,24 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
   const [changeBioMutation] = useMutation(changeBio)
   const [changePronounsMutation] = useMutation(changePronouns)
   const [changeUrlMutation] = useMutation(changeUrl)
+  const [workspaceFirstName, setWorkspaceFirstName] = useRecoilState(workspaceFirstNameAtom)
+  const resetFirstName = useResetRecoilState(workspaceFirstNameAtom)
+
+  useEffect(() => {
+    if (workspaceFirstName === "") {
+      setWorkspaceFirstName(workspace.firstName)
+    }
+  }, [])
 
   const formik = useFormik({
     initialValues: {
-      firstName: workspace.firstName,
+      firstName: workspaceFirstName,
       lastName: workspace.lastName,
       bio: workspace.bio,
       pronouns: workspace.pronouns,
       profileUrl: workspace.url,
     },
+    enableReinitialize: true,
     validate: validateZodSchema(
       z.object({
         firstName: z.any(),
@@ -181,6 +194,10 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               autoComplete="firstName"
               className="placeholder-font-normal block w-11/12 appearance-none rounded border border-gray-300 bg-transparent px-3 py-2 text-sm font-normal placeholder-gray-400 focus:border-indigo-500 focus:outline-none  focus:ring-indigo-500 dark:border-gray-600 "
               {...formik.getFieldProps("firstName")}
+              onChange={(data) => {
+                // console.log(data.target.value)
+                setWorkspaceFirstName(data.target.value)
+              }}
             />
           </div>
         </div>
@@ -259,6 +276,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               type="reset"
               className="mx-4 flex rounded-md bg-red-50 py-2 px-4 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
               onClick={() => {
+                resetFirstName()
                 setIsOpen(false)
               }}
             >
