@@ -9,4 +9,34 @@ const workspaceFirstNameAtom = atom({
   effects_UNSTABLE: [persistAtom],
 })
 
-export { workspaceFirstNameAtom }
+const workspaceLastNameAtom = atom({
+  key: "workspaceLastName", // unique ID (with respect to other atoms/selectors)
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+})
+
+const workspaceBioAtom = atom({
+  key: "workspaceBio", // unique ID (with respect to other atoms/selectors)
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+})
+
+const workspacePronounsAtom = atom({
+  key: "workspacePronouns", // unique ID (with respect to other atoms/selectors)
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+})
+
+const workspaceUrlAtom = atom({
+  key: "workspaceUrl", // unique ID (with respect to other atoms/selectors)
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+})
+
+export {
+  workspaceFirstNameAtom,
+  workspaceLastNameAtom,
+  workspaceBioAtom,
+  workspacePronounsAtom,
+  workspaceUrlAtom,
+}
