@@ -1,34 +1,34 @@
 import { atom } from "recoil"
 import { recoilPersist } from "recoil-persist"
 
-const { persistAtom } = recoilPersist({ key: "ResearchEquals" })
+const { persistAtom } = recoilPersist({ key: "researchequals" })
 
 const workspaceFirstNameAtom = atom({
-  key: "workspaceFirstName", // unique ID (with respect to other atoms/selectors)
+  key: "workspaceFirstName",
   default: "",
   effects_UNSTABLE: [persistAtom],
 })
 
 const workspaceLastNameAtom = atom({
-  key: "workspaceLastName", // unique ID (with respect to other atoms/selectors)
+  key: "workspaceLastName",
   default: "",
   effects_UNSTABLE: [persistAtom],
 })
 
 const workspaceBioAtom = atom({
-  key: "workspaceBio", // unique ID (with respect to other atoms/selectors)
+  key: "workspaceBio",
   default: "",
   effects_UNSTABLE: [persistAtom],
 })
 
 const workspacePronounsAtom = atom({
-  key: "workspacePronouns", // unique ID (with respect to other atoms/selectors)
+  key: "workspacePronouns",
   default: "",
   effects_UNSTABLE: [persistAtom],
 })
 
 const workspaceUrlAtom = atom({
-  key: "workspaceUrl", // unique ID (with respect to other atoms/selectors)
+  key: "workspaceUrl",
   default: "",
   effects_UNSTABLE: [persistAtom],
 })
