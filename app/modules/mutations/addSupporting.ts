@@ -10,6 +10,11 @@ export default resolver.pipe(resolver.authorize(), async ({ id, newFiles }) => {
   let supportingFiles = oldModule?.supporting as Prisma.JsonObject
   // 2. Map the array to push each files object into supporting files
   newFiles.map((newFile) => {
+    supportingFiles.files.filter((file) => {
+      if (file.original_filename == newFile.original_filename) {
+        throw new Error("Please check for duplicates.")
+      }
+    })
     supportingFiles.files.push(newFile)
   })
 
