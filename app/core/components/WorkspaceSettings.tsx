@@ -4,11 +4,20 @@ import changeUrl from "app/workspaces/mutations/changeUrl"
 import { Link, useMutation, validateZodSchema } from "blitz"
 import { useFormik } from "formik"
 import { z } from "zod"
-import { Checkmark, Close, Renew } from "@carbon/icons-react"
+import { Checkmark, Close } from "@carbon/icons-react"
 import toast from "react-hot-toast"
-import ReactTooltip from "react-tooltip"
+import { useRecoilState, useResetRecoilState } from "recoil"
+
 import changeLastName from "../../workspaces/mutations/changeLastName"
 import changeFirstName from "../../workspaces/mutations/changeFirstName"
+import {
+  workspaceFirstNameAtom,
+  workspaceLastNameAtom,
+  workspaceBioAtom,
+  workspacePronounsAtom,
+  workspaceUrlAtom,
+} from "../utils/Atoms"
+import { useEffect } from "react"
 
 const WorkspaceSettings = ({ workspace, setIsOpen }) => {
   const [changeFirstNameMutation] = useMutation(changeFirstName)
@@ -17,14 +26,45 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
   const [changePronounsMutation] = useMutation(changePronouns)
   const [changeUrlMutation] = useMutation(changeUrl)
 
+  // State management
+  const [workspaceFirstName, setWorkspaceFirstName] = useRecoilState(workspaceFirstNameAtom)
+  const resetFirstName = useResetRecoilState(workspaceFirstNameAtom)
+  const [workspaceLastName, setWorkspaceLastName] = useRecoilState(workspaceLastNameAtom)
+  const resetLastName = useResetRecoilState(workspaceLastNameAtom)
+  const [workspaceBio, setWorkspaceBio] = useRecoilState(workspaceBioAtom)
+  const resetBio = useResetRecoilState(workspaceBioAtom)
+  const [workspacePronouns, setWorkspacePronouns] = useRecoilState(workspacePronounsAtom)
+  const resetPronouns = useResetRecoilState(workspacePronounsAtom)
+  const [workspaceUrl, setWorkspaceUrl] = useRecoilState(workspaceUrlAtom)
+  const resetUrl = useResetRecoilState(workspaceUrlAtom)
+
+  useEffect(() => {
+    if (workspaceFirstName === "") {
+      setWorkspaceFirstName(workspace.firstName)
+    }
+    if (workspaceLastName === "") {
+      setWorkspaceLastName(workspace.lastName)
+    }
+    if (workspaceBio === "") {
+      setWorkspaceBio(workspace.bio)
+    }
+    if (workspacePronouns === "") {
+      setWorkspacePronouns(workspace.pronouns)
+    }
+    if (workspaceUrl === "") {
+      setWorkspaceUrl(workspace.url)
+    }
+  }, [])
+
   const formik = useFormik({
     initialValues: {
-      firstName: workspace.firstName,
-      lastName: workspace.lastName,
-      bio: workspace.bio,
-      pronouns: workspace.pronouns,
-      profileUrl: workspace.url,
+      firstName: workspaceFirstName,
+      lastName: workspaceLastName,
+      bio: workspaceBio,
+      pronouns: workspacePronouns,
+      profileUrl: workspaceUrl,
     },
+    enableReinitialize: true,
     validate: validateZodSchema(
       z.object({
         firstName: z.any(),
@@ -181,6 +221,9 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               autoComplete="firstName"
               className="placeholder-font-normal block w-11/12 appearance-none rounded border border-gray-300 bg-transparent px-3 py-2 text-sm font-normal placeholder-gray-400 focus:border-indigo-500 focus:outline-none  focus:ring-indigo-500 dark:border-gray-600 "
               {...formik.getFieldProps("firstName")}
+              onChange={(data) => {
+                setWorkspaceFirstName(data.target.value)
+              }}
             />
           </div>
         </div>
@@ -198,6 +241,9 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               autoComplete="lastName"
               className="placeholder-font-normal block w-11/12 appearance-none rounded border border-gray-300 bg-transparent px-3 py-2 text-sm font-normal placeholder-gray-400 focus:border-indigo-500 focus:outline-none  focus:ring-indigo-500 dark:border-gray-600 "
               {...formik.getFieldProps("lastName")}
+              onChange={(data) => {
+                setWorkspaceLastName(data.target.value)
+              }}
             />
           </div>
         </div>
@@ -212,6 +258,9 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               className="block w-11/12 rounded border border-gray-300 bg-transparent text-gray-900 focus:border-indigo-500 focus:ring-indigo-500  dark:border-gray-600 dark:text-gray-200 sm:text-sm"
               {...formik.getFieldProps("bio")}
               defaultValue={workspace.bio}
+              onChange={(data) => {
+                setWorkspaceBio(data.target.value)
+              }}
             />
           </div>
         </div>
@@ -230,6 +279,9 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               placeholder="they/them"
               className="placeholder-font-normal block w-11/12 appearance-none rounded border border-gray-300 bg-transparent px-3 py-2 text-sm font-normal placeholder-gray-400 focus:border-indigo-500 focus:outline-none  focus:ring-indigo-500 dark:border-gray-600 "
               {...formik.getFieldProps("pronouns")}
+              onChange={(data) => {
+                setWorkspacePronouns(data.target.value)
+              }}
             />
           </div>
         </div>
@@ -248,6 +300,9 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               placeholder="https://twitter.com/you"
               className=" placeholder-font-normal block w-11/12 appearance-none rounded border border-gray-300 bg-transparent px-3 py-2  text-sm font-normal placeholder-gray-400 focus:border-indigo-500 focus:outline-none  focus:ring-indigo-500 dark:border-gray-600 "
               {...formik.getFieldProps("profileUrl")}
+              onChange={(data) => {
+                setWorkspaceUrl(data.target.value)
+              }}
             />
           </div>
         </div>
@@ -260,6 +315,11 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               className="mx-4 flex rounded-md bg-red-50 py-2 px-4 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
               onClick={() => {
                 setIsOpen(false)
+                resetFirstName()
+                resetLastName()
+                resetBio()
+                resetPronouns()
+                resetUrl()
               }}
             >
               <Close

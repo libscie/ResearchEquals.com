@@ -70,6 +70,8 @@
     "react-syntax-highlighter": "15.5.0",
     "react-tooltip": "4.2.21",
     "react-xarrows": "2.0.2",
+    "recoil": "0.7.4",
+    "recoil-persist": "4.2.0",
     "recharts": "2.1.12",
     "rehype-katex": "6.0.2",
     "remark-gfm": "3.0.1",
