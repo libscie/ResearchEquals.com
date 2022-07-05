@@ -38,11 +38,11 @@ model Module {
   authors    Authorship[]
   authorsRaw Json?        @default("{}")
 
-  parents  Module[] @relation("ModuleToModule", references: [id])
-  children Module[] @relation("ModuleToModule", references: [id])
+  parents  Module[] @relation("ModuleToModule")
+  children Module[] @relation("ModuleToModule")
 
-  references    Module[] @relation("ModuleReference", references: [id])
-  referencedBy  Module[] @relation("ModuleReference", references: [id])
+  references    Module[] @relation("ModuleReference")
+  referencedBy  Module[] @relation("ModuleReference")
   referencesRaw Json?    @default("{}")
 
   @@unique([prefix, suffix])
