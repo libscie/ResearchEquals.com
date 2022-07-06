@@ -206,7 +206,9 @@ export default function PublishModule({ module, user, workspace }) {
                         <form
                           action={`/api/checkout_sessions?email=${encodeURIComponent(
                             user.email
-                          )}&price_data=${payWhat}&suffix=${module.suffix}&module_id=${module.id}`}
+                          )}&prod_id=${module.license.prod_id}&price_data=${payWhat}&suffix=${
+                            module.suffix
+                          }&module_id=${module.id}`}
                           method="POST"
                         >
                           <div className="mt-4">

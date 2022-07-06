@@ -3,7 +3,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
 export default async function handler(req, res) {
   if (
     !req.query.email ||
-    !(req.query.price_id || req.query.price_data) ||
+    !(req.query.price_id || (req.query.price_data && req.query.prod_id)) ||
     !req.query.suffix ||
     !req.query.module_id
   ) {
@@ -42,7 +42,7 @@ export default async function handler(req, res) {
       } catch (err) {
         res.status(err.statusCode || 500).json(err.message)
       }
-    } else if (req.method === "POST" && req.query.price_data) {
+    } else if (req.method === "POST" && req.query.price_data && req.query.prod_id) {
       try {
         // Create Checkout Sessions from body params.
         const session = await stripe.checkout.sessions.create({
@@ -56,7 +56,7 @@ export default async function handler(req, res) {
                 currency: "eur",
                 // TODO: This is hardcoded but could be better
                 // Still needs updating for the production
-                product: "prod_M0CmdzwdQFqcC9",
+                product: req.query.prod_id,
                 tax_behavior: "inclusive",
               },
               quantity: 1,
