@@ -83,6 +83,7 @@ const seed = async () => {
       // This contains the latest update, change this to update the price
       update: {
         price: 0,
+        prod_id: "prod_M0VJdtMgxTMRvS",
       },
       // This is the original
       create: {
@@ -101,6 +102,7 @@ const seed = async () => {
       // This contains the latest update, change this to update the price
       update: {
         price: 0,
+        prod_id: "prod_M0VKT0n4i9hFlz",
       },
       // This is the original
       create: {
@@ -237,6 +239,7 @@ const seed = async () => {
       // This contains the latest update, change this to update the price
       update: {
         price: 0,
+        prod_id: "prod_M0VIEuGW4US4mL",
       },
       // This is the original
       create: {
@@ -255,6 +258,7 @@ const seed = async () => {
       // This contains the latest update, change this to update the price
       update: {
         price: 0,
+        prod_id: "prod_M0VJVhT9ulOw1c",
       },
       // This is the original
       create: {
