@@ -38,7 +38,7 @@
     "@stripe/stripe-js": "1.32.0",
     "@tailwindcss/forms": "0.5.2",
     "@tailwindcss/line-clamp": "0.4.0",
-    "@uploadcare/react-widget": "2.1.1",
+    "@uploadcare/react-widget": "2.1.4",
     "algoliasearch": "4.13.1",
     "autoprefixer": "10.4.7",
     "axios": "0.27.2",
