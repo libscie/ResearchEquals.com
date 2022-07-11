@@ -14,7 +14,7 @@ function classNames(...classes) {
 export default function PublishModule({ module, user, workspace }) {
   let [isOpen, setIsOpen] = useState(false)
   const [waiver, setWaiver] = useState(false)
-  const [payWhat, setPayWhat] = useState(0)
+  const [payWhat, setPayWhat] = useState(5)
 
   const [publishModuleMutation] = useMutation(publishModule)
   const router = useRouter()
@@ -126,7 +126,7 @@ export default function PublishModule({ module, user, workspace }) {
                               value={payWhat}
                               className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-sm font-normal placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500  dark:border-gray-500 dark:bg-gray-800"
                               onChange={(value) => {
-                                setPayWhat(parseInt(value.target.value) || 0)
+                                setPayWhat(parseInt(value.target.value) || 5)
                               }}
                             />
                             <div className="w-full">
