@@ -33,10 +33,17 @@ const workspaceUrlAtom = atom({
   effects_UNSTABLE: [persistAtom],
 })
 
+const settingsModalAtom = atom({
+  key: "settingsModal",
+  default: false,
+  effects_UNSTABLE: [persistAtom],
+})
+
 export {
   workspaceFirstNameAtom,
   workspaceLastNameAtom,
   workspaceBioAtom,
   workspacePronounsAtom,
   workspaceUrlAtom,
+  settingsModalAtom,
 }
