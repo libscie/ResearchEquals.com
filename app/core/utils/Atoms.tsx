@@ -33,10 +33,38 @@ const workspaceUrlAtom = atom({
   effects_UNSTABLE: [persistAtom],
 })
 
+const currentUserAtom = atom({
+  key: "currentUser",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+})
+
+const currentWorkspaceAtom = atom({
+  key: "currentWorkspace",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+})
+
+const draftsAtom = atom({
+  key: "drafts",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+})
+
+const invitationsAtom = atom({
+  key: "invitations",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+})
+
 export {
   workspaceFirstNameAtom,
   workspaceLastNameAtom,
   workspaceBioAtom,
   workspacePronounsAtom,
   workspaceUrlAtom,
+  currentUserAtom,
+  currentWorkspaceAtom,
+  draftsAtom,
+  invitationsAtom,
 }
