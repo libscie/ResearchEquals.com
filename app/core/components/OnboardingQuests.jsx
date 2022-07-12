@@ -1,14 +1,23 @@
 import { useMutation, useQuery } from "blitz"
 import { Widget } from "@uploadcare/react-widget"
-import { useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Formik, Form } from "formik"
 import { Email, UserAvatar, User, Parameter } from "@carbon/icons-react"
+import { useRecoilValue, useRecoilState } from "recoil"
 
 import SettingsModal from "../modals/settings"
 import changeAvatar from "../../workspaces/mutations/changeAvatar"
 import getSignature from "../../auth/queries/getSignature"
 import QuickDraft from "../../modules/components/QuickDraft"
 import resendVerification from "../../auth/mutations/resendVerification"
+import {
+  workspaceFirstNameAtom,
+  workspaceLastNameAtom,
+  workspaceBioAtom,
+  workspacePronounsAtom,
+  workspaceUrlAtom,
+  settingsModalAtom,
+} from "../utils/Atoms"
 
 const OnboardingQuests = ({ data, expire, signature, refetch }) => {
   return (
@@ -132,9 +141,21 @@ const OnboardingOrcid = ({ data }) => {
 }
 
 const OnboardingProfile = ({ data }) => {
+  // State management
+  const workspaceFirstName = useRecoilValue(workspaceFirstNameAtom)
+  const workspaceLastName = useRecoilValue(workspaceLastNameAtom)
+  const workspaceBio = useRecoilValue(workspaceBioAtom)
+  const workspacePronouns = useRecoilValue(workspacePronounsAtom)
+  const workspaceUrl = useRecoilValue(workspaceUrlAtom)
+  const [settingsModal, setSettingsModal] = useRecoilState(settingsModalAtom)
+
   return (
     <>
-      {!data.workspace.bio ? (
+      {!workspaceFirstName ||
+      !workspaceLastName ||
+      !workspaceBio ||
+      !workspacePronouns ||
+      !workspaceUrl ? (
         <div
           key="onboarding profile-onboarding-quest"
           className="onboarding my-2 flex w-full flex-col rounded-r border-l-4 border-pink-400 bg-pink-50 p-4 dark:border-pink-200 dark:bg-pink-900 lg:my-0"
@@ -158,18 +179,16 @@ const OnboardingProfile = ({ data }) => {
             </div>
           </div>
           <div className="block text-right text-pink-700 dark:text-pink-200">
-            <p className="mt-3 text-sm md:mt-0 md:ml-6">
-              <SettingsModal
-                styling="whitespace-nowrap font-medium hover:text-blue-600 underline"
-                button={
-                  <>
-                    Add information <span aria-hidden="true">&rarr;</span>
-                  </>
-                }
-                user={data.user}
-                workspace={data.workspace}
-              />
-            </p>
+            <button
+              className="mt-3 whitespace-nowrap text-sm font-medium underline hover:text-blue-600 md:mt-0 md:ml-6"
+              onClick={() => {
+                setSettingsModal(!settingsModal)
+              }}
+            >
+              <>
+                Add information <span aria-hidden="true">&rarr;</span>
+              </>
+            </button>
           </div>
         </div>
       ) : (
