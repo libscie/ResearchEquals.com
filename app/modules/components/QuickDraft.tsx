@@ -9,12 +9,16 @@ import { Checkmark, Close, InformationSquareFilled } from "@carbon/icons-react"
 
 import createModule from "../mutations/createModule"
 import toast from "react-hot-toast"
+import { useRecoilState } from "recoil"
+import { draftsAtom } from "../../core/utils/Atoms"
 
-const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
+const QuickDraft = ({ buttonText, buttonStyle }) => {
   const [openCreate, setCreateOpen] = useState(false)
   const [moduleTypes] = useQuery(getTypes, undefined)
   const [licenses] = useQuery(getLicenses, undefined)
   const [createModuleMutation] = useMutation(createModule)
+  const [drafts, setDrafts] = useRecoilState(draftsAtom)
+
   const router = useRouter()
   const formik = useFormik({
     initialValues: {
@@ -47,10 +51,10 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
         {
           loading: "Creating draft...",
           success: (data) => {
-            refetchFn()
+            setDrafts(drafts.concat(data))
             setCreateOpen(false)
             formikReset()
-            router.push(`/drafts?suffix=${data}`)
+            router.push(`/drafts?suffix=${data.suffix}`)
             return "Created!"
           },
           error: (error) => {
@@ -58,21 +62,6 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
           },
         }
       )
-      // try {
-      //   await createModuleMutation({
-      //     title: values.title,
-      //     description: values.description,
-      //     typeId: parseInt(values.type),
-      //     licenseId: parseInt(values.license),
-      //     authors: [],
-      //     displayColor: values.displayColor,
-      //   })
-      //   refetchFn()
-      //   setCreateOpen(false)
-      //   formikReset()
-      // } catch (error) {
-      //   alert(error.toString())
-      // }
     },
   })
 

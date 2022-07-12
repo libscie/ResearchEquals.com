@@ -7,16 +7,14 @@ import logout from "../../auth/mutations/logout"
 import SettingsModal from "../modals/settings"
 import QuickDraft from "../../modules/components/QuickDraft"
 import InvitationNotification from "./InvitationNotification"
+import { useRecoilValue } from "recoil"
+import { currentUserAtom, currentWorkspaceAtom, invitationsAtom } from "../utils/Atoms"
 
-const FullWidthMenu = ({
-  currentUser,
-  session,
-  router,
-  currentWorkspace,
-  invitedModules,
-  refetchFn,
-}) => {
+const FullWidthMenu = ({ router }) => {
   const [logoutMutation] = useMutation(logout)
+  const currentUser = useRecoilValue(currentUserAtom)
+  const currentWorkspace = useRecoilValue(currentWorkspaceAtom)
+  const invitedModules = useRecoilValue(invitationsAtom)
 
   if (currentUser && currentWorkspace) {
     return (
@@ -143,7 +141,6 @@ const FullWidthMenu = ({
             </>
           }
           buttonStyle="bg-indigo-50 dark:bg-gray-800 text-indigo-700 dark:text-gray-200 ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-normal rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:border dark:border-gray-400 dark:hover:bg-gray-700"
-          refetchFn={refetchFn}
         />
       </div>
     )

@@ -7,16 +7,15 @@ import SettingsModal from "../modals/settings"
 import ResearchEqualsLogo from "./ResearchEqualsLogo"
 import QuickDraft from "../../modules/components/QuickDraft"
 import DropdownNotificationModal from "../modals/DropdownNotificationModal"
+import { useRecoilValue } from "recoil"
+import { currentUserAtom, currentWorkspaceAtom, draftsAtom, invitationsAtom } from "../utils/Atoms"
 
-const DropdownContents = ({
-  currentUser,
-  currentWorkspace,
-  router,
-  invitedModules,
-  drafts,
-  refetchFn,
-}) => {
+const DropdownContents = ({ router, invitedModules }) => {
   const [logoutMutation] = useMutation(logout)
+  const currentUser = useRecoilValue(currentUserAtom)
+  const currentWorkspace = useRecoilValue(currentWorkspaceAtom)
+  const drafts = useRecoilValue(draftsAtom)
+  const invitations = useRecoilValue(invitationsAtom)
 
   if (currentUser && currentWorkspace) {
     return (
@@ -34,7 +33,6 @@ const DropdownContents = ({
               </>
             }
             buttonStyle="w-full py-2 bg-indigo-50 dark:bg-gray-800 text-indigo-700 dark:text-gray-200  border border-transparent text-sm leading-5 font-normal rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:border dark:border-gray-400 dark:hover:bg-gray-700"
-            refetchFn={refetchFn}
           />
           <Link href={Routes.Browse()}>
             <button className="group block w-full rounded-md px-2 py-2 text-left text-base font-normal leading-5 text-gray-900 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800">
@@ -134,15 +132,12 @@ const DropdownContents = ({
   }
 }
 
-const NavbarDropdown = ({
-  currentUser,
-  currentWorkspace,
-  router,
-  invitedModules,
-  drafts,
-  refetchFn,
-}) => {
+const NavbarDropdown = ({ router }) => {
   let [isOpen, setIsOpen] = useState(false)
+  const currentUser = useRecoilValue(currentUserAtom)
+  const currentWorkspace = useRecoilValue(currentWorkspaceAtom)
+  const drafts = useRecoilValue(draftsAtom)
+  const invitedModules = useRecoilValue(invitationsAtom)
 
   return (
     <>
@@ -226,14 +221,7 @@ const NavbarDropdown = ({
                   </div>
                 </Dialog.Title>
                 <div className="items-center justify-between">
-                  <DropdownContents
-                    currentUser={currentUser}
-                    currentWorkspace={currentWorkspace}
-                    router={router}
-                    invitedModules={invitedModules}
-                    drafts={drafts}
-                    refetchFn={refetchFn}
-                  />
+                  <DropdownContents router={router} invitedModules={invitedModules} />
                 </div>
               </div>
             </Transition.Child>
