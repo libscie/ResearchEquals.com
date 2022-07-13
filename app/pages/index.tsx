@@ -5,7 +5,6 @@ import {
   Link,
   Routes,
   useQuery,
-  useRouter,
   useSession,
 } from "blitz"
 import Layout from "app/core/layouts/Layout"
@@ -35,6 +34,14 @@ import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import getDrafts from "app/core/queries/getDrafts"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
+import {
+  currentUserAtom,
+  currentWorkspaceAtom,
+  draftsAtom,
+  invitationsAtom,
+} from "../core/utils/Atoms"
+import { useRecoilState } from "recoil"
+import { useEffect } from "react"
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const licenses = await db.license.findMany({
@@ -61,27 +68,28 @@ export const getStaticProps: GetStaticProps = async (context) => {
 const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const prefersDarkMode = useMediaPredicate("(prefers-color-scheme: dark)")
   const biggerWindow = useMediaPredicate("(min-width: 640px)")
-  const currentUser = useCurrentUser()
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserAtom)
+  setCurrentUser(useCurrentUser())
+  const [currentWorkspace, setCurrentWorkspace] = useRecoilState(currentWorkspaceAtom)
+  setCurrentWorkspace(useCurrentWorkspace())
+  const [drafts, setDrafts] = useRecoilState(draftsAtom)
+  const [invitations, setInvitations] = useRecoilState(invitationsAtom)
+
   const session = useSession()
-  const currentWorkspace = useCurrentWorkspace()
-  const router = useRouter()
-  const [drafts, { refetch }] = useQuery(getDrafts, { session })
-  const [invitations] = useQuery(getInvitedModules, { session })
+  const [tmpDrafts] = useQuery(getDrafts, { session })
+  const [tmpInvitations] = useQuery(getInvitedModules, { session })
+
+  useEffect(() => {
+    setDrafts(tmpDrafts)
+    setInvitations(tmpInvitations)
+  }, [])
 
   const freeLicenses = licenses.filter((license) => license.price === 0)
   const payToClose = licenses.filter((license) => license.price > 0)
 
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+      <Navbar />
       <main className="bg-white dark:bg-gray-900 lg:relative">
         <div className="" id="hero">
           <div className="overflow-hidden pt-8 sm:pt-12 lg:relative lg:py-32">

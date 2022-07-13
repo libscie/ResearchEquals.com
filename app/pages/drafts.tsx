@@ -14,6 +14,13 @@ import generateSignature from "../signature"
 import LayoutLoader from "app/core/components/LayoutLoader"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 import Ripple from "../core/components/Ripple"
+import { useRecoilState } from "recoil"
+import {
+  currentUserAtom,
+  currentWorkspaceAtom,
+  draftsAtom,
+  invitationsAtom,
+} from "app/core/utils/Atoms"
 
 export async function getServerSideProps(context) {
   // Expires in 30 minutes
@@ -140,24 +147,25 @@ const DraftsContents = ({ expire, signature, currentWorkspace, session, user }) 
 }
 
 const DraftsPage = ({ expire, signature }) => {
-  const currentUser = useCurrentUser()
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserAtom)
+  setCurrentUser(useCurrentUser())
+  const [currentWorkspace, setCurrentWorkspace] = useRecoilState(currentWorkspaceAtom)
+  setCurrentWorkspace(useCurrentWorkspace())
+  const [drafts, setDrafts] = useRecoilState(draftsAtom)
+  const [invitations, setInvitations] = useRecoilState(invitationsAtom)
+
   const session = useSession()
-  const currentWorkspace = useCurrentWorkspace()
-  const router = useRouter()
-  const [drafts, { refetch }] = useQuery(getDrafts, { session })
-  const [invitations] = useQuery(getInvitedModules, { session })
+  const [tmpDrafts] = useQuery(getDrafts, { session })
+  const [tmpInvitations] = useQuery(getInvitedModules, { session })
+
+  useEffect(() => {
+    setDrafts(tmpDrafts)
+    setInvitations(tmpInvitations)
+  }, [])
 
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+      <Navbar />
       <main className="relative flex">
         <DraftsContents
           expire={expire}

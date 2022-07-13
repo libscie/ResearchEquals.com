@@ -9,6 +9,14 @@ import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { a11yLight, a11yDark } from "react-syntax-highlighter/dist/cjs/styles/prism"
+import { useRecoilState } from "recoil"
+import {
+  currentUserAtom,
+  currentWorkspaceAtom,
+  draftsAtom,
+  invitationsAtom,
+} from "../../core/utils/Atoms"
+
 import "@react-pdf-viewer/core/lib/styles/index.css"
 import remarkMath from "remark-math"
 import rehypeKatex from "rehype-katex"
@@ -104,18 +112,22 @@ export async function getServerSideProps(context) {
 }
 
 const Module = ({ module, mainFile, supportingRaw }) => {
-  const currentUser = useCurrentUser()
-  const session = useSession()
-  const currentWorkspace = useCurrentWorkspace()
   const router = useRouter()
-  const [drafts, { refetch }] = useQuery(getDrafts, { session })
-  const [invitations] = useQuery(getInvitedModules, { session })
+  const session = useSession()
+  const [tmpDrafts, { refetch }] = useQuery(getDrafts, { session })
+  const [drafts, setDrafts] = useRecoilState(draftsAtom)
   const prefersDarkMode = useMediaPredicate("(prefers-color-scheme: dark)")
   const biggerWindow = useMediaPredicate("(min-width: 916px)")
   const [previousOpen, setPreviousOpen] = useState(false)
   const [leadsToOpen, setLeadsToOpen] = useState(false)
   const [createNextModuleMutation] = useMutation(createNextModule)
   const [mainFileMarkdown, setMarkdown] = useState("")
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserAtom)
+  setCurrentUser(useCurrentUser())
+  const [currentWorkspace, setCurrentWorkspace] = useRecoilState(currentWorkspaceAtom)
+  setCurrentWorkspace(useCurrentWorkspace())
+  const [invitations, setInvitations] = useRecoilState(invitationsAtom)
+  const [tmpInvitations] = useQuery(getInvitedModules, { session })
 
   let arrowColor
   if (biggerWindow) {
@@ -131,19 +143,14 @@ const Module = ({ module, mainFile, supportingRaw }) => {
         .then((body) => setMarkdown(body))
         .then((res) => console.log(mainFileMarkdown))
     }
+
+    setDrafts(tmpDrafts)
+    setInvitations(tmpInvitations)
   }, [])
 
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+      <Navbar />
       {module.parents.length > 0 ? (
         <div className="bottom-2 hidden modscreen:absolute modscreen:top-1/3 modscreen:left-2 modscreen:inline">
           <button

@@ -13,15 +13,35 @@ import { useCurrentWorkspace } from "../core/hooks/useCurrentWorkspace"
 import { useMediaPredicate } from "react-media-hook"
 import LayoutLoader from "app/core/components/LayoutLoader"
 import getDrafts from "app/core/queries/getDrafts"
+import { useRecoilState } from "recoil"
+import {
+  currentUserAtom,
+  currentWorkspaceAtom,
+  draftsAtom,
+  invitationsAtom,
+} from "app/core/utils/Atoms"
 
-const Invitations = ({ currentWorkspace }) => {
-  const session = useSession()
+const Invitations = () => {
   const [currentModule, setModule] = useState<any>(undefined)
   const [inboxOpen, setInboxOpen] = useState(true)
   const biggerWindow = useMediaPredicate("(min-width: 1024px)")
-  const [invitations, { refetch }] = useQuery(getInvitedModules, { session })
   const user = useCurrentUser()
   const query = useRouterQuery()
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserAtom)
+  setCurrentUser(useCurrentUser())
+  const [currentWorkspace, setCurrentWorkspace] = useRecoilState(currentWorkspaceAtom)
+  setCurrentWorkspace(useCurrentWorkspace())
+  const [drafts, setDrafts] = useRecoilState(draftsAtom)
+  const [invitations, setInvitations] = useRecoilState(invitationsAtom)
+
+  const session = useSession()
+  const [tmpDrafts] = useQuery(getDrafts, { session })
+  const [tmpInvitations] = useQuery(getInvitedModules, { session })
+
+  useEffect(() => {
+    setDrafts(tmpDrafts)
+    setInvitations(tmpInvitations)
+  }, [])
 
   useEffect(() => {
     if (query.suffix) {
@@ -121,26 +141,11 @@ const Invitations = ({ currentWorkspace }) => {
 }
 
 const InvitationsPage: BlitzPage = () => {
-  const currentUser = useCurrentUser()
-  const session = useSession()
-  const currentWorkspace = useCurrentWorkspace()
-  const router = useRouter()
-  const [drafts, { refetch }] = useQuery(getDrafts, { session })
-  const [invitations] = useQuery(getInvitedModules, { session })
-
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+      <Navbar />
       <main className="relative flex">
-        <Invitations currentWorkspace={currentWorkspace} />
+        <Invitations />
       </main>
     </>
   )

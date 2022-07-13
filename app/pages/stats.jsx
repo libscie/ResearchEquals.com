@@ -5,7 +5,14 @@ import { useInfiniteQuery, useQuery, useRouter, useSession, Link, Routes } from 
 import moment from "moment"
 import { useMediaPredicate } from "react-media-hook"
 
-import React from "react"
+import React, { useEffect } from "react"
+import {
+  currentUserAtom,
+  currentWorkspaceAtom,
+  draftsAtom,
+  invitationsAtom,
+} from "../core/utils/Atoms"
+import { useRecoilState } from "recoil"
 import {
   Area,
   AreaChart,
@@ -228,25 +235,26 @@ const StatsExtensions = ({ graphData }) => {
 }
 
 const Stats = () => {
-  const currentUser = useCurrentUser()
-  const session = useSession()
-  const currentWorkspace = useCurrentWorkspace()
-  const router = useRouter()
-  const [drafts, { refetch }] = useQuery(getDrafts, { session })
-  const [invitations] = useQuery(getInvitedModules, { session })
   const [graphData] = useQuery(getBrowseGraphData, undefined)
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserAtom)
+  setCurrentUser(useCurrentUser())
+  const [currentWorkspace, setCurrentWorkspace] = useRecoilState(currentWorkspaceAtom)
+  setCurrentWorkspace(useCurrentWorkspace())
+  const [drafts, setDrafts] = useRecoilState(draftsAtom)
+  const [invitations, setInvitations] = useRecoilState(invitationsAtom)
+
+  const session = useSession()
+  const [tmpDrafts] = useQuery(getDrafts, { session })
+  const [tmpInvitations] = useQuery(getInvitedModules, { session })
+
+  useEffect(() => {
+    setDrafts(tmpDrafts)
+    setInvitations(tmpInvitations)
+  }, [])
 
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+      <Navbar />
       <h1 className="mx-auto my-8 max-w-7xl text-center text-5xl font-black sm:text-6xl">
         Real-time statistics
       </h1>

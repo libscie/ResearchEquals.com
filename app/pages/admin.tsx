@@ -10,28 +10,38 @@ import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 import getAdminInfo from "../core/queries/getAdminInfo"
 import toast from "react-hot-toast"
 import updateCrossRef from "../modules/mutations/updateCrossRef"
+import { useRecoilState } from "recoil"
+import {
+  currentUserAtom,
+  currentWorkspaceAtom,
+  draftsAtom,
+  invitationsAtom,
+} from "app/core/utils/Atoms"
+import { useEffect } from "react"
 
 const Admin: BlitzPage = () => {
-  const currentUser = useCurrentUser()
-  const session = useSession()
-  const currentWorkspace = useCurrentWorkspace()
   const router = useRouter()
-  const [drafts, { refetch }] = useQuery(getDrafts, { session })
-  const [invitations] = useQuery(getInvitedModules, { session })
   const [adminInfo] = useQuery(getAdminInfo, null)
   const [updateCrossRefMutation] = useMutation(updateCrossRef)
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserAtom)
+  setCurrentUser(useCurrentUser())
+  const [currentWorkspace, setCurrentWorkspace] = useRecoilState(currentWorkspaceAtom)
+  setCurrentWorkspace(useCurrentWorkspace())
+  const [drafts, setDrafts] = useRecoilState(draftsAtom)
+  const [invitations, setInvitations] = useRecoilState(invitationsAtom)
+
+  const session = useSession()
+  const [tmpDrafts] = useQuery(getDrafts, { session })
+  const [tmpInvitations] = useQuery(getInvitedModules, { session })
+
+  useEffect(() => {
+    setDrafts(tmpDrafts)
+    setInvitations(tmpInvitations)
+  }, [])
 
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+      <Navbar />
       <main className="my-8 bg-white dark:bg-gray-900 lg:relative">
         <div className="flex flex-col">
           <div className="">
