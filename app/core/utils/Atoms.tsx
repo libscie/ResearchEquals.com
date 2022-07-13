@@ -47,13 +47,13 @@ const currentWorkspaceAtom = atom({
 
 const draftsAtom = atom({
   key: "drafts",
-  default: "",
+  default: [],
   effects_UNSTABLE: [persistAtom],
 })
 
 const invitationsAtom = atom({
   key: "invitations",
-  default: "",
+  default: [],
   effects_UNSTABLE: [persistAtom],
 })
 
