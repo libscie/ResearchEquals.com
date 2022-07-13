@@ -1,13 +1,9 @@
-import { BlitzPage, useQuery, useRouter, useSession } from "blitz"
+import { BlitzPage } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import Markdown from "markdown-it"
 
 import Navbar from "../core/components/Navbar"
 import LayoutLoader from "app/core/components/LayoutLoader"
-import { useCurrentUser } from "app/core/hooks/useCurrentUser"
-import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
-import getDrafts from "app/core/queries/getDrafts"
-import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 
 const privacyMarkdown = `
 # Privacy policy
@@ -173,24 +169,9 @@ We use the service Crisp provided by Crisp IM SARL 2 Boulevard de Launay, 44100 
 const md = new Markdown()
 
 const PrivacyPage: BlitzPage = () => {
-  const currentUser = useCurrentUser()
-  const session = useSession()
-  const currentWorkspace = useCurrentWorkspace()
-  const router = useRouter()
-  const [drafts, { refetch }] = useQuery(getDrafts, { session })
-  const [invitations] = useQuery(getInvitedModules, { session })
-
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+      <Navbar />
       <main className="bg-white dark:bg-gray-900 lg:relative">
         <div className="mx-4 my-8 max-w-3xl text-black dark:text-white lg:mx-auto">
           <div
