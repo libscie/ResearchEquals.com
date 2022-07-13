@@ -12,6 +12,8 @@ import removeInvitation from "app/authorship/mutations/removeInvitation"
 import MetadataInvite from "./MetadataInvite"
 import ParentPanel from "./ParentPanel"
 import { useMediaPredicate } from "react-media-hook"
+import { draftsAtom, invitationsAtom } from "app/core/utils/Atoms"
+import { useRecoilState } from "recoil"
 
 const ModuleInvitation = ({
   user,
@@ -31,10 +33,18 @@ const ModuleInvitation = ({
   const [declineMutation] = useMutation(removeInvitation)
   const [previousOpen, setPreviousOpen] = useState(false)
   const prefersDarkMode = useMediaPredicate("(prefers-color-scheme: dark)")
+  const [invitations, setInvitations] = useRecoilState(invitationsAtom)
+  const [drafts, setDrafts] = useRecoilState(draftsAtom)
 
   const arrowColor = prefersDarkMode ? "white" : "#0f172a"
   const mainFile = moduleEdit!.main as Prisma.JsonObject
   const supportingRaw = moduleEdit!.supporting as Prisma.JsonObject
+
+  // Accept
+  let newDrafts = Object.assign([], drafts)
+  newDrafts = [...newDrafts, invitations[0]]
+  const inviteFilter = invitations.filter((invite) => invite.id !== module.id)
+  invitations.filter((invite) => invite.id !== module.id)
 
   return (
     <div className="mx-auto max-w-7xl overflow-y-auto p-5 text-base">
@@ -71,6 +81,9 @@ const ModuleInvitation = ({
                   error: "Hmm that didn't work...",
                 }
               )
+              setDrafts(newDrafts)
+              setInvitations(inviteFilter)
+
               refetch()
               setModule(undefined)
             }}
@@ -91,6 +104,8 @@ const ModuleInvitation = ({
                   error: "Hmm that didn't work...",
                 }
               )
+              setInvitations(inviteFilter)
+
               refetch()
               setModule(undefined)
             }}
