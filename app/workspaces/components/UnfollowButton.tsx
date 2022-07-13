@@ -1,9 +1,15 @@
 import { useMutation } from "blitz"
 import toast from "react-hot-toast"
 import unfollowWorkspace from "../mutations/unfollowWorkspace"
+import { currentWorkspaceAtom } from "../../core/utils/Atoms"
+import { useRecoilState } from "recoil"
 
 const UnfollowButton = ({ author, refetchFn }) => {
   const [unfollowWorkspaceMutation] = useMutation(unfollowWorkspace)
+  const [currentWorkspace, setCurrentWorkspace] = useRecoilState(currentWorkspaceAtom)
+
+  let newWorkspace = Object.assign({}, currentWorkspace)
+  newWorkspace.following = [newWorkspace.following.filter((follow) => follow.id !== author.id)]
 
   return (
     <>
@@ -15,6 +21,8 @@ const UnfollowButton = ({ author, refetchFn }) => {
           await unfollowWorkspaceMutation({
             followedId: author.id,
           })
+          await setCurrentWorkspace(newWorkspace)
+
           refetchFn()
           toast("Unfollowed", { icon: "👋" })
         }}
