@@ -119,6 +119,7 @@ const FullWidthMenu = ({ router }) => {
                     }
                block w-full py-2 px-4 text-left text-sm font-normal leading-5 dark:text-gray-200`}
                     onClick={async () => {
+                      window.localStorage.clear()
                       await logoutMutation()
                     }}
                   >

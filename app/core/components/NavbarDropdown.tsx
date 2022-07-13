@@ -103,6 +103,7 @@ const DropdownContents = ({ router, invitedModules }) => {
           <button
             className="block w-full rounded-md px-2 py-2 text-left text-base font-normal leading-5 text-gray-500 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-700"
             onClick={async () => {
+              window.localStorage.clear()
               router.push("/")
               await logoutMutation()
             }}
