@@ -7,6 +7,7 @@ import { Add } from "@carbon/icons-react"
 import addMain from "../mutations/addMain"
 import EditMainFileDisplay from "../../core/components/EditMainFileDisplay"
 import { fileSizeLimit, fileTypeLimit } from "../../core/utils/fileTypeLimit"
+import uploadcareError from "../../core/utils/uploadcareError"
 
 const validators = [fileTypeLimit, fileSizeLimit]
 
@@ -51,6 +52,7 @@ const EditMainFile = ({
               previewStep
               validators={validators}
               clearable
+              localeTranslations={uploadcareError}
               onChange={async (info) => {
                 // TODO: Only store upon save
                 try {

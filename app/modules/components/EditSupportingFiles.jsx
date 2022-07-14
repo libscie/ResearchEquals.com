@@ -7,6 +7,7 @@ import { Add } from "@carbon/icons-react"
 import addSupporting from "../mutations/addSupporting"
 import getSupportingFiles from "../mutations/getSupportingFiles"
 import { fileSizeLimit, fileTypeLimit } from "../../core/utils/fileTypeLimit"
+import uploadcareError from "../../core/utils/uploadcareError"
 
 const validators = [fileTypeLimit, fileSizeLimit]
 
@@ -61,6 +62,7 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit, user, workspace, expire
               multiple
               multipleMax={10}
               clearable
+              localeTranslations={uploadcareError}
               onChange={updateSupporting}
             />
           </button>
