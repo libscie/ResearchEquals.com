@@ -1,7 +1,7 @@
 import { Dialog, Transition, Tab } from "@headlessui/react"
 import { Fragment, useState } from "react"
 import { Close } from "@carbon/icons-react"
-import { useRecoilState, useResetRecoilState } from "recoil"
+import { useRecoilState } from "recoil"
 import { settingsModalAtom } from "../utils/Atoms"
 
 import WorkspaceSettings from "../components/WorkspaceSettings"
