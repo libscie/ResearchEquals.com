@@ -37,6 +37,6 @@ export default resolver.pipe(
       },
     })
 
-    return module.suffix
+    return module
   }
 )

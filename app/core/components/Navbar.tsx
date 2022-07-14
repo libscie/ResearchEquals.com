@@ -12,15 +12,9 @@ import NavbarTabs from "./NavbarTabs"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
-const Navbar = ({
-  currentUser,
-  session,
-  currentWorkspace,
-  router,
-  drafts,
-  invitations,
-  refetchFn,
-}) => {
+const Navbar = () => {
+  const router = useRouter()
+
   return (
     <>
       <div className="z-50 mx-auto w-full border-b border-gray-100 bg-white px-4 dark:border-gray-600 dark:bg-gray-900 sm:px-6 lg:px-8">
@@ -98,33 +92,12 @@ const Navbar = ({
             </div>
           </div>
           <div className="flex items-center md:absolute md:inset-y-0 md:right-0 lg:hidden">
-            <NavbarDropdown
-              currentUser={currentUser}
-              currentWorkspace={currentWorkspace}
-              router={router}
-              invitedModules={invitations}
-              drafts={drafts}
-              refetchFn={refetchFn}
-            />
+            <NavbarDropdown router={router} />
           </div>
-          <NavbarFullwidthMenu
-            currentUser={currentUser}
-            session={session}
-            router={router}
-            currentWorkspace={currentWorkspace}
-            invitedModules={invitations}
-            refetchFn={refetchFn}
-          />
+          <NavbarFullwidthMenu router={router} />
         </div>
       </div>
-      <NavbarTabs
-        currentUser={currentUser}
-        currentWorkspace={currentWorkspace}
-        session={session}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-      />
+      <NavbarTabs router={router} />
     </>
   )
 }

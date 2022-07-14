@@ -1,7 +1,7 @@
 import Navbar from "app/core/components/Navbar"
 import Layout from "app/core/layouts/Layout"
 import { useInfiniteQuery, useQuery, useRouter, useSession, Link, Routes } from "blitz"
-import React from "react"
+import React, { useEffect } from "react"
 
 import getBrowseData from "../core/queries/getBrowseData"
 import LayoutLoader from "../core/components/LayoutLoader"
@@ -12,6 +12,13 @@ import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 import ModuleBoxFeed from "app/core/components/ModuleBoxFeed"
 import getBrowseWorkspaceData from "../core/queries/getBrowseWorkspaceData"
 import getBrowseWorkspaceGraphData from "../core/queries/getBrowseWorkspaceGraphData"
+import { useRecoilState } from "recoil"
+import {
+  currentUserAtom,
+  currentWorkspaceAtom,
+  draftsAtom,
+  invitationsAtom,
+} from "app/core/utils/Atoms"
 
 const BrowseContent = () => {
   const [modulePages, { isFetching, isFetchingNextPage, fetchNextPage, hasNextPage }] =
@@ -88,24 +95,26 @@ const BrowseWorkspaces = () => {
 }
 
 const Browse = () => {
-  const currentUser = useCurrentUser()
-  const session = useSession()
-  const currentWorkspace = useCurrentWorkspace()
   const router = useRouter()
-  const [drafts, { refetch }] = useQuery(getDrafts, { session })
-  const [invitations] = useQuery(getInvitedModules, { session })
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserAtom)
+  setCurrentUser(useCurrentUser())
+  const [currentWorkspace, setCurrentWorkspace] = useRecoilState(currentWorkspaceAtom)
+  setCurrentWorkspace(useCurrentWorkspace())
+  const [drafts, setDrafts] = useRecoilState(draftsAtom)
+  const [invitations, setInvitations] = useRecoilState(invitationsAtom)
+
+  const session = useSession()
+  const [tmpDrafts] = useQuery(getDrafts, { session })
+  const [tmpInvitations] = useQuery(getInvitedModules, { session })
+
+  useEffect(() => {
+    setDrafts(tmpDrafts)
+    setInvitations(tmpInvitations)
+  }, [])
 
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+      <Navbar />
       <div className="grid-cols-2 2xl:mx-4 2xl:grid">
         <BrowseContent />
         <BrowseWorkspaces />

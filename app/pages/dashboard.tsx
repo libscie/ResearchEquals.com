@@ -23,6 +23,16 @@ import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import ModuleBoxFeed from "app/core/components/ModuleBoxFeed"
 import ViewFollowers from "../modules/components/ViewFollowers"
+import { useRecoilState } from "recoil"
+import {
+  currentUserAtom,
+  currentWorkspaceAtom,
+  draftsAtom,
+  invitationsAtom,
+} from "app/core/utils/Atoms"
+import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
+import getInvitedModules from "app/workspaces/queries/getInvitedModules"
+import getDrafts from "app/core/queries/getDrafts"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -46,7 +56,6 @@ const DashboardContent = ({
   signature,
   query,
   ownWorkspace,
-  router,
   data,
   refetch,
   refetchWorkspace,
@@ -56,6 +65,21 @@ const DashboardContent = ({
       getNextPageParam: (lastPage) => lastPage.nextPage,
     })
   const [viewFollowers, setViewFollowers] = useState(false)
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserAtom)
+  setCurrentUser(useCurrentUser())
+  const [currentWorkspace, setCurrentWorkspace] = useRecoilState(currentWorkspaceAtom)
+  setCurrentWorkspace(useCurrentWorkspace())
+  const [drafts, setDrafts] = useRecoilState(draftsAtom)
+  const [invitations, setInvitations] = useRecoilState(invitationsAtom)
+
+  const session = useSession()
+  const [tmpDrafts] = useQuery(getDrafts, { session })
+  const [tmpInvitations] = useQuery(getInvitedModules, { session })
+
+  useEffect(() => {
+    setDrafts(tmpDrafts)
+    setInvitations(tmpInvitations)
+  }, [])
 
   const stats = [
     {
@@ -263,11 +287,9 @@ const DashboardContent = ({
 }
 
 const Dashboard = ({ expire, signature }) => {
-  const currentUser = useCurrentUser()
   const session = useSession()
   const query = useRouterQuery()
   const [ownWorkspace, { refetch: refetchWorkspace }] = useQuery(getCurrentWorkspace, null)
-  const router = useRouter()
   // TODO: Add user select
   const [data, { refetch }] = useQuery(
     getDashboardData,
@@ -277,22 +299,13 @@ const Dashboard = ({ expire, signature }) => {
 
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={ownWorkspace}
-        router={router}
-        drafts={data.draftModules}
-        invitations={data.invitedModules}
-        refetchFn={refetch}
-      />
+      <Navbar />
       <main className="mx-auto max-w-7xl">
         <DashboardContent
           expire={expire}
           signature={signature}
           query={query}
           ownWorkspace={ownWorkspace}
-          router={router}
           data={data}
           refetch={refetch}
           refetchWorkspace={refetchWorkspace}

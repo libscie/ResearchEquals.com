@@ -1,11 +1,19 @@
-import { Link, Routes } from "blitz"
+import { Link, Routes, useSession } from "blitz"
 import { Undo } from "@carbon/icons-react"
+import { useRecoilValue } from "recoil"
+import { currentUserAtom, currentWorkspaceAtom, draftsAtom, invitationsAtom } from "../utils/Atoms"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
 
-const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invitations }) => {
+const NavTabs = ({ router }) => {
+  const currentUser = useRecoilValue(currentUserAtom)
+  const currentWorkspace = useRecoilValue(currentWorkspaceAtom)
+  const drafts = useRecoilValue(draftsAtom)
+  const invitations = useRecoilValue(invitationsAtom)
+  const session = useSession()
+
   let tabs
   if (currentWorkspace) {
     tabs = [

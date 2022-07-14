@@ -6,6 +6,8 @@ import { Close, Checkmark } from "@carbon/icons-react"
 
 import publishModule from "../../modules/mutations/publishModule"
 import toast from "react-hot-toast"
+import { useRecoilState } from "recoil"
+import { draftsAtom } from "../utils/Atoms"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -14,7 +16,7 @@ function classNames(...classes) {
 export default function PublishModule({ module, user, workspace }) {
   let [isOpen, setIsOpen] = useState(false)
   const [waiver, setWaiver] = useState(false)
-
+  const [drafts, setDrafts] = useRecoilState(draftsAtom)
   const [publishModuleMutation] = useMutation(publishModule)
   const router = useRouter()
   const publishCount =
@@ -105,6 +107,7 @@ export default function PublishModule({ module, user, workspace }) {
                             success: "Published!",
                             error: "Uh-oh something went wrong.",
                           })
+                          await setDrafts(drafts.filter((draft) => draft.suffix !== module.suffix))
                           router.push(`/modules/${module.suffix}`)
                         }}
                       >

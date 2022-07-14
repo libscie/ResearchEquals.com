@@ -21,6 +21,13 @@ import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 import getNodes from "../core/queries/getNodes"
 import InputNode from "../core/components/InputNode"
 import DefaultNode from "../core/components/DefaultNode"
+import { useRecoilState } from "recoil"
+import {
+  currentUserAtom,
+  currentWorkspaceAtom,
+  draftsAtom,
+  invitationsAtom,
+} from "app/core/utils/Atoms"
 
 const nodeTypes = { inputNode: InputNode, defaultNode: DefaultNode }
 
@@ -63,17 +70,27 @@ const getLayoutedElements = (nodes, edges, direction = "TB") => {
 }
 
 const Graph = () => {
-  const currentUser = useCurrentUser()
-  const session = useSession()
-  const currentWorkspace = useCurrentWorkspace()
   const router = useRouter()
-  const [drafts, { refetch }] = useQuery(getDrafts, { session })
   const [{ nodesData: nodesQuery, edgesData: edgesQuery }] = useQuery(getNodes, undefined)
-  const [invitations] = useQuery(getInvitedModules, { session })
   const [nodes, setNodes, onNodesChange] = useNodesState([])
   const [edges, setEdges, onEdgesChange] = useEdgesState([])
   const [onlyConnected, setOnlyConnected] = useState(true)
   const prefersDarkMode = useMediaPredicate("(prefers-color-scheme: dark)")
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserAtom)
+  setCurrentUser(useCurrentUser())
+  const [currentWorkspace, setCurrentWorkspace] = useRecoilState(currentWorkspaceAtom)
+  setCurrentWorkspace(useCurrentWorkspace())
+  const [drafts, setDrafts] = useRecoilState(draftsAtom)
+  const [invitations, setInvitations] = useRecoilState(invitationsAtom)
+
+  const session = useSession()
+  const [tmpDrafts] = useQuery(getDrafts, { session })
+  const [tmpInvitations] = useQuery(getInvitedModules, { session })
+
+  useEffect(() => {
+    setDrafts(tmpDrafts)
+    setInvitations(tmpInvitations)
+  }, [])
 
   useEffect(() => {
     edgesQuery.forEach((edge) => {
@@ -99,15 +116,7 @@ const Graph = () => {
 
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+      <Navbar />
       <div className="h-[85vh] w-full">
         <ReactFlow
           nodes={nodes}

@@ -1,9 +1,16 @@
 import Layout from "app/core/layouts/Layout"
 import db from "db"
 import { Link, useRouter, usePaginatedQuery, useParams, useQuery, useSession } from "blitz"
-import { Suspense } from "react"
+import { Suspense, useEffect } from "react"
 import moment from "moment"
 import { Calendar, UserFollow, Link as Link32 } from "@carbon/icons-react"
+import {
+  currentUserAtom,
+  currentWorkspaceAtom,
+  draftsAtom,
+  invitationsAtom,
+} from "../core/utils/Atoms"
+import { useRecoilState } from "recoil"
 
 import Navbar from "../core/components/Navbar"
 import getHandleFeed from "../workspaces/queries/getHandleFeed"
@@ -50,26 +57,28 @@ export const getServerSideProps = async ({ params }) => {
 }
 
 const Handle = ({ workspace, expire, signature }) => {
-  const currentUser = useCurrentUser()
   const session = useSession()
-  const currentWorkspace = useCurrentWorkspace()
   const [ownWorkspace, { refetch }] = useQuery(getCurrentWorkspace, null)
   const router = useRouter()
-  const [drafts, { refetch: refetchDrafts }] = useQuery(getDrafts, { session })
-  const [invitations] = useQuery(getInvitedModules, { session })
   const params = useParams()
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserAtom)
+  setCurrentUser(useCurrentUser())
+  const [currentWorkspace, setCurrentWorkspace] = useRecoilState(currentWorkspaceAtom)
+  setCurrentWorkspace(useCurrentWorkspace())
+  const [drafts, setDrafts] = useRecoilState(draftsAtom)
+  const [invitations, setInvitations] = useRecoilState(invitationsAtom)
+
+  const [tmpDrafts] = useQuery(getDrafts, { session })
+  const [tmpInvitations] = useQuery(getInvitedModules, { session })
+
+  useEffect(() => {
+    setDrafts(tmpDrafts)
+    setInvitations(tmpInvitations)
+  }, [])
 
   return (
     <div className="h-full bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-200">
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetchDrafts}
-      />
+      <Navbar />
       <div className="mx-4 max-w-full lg:flex">
         <div className="w-full lg:w-1/2 xl:w-1/3">
           <div className="lg:sticky lg:top-8">

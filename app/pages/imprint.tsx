@@ -1,33 +1,15 @@
-import { BlitzPage, Link, Routes, useQuery, useRouter, useSession } from "blitz"
+import { BlitzPage, Link } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import Navbar from "../core/components/Navbar"
 import LayoutLoader from "app/core/components/LayoutLoader"
-import { useCurrentUser } from "app/core/hooks/useCurrentUser"
-import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
-import getDrafts from "app/core/queries/getDrafts"
-import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 
 const Imprint: BlitzPage = () => {
   const page = "Imprint"
   const title = "Who runs this website?"
-  const currentUser = useCurrentUser()
-  const session = useSession()
-  const currentWorkspace = useCurrentWorkspace()
-  const router = useRouter()
-  const [drafts, { refetch }] = useQuery(getDrafts, { session })
-  const [invitations] = useQuery(getInvitedModules, { session })
 
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+      <Navbar />
       <main className="bg-white dark:bg-gray-900 lg:relative">
         <div className="mx-4">
           <div className="mx-auto max-w-7xl pt-10 text-black dark:text-white md:p-0 md:pt-10">
@@ -56,7 +38,7 @@ const Imprint: BlitzPage = () => {
                 className="border-b-2 border-indigo-600 hover:bg-indigo-600 hover:text-white"
                 href="tel:+491626818225"
               >
-                +49 162 68 18 225
+                +49 30 23 88 29 71
               </a>
             </p>
             <p>
