@@ -5,7 +5,6 @@ import { Formik, Form } from "formik"
 import { Email, UserAvatar, User, Parameter } from "@carbon/icons-react"
 import { useRecoilValue, useRecoilState } from "recoil"
 
-import SettingsModal from "../modals/settings"
 import changeAvatar from "../../workspaces/mutations/changeAvatar"
 import getSignature from "../../auth/queries/getSignature"
 import QuickDraft from "../../modules/components/QuickDraft"
