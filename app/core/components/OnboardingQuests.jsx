@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "blitz"
 import { Widget } from "@uploadcare/react-widget"
-import { useEffect, useRef, useState } from "react"
+import { useRef } from "react"
 import { Formik, Form } from "formik"
 import { Email, UserAvatar, User, Parameter } from "@carbon/icons-react"
 import { useRecoilValue, useRecoilState } from "recoil"
