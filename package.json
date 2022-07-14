@@ -63,7 +63,7 @@
     "react-dom": "18.2.0",
     "react-flow-renderer": "10.3.8",
     "react-helmet": "6.1.0",
-    "react-hot-toast": "2.2.0",
+    "react-hot-toast": "2.3.0",
     "react-markdown": "8.0.3",
     "react-media-hook": "0.4.9",
     "react-syntax-highlighter": "15.5.0",
