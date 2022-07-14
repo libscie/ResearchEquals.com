@@ -1,6 +1,8 @@
 import { Dialog, Transition, Tab } from "@headlessui/react"
 import { Fragment, useState } from "react"
 import { Close } from "@carbon/icons-react"
+import { useRecoilState } from "recoil"
+import { settingsModalAtom } from "../utils/Atoms"
 
 import WorkspaceSettings from "../components/WorkspaceSettings"
 import AccountSettings from "../components/AccountSettings"
@@ -10,7 +12,7 @@ function classNames(...classes) {
 }
 
 export default function SettingsModal({ button, styling, user, workspace }) {
-  let [isOpen, setIsOpen] = useState(false)
+  let [isOpen, setIsOpen] = useRecoilState(settingsModalAtom)
   let [categories] = useState(["Workspace", "Account"])
 
   return (
