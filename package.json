@@ -43,7 +43,7 @@
     "autoprefixer": "10.4.7",
     "axios": "0.27.2",
     "blitz": "0.45.4",
-    "concurrently": "7.2.2",
+    "concurrently": "7.3.0",
     "dagre": "0.8.5",
     "eslint": "8.19.0",
     "filesize": "9.0.11",
