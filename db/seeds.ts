@@ -388,7 +388,7 @@ const seed = async () => {
                 workspace: {
                   create: {
                     handle: faker.internet.userName().toLowerCase(),
-                    avatar: faker.image.abstract(),
+                    avatar: `https://eu.ui-avatars.com/api/?rounded=true&background=574cfa&color=ffffff&name=${faker.internet.userName()}`,
                     firstName: faker.name.findName(),
                     lastName: faker.name.findName(),
                     url: faker.internet.url(),
