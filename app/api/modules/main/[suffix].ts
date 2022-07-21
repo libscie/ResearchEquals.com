@@ -22,7 +22,7 @@ const handler: BlitzApiHandler = async (req, res) => {
           .on("end", function () {
             res.statusCode = 200
             res.setHeader("Content-Type", module?.main!["mimeType"])
-            res.setHeader("Content-Disposition", `filename=${module?.main!["name"]}`)
+            res.setHeader("Content-Disposition", `filename=${encodeURI(module?.main!["name"])}`)
             var buffer = Buffer.concat(data)
             res.end(buffer)
             resolve()
