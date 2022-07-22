@@ -83,6 +83,8 @@
   },
   "devDependencies": {
     "@types/react": "17.0.38",
+    "@types/unist": "2.0.6",
+    "@types/xast": "1.0.2",
     "lint-staged": "13.0.3",
     "prettier": "2.7.1",
     "prettier-plugin-prisma": "4.1.0",
