@@ -1,5 +1,7 @@
 import { Element } from "xast"
 import book, { Book } from "./book"
+import { Cite } from "./citation_list"
+import { Author } from "./contributors"
 
 export interface BodyProps {
   type: any
@@ -9,7 +11,7 @@ export interface BodyProps {
   license_url: string
   doi: string
   resolve_url: string
-  citations: Citation[]
+  citations: Cite[]
 }
 export interface Body extends Element {
   name: "body"

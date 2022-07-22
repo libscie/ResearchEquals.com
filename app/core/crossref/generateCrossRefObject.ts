@@ -2,6 +2,8 @@ import { Element, Text } from "xast"
 
 import head, { Head } from "./head"
 import body, { Body } from "./body"
+import { Cite } from "./citation_list"
+import { Author } from "./contributors"
 
 export interface CrossRef extends Element {
   declaration: {
@@ -37,12 +39,12 @@ const generateCrossRef = ({
   schema: string
   type: string
   title: string
-  authors: string[]
+  authors: Author[]
   abstractText: string
   license_url: string
   doi: string
   resolve_url: string
-  citations: string[]
+  citations: Cite[]
 }) => {
   const jsCrossRef = {
     declaration: {

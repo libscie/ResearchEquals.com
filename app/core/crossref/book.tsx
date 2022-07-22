@@ -7,7 +7,7 @@ import abstract from "./abstract"
 import aiProgram from "./ai_program"
 import doiData from "./doi_data"
 import contributors, { Author } from "./contributors"
-import citationList, { Citation } from "./citation_list"
+import citationList, { Citation, Cite } from "./citation_list"
 import componentList from "./component_list"
 
 export interface BookProps {
@@ -17,7 +17,7 @@ export interface BookProps {
   license_url: string
   doi: string
   resolve_url: string
-  citations: Citation[]
+  citations: Cite[]
 }
 
 export interface Book extends Element {

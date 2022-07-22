@@ -98,18 +98,15 @@ export interface CitationTitle extends Element {
 
 // TODO: Verify output generated
 
-const citation_list = ({
-  citations,
-}: {
-  citations: {
-    publishedWhere: string
-    authors: [{ name: string }] | { name: string }[]
-    title: string
-    prefix: string
-    suffix: string
-    publishedAt: string
-  }[]
-}): CitationList => {
+export interface Cite {
+  publishedWhere: string
+  authors: [{ name: string }] | { name: string }[]
+  title: string
+  prefix: string
+  suffix: string
+  publishedAt: string
+}
+const citation_list = ({ citations }: { citations: Cite[] }): CitationList => {
   const js: CitationList = {
     type: "element",
     name: "citation_list",
