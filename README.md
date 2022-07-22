@@ -18,7 +18,7 @@ Our house may be different from yours, and if you find any of this unagreeable, 
 
 ## Development
 
-Please clone the repository and make sure you have [BlitzJS](blitzjs.com/) installed:
+Please clone the repository and make sure you have [BlitzJS](https://www.blitzjs.com/) installed:
 
 ```
 ## Install BlitzJS if you don't have it
