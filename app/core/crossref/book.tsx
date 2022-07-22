@@ -1,3 +1,4 @@
+import { Element, Text } from "xast"
 import titles from "./titles"
 import publicationDate from "./publication_date"
 import noisbn from "./noisbn"
@@ -5,18 +6,58 @@ import publisher from "./publisher"
 import abstract from "./abstract"
 import aiProgram from "./ai_program"
 import doiData from "./doi_data"
-import contributors from "./contributors"
-import citationList from "./citation_list"
+import contributors, { Author } from "./contributors"
+import citationList, { Citation } from "./citation_list"
 import componentList from "./component_list"
 
-const book = ({ title, authors, abstractText, license_url, doi, resolve_url, citations }) => {
-  const js = {
+export interface BookProps {
+  title: string
+  authors: Author[]
+  abstractText: string
+  license_url: string
+  doi: string
+  resolve_url: string
+  citations: Citation[]
+}
+
+export interface Book extends Element {
+  name: "book"
+  attributes: {
+    book_type: "other"
+  }
+  children: [BookMetadata, ContentItem]
+}
+
+export interface BookMetadata extends Element {
+  name: "book_metadata"
+  attributes: {
+    language: "en"
+  }
+}
+
+export interface ContentItem extends Element {
+  name: "content_item"
+  attributes: {
+    component_type: "other"
+  }
+}
+
+const book = ({
+  title,
+  authors,
+  abstractText,
+  license_url,
+  doi,
+  resolve_url,
+  citations,
+}: BookProps) => {
+  const js: Book = {
     type: "element",
     name: "book",
     attributes: {
       book_type: "other",
     },
-    elements: [
+    children: [
       {
         // https://data.crossref.org/reports/help/schema_doc/4.4.2/schema_4_4_2.html#book_metadata
         type: "element",
@@ -24,7 +65,7 @@ const book = ({ title, authors, abstractText, license_url, doi, resolve_url, cit
         attributes: {
           language: "en",
         },
-        elements: [
+        children: [
           titles("ResearchEquals"),
           publicationDate(),
           noisbn(),
@@ -42,7 +83,7 @@ const book = ({ title, authors, abstractText, license_url, doi, resolve_url, cit
         attributes: {
           component_type: "other",
         },
-        elements: [
+        children: [
           contributors(authors),
           titles(title),
           abstract(abstractText),
@@ -52,7 +93,7 @@ const book = ({ title, authors, abstractText, license_url, doi, resolve_url, cit
           citationList({ citations }),
           componentList(),
         ],
-      },
+      } as ContentItem,
     ],
   }
 

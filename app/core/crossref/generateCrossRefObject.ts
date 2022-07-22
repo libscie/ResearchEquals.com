@@ -1,6 +1,28 @@
-import head from "./head"
-import body from "./body"
+import { Element, Text } from "xast"
 
+import head, { Head } from "./head"
+import body, { Body } from "./body"
+
+export interface CrossRef extends Element {
+  declaration: {
+    attributes: {
+      version: "1.0"
+      encoding: "UTF-8"
+    }
+  }
+  children: DOIBatch[]
+}
+export interface DOIBatch extends Element {
+  name: "doi_batch"
+  attributes: {
+    version: string
+    xmlns: string
+    "xmlns:xsi": string
+    "xsi:schemaLocation": string
+    "xmlns:jats": string
+  }
+  elements: (Head | Body)[]
+}
 const generateCrossRef = ({
   schema,
   type,
@@ -11,6 +33,16 @@ const generateCrossRef = ({
   doi,
   resolve_url,
   citations,
+}: {
+  schema: string
+  type: string
+  title: string
+  authors: string[]
+  abstractText: string
+  license_url: string
+  doi: string
+  resolve_url: string
+  citations: string[]
 }) => {
   const jsCrossRef = {
     declaration: {

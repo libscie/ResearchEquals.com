@@ -1,76 +1,185 @@
+import { Element, Text } from "xast"
+export interface CitationList extends Element {
+  name: "citation_list"
+  children: Citation[]
+}
+
+export interface Citation extends Element {
+  name: "citation"
+  attributes: {
+    key: string
+  }
+  children: (
+    | CitationLabel
+    | CitationText
+    | CitationDate
+    | CitationURL
+    | CitationDOI
+    | CitationVolume
+    | CitationIssue
+    | CitationFirstPage
+    | CitationLastPage
+    | CitationISSN
+    | CitationISBN
+    | CitationPublisher
+    | CitationJournal
+    | CitationAuthor
+    | CitationYear
+    | CitationTitle
+  )[]
+}
+
+export interface CitationLabel extends Element {
+  name: "label"
+  children: [Text]
+}
+export interface CitationAuthor extends Element {
+  name: "author"
+  children: [Text]
+}
+
+export interface CitationText extends Element {
+  name: "text"
+  children: [Text]
+}
+
+export interface CitationDate extends Element {
+  name: "cDate"
+  children: [Text]
+}
+export interface CitationYear extends Element {
+  name: "cYear"
+  children: [Text]
+}
+export interface CitationURL extends Element {
+  name: "url"
+  children: [Text]
+}
+export interface CitationDOI extends Element {
+  name: "doi"
+  children: [Text]
+}
+export interface CitationVolume extends Element {
+  name: "volume"
+  children: [Text]
+}
+export interface CitationIssue extends Element {
+  name: "issue"
+  children: [Text]
+}
+export interface CitationFirstPage extends Element {
+  name: "first_page"
+  children: [Text]
+}
+export interface CitationLastPage extends Element {
+  name: "last_page"
+  children: [Text]
+}
+export interface CitationISSN extends Element {
+  name: "issn"
+  children: [Text]
+}
+export interface CitationISBN extends Element {
+  name: "isbn"
+  children: [Text]
+}
+export interface CitationPublisher extends Element {
+  name: "publisher"
+  children: [Text]
+}
+export interface CitationJournal extends Element {
+  name: "journal_title"
+  children: [Text]
+}
+export interface CitationTitle extends Element {
+  name: "article_title"
+  children: [Text]
+}
+
 // TODO: Verify output generated
 
-const citation_list = ({ citations }) => {
-  const js = {
+const citation_list = ({
+  citations,
+}: {
+  citations: {
+    publishedWhere: string
+    authors: [{ name: string }] | { name: string }[]
+    title: string
+    prefix: string
+    suffix: string
+    publishedAt: string
+  }[]
+}): CitationList => {
+  const js: CitationList = {
     type: "element",
     name: "citation_list",
-    elements: citations.map((citation, index) => {
+    children: citations.map((citation, index) => {
       const datetime = new Date(citation.publishedAt)
-      const citationJs = {
+      const citationJs: Citation = {
         type: "element",
         name: "citation",
         attributes: {
           // index starts at 0
-          key: index + 1,
+          key: `${index + 1}`,
         },
-        elements: [
+        children: [
           {
             type: "element",
             name: "journal_title",
-            elements: [
+            children: [
               {
                 type: "text",
-                text: citation.publishedWhere,
+                value: citation.publishedWhere,
               },
             ],
           },
           {
             type: "element",
             name: "author",
-            elements: [
+            children: [
               {
                 type: "text",
-                text: citation.authors[0].name,
+                value: citation.authors[0].name,
               },
             ],
           },
           {
             type: "element",
             name: "cYear",
-            elements: [
+            children: [
               {
                 type: "text",
-                text: datetime.getUTCFullYear(),
+                value: datetime.getUTCFullYear().toString(),
               },
             ],
           },
           {
             type: "element",
             name: "doi",
-            elements: [
+            children: [
               {
                 type: "text",
-                text: `${citation.prefix}/${citation.suffix}`,
+                value: `${citation.prefix}/${citation.suffix}`,
               },
             ],
           },
           // {
           //   type: "element",
           //   name: "isbn",
-          //   elements: [
+          //   children: [
           //     {
           //       type: "text",
-          //       text: citation.isbn,
+          //       value: citation.isbn,
           //     },
           //   ],
           // },
           {
             type: "element",
             name: "article_title",
-            elements: [
+            children: [
               {
                 type: "text",
-                text: citation.title,
+                value: citation.title,
               },
             ],
           },

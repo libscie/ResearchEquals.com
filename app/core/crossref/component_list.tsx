@@ -1,8 +1,13 @@
-const component_list = () => {
-  const js = {
+import { Element } from "xast"
+
+export interface ComponentList extends Element {
+  name: "component_list"
+}
+const component_list = (): ComponentList => {
+  const js: ComponentList = {
     type: "element",
     name: "component_list",
-    elements: [],
+    children: [],
   }
 
   return js
