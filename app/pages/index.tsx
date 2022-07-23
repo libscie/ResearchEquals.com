@@ -27,6 +27,7 @@ import {
 import Xarrows from "react-xarrows"
 import { useMediaPredicate } from "react-media-hook"
 import ReactTooltip from "react-tooltip"
+import "@dotlottie/player-component"
 
 import Navbar from "../core/components/Navbar"
 import db from "db"
@@ -84,6 +85,12 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
       />
       <main className="bg-white dark:bg-gray-900 lg:relative">
         <div className="" id="hero">
+          <dotlottie-player
+            src="https://ucarecdn.com/5be3c1f5-295e-4276-9330-388757bd0bea/"
+            autoplay
+            loop
+            style={{ height: "100%", width: "100%" }}
+          />
           <div className="overflow-hidden pt-8 sm:pt-12 lg:relative lg:py-32">
             <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-24 lg:px-8">
               <div>
