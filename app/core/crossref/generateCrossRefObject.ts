@@ -1,18 +1,12 @@
-import { Element, Text } from "xast"
+import { Element, Instruction, Root, Text } from "xast"
 
 import head, { Head } from "./head"
 import body, { Body } from "./body"
 import { Cite } from "./citation_list"
 import { Author } from "./contributors"
 
-export interface CrossRef extends Element {
-  declaration: {
-    attributes: {
-      version: "1.0"
-      encoding: "UTF-8"
-    }
-  }
-  children: DOIBatch[]
+export interface CrossRef extends Root {
+  children: (Instruction | DOIBatch)[]
 }
 export interface DOIBatch extends Element {
   name: "doi_batch"
@@ -23,7 +17,7 @@ export interface DOIBatch extends Element {
     "xsi:schemaLocation": string
     "xmlns:jats": string
   }
-  elements: (Head | Body)[]
+  children: (Head | Body)[]
 }
 const generateCrossRef = ({
   schema,
@@ -45,15 +39,15 @@ const generateCrossRef = ({
   doi: string
   resolve_url: string
   citations: Cite[]
-}) => {
-  const jsCrossRef = {
-    declaration: {
-      attributes: {
-        version: "1.0",
-        encoding: "UTF-8",
+}): CrossRef => {
+  const jsCrossRef: CrossRef = {
+    type: "root",
+    children: [
+      {
+        type: "instruction",
+        name: "xml",
+        value: 'version="1.0" encoding="UTF-8"',
       },
-    },
-    elements: [
       {
         type: "element",
         name: "doi_batch",
@@ -64,7 +58,7 @@ const generateCrossRef = ({
           "xsi:schemaLocation": `http://www.crossref.org/schema/${schema} http://www.crossref.org/schemas/crossref${schema}.xsd`,
           "xmlns:jats": "http://www.ncbi.nlm.nih.gov/JATS1",
         },
-        elements: [
+        children: [
           head({
             registrant: "Liberate Science GmbH",
             email: "info@libscie.org",
