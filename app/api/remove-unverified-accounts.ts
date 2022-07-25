@@ -50,6 +50,17 @@ export default CronJob(
       })
     })
 
-    //  TODO: Remove workspaces without memberships and authorships
+    // Remove workspaces without memberships and authorships
+    // This helps clean up any unused author profiles.
+    await db.workspace.findMany({
+      where: {
+        members: {
+          none: {},
+        },
+        authorships: {
+          none: {},
+        },
+      },
+    })
   }
 )
