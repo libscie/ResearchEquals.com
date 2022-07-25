@@ -52,7 +52,7 @@ export default CronJob(
 
     // Remove workspaces without memberships and authorships
     // This helps clean up any unused author profiles.
-    await db.workspace.findMany({
+    await db.workspace.deleteMany({
       where: {
         members: {
           none: {},
