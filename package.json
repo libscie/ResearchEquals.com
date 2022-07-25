@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@algolia/autocomplete-js": "1.7.1",
-    "@carbon/icons-react": "11.5.0",
+    "@carbon/icons-react": "11.6.0",
     "@faker-js/faker": "7.3.0",
     "@floating-ui/dom": "1.0.0",
     "@headlessui/react": "1.6.6",
