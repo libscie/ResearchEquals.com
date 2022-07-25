@@ -283,7 +283,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
               ""
             )}
             {/* Preview PDF */}
-            {mainFile.mimeType === "application/pdf" ? (
+            {mainFile.mimeType.startsWith("application/pdf") ? (
               <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.14.305/build/pdf.worker.min.js">
                 <div style={{ height: "750px" }} className="max-w-screen text-gray-900">
                   <Viewer fileUrl={mainFile.cdnUrl} />
@@ -293,7 +293,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
               ""
             )}
             {/* Preview Markdown */}
-            {mainFile.mimeType === "text/markdown" ? (
+            {mainFile.mimeType.startsWith("text/markdown") ? (
               <div className="coc">
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm, remarkMath]}
@@ -332,11 +332,16 @@ const Module = ({ module, mainFile, supportingRaw }) => {
               ""
             )}
             {/* Preview Office files */}
-            {mainFile.mimeType === "application/vnd.ms-excel" ||
-            mainFile.mimeType ===
-              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
-            mainFile.mimeType ===
-              "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ? (
+            {mainFile.mimeType.startsWith("application/vnd.ms-excel") ||
+            mainFile.mimeType.startsWith(
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            ) ||
+            mainFile.mimeType.startsWith(
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            ) ||
+            mainFile.mimeType.startsWith(
+              "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            ) ? (
               <iframe
                 src={`https://view.officeapps.live.com/op/embed.aspx?src=${mainFile.cdnUrl}`}
                 width="100%"
