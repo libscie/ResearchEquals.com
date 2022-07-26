@@ -9,7 +9,16 @@ import contributors from "./contributors"
 import citationList from "./citation_list"
 import componentList from "./component_list"
 
-const book = ({ title, authors, abstractText, license_url, doi, resolve_url, citations }) => {
+const book = ({
+  title,
+  language,
+  authors,
+  abstractText,
+  license_url,
+  doi,
+  resolve_url,
+  citations,
+}) => {
   const js = {
     type: "element",
     name: "book",
@@ -41,6 +50,7 @@ const book = ({ title, authors, abstractText, license_url, doi, resolve_url, cit
         name: "content_item",
         attributes: {
           component_type: "other",
+          language,
         },
         elements: [
           contributors(authors),
