@@ -69,7 +69,7 @@
     "react-syntax-highlighter": "15.5.0",
     "react-tooltip": "4.2.21",
     "react-xarrows": "2.0.2",
-    "recharts": "2.1.12",
+    "recharts": "2.1.13",
     "recoil": "0.7.4",
     "recoil-persist": "4.2.0",
     "rehype-katex": "6.0.2",
