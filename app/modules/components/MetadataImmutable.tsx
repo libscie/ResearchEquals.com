@@ -1,5 +1,6 @@
 import { Link } from "blitz"
 import moment from "moment"
+import ISO6391 from "iso-639-1"
 
 import AuthorAvatarsNew from "./AuthorAvatarsNew"
 import ViewAuthors from "./ViewAuthors"
@@ -11,7 +12,7 @@ const MetadataImmutable = ({ module }) => {
       <div className="text-center text-sm font-normal leading-4 lg:flex">
         <div className="flex-grow py-2">
           {module.published ? (
-            <>Published: {module.publishedAt.toISOString().substring(0, 10)}</>
+            <>{module.publishedAt.toISOString().substring(0, 10)}</>
           ) : (
             <>Last updated: {moment(module.updatedAt).fromNow()}</>
           )}
@@ -20,7 +21,7 @@ const MetadataImmutable = ({ module }) => {
           {module.published ? (
             <>
               <Link href={`https://doi.org/${module.prefix}/${module.suffix}`}>
-                <a className="underline">DOI: {`${module.prefix}/${module.suffix}`}</a>
+                <a className="underline">{`${module.prefix}/${module.suffix}`}</a>
               </Link>
             </>
           ) : (
@@ -30,11 +31,13 @@ const MetadataImmutable = ({ module }) => {
           )}
         </div>
         <div className="flex-grow py-2">
-          License:{" "}
           <Link href={module.license!.url!}>
             <a target="_blank">{module.license!.name}</a>
           </Link>
         </div>
+        {ISO6391.getName(module.language) && (
+          <div className="flex-grow py-2">{ISO6391.getName(module.language)}</div>
+        )}
       </div>
       <div
         className="module my-4 py-2 px-4 text-white"
