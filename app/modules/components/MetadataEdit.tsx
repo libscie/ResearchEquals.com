@@ -1,6 +1,8 @@
 import { useMutation, useQuery, validateZodSchema } from "blitz"
 import moment from "moment"
 import algoliasearch from "algoliasearch"
+import ISO6391 from "iso-639-1"
+
 import AuthorAvatarsNew from "./AuthorAvatarsNew"
 import { useEffect } from "react"
 import { useFormik } from "formik"
@@ -21,6 +23,7 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
       description: module.description,
       license: module.license?.id.toString(),
       displayColor: module.displayColor,
+      language: module.language,
     },
     validate: validateZodSchema(
       z.object({
@@ -29,6 +32,7 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
         description: z.string(),
         license: z.string().min(1),
         displayColor: z.string().min(1),
+        language: z.string().min(1).max(2),
       })
     ),
     onSubmit: async (values) => {
@@ -39,6 +43,7 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
         description: values.description,
         licenseId: parseInt(values.license),
         displayColor: values.displayColor,
+        language: values.language,
       })
       setQueryData(updatedModule)
       setIsEditing(false)
@@ -51,6 +56,7 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
     formik.setFieldValue("description", module.description)
     formik.setFieldValue("license", module.license!.id.toString())
     formik.setFieldValue("displayColor", module.displayColor)
+    formik.setFieldValue("language", module.language)
   }, [module])
 
   return (
@@ -187,6 +193,34 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
               <option value="#db2777" className="text-white" style={{ backgroundColor: "#db2777" }}>
                 Red
               </option>
+            </select>
+          </div>
+        </div>
+        <div className="px-2 py-2">
+          <label
+            htmlFor="language"
+            className="my-1 flex text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
+          >
+            Language{" "}
+            {formik.touched.language && formik.errors.language
+              ? " - " + formik.errors.language
+              : null}
+          </label>
+          <div className="mt-1">
+            <select
+              id="language"
+              required
+              className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-400 bg-white px-3 py-2 text-sm font-normal placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border-gray-600 dark:bg-transparent dark:text-gray-200"
+              {...formik.getFieldProps("language")}
+            >
+              {" "}
+              {ISO6391.getAllNames().map((lang) => (
+                <>
+                  <option value={ISO6391.getCode(lang)}>
+                    {ISO6391.getCode(lang) + " - " + lang}
+                  </option>
+                </>
+              ))}
             </select>
           </div>
         </div>
