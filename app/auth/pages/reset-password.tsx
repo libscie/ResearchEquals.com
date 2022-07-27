@@ -72,9 +72,11 @@ const ResetPasswordPage: BlitzPage = () => {
                 className="block text-sm font-medium text-gray-700 dark:text-gray-100"
               >
                 New password{" "}
-                {formik.touched.password && formik.errors.password
-                  ? " - " + formik.errors.password
-                  : null}
+                {
+                  formik.touched.password 
+                  && formik.errors.password
+                  && " - " + formik.errors.password
+                }
               </label>
               <div className="mt-1">
                 <input
@@ -93,9 +95,11 @@ const ResetPasswordPage: BlitzPage = () => {
                 className=" my-1 block text-sm font-medium text-gray-700 dark:text-gray-100"
               >
                 Repeat new password{" "}
-                {formik.touched.passwordConfirmation && formik.errors.passwordConfirmation
-                  ? " - " + formik.errors.passwordConfirmation
-                  : null}
+                {
+                  formik.touched.passwordConfirmation 
+                  && formik.errors.passwordConfirmation
+                  && " - " + formik.errors.passwordConfirmation
+                }
               </label>
               <div className="mt-1">
                 <input

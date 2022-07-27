@@ -71,7 +71,7 @@ const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invit
                     aria-current={tab.current ? "page" : undefined}
                   >
                     {tab.name}
-                    {tab.count ? (
+                    {tab.count && (
                       <span
                         className={classNames(
                           tab.current
@@ -82,7 +82,7 @@ const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invit
                       >
                         {tab.count}
                       </span>
-                    ) : null}
+                    )}
                   </a>
                 </Link>
               ))}

@@ -70,7 +70,7 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
             className="my-1 block text-sm font-medium  text-gray-900 dark:text-gray-200"
           >
             Email address{" "}
-            {formik.touched.email && formik.errors.email ? " - " + formik.errors.email : null}
+            {formik.touched.email && formik.errors.email && " - " + formik.errors.email}
           </label>
           <div className="max-w-11/12 mt-1">
             <input
@@ -90,9 +90,11 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
             className=" my-1 block text-sm font-medium  text-gray-900 dark:text-gray-200"
           >
             Current password{" "}
-            {formik.touched.currentPassword && formik.errors.currentPassword
-              ? " - " + formik.errors.currentPassword
-              : null}
+            {
+              formik.touched.currentPassword 
+              && formik.errors.currentPassword
+              && " - " + formik.errors.currentPassword
+            }
           </label>
           <div className="mt-1">
             <input
@@ -110,9 +112,11 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
             className=" my-1 block text-sm font-medium  text-gray-900 dark:text-gray-200"
           >
             New password{" "}
-            {formik.touched.newPassword && formik.errors.newPassword
-              ? " - " + formik.errors.newPassword
-              : null}
+            {
+              formik.touched.newPassword 
+              && formik.errors.newPassword
+              && " - " + formik.errors.newPassword
+            }
           </label>
           <p className="text-xs text-gray-900 dark:text-gray-200">
             Password needs to be at least 10 characters.
@@ -132,9 +136,11 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
             className=" my-1 block text-sm font-medium  text-gray-900 dark:text-gray-200"
           >
             Repeat password{" "}
-            {formik.touched.newRepeat && formik.errors.newRepeat
-              ? " - " + formik.errors.newRepeat
-              : null}
+            {
+              formik.touched.newRepeat 
+              && formik.errors.newRepeat
+              && " - " + formik.errors.newRepeat
+            }
           </label>
           <div className="mt-1">
             <input

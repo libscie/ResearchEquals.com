@@ -77,9 +77,9 @@ const SignupPage: BlitzPage = () => {
                 className="block text-sm font-medium text-gray-700 dark:text-gray-100"
               >
                 Email address
-                {formik.touched.email && formik.errors.email ? (
+                {formik.touched.email && formik.errors.email && (
                   <span className="text-red-500">{` - ${formik.errors.email}`}</span>
-                ) : null}
+                )}
               </label>
               <div className="mt-1">
                 <input
@@ -100,9 +100,9 @@ const SignupPage: BlitzPage = () => {
                 className="my-1 block text-sm font-medium text-gray-700 dark:text-gray-100"
               >
                 Username
-                {formik.touched.handle && formik.errors.handle ? (
+                {formik.touched.handle && formik.errors.handle && (
                   <span className="text-red-500">{` - ${formik.errors.handle}`}</span>
-                ) : null}
+                )}
               </label>
               <div className="flex max-w-lg rounded-md shadow-sm">
                 <span className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm font-normal leading-5 text-gray-500 dark:border-gray-500 dark:bg-gray-700  dark:text-gray-300">
@@ -125,9 +125,9 @@ const SignupPage: BlitzPage = () => {
                 className="my-1 block text-sm font-medium text-gray-700 dark:text-gray-100"
               >
                 Password
-                {formik.touched.password && formik.errors.password ? (
+                {formik.touched.password && formik.errors.password && (
                   <span className="text-red-500">{` - ${formik.errors.password}`}</span>
-                ) : null}
+                )}
               </label>
               <div className="">
                 <input

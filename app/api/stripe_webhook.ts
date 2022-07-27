@@ -94,9 +94,8 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
           return js
         }),
         citations:
-          module!.references.length === 0
-            ? []
-            : module?.references.map((reference) => {
+          module!.references.length
+            && module?.references.map((reference) => {
                 const refJs = {
                   publishedWhere: reference.publishedWhere,
                   authors:

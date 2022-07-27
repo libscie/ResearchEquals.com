@@ -210,9 +210,11 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         <div className="my-4 px-2 text-gray-900 dark:text-gray-200">
           <label htmlFor="firstName" className="my-1 block text-sm font-medium">
             Author First Name{" "}
-            {formik.touched.firstName && formik.errors.firstName
-              ? " - " + formik.errors.firstName
-              : null}
+            {
+              formik.touched.firstName 
+              && formik.errors.firstName
+              && " - " + formik.errors.firstName
+            }
           </label>
           <div className="mt-1 text-gray-900 dark:text-gray-200">
             <input
@@ -230,9 +232,11 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         <div className="my-4 px-2 text-gray-900 dark:text-gray-200">
           <label htmlFor="lastName" className="my-1 block text-sm font-medium">
             Author Last Name{" "}
-            {formik.touched.lastName && formik.errors.lastName
-              ? " - " + formik.errors.lastName
-              : null}
+            {
+              formik.touched.lastName 
+              && formik.errors.lastName
+              && " - " + formik.errors.lastName
+            }
           </label>
           <div className="mt-1 text-gray-900 dark:text-gray-200">
             <input
@@ -249,7 +253,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         </div>
         <div className="my-4 px-2 text-gray-900 dark:text-gray-200">
           <label htmlFor="bio" className="my-1 block text-sm font-medium">
-            Bio {formik.touched.bio && formik.errors.bio ? " - " + formik.errors.bio : null}
+            Bio {formik.touched.bio && formik.errors.bio && " - " + formik.errors.bio}
           </label>
           <div className="mt-1">
             <textarea
@@ -267,9 +271,11 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         <div className="my-4 px-2 text-gray-900 dark:text-gray-200">
           <label htmlFor="pronouns" className="my-1 block text-sm font-medium">
             Pronouns{" "}
-            {formik.touched.pronouns && formik.errors.pronouns
-              ? " - " + formik.errors.pronouns
-              : null}
+            {
+              formik.touched.pronouns 
+              && formik.errors.pronouns
+              && " - " + formik.errors.pronouns
+            }
           </label>
           <div className="mt-1 text-gray-900 dark:text-gray-200">
             <input
@@ -288,9 +294,11 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         <div className="my-4 px-2 text-gray-900 dark:text-gray-200">
           <label htmlFor="profileUrl" className="my-1 block text-sm font-medium">
             Profile URL{" "}
-            {formik.touched.profileUrl && formik.errors.profileUrl
-              ? " - " + formik.errors.profileUrl
-              : null}
+            {
+              formik.touched.profileUrl 
+              && formik.errors.profileUrl
+              && " - " + formik.errors.profileUrl
+            }
           </label>
           <div className="mt-1">
             <input

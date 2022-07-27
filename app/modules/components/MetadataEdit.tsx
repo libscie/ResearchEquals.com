@@ -90,9 +90,11 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
                 </>
               ))}
             </select>
-            {formik.touched.license && formik.errors.license ? (
-              <div>{formik.errors.license}</div>
-            ) : null}
+            {
+              formik.touched.license 
+              && formik.errors.license 
+              && <div>{formik.errors.license}</div>
+            }
           </div>
         </div>
         <div className="min-h-32 py-4 px-2">
@@ -116,7 +118,7 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
                 </>
               ))}
             </select>
-            {formik.touched.type && formik.errors.type ? <div>{formik.errors.type}</div> : null}
+            {formik.touched.type && formik.errors.type && <div>{formik.errors.type}</div>}
           </p>
           <p className="text-xl font-medium leading-6 text-gray-900 dark:text-white">
             <label htmlFor="title" className="sr-only block text-sm font-medium text-gray-700">
@@ -129,9 +131,11 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
                 className="block w-full rounded-md border border-gray-300 bg-transparent shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-600  sm:text-sm"
                 {...formik.getFieldProps("title")}
               />
-              {formik.touched.title && formik.errors.title ? (
-                <div>{formik.errors.title}</div>
-              ) : null}
+              {
+                formik.touched.title 
+                && formik.errors.title 
+                && <div>{formik.errors.title}</div>
+              }
             </div>
           </p>
         </div>
@@ -156,9 +160,11 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
               className="block w-full rounded-md border border-gray-300 bg-transparent shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-600 sm:text-sm"
               {...formik.getFieldProps("description")}
             />
-            {formik.touched.description && formik.errors.description ? (
-              <div>{formik.errors.description}</div>
-            ) : null}
+            {
+            formik.touched.description 
+            && formik.errors.description 
+            && <div>{formik.errors.description}</div>
+            }
           </div>
         </div>
         <div className="px-2 py-2">
@@ -167,9 +173,11 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
             className="my-1 flex text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
           >
             Display color{" "}
-            {formik.touched.displayColor && formik.errors.displayColor
-              ? " - " + formik.errors.displayColor
-              : null}
+            {
+              formik.touched.displayColor 
+              && formik.errors.displayColor
+              && " - " + formik.errors.displayColor
+            }
           </label>
           <div className="mt-1">
             <select
