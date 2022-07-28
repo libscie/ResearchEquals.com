@@ -35,7 +35,7 @@
     "@headlessui/react": "1.6.6",
     "@prisma/client": "4.1.0",
     "@react-pdf-viewer/core": "3.6.0",
-    "@stripe/stripe-js": "1.32.0",
+    "@stripe/stripe-js": "1.34.0",
     "@tailwindcss/forms": "0.5.2",
     "@tailwindcss/line-clamp": "0.4.0",
     "@uploadcare/react-widget": "2.1.5",
