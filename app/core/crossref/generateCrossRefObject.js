@@ -5,6 +5,7 @@ const generateCrossRef = ({
   schema,
   type,
   title,
+  language,
   authors,
   abstractText,
   license_url,
@@ -38,6 +39,7 @@ const generateCrossRef = ({
           body({
             type,
             title,
+            language,
             authors,
             abstractText,
             license_url,

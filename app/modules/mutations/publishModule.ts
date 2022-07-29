@@ -48,6 +48,7 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
     schema: "5.3.1",
     type: module!.type!.name,
     title: module!.title,
+    language: module!.language,
     authors: module!.authors!.map((author) => {
       const js = {
         firstName: author.workspace?.firstName,
@@ -142,6 +143,7 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
     description: publishedModule.description,
     publishedAt: publishedModule.publishedAt,
     displayColor: publishedModule.displayColor,
+    language: publishedModule.language,
   })
 
   return true
