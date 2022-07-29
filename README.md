@@ -39,7 +39,13 @@ npm install
 Before you can run a local development version, please ensure you have a Postgres server you can create databases on. Add your preferred route to `.env.local` as such:
 
 ```
-DATABASE_URL=postgres://<username>:<password>@localhost:5432/researchequals-dev
+DATABASE_URL=postgres://postgres:user@localhost:5432/researchequals-dev
+```
+
+If you don't have postgres running, you can use the `docker-compose` file which will set one up:
+
+```
+docker-compose up
 ```
 
 To get a fully functional development environment you need to add the environment variables as listed in `.env.example`. Please note most of these services are freemium and you can sign up for a free account.
