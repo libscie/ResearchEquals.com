@@ -1,7 +1,9 @@
 # ResearchEquals.com <img src="https://ucarecdn.com/6b429a46-7b66-4f4a-9f8c-13338fb438c2/RBadgegh.png" align="right" height="64" />
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-25-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Discord online](https://img.shields.io/discord/933331539276759070?label=discord&style=flat-square)](https://discord.gg/SefsGJWWSw)
@@ -17,6 +19,8 @@ You're welcome to our house in good faith – read our [code of conduct](https:/
 Our house may be different from yours, and if you find any of this unagreeable, that's perfectly okay, and we ask you respectfully to not contribute.
 
 ## Development
+
+Development for this project uses `node` version 16. Please make sure you are using this version.
 
 Please clone the repository and make sure you have [BlitzJS](https://www.blitzjs.com/) installed:
 
@@ -35,14 +39,22 @@ npm install
 Before you can run a local development version, please ensure you have a Postgres server you can create databases on. Add your preferred route to `.env.local` as such:
 
 ```
-DATABASE_URL=postgres://<username>:<password>@localhost:5432/researchequals-dev
+DATABASE_URL=postgres://myuser:mypassword@localhost:5432/researchequals-dev
+```
+
+If you don't have postgres running, you can use the `docker-compose` file which will set one up:
+
+```
+docker-compose up
 ```
 
 To get a fully functional development environment you need to add the environment variables as listed in `.env.example`. Please note most of these services are freemium and you can sign up for a free account.
 
-You can seed your database with
+You can migrate and seed your database with
 
 ```
+npx prisma migrate dev
+
 blitz db seed
 ```
 
