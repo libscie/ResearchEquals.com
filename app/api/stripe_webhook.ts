@@ -84,6 +84,7 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
         schema: "5.3.1",
         type: module!.type!.name,
         title: module!.title,
+        language: module!.language,
         authors: module!.authors!.map((author) => {
           const js = {
             firstName: author.workspace?.firstName,
@@ -178,6 +179,7 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
         description: publishedModule.description,
         publishedAt: publishedModule.publishedAt,
         displayColor: publishedModule.displayColor,
+        language: publishedModule.language,
       })
       console.log(`[STRIPE WEBHOOK]: Publication complete; type ${event.type}, id: ${event.id}.`)
 

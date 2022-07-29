@@ -44,6 +44,7 @@ export default resolver.pipe(resolver.authorize(), async ({ id }) => {
     schema: "5.3.1",
     type: module!.type!.name,
     title: module!.title,
+    language: module!.language,
     authors: module!.authors!.map((author) => {
       const js = {
         firstName: author.workspace?.firstName,

@@ -25,7 +25,8 @@ model Module {
   prefix         String?
   suffix         String?
   title          String
-  description    String? // Could rename to abstract/summary
+  description    String?
+  language       String    @default("en")
   license        License?  @relation(fields: [licenseId], references: [id])
   licenseId      Int?
 
