@@ -48,7 +48,7 @@ export const LoginForm = (props: LoginFormProps) => {
                 className=" my-1 block text-sm font-medium text-gray-700 dark:text-gray-100"
               >
                 Email address{" "}
-                {formik.touched.email && formik.errors.email ? " - " + formik.errors.email : null}
+                {formik.touched.email && formik.errors.email && " - " + formik.errors.email}
               </label>
               <div className="mt-1">
                 <input
@@ -69,9 +69,11 @@ export const LoginForm = (props: LoginFormProps) => {
                 className="my-1 block text-sm font-medium text-gray-700 dark:text-gray-100"
               >
                 Password{" "}
-                {formik.touched.password && formik.errors.password
-                  ? " - " + formik.errors.password
-                  : null}
+                {
+                  formik.touched.password 
+                  && formik.errors.password
+                  && " - " + formik.errors.password
+                }
               </label>
               <div className="">
                 <input

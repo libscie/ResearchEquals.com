@@ -146,9 +146,11 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             className="my-1 block text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
                           >
                             Title{" "}
-                            {formik.touched.title && formik.errors.title
-                              ? " - " + formik.errors.title
-                              : null}
+                            {
+                              formik.touched.title 
+                              && formik.errors.title
+                              && " - " + formik.errors.title
+                            }
                           </label>
                           <div className="mt-1">
                             <input
@@ -166,9 +168,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             className="my-1 block text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
                           >
                             Summary{" "}
-                            {formik.touched.description && formik.errors.description
-                              ? " - " + formik.errors.description
-                              : null}
+                            {formik.touched.description && formik.errors.description && " - " + formik.errors.description}
                           </label>
                           <div className="mt-1">
                             <textarea
@@ -186,9 +186,9 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             className="my-1 block text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
                           >
                             Module type{" "}
-                            {formik.touched.type && formik.errors.type ? (
+                            {formik.touched.type && formik.errors.type && (
                               <span className="text-red-500">- Required</span>
-                            ) : null}
+                            )}
                             <p className="text-xs">
                               Missing something?{" "}
                               <Link href="mailto:info@libscie.org?subject=Missing module type">
@@ -229,9 +229,9 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                                 />
                               </a>
                             </Link>
-                            {formik.touched.license && formik.errors.license ? (
+                            {formik.touched.license && formik.errors.license && (
                               <span className="text-red-500">- Required</span>
-                            ) : null}
+                            )}
                           </label>
                           <p className="text-xs text-gray-700 dark:text-gray-200">
                             Get more information about licenses{" "}
@@ -269,9 +269,8 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             className="my-1 text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
                           >
                             Display color{" "}
-                            {formik.touched.displayColor && formik.errors.displayColor
-                              ? " - " + formik.errors.displayColor
-                              : null}
+                            {formik.touched.displayColor && formik.errors.displayColor && " - " + formik.errors.displayColor
+                            }
                             <p className="text-xs">This is the module color upon publication.</p>
                           </label>
                           <div className="mt-1">

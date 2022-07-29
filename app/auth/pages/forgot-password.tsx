@@ -58,7 +58,7 @@ const ForgotPasswordPage: BlitzPage = () => {
                   className=" my-1 block text-sm font-medium text-gray-700 dark:text-gray-100"
                 >
                   Email address{" "}
-                  {formik.touched.email && formik.errors.email ? " - " + formik.errors.email : null}
+                  {formik.touched.email && formik.errors.email && " - " + formik.errors.email}
                 </label>
                 <div className="mt-1">
                   <input
