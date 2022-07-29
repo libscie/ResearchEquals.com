@@ -14,7 +14,7 @@ const MetadataImmutable = ({ module }) => {
           {module.published ? (
             <>{module.publishedAt.toISOString().substring(0, 10)}</>
           ) : (
-            <>Last updated: {moment(module.updatedAt).fromNow()}</>
+            <>Updated: {moment(module.updatedAt).fromNow()}</>
           )}
         </div>
         <div className="flex-grow py-2">
@@ -26,7 +26,7 @@ const MetadataImmutable = ({ module }) => {
             </>
           ) : (
             <>
-              DOI upon publish: <span className="">{`${module.prefix}/${module.suffix}`}</span>
+              DOI: <span className="">{`${module.prefix}/${module.suffix}`}</span>
             </>
           )}
         </div>

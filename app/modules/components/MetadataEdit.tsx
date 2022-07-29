@@ -68,37 +68,67 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
         <div className="divide-y divide-gray-100 text-center text-sm font-normal leading-4 text-gray-500 dark:divide-gray-600 dark:bg-gray-800 dark:text-gray-200 lg:flex lg:divide-y-0 lg:divide-x">
           <div className="flex-grow py-2">
             <span className="inline-block h-full align-middle"> </span>
-            <span className="">Last updated: {moment(module.updatedAt).fromNow()}</span>
+            <span className="">Updated: {moment(module.updatedAt).fromNow()}</span>
           </div>
           <div className="flex-grow py-2">
             <span className="inline-block h-full align-middle"> </span>
             <span className="">
-              DOI upon publish:{" "}
+              DOI:{" "}
               <span className="text-gray-300 dark:text-gray-600">{`${module.prefix}/${module.suffix}`}</span>
             </span>
           </div>
-
-          <div className="flex-grow py-1">
-            <label htmlFor="license">License: </label>
-            <select
-              className="rounded border border-gray-300 bg-transparent text-sm font-normal leading-4 dark:border-gray-600"
-              id="license"
-              {...formik.getFieldProps("license")}
+          <div className="px-2 py-2">
+            <label
+              htmlFor="license"
+              className="sr-only my-1 flex text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
             >
-              <option value="" className="text-gray-900">
-                --Please choose a license--
-              </option>
-              {licenses.map((license) => (
-                <>
-                  <option value={license.id} className="text-gray-900">
-                    {license.name} ({license.price > 0 ? `${license.price / 100}EUR` : "Free"})
-                  </option>
-                </>
-              ))}
-            </select>
-            {formik.touched.license && formik.errors.license ? (
-              <div>{formik.errors.license}</div>
-            ) : null}
+              License{" "}
+              {formik.touched.license && formik.errors.license
+                ? " - " + formik.errors.license
+                : null}
+            </label>
+            <div className="mt-1">
+              <select
+                className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-400 bg-white px-3 py-2 text-sm font-normal placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border-gray-600 dark:bg-transparent dark:text-gray-200"
+                id="license"
+                {...formik.getFieldProps("license")}
+              >
+                {licenses.map((license) => (
+                  <>
+                    <option value={license.id} className="text-gray-900">
+                      {license.name} ({license.price > 0 ? `${license.price / 100}EUR` : "Free"})
+                    </option>
+                  </>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className="px-2 py-2">
+            <label
+              htmlFor="language"
+              className="sr-only my-1 flex text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
+            >
+              Language{" "}
+              {formik.touched.language && formik.errors.language
+                ? " - " + formik.errors.language
+                : null}
+            </label>
+            <div className="mt-1">
+              <select
+                id="language"
+                required
+                className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-400 bg-white px-3 py-2 text-sm font-normal placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border-gray-600 dark:bg-transparent dark:text-gray-200"
+                {...formik.getFieldProps("language")}
+              >
+                {ISO6391.getAllNames().map((lang) => (
+                  <>
+                    <option value={ISO6391.getCode(lang)}>
+                      {ISO6391.getCode(lang) + " - " + lang}
+                    </option>
+                  </>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
         <div className="min-h-32 py-4 px-2">
@@ -196,34 +226,7 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
             </select>
           </div>
         </div>
-        <div className="px-2 py-2">
-          <label
-            htmlFor="language"
-            className="my-1 flex text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
-          >
-            Language{" "}
-            {formik.touched.language && formik.errors.language
-              ? " - " + formik.errors.language
-              : null}
-          </label>
-          <div className="mt-1">
-            <select
-              id="language"
-              required
-              className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-400 bg-white px-3 py-2 text-sm font-normal placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border-gray-600 dark:bg-transparent dark:text-gray-200"
-              {...formik.getFieldProps("language")}
-            >
-              {" "}
-              {ISO6391.getAllNames().map((lang) => (
-                <>
-                  <option value={ISO6391.getCode(lang)}>
-                    {ISO6391.getCode(lang) + " - " + lang}
-                  </option>
-                </>
-              ))}
-            </select>
-          </div>
-        </div>
+
         <div className="flex px-2 py-2">
           <button
             type="submit"
