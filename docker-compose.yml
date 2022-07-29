@@ -6,8 +6,8 @@ services:
     command: postgres -c 'max_connections=1000'
     restart: always
     environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_DB: researchequals-dev
+      POSTGRES_USER: dbuser
+      POSTGRES_PASSWORD: dbpassword
     ports:
       - "5432:5432"
