@@ -1,4 +1,12 @@
-import { BlitzPage, useQuery, useRouter, useSession, Link, useMutation } from "blitz"
+import {
+  BlitzPage,
+  useQuery,
+  useRouter,
+  useSession,
+  Link,
+  useMutation,
+  validateZodSchema,
+} from "blitz"
 import Layout from "app/core/layouts/Layout"
 
 import Navbar from "../core/components/Navbar"
@@ -10,6 +18,8 @@ import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 import getAdminInfo from "../core/queries/getAdminInfo"
 import toast from "react-hot-toast"
 import updateCrossRef from "../modules/mutations/updateCrossRef"
+import { z } from "zod"
+import { useFormik } from "formik"
 
 const Admin: BlitzPage = () => {
   const currentUser = useCurrentUser()
@@ -20,6 +30,35 @@ const Admin: BlitzPage = () => {
   const [invitations] = useQuery(getInvitedModules, { session })
   const [adminInfo] = useQuery(getAdminInfo, null)
   const [updateCrossRefMutation] = useMutation(updateCrossRef)
+
+  const formik = useFormik({
+    initialValues: {
+      to: "",
+      from: "no-reply@libscie.org",
+      subject: "",
+      content: "",
+    },
+    validate: validateZodSchema(
+      z.object({
+        to: z.string().email(),
+        from: z.string().email(),
+        subject: z.string().max(100),
+        content: z.string(),
+      })
+    ),
+    onSubmit: async (values) => {
+      alert(JSON.stringify(values))
+      // try {
+      //   toast.promise(forgotPasswordMutation(values), {
+      //     loading: "Loading...",
+      //     success: "Success!",
+      //     error: "That did not work",
+      //   })
+      // } catch (error) {
+      //   alert(error.toString())
+      // }
+    },
+  })
 
   return (
     <>
@@ -33,6 +72,66 @@ const Admin: BlitzPage = () => {
         refetchFn={refetch}
       />
       <main className="my-8 bg-white dark:bg-gray-900 lg:relative">
+        <h1>Admin portal</h1>
+        <h2>Broadcast email to users</h2>
+        <div className="mx-auto sm:w-1/2">
+          <form onSubmit={formik.handleSubmit}>
+            <label
+              htmlFor="to"
+              className="my-1 block text-sm font-medium text-gray-700 dark:text-gray-100"
+            >
+              to address {formik.touched.to && formik.errors.to ? " - " + formik.errors.to : null}
+            </label>
+            <input
+              id="to"
+              type="to"
+              autoComplete="to"
+              required
+              className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-sm font-normal placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500  dark:border-gray-500 dark:bg-gray-800 "
+              placeholder="you@to.com"
+              {...formik.getFieldProps("to")}
+            />
+            <label
+              htmlFor="from"
+              className="my-1 block text-sm font-medium text-gray-700 dark:text-gray-100"
+            >
+              from address{" "}
+              {formik.touched.from && formik.errors.from ? " - " + formik.errors.from : null}
+            </label>
+            <input
+              id="from"
+              type="from"
+              autoComplete="from"
+              required
+              className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-sm font-normal placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500  dark:border-gray-500 dark:bg-gray-800 "
+              placeholder="you@from.com"
+              {...formik.getFieldProps("from")}
+            />
+            <label
+              htmlFor="from"
+              className="my-1 block text-sm font-medium text-gray-700 dark:text-gray-100"
+            >
+              from address{" "}
+              {formik.touched.from && formik.errors.from ? " - " + formik.errors.from : null}
+            </label>
+            <input
+              id="content"
+              type="content"
+              autoComplete="content"
+              required
+              className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-sm font-normal placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500  dark:border-gray-500 dark:bg-gray-800 "
+              placeholder="you@content.com"
+              {...formik.getFieldProps("content")}
+            />
+            <button
+              type="submit"
+              className="text-medium w-full rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
+              Send reset password instructions
+            </button>
+          </form>
+        </div>
+        <h2>DOI reminting</h2>
         <div className="flex flex-col">
           <div className="">
             <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
