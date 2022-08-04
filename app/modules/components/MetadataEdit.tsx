@@ -122,7 +122,7 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
               >
                 {ISO6391.getAllNames().map((lang) => (
                   <>
-                    <option value={ISO6391.getCode(lang)}>
+                    <option value={ISO6391.getCode(lang)} className="text-gray-900">
                       {ISO6391.getCode(lang) + " - " + lang}
                     </option>
                   </>
