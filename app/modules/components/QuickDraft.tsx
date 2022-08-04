@@ -320,7 +320,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                         <div className="my-4">
                           <label
                             htmlFor="language"
-                            className="my-1 text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
+                            className="my-1 block text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
                           >
                             Language{" "}
                             {formik.touched.language && formik.errors.language
@@ -332,12 +332,12 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             <select
                               id="language"
                               required
-                              className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-400 bg-white px-3 py-2 text-sm font-normal placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border-gray-600 dark:bg-transparent dark:text-gray-200"
+                              className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-400 bg-white px-3 py-2 text-sm font-normal placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border-gray-600 dark:bg-transparent dark:text-gray-200 "
                               {...formik.getFieldProps("language")}
                             >
                               {ISO6391.getAllNames().map((lang) => (
                                 <>
-                                  <option value={ISO6391.getCode(lang)}>
+                                  <option value={ISO6391.getCode(lang)} className="text-gray-900">
                                     {ISO6391.getCode(lang) + " - " + lang}
                                   </option>
                                 </>
