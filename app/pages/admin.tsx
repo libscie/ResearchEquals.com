@@ -101,7 +101,7 @@ const Admin: BlitzPage = () => {
                 placeholder="Subject"
                 {...formik.getFieldProps("subject")}
               />
-              <div className="h-[500px]">
+              <div className="my-8">
                 <div ref={quillRef} />
               </div>
               <button
