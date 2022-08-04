@@ -32,7 +32,7 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
         description: z.string(),
         license: z.string().min(1),
         displayColor: z.string().min(1),
-        language: z.string().min(1).max(2),
+        language: z.enum([...ISO6391.getAllCodes()] as any),
       })
     ),
     onSubmit: async (values) => {
