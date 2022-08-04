@@ -1,0 +1,13 @@
+version: "3.2"
+
+services:
+  db:
+    image: postgres:12.5
+    command: postgres -c 'max_connections=1000'
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
