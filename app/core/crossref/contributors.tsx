@@ -1,9 +1,9 @@
 import { Element, Text } from "xast"
 
 export interface Author {
-  firstName: string
-  lastName: string
-  orcid?: string
+  firstName?: string | null
+  lastName?: string | null
+  orcid?: string | null
 }
 
 export interface Contributors extends Element {
@@ -35,6 +35,46 @@ export interface Orcid extends Element {
   children: Text[]
 }
 
+const authorMap = {
+  firstName: "given_name",
+  lastName: "surname",
+  orcid: "ORCID",
+}
+
+const dbAuthorToCrossrefAuthor = (author: Author): Contributor["children"] => {
+  /**
+   * Object.entries returns [key:string, value:any][], always
+   * so we need to typecast it
+   */
+  return (
+    (Object.entries(author) as [keyof Author, string][])
+      .map(([key, value]) => {
+        const baseObject = { type: "element", name: authorMap[key] }
+        if (!value) {
+          return null
+        }
+
+        switch (key) {
+          case "firstName":
+            return { ...baseObject, children: [{ type: "text", value }] } as GivenName
+          case "lastName":
+            return { ...baseObject, children: [{ type: "text", value }] } as Surname
+
+          case "orcid":
+            return {
+              ...baseObject,
+              attributes: { authenticated: "true" },
+              children: [{ type: "text", value: `https://orcid.org/${value}` }],
+            } as Orcid
+        }
+      })
+      /**
+       * Filter out null values
+       */
+      .filter((x) => x) as Contributor["children"]
+  )
+}
+
 // TODO: Feature update needed for organizations / affiliations
 const contributors = (authors: Author[]): Contributors => {
   const js: Contributors = {
@@ -48,46 +88,8 @@ const contributors = (authors: Author[]): Contributors => {
           sequence: index === 0 ? "first" : "additional",
           contributor_role: "author",
         },
-        children: [
-          {
-            type: "element",
-            name: "given_name",
-            children: [
-              {
-                type: "text",
-                value: author.firstName,
-              },
-            ],
-          },
-          {
-            type: "element",
-            name: "surname",
-            children: [
-              {
-                type: "text",
-                value: author.lastName,
-              },
-            ],
-          },
-        ],
+        children: dbAuthorToCrossrefAuthor(author),
       }
-
-      if (author.orcid) {
-        authorJs.children.push({
-          type: "element",
-          name: "ORCID",
-          attributes: {
-            authenticated: "true",
-          },
-          children: [
-            {
-              type: "text",
-              value: `https://orcid.org/${author.orcid}`,
-            },
-          ],
-        } as Orcid)
-      }
-
       return authorJs
     }),
   }

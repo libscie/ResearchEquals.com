@@ -104,14 +104,16 @@ export interface Cite {
   title: string
   prefix: string
   suffix: string
-  publishedAt: string
+  publishedAt: string | Date
 }
 const citation_list = ({ citations }: { citations: Cite[] }): CitationList => {
   const js: CitationList = {
     type: "element",
     name: "citation_list",
     children: citations.map((citation, index) => {
-      const datetime = new Date(citation.publishedAt)
+      const { publishedWhere, authors, title, prefix, suffix, publishedAt } = citation
+
+      const datetime = typeof publishedAt === "string" ? new Date(publishedAt) : publishedAt
       const citationJs: Citation = {
         type: "element",
         name: "citation",
@@ -126,7 +128,7 @@ const citation_list = ({ citations }: { citations: Cite[] }): CitationList => {
             children: [
               {
                 type: "text",
-                value: citation.publishedWhere,
+                value: publishedWhere,
               },
             ],
           },
@@ -136,7 +138,7 @@ const citation_list = ({ citations }: { citations: Cite[] }): CitationList => {
             children: [
               {
                 type: "text",
-                value: citation.authors[0].name,
+                value: authors[0].name,
               },
             ],
           },
@@ -156,7 +158,7 @@ const citation_list = ({ citations }: { citations: Cite[] }): CitationList => {
             children: [
               {
                 type: "text",
-                value: `${citation.prefix}/${citation.suffix}`,
+                value: `${prefix}/${suffix}`,
               },
             ],
           },
@@ -166,7 +168,7 @@ const citation_list = ({ citations }: { citations: Cite[] }): CitationList => {
           //   children: [
           //     {
           //       type: "text",
-          //       value: citation.isbn,
+          //       value: isbn,
           //     },
           //   ],
           // },
@@ -176,7 +178,7 @@ const citation_list = ({ citations }: { citations: Cite[] }): CitationList => {
             children: [
               {
                 type: "text",
-                value: citation.title,
+                value: title,
               },
             ],
           },
