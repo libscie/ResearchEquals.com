@@ -230,6 +230,16 @@
       "contributions": [
         "maintenance"
       ]
+    },
+    {
+      "login": "nasainsbury",
+      "name": "Nathan Sainsbury",
+      "avatar_url": "https://avatars.githubusercontent.com/u/58425475?v=4",
+      "profile": "https://github.com/nasainsbury",
+      "contributions": [
+        "code",
+        "design"
+      ]
     }
   ],
   "contributorsPerLine": 7,

@@ -1,7 +1,9 @@
 # ResearchEquals.com <img src="https://ucarecdn.com/6b429a46-7b66-4f4a-9f8c-13338fb438c2/RBadgegh.png" align="right" height="64" />
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-24-orange.svg?style=flat-square)](#contributors-)
+
+[![All Contributors](https://img.shields.io/badge/all_contributors-25-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Discord online](https://img.shields.io/discord/933331539276759070?label=discord&style=flat-square)](https://discord.gg/SefsGJWWSw)
@@ -18,7 +20,9 @@ Our house may be different from yours, and if you find any of this unagreeable, 
 
 ## Development
 
-Please clone the repository and make sure you have [BlitzJS](blitzjs.com/) installed:
+Development for this project uses `node` version 16. Please make sure you are using this version.
+
+Please clone the repository and make sure you have [BlitzJS](https://www.blitzjs.com/) installed:
 
 ```
 ## Install BlitzJS if you don't have it
@@ -35,14 +39,22 @@ npm install
 Before you can run a local development version, please ensure you have a Postgres server you can create databases on. Add your preferred route to `.env.local` as such:
 
 ```
-DATABASE_URL=postgres://<username>:<password>@localhost:5432/researchequals-dev
+DATABASE_URL=postgres://myuser:mypassword@localhost:5432/researchequals-dev
+```
+
+If you don't have postgres running, you can use the `docker-compose` file which will set one up:
+
+```
+docker-compose up
 ```
 
 To get a fully functional development environment you need to add the environment variables as listed in `.env.example`. Please note most of these services are freemium and you can sign up for a free account.
 
-You can seed your database with
+You can migrate and seed your database with
 
 ```
+npx prisma migrate dev
+
 blitz db seed
 ```
 
@@ -103,15 +115,16 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/nathan-at-jisc"><img src="https://avatars.githubusercontent.com/u/58425475?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nathan Sainsbury</b></sub></a><br /><a href="https://github.com/libscie/ResearchEquals.com/issues?q=author%3Anathan-at-jisc" title="Bug reports">🐛</a></td>
   </tr>
   <tr>
+    <td align="center"><a href="https://github.com/nasainsbury"><img src="https://avatars.githubusercontent.com/u/58425475?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nathan Sainsbury</b></sub></a><br /><a href="https://github.com/libscie/ResearchEquals.com/commits?author=nasainsbury" title="Code">💻</a> <a href="#design-nasainsbury" title="Design">🎨</a></td>
     <td align="center"><a href="http://sobrakseaton.com"><img src="https://avatars.githubusercontent.com/u/28573875?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Patrick Sobrak-Seaton</b></sub></a><br /><a href="#design-psobrakseaton" title="Design">🎨</a> <a href="https://github.com/libscie/ResearchEquals.com/commits?author=psobrakseaton" title="Tests">⚠️</a> <a href="#userTesting-psobrakseaton" title="User Testing">📓</a></td>
     <td align="center"><a href="https://github.com/samteplitzky"><img src="https://avatars.githubusercontent.com/u/13663076?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Sam Teplitzky</b></sub></a><br /><a href="#userTesting-samteplitzky" title="User Testing">📓</a></td>
     <td align="center"><a href="https://github.com/SarahanneMField"><img src="https://avatars.githubusercontent.com/u/99656061?v=4?s=100" width="100px;" alt=""/><br /><sub><b>SarahanneMField</b></sub></a><br /><a href="#userTesting-SarahanneMField" title="User Testing">📓</a></td>
     <td align="center"><a href="https://simon.events"><img src="https://avatars.githubusercontent.com/u/770632?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Simon</b></sub></a><br /><a href="https://github.com/libscie/ResearchEquals.com/issues?q=author%3APonjimon" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://internethealthreport.org"><img src="https://avatars.githubusercontent.com/u/22150791?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Solana</b></sub></a><br /><a href="#translation-Solanasaurus" title="Translation">🌍</a></td>
     <td align="center"><a href="http://tefkah.com"><img src="https://avatars.githubusercontent.com/u/21983833?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Thomas F. K. Jorna</b></sub></a><br /><a href="https://github.com/libscie/ResearchEquals.com/issues?q=author%3AThomasFKJorna" title="Bug reports">🐛</a></td>
-    <td align="center"><a href="https://github.com/InquisitiveVi"><img src="https://avatars.githubusercontent.com/u/23527107?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Vinodh Ilangovan</b></sub></a><br /><a href="#a11y-InquisitiveVi" title="Accessibility">️️️️♿️</a></td>
   </tr>
   <tr>
+    <td align="center"><a href="https://github.com/InquisitiveVi"><img src="https://avatars.githubusercontent.com/u/23527107?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Vinodh Ilangovan</b></sub></a><br /><a href="#a11y-InquisitiveVi" title="Accessibility">️️️️♿️</a></td>
     <td align="center"><a href="https://github.com/ab-ioi"><img src="https://avatars.githubusercontent.com/u/98346737?v=4?s=100" width="100px;" alt=""/><br /><sub><b>ab-ioi</b></sub></a><br /><a href="#userTesting-ab-ioi" title="User Testing">📓</a></td>
     <td align="center"><a href="https://github.com/coglebed"><img src="https://avatars.githubusercontent.com/u/73071333?v=4?s=100" width="100px;" alt=""/><br /><sub><b>coglebed</b></sub></a><br /><a href="#translation-coglebed" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/Senficon"><img src="https://avatars.githubusercontent.com/u/762381?v=4?s=100" width="100px;" alt=""/><br /><sub><b>senficon</b></sub></a><br /><a href="#ideas-senficon" title="Ideas, Planning, & Feedback">🤔</a></td>

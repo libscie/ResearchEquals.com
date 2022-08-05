@@ -6,6 +6,7 @@ import { Author } from "./contributors"
 export interface BodyProps {
   type: any
   title: string
+  language: string
   authors: Author[]
   abstractText: string
   license_url: string
@@ -21,6 +22,7 @@ export interface Body extends Element {
 const body = ({
   type,
   title,
+  language,
   authors,
   abstractText,
   license_url,
@@ -31,7 +33,9 @@ const body = ({
   const js: Body = {
     type: "element",
     name: "body",
-    children: [book({ title, authors, abstractText, license_url, doi, resolve_url, citations })],
+    children: [
+      book({ title, language, authors, abstractText, license_url, doi, resolve_url, citations }),
+    ],
   }
 
   return js

@@ -12,6 +12,7 @@ import componentList from "./component_list"
 
 export interface BookProps {
   title: string
+  language: string
   authors: Author[]
   abstractText: string
   license_url: string
@@ -31,7 +32,7 @@ export interface Book extends Element {
 export interface BookMetadata extends Element {
   name: "book_metadata"
   attributes: {
-    language: "en"
+    language: string
   }
 }
 
@@ -44,6 +45,7 @@ export interface ContentItem extends Element {
 
 const book = ({
   title,
+  language,
   authors,
   abstractText,
   license_url,
@@ -63,7 +65,7 @@ const book = ({
         type: "element",
         name: "book_metadata",
         attributes: {
-          language: "en",
+          language,
         },
         children: [
           titles("ResearchEquals"),
@@ -82,6 +84,7 @@ const book = ({
         name: "content_item",
         attributes: {
           component_type: "other",
+          language,
         },
         children: [
           contributors(authors),
