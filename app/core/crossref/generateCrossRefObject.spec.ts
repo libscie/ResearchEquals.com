@@ -9,6 +9,7 @@ describe("generateCrossRefObject", () => {
       schema: "5.3.1",
       type: "article",
       title: "Test",
+      language: "en",
       authors: [
         {
           firstName: "John",
@@ -31,6 +32,7 @@ describe("generateCrossRefObject", () => {
     const x = generateCrossRefObject({
       schema: "5.3.1",
       type: "book",
+      language: "en",
       title: "ResearchEquals",
       authors: [],
       abstractText: "This is falksdjfdlsa;k jfdsl k;afjsdl; ja",
