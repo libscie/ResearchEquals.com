@@ -333,25 +333,27 @@ const ModuleEdit = ({
           </div>
         </div>
         <div className="items-middle pt-8">
-          {isEditing ? (
-            <EditOff
-              size={24}
-              className="h-6 w-6 fill-current text-gray-900 dark:text-gray-200"
-              onClick={() => {
-                setIsEditing(false)
-              }}
-              aria-label="End editing mode without saving"
-            />
-          ) : (
-            <Edit
-              size={24}
-              className="h-6 w-6 fill-current text-gray-900 dark:text-gray-200"
-              onClick={() => {
-                setIsEditing(true)
-              }}
-              aria-label="Start editing mode"
-            />
-          )}
+          <button>
+            {isEditing ? (
+              <EditOff
+                size={24}
+                className="h-6 w-6 fill-current text-gray-900 dark:text-gray-200"
+                onClick={() => {
+                  setIsEditing(false)
+                }}
+                aria-label="End editing mode without saving"
+              />
+            ) : (
+              <Edit
+                size={24}
+                className="h-6 w-6 fill-current text-gray-900 dark:text-gray-200"
+                onClick={() => {
+                  setIsEditing(true)
+                }}
+                aria-label="Start editing mode"
+              />
+            )}
+          </button>
         </div>
       </div>
       <div className="relative">
