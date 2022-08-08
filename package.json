@@ -59,7 +59,7 @@
     "postmark": "3.0.12",
     "prisma": "4.1.1",
     "quirrel": "1.9.3",
-    "react": "18.1.0",
+    "react": "18.2.0",
     "react-cookie-consent": "8.0.1",
     "react-dom": "18.2.0",
     "react-flow-renderer": "10.3.14",
@@ -84,7 +84,7 @@
     "zod": "3.17.10"
   },
   "devDependencies": {
-    "@types/react": "17.0.38",
+    "@types/react": "18.0.17",
     "lint-staged": "13.0.3",
     "prettier": "2.7.1",
     "prettier-plugin-prisma": "4.1.0",
