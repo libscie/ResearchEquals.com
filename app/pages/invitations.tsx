@@ -26,6 +26,8 @@ const Invitations = ({ currentWorkspace }) => {
   useEffect(() => {
     if (query.suffix) {
       setModule(invitations.filter((invite) => invite.suffix === query.suffix)[0])
+    } else {
+      setModule(invitations[0])
     }
 
     if (invitations.length === 0) {
