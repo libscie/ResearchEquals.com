@@ -10,6 +10,8 @@ const handler: BlitzApiHandler = async (req, res) => {
   const author = await db.workspace.findFirst({
     where: { handle: handle?.toString() },
   })
+
+  const mimetype = !author?.avatar!.match(/ucarecdn/g) ? "image/svg+xml" : "image"
   return new Promise((resolve, reject) => {
     https
       .get(author?.avatar!, (response) => {
@@ -22,7 +24,7 @@ const handler: BlitzApiHandler = async (req, res) => {
           })
           .on("end", function () {
             res.statusCode = 200
-            res.setHeader("Content-Type", "image")
+            res.setHeader("Content-Type", mimetype)
             res.setHeader("Content-Disposition", `filename=avatar-${author?.handle}`)
             var buffer = Buffer.concat(data)
             res.end(buffer)
