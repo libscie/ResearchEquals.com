@@ -54,7 +54,7 @@
     "moment": "2.29.4",
     "passport-orcid": "0.0.4",
     "pdfjs-dist": "2.15.349",
-    "postcss": "8.4.14",
+    "postcss": "8.4.16",
     "postmark": "3.0.12",
     "prisma": "4.1.1",
     "quirrel": "1.9.3",
