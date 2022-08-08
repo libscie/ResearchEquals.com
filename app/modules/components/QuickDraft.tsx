@@ -12,6 +12,7 @@ import createModule from "../mutations/createModule"
 import toast from "react-hot-toast"
 
 const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
+  console.log([...ISO6391.getAllCodes()])
   const [openCreate, setCreateOpen] = useState(false)
   const [moduleTypes] = useQuery(getTypes, undefined)
   const [licenses] = useQuery(getLicenses, undefined)
@@ -33,7 +34,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
         description: z.string(),
         type: z.string().min(1),
         license: z.string().min(1),
-        language: z.string().min(1).max(2),
+        language: z.enum([...ISO6391.getAllCodes()] as any),
         displayColor: z.string().min(1),
       })
     ),
