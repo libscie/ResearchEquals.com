@@ -12,7 +12,6 @@ import createModule from "../mutations/createModule"
 import toast from "react-hot-toast"
 
 const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
-  console.log([...ISO6391.getAllCodes()])
   const [openCreate, setCreateOpen] = useState(false)
   const [moduleTypes] = useQuery(getTypes, undefined)
   const [licenses] = useQuery(getLicenses, undefined)

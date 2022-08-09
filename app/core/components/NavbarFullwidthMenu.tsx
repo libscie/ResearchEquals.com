@@ -18,8 +18,6 @@ const FullWidthMenu = ({
 }) => {
   const [logoutMutation] = useMutation(logout)
 
-  console.log(currentUser)
-
   if (currentUser && currentWorkspace) {
     return (
       <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
