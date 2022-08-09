@@ -10,7 +10,7 @@
 
 [ResearchEquals.com](https://researchequals.com) is a research module server, where researchers can publish building blocks of research and link them together in chronological order.
 
-ResearchEquals is deployed on a continuous basis using [Flightcontrol](https://flightcontrol.dev/).
+ResearchEquals is deployed on a continuous basis using [Flightcontrol](https://flightcontrol.dev/) and translated on a continuous basis using [Weblate](https://github.com/libscie/ResearchEquals.com/wiki/Localization).
 
 ## Code of Conduct
 
