@@ -150,7 +150,8 @@ const OnboardingProfile = ({ data }) => {
 
   return (
     <>
-      {!workspaceFirstName ||
+      {!data.workspace.bio ||
+      !workspaceFirstName ||
       !workspaceLastName ||
       !workspaceBio ||
       !workspacePronouns ||
