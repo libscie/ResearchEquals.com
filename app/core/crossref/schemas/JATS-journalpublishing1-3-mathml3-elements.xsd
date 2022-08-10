@@ -5,7 +5,8 @@
             xmlns:mml="http://www.w3.org/1998/Math/MathML"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:ali="http://www.niso.org/schemas/ali/1.0/"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            >
    <xsd:annotation xmlns:dxdy="http://mulberrytech.com/2014/dxdy">
       <xsd:documentation>
          <div xmlns="http://www.w3.org/1999/xhtml" class="bodytext">
@@ -32,9 +33,14 @@
       </xsd:documentation>
    </xsd:annotation>
    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
-   <xsd:import namespace="http://www.w3.org/1999/xlink"/>
-   <xsd:import namespace="http://www.w3.org/1998/Math/MathML"/>
-   <xsd:import namespace="http://www.niso.org/schemas/ali/1.0/"/>
+   <xsd:import namespace="http://www.w3.org/1999/xlink"
+schemaLocation="http://www.w3.org/1999/xlink.xsd"
+   />
+   <xsd:import namespace="http://www.w3.org/1998/Math/MathML"
+               schemaLocation="standard-modules/mathml3/mathml3.xsd"/>
+   <xsd:import namespace="http://www.niso.org/schemas/ali/1.0/"
+   schemaLocation="standard-modules/module-ali.xsd"
+   />
    <!--* Some imports may need to be added manually *-->
    <xsd:element name="abbrev">
       <xsd:annotation>

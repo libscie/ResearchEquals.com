@@ -5,7 +5,10 @@
             xmlns:ali="http://www.niso.org/schemas/ali/1.0/"
             xmlns:xlink="http://www.w3.org/1999/xlink"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+
+	targetNamespace="http://www.ncbi.nlm.nih.gov/JATS1"
+>
    <xsd:annotation>
       <xsd:documentation>
          <div xmlns:dxdy="http://mulberrytech.com/2014/dxdy"
@@ -33,6 +36,8 @@
          </div>
       </xsd:documentation>
    </xsd:annotation>
+   <xsd:import schemaLocation="JATS-journalpublishing1-3-mathml3-elements.xsd"/>
+   <xsd:include schemaLocation="JATS-journalpublishing1-3-mathml3-elements.xsd"/>
    <xsd:import namespace="http://www.w3.org/1999/xlink"
                schemaLocation="standard-modules/xlink.xsd"/>
    <xsd:import namespace="http://www.w3.org/1998/Math/MathML"
@@ -41,5 +46,4 @@
                schemaLocation="standard-modules/module-ali.xsd"/>
    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"
                schemaLocation="standard-modules/xml.xsd"/>
-   <xsd:include schemaLocation="JATS-journalpublishing1-3-mathml3-elements.xsd"/>
 </xsd:schema>
