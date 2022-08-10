@@ -1,9 +1,7 @@
 # ResearchEquals.com <img src="https://ucarecdn.com/6b429a46-7b66-4f4a-9f8c-13338fb438c2/RBadgegh.png" align="right" height="64" />
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-25-orange.svg?style=flat-square)](#contributors-)
-
+[![All Contributors](https://img.shields.io/badge/all_contributors-26-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Discord online](https://img.shields.io/discord/933331539276759070?label=discord&style=flat-square)](https://discord.gg/SefsGJWWSw)
@@ -125,6 +123,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/InquisitiveVi"><img src="https://avatars.githubusercontent.com/u/23527107?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Vinodh Ilangovan</b></sub></a><br /><a href="#a11y-InquisitiveVi" title="Accessibility">️️️️♿️</a></td>
+    <td align="center"><a href="https://weblate.org/hosting/"><img src="https://avatars.githubusercontent.com/u/1607653?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Weblate (bot)</b></sub></a><br /><a href="#translation-weblate" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/ab-ioi"><img src="https://avatars.githubusercontent.com/u/98346737?v=4?s=100" width="100px;" alt=""/><br /><sub><b>ab-ioi</b></sub></a><br /><a href="#userTesting-ab-ioi" title="User Testing">📓</a></td>
     <td align="center"><a href="https://github.com/coglebed"><img src="https://avatars.githubusercontent.com/u/73071333?v=4?s=100" width="100px;" alt=""/><br /><sub><b>coglebed</b></sub></a><br /><a href="#translation-coglebed" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/Senficon"><img src="https://avatars.githubusercontent.com/u/762381?v=4?s=100" width="100px;" alt=""/><br /><sub><b>senficon</b></sub></a><br /><a href="#ideas-senficon" title="Ideas, Planning, & Feedback">🤔</a></td>
