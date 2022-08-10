@@ -6,8 +6,9 @@ import convert from "xml-js"
 import FormData from "form-data"
 import { Readable } from "stream"
 import generateCrossRefObject from "../../core/crossref/generateCrossRefObject"
+import { Cite } from "app/core/crossref/citation_list"
 
-export default resolver.pipe(resolver.authorize(), async ({ id }) => {
+export default resolver.pipe(resolver.authorize(), async ({ id }: { id: number }) => {
   const datetime = Date.now()
 
   // TODO: Can be simplified along with stripe_webhook.ts and publishModule.ts
@@ -57,38 +58,40 @@ export default resolver.pipe(resolver.authorize(), async ({ id }) => {
     citations:
       module!.references.length === 0
         ? []
-        : module?.references.map((reference) => {
-            const refJs = {
-              publishedWhere: reference.publishedWhere,
-              authors:
-                reference.publishedWhere === "ResearchEquals"
-                  ? reference.authors.map((author) => {
-                      const authJs = {
-                        name: `${author.workspace?.firstName} ${author.workspace?.lastName}`,
-                        orcid: `https://orcid.org/${author!.workspace!.orcid}`,
-                      }
+        : module?.references.map(
+            ({ authors, authorsRaw, publishedAt, publishedWhere, suffix, prefix, title }) => {
+              const refJs: Cite = {
+                publishedWhere: publishedWhere!,
+                authors:
+                  publishedWhere === "ResearchEquals"
+                    ? authors.map(({ workspace }) => {
+                        const authJs = {
+                          name: `${workspace?.firstName} ${workspace?.lastName}`,
+                          orcid: `https://orcid.org/${workspace!.orcid}`,
+                        }
 
-                      return authJs
-                    })
-                  : reference!.authorsRaw!["object"].map((author) => {
-                      const authJs = {
-                        name:
-                          author.given && author.family
-                            ? `${author.given} ${author.family}`
-                            : `${author.name}`,
-                      }
+                        return authJs
+                      })
+                    : authorsRaw!["object"].map(({ given, family, name }) => {
+                        const authJs = {
+                          name: given && family ? `${given} ${family}` : `${name}`,
+                        }
 
-                      return authJs
-                    }),
-              publishedAt: reference.publishedAt,
-              prefix: reference.prefix,
-              suffix: reference.suffix,
-              isbn: reference.isbn,
-              title: reference.title,
+                        return authJs
+                      }),
+                publishedAt: publishedAt!,
+                prefix: prefix!,
+                suffix: suffix!,
+                /**
+                 * TODO: Should there be an isbn here?
+                 */
+                // isbn: reference.isbn!,
+                title: title,
+              }
+              return refJs
             }
-            return refJs
-          }),
-    abstractText: module!.description,
+          ) ?? [],
+    abstractText: module!.description!,
     license_url: module!.license!.url,
     doi: `${module!.prefix}/${module!.suffix}`,
     resolve_url: `${process.env.APP_ORIGIN}/modules/${module!.suffix}`,

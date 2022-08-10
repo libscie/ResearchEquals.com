@@ -9,6 +9,7 @@ import { Readable } from "stream"
 import moment from "moment"
 import algoliasearch from "algoliasearch"
 import generateCrossRefObject from "../core/crossref/generateCrossRefObject"
+import { Cite } from "app/core/crossref/citation_list"
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET
 const datetime = Date.now()
@@ -97,38 +98,40 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
         citations:
           module!.references.length === 0
             ? []
-            : module?.references.map((reference) => {
-                const refJs = {
-                  publishedWhere: reference.publishedWhere,
-                  authors:
-                    reference.publishedWhere === "ResearchEquals"
-                      ? reference.authors.map((author) => {
-                          const authJs = {
-                            name: `${author.workspace?.firstName} ${author.workspace?.lastName}`,
-                            orcid: `https://orcid.org/${author!.workspace!.orcid}`,
-                          }
+            : module?.references.map(
+                ({ authors, authorsRaw, publishedAt, publishedWhere, suffix, prefix, title }) => {
+                  const refJs: Cite = {
+                    publishedWhere: publishedWhere!,
+                    authors:
+                      publishedWhere === "ResearchEquals"
+                        ? authors.map(({ workspace }) => {
+                            const authJs = {
+                              name: `${workspace?.firstName} ${workspace?.lastName}`,
+                              orcid: `https://orcid.org/${workspace!.orcid}`,
+                            }
 
-                          return authJs
-                        })
-                      : reference!.authorsRaw!["object"].map((author) => {
-                          const authJs = {
-                            name:
-                              author.given && author.family
-                                ? `${author.given} ${author.family}`
-                                : `${author.name}`,
-                          }
+                            return authJs
+                          })
+                        : authorsRaw!["object"].map(({ given, family, name }) => {
+                            const authJs = {
+                              name: given && family ? `${given} ${family}` : `${name}`,
+                            }
 
-                          return authJs
-                        }),
-                  publishedAt: reference.publishedAt,
-                  prefix: reference.prefix,
-                  suffix: reference.suffix,
-                  isbn: reference.isbn,
-                  title: reference.title,
+                            return authJs
+                          }),
+                    publishedAt: publishedAt!,
+                    prefix: prefix!,
+                    suffix: suffix!,
+                    /**
+                     * TODO: Should there be an isbn here?
+                     */
+                    // isbn: reference.isbn!,
+                    title: title,
+                  }
+                  return refJs
                 }
-                return refJs
-              }),
-        abstractText: module!.description,
+              ) ?? [],
+        abstractText: module!.description!,
         license_url: module!.license!.url,
         doi: `${module!.prefix}/${module!.suffix}`,
         resolve_url: `${process.env.APP_ORIGIN}/modules/${module!.suffix}`,

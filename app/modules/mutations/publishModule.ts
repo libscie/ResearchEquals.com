@@ -14,7 +14,7 @@ const index = client.initIndex(`${process.env.ALGOLIA_PREFIX}_modules`)
 
 export default resolver.pipe(
   resolver.authorize(),
-  async ({ id, suffix }: { id: number; suffix: string }) => {
+  async ({ id, suffix }: { id: number; suffix?: string }) => {
     const datetime = Date.now()
 
     // TODO: Can be simplified along with stripe_webhook.ts
@@ -78,8 +78,7 @@ export default resolver.pipe(
 
                           return authJs
                         })
-                      : // @ts-expect-error ts-migrate(2339) FIXME: Property 'authors' does not exist on type '{ publishedWhere: string; authors: ... Remove this comment to see the full error message
-                        authorsRaw!["object"].map(({ given, family, name }) => {
+                      : authorsRaw!["object"].map(({ given, family, name }) => {
                           const authJs = {
                             name: given && family ? `${given} ${family}` : `${name}`,
                           }

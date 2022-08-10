@@ -30,6 +30,8 @@ import addParent from "../mutations/addParent"
 import ManageParents from "./ManageParents"
 import approveAuthorship from "app/authorship/mutations/approveAuthorship"
 import SettingsModal from "../../core/modals/settings"
+import { Module, User, Workspace } from "@prisma/client"
+import { UseCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
@@ -44,6 +46,17 @@ const ModuleEdit = ({
   signature,
   setModule,
   fetchDrafts,
+}: {
+  user: User
+  workspace: UseCurrentWorkspace
+  module: Module
+  isAuthor: boolean
+  setInboxOpen: (open: boolean) => void
+  inboxOpen: boolean
+  expire: boolean
+  signature: string
+  setModule: (module: Module) => void
+  fetchDrafts: () => void
 }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [addAuthors, setAddAuthors] = useState(false)
@@ -51,7 +64,7 @@ const ModuleEdit = ({
 
   const [moduleEdit, { refetch, setQueryData }] = useQuery(
     useCurrentModule,
-    { suffix: module.suffix },
+    { suffix: module.suffix! },
     { refetchOnWindowFocus: false }
   )
 
@@ -103,7 +116,7 @@ const ModuleEdit = ({
   }, [moduleEdit])
 
   const ownAuthorship = moduleEdit?.authors.find(
-    (author) => author.workspace?.handle === workspace.handle
+    (author) => author.workspace?.handle === workspace?.handle
   )
 
   return (
