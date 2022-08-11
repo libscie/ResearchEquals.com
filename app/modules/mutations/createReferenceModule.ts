@@ -46,6 +46,7 @@ export default resolver.pipe(resolver.authorize(), async ({ doi }, ctx) => {
             },
             create: {
               name: crType,
+              originType: "CrossRef",
             },
           },
         },
@@ -110,6 +111,7 @@ export default resolver.pipe(resolver.authorize(), async ({ doi }, ctx) => {
             },
             create: {
               name: metadata.data.attributes.types.resourceType || "Other",
+              originType: "DataCite",
             },
           },
         },
