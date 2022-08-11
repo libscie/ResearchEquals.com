@@ -2,13 +2,12 @@ import { BlitzApiRequest, BlitzApiResponse, Ctx } from "blitz"
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
 import db from "db"
 import axios from "axios"
-import convert from "xml-js"
 import FormData from "form-data"
 import { Readable } from "stream"
 
 import moment from "moment"
 import algoliasearch from "algoliasearch"
-import generateCrossRefObject from "../core/crossref/generateCrossRefObject"
+import generateCrossRefXml from "../core/crossref/generateCrossRefXml"
 import { Cite } from "app/core/crossref/citation_list"
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET
@@ -81,7 +80,7 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
 
       if (!module!.main) throw Error("Main file is empty")
 
-      const x = generateCrossRefObject({
+      const xmlData = generateCrossRefXml({
         schema: "5.3.1",
         type: module!.type!.name,
         title: module!.title,
@@ -137,7 +136,6 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
         resolve_url: `${process.env.APP_ORIGIN}/modules/${module!.suffix}`,
       })
 
-      const xmlData = convert.js2xml(x)
       const xmlStream = new Readable()
       xmlStream._read = () => {}
       xmlStream.push(xmlData)

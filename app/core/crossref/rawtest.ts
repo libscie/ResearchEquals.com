@@ -1,16 +1,9 @@
-import { readFileSync, writeFileSync } from "fs"
 import { join } from "path"
-import { toXml } from "xast-util-to-xml"
-import generateCrossRefObject from "./generateCrossRefObject"
-// import validator from "xsd-schema-validator"
 import LibXML from "node-libxml"
-import { promisify } from "util"
-
-// const validateXML = promisify(validator.validateXML)
-// const testXML = readFileSync(join("app", "core", "crossref", "test.xml"), "utf8")
+import generateCrossRefXml from "./generateCrossRefXml"
 
 const main = () => {
-  const x = generateCrossRefObject({
+  const xml = generateCrossRefXml({
     schema: "5.3.1",
     type: "book",
     language: "en",
@@ -23,16 +16,13 @@ const main = () => {
     citations: [],
   })
 
-  const xml = toXml(x)
   const libxml = new LibXML()
-  const xmlIsWellFormed = libxml.loadXml("app/core/crossref/rawText.xml")
+  const xmlIsWellFormed = libxml.loadXmlFromString(xml)
   console.log({ xmlIsWellFormed })
   // this is always relative to the main directory
   const loadSchemas = libxml.loadSchemas([
     join("app", "core", "crossref", "schemas", "crossref5.3.1.xsd"),
   ])
-  console.log({ loadSchemas })
-  console.log(join("app", "core", "crossref", "schemas", "crossref5.3.1.xsd"))
 
   let valid
   try {
@@ -42,7 +32,6 @@ const main = () => {
   } catch (e) {
     valid = e
   }
-  writeFileSync(__dirname + "/rawText.xml", xml)
   console.log(xml)
   console.log({ valid })
   return valid

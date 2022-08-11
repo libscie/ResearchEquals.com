@@ -2,10 +2,9 @@ import { NotFoundError, resolver } from "blitz"
 import db from "db"
 import moment from "moment"
 import axios from "axios"
-import convert from "xml-js"
 import FormData from "form-data"
 import { Readable } from "stream"
-import generateCrossRefObject from "../../core/crossref/generateCrossRefObject"
+import generateCrossRefXml from "../../core/crossref/generateCrossRefXml"
 import { Cite } from "app/core/crossref/citation_list"
 
 export default resolver.pipe(resolver.authorize(), async ({ id }: { id: number }) => {
@@ -41,7 +40,7 @@ export default resolver.pipe(resolver.authorize(), async ({ id }: { id: number }
 
   if (!module!.main) throw Error("Main file is empty")
 
-  const x = generateCrossRefObject({
+  const xmlData = generateCrossRefXml({
     schema: "5.3.1",
     type: module!.type!.name,
     title: module!.title,
@@ -97,7 +96,6 @@ export default resolver.pipe(resolver.authorize(), async ({ id }: { id: number }
     resolve_url: `${process.env.APP_ORIGIN}/modules/${module!.suffix}`,
   })
 
-  const xmlData = convert.js2xml(x)
   const xmlStream = new Readable()
   xmlStream._read = () => {}
   xmlStream.push(xmlData)

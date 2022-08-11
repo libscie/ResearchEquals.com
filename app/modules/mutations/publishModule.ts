@@ -3,10 +3,9 @@ import db from "db"
 import moment from "moment"
 import algoliasearch from "algoliasearch"
 import axios from "axios"
-import convert from "xml-js"
 import FormData from "form-data"
 import { Readable } from "stream"
-import generateCrossRefObject from "../../core/crossref/generateCrossRefObject"
+import generateCrossRefXml from "../../core/crossref/generateCrossRefXml"
 import { Cite } from "app/core/crossref/citation_list"
 
 const client = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_ADMIN_KEY!)
@@ -47,7 +46,7 @@ export default resolver.pipe(
 
     if (!module!.main) throw Error("Main file is empty")
 
-    const x = generateCrossRefObject({
+    const xmlData = generateCrossRefXml({
       schema: "5.3.1",
       type: module!.type!.name,
       title: module!.title,
@@ -103,7 +102,6 @@ export default resolver.pipe(
       resolve_url: `${process.env.APP_ORIGIN}/modules/${module!.suffix}`,
     })
 
-    const xmlData = convert.js2xml(x)
     const xmlStream = new Readable()
     xmlStream._read = () => {}
     xmlStream.push(xmlData)
