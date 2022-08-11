@@ -4,6 +4,9 @@
   xmlns:m="http://www.w3.org/1998/Math/MathML" 
   elementFormDefault="qualified"
   targetNamespace="http://www.w3.org/1998/Math/MathML">
+           <xs:include schemaLocation="mathml3-content.xsd"></xs:include>
+           <xs:include schemaLocation="mathml3-strict-content.xsd"></xs:include>
+           <xs:include schemaLocation="mathml3-presentation.xsd"></xs:include>
 <xs:element name="math">
 <xs:complexType>
 <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:MathExpression"/>

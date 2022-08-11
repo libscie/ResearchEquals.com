@@ -4,6 +4,9 @@
   xmlns:m="http://www.w3.org/1998/Math/MathML" 
   elementFormDefault="qualified"
   targetNamespace="http://www.w3.org/1998/Math/MathML">
+           <xs:include schemaLocation="mathml3-content.xsd"></xs:include>
+           <xs:include schemaLocation="mathml3-strict-content.xsd"></xs:include>
+           <xs:include schemaLocation="mathml3-presentation.xsd"></xs:include>
 <xs:element name="math">
 <xs:complexType>
 <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:MathExpression"/>
@@ -43,7 +46,7 @@
 <xs:complexType name="annotation-xml.model">
 <xs:choice minOccurs="0" maxOccurs="unbounded">
 <xs:group ref="m:MathExpression"/>
-<xs:group ref="m:anyElement"/>
+<!-- <xs:group ref="m:anyElement"/> -->
 </xs:choice>
 </xs:complexType>
 <xs:group name="anyElement">

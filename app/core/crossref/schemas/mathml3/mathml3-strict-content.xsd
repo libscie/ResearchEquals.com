@@ -3,6 +3,9 @@
            xmlns:m="http://www.w3.org/1998/Math/MathML"
            elementFormDefault="qualified"
            targetNamespace="http://www.w3.org/1998/Math/MathML">
+           <xs:include schemaLocation="mathml3-content.xsd"></xs:include>
+           <xs:include schemaLocation="mathml3-common.xsd"></xs:include>
+           <xs:include schemaLocation="mathml3-presentation.xsd"></xs:include>
    <xs:group name="ContExp">
       <xs:choice>
 <!--Ambiguous content model altered (ContExp)-->

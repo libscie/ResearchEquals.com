@@ -3,6 +3,11 @@
            xmlns:m="http://www.w3.org/1998/Math/MathML"
            elementFormDefault="qualified"
            targetNamespace="http://www.w3.org/1998/Math/MathML">
+           <xs:include schemaLocation="mathml3-content.xsd"></xs:include>
+           <xs:include schemaLocation="mathml3-common.xsd"></xs:include>
+           <xs:include schemaLocation="mathml3-strict-content.xsd"></xs:include>
+
+
    <xs:complexType name="ImpliedMrow">
       <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:MathExpression"/>
    </xs:complexType>
