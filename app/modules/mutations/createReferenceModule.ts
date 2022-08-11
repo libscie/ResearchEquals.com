@@ -98,8 +98,11 @@ export default resolver.pipe(resolver.authorize(), async ({ doi }, ctx) => {
         suffix: metadata.data.attributes.suffix,
         isbn: undefined, // Not used in schema
         url: `https://doi.org/${metadata.data.id}`,
+        language: metadata.data.attributes.language || "en",
         title: metadata.data.attributes.titles[0].title,
-        description: metadata.data.attributes.descriptions[0].description,
+        description: metadata.data.attributes.descriptions[0]
+          ? metadata.data.attributes.descriptions[0].description
+          : undefined,
         type: {
           connectOrCreate: {
             where: {
@@ -113,9 +116,9 @@ export default resolver.pipe(resolver.authorize(), async ({ doi }, ctx) => {
         license: metadata.data.attributes.rightsList[0]
           ? {
               connectOrCreate: {
-                where: { url: metadata.data.attributes.rightsList[0].rightsUri },
+                where: { url: metadata.data.attributes.rightsList[0].rightsUri || "undefined" },
                 create: {
-                  url: metadata.data.attributes.rightsList[0].rightsUri,
+                  url: metadata.data.attributes.rightsList[0].rightsUri || "undefined",
                   source: "DataCite",
                 },
               },
