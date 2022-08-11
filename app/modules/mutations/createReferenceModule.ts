@@ -11,74 +11,144 @@ function capitalizeFirstLetter(string) {
 }
 
 export default resolver.pipe(resolver.authorize(), async ({ doi }, ctx) => {
-  // Will auto-throw if resource not found
-  const cr = await axios.get(`https://api.crossref.org/works/${doi}`)
-  const metadata = cr.data.message
+  try {
+    // Will auto-throw if resource not found
+    const cr = await axios.get(`https://api.crossref.org/works/${doi}`)
+    const metadata = cr.data.message
 
-  const crType = capitalizeFirstLetter(metadata.type.replace("-", " "))
-  let licenseUrl = undefined
-  if (metadata.license) {
-    const filter = metadata.license.filter((license) => license["content-version"] === "vor")
-    licenseUrl = filter && filter.length > 0 ? filter[0].URL : undefined
-  }
+    const crType = capitalizeFirstLetter(metadata.type.replace("-", " "))
+    let licenseUrl = undefined
+    if (metadata.license) {
+      const filter = metadata.license.filter((license) => license["content-version"] === "vor")
+      licenseUrl = filter && filter.length > 0 ? filter[0].URL : undefined
+    }
 
-  const module = await db.module.create({
-    data: {
-      published: true,
-      publishedAt: new Date(
-        metadata.published["date-parts"][0].map((y) => y.toString().padStart(2, "0")).join("-")
-      ),
-      publishedWhere: metadata["container-title"][0]
-        ? metadata["container-title"][0]
-        : metadata.publisher,
-      prefix: metadata.DOI.split("/")[0],
-      suffix: metadata.DOI.split("/").slice(1).join("/"),
-      isbn: metadata.ISBN ? metadata.ISBN[0] : undefined,
-      url: `https://doi.org/${metadata.DOI}`,
-      title: metadata.title[0],
-      description: metadata.abstract,
-      type: {
-        connectOrCreate: {
-          where: {
-            name: crType,
-          },
-          create: {
-            name: crType,
+    const module = await db.module.create({
+      data: {
+        published: true,
+        publishedAt: new Date(
+          metadata.published["date-parts"][0].map((y) => y.toString().padStart(2, "0")).join("-")
+        ),
+        publishedWhere: metadata["container-title"][0]
+          ? metadata["container-title"][0]
+          : metadata.publisher,
+        originMetadata: "CrossRef",
+        prefix: metadata.DOI.split("/")[0],
+        suffix: metadata.DOI.split("/").slice(1).join("/"),
+        isbn: metadata.ISBN ? metadata.ISBN[0] : undefined,
+        url: `https://doi.org/${metadata.DOI}`,
+        title: metadata.title[0],
+        description: metadata.abstract,
+        type: {
+          connectOrCreate: {
+            where: {
+              name: crType,
+            },
+            create: {
+              name: crType,
+            },
           },
         },
-      },
-      license: licenseUrl
-        ? {
-            connectOrCreate: {
-              where: { url: licenseUrl },
-              create: {
-                url: licenseUrl,
-                source: "CrossRef",
+        license: licenseUrl
+          ? {
+              connectOrCreate: {
+                where: { url: licenseUrl },
+                create: {
+                  url: licenseUrl,
+                  source: "CrossRef",
+                },
               },
+            }
+          : undefined,
+        authorsRaw: { object: metadata.author },
+        referencesRaw: metadata["reference-count"] > 0 ? { object: metadata.reference } : undefined,
+      },
+      include: {
+        license: true,
+        type: true,
+      },
+    })
+    await index.saveObject({
+      objectID: module.id,
+      doi: `${module.prefix}/${module.suffix}`,
+      suffix: module.suffix,
+      license: module.license?.url,
+      type: module.type.name,
+      // It's called name and not title to improve Algolia search
+      name: module.title,
+      description: module.description,
+      publishedAt: module.publishedAt,
+      displayColor: module.displayColor,
+    })
+
+    return module
+  } catch {
+    const cr = await axios.get(`https://api.datacite.org/dois/${doi}`)
+    const metadata = cr.data
+
+    const module = await db.module.create({
+      data: {
+        published: true,
+        publishedAt: new Date(
+          metadata.data.attributes.publicationYear.toString() || metadata.data.attributes.published
+        ),
+        publishedWhere: metadata.data.attributes.publisher,
+        originMetadata: "DataCite",
+        prefix: metadata.data.attributes.prefix,
+        suffix: metadata.data.attributes.suffix,
+        isbn: undefined, // Not used in schema
+        url: `https://doi.org/${metadata.data.id}`,
+        title: metadata.data.attributes.titles[0].title,
+        description: metadata.data.attributes.descriptions[0].description,
+        type: {
+          connectOrCreate: {
+            where: {
+              name: metadata.data.attributes.types.resourceType || "Other",
             },
-          }
-        : undefined,
-      authorsRaw: { object: metadata.author },
-      referencesRaw: metadata["reference-count"] > 0 ? { object: metadata.reference } : undefined,
-    },
-    include: {
-      license: true,
-      type: true,
-    },
-  })
+            create: {
+              name: metadata.data.attributes.types.resourceType || "Other",
+            },
+          },
+        },
+        license: metadata.data.attributes.rightsList[0]
+          ? {
+              connectOrCreate: {
+                where: { url: metadata.data.attributes.rightsList[0].rightsUri },
+                create: {
+                  url: metadata.data.attributes.rightsList[0].rightsUri,
+                  source: "DataCite",
+                },
+              },
+            }
+          : undefined,
+        authorsRaw: { object: metadata.data.attributes.creators },
+        referencesRaw:
+          metadata.data.attributes.relatedIdentifiers.map(
+            (x) => x.relationType === "Reference" && x
+          ).length > 0
+            ? metadata.data.attributes.relatedIdentifiers.map(
+                (x) => x.relationType === "Reference" && x
+              )
+            : undefined,
+      },
+      include: {
+        license: true,
+        type: true,
+      },
+    })
+    await index.saveObject({
+      objectID: module.id,
+      doi: `${module.prefix}/${module.suffix}`,
+      suffix: module.suffix,
+      license: module.license?.url,
+      type: module.type.name,
+      // It's called name and not title to improve Algolia search
+      name: module.title,
+      description: module.description,
+      publishedAt: module.publishedAt,
+      displayColor: module.displayColor,
+    })
 
-  await index.saveObject({
-    objectID: module.id,
-    doi: `${module.prefix}/${module.suffix}`,
-    suffix: module.suffix,
-    license: module.license?.url,
-    type: module.type.name,
-    // It's called name and not title to improve Algolia search
-    name: module.title,
-    description: module.description,
-    publishedAt: module.publishedAt,
-    displayColor: module.displayColor,
-  })
-
-  return module
+    return module
+  }
 })
