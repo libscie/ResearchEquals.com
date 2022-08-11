@@ -27,8 +27,8 @@
   </xsd:annotation>
   <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
   <xsd:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd" />
-  <xsd:import namespace="http://www.w3.org/1998/Math/MathML" schemaLocation="standard-modules/mathml3/mathml3.xsd" />
-  <xsd:import namespace="http://www.niso.org/schemas/ali/1.0/" schemaLocation="standard-modules/module-ali.xsd" />
+  <xsd:import namespace="http://www.w3.org/1998/Math/MathML" schemaLocation="mathml3/mathml3.xsd" />
+  <xsd:import namespace="http://www.niso.org/schemas/ali/1.0/" schemaLocation="module-ali.xsd" />
   <!--* Some imports may need to be added manually *-->
   <xsd:element name="abbrev">
     <xsd:annotation>

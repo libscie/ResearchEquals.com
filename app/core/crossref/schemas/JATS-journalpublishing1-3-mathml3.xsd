@@ -1,20 +1,8 @@
 <?xml-stylesheet href="xsd.xsl" type="text/xsl"?>
-<xsd:schema xmlns:mtl="http://www.mulberrytech.com/taglib"
-            xmlns:c="http://www.w3.org/ns/xproc-step"
-            xmlns:mml="http://www.w3.org/1998/Math/MathML"
-            xmlns:ali="http://www.niso.org/schemas/ali/1.0/"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-
-	targetNamespace="http://www.ncbi.nlm.nih.gov/JATS1"
->
+<xsd:schema xmlns:mtl="http://www.mulberrytech.com/taglib" xmlns:c="http://www.w3.org/ns/xproc-step" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:ali="http://www.niso.org/schemas/ali/1.0/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ncbi.nlm.nih.gov/JATS1">
    <xsd:annotation>
       <xsd:documentation>
-         <div xmlns:dxdy="http://mulberrytech.com/2014/dxdy"
-              xmlns:xsd="http://www.w3.org/2000/10/XMLSchema"
-              xmlns="http://www.w3.org/1999/xhtml"
-              class="bodytext">
+         <div xmlns:dxdy="http://mulberrytech.com/2014/dxdy" xmlns:xsd="http://www.w3.org/2000/10/XMLSchema" xmlns="http://www.w3.org/1999/xhtml" class="bodytext">
             <h1>MODULE: JATS-journalpublishing1-3-mathml3 DTD in XSD form (driver file)</h1>
             <h2>MODEL: Journal Publishing DTD (MathML 3.0)</h2>
             <h2>VERSION:   1.3</h2>
@@ -36,14 +24,10 @@
          </div>
       </xsd:documentation>
    </xsd:annotation>
-   <xsd:import schemaLocation="JATS-journalpublishing1-3-mathml3-elements.xsd"/>
-   <xsd:include schemaLocation="JATS-journalpublishing1-3-mathml3-elements.xsd"/>
-   <xsd:import namespace="http://www.w3.org/1999/xlink"
-               schemaLocation="standard-modules/xlink.xsd"/>
-   <xsd:import namespace="http://www.w3.org/1998/Math/MathML"
-               schemaLocation="standard-modules/mathml3/mathml3.xsd"/>
-   <xsd:import namespace="http://www.niso.org/schemas/ali/1.0/"
-               schemaLocation="standard-modules/module-ali.xsd"/>
-   <xsd:import namespace="http://www.w3.org/XML/1998/namespace"
-               schemaLocation="standard-modules/xml.xsd"/>
+   <xsd:import schemaLocation="JATS-journalpublishing1-3-mathml3-elements.xsd" />
+   <xsd:include schemaLocation="JATS-journalpublishing1-3-mathml3-elements.xsd" />
+   <xsd:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd" />
+   <xsd:import namespace="http://www.w3.org/1998/Math/MathML" schemaLocation="mathml3/mathml3.xsd" />
+   <xsd:import namespace="http://www.niso.org/schemas/ali/1.0/" schemaLocation="module-ali.xsd" />
+   <xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd" />
 </xsd:schema>
