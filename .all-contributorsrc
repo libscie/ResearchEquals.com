@@ -249,6 +249,16 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "tefkah",
+      "name": "Thomas F. K. Jorna",
+      "avatar_url": "https://avatars.githubusercontent.com/u/21983833?v=4",
+      "profile": "http://tefkah.com",
+      "contributions": [
+        "code",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
