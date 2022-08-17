@@ -337,8 +337,8 @@ const OnboardingDiscord = () => {
               <p className="mr-2 text-sm">
                 <span className=" font-bold">Meeting space</span>{" "}
                 <span>
-                  We informally chat with other people in the community, exchange best practices,
-                  and support each other!
+                  We have an informal chat room to exchange best practices, support each other, and
+                  find collaborators!
                 </span>
               </p>
             </div>
