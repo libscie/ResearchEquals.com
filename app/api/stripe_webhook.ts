@@ -8,8 +8,8 @@ import { Readable } from "stream"
 import moment from "moment"
 import algoliasearch from "algoliasearch"
 import generateCrossRefXml from "../core/crossref/generateCrossRefXml"
-import { Cite } from "app/core/crossref/citation_list"
-import { isURI } from "app/core/crossref/ai_program"
+import { Cite } from "../core/crossref/citation_list"
+import { isURI } from "../core/crossref/ai_program"
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET
 const datetime = Date.now()

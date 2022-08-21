@@ -5,8 +5,8 @@ import axios from "axios"
 import FormData from "form-data"
 import { Readable } from "stream"
 import generateCrossRefXml from "../../core/crossref/generateCrossRefXml"
-import { Cite } from "app/core/crossref/citation_list"
-import { isURI, URI } from "app/core/crossref/ai_program"
+import { Cite } from "../../core/crossref/citation_list"
+import { isURI, URI } from "../../core/crossref/ai_program"
 
 export default resolver.pipe(resolver.authorize(), async ({ id }: { id: number }) => {
   const datetime = Date.now()

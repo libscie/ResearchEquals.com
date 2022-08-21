@@ -6,8 +6,8 @@ import axios from "axios"
 import FormData from "form-data"
 import { Readable } from "stream"
 import generateCrossRefXml from "../../core/crossref/generateCrossRefXml"
-import { Cite } from "app/core/crossref/citation_list"
-import { isURI, URI } from "app/core/crossref/ai_program"
+import { Cite } from "../../core/crossref/citation_list"
+import { isURI, URI } from "../../core/crossref/ai_program"
 
 const client = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_ADMIN_KEY!)
 const index = client.initIndex(`${process.env.ALGOLIA_PREFIX}_modules`)
