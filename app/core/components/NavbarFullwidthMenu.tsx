@@ -113,6 +113,23 @@ const FullWidthMenu = ({
                   </button>
                 )}
               </Menu.Item>
+              {currentUser.role === "SUPERADMIN" && (
+                <Menu.Item key="dropdown-superadmin">
+                  {({ active }) => (
+                    <button
+                      className={`${
+                        active ? "bg-gray-100 text-gray-900 dark:bg-gray-700 " : "text-gray-500"
+                      }
+                  block w-full py-2 px-4 text-left text-sm font-normal leading-5 dark:text-gray-200`}
+                      onClick={async () => {
+                        router.push(Routes.Admin())
+                      }}
+                    >
+                      Admin
+                    </button>
+                  )}
+                </Menu.Item>
+              )}
               <Menu.Item key="dropdown-logout">
                 {({ active }) => (
                   <button

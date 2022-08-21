@@ -36,6 +36,11 @@ import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import getDrafts from "app/core/queries/getDrafts"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 
+import React, { useEffect } from "react"
+import { createRoot } from "react-dom/client"
+import "../core/i18n"
+import { useTranslation } from "react-i18next"
+
 export const getStaticProps: GetStaticProps = async (context) => {
   const licenses = await db.license.findMany({
     where: {
@@ -67,6 +72,11 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
   const router = useRouter()
   const [drafts, { refetch }] = useQuery(getDrafts, { session })
   const [invitations] = useQuery(getInvitedModules, { session })
+  const { t, i18n } = useTranslation()
+
+  useEffect(() => {
+    i18n.changeLanguage(router.locale)
+  }, [])
 
   const freeLicenses = licenses.filter((license) => license.price === 0)
   const payToClose = licenses.filter((license) => license.price > 0)
@@ -90,11 +100,10 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                 <div className="mt-20">
                   <div className="mt-6 leading-5 sm:max-w-xl">
                     <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
-                      Step by step publishing of{" "}
-                      <span className="my-2 text-indigo-600">your research</span>
+                      {t("hero")}
                     </h1>
                     <p className="my-4 text-xl text-gray-800 dark:text-gray-50">
-                      A new publishing format: Research modules.
+                      {t("hero_subtitle")}
                     </p>
                     <button
                       className="inline-flex items-center justify-center scroll-smooth whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-normal leading-5 text-white shadow-sm hover:bg-indigo-700"

@@ -20,6 +20,7 @@ model Module {
   published      Boolean   @default(false)
   publishedAt    DateTime?
   publishedWhere String?
+  originMetadata String    @default("ResearchEquals")
   url            String?
   isbn           String?
   prefix         String?
@@ -61,12 +62,13 @@ model License {
 }
 
 model ModuleType {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  wikidata  String?
-  name      String   @unique
-  schema    String   @default("CreativeWork")
-  Module    Module[]
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  originType String   @default("ResearchEquals")
+  wikidata   String?
+  name       String   @unique
+  schema     String   @default("CreativeWork")
+  Module     Module[]
 }
 
 model Authorship {

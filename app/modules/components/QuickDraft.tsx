@@ -33,7 +33,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
         description: z.string(),
         type: z.string().min(1),
         license: z.string().min(1),
-        language: z.string().min(1).max(2),
+        language: z.enum([...ISO6391.getAllCodes()] as any),
         displayColor: z.string().min(1),
       })
     ),

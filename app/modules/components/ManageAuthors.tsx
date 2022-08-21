@@ -79,7 +79,6 @@ const ManageAuthors = ({ open, setOpen, moduleEdit, setQueryData }) => {
                       type="submit"
                       className="flex rounded-md bg-emerald-50 py-2 px-4 text-sm font-medium text-emerald-700 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-emerald-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                       onClick={() => {
-                        // console.log(authorState)
                         authorState.map(async (author, index) => {
                           const updatedModule = await updateAuthorRankMutation({
                             id: author.id,
