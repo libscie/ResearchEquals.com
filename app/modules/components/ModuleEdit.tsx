@@ -53,7 +53,7 @@ const ModuleEdit = ({
   isAuthor: boolean
   setInboxOpen: (open: boolean) => void
   inboxOpen: boolean
-  expire: boolean
+  expire: number
   signature: string
   setModule: (module: Module) => void
   fetchDrafts: () => void

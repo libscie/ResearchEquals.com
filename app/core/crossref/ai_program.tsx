@@ -1,7 +1,8 @@
 import { Element, Text } from "xast"
 
+type URI = `http${"s" | ""}://${string}`
 export interface AiProgramProps {
-  url: string
+  url: URI
 }
 
 export interface AiProgram extends Element {
@@ -17,12 +18,15 @@ export interface FreeToRead extends Element {
   name: "free_to_read"
 }
 
+interface URINode extends Text {
+  value: URI
+}
 export interface LicenseRef extends Element {
   name: "license_ref"
   attributes: {
     applies_to: "vor" | Exclude<string, "vor">
   }
-  children: Text[]
+  children: URINode[]
 }
 
 const aiProgram = ({ url }: AiProgramProps): AiProgram => {
@@ -38,7 +42,7 @@ const aiProgram = ({ url }: AiProgramProps): AiProgram => {
         type: "element",
         name: "free_to_read",
         children: [],
-      },
+      } as FreeToRead,
       {
         type: "element",
         name: "license_ref",
@@ -51,7 +55,7 @@ const aiProgram = ({ url }: AiProgramProps): AiProgram => {
             value: url,
           },
         ],
-      },
+      } as LicenseRef,
     ],
   }
 
