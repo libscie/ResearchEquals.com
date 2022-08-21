@@ -65,7 +65,7 @@ const book = ({
         type: "element",
         name: "book_metadata",
         attributes: {
-          language,
+          language: "en",
         },
         children: [
           titles("ResearchEquals"),
