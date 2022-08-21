@@ -17,12 +17,14 @@ const main = () => {
   })
 
   const libxml = new LibXML()
+
   const xmlIsWellFormed = libxml.loadXmlFromString(xml)
   console.log({ xmlIsWellFormed })
   // this is always relative to the main directory
-  const loadSchemas = libxml.loadSchemas([
-    join("app", "core", "crossref", "schemas", "crossref5.3.1.xsd"),
-  ])
+  const xsdFolder = join(__dirname, "schemas")
+  const xsdPath = join(xsdFolder, "crossref5.3.1.xsd")
+
+  const loadSchemas = libxml.loadSchemas([xsdPath])
 
   let valid
   try {
@@ -31,6 +33,7 @@ const main = () => {
     // valid = await validateXML(xml, join(__dirname, "schemas", "crossref5.3.1.xsd"))
   } catch (e) {
     valid = e
+    throw new Error("Generated XML is invalid!", e)
   }
   console.log(xml)
   console.log({ valid })
