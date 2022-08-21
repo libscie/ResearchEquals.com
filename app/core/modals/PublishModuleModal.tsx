@@ -56,7 +56,7 @@ export default function PublishModule({
         <div className="ml-3 flex-grow text-emerald-800 dark:text-emerald-100">
           <h3 className="inline-block align-middle text-sm font-normal leading-4 text-emerald-800 dark:text-emerald-100">
             This module is ready for publication. Would you like to{" "}
-            {(module?.license?.price || -1) > 0 ? "pay and" : ""} publish it now?
+            {module?.license?.price && module.license.price > 0 ? "pay and" : ""} publish it now?
           </h3>
         </div>
         <div className="">
@@ -148,7 +148,7 @@ export default function PublishModule({
                         <p className="text-base text-gray-500 dark:text-gray-300">
                           Once you publish this module, you cannot delete it. Because you chose a{" "}
                           {module?.license?.name} license, publishing costs{" "}
-                          {module?.license?.price ?? 145 / 100} euro (incl. VAT).
+                          {(module?.license?.price ?? 14500) / 100} euro (incl. VAT).
                         </p>
                       </div>
                       <div className="my-4 flex">
