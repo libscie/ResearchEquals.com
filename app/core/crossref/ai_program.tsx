@@ -1,6 +1,7 @@
 import { Element, Text } from "xast"
 
-type URI = `http${"s" | ""}://${string}`
+export type URI = `http${"s" | ""}://${string}`
+export const isURI = (uri: string): uri is URI => /https?:\/\.*/.test(uri)
 export interface AiProgramProps {
   url: URI
 }

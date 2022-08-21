@@ -4,7 +4,7 @@ import publicationDate from "./publication_date"
 import noisbn from "./noisbn"
 import publisher from "./publisher"
 import abstract from "./abstract"
-import aiProgram from "./ai_program"
+import aiProgram, { URI } from "./ai_program"
 import doiData from "./doi_data"
 import contributors, { Author } from "./contributors"
 import citationList, { Citation, Cite } from "./citation_list"
@@ -15,9 +15,9 @@ export interface BookProps {
   language: string
   authors: Author[]
   abstractText: string
-  license_url: string
+  license_url: URI
   doi: string
-  resolve_url: string
+  resolve_url: URI
   citations: Cite[]
 }
 

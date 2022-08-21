@@ -33,7 +33,9 @@ const main = () => {
     // valid = await validateXML(xml, join(__dirname, "schemas", "crossref5.3.1.xsd"))
   } catch (e) {
     valid = e
-    throw new Error("Generated XML is invalid!", e)
+    throw new Error(`Generated XML is invalid!
+
+     ${e}`)
   }
   console.log(xml)
   console.log({ valid })

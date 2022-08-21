@@ -7,6 +7,7 @@ import FormData from "form-data"
 import { Readable } from "stream"
 import generateCrossRefXml from "../../core/crossref/generateCrossRefXml"
 import { Cite } from "app/core/crossref/citation_list"
+import { isURI, URI } from "app/core/crossref/ai_program"
 
 const client = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_ADMIN_KEY!)
 const index = client.initIndex(`${process.env.ALGOLIA_PREFIX}_modules`)
@@ -45,6 +46,13 @@ export default resolver.pipe(
     })
 
     if (!module!.main) throw Error("Main file is empty")
+
+    const licenseUrl = module?.license?.url ?? ""
+    if (!isURI(licenseUrl)) throw Error("License URL is not a valid URI")
+
+    const resolveUrl = `${process.env.APP_ORIGIN}/modules/${module!.suffix}`
+
+    if (!isURI(resolveUrl)) throw Error("Resolve URL is not a valid URI")
 
     const xmlData = generateCrossRefXml({
       schema: "5.3.1",
@@ -97,9 +105,9 @@ export default resolver.pipe(
               }
             ) ?? [],
       abstractText: module!.description!,
-      license_url: module!.license!.url,
+      license_url: licenseUrl,
       doi: `${module!.prefix}/${module!.suffix}`,
-      resolve_url: `${process.env.APP_ORIGIN}/modules/${module!.suffix}`,
+      resolve_url: resolveUrl,
     })
 
     const xmlStream = new Readable()

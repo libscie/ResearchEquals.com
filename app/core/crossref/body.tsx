@@ -1,4 +1,5 @@
 import { Element } from "xast"
+import { URI } from "./ai_program"
 import book, { Book } from "./book"
 import { Cite } from "./citation_list"
 import { Author } from "./contributors"
@@ -9,9 +10,9 @@ export interface BodyProps {
   language: string
   authors: Author[]
   abstractText: string
-  license_url: string
+  license_url: URI
   doi: string
-  resolve_url: string
+  resolve_url: URI
   citations: Cite[]
 }
 export interface Body extends Element {

@@ -6,6 +6,7 @@ import FormData from "form-data"
 import { Readable } from "stream"
 import generateCrossRefXml from "../../core/crossref/generateCrossRefXml"
 import { Cite } from "app/core/crossref/citation_list"
+import { isURI, URI } from "app/core/crossref/ai_program"
 
 export default resolver.pipe(resolver.authorize(), async ({ id }: { id: number }) => {
   const datetime = Date.now()
@@ -39,6 +40,13 @@ export default resolver.pipe(resolver.authorize(), async ({ id }: { id: number }
   })
 
   if (!module!.main) throw Error("Main file is empty")
+
+  const licenseUrl = module?.license?.url ?? ""
+  if (!isURI(licenseUrl)) throw Error("License URL is not a valid URI")
+
+  const resolveUrl = `${process.env.APP_ORIGIN}/modules/${module!.suffix}`
+
+  if (!isURI(resolveUrl)) throw Error("Resolve URL is not a valid URI")
 
   const xmlData = generateCrossRefXml({
     schema: "5.3.1",
@@ -91,9 +99,9 @@ export default resolver.pipe(resolver.authorize(), async ({ id }: { id: number }
             }
           ) ?? [],
     abstractText: module!.description!,
-    license_url: module!.license!.url,
+    license_url: licenseUrl,
     doi: `${module!.prefix}/${module!.suffix}`,
-    resolve_url: `${process.env.APP_ORIGIN}/modules/${module!.suffix}`,
+    resolve_url: resolveUrl,
   })
 
   const xmlStream = new Readable()

@@ -9,6 +9,7 @@ import moment from "moment"
 import algoliasearch from "algoliasearch"
 import generateCrossRefXml from "../core/crossref/generateCrossRefXml"
 import { Cite } from "app/core/crossref/citation_list"
+import { isURI } from "app/core/crossref/ai_program"
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET
 const datetime = Date.now()
@@ -80,6 +81,12 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
 
       if (!module!.main) throw Error("Main file is empty")
 
+      const licenseUrl = module?.license?.url ?? ""
+      if (!isURI(licenseUrl)) throw Error("License URL is not a valid URI")
+
+      const resolveUrl = `${process.env.APP_ORIGIN}/modules/${module!.suffix}`
+      if (!isURI(resolveUrl)) throw Error("Resolve URL is not a valid URI")
+
       const xmlData = generateCrossRefXml({
         schema: "5.3.1",
         type: module!.type!.name,
@@ -131,9 +138,9 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
                 }
               ) ?? [],
         abstractText: module!.description!,
-        license_url: module!.license!.url,
+        license_url: licenseUrl,
         doi: `${module!.prefix}/${module!.suffix}`,
-        resolve_url: `${process.env.APP_ORIGIN}/modules/${module!.suffix}`,
+        resolve_url: resolveUrl,
       })
 
       const xmlStream = new Readable()

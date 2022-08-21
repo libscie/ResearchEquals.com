@@ -4,6 +4,7 @@ import head, { Head } from "./head"
 import body, { Body } from "./body"
 import { Cite } from "./citation_list"
 import { Author } from "./contributors"
+import { URI } from "./ai_program"
 
 export interface CrossRef extends Root {
   children: (Instruction | DOIBatch)[]
@@ -37,9 +38,9 @@ const generateCrossRef = ({
   language: string
   authors: Author[]
   abstractText: string
-  license_url: string
+  license_url: URI
   doi: string
-  resolve_url: string
+  resolve_url: URI
   citations: Cite[]
 }): CrossRef => {
   const jsCrossRef: CrossRef = {
