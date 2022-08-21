@@ -9,89 +9,31 @@ export interface Citation extends Element {
   attributes: {
     key: string
   }
-  children: (
-    | CitationLabel
-    | CitationText
-    | CitationDate
-    | CitationURL
-    | CitationDOI
-    | CitationVolume
-    | CitationIssue
-    | CitationFirstPage
-    | CitationLastPage
-    | CitationISSN
-    | CitationISBN
-    | CitationPublisher
-    | CitationJournal
-    | CitationAuthor
-    | CitationYear
-    | CitationTitle
-  )[]
+  children: (DOI | ISBN | JournalTitle | CitationAuthor | CYear | ArticleTitle)[]
 }
 
-export interface CitationLabel extends Element {
-  name: "label"
-  children: [Text]
-}
 export interface CitationAuthor extends Element {
   name: "author"
   children: [Text]
 }
 
-export interface CitationText extends Element {
-  name: "text"
-  children: [Text]
-}
-
-export interface CitationDate extends Element {
-  name: "cDate"
-  children: [Text]
-}
-export interface CitationYear extends Element {
+export interface CYear extends Element {
   name: "cYear"
   children: [Text]
 }
-export interface CitationURL extends Element {
-  name: "url"
-  children: [Text]
-}
-export interface CitationDOI extends Element {
+export interface DOI extends Element {
   name: "doi"
   children: [Text]
 }
-export interface CitationVolume extends Element {
-  name: "volume"
-  children: [Text]
-}
-export interface CitationIssue extends Element {
-  name: "issue"
-  children: [Text]
-}
-export interface CitationFirstPage extends Element {
-  name: "first_page"
-  children: [Text]
-}
-export interface CitationLastPage extends Element {
-  name: "last_page"
-  children: [Text]
-}
-export interface CitationISSN extends Element {
-  name: "issn"
-  children: [Text]
-}
-export interface CitationISBN extends Element {
+export interface ISBN extends Element {
   name: "isbn"
   children: [Text]
 }
-export interface CitationPublisher extends Element {
-  name: "publisher"
-  children: [Text]
-}
-export interface CitationJournal extends Element {
+export interface JournalTitle extends Element {
   name: "journal_title"
   children: [Text]
 }
-export interface CitationTitle extends Element {
+export interface ArticleTitle extends Element {
   name: "article_title"
   children: [Text]
 }
@@ -106,6 +48,7 @@ export interface Cite {
   suffix: string
   publishedAt: string | Date
 }
+
 const citation_list = ({ citations }: { citations: Cite[] }): CitationList => {
   const js: CitationList = {
     type: "element",
@@ -131,7 +74,7 @@ const citation_list = ({ citations }: { citations: Cite[] }): CitationList => {
                 value: publishedWhere,
               },
             ],
-          },
+          } as JournalTitle,
           {
             type: "element",
             name: "author",
@@ -141,7 +84,7 @@ const citation_list = ({ citations }: { citations: Cite[] }): CitationList => {
                 value: authors[0].name,
               },
             ],
-          },
+          } as CitationAuthor,
           {
             type: "element",
             name: "cYear",
@@ -161,7 +104,7 @@ const citation_list = ({ citations }: { citations: Cite[] }): CitationList => {
                 value: `${prefix}/${suffix}`,
               },
             ],
-          },
+          } as DOI,
           // {
           //   type: "element",
           //   name: "isbn",
@@ -181,7 +124,7 @@ const citation_list = ({ citations }: { citations: Cite[] }): CitationList => {
                 value: title,
               },
             ],
-          },
+          } as ArticleTitle,
         ],
       }
       return citationJs
