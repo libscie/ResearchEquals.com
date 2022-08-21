@@ -1,164 +1,164 @@
-diff '--color=auto' -urN schemas/JATS-journalpublishing1-3-mathml3-elements.xsd original-schemas/JATS-journalpublishing1-3-mathml3-elements.xsd
---- schemas/JATS-journalpublishing1-3-mathml3-elements.xsd	2022-08-21 15:56:57.481196898 +0200
-+++ original-schemas/JATS-journalpublishing1-3-mathml3-elements.xsd	2022-08-21 15:49:27.116340193 +0200
-@@ -5,8 +5,7 @@
+diff '--color=auto' -uraN original-schemas/JATS-journalpublishing1-3-mathml3-elements.xsd schemas/JATS-journalpublishing1-3-mathml3-elements.xsd
+--- original-schemas/JATS-journalpublishing1-3-mathml3-elements.xsd	2022-08-21 16:29:07.558963864 +0200
++++ schemas/JATS-journalpublishing1-3-mathml3-elements.xsd	2022-08-21 16:31:48.524780034 +0200
+@@ -5,7 +5,8 @@
              xmlns:mml="http://www.w3.org/1998/Math/MathML"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xmlns:ali="http://www.niso.org/schemas/ali/1.0/"
--            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
--            >
-+            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+-            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
++            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
++            >
     <xsd:annotation xmlns:dxdy="http://mulberrytech.com/2014/dxdy">
        <xsd:documentation>
           <div xmlns="http://www.w3.org/1999/xhtml" class="bodytext">
-@@ -33,14 +32,9 @@
+@@ -32,9 +33,14 @@
        </xsd:documentation>
     </xsd:annotation>
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
--   <xsd:import namespace="http://www.w3.org/1999/xlink"
--schemaLocation="xlink.xsd"
--   />
--   <xsd:import namespace="http://www.w3.org/1998/Math/MathML"
--               schemaLocation="mathml3/mathml3.xsd"/>
--   <xsd:import namespace="http://www.niso.org/schemas/ali/1.0/"
--   schemaLocation="module-ali.xsd"
--   />
-+   <xsd:import namespace="http://www.w3.org/1999/xlink"/>
-+   <xsd:import namespace="http://www.w3.org/1998/Math/MathML"/>
-+   <xsd:import namespace="http://www.niso.org/schemas/ali/1.0/"/>
+-   <xsd:import namespace="http://www.w3.org/1999/xlink"/>
+-   <xsd:import namespace="http://www.w3.org/1998/Math/MathML"/>
+-   <xsd:import namespace="http://www.niso.org/schemas/ali/1.0/"/>
++   <xsd:import namespace="http://www.w3.org/1999/xlink"
++schemaLocation="xlink.xsd"
++   />
++   <xsd:import namespace="http://www.w3.org/1998/Math/MathML"
++               schemaLocation="mathml3/mathml3.xsd"/>
++   <xsd:import namespace="http://www.niso.org/schemas/ali/1.0/"
++   schemaLocation="module-ali.xsd"
++   />
     <!--* Some imports may need to be added manually *-->
     <xsd:element name="abbrev">
        <xsd:annotation>
-diff '--color=auto' -urN schemas/JATS-journalpublishing1-3-mathml3.xsd original-schemas/JATS-journalpublishing1-3-mathml3.xsd
---- schemas/JATS-journalpublishing1-3-mathml3.xsd	2022-08-19 16:30:59.941373438 +0200
-+++ original-schemas/JATS-journalpublishing1-3-mathml3.xsd	2022-08-21 15:49:27.107971763 +0200
-@@ -1,8 +1,17 @@
+diff '--color=auto' -uraN original-schemas/JATS-journalpublishing1-3-mathml3.xsd schemas/JATS-journalpublishing1-3-mathml3.xsd
+--- original-schemas/JATS-journalpublishing1-3-mathml3.xsd	2022-08-21 16:29:07.554284221 +0200
++++ schemas/JATS-journalpublishing1-3-mathml3.xsd	2022-08-21 16:31:48.530590982 +0200
+@@ -1,17 +1,8 @@
  <?xml-stylesheet href="xsd.xsl" type="text/xsl"?>
--<xsd:schema xmlns:mtl="http://www.mulberrytech.com/taglib" xmlns:c="http://www.w3.org/ns/xproc-step" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:ali="http://www.niso.org/schemas/ali/1.0/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ncbi.nlm.nih.gov/JATS1">
-+<xsd:schema xmlns:mtl="http://www.mulberrytech.com/taglib"
-+            xmlns:c="http://www.w3.org/ns/xproc-step"
-+            xmlns:mml="http://www.w3.org/1998/Math/MathML"
-+            xmlns:ali="http://www.niso.org/schemas/ali/1.0/"
-+            xmlns:xlink="http://www.w3.org/1999/xlink"
-+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-+            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+-<xsd:schema xmlns:mtl="http://www.mulberrytech.com/taglib"
+-            xmlns:c="http://www.w3.org/ns/xproc-step"
+-            xmlns:mml="http://www.w3.org/1998/Math/MathML"
+-            xmlns:ali="http://www.niso.org/schemas/ali/1.0/"
+-            xmlns:xlink="http://www.w3.org/1999/xlink"
+-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+-            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
++<xsd:schema xmlns:mtl="http://www.mulberrytech.com/taglib" xmlns:c="http://www.w3.org/ns/xproc-step" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:ali="http://www.niso.org/schemas/ali/1.0/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ncbi.nlm.nih.gov/JATS1">
     <xsd:annotation>
        <xsd:documentation>
--         <div xmlns:dxdy="http://mulberrytech.com/2014/dxdy" xmlns:xsd="http://www.w3.org/2000/10/XMLSchema" xmlns="http://www.w3.org/1999/xhtml" class="bodytext">
-+         <div xmlns:dxdy="http://mulberrytech.com/2014/dxdy"
-+              xmlns:xsd="http://www.w3.org/2000/10/XMLSchema"
-+              xmlns="http://www.w3.org/1999/xhtml"
-+              class="bodytext">
+-         <div xmlns:dxdy="http://mulberrytech.com/2014/dxdy"
+-              xmlns:xsd="http://www.w3.org/2000/10/XMLSchema"
+-              xmlns="http://www.w3.org/1999/xhtml"
+-              class="bodytext">
++         <div xmlns:dxdy="http://mulberrytech.com/2014/dxdy" xmlns:xsd="http://www.w3.org/2000/10/XMLSchema" xmlns="http://www.w3.org/1999/xhtml" class="bodytext">
              <h1>MODULE: JATS-journalpublishing1-3-mathml3 DTD in XSD form (driver file)</h1>
              <h2>MODEL: Journal Publishing DTD (MathML 3.0)</h2>
              <h2>VERSION:   1.3</h2>
-@@ -24,10 +33,13 @@
+@@ -33,13 +24,10 @@
           </div>
        </xsd:documentation>
     </xsd:annotation>
--   <xsd:import schemaLocation="JATS-journalpublishing1-3-mathml3-elements.xsd" />
--   <xsd:include schemaLocation="JATS-journalpublishing1-3-mathml3-elements.xsd" />
--   <xsd:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd" />
--   <xsd:import namespace="http://www.w3.org/1998/Math/MathML" schemaLocation="mathml3/mathml3.xsd" />
--   <xsd:import namespace="http://www.niso.org/schemas/ali/1.0/" schemaLocation="module-ali.xsd" />
--   <xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd" />
-+   <xsd:import namespace="http://www.w3.org/1999/xlink"
-+               schemaLocation="standard-modules/xlink.xsd"/>
-+   <xsd:import namespace="http://www.w3.org/1998/Math/MathML"
-+               schemaLocation="standard-modules/mathml3/mathml3.xsd"/>
-+   <xsd:import namespace="http://www.niso.org/schemas/ali/1.0/"
-+               schemaLocation="standard-modules/module-ali.xsd"/>
-+   <xsd:import namespace="http://www.w3.org/XML/1998/namespace"
-+               schemaLocation="standard-modules/xml.xsd"/>
-+   <xsd:include schemaLocation="JATS-journalpublishing1-3-mathml3-elements.xsd"/>
+-   <xsd:import namespace="http://www.w3.org/1999/xlink"
+-               schemaLocation="standard-modules/xlink.xsd"/>
+-   <xsd:import namespace="http://www.w3.org/1998/Math/MathML"
+-               schemaLocation="standard-modules/mathml3/mathml3.xsd"/>
+-   <xsd:import namespace="http://www.niso.org/schemas/ali/1.0/"
+-               schemaLocation="standard-modules/module-ali.xsd"/>
+-   <xsd:import namespace="http://www.w3.org/XML/1998/namespace"
+-               schemaLocation="standard-modules/xml.xsd"/>
+-   <xsd:include schemaLocation="JATS-journalpublishing1-3-mathml3-elements.xsd"/>
++   <xsd:import schemaLocation="JATS-journalpublishing1-3-mathml3-elements.xsd" />
++   <xsd:include schemaLocation="JATS-journalpublishing1-3-mathml3-elements.xsd" />
++   <xsd:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd" />
++   <xsd:import namespace="http://www.w3.org/1998/Math/MathML" schemaLocation="mathml3/mathml3.xsd" />
++   <xsd:import namespace="http://www.niso.org/schemas/ali/1.0/" schemaLocation="module-ali.xsd" />
++   <xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd" />
  </xsd:schema>
-diff '--color=auto' -urN schemas/common5.3.1.xsd original-schemas/common5.3.1.xsd
---- schemas/common5.3.1.xsd	2022-08-21 15:58:14.601984305 +0200
-+++ original-schemas/common5.3.1.xsd	2022-08-21 15:49:03.182257285 +0200
+diff '--color=auto' -uraN original-schemas/common5.3.1.xsd schemas/common5.3.1.xsd
+--- original-schemas/common5.3.1.xsd	2022-08-21 16:29:07.557665972 +0200
++++ schemas/common5.3.1.xsd	2022-08-21 16:31:48.532301420 +0200
 @@ -19,7 +19,7 @@
    -->
  
  	<xsd:import namespace="http://www.w3.org/1998/Math/MathML"
--		schemaLocation="mathml3/mathml3.xsd"/>
-+		schemaLocation="http://www.w3.org/Math/XMLSchema/mathml3/mathml3.xsd"/>
+-		schemaLocation="http://www.w3.org/Math/XMLSchema/mathml3/mathml3.xsd"/>
++		schemaLocation="mathml3/mathml3.xsd"/>
  	<xsd:import namespace="http://www.crossref.org/fundref.xsd" schemaLocation="fundref.xsd"/>
  	<xsd:import namespace="http://www.crossref.org/AccessIndicators.xsd"
  		schemaLocation="AccessIndicators.xsd"/>
-diff '--color=auto' -urN schemas/crossref5.3.1.xsd original-schemas/crossref5.3.1.xsd
---- schemas/crossref5.3.1.xsd	2022-08-21 16:04:25.219531619 +0200
-+++ original-schemas/crossref5.3.1.xsd	2022-08-21 16:04:41.761902432 +0200
+diff '--color=auto' -uraN original-schemas/crossref5.3.1.xsd schemas/crossref5.3.1.xsd
+--- original-schemas/crossref5.3.1.xsd	2022-08-21 16:29:07.556901129 +0200
++++ schemas/crossref5.3.1.xsd	2022-08-21 16:31:48.533366559 +0200
 @@ -24,9 +24,9 @@
  
  	<!-- imported schema -->
  	<xsd:import namespace="http://www.ncbi.nlm.nih.gov/JATS1"
--		schemaLocation="JATS-journalpublishing1-3-mathml3.xsd"/>
-+		schemaLocation="JATS-journalpublishing1-3d2-mathml3.xsd"/>
+-		schemaLocation="JATS-journalpublishing1-3d2-mathml3.xsd"/>
++		schemaLocation="JATS-journalpublishing1-3-mathml3.xsd"/>
  	<xsd:import namespace="http://www.w3.org/1998/Math/MathML"
--		schemaLocation="mathml3/mathml3.xsd"/>
-+		schemaLocation="http://www.w3.org/Math/XMLSchema/mathml3/mathml3.xsd"/>
+-		schemaLocation="http://www.w3.org/Math/XMLSchema/mathml3/mathml3.xsd"/>
++		schemaLocation="mathml3/mathml3.xsd"/>
  	<xsd:import namespace="http://www.crossref.org/fundref.xsd" schemaLocation="fundref.xsd"/>
  	<xsd:import namespace="http://www.crossref.org/clinicaltrials.xsd"
  		schemaLocation="clinicaltrials.xsd"/>
-diff '--color=auto' -urN schemas/mathml3/mathml3-common.xsd original-schemas/mathml3/mathml3-common.xsd
---- schemas/mathml3/mathml3-common.xsd	2022-08-19 16:30:59.947020477 +0200
-+++ original-schemas/mathml3/mathml3-common.xsd	2022-08-21 15:49:49.801488960 +0200
-@@ -4,9 +4,6 @@
+diff '--color=auto' -uraN original-schemas/mathml3/mathml3-common.xsd schemas/mathml3/mathml3-common.xsd
+--- original-schemas/mathml3/mathml3-common.xsd	2022-08-21 16:29:07.555560446 +0200
++++ schemas/mathml3/mathml3-common.xsd	2022-08-21 16:31:48.534259945 +0200
+@@ -4,6 +4,9 @@
    xmlns:m="http://www.w3.org/1998/Math/MathML" 
    elementFormDefault="qualified"
    targetNamespace="http://www.w3.org/1998/Math/MathML">
--           <xs:include schemaLocation="mathml3-content.xsd"></xs:include>
--           <xs:include schemaLocation="mathml3-strict-content.xsd"></xs:include>
--           <xs:include schemaLocation="mathml3-presentation.xsd"></xs:include>
++           <xs:include schemaLocation="mathml3-content.xsd"></xs:include>
++           <xs:include schemaLocation="mathml3-strict-content.xsd"></xs:include>
++           <xs:include schemaLocation="mathml3-presentation.xsd"></xs:include>
  <xs:element name="math">
  <xs:complexType>
  <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:MathExpression"/>
-@@ -46,7 +43,7 @@
+@@ -43,7 +46,7 @@
  <xs:complexType name="annotation-xml.model">
  <xs:choice minOccurs="0" maxOccurs="unbounded">
  <xs:group ref="m:MathExpression"/>
--<!-- <xs:group ref="m:anyElement"/> -->
-+<xs:group ref="m:anyElement"/>
+-<xs:group ref="m:anyElement"/>
++<!-- <xs:group ref="m:anyElement"/> -->
  </xs:choice>
  </xs:complexType>
  <xs:group name="anyElement">
-diff '--color=auto' -urN schemas/mathml3/mathml3-content.xsd original-schemas/mathml3/mathml3-content.xsd
---- schemas/mathml3/mathml3-content.xsd	2022-08-19 16:30:59.947537727 +0200
-+++ original-schemas/mathml3/mathml3-content.xsd	2022-08-21 15:49:49.802502868 +0200
-@@ -3,9 +3,6 @@
+diff '--color=auto' -uraN original-schemas/mathml3/mathml3-content.xsd schemas/mathml3/mathml3-content.xsd
+--- original-schemas/mathml3/mathml3-content.xsd	2022-08-21 16:29:07.556530708 +0200
++++ schemas/mathml3/mathml3-content.xsd	2022-08-21 16:31:48.535495752 +0200
+@@ -3,6 +3,9 @@
             xmlns:m="http://www.w3.org/1998/Math/MathML"
             elementFormDefault="qualified"
             targetNamespace="http://www.w3.org/1998/Math/MathML">
--           <xs:include schemaLocation="mathml3-common.xsd"></xs:include>
--           <xs:include schemaLocation="mathml3-strict-content.xsd"></xs:include>
--           <xs:include schemaLocation="mathml3-presentation.xsd"></xs:include>
++           <xs:include schemaLocation="mathml3-common.xsd"></xs:include>
++           <xs:include schemaLocation="mathml3-strict-content.xsd"></xs:include>
++           <xs:include schemaLocation="mathml3-presentation.xsd"></xs:include>
     <xs:include schemaLocation="mathml3-strict-content.xsd"/>
     <xs:complexType name="cn.content" mixed="true">
        <xs:choice minOccurs="0" maxOccurs="unbounded">
-diff '--color=auto' -urN schemas/mathml3/mathml3-presentation.xsd original-schemas/mathml3/mathml3-presentation.xsd
---- schemas/mathml3/mathml3-presentation.xsd	2022-08-19 16:30:59.948214018 +0200
-+++ original-schemas/mathml3/mathml3-presentation.xsd	2022-08-21 15:49:49.804032897 +0200
-@@ -3,11 +3,6 @@
+diff '--color=auto' -uraN original-schemas/mathml3/mathml3-presentation.xsd schemas/mathml3/mathml3-presentation.xsd
+--- original-schemas/mathml3/mathml3-presentation.xsd	2022-08-21 16:29:07.556784128 +0200
++++ schemas/mathml3/mathml3-presentation.xsd	2022-08-21 16:31:48.537601737 +0200
+@@ -3,6 +3,11 @@
             xmlns:m="http://www.w3.org/1998/Math/MathML"
             elementFormDefault="qualified"
             targetNamespace="http://www.w3.org/1998/Math/MathML">
--           <xs:include schemaLocation="mathml3-content.xsd"></xs:include>
--           <xs:include schemaLocation="mathml3-common.xsd"></xs:include>
--           <xs:include schemaLocation="mathml3-strict-content.xsd"></xs:include>
--
--
++           <xs:include schemaLocation="mathml3-content.xsd"></xs:include>
++           <xs:include schemaLocation="mathml3-common.xsd"></xs:include>
++           <xs:include schemaLocation="mathml3-strict-content.xsd"></xs:include>
++
++
     <xs:complexType name="ImpliedMrow">
        <xs:group minOccurs="0" maxOccurs="unbounded" ref="m:MathExpression"/>
     </xs:complexType>
-diff '--color=auto' -urN schemas/mathml3/mathml3-strict-content.xsd original-schemas/mathml3/mathml3-strict-content.xsd
---- schemas/mathml3/mathml3-strict-content.xsd	2022-08-19 16:30:59.948891768 +0200
-+++ original-schemas/mathml3/mathml3-strict-content.xsd	2022-08-21 15:49:49.805015014 +0200
-@@ -3,9 +3,6 @@
+diff '--color=auto' -uraN original-schemas/mathml3/mathml3-strict-content.xsd schemas/mathml3/mathml3-strict-content.xsd
+--- original-schemas/mathml3/mathml3-strict-content.xsd	2022-08-21 16:29:07.556652876 +0200
++++ schemas/mathml3/mathml3-strict-content.xsd	2022-08-21 16:31:48.540194978 +0200
+@@ -3,6 +3,9 @@
             xmlns:m="http://www.w3.org/1998/Math/MathML"
             elementFormDefault="qualified"
             targetNamespace="http://www.w3.org/1998/Math/MathML">
--           <xs:include schemaLocation="mathml3-content.xsd"></xs:include>
--           <xs:include schemaLocation="mathml3-common.xsd"></xs:include>
--           <xs:include schemaLocation="mathml3-presentation.xsd"></xs:include>
++           <xs:include schemaLocation="mathml3-content.xsd"></xs:include>
++           <xs:include schemaLocation="mathml3-common.xsd"></xs:include>
++           <xs:include schemaLocation="mathml3-presentation.xsd"></xs:include>
     <xs:group name="ContExp">
        <xs:choice>
  <!--Ambiguous content model altered (ContExp)-->

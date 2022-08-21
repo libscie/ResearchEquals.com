@@ -14,7 +14,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "prepare": "husky install",
-    "test:xml": "tsx app/core/crossref/rawtest.ts"
+    "test:xml": "tsx app/core/crossref/rawtest.ts",
+    "patch-xsds": "cd app/core/crossref && cp -r original-schemas original-schemas-bak && patch -s -p0 < patches/xsd.diff && mv original-schemas schemas && mv original-schemas-bak original-schemas"
   },
   "prisma": {
     "schema": "db/schema.prisma"
