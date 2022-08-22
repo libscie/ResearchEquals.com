@@ -7,7 +7,7 @@ const client = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_AP
 const index = client.initIndex(`${process.env.ALGOLIA_PREFIX}_workspaces`)
 
 export default CronJob(
-  "api/update-authors-sort", // 👈 the route that it's reachable on
+  "api/update-index", // 👈 the route that it's reachable on
   "0 0 * * *", // “At 00:00 every day.”
   async () => {
     const authors = await db.workspace.findMany()
