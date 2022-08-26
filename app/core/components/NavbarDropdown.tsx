@@ -7,6 +7,7 @@ import SettingsModal from "../modals/settings"
 import ResearchEqualsLogo from "./ResearchEqualsLogo"
 import QuickDraft from "../../modules/components/QuickDraft"
 import DropdownNotificationModal from "../modals/DropdownNotificationModal"
+import CollectionsModal from "../modals/CollectionsModal"
 
 const DropdownContents = ({
   currentUser,
@@ -94,6 +95,14 @@ const DropdownContents = ({
             </div>
             <DropdownNotificationModal invitedModules={invitedModules} />
           </li>
+          <Link href="#">
+            <CollectionsModal
+              styling="w-full text-left block rounded-md px-2 py-2 text-gray-500 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 text-base leading-5 font-normal"
+              button="Collections"
+              user={currentUser}
+              workspace={currentWorkspace}
+            />
+          </Link>
           <Link href="#">
             <SettingsModal
               styling="w-full text-left block rounded-md px-2 py-2 text-gray-500 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 text-base leading-5 font-normal"

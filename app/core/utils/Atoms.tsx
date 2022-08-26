@@ -38,6 +38,11 @@ const settingsModalAtom = atom({
   default: false,
   effects_UNSTABLE: [persistAtom],
 })
+const collectionsModalAtom = atom({
+  key: "collectionsModal",
+  default: false,
+  effects_UNSTABLE: [persistAtom],
+})
 
 export {
   workspaceFirstNameAtom,
@@ -46,4 +51,5 @@ export {
   workspacePronounsAtom,
   workspaceUrlAtom,
   settingsModalAtom,
+  collectionsModalAtom,
 }
