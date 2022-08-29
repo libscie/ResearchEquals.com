@@ -23,6 +23,7 @@ import {
   TextAlignLeft,
   Video,
   CircleFill,
+  Bullhorn,
 } from "@carbon/icons-react"
 import Xarrows from "react-xarrows"
 import { useMediaPredicate } from "react-media-hook"
@@ -38,6 +39,8 @@ import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 
 import React, { useEffect } from "react"
 import { createRoot } from "react-dom/client"
+import CollectionsModal from "../core/modals/CollectionsModal"
+
 import "../core/i18n"
 import { useTranslation } from "react-i18next"
 
@@ -99,6 +102,21 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
               <div>
                 <div className="mt-20">
                   <div className="mt-6 leading-5 sm:max-w-xl">
+                    <CollectionsModal
+                      styling=""
+                      button={
+                        <button className="my-2 inline-flex items-center rounded-full bg-orange-100 px-3 py-0.5 text-sm font-medium text-orange-800 hover:bg-orange-300 hover:text-orange-900">
+                          <Bullhorn
+                            className="mx-1 text-orange-800 hover:text-orange-900"
+                            size={24}
+                          />
+                          Coming soon: Collections
+                        </button>
+                      }
+                      user={currentUser}
+                      workspace={currentWorkspace}
+                    />
+
                     <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
                       {t("hero")}
                     </h1>
