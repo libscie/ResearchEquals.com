@@ -102,8 +102,8 @@ export default function CollectionsModal({ button, styling, user, workspace }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="sm:min-w-120 sm:max-w-120 inline-block min-h-screen  w-full transform rounded bg-transparent text-left align-middle text-gray-900 transition-all dark:border-gray-600 dark:bg-gray-900 sm:min-h-full sm:w-auto">
-                <button className="float-right inline-flex items-center  justify-center rounded-md p-2 text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 dark:text-gray-500 dark:hover:text-gray-300">
+              <div className="sm:min-w-120 sm:max-w-120 inline-block min-h-screen w-full transform rounded bg-transparent text-left align-middle text-gray-900 transition-all dark:border-gray-600 dark:bg-gray-900 sm:min-h-full sm:w-auto">
+                <button className="absolute top-0 right-0 float-right inline-flex items-center justify-center  rounded-md bg-transparent p-2 text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 dark:text-gray-500 dark:hover:text-gray-300">
                   <span className="sr-only">Close menu</span>
                   <Close
                     size={32}
@@ -114,10 +114,10 @@ export default function CollectionsModal({ button, styling, user, workspace }) {
                     }}
                   />
                 </button>
-                <section className="grid grid-cols-1 overflow-hidden py-32 2xl:grid-cols-3">
+                <section className="mx-auto grid grid-cols-1 overflow-hidden py-32 2xl:grid-cols-3">
                   <div className="container col-span-1 mx-auto px-4">
                     <div className=" flex flex-wrap items-center">
-                      <div className="max-w-lg p-5">
+                      <div className="max-w-lg pb-5 lg:p-5">
                         <p className="flex">
                           <h2 className="font-heading my-4 text-6xl font-bold text-white sm:text-7xl">
                             Start collecting
