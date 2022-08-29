@@ -1,11 +1,57 @@
-import { Dialog, Transition, Tab } from "@headlessui/react"
+import { Dialog, Transition, Tab, RadioGroup } from "@headlessui/react"
 import { Fragment, useState } from "react"
-import { CheckmarkFilled, Close } from "@carbon/icons-react"
+import { CheckmarkFilled, Close, CloseFilled } from "@carbon/icons-react"
 import { useRecoilState } from "recoil"
 import { collectionsModalAtom } from "../utils/Atoms"
 
+const plans = [
+  {
+    name: "Individual collection",
+    price: "Free",
+    note: "Limited to 1 active collection per workspace",
+    features: [
+      { title: "Unique collection DOI", available: true },
+      { title: "RSS Feed", available: false },
+      { title: "Extra editors", available: false },
+      { title: "Custom title", available: false },
+      { title: "Custom icon", available: false },
+      { title: "Custom banner image", available: false },
+      { title: "External submissions", available: false },
+    ],
+  },
+  {
+    name: "Collaborative collection",
+    price: "€14.99",
+    note: "",
+    features: [
+      { title: "Unique collection DOI", available: true },
+      { title: "RSS Feed", available: true },
+      { title: "Five editors", available: true },
+      { title: "Custom title", available: true },
+      { title: "Custom icon", available: true },
+      { title: "Custom banner image", available: false },
+      { title: "External submissions", available: false },
+    ],
+  },
+  {
+    name: "Community collection",
+    price: "€149.99",
+    note: "",
+    features: [
+      { title: "Unique collection DOI", available: true },
+      { title: "RSS Feed", available: true },
+      { title: "Unlimited editors", available: true },
+      { title: "Custom title", available: true },
+      { title: "Custom icon", available: true },
+      { title: "Custom banner image", available: true },
+      { title: "External submissions", available: true },
+    ],
+  },
+]
+
 export default function CollectionsModal({ button, styling, user, workspace }) {
   let [isOpen, setIsOpen] = useRecoilState(collectionsModalAtom)
+  const [selected, setSelected] = useState(plans[0])
 
   return (
     <>
@@ -37,7 +83,7 @@ export default function CollectionsModal({ button, styling, user, workspace }) {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Dialog.Overlay className="fixed inset-0 bg-gray-900 bg-opacity-90 transition-opacity" />
+              <Dialog.Overlay className="fixed inset-0 bg-gray-900 bg-opacity-95 transition-opacity" />
             </Transition.Child>
 
             {/* This element is to trick the browser into centering the modal contents. */}
@@ -68,6 +114,125 @@ export default function CollectionsModal({ button, styling, user, workspace }) {
                     }}
                   />
                 </button>
+                <section className="grid grid-cols-1 overflow-hidden py-32 2xl:grid-cols-3">
+                  <div className="container col-span-1 mx-auto px-4">
+                    <div className=" flex flex-wrap items-center">
+                      <div className="max-w-lg p-5">
+                        <p className="flex">
+                          <h2 className="font-heading my-4 text-6xl font-bold text-white sm:text-7xl">
+                            Start collecting
+                          </h2>
+                        </p>
+                        <p className="my-2 text-gray-200">
+                          Collect anything with a DOI in one place for easy reference and
+                          safekeeping.
+                        </p>
+                        <p className="my-2 text-gray-200">
+                          A literature review, portfolio, grant outputs, project deliverables, team
+                          outputs, or to keep up with a topic.
+                        </p>
+                        <p className="my-2 text-gray-200">
+                          Once you create a collection, you own it. You can upgrade to a higher tier
+                          at any time with a one time payment.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="container col-span-2 mx-auto px-4 md:py-10">
+                    <div className="">
+                      <RadioGroup value={selected} onChange={setSelected}>
+                        <RadioGroup.Label className="sr-only">Collection type</RadioGroup.Label>
+                        <div className="grid grid-cols-1 gap-y-2 gap-x-2 md:grid-cols-3 md:gap-y-0">
+                          {plans.map((plan) => (
+                            <RadioGroup.Option
+                              key={plan.name}
+                              value={plan}
+                              className={({ active, checked }) =>
+                                `${
+                                  active || checked
+                                    ? "ring-2 ring-indigo-600 ring-opacity-60 ring-offset-2 ring-offset-indigo-300"
+                                    : "border border-dashed border-gray-400"
+                                }
+                          ${
+                            active || checked
+                              ? "bg-transparent bg-opacity-75 text-white"
+                              : "bg-transparent"
+                          }
+                     cursor-pointer rounded-lg px-5 py-4 focus:outline-none`
+                              }
+                            >
+                              {({ active, checked }) => (
+                                <>
+                                  <div className="flex w-full items-center justify-between">
+                                    <div className="flex-grow items-center">
+                                      <div className="flex-grow">
+                                        <RadioGroup.Label
+                                          as="h3"
+                                          className={`text-center text-2xl font-medium ${
+                                            checked ? "text-indigo-300" : "text-white"
+                                          }`}
+                                        >
+                                          {plan.name}
+                                        </RadioGroup.Label>
+                                      </div>
+                                      <div className="mt-2 mr-2 text-center ">
+                                        <span className=" text-4xl font-bold tracking-tight text-white">
+                                          {plan.price}
+                                        </span>
+                                        {plan.price !== "Free" ? (
+                                          <span className="text-base font-medium text-gray-500">
+                                            {" "}
+                                            incl. VAT
+                                          </span>
+                                        ) : (
+                                          ""
+                                        )}
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <RadioGroup.Description
+                                    as="div"
+                                    className={`${checked ? "text-sky-100" : "text-gray-300"}`}
+                                  >
+                                    <ul>
+                                      {plan.features.map((feature) => (
+                                        <li className="my-2 flex" key={feature.title}>
+                                          {feature.available ? (
+                                            <CheckmarkFilled
+                                              className="mr-2.5 fill-current text-green-500"
+                                              size={24}
+                                            />
+                                          ) : (
+                                            <CloseFilled
+                                              className="mr-2.5 fill-current text-red-500"
+                                              size={24}
+                                            />
+                                          )}
+                                          {feature.title}
+                                        </li>
+                                      ))}
+                                    </ul>
+                                    {/* <span aria-hidden="true">&middot;</span>{" "} */}
+                                    <p className="text-xs text-gray-400">{plan.note}</p>
+                                  </RadioGroup.Description>
+                                </>
+                              )}
+                            </RadioGroup.Option>
+                          ))}
+                        </div>
+                      </RadioGroup>
+                      <div className="group relative my-4 rounded bg-indigo-600 text-white">
+                        <button
+                          className={`font-heading tracking-px w-full cursor-not-allowed overflow-hidden rounded-md p-1 text-sm font-semibold uppercase`}
+                        >
+                          <div className="border-gradient-to-r relative overflow-hidden rounded-md from-indigo-500 px-9 py-5">
+                            <p className="relative z-10">Coming soon...</p>
+                          </div>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </section>
               </div>
             </Transition.Child>
           </div>

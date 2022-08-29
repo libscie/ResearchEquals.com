@@ -38,6 +38,7 @@ const settingsModalAtom = atom({
   default: false,
   effects_UNSTABLE: [persistAtom],
 })
+
 const collectionsModalAtom = atom({
   key: "collectionsModal",
   default: false,
