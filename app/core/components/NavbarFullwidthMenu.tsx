@@ -1,12 +1,19 @@
 import { Link, Routes, useMutation } from "blitz"
 import { Menu, Popover, Transition } from "@headlessui/react"
 import { Fragment } from "react"
-import { Add, Settings, Notification, NotificationNew } from "@carbon/icons-react"
+import {
+  Add,
+  Settings,
+  Notification,
+  NotificationNew,
+  WatsonHealthStackedScrolling_1,
+} from "@carbon/icons-react"
 
 import logout from "../../auth/mutations/logout"
 import SettingsModal from "../modals/settings"
 import QuickDraft from "../../modules/components/QuickDraft"
 import InvitationNotification from "./InvitationNotification"
+import CollectionsModal from "../modals/CollectionsModal"
 
 const FullWidthMenu = ({
   currentUser,
@@ -33,11 +40,15 @@ const FullWidthMenu = ({
               >
                 <span className="sr-only">View notifications</span>
                 {invitedModules.length > 0 ? (
-                  <NotificationNew size={32} className="h-6 w-6" aria-hidden="true" />
+                  <NotificationNew
+                    size={32}
+                    className="flex h-6 w-6 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    aria-hidden="true"
+                  />
                 ) : (
                   <Notification
                     size={32}
-                    className="h-6 w-6 cursor-not-allowed"
+                    className="flex h-6 w-6 cursor-not-allowed text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     aria-hidden="true"
                   />
                 )}
@@ -64,6 +75,20 @@ const FullWidthMenu = ({
             </>
           )}
         </Popover>
+        <span className="sr-only">Create collection</span>
+        <CollectionsModal
+          styling="ml-1 shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
+          button={
+            <WatsonHealthStackedScrolling_1
+              size={32}
+              className="flex h-6 w-6 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              aria-hidden="true"
+            />
+          }
+          user={currentUser}
+          workspace={currentWorkspace}
+        />
+
         <span className="sr-only">Open settings</span>
         <SettingsModal
           styling="ml-1 shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
