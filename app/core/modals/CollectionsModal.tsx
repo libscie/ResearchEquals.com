@@ -150,8 +150,8 @@ export default function CollectionsModal({ button, styling, user, workspace }) {
                               className={({ active, checked }) =>
                                 `${
                                   active || checked
-                                    ? "ring-2 ring-indigo-600 ring-opacity-60 ring-offset-2 ring-offset-indigo-300"
-                                    : "border border-dashed border-gray-400"
+                                    ? "border border-transparent ring-2 ring-indigo-600 ring-opacity-60 ring-offset-2 ring-offset-indigo-300"
+                                    : "border border-dashed border-gray-400 ring-2 ring-transparent ring-offset-2 ring-offset-transparent"
                                 }
                           ${
                             active || checked
