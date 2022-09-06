@@ -2,7 +2,15 @@ import { useMutation, useQuery, Link } from "blitz"
 import { Widget } from "@uploadcare/react-widget"
 import { useRef } from "react"
 import { Formik, Form } from "formik"
-import { Email, UserAvatar, User, Parameter, LogoDiscord } from "@carbon/icons-react"
+import {
+  Email,
+  UserAvatar,
+  User,
+  Parameter,
+  LogoDiscord,
+  ThumbsDown,
+  ThumbsUp,
+} from "@carbon/icons-react"
 import { useRecoilValue, useRecoilState } from "recoil"
 
 import changeAvatar from "../../workspaces/mutations/changeAvatar"
@@ -18,11 +26,13 @@ import {
   settingsModalAtom,
   userDiscordAtom,
 } from "../utils/Atoms"
+import changeEmailConsent from "../../users/mutations/changeEmailConsent"
 
 const OnboardingQuests = ({ data, expire, signature, refetch }) => {
   return (
     <>
       <OnboardingEmail data={data.user.emailIsVerified} />
+      <OnboardingEmailAccept data={data.user} />
       {/* <OnboardingOrcid data={data.workspace.orcid} /> */}
       <OnboardingAvatar
         data={data.workspace}
@@ -85,6 +95,68 @@ const OnboardingEmail = ({ data }) => {
                   </Form>
                 </Formik>
               )}
+            </p>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+    </>
+  )
+}
+
+const OnboardingEmailAccept = ({ data }) => {
+  const [emailConsentMutation, { isSuccess }] = useMutation(changeEmailConsent)
+  return (
+    <>
+      {data.emailConsent === null ? (
+        <div className="onboarding my-2 flex w-full flex-col rounded-r border-l-4 border-cyan-400 bg-cyan-50 p-4 dark:border-cyan-200 dark:bg-cyan-900 lg:my-0">
+          <div className="flex flex-grow">
+            <div className="">
+              <Email
+                size={32}
+                className="h-5 w-5 text-cyan-400 dark:text-cyan-200"
+                aria-hidden="true"
+              />
+            </div>
+            <div className="ml-3 flex-1 text-cyan-800 dark:text-cyan-200 md:flex">
+              <p className="mr-2 text-sm">
+                <span className="font-bold">Email notifications</span>{" "}
+                <span>
+                  Would you like to receive emails about ResearchEquals? You can manage which in
+                  your settings.
+                </span>
+              </p>
+            </div>
+          </div>
+          <div className="block text-right text-cyan-700 dark:text-cyan-200">
+            <p className="mt-3 text-sm md:mt-0 md:ml-6">
+              {isSuccess ? (
+                <p className="whitespace-nowrap font-medium  underline">Got it!</p>
+              ) : (
+                <p className="whitespace-nowrap font-medium  underline">
+                  <button
+                    className="mx-2 whitespace-nowrap font-medium  underline"
+                    type="submit"
+                    onClick={async () => {
+                      await emailConsentMutation({ emailConsent: true, marketingConsent: true })
+                    }}
+                  >
+                    Yes
+                    <ThumbsUp size={16} className="inline" />
+                  </button>
+                  <button
+                    className="whitespace-nowrap font-medium  underline"
+                    type="submit"
+                    onClick={async () => {
+                      await emailConsentMutation({ emailConsent: false, marketingConsent: false })
+                    }}
+                  >
+                    No
+                    <ThumbsDown size={16} className="inline" />
+                  </button>
+                </p>
+              )}{" "}
             </p>
           </div>
         </div>

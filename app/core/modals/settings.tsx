@@ -6,6 +6,7 @@ import { settingsModalAtom } from "../utils/Atoms"
 
 import WorkspaceSettings from "../components/WorkspaceSettings"
 import AccountSettings from "../components/AccountSettings"
+import EmailSettings from "../components/EmailSettings"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -13,7 +14,7 @@ function classNames(...classes) {
 
 export default function SettingsModal({ button, styling, user, workspace }) {
   let [isOpen, setIsOpen] = useRecoilState(settingsModalAtom)
-  let [categories] = useState(["Workspace", "Account"])
+  let [categories] = useState(["Workspace", "Account", "Emails"])
 
   return (
     <>
@@ -111,6 +112,9 @@ export default function SettingsModal({ button, styling, user, workspace }) {
                       </Tab.Panel>
                       <Tab.Panel key="account-panel" className="">
                         <AccountSettings user={user} setIsOpen={setIsOpen} />
+                      </Tab.Panel>
+                      <Tab.Panel key="emails-panel" className="">
+                        <EmailSettings user={user} setIsOpen={setIsOpen} />
                       </Tab.Panel>
                     </Tab.Panels>
                   </Tab.Group>
