@@ -54,7 +54,7 @@
     "markdown-it": "13.0.1",
     "moment": "2.29.4",
     "passport-orcid": "0.0.4",
-    "pdfjs-dist": "2.15.349",
+    "pdfjs-dist": "2.16.105",
     "postcss": "8.4.16",
     "postmark": "3.0.14",
     "prisma": "4.2.1",
