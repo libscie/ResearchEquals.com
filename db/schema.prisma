@@ -129,6 +129,10 @@ model Membership {
   invitedName  String?
   invitedEmail String?
 
+  emailInvitations  Boolean @default(true)
+  emailApprovals    Boolean @default(true)
+  emailWeeklyDigest Boolean @default(true)
+
   @@unique([workspaceId, invitedEmail])
 }
 
@@ -144,14 +148,16 @@ enum GlobalRole {
 }
 
 model User {
-  id              Int        @id @default(autoincrement())
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
-  name            String?
-  email           String     @unique
-  emailIsVerified Boolean    @default(false)
-  hashedPassword  String?
-  role            GlobalRole
+  id               Int        @id @default(autoincrement())
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  name             String?
+  email            String     @unique
+  emailIsVerified  Boolean    @default(false)
+  hashedPassword   String?
+  role             GlobalRole
+  emailConsent     Boolean?
+  marketingConsent Boolean?
 
   tokens      Token[]
   sessions    Session[]
