@@ -1,5 +1,7 @@
-import { NotFoundError, resolver } from "blitz"
+import { addMinutes, NotFoundError, resolver } from "blitz"
 import db from "db"
+
+import invitationMailer from "../../api/invitation-mailer"
 
 export default resolver.pipe(
   resolver.authorize(),
@@ -50,6 +52,13 @@ export default resolver.pipe(
       },
     })
 
+    const createdAuthor = await db.authorship.findFirst({
+      where: {
+        moduleId,
+        workspaceId: parseInt(authorId),
+      },
+    })
+
     // Force all authors to reapprove for publishing
     await db.authorship.updateMany({
       where: {
@@ -59,6 +68,16 @@ export default resolver.pipe(
         readyToPublish: false,
       },
     })
+
+    const dateimte = new Date()
+    await invitationMailer.enqueue(
+      // authorship id
+      createdAuthor!.id,
+      {
+        runAt: addMinutes(dateimte, 1),
+        id: createdAuthor?.id.toString(),
+      }
+    )
 
     return module
   }
