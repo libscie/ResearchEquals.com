@@ -1,6 +1,6 @@
 import { ServerClient, TemplatedMessage } from "postmark"
 
-const from = process.env.MAIL_FROM ?? "no-reply@libscie.org"
+const from = process.env.MAIL_FROM ?? "ResearchEquals <no-reply@libscie.org>"
 
 export const postmark = () => new ServerClient(process.env.POSTMARK_TOKEN ?? "")
 
@@ -14,16 +14,14 @@ export async function sendEmailWithTemplate(
   await postmark().sendEmailWithTemplate(message)
 }
 
-export async function sendInvitation() {
-  const message = new TemplatedMessage(
-    from,
-    "invitation-mail",
-    {
-      title: "Testing",
-    },
-    "chris@libscie.org"
-  )
+export async function sendInvitation(to: string, title: string) {
+  const message = new TemplatedMessage(from, "invitation-mail", { title }, to)
+  message.MessageStream = "broadcast"
+  message.ReplyTo = "Chris Hartgerink <ceo@libscie.org>"
+  await postmark().sendEmailWithTemplate(message)
+}
 
+export async function sendApprovals() {
   await postmark().sendEmail({
     From: "chris@libscie.org",
     To: "chris@libscie.org",
@@ -32,16 +30,4 @@ export async function sendInvitation() {
     TextBody: "Hello from Postmark!",
     MessageStream: "broadcast",
   })
-
-  // await postmark().sendEmail({
-  //   From: "chris@libscie.org",
-  //   To: "chris@libscie.org",
-  //   Subject: "Hello from Postmark",
-  //   HtmlBody: "<strong>Hello</strong> dear Postmark user.",
-  //   TextBody: "Hello from Postmark!",
-  //   MessageStream: "broadcast",
-  // })
-  // await postmark().sendEmailWithTemplate(message, {
-  //   MessageStream: "broadcast",
-  // })
 }

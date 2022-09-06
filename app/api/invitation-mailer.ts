@@ -9,6 +9,7 @@ export default Queue("api/invitation-mailer", async (authorshipId: number) => {
       id: authorshipId,
     },
     include: {
+      module: true,
       workspace: {
         include: {
           members: {
@@ -29,7 +30,7 @@ export default Queue("api/invitation-mailer", async (authorshipId: number) => {
   // Send to all members who have consented to receive invitations
   authorship?.workspace?.members.map(async (member) => {
     if (member.emailInvitations && member.user?.emailConsent) {
-      await sendInvitation()
+      await sendInvitation(member.user.email, authorship.module.title)
     }
   })
 })
