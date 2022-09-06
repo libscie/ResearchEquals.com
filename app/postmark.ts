@@ -21,13 +21,9 @@ export async function sendInvitation(to: string, title: string) {
   await postmark().sendEmailWithTemplate(message)
 }
 
-export async function sendApprovals() {
-  await postmark().sendEmail({
-    From: "chris@libscie.org",
-    To: "chris@libscie.org",
-    Subject: "Hello from Postmark2121!!!!!!",
-    HtmlBody: "<strong>Hello</strong> dear Postmark user.",
-    TextBody: "Hello from Postmark!",
-    MessageStream: "broadcast",
-  })
+export async function sendApproval(name: string, title: string, to: string) {
+  const message = new TemplatedMessage(from, "approval-mail", { title, name }, to)
+  message.MessageStream = "broadcast"
+  message.ReplyTo = "Chris Hartgerink <ceo@libscie.org>"
+  await postmark().sendEmailWithTemplate(message)
 }
