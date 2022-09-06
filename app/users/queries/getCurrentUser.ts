@@ -11,10 +11,16 @@ export default async function getCurrentUser(_ = null, { session }: Ctx) {
       name: true,
       email: true,
       emailIsVerified: true,
+      emailConsent: true,
+      marketingConsent: true,
       role: true,
       memberships: {
         select: {
+          id: true,
           role: true,
+          emailInvitations: true,
+          emailApprovals: true,
+          emailWeeklyDigest: true,
           workspace: {
             select: {
               avatar: true,
