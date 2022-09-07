@@ -18,6 +18,7 @@ export default Queue("api/approval-mailer", async (moduleId) => {
                     select: {
                       emailConsent: true,
                       email: true,
+                      emailIsVerified: true,
                     },
                   },
                 },
@@ -31,10 +32,18 @@ export default Queue("api/approval-mailer", async (moduleId) => {
 
   module?.authors.map(async (author) => {
     author.workspace?.members.map(async (member) => {
-      if (member.emailApprovals && member.user?.emailConsent && author.acceptedInvitation) {
+      if (
+        member.emailApprovals &&
+        member.user?.emailConsent &&
+        member.user.emailIsVerified &&
+        author.acceptedInvitation
+      ) {
         await sendApproval(
-          `${author.workspace?.firstName} ${author.workspace?.lastName}`,
-          module.title,
+          {
+            name: `${author.workspace?.firstName} ${author.workspace?.lastName}`,
+            title: module.title,
+            url: `${process.env.APP_ORIGIN}/drafts?suffix=${module.suffix}`,
+          },
           member.user?.email
         )
       }

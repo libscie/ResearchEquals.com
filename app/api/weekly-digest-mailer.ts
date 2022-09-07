@@ -58,7 +58,6 @@ export default CronJob(
     })
 
     workspaces.map(async (workspace) => {
-      // new published modules past week you followd
       const followedWorkspaces = await db.workspace.findFirst({
         where: {
           id: workspace.id,
@@ -75,6 +74,7 @@ export default CronJob(
           },
         },
       })
+
       let newModules = [] as any
       followedWorkspaces?.following.map((following) => {
         return following.authorships.map((author) => {
@@ -89,8 +89,7 @@ export default CronJob(
           }
         })
       })
-      console.log(newModules)
-      // awaiting your approval
+
       const myDrafts = await db.authorship.findMany({
         where: {
           acceptedInvitation: true,
@@ -120,7 +119,12 @@ export default CronJob(
       })
 
       workspace.members.map(async (member) => {
-        if (member.emailInvitations && member.user?.emailConsent && member.user.emailIsVerified) {
+        if (
+          member.emailInvitations &&
+          member.user?.emailConsent &&
+          member.user.emailIsVerified &&
+          (newModules.length > 0 || myDrafts.length > 0 || invitations.length > 0)
+        ) {
           // TODO: conditional on that there is something to provide a digest on!
           await sendDigest(
             {

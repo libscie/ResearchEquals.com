@@ -21,8 +21,8 @@ export async function sendInvitation(to: string, data: Object) {
   await postmark().sendEmailWithTemplate(message)
 }
 
-export async function sendApproval(name: string, title: string, to: string) {
-  const message = new TemplatedMessage(from, "approval-mail", { title, name }, to)
+export async function sendApproval(data: Object, to: string) {
+  const message = new TemplatedMessage(from, "approval-mail", data, to)
   message.MessageStream = "broadcast"
   message.ReplyTo = "Chris Hartgerink <ceo@libscie.org>"
   await postmark().sendEmailWithTemplate(message)

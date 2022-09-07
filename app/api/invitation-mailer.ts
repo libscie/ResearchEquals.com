@@ -18,6 +18,7 @@ export default Queue("api/invitation-mailer", async (authorshipId: number) => {
                 select: {
                   emailConsent: true,
                   email: true,
+                  emailIsVerified: true,
                 },
               },
             },
@@ -28,9 +29,16 @@ export default Queue("api/invitation-mailer", async (authorshipId: number) => {
   })
 
   // Send to all members who have consented to receive invitations
+  // TODO COLLECTIONS: Add conditional logic to those who CAN accept/decline
   authorship?.workspace?.members.map(async (member) => {
-    if (member.emailInvitations && member.user?.emailConsent) {
-      await sendInvitation(member.user.email, authorship.module.title)
+    if (member.emailInvitations && member.user?.emailConsent && member.user.emailIsVerified) {
+      await sendInvitation(member.user.email, {
+        title: authorship.module.title,
+        url: `${process.env.APP_ORIGIN}/invitations?suffix=${authorship.module.suffix}`,
+        product_url: process.env.APP_ORIGIN,
+        product_name: "ResearchEquals",
+        company_name: "Liberate Science GmbH",
+      })
     }
   })
 })
