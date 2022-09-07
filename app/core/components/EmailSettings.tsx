@@ -5,24 +5,16 @@ import { z } from "zod"
 import { Checkmark, Close } from "@carbon/icons-react"
 import changeEmailConsent from "../../users/mutations/changeEmailConsent"
 import changeMemberEmails from "../../memberships/mutations/changeMemberEmails"
+import { emailNotificationsAtom } from "../utils/Atoms"
+import { useRecoilState } from "recoil"
 
 const EmailSettings = ({ user, setIsOpen }) => {
+  const [emailNotifications, setEmailNotifications] = useRecoilState(emailNotificationsAtom)
   const [changeEmailMutation] = useMutation(changeEmailConsent)
   const [changeMemberEmailsMutation] = useMutation(changeMemberEmails)
-  let x = user.memberships.map((membership) => {
-    return {
-      [`${membership.workspace.handle}-invitations`]: membership.emailInvitations,
-      [`${membership.workspace.handle}-approvals`]: membership.emailApprovals,
-      [`${membership.workspace.handle}-weeklyDigest`]: membership.emailWeeklyDigest,
-    }
-  })[0]
 
   const formik = useFormik({
-    initialValues: {
-      emailConsent: user.emailConsent,
-      marketingConsent: user.marketingConsent,
-      ...x,
-    },
+    initialValues: emailNotifications,
     validate: validateZodSchema(
       z.object({
         emailConsent: z.boolean(),
@@ -31,8 +23,11 @@ const EmailSettings = ({ user, setIsOpen }) => {
     ),
     onSubmit: async (values) => {
       try {
-        console.log(values)
-        if (values.emailConsent != user.emailConsent) {
+        setEmailNotifications(values)
+        if (
+          values.emailConsent != user.emailConsent ||
+          values.marketingConsent != user.marketingConsent
+        ) {
           toast.promise(
             changeEmailMutation({
               emailConsent: values.emailConsent,
@@ -106,7 +101,6 @@ const EmailSettings = ({ user, setIsOpen }) => {
               <input
                 type="checkbox"
                 id="marketingEmails"
-                className=""
                 defaultChecked={formik.values.marketingConsent}
                 {...formik.getFieldProps("marketingConsent")}
               />
@@ -149,13 +143,18 @@ const EmailSettings = ({ user, setIsOpen }) => {
                       <input
                         type="checkbox"
                         id={`${membership.workspace.handle}-invitations`}
-                        className=""
                         defaultChecked={formik.values[`${membership.workspace.handle}-invitations`]}
                         {...formik.getFieldProps(`${membership.workspace.handle}-invitations`)}
                       />
                     ) : (
                       // <input type="checkbox" className="w-fullalign-middle" />
-                      <input type="checkbox" disabled className="disabled:opacity-25" />
+                      <input
+                        type="checkbox"
+                        disabled
+                        className="disabled:opacity-25"
+                        defaultChecked={formik.values[`${membership.workspace.handle}-invitations`]}
+                        {...formik.getFieldProps(`${membership.workspace.handle}-invitations`)}
+                      />
                     )}
                   </td>
                   <td className="">
@@ -163,12 +162,17 @@ const EmailSettings = ({ user, setIsOpen }) => {
                       <input
                         type="checkbox"
                         id={`${membership.workspace.handle}-approvals`}
-                        className=""
                         defaultChecked={formik.values[`${membership.workspace.handle}-approvals`]}
                         {...formik.getFieldProps(`${membership.workspace.handle}-approvals`)}
                       />
                     ) : (
-                      <input type="checkbox" disabled className="disabled:opacity-25" />
+                      <input
+                        type="checkbox"
+                        disabled
+                        className="disabled:opacity-25"
+                        defaultChecked={formik.values[`${membership.workspace.handle}-approvals`]}
+                        {...formik.getFieldProps(`${membership.workspace.handle}-approvals`)}
+                      />
                     )}
                   </td>
                   <td className="">
@@ -176,14 +180,21 @@ const EmailSettings = ({ user, setIsOpen }) => {
                       <input
                         type="checkbox"
                         id={`${membership.workspace.handle}-weeklyDigest`}
-                        className=""
                         defaultChecked={
                           formik.values[`${membership.workspace.handle}-weeklyDigest`]
                         }
                         {...formik.getFieldProps(`${membership.workspace.handle}-weeklyDigest`)}
                       />
                     ) : (
-                      <input type="checkbox" disabled className="disabled:opacity-25" />
+                      <input
+                        type="checkbox"
+                        disabled
+                        className="disabled:opacity-25"
+                        defaultChecked={
+                          formik.values[`${membership.workspace.handle}-weeklyDigest`]
+                        }
+                        {...formik.getFieldProps(`${membership.workspace.handle}-weeklyDigest`)}
+                      />
                     )}
                   </td>
                 </tr>
