@@ -14,8 +14,8 @@ export async function sendEmailWithTemplate(
   await postmark().sendEmailWithTemplate(message)
 }
 
-export async function sendInvitation(to: string, title: string) {
-  const message = new TemplatedMessage(from, "invitation-mail", { title }, to)
+export async function sendInvitation(to: string, data: Object) {
+  const message = new TemplatedMessage(from, "invitation-mail", data, to)
   message.MessageStream = "broadcast"
   message.ReplyTo = "Chris Hartgerink <ceo@libscie.org>"
   await postmark().sendEmailWithTemplate(message)
@@ -23,6 +23,13 @@ export async function sendInvitation(to: string, title: string) {
 
 export async function sendApproval(name: string, title: string, to: string) {
   const message = new TemplatedMessage(from, "approval-mail", { title, name }, to)
+  message.MessageStream = "broadcast"
+  message.ReplyTo = "Chris Hartgerink <ceo@libscie.org>"
+  await postmark().sendEmailWithTemplate(message)
+}
+
+export async function sendDigest(data: Object, to: string) {
+  const message = new TemplatedMessage(from, "weekly-digest", data, to)
   message.MessageStream = "broadcast"
   message.ReplyTo = "Chris Hartgerink <ceo@libscie.org>"
   await postmark().sendEmailWithTemplate(message)
