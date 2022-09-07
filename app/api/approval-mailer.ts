@@ -2,10 +2,10 @@ import { sendApproval } from "app/postmark"
 import { Queue } from "quirrel/next"
 import db from "../../db"
 
-export default Queue("api/approval-mailer", async (moduleId) => {
+export default Queue("api/approval-mailer", async (moduleId: number) => {
   const module = await db.module.findFirst({
     where: {
-      id: moduleId!,
+      id: moduleId,
     },
     include: {
       authors: {
