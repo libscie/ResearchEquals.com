@@ -25,6 +25,7 @@ import {
   workspaceUrlAtom,
   settingsModalAtom,
   userDiscordAtom,
+  emailNotificationsAtom,
 } from "../utils/Atoms"
 import changeEmailConsent from "../../users/mutations/changeEmailConsent"
 
@@ -107,6 +108,8 @@ const OnboardingEmail = ({ data }) => {
 
 const OnboardingEmailAccept = ({ data }) => {
   const [emailConsentMutation, { isSuccess }] = useMutation(changeEmailConsent)
+  const [emailNotifications, setEmailNotifications] = useRecoilState(emailNotificationsAtom)
+
   return (
     <>
       {data.emailConsent === null ? (
@@ -140,6 +143,10 @@ const OnboardingEmailAccept = ({ data }) => {
                     type="submit"
                     onClick={async () => {
                       await emailConsentMutation({ emailConsent: true, marketingConsent: true })
+                      let emailNotis = { ...emailNotifications }
+                      emailNotis.emailConsent = true
+                      emailNotis.marketingConsent = true
+                      setEmailNotifications(emailNotis)
                     }}
                   >
                     Yes
@@ -150,6 +157,10 @@ const OnboardingEmailAccept = ({ data }) => {
                     type="submit"
                     onClick={async () => {
                       await emailConsentMutation({ emailConsent: false, marketingConsent: false })
+                      let emailNotis = { ...emailNotifications }
+                      emailNotis.emailConsent = false
+                      emailNotis.marketingConsent = false
+                      setEmailNotifications(emailNotis)
                     }}
                   >
                     No
