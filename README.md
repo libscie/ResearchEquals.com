@@ -48,7 +48,7 @@ If you don't have postgres running, you can use the `docker-compose` file which 
 docker-compose up
 ```
 
-To get a fully functional development environment you need to add the environment variables as listed in `.env.example`. Please note most of these services are freemium and you can sign up for a free account.
+To get a fully functional development environment you need to add the environment variables as listed in `.env.example`. For developing locally, you need to add these variables to two .env files: (1) `.env.local` and (2) `.env.test.local`. Please note most of these services are freemium and you can sign up for a free account.
 
 You can migrate and seed your database with
 
