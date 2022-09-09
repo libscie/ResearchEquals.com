@@ -51,6 +51,12 @@ const userDiscordAtom = atom({
   effects_UNSTABLE: [persistAtom],
 })
 
+const emailNotificationsAtom = atom({
+  key: "emailNotifications",
+  default: {},
+  effects_UNSTABLE: [persistAtom],
+})
+
 export {
   workspaceFirstNameAtom,
   workspaceLastNameAtom,
@@ -60,4 +66,5 @@ export {
   settingsModalAtom,
   collectionsModalAtom,
   userDiscordAtom,
+  emailNotificationsAtom,
 }
