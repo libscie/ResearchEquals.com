@@ -39,24 +39,32 @@ const EmailSettings = ({ user, setIsOpen }) => {
               error: "Please check your settings",
             }
           )
-          if (values.emailConsent) {
-            user.memberships.map((membership) => {
-              toast.promise(
-                changeMemberEmailsMutation({
-                  id: membership.id,
-                  invitations: values[`${membership.workspace.handle}-invitations`],
-                  approvals: values[`${membership.workspace.handle}-approvals`],
-                  weeklyDigest: values[`${membership.workspace.handle}-weeklyDigest`],
-                }),
-                {
-                  loading: `Updating @${membership.workspace.handle}...`,
-                  success: `Updated @${membership.workspace.handle}!`,
-                  error: "Please check your settings",
-                }
-              )
-            })
-          }
         }
+
+        user.memberships.map((membership) => {
+          if (
+            values[`${membership.workspace.handle}-invitations`] !=
+              emailNotifications[`${membership.workspace.handle}-invitations`] ||
+            values[`${membership.workspace.handle}-approvals`] !=
+              emailNotifications[`${membership.workspace.handle}-approvals`] ||
+            values[`${membership.workspace.handle}-weeklyDigest`] !=
+              emailNotifications[`${membership.workspace.handle}-weeklyDigest`]
+          )
+            toast.promise(
+              changeMemberEmailsMutation({
+                id: membership.id,
+                invitations: values[`${membership.workspace.handle}-invitations`],
+                approvals: values[`${membership.workspace.handle}-approvals`],
+                weeklyDigest: values[`${membership.workspace.handle}-weeklyDigest`],
+              }),
+              {
+                loading: `Updating emails for @${membership.workspace.handle}...`,
+                success: `Updated emails for @${membership.workspace.handle}!`,
+                error: "Please check your settings",
+              }
+            )
+        })
+
         setIsOpen(false)
       } catch (error) {
         alert(error.toString())

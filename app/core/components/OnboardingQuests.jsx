@@ -112,7 +112,7 @@ const OnboardingEmailAccept = ({ data }) => {
 
   return (
     <>
-      {data.emailConsent === null ? (
+      {data.emailConsent === null || emailNotifications.emailConsent === null ? (
         <div className="onboarding my-2 flex w-full flex-col rounded-r border-l-4 border-cyan-400 bg-cyan-50 p-4 dark:border-cyan-200 dark:bg-cyan-900 lg:my-0">
           <div className="flex flex-grow">
             <div className="">

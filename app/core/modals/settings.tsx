@@ -27,8 +27,8 @@ export default function SettingsModal({ button, styling, user, workspace }) {
   useEffect(() => {
     if (JSON.stringify(emailNotifications) === "{}") {
       setEmailNotifications({
-        emailConsent: user.emailConsent,
-        marketingConsent: user.marketingConsent,
+        emailConsent: false,
+        marketingConsent: false,
         ...x,
       })
     }
