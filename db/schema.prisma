@@ -43,9 +43,10 @@ model Module {
   parents  Module[] @relation("ModuleToModule")
   children Module[] @relation("ModuleToModule")
 
-  references    Module[] @relation("ModuleReference")
-  referencedBy  Module[] @relation("ModuleReference")
-  referencesRaw Json?    @default("{}")
+  references    Module[]     @relation("ModuleReference")
+  referencedBy  Module[]     @relation("ModuleReference")
+  referencesRaw Json?        @default("{}")
+  submissions   Submission[]
 
   @@unique([prefix, suffix])
 }
@@ -58,7 +59,7 @@ model License {
   name      String?
   price     Int      @default(0)
   price_id  String?
-  Module    Module[]
+  modules   Module[]
 }
 
 model ModuleType {
@@ -68,7 +69,7 @@ model ModuleType {
   wikidata   String?
   name       String   @unique
   schema     String   @default("CreativeWork")
-  Module     Module[]
+  modules    Module[]
 }
 
 model Authorship {
@@ -109,6 +110,10 @@ model Workspace {
   authorships Authorship[]
   following   Workspace[]  @relation("WorkspaceToWorkspace")
   followers   Workspace[]  @relation("WorkspaceToWorkspace")
+  submissions Submission[]
+  editorships Editorship[]
+
+  followingCollections Collection[] @relation("WorkspaceToCollection")
 }
 
 enum WorkspaceType {
@@ -198,8 +203,80 @@ enum TokenType {
   RESET_PASSWORD
 }
 
-model ReleaseList {
+model Submission {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  email     String
+  updatedAt DateTime @updatedAt
+  accepted  Boolean?
+
+  // The actual submission
+  collection   Collection @relation(fields: [collectionId], references: [id])
+  collectionId Int
+  module       Module     @relation(fields: [moduleId], references: [id])
+  moduleId     Int
+  comment      String     @db.VarChar(280)
+
+  // The people involved
+  editor       Editorship @relation(fields: [editorshipId], references: [id])
+  editorshipId Int
+  submittedBy  Workspace? @relation(fields: [workspaceId], references: [id])
+  workspaceId  Int
+
+  // pinned information
+  pinPosition Int?
+
+  @@unique([collectionId, pinPosition])
+}
+
+model Collection {
+  id         Int       @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  finishedAt DateTime?
+
+  type             CollectionType @relation(fields: [collectionTypeId], references: [id])
+  collectionTypeId Int
+
+  suffix      String? @unique
+  icon        Json?
+  header      Json?
+  title       String
+  subtitle    String?
+  description String?
+  language    String  @default("en")
+
+  editors     Editorship[]
+  submissions Submission[]
+
+  followers Workspace[] @relation("WorkspaceToCollection")
+}
+
+model CollectionType {
+  id          Int             @id @default(autoincrement())
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  type        CollectionTypes @unique
+  collections Collection[]
+  price       Int?
+  price_id    String?
+}
+
+enum CollectionTypes {
+  INDIVIDUAL
+  COLLABORATIVE
+  COMMUNITY
+}
+
+model Editorship {
+  id        Int            @id @default(autoincrement())
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  role      MembershipRole @default(USER)
+
+  collection   Collection @relation(fields: [collectionId], references: [id])
+  collectionId Int
+
+  workspace   Workspace    @relation(fields: [workspaceId], references: [id])
+  workspaceId Int
+  submissions Submission[]
 }
