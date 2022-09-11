@@ -2,11 +2,16 @@ import { Dialog, Transition, Tab, RadioGroup } from "@headlessui/react"
 import { Fragment, useState } from "react"
 import { CheckmarkFilled, Close, CloseFilled } from "@carbon/icons-react"
 import { useRecoilState } from "recoil"
+import { useMutation } from "blitz"
+
 import { collectionsModalAtom } from "../utils/Atoms"
+import createIndividualCollection from "../../collections/mutations/createIndividualCollection"
+import { toast } from "react-hot-toast"
 
 const plans = [
   {
     name: "Individual collection",
+    tag: "INDIVIDUAL",
     price: "Free",
     note: "Limited to 1 active collection per workspace",
     features: [
@@ -21,6 +26,7 @@ const plans = [
   },
   {
     name: "Collaborative collection",
+    tag: "COLLABORATIVE",
     price: "€14.99",
     note: "",
     features: [
@@ -35,6 +41,7 @@ const plans = [
   },
   {
     name: "Community collection",
+    tag: "COMMUNITY",
     price: "€149.99",
     note: "",
     features: [
@@ -50,6 +57,7 @@ const plans = [
 ]
 
 export default function CollectionsModal({ button, styling, user, workspace }) {
+  const [createIndividualCollectionMutation] = useMutation(createIndividualCollection)
   let [isOpen, setIsOpen] = useRecoilState(collectionsModalAtom)
   const [selected, setSelected] = useState(plans[0])
 
@@ -223,10 +231,23 @@ export default function CollectionsModal({ button, styling, user, workspace }) {
                       </RadioGroup>
                       <div className="group relative my-4 rounded bg-indigo-600 text-white">
                         <button
-                          className={`font-heading tracking-px w-full cursor-not-allowed overflow-hidden rounded-md p-1 text-sm font-semibold uppercase`}
+                          className={`font-heading tracking-px w-full overflow-hidden rounded-md p-1 text-lg font-semibold uppercase`}
+                          onClick={() => {
+                            if (selected?.tag === "INDIVIDUAL") {
+                              toast.promise(createIndividualCollectionMutation({}), {
+                                loading: "Creating collection...",
+                                success: "Collection created!",
+                                error: (err) => {
+                                  return err.toString()
+                                },
+                              })
+                            }
+                          }}
                         >
                           <div className="border-gradient-to-r relative overflow-hidden rounded-md from-indigo-500 px-9 py-5">
-                            <p className="relative z-10">Coming soon...</p>
+                            <p className="relative z-10">
+                              {selected?.price === "Free" ? "Create" : "Pay and create"}
+                            </p>
                           </div>
                         </button>
                       </div>
