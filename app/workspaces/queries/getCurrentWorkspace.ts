@@ -13,6 +13,15 @@ export default async function getCurrentWorkspace(_ = null, { session }: Ctx) {
           module: true,
         },
       },
+      editorships: {
+        include: {
+          collection: {
+            include: {
+              type: true,
+            },
+          },
+        },
+      },
     },
   })
 
