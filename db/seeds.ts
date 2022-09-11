@@ -223,6 +223,57 @@ const seed = async () => {
         price_id: "price_1KCTBbLmgtJbKHNGQSZHsNO0",
       },
     })
+
+    // Add collections pricing
+    // [PROD] Individual collection
+    await db.collectionType.upsert({
+      where: {
+        type: "INDIVIDUAL",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 0,
+      },
+      // This is the original
+      create: {
+        type: "INDIVIDUAL",
+        price: 0,
+      },
+    })
+    // [PROD] Collaborative collection
+    await db.collectionType.upsert({
+      where: {
+        type: "COLLABORATIVE",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 1499,
+        price_id: "price_1LgCMbLmgtJbKHNGvX5LHLoo",
+      },
+      // This is the original
+      create: {
+        type: "COLLABORATIVE",
+        price: 1499,
+        price_id: "price_1LgCMbLmgtJbKHNGvX5LHLoo",
+      },
+    })
+    // [PROD] Community collection
+    await db.collectionType.upsert({
+      where: {
+        type: "COMMUNITY",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 14999,
+        price_id: "price_1LgCLQLmgtJbKHNGNoiEKuv1",
+      },
+      // This is the original
+      create: {
+        type: "COMMUNITY",
+        price: 14999,
+        price_id: "price_1LgCLQLmgtJbKHNGNoiEKuv1",
+      },
+    })
   }
 
   // Do this when not in production
@@ -373,6 +424,57 @@ const seed = async () => {
         name: "All rights reserved",
         price: 54999,
         price_id: "price_1KCRbjLmgtJbKHNGLa8TS0aH",
+      },
+    })
+
+    // Add collections pricing
+    // Individual collection
+    await db.collectionType.upsert({
+      where: {
+        type: "INDIVIDUAL",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 0,
+      },
+      // This is the original
+      create: {
+        type: "INDIVIDUAL",
+        price: 0,
+      },
+    })
+    // Collaborative collection
+    await db.collectionType.upsert({
+      where: {
+        type: "COLLABORATIVE",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 1499,
+        price_id: "price_1LgCBCLmgtJbKHNG3r9B3C1C",
+      },
+      // This is the original
+      create: {
+        type: "COLLABORATIVE",
+        price: 1499,
+        price_id: "price_1LgCBCLmgtJbKHNG3r9B3C1C",
+      },
+    })
+    // Community collection
+    await db.collectionType.upsert({
+      where: {
+        type: "COMMUNITY",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 14999,
+        price_id: "price_1LgCCSLmgtJbKHNG0hJCGKhd",
+      },
+      // This is the original
+      create: {
+        type: "COMMUNITY",
+        price: 14999,
+        price_id: "price_1LgCCSLmgtJbKHNG0hJCGKhd",
       },
     })
 
