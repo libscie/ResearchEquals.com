@@ -36,6 +36,8 @@ const CreateSessionCollection = async (req: BlitzApiRequest, res: BlitzApiRespon
               description: `Charge for creating a ${req.query.collectionType} collection.`,
               product: "collection-type",
               id: req.query.collectionType,
+              collectionId: collection?.id,
+              workspaceId: req.query.workspaceId,
             },
           },
           tax_id_collection: {
