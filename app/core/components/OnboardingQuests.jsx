@@ -10,6 +10,7 @@ import {
   LogoDiscord,
   ThumbsDown,
   ThumbsUp,
+  WatsonHealthStackedScrolling_1,
 } from "@carbon/icons-react"
 import { useRecoilValue, useRecoilState } from "recoil"
 
@@ -28,6 +29,7 @@ import {
   emailNotificationsAtom,
 } from "../utils/Atoms"
 import changeEmailConsent from "../../users/mutations/changeEmailConsent"
+import CollectionsModal from "../modals/CollectionsModal"
 
 const OnboardingQuests = ({ data, expire, signature, refetch }) => {
   return (
@@ -43,6 +45,7 @@ const OnboardingQuests = ({ data, expire, signature, refetch }) => {
       />
       <OnboardingProfile data={data} />
       <OnboardingDraft data={data.workspace} refetch={refetch} />
+      <OnboardingCollection data={data} refetch={refetch} />
       <OnboardingDiscord data={data.workspace} refetch={refetch} />
     </>
   )
@@ -387,6 +390,54 @@ const OnboardingDraft = ({ data, refetch }) => {
                 }
                 buttonStyle="whitespace-nowrap font-medium hover:text-blue-600 underline"
                 refetchFn={refetch}
+              />
+            </p>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+    </>
+  )
+}
+
+const OnboardingCollection = ({ data, refetch }) => {
+  return (
+    <>
+      {true ? (
+        <div
+          key="draft-onboarding-quest"
+          className="onboarding my-2 flex w-full flex-col rounded-r border-l-4 border-orange-400 bg-orange-50 p-4 dark:border-orange-200 dark:bg-orange-900 lg:my-0"
+        >
+          <div className="flex flex-grow">
+            <div className="">
+              <WatsonHealthStackedScrolling_1
+                size={32}
+                className="h-5 w-5 text-orange-400 dark:text-orange-200"
+                aria-hidden="true"
+              />
+            </div>
+            <div className="ml-3 flex-1 text-orange-800 dark:text-orange-200 md:flex">
+              <p className="mr-2 text-sm">
+                <span className=" font-bold">Create collection(s)</span>{" "}
+                <span>
+                  Start curating DOIs for your peers. Create a research portfolio, track grant
+                  outputs, or get creative.
+                </span>
+              </p>
+            </div>
+          </div>
+          <div className="block text-right text-orange-700 dark:text-orange-200">
+            <p className="mt-3 text-sm md:mt-0 md:ml-6">
+              <CollectionsModal
+                button={
+                  <>
+                    Create collection <span aria-hidden="true">&rarr;</span>
+                  </>
+                }
+                styling="whitespace-nowrap font-medium hover:text-blue-600 underline"
+                user={data.user}
+                workspace={data.workspace}
               />
             </p>
           </div>
