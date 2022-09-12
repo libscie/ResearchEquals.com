@@ -15,7 +15,6 @@ const CreateSessionCollection = async (req: BlitzApiRequest, res: BlitzApiRespon
         },
       })
 
-      console.log(collection)
       try {
         // Create Checkout Sessions from body params.
         const session = await stripe.checkout.sessions.create({

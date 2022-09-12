@@ -13,7 +13,7 @@ const plans = [
   {
     name: "Individual collection",
     tag: "INDIVIDUAL",
-    price: "Free",
+    price: 0,
     note: "Limited to 1 active collection per workspace",
     features: [
       { title: "Unique collection DOI", available: true },
@@ -28,7 +28,7 @@ const plans = [
   {
     name: "Collaborative collection",
     tag: "COLLABORATIVE",
-    price: "€14.99",
+    price: 1499,
     note: "",
     features: [
       { title: "Unique collection DOI", available: true },
@@ -43,7 +43,7 @@ const plans = [
   {
     name: "Community collection",
     tag: "COMMUNITY",
-    price: "€149.99",
+    price: 14999,
     note: "",
     features: [
       { title: "Unique collection DOI", available: true },
@@ -186,9 +186,9 @@ export default function CollectionsModal({ button, styling, user, workspace }) {
                                       </div>
                                       <div className="mt-2 mr-2 text-center ">
                                         <span className=" text-4xl font-bold tracking-tight text-white">
-                                          {plan.price}
+                                          {plan.price === 0 ? "Free" : `€${plan.price / 100}`}
                                         </span>
-                                        {plan.price !== "Free" ? (
+                                        {plan.price > 0 ? (
                                           <span className="text-base font-medium text-gray-500">
                                             {" "}
                                             incl. VAT
@@ -231,37 +231,14 @@ export default function CollectionsModal({ button, styling, user, workspace }) {
                         </div>
                       </RadioGroup>
                       <div className="group relative my-4 rounded bg-indigo-600 text-white">
-                        {selected?.price === "Free" ? (
-                          <button
-                            className={`font-heading tracking-px w-full overflow-hidden rounded-md p-1 text-lg font-semibold uppercase`}
-                            onClick={() => {
-                              if (selected?.tag === "INDIVIDUAL") {
-                                toast.promise(createIndividualCollectionMutation({}), {
-                                  loading: "Creating collection...",
-                                  success: "Collection created!",
-                                  error: (err) => {
-                                    return err.toString()
-                                  },
-                                })
-                              }
-                            }}
-                          >
-                            <div className="border-gradient-to-r relative overflow-hidden rounded-md from-indigo-500 px-9 py-5">
-                              <p className="relative z-10">
-                                {selected?.price === "Free" ? "Create" : "Pay and create"}
-                              </p>
-                            </div>
-                          </button>
-                        ) : (
-                          <>
-                            <PayCreateCollectionModal
-                              user={user}
-                              type={selected?.tag}
-                              price={selected?.price}
-                              workspace={workspace}
-                            />
-                          </>
-                        )}
+                        <PayCreateCollectionModal
+                          user={user}
+                          type={selected?.tag}
+                          price={selected?.price}
+                          workspace={workspace}
+                        />
+                        {/* </>
+                        )} */}
                       </div>
                     </div>
                   </div>
