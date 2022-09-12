@@ -43,12 +43,11 @@ export default resolver.pipe(resolver.authorize(), async ({}, ctx) => {
     },
   })
 
-  // TODO: UNCOMMENT!
-  // workspace?.editorships.map((edits) => {
-  //   if (edits.collection.collectionTypeId === collection?.id) {
-  //     throw Error("Limited to 1 individual collection per workspace")
-  //   }
-  // })
+  workspace?.editorships.map((edits) => {
+    if (edits.collection.collectionTypeId === collection?.id) {
+      throw Error("Limited to 1 individual collection per workspace")
+    }
+  })
 
   let collectionName
   if (workspace?.firstName && workspace.lastName) {
