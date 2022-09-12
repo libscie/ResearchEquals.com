@@ -7,6 +7,7 @@ import { useMutation } from "blitz"
 import { collectionsModalAtom } from "../utils/Atoms"
 import createIndividualCollection from "../../collections/mutations/createIndividualCollection"
 import { toast } from "react-hot-toast"
+import PayCreateCollectionModal from "./PayCreateCollectionModal"
 
 const plans = [
   {
@@ -230,26 +231,37 @@ export default function CollectionsModal({ button, styling, user, workspace }) {
                         </div>
                       </RadioGroup>
                       <div className="group relative my-4 rounded bg-indigo-600 text-white">
-                        <button
-                          className={`font-heading tracking-px w-full overflow-hidden rounded-md p-1 text-lg font-semibold uppercase`}
-                          onClick={() => {
-                            if (selected?.tag === "INDIVIDUAL") {
-                              toast.promise(createIndividualCollectionMutation({}), {
-                                loading: "Creating collection...",
-                                success: "Collection created!",
-                                error: (err) => {
-                                  return err.toString()
-                                },
-                              })
-                            }
-                          }}
-                        >
-                          <div className="border-gradient-to-r relative overflow-hidden rounded-md from-indigo-500 px-9 py-5">
-                            <p className="relative z-10">
-                              {selected?.price === "Free" ? "Create" : "Pay and create"}
-                            </p>
-                          </div>
-                        </button>
+                        {selected?.price === "Free" ? (
+                          <button
+                            className={`font-heading tracking-px w-full overflow-hidden rounded-md p-1 text-lg font-semibold uppercase`}
+                            onClick={() => {
+                              if (selected?.tag === "INDIVIDUAL") {
+                                toast.promise(createIndividualCollectionMutation({}), {
+                                  loading: "Creating collection...",
+                                  success: "Collection created!",
+                                  error: (err) => {
+                                    return err.toString()
+                                  },
+                                })
+                              }
+                            }}
+                          >
+                            <div className="border-gradient-to-r relative overflow-hidden rounded-md from-indigo-500 px-9 py-5">
+                              <p className="relative z-10">
+                                {selected?.price === "Free" ? "Create" : "Pay and create"}
+                              </p>
+                            </div>
+                          </button>
+                        ) : (
+                          <>
+                            <PayCreateCollectionModal
+                              user={user}
+                              type={selected?.tag}
+                              price={selected?.price}
+                              workspace={workspace}
+                            />
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
