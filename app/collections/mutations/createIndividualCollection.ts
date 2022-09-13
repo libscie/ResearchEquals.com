@@ -56,10 +56,11 @@ export default resolver.pipe(resolver.authorize(), async ({}, ctx) => {
     collectionName = workspace?.name || workspace?.handle
   }
 
+  const generatedSuffix = await generateSuffix(6)
   await db.collection.create({
     data: {
       title: `${collectionName}'s collection`,
-      suffix: await generateSuffix(6),
+      suffix: generatedSuffix,
       collectionTypeId: collection!.id,
       editors: {
         create: {
@@ -72,5 +73,5 @@ export default resolver.pipe(resolver.authorize(), async ({}, ctx) => {
 
   // Add DOI minting
 
-  return true
+  return generatedSuffix
 })

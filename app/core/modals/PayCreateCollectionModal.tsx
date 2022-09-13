@@ -1,9 +1,10 @@
-import { Link, useMutation, useRouter } from "blitz"
-import { Fragment, useState } from "react"
+import { Link, useMutation, useQuery, useRouter } from "blitz"
+import { Fragment, useEffect, useState } from "react"
 import { Dialog, Switch, Transition } from "@headlessui/react"
 import { Close, Checkmark } from "@carbon/icons-react"
 import { toast } from "react-hot-toast"
 import createIndividualCollection from "../../collections/mutations/createIndividualCollection"
+import getCollectionSuffix from "../../collections/queries/getCollectionSuffix"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -13,6 +14,7 @@ export default function PayCreateCollectionModal({ user, price, type, workspace 
   let [isOpen, setIsOpen] = useState(false)
   const [waiver, setWaiver] = useState(false)
   const [createIndividualCollectionMutation] = useMutation(createIndividualCollection)
+  const [generatedSuffix] = useQuery(getCollectionSuffix, {})
 
   const router = useRouter()
   function closeModal() {
@@ -89,13 +91,16 @@ export default function PayCreateCollectionModal({ user, price, type, workspace 
                           onClick={() => {
                             toast.promise(createIndividualCollectionMutation({}), {
                               loading: "Creating collection...",
-                              success: "Collection created!",
+                              success: (data) => {
+                                router.push(`/collections/${data}/admin`)
+                                return "Created collection!"
+                              },
                               error: (err) => {
                                 return err.toString()
                               },
                             })
                             closeModal()
-                            router.push("/collections")
+                            // router.push("/collections")
                           }}
                         >
                           Create
@@ -113,7 +118,9 @@ export default function PayCreateCollectionModal({ user, price, type, workspace 
                     <form
                       action={`/api/checkout_sessions_collections?email=${encodeURIComponent(
                         user.email
-                      )}&workspaceId=${workspace.id}&collectionType=${type}`}
+                      )}&workspaceId=${
+                        workspace.id
+                      }&collectionType=${type}&suffix=${generatedSuffix}`}
                       method="POST"
                     >
                       <div className="mt-2">

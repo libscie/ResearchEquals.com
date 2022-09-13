@@ -9,7 +9,6 @@ import { Readable } from "stream"
 import moment from "moment"
 import algoliasearch from "algoliasearch"
 import generateCrossRefObject from "../core/crossref/generateCrossRefObject"
-import generateSuffix from "app/modules/mutations/generateSuffix"
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET
 const datetime = Date.now()
@@ -55,7 +54,7 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
           await db.collection.create({
             data: {
               title: "",
-              suffix: await generateSuffix(6),
+              suffix: event.data.object.metadata.suffix,
               collectionTypeId: parseInt(event.data.object.metadata.collectionId),
               editors: {
                 create: {

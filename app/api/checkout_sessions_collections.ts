@@ -4,7 +4,12 @@ import db from "db"
 import { CollectionTypes } from "db"
 
 const CreateSessionCollection = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
-  if (!req.query.workspaceId || !req.query.collectionType || !req.query.email) {
+  if (
+    !req.query.workspaceId ||
+    !req.query.collectionType ||
+    !req.query.email ||
+    !req.query.suffix
+  ) {
     res.status(500).end("Incomplete request")
   } else {
     if (req.method === "POST") {
@@ -28,7 +33,7 @@ const CreateSessionCollection = async (req: BlitzApiRequest, res: BlitzApiRespon
             },
           ],
           mode: "payment",
-          success_url: `${req.headers.origin}/collections/admin?success=true`,
+          success_url: `${req.headers.origin}/collections/${req.query.suffix}/admin?success=true`,
           cancel_url: `${req.headers.origin}`,
           automatic_tax: { enabled: true },
           payment_intent_data: {
@@ -38,6 +43,7 @@ const CreateSessionCollection = async (req: BlitzApiRequest, res: BlitzApiRespon
               id: req.query.collectionType,
               collectionId: collection?.id,
               workspaceId: req.query.workspaceId,
+              suffix: req.query.suffix,
             },
           },
           tax_id_collection: {
