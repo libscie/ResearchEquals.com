@@ -214,13 +214,13 @@ model Submission {
   collectionId Int
   module       Module     @relation(fields: [moduleId], references: [id])
   moduleId     Int
-  comment      String     @db.VarChar(280)
+  comment      String?    @db.VarChar(280)
 
   // The people involved
   editor       Editorship @relation(fields: [editorshipId], references: [id])
   editorshipId Int
   submittedBy  Workspace? @relation(fields: [workspaceId], references: [id])
-  workspaceId  Int
+  workspaceId  Int?
 
   // pinned information
   pinPosition Int?
@@ -273,6 +273,7 @@ model Editorship {
   createdAt DateTime       @default(now())
   updatedAt DateTime       @updatedAt
   role      MembershipRole @default(USER)
+  isActive  Boolean        @default(true)
 
   collection   Collection @relation(fields: [collectionId], references: [id])
   collectionId Int
