@@ -31,12 +31,13 @@ CREATE TABLE "Collection" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "public" BOOLEAN NOT NULL DEFAULT false,
     "finishedAt" TIMESTAMP(3),
     "collectionTypeId" INTEGER NOT NULL,
     "suffix" TEXT,
     "icon" JSONB,
     "header" JSONB,
-    "title" TEXT NOT NULL,
+    "title" TEXT,
     "subtitle" TEXT,
     "description" TEXT,
     "language" TEXT NOT NULL DEFAULT 'en',
@@ -82,6 +83,9 @@ CREATE UNIQUE INDEX "Collection_suffix_key" ON "Collection"("suffix");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "CollectionType_type_key" ON "CollectionType"("type");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Editorship_workspaceId_collectionId_key" ON "Editorship"("workspaceId", "collectionId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_WorkspaceToCollection_AB_unique" ON "_WorkspaceToCollection"("A", "B");

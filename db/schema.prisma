@@ -232,6 +232,7 @@ model Collection {
   id         Int       @id @default(autoincrement())
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
+  public     Boolean   @default(false)
   finishedAt DateTime?
 
   type             CollectionType @relation(fields: [collectionTypeId], references: [id])
@@ -240,7 +241,7 @@ model Collection {
   suffix      String? @unique
   icon        Json?
   header      Json?
-  title       String
+  title       String?
   subtitle    String?
   description String?
   language    String  @default("en")
@@ -279,4 +280,6 @@ model Editorship {
   workspace   Workspace    @relation(fields: [workspaceId], references: [id])
   workspaceId Int
   submissions Submission[]
+
+  @@unique([workspaceId, collectionId])
 }
