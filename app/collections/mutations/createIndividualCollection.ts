@@ -1,5 +1,5 @@
 import { resolver } from "blitz"
-import db from "db"
+import db, { Prisma } from "db"
 import generateSuffix from "../../modules/mutations/generateSuffix"
 
 export default resolver.pipe(resolver.authorize(), async ({}, ctx) => {
@@ -62,6 +62,11 @@ export default resolver.pipe(resolver.authorize(), async ({}, ctx) => {
       title: `${collectionName}'s collection`,
       suffix: generatedSuffix,
       collectionTypeId: collection!.id,
+      icon: {
+        cdnUrl: workspace?.avatar,
+        originalUrl: workspace?.avatar,
+        mimeType: "image",
+      } as Prisma.JsonObject,
       editors: {
         create: {
           role: "OWNER",
