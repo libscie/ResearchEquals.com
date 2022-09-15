@@ -137,3 +137,18 @@ button.react-flow__controls-button {
     background-color: #334155;
   }
 }
+
+.terms-diff strong {
+  color: green;
+}
+
+/* .terms-diff p,
+body {
+  font-family: sans-serif;
+} */
+.terms-diff u {
+  color: green;
+}
+.terms-diff del {
+  color: red;
+}
