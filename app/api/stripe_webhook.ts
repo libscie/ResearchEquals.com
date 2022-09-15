@@ -76,6 +76,17 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
           })
           break
 
+        case "collection-upgrade":
+          await db.collection.update({
+            where: {
+              id: parseInt(event.data.object.metadata.collectionId),
+            },
+            data: {
+              collectionTypeId: parseInt(event.data.object.metadata.id),
+            },
+          })
+          break
+
         case "module-license":
           const datetime = Date.now()
           // TODO: Can be simplified along with publishModule.ts

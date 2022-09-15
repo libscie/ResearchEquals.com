@@ -4,22 +4,28 @@ import db from "db"
 import { CollectionTypes } from "db"
 
 const CreateSessionCollection = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
-  if (
-    !req.query.workspaceId ||
-    !req.query.collectionType ||
-    !req.query.email ||
-    !req.query.suffix
-  ) {
+  if (!req.query.email || !req.query.collectionType || !req.query.collectionId) {
     res.status(500).end("Incomplete request")
   } else {
     if (req.method === "POST") {
-      console.log(JSON.stringify(req.query))
+      console.log(req.query)
       // find collection price id
       const collection = await db.collectionType.findFirst({
         where: {
           type: req.query.collectionType as CollectionTypes,
         },
       })
+      let price_id = collection!.price_id
+      if (req.query.oldCollectionType === "COLLABORATIVE") {
+        // TODO: Find a better way to manage these price_id's
+        if (process.env.ALGOLIA_PREFIX === "production") {
+          // This is the production price for COLLAB->COMMUNITY
+          price_id = "price_1LiN0mLmgtJbKHNG23YGZ0yA"
+        } else {
+          // This is the test price for COLLAB->COMMUNITY
+          price_id = "price_1LiKxHLmgtJbKHNGn7JHxCDk"
+        }
+      }
 
       try {
         // Create Checkout Sessions from body params.
@@ -29,7 +35,7 @@ const CreateSessionCollection = async (req: BlitzApiRequest, res: BlitzApiRespon
           billing_address_collection: "auto",
           line_items: [
             {
-              price: collection?.price_id,
+              price: price_id,
               quantity: 1,
             },
           ],
@@ -39,12 +45,10 @@ const CreateSessionCollection = async (req: BlitzApiRequest, res: BlitzApiRespon
           automatic_tax: { enabled: true },
           payment_intent_data: {
             metadata: {
-              description: `Charge for creating a ${req.query.collectionType} collection.`,
-              product: "collection-type",
-              id: req.query.collectionType,
-              collectionId: collection?.id,
-              workspaceId: req.query.workspaceId,
-              suffix: req.query.suffix,
+              description: `Charge for upgrading to a ${req.query.collectionType} collection.`,
+              product: "collection-upgrade",
+              id: collection?.id,
+              collectionId: req.query.collectionId,
             },
           },
           tax_id_collection: {
