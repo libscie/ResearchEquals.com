@@ -9,10 +9,19 @@ export default resolver.pipe(resolver.authorize(), async (suffix: string, ctx: C
     include: {
       submissions: {
         include: {
+          submittedBy: true,
           module: true,
+          editor: {
+            include: {
+              workspace: true,
+            },
+          },
         },
       },
       editors: {
+        orderBy: {
+          id: "asc",
+        },
         include: {
           workspace: {
             include: {
@@ -33,15 +42,17 @@ export default resolver.pipe(resolver.authorize(), async (suffix: string, ctx: C
     },
   })
 
-  const x = collection?.editors
-    .map((editor) => {
-      return editor.workspaceId
-    })
-    .filter((x) => x === ctx.session.$publicData.workspaceId)
+  const x = collection?.editors.filter((x) => {
+    return x.workspaceId === ctx.session.$publicData.workspaceId
+  })
 
   if (x!.length === 0) {
     throw new AuthorizationError()
   }
 
-  return collection
+  return {
+    collection,
+    editorIdSelf: x![0]!.id,
+    editorIsAdmin: x![0]!.role === "OWNER" || x![0]!.role === "ADMIN",
+  }
 })
