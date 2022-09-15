@@ -14,7 +14,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
 
-type ModuleEdit = Prisma.PromiseReturnType<typeof useCurrentModule>
+type ModuleEdit = NonNullable<Prisma.PromiseReturnType<typeof useCurrentModule>>
 
 export default function PublishModule({
   module,
@@ -101,7 +101,7 @@ export default function PublishModule({
                 <Dialog.Title as="h3" className="text-lg font-medium leading-6">
                   Confirm publication
                 </Dialog.Title>
-                {module?.license?.price === 0 ? (
+                {!module.license || module.license.price === 0 ? (
                   <>
                     <div className="mt-2">
                       <p className="text-base text-gray-500 dark:text-gray-300">
@@ -147,8 +147,8 @@ export default function PublishModule({
                       <div className="mt-2">
                         <p className="text-base text-gray-500 dark:text-gray-300">
                           Once you publish this module, you cannot delete it. Because you chose a{" "}
-                          {module?.license?.name} license, publishing costs{" "}
-                          {module?.license?.price / 100} euro (incl. VAT).
+                          {module.license.name} license, publishing costs{" "}
+                          {module.license.price / 100} euro (incl. VAT).
                         </p>
                       </div>
                       <div className="my-4 flex">

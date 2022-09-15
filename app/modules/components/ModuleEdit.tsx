@@ -127,7 +127,7 @@ const ModuleEdit = ({
       (moduleEdit!.authors.length === 1 &&
         moduleEdit!.main!["name"] &&
         (ownAuthorship?.workspace?.firstName || ownAuthorship?.workspace?.lastName)) ? (
-        <PublishModuleModal module={moduleEdit} user={user} workspace={workspace} />
+        <PublishModuleModal module={moduleEdit!} user={user} workspace={workspace} />
       ) : (
         <>
           <div className="my-4 flex w-full rounded-md bg-orange-50 p-2 dark:bg-orange-800">
