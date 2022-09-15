@@ -62,7 +62,13 @@ export default resolver.pipe(resolver.authorize(), async ({}, ctx) => {
       title: `${collectionName}'s collection`,
       suffix: generatedSuffix,
       collectionTypeId: collection!.id,
+      public: true,
       icon: {
+        cdnUrl: workspace?.avatar,
+        originalUrl: workspace?.avatar,
+        mimeType: "image",
+      } as Prisma.JsonObject,
+      header: {
         cdnUrl: workspace?.avatar,
         originalUrl: workspace?.avatar,
         mimeType: "image",

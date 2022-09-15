@@ -22,7 +22,6 @@ import { Field, Form, Formik } from "formik"
 import changeTitle from "app/collections/mutations/changeTitle"
 import changeSubtitle from "app/collections/mutations/changeSubtitle"
 import changeDescription from "app/collections/mutations/changeDescription"
-import UpgradeButton from "../../../collections/components/upgrade-button"
 import Autocomplete from "../../../core/components/Autocomplete"
 import algoliasearch from "algoliasearch"
 import { getAlgoliaResults } from "@algolia/autocomplete-js"
@@ -37,6 +36,8 @@ import SetEditorToInactiveModal from "app/core/modals/SetEditorToInactiveModal"
 import DeleteEditorModal from "../../../core/modals/DeleteEditorModal"
 import addComment from "app/collections/mutations/addComment"
 import DeleteSubmissionModal from "../../../core/modals/DeleteSubmissionModal"
+import MakeCollectionPublicModal from "../../../core/modals/MakeCollectionPublicModal"
+import UpgradeCollectionModal from "../../../core/modals/UpgradeCollectionModal"
 
 export async function getServerSideProps(context) {
   // Expires in 30 minutes
@@ -76,10 +77,15 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
         invitations={invitations}
         refetchFn={refetch}
       />
-      <main className="relative grid xl:grid-cols-8">
-        {/* TODO: Add a make public for collab and community */}
+      <main className="relative ">
+        {!collection?.public && (
+          <div className="w-full bg-red-400 text-center">
+            This collection is not yet public.
+            <MakeCollectionPublicModal collection={collection} refetchFn={refetch} />
+          </div>
+        )}
         {/* Metadata */}
-        <>
+        <div className="grid xl:grid-cols-8">
           <div className="col-span-2 p-4">
             <HeaderImage
               collection={collection}
@@ -97,7 +103,12 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
             <Subtitle collection={collection} refetchFn={refetch} />
             <Doi collection={collection} />
             <Description collection={collection} refetchFn={refetch} />
-            <Editors collection={collection} selfId={editorIdSelf} refetchFn={refetch} />
+            <Editors
+              collection={collection}
+              user={currentUser}
+              selfId={editorIdSelf}
+              refetchFn={refetch}
+            />
           </div>
           {/* Works */}
           <div className="col-span-4">
@@ -157,7 +168,7 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
                   },
                 ]}
               />
-              {collection?.submissions.map((submission) => {
+              {collection?.submissions.map((submission, index) => {
                 return (
                   <>
                     {submission.accepted && (
@@ -167,6 +178,7 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
                             href={`https://doi.org/${submission.module.prefix}/${submission.module.suffix}`}
                           >
                             {submission.module.title}
+                            {index}
                           </a>
                         </p>
                         <div className="grid grid-cols-2">
@@ -286,9 +298,10 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
           </div>
           <div className="col-span-2">
             <h2>Submissions</h2>
-            <UpgradeButton />
+            {/* TODO: Make conditional */}
+            <UpgradeCollectionModal collection={collection} email={currentUser!.email} />
           </div>
-        </>
+        </div>
       </main>
     </>
   )
@@ -352,15 +365,14 @@ const Description = ({ collection, refetchFn }) => {
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
-const Editors = ({ collection, selfId, refetchFn }) => {
+const Editors = ({ collection, selfId, refetchFn, user }) => {
   const [addEditorMutation] = useMutation(addEditor)
   return (
     <div>
       <h3 className="text-center text-sm">Editors</h3>
-      {/* Search box to add editors */}
-      {/* Add conditional upgrade button if collab and five editors present. */}
-      {collection.type.type === "INDIVIDUAL" ? (
-        <UpgradeButton />
+      {collection.type.type === "INDIVIDUAL" ||
+      (collection.type.type === "COLLABORATIVE" && collection.editors.length >= 5) ? (
+        <UpgradeCollectionModal collection={collection} email={user.email} />
       ) : (
         <>
           <Autocomplete
