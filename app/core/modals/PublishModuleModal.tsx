@@ -148,7 +148,7 @@ export default function PublishModule({
                         <p className="text-base text-gray-500 dark:text-gray-300">
                           Once you publish this module, you cannot delete it. Because you chose a{" "}
                           {module?.license?.name} license, publishing costs{" "}
-                          {(module?.license?.price ?? 14500) / 100} euro (incl. VAT).
+                          {module?.license?.price / 100} euro (incl. VAT).
                         </p>
                       </div>
                       <div className="my-4 flex">
