@@ -1,6 +1,6 @@
 import { BlitzApiRequest, BlitzApiResponse, Ctx } from "blitz"
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
-import db from "db"
+import db, { Prisma } from "db"
 import axios from "axios"
 import convert from "xml-js"
 import FormData from "form-data"
@@ -51,11 +51,21 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
     case "payment_intent.succeeded":
       switch (event.data.object.metadata.product) {
         case "collection-type":
+          // TODO: Split for type of collection
           await db.collection.create({
             data: {
-              title: "",
               suffix: event.data.object.metadata.suffix,
               collectionTypeId: parseInt(event.data.object.metadata.collectionId),
+              icon: {
+                cdnUrl: "https://ucarecdn.com/d531f64b-70a5-485e-8b6c-e0df28f0db21/",
+                originalUrl: "https://ucarecdn.com/d531f64b-70a5-485e-8b6c-e0df28f0db21/",
+                mimeType: "image/jpeg",
+              } as Prisma.JsonObject,
+              header: {
+                cdnUrl: "https://ucarecdn.com/d531f64b-70a5-485e-8b6c-e0df28f0db21/",
+                originalUrl: "https://ucarecdn.com/d531f64b-70a5-485e-8b6c-e0df28f0db21/",
+                mimeType: "image/jpeg",
+              } as Prisma.JsonObject,
               editors: {
                 create: {
                   role: "OWNER",
