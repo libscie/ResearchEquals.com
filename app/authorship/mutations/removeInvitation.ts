@@ -1,7 +1,17 @@
 import { resolver } from "blitz"
 import db from "db"
+import invitationMailer from "../../api/invitation-mailer"
 
 export default resolver.pipe(resolver.authorize(), async ({ workspaceId, moduleId }) => {
+  // Cancel email queue
+  const createdAuthor = await db.authorship.findFirst({
+    where: {
+      moduleId,
+      workspaceId,
+    },
+  })
+  await invitationMailer.delete(createdAuthor!.id.toString())
+
   await db.authorship.delete({
     where: {
       moduleId_workspaceId: { workspaceId, moduleId },
