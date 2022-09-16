@@ -4,7 +4,6 @@ import { CheckmarkFilled, Close, CloseFilled } from "@carbon/icons-react"
 import { useRecoilState } from "recoil"
 import { useMutation } from "blitz"
 
-import { collectionsModalAtom } from "../utils/Atoms"
 import createIndividualCollection from "../../collections/mutations/createIndividualCollection"
 import { toast } from "react-hot-toast"
 import PayCreateCollectionModal from "./PayCreateCollectionModal"
@@ -59,7 +58,7 @@ const plans = [
 
 export default function CollectionsModal({ button, styling, user, workspace }) {
   const [createIndividualCollectionMutation] = useMutation(createIndividualCollection)
-  let [isOpen, setIsOpen] = useRecoilState(collectionsModalAtom)
+  let [isOpen, setIsOpen] = useState(false)
   const [selected, setSelected] = useState(plans[0])
 
   return (
