@@ -217,9 +217,9 @@ model Submission {
   comment      String?    @db.VarChar(280)
 
   // The people involved
-  editor       Editorship @relation(fields: [editorshipId], references: [id])
-  editorshipId Int
-  submittedBy  Workspace? @relation(fields: [workspaceId], references: [id])
+  editor       Editorship? @relation(fields: [editorshipId], references: [id])
+  editorshipId Int?
+  submittedBy  Workspace?  @relation(fields: [workspaceId], references: [id])
   workspaceId  Int?
 
   // pinned information
