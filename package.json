@@ -86,7 +86,7 @@
     "typescript": "~4.5",
     "xast-util-to-xml": "3.0.0",
     "xml-js": "1.6.11",
-    "zod": "3.19.0"
+    "zod": "3.19.1"
   },
   "devDependencies": {
     "@types/node": "18.7.8",
