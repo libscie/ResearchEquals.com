@@ -16,7 +16,11 @@ function capitalizeFirstLetter(string) {
 export default function MakeCollectionPublicModal({ collection, email }) {
   let [isOpen, setIsOpen] = useState(false)
   const [waiver, setWaiver] = useState(false)
-  const [upgrade, setUpgrade] = useState(CollectionTypes.COLLABORATIVE as string)
+  const [upgrade, setUpgrade] = useState(
+    collection.type.type === "COLLABORATIVE"
+      ? (CollectionTypes.COMMUNITY as string)
+      : (CollectionTypes.COLLABORATIVE as string)
+  )
 
   function closeModal() {
     setIsOpen(false)
