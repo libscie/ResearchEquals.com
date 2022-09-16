@@ -57,7 +57,6 @@ const plans = [
 ]
 
 export default function CollectionsModal({ button, styling, user, workspace }) {
-  const [createIndividualCollectionMutation] = useMutation(createIndividualCollection)
   let [isOpen, setIsOpen] = useState(false)
   const [selected, setSelected] = useState(plans[0])
 

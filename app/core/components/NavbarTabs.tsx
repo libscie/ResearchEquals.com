@@ -42,6 +42,11 @@ const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invit
         href: Routes.HandlePage({ handle: currentWorkspace!.handle }),
         current: router.asPath === `/${currentWorkspace!.handle}`,
       },
+      {
+        name: "Collections",
+        href: Routes.CollectionsPage(),
+        current: router.asPath === `/collections`,
+      },
     ]
   }
 
@@ -87,25 +92,6 @@ const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invit
                   </a>
                 </Link>
               ))}
-              <CollectionsModal
-                styling=""
-                button={
-                  <a
-                    className={classNames(
-                      false
-                        ? "bg-gray-100 dark:bg-gray-800"
-                        : "hover:bg-gray-100 dark:hover:bg-gray-800",
-                      // tab.count === 0 ? "pointer-events-none text-gray-400 dark:text-gray-700" : "",
-                      "disabled group my-2 flex whitespace-nowrap rounded-md py-2 px-4 text-sm font-normal leading-5"
-                    )}
-                    aria-current={true ? "page" : undefined}
-                  >
-                    Collections
-                  </a>
-                }
-                user={currentUser}
-                workspace={currentWorkspace}
-              />
             </nav>
           </div>
         </div>
