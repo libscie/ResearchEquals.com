@@ -1,15 +1,27 @@
-const titles = (title) => {
-  const js = {
+import { Element, Text } from "xast"
+
+export interface Titles extends Element {
+  name: "titles"
+  children: [Title]
+}
+
+export interface Title extends Element {
+  name: "title"
+  children: [Text]
+}
+
+const titles = (title: string): Titles => {
+  const js: Titles = {
     type: "element",
     name: "titles",
-    elements: [
+    children: [
       {
         type: "element",
         name: "title",
-        elements: [
+        children: [
           {
             type: "text",
-            text: title,
+            value: title,
           },
         ],
       },
