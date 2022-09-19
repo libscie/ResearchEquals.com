@@ -8,7 +8,7 @@ const Subtitle = ({ collection, refetchFn }) => {
 
   return (
     <>
-      {collection.subtitle === null || !collection.public ? (
+      {collection.subtitle === null || !collection.public || collection.upgraded ? (
         <>
           <Formik
             initialValues={{
@@ -17,6 +17,7 @@ const Subtitle = ({ collection, refetchFn }) => {
             onSubmit={() => {}}
           >
             <Form
+              className="my-4"
               onBlur={(values) => {
                 if (collection.subtitle != values.target.defaultValue) {
                   toast.promise(
@@ -44,7 +45,7 @@ const Subtitle = ({ collection, refetchFn }) => {
                 name="subtitle"
                 placeholder={collection.subtitle || "Your subtitle here"}
                 type="text"
-                className="w-full select-none border-0 text-center text-2xl focus:ring-0 dark:bg-gray-900 "
+                className="w-full border-0 text-center text-base font-medium leading-5 focus:ring-0 dark:bg-gray-900 "
               />
             </Form>
           </Formik>

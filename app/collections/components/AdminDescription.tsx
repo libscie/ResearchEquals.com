@@ -37,7 +37,7 @@ const Description = ({ collection, refetchFn }) => {
 
   return (
     <div className="">
-      <h2 className="text-xl">A message from your editors</h2>
+      <h2 className="text-xl">A message from your editor{collection.editors.length > 1 && "s"}</h2>
       <form
         onSubmit={formik.handleSubmit}
         onBlur={() => {

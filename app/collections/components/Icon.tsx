@@ -3,6 +3,7 @@ import { useMutation } from "blitz"
 import { Ref, useRef } from "react"
 import toast from "react-hot-toast"
 import { JsonObject } from "prisma"
+
 import changeIcon from "../mutations/changeIcon"
 
 const Icon = ({ collection, refetchFn, signature, expire }) => {
@@ -11,11 +12,17 @@ const Icon = ({ collection, refetchFn, signature, expire }) => {
 
   return (
     <>
-      {collection.type.type != "INDVIDUAL" ? (
+      {collection.type.type === "INDIVIDUAL" ? (
+        <img
+          src={collection?.icon!["cdnUrl"]}
+          className="mx-auto mb-2 max-w-[33%] rounded-full xl:max-w-[75%]"
+          alt={`Icon of ${collection.title}`}
+        />
+      ) : (
         <>
           <img
-            src={collection?.icon!["originalUrl"]}
-            className="mx-auto my-2 max-w-[75%] hover:cursor-pointer hover:opacity-75 dark:invert"
+            src={collection?.icon!["cdnUrl"]}
+            className="mx-auto my-2 max-h-56 max-w-[33%] hover:cursor-pointer hover:opacity-75 dark:invert xl:max-w-[75%]"
             alt={`Icon of ${collection.title}`}
             onClick={() => {
               widgetApiIcon!["current"].openDialog()
@@ -51,12 +58,6 @@ const Icon = ({ collection, refetchFn, signature, expire }) => {
             }}
           />
         </>
-      ) : (
-        <img
-          src={collection?.icon!["originalUrl"]}
-          className="max-w-28 mx-auto h-28 max-h-28 w-28 rounded-full border border-2 border-gray-900 hover:cursor-pointer hover:border-4 hover:border-indigo-600 dark:border-white"
-          alt={`Icon of ${collection.title}`}
-        />
       )}
     </>
   )
