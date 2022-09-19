@@ -11,7 +11,41 @@ export default resolver.pipe(
       data: {
         isActive: active,
       },
+      select: {
+        collectionId: true,
+      },
     })
+    const editorshipActive = await db.editorship.findMany({
+      where: {
+        collectionId: editorship.collectionId,
+      },
+      select: {
+        isActive: true,
+      },
+    })
+
+    const x = editorshipActive.filter((x) => {
+      return x.isActive
+    })
+    if (x.length === 0) {
+      await db.collection.update({
+        where: {
+          id: editorship.collectionId,
+        },
+        data: {
+          active: false,
+        },
+      })
+    } else {
+      await db.collection.update({
+        where: {
+          id: editorship.collectionId,
+        },
+        data: {
+          active: true,
+        },
+      })
+    }
 
     return editorship
   }

@@ -45,6 +45,52 @@ export default resolver.pipe(resolver.authorize(), async (suffix: string, ctx: C
     },
   })
 
+  const pendingSubmissions = await db.collection.findFirst({
+    where: {
+      suffix,
+    },
+    include: {
+      submissions: {
+        where: {
+          accepted: null,
+        },
+        orderBy: {
+          updatedAt: "desc",
+        },
+        include: {
+          submittedBy: true,
+          module: true,
+          editor: {
+            include: {
+              workspace: true,
+            },
+          },
+        },
+      },
+      editors: {
+        orderBy: {
+          id: "asc",
+        },
+        include: {
+          workspace: {
+            include: {
+              members: {
+                include: {
+                  user: {
+                    select: {
+                      id: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      type: true,
+    },
+  })
+
   const x = collection?.editors.filter((x) => {
     return x.workspaceId === ctx.session.$publicData.workspaceId
   })
@@ -57,5 +103,6 @@ export default resolver.pipe(resolver.authorize(), async (suffix: string, ctx: C
     collection,
     editorIdSelf: x![0]!.id,
     editorIsAdmin: x![0]!.role === "OWNER" || x![0]!.role === "ADMIN",
+    pendingSubmissions,
   }
 })
