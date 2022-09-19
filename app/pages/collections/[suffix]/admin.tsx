@@ -1,6 +1,13 @@
-import { useSession, useQuery, useRouter, useMutation } from "blitz"
+import {
+  useSession,
+  useQuery,
+  useRouter,
+  useMutation,
+  Routes,
+  Link,
+  validateZodSchema,
+} from "blitz"
 import Layout from "app/core/layouts/Layout"
-import { JsonObject } from "prisma"
 import { MembershipRole } from "@prisma/client"
 import moment from "moment"
 import { LogoTwitter } from "@carbon/icons-react"
@@ -13,12 +20,12 @@ import generateSignature from "../../../signature"
 import LayoutLoader from "app/core/components/LayoutLoader"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 import getCollectionInfo from "app/collections/queries/getCollectionInfo"
-import { Ref, useRef, useState } from "react"
+import { Ref, useEffect, useRef, useState } from "react"
 import { Widget, WidgetAPI } from "@uploadcare/react-widget"
 import toast from "react-hot-toast"
 import changeIcon from "../../../collections/mutations/changeIcon"
 import changeHeader from "../../../collections/mutations/changeHeader"
-import { Field, Form, Formik } from "formik"
+import { Field, Form, Formik, useFormik } from "formik"
 import changeTitle from "app/collections/mutations/changeTitle"
 import changeSubtitle from "app/collections/mutations/changeSubtitle"
 import changeDescription from "app/collections/mutations/changeDescription"
@@ -28,8 +35,6 @@ import { getAlgoliaResults } from "@algolia/autocomplete-js"
 import SearchResultWorkspace from "../../../core/components/SearchResultWorkspace"
 import addEditor from "../../../collections/mutations/addEditor"
 import changeEditorRole from "app/collections/mutations/changeEditorRole"
-import changeEditorActive from "app/collections/mutations/changeEditorActive"
-import deleteEditor from "app/collections/mutations/deleteEditor"
 import SearchResultModule from "../../../core/components/SearchResultModule"
 import addWork from "app/collections/mutations/addWork"
 import SetEditorToInactiveModal from "app/core/modals/SetEditorToInactiveModal"
@@ -39,6 +44,19 @@ import DeleteSubmissionModal from "../../../core/modals/DeleteSubmissionModal"
 import MakeCollectionPublicModal from "../../../core/modals/MakeCollectionPublicModal"
 import UpgradeCollectionModal from "../../../core/modals/UpgradeCollectionModal"
 import HandleSubmissionToCollectionModal from "../../../core/modals/HandleSubmissionToCollectionModal"
+import HeaderImage from "../../../collections/components/HeaderImage"
+import Icon from "../../../collections/components/Icon"
+import AdminSubtitle from "../../../collections/components/AdminSubtitle"
+import { useQuill } from "react-quilljs"
+import { z } from "zod"
+import Doi from "../../../collections/components/DoiCollection"
+import AdminDescription from "../../../collections/components/AdminDescription"
+import createReferenceModule from "app/modules/mutations/createReferenceModule"
+import ActivityBadge from "../../../collections/components/ActivityBadge"
+import ContributorsBadge from "../../../collections/components/ContributorsBadge"
+import EditorsBadge from "../../../collections/components/EditorsBadge"
+import AdminWorkCard from "../../../collections/components/AdminWorkCard"
+import AdminSubmission from "app/collections/components/AdminSubmission"
 
 export async function getServerSideProps(context) {
   // Expires in 30 minutes
@@ -66,6 +84,7 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
   )
   const [addWorkMutation] = useMutation(addWork)
   const [addCommentMutation] = useMutation(addComment)
+  const [createReferenceMutation] = useMutation(createReferenceModule)
 
   return (
     <>
@@ -78,32 +97,25 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
         invitations={invitations}
         refetchFn={refetch}
       />
-      <main className="relative ">
+      <main className="relative">
+        {/* TODO: add conditions for when not ready to be made public */}
         {!collection?.public && (
-          <div className="w-full bg-red-400 text-center">
-            This collection is not yet public.
-            <MakeCollectionPublicModal collection={collection} refetchFn={refetch} />
-          </div>
+          <MakeCollectionPublicModal collection={collection} refetchFn={refetch} />
         )}
-        {/* Metadata */}
+        <HeaderImage
+          collection={collection}
+          refetchFn={refetch}
+          signature={signature}
+          expire={expire}
+        />
         <div className="grid xl:grid-cols-8">
-          <div className="col-span-2 p-4">
-            <HeaderImage
-              collection={collection}
-              refetchFn={refetch}
-              signature={signature}
-              expire={expire}
-            />
+          <div className="col-span-2 mx-4 p-4">
             <Icon
               collection={collection}
               refetchFn={refetch}
               signature={signature}
               expire={expire}
             />
-            <Title collection={collection} refetchFn={refetch} />
-            <Subtitle collection={collection} refetchFn={refetch} />
-            <Doi collection={collection} />
-            <Description collection={collection} refetchFn={refetch} />
             <Editors
               collection={collection}
               user={currentUser}
@@ -114,10 +126,19 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
           </div>
           {/* Works */}
           <div className="col-span-4">
-            <h2>Collected works</h2>
-            {/* Search bar */}
+            <Title collection={collection} refetchFn={refetch} />
+            {collection!.type.type !== "INDIVIDUAL" && (
+              <AdminSubtitle collection={collection} refetchFn={refetch} />
+            )}
+            <div className="w-full text-center align-middle">
+              <Doi collection={collection} />
+              <ActivityBadge collection={collection} />
+              <EditorsBadge collection={collection} />
+              <ContributorsBadge collection={collection} />
+            </div>
+            <AdminDescription collection={collection} refetchFn={refetch} />
+            <h2 className="text-xl">Collected works</h2>
             <div>
-              {/* TODO: Add DOI ingestion */}
               <Autocomplete
                 className=""
                 openOnFocus={false}
@@ -166,6 +187,63 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
                           </>
                         )
                       },
+                      noResults() {
+                        const matchedQuery = query.match(/10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
+
+                        return (
+                          <>
+                            {/* https://www.crossref.org/blog/dois-and-matching-regular-expressions/ */}
+                            {matchedQuery ? (
+                              <>
+                                <button
+                                  className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200"
+                                  onClick={async () => {
+                                    toast.promise(
+                                      createReferenceMutation({
+                                        doi: matchedQuery.slice(-1)[0].endsWith("/")
+                                          ? matchedQuery.slice(-1)[0].slice(0, -1)
+                                          : matchedQuery.slice(-1)[0],
+                                      }),
+                                      {
+                                        loading: "Searching...",
+                                        success: (data) => {
+                                          toast.promise(
+                                            addWorkMutation({
+                                              collectionId: collection!.id,
+                                              editorId: editorIdSelf,
+                                              moduleId: data.id,
+                                            }),
+                                            {
+                                              loading: "Adding work to collection...",
+                                              success: () => {
+                                                refetch()
+                                                return "Added work to collection!"
+                                              },
+                                              error: "Failed to add work to collection...",
+                                            }
+                                          )
+
+                                          refetch()
+
+                                          return "Record added to database"
+                                        },
+                                        error: "Could not add record.",
+                                      }
+                                    )
+                                  }}
+                                >
+                                  Click here to add {matchedQuery.slice(-1)} to ResearchEquals
+                                  database
+                                </button>
+                              </>
+                            ) : (
+                              <p className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200">
+                                Input a DOI to add
+                              </p>
+                            )}
+                          </>
+                        )
+                      },
                     },
                   },
                 ]}
@@ -174,172 +252,35 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
                 return (
                   <>
                     {submission.accepted && (
-                      <div className="bg-red-50">
-                        <p>
-                          <a
-                            href={`https://doi.org/${submission.module.prefix}/${submission.module.suffix}`}
-                          >
-                            {submission.module.title}
-                            {index}
-                          </a>
-                        </p>
-                        <div className="grid grid-cols-2">
-                          <div>
-                            <p>{`${submission.module.prefix}/${submission.module.suffix}`}</p>
-                            <p>Collected {moment(submission.updatedAt).fromNow()}</p>
-                            <p>
-                              Originally published{" "}
-                              {moment(submission.module.publishedAt!).fromNow()}
-                            </p>
-                            {submission.submittedBy && (
-                              <p className="text-xs">
-                                Submitted by {submission.editor!.workspace.firstName}{" "}
-                                {submission.editor!.workspace.lastName}
-                              </p>
-                            )}
-                          </div>
-                          <div>
-                            {submission.editor!.id === editorIdSelf && submission.comment === null && (
-                              <>
-                                <Formik
-                                  initialValues={{
-                                    comment: "",
-                                  }}
-                                  onSubmit={async (values) => {
-                                    try {
-                                      await addCommentMutation({
-                                        id: submission.id,
-                                        comment: values.comment,
-                                      })
-                                      refetch()
-                                    } catch (error) {
-                                      alert("Error saving product")
-                                    }
-                                  }}
-                                >
-                                  <Form>
-                                    <label htmlFor="comment" className="sr-only">
-                                      comment
-                                    </label>
-                                    <Field
-                                      id="comment"
-                                      name="comment"
-                                      placeholder="comment"
-                                      type="text"
-                                      component="textarea"
-                                      rows={3}
-                                    />
-                                    {false ? (
-                                      <button
-                                        className="whitespace-nowrap font-medium underline"
-                                        type="submit"
-                                      >
-                                        Thanks!
-                                      </button>
-                                    ) : (
-                                      <button
-                                        className="whitespace-nowrap font-medium underline"
-                                        type="submit"
-                                      >
-                                        Save comment <span aria-hidden="true">&rarr;</span>
-                                      </button>
-                                    )}
-                                  </Form>
-                                </Formik>
-                              </>
-                            )}
-                            {submission.comment && submission.comment != "" && (
-                              <>
-                                {/* for inspiration https://shuffle.dev/components/all/all/testimonials */}
-                                <blockquote className="bg-indigo-100">
-                                  {submission.comment}
-                                </blockquote>
-                              </>
-                            )}
-                            <div className="">
-                              <p className="flex">
-                                <img
-                                  src={submission.editor!.workspace!.avatar!}
-                                  alt={`Avatar of ${submission.editor!.workspace.firstName}
-                                ${submission.editor!.workspace.lastName}`}
-                                  className="h-6 w-6 rounded-full"
-                                />
-                                {submission.editor!.workspace.firstName}{" "}
-                                {submission.editor!.workspace.lastName}
-                              </p>
-
-                              {/* Tweet button */}
-                              {/* https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/guides/web-intent */}
-                            </div>
-                            {submission.comment && submission.comment != "" && (
-                              <a
-                                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                                  submission.comment
-                                )}&via=ResearchEquals`}
-                                target="_blank"
-                                rel="noreferrer"
-                              >
-                                <LogoTwitter size={32} className="fill-current text-indigo-400" />
-                              </a>
-                            )}
-                            {editorIsAdmin && (
-                              <DeleteSubmissionModal
-                                submissionId={submission.id}
-                                refetchFn={refetch}
-                              />
-                            )}
-                          </div>
-                        </div>
-                        {/* If no comment add option to add one */}
-                      </div>
+                      <AdminWorkCard
+                        submission={submission}
+                        index={index}
+                        editorIdSelf={editorIdSelf}
+                        editorIsAdmin={editorIsAdmin}
+                        refetchFn={refetch}
+                      />
                     )}
                   </>
                 )
               })}
             </div>
           </div>
-          <div className="col-span-2">
-            <h2>Submissions</h2>
+          <div className="col-span-2 p-4">
+            <h2 className="my-2 text-center text-lg font-bold">Pending Submissions</h2>
             {collection?.type.type != "COMMUNITY" ? (
-              <UpgradeCollectionModal collection={collection} email={currentUser!.email} />
+              <div className="mx-auto w-full align-middle">
+                <UpgradeCollectionModal collection={collection} email={currentUser!.email} />
+              </div>
             ) : (
               <>
-                {collection.submissions.map((submission) => {
+                {collection.submissions.map((submission, index) => {
                   return (
-                    <>
-                      {submission.accepted === null && (
-                        <>
-                          <h3>{submission.module.title}</h3>
-                          {/* doi */}
-                          <p>
-                            {submission.module.prefix}/{submission.module.suffix}
-                          </p>
-                          <p>Submitted {moment(submission.createdAt).fromNow()}</p>
-                          <p className="text-xs">
-                            {/* TODO: Need to manage this for just name */}
-                            Submitted by {submission.submittedBy!.firstName}{" "}
-                            {submission.submittedBy!.lastName}
-                          </p>
-                          <p>
-                            Originally published {moment(submission.module.publishedAt).fromNow()}
-                          </p>
-                          {/* accept submission */}
-                          <HandleSubmissionToCollectionModal
-                            submission={submission}
-                            editorId={editorIdSelf}
-                            accept={true}
-                            refetchFn={refetch}
-                          />
-                          {/* decline submission */}
-                          <HandleSubmissionToCollectionModal
-                            submission={submission}
-                            editorId={editorIdSelf}
-                            accept={false}
-                            refetchFn={refetch}
-                          />
-                        </>
-                      )}
-                    </>
+                    <AdminSubmission
+                      submission={submission}
+                      editorIdSelf={editorIdSelf}
+                      refetchFn={refetch}
+                      key={`submission-${index}`}
+                    />
                   )
                 })}
               </>
@@ -360,60 +301,13 @@ CollectionsAdmin.getLayout = (page) => (
 
 export default CollectionsAdmin
 
-const Description = ({ collection, refetchFn }) => {
-  const [changeDescriptionMutation, { isSuccess: isDescriptionSuccess }] =
-    useMutation(changeDescription)
-
-  return (
-    <Formik
-      initialValues={{
-        description: "",
-      }}
-      onSubmit={async (values) => {
-        try {
-          await changeDescriptionMutation({
-            id: collection.id,
-            description: values.description,
-          })
-          refetchFn()
-        } catch (error) {
-          alert("Error saving product")
-        }
-      }}
-    >
-      <Form>
-        <label htmlFor="description" className="sr-only">
-          description
-        </label>
-        <Field
-          id="description"
-          name="description"
-          placeholder="description"
-          type="text"
-          component="textarea"
-          rows={8}
-        />
-        {isDescriptionSuccess ? (
-          <button className="whitespace-nowrap font-medium underline" type="submit">
-            Thanks!
-          </button>
-        ) : (
-          <button className="whitespace-nowrap font-medium underline" type="submit">
-            Save description <span aria-hidden="true">&rarr;</span>
-          </button>
-        )}
-      </Form>
-    </Formik>
-  )
-}
-
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
 const Editors = ({ collection, isAdmin, selfId, refetchFn, user }) => {
   const [addEditorMutation] = useMutation(addEditor)
   return (
     <div>
-      <h3 className="text-center text-sm">Editors</h3>
+      <h3 className="text-center text-lg font-bold">Editors</h3>
       {(isAdmin && collection.type.type === "INDIVIDUAL") ||
       (collection.type.type === "COLLABORATIVE" && collection.editors.length >= 5) ? (
         <UpgradeCollectionModal collection={collection} email={user.email} />
@@ -492,8 +386,6 @@ const Editors = ({ collection, isAdmin, selfId, refetchFn, user }) => {
 
 const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
   const [changeEditorRoleMutation] = useMutation(changeEditorRole)
-  const [changeEditorActiveMutation] = useMutation(changeEditorActive)
-  const [deleteEditorMutation] = useMutation(deleteEditor)
 
   return (
     <>
@@ -501,16 +393,18 @@ const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
       {/* 1 - Change role */}
       {/* 2 - Delete editor - with confirmation */}
       {/* 3 - Make editor inactive */}
-      <div className={`flex ${editor.isActive ? "" : "opacity-50"}`}>
-        <img src={editor.workspace.avatar} />
-        {/* {editor.role} */}
-        <div className="inline-block">
-          <p>{editor.workspace.firstName}</p>
-          {JSON.stringify(isAdmin)}
-
-          {JSON.stringify(isSelf)}
+      <div className={`flex ${editor.isActive ? "" : "opacity-50"} my-2`}>
+        <img src={editor.workspace.avatar} className="mx-2 h-12 w-12 rounded-full" />
+        <div className="inline-block flex-grow">
+          <Link href={Routes.HandlePage({ handle: editor.workspace.handle })}>
+            <a target="_blank">
+              <p className="line-clamp-1">
+                {editor.workspace.firstName} {editor.workspace.lastName}
+              </p>
+              <p className="text-sm">@{editor.workspace.handle}</p>
+            </a>
+          </Link>
         </div>
-        <p>@{editor.workspace.handle}</p>
         {isAdmin && (
           <>
             <select
@@ -523,11 +417,14 @@ const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
                       refetchFn()
                       return `Changed role to ${info.target.value.toLowerCase()}!`
                     },
-                    error: "Failed to change role...",
+                    error: (err) => {
+                      return `${err}`
+                    },
                   }
                 )
               }}
               defaultValue={editor.role}
+              className="placeholder-font-normal block appearance-none rounded-md border border-gray-400 bg-white px-4 py-2 pr-6 text-sm font-normal placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border-gray-600 dark:bg-transparent dark:text-gray-200 "
             >
               {Object.values(MembershipRole).map((role) => {
                 return <option key={role}>{role}</option>
@@ -543,7 +440,7 @@ const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
 }
 
 const Title = ({ collection, refetchFn }) => {
-  const [changeTitleMutation, { isSuccess: isTitleSuccess }] = useMutation(changeTitle)
+  const [changeTitleMutation] = useMutation(changeTitle)
 
   return (
     <>
@@ -553,196 +450,47 @@ const Title = ({ collection, refetchFn }) => {
             initialValues={{
               title: "",
             }}
-            onSubmit={async (values) => {
-              try {
-                await changeTitleMutation({ id: collection.id, title: values.title })
-                refetchFn()
-              } catch (error) {
-                alert("Error saving product")
-              }
-            }}
+            onSubmit={() => {}}
           >
-            <Form>
+            <Form
+              className="w-full "
+              onBlur={(values) => {
+                if (collection.title != values.target.defaultValue) {
+                  toast.promise(
+                    changeTitleMutation({
+                      id: collection.id,
+                      title: values.target.defaultValue,
+                    }),
+                    {
+                      loading: "Updating title...",
+                      success: () => {
+                        refetchFn()
+                        return "Updated title"
+                      },
+                      error: "Failed to update title",
+                    }
+                  )
+                }
+              }}
+            >
               <label htmlFor="title" className="sr-only">
                 title
               </label>
-              <Field id="title" name="title" placeholder="jane@acme.com" type="text" />
-              {isTitleSuccess ? (
-                <button className="whitespace-nowrap font-medium underline" type="submit">
-                  Thanks!
-                </button>
-              ) : (
-                <button className="whitespace-nowrap font-medium underline" type="submit">
-                  Send again <span aria-hidden="true">&rarr;</span>
-                </button>
-              )}
+              <Field
+                id="title"
+                name="title"
+                placeholder={collection.title || "Your title here"}
+                type="text"
+                className="w-full select-none overflow-auto border-0 bg-white text-center text-6xl focus:ring-0 dark:bg-gray-900 "
+              />
             </Form>
           </Formik>
         </>
       ) : (
-        <h2 className="mx-auto text-center text-xl font-bold">{collection.title}</h2>
-      )}
-    </>
-  )
-}
-const Subtitle = ({ collection, refetchFn }) => {
-  const [changeSubtitleMutation, { isSuccess: isSubtitleSuccess }] = useMutation(changeSubtitle)
-
-  return (
-    <>
-      {collection.subtitle === null || !collection.public ? (
-        <>
-          <Formik
-            initialValues={{
-              subtitle: "",
-            }}
-            onSubmit={async (values) => {
-              try {
-                await changeSubtitleMutation({
-                  id: collection.id,
-                  subtitle: values.subtitle,
-                })
-                refetchFn()
-              } catch (error) {
-                alert("Error saving product")
-              }
-            }}
-          >
-            <Form>
-              <label htmlFor="subtitle" className="sr-only">
-                subtitle
-              </label>
-              <Field id="subtitle" name="subtitle" placeholder="Subtitle" type="text" />
-              {isSubtitleSuccess ? (
-                <button className="whitespace-nowrap font-medium underline" type="submit">
-                  Thanks!
-                </button>
-              ) : (
-                <button className="whitespace-nowrap font-medium underline" type="submit">
-                  Save subtitle <span aria-hidden="true">&rarr;</span>
-                </button>
-              )}
-            </Form>
-          </Formik>
-        </>
-      ) : (
-        <h2 className="mx-auto text-center text-base font-medium leading-5">
-          {collection.subtitle}
+        <h2 className="my-2 w-full border-0 bg-white text-center text-6xl focus:ring-0 dark:bg-gray-900">
+          {collection.title}
         </h2>
       )}
     </>
   )
-}
-
-const Icon = ({ collection, refetchFn, signature, expire }) => {
-  const widgetApiIcon = useRef() as Ref<WidgetAPI>
-  const [changeIconMutation] = useMutation(changeIcon)
-
-  return (
-    <>
-      {collection.type.type != "INDVIDUAL" ? (
-        <>
-          <img
-            src={collection?.icon!["originalUrl"]}
-            className="max-w-28 mx-auto h-28 max-h-28 w-28 rounded-full border border-2 border-gray-900 hover:cursor-pointer hover:border-4 hover:border-indigo-600 dark:border-white"
-            alt={`Icon of ${collection.title}`}
-            onClick={() => {
-              widgetApiIcon!["current"].openDialog()
-            }}
-          />
-          <Widget
-            publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
-            secureSignature={signature}
-            secureExpire={expire}
-            ref={widgetApiIcon}
-            imagesOnly
-            previewStep
-            clearable
-            onChange={async (info) => {
-              try {
-                toast.promise(
-                  changeIconMutation({
-                    id: collection.id,
-                    iconInfo: info as JsonObject,
-                  }),
-                  {
-                    loading: "Updating icon...",
-                    success: () => {
-                      refetchFn()
-                      return "Success!"
-                    },
-                    error: "That did not work",
-                  }
-                )
-              } catch (err) {
-                alert(err)
-              }
-            }}
-          />
-        </>
-      ) : (
-        <img
-          src={collection?.icon!["originalUrl"]}
-          className="max-w-28 mx-auto h-28 max-h-28 w-28 rounded-full border border-2 border-gray-900 hover:cursor-pointer hover:border-4 hover:border-indigo-600 dark:border-white"
-          alt={`Icon of ${collection.title}`}
-        />
-      )}
-    </>
-  )
-}
-
-const HeaderImage = ({ collection, refetchFn, signature, expire }) => {
-  const widgetApiHeader = useRef() as Ref<WidgetAPI>
-  const [changeHeaderMutation] = useMutation(changeHeader)
-
-  return (
-    <>
-      {collection.type.type === "COMMUNITY" && (
-        <>
-          <img
-            src={collection?.header!["originalUrl"]}
-            className="h-28 max-h-28 w-full rounded-full border border-2 border-gray-900 hover:cursor-pointer hover:border-4 hover:border-indigo-600 dark:border-white"
-            alt={`Header image of ${collection.title}`}
-            onClick={() => {
-              widgetApiHeader!["current"].openDialog()
-            }}
-          />
-          <Widget
-            publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
-            secureSignature={signature}
-            secureExpire={expire}
-            ref={widgetApiHeader}
-            imagesOnly
-            previewStep
-            clearable
-            onChange={async (info) => {
-              console.log(JSON.stringify(info))
-              try {
-                toast.promise(
-                  changeHeaderMutation({
-                    id: collection.id,
-                    headerInfo: info as JsonObject,
-                  }),
-                  {
-                    loading: "Updating header...",
-                    success: () => {
-                      refetchFn()
-                      return "Success!"
-                    },
-                    error: "That did not work",
-                  }
-                )
-              } catch (err) {
-                alert(err)
-              }
-            }}
-          />
-        </>
-      )}
-    </>
-  )
-}
-
-const Doi = ({ collection }) => {
-  return <div>{`${process.env.DOI_PREFIX}/${collection!.suffix}`}</div>
 }
