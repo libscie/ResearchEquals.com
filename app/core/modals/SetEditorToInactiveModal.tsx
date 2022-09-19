@@ -28,7 +28,14 @@ export default function SetEditorToInactiveModal({ editor, refetchFn }) {
         <label htmlFor="search" className="sr-only">
           Set editor to {`${editor.isActive ? "inactive" : "active"}`}
         </label>
-        <Logout size={32} id="search" className={`${editor.isActive ? "" : "rotate-180"}`} />
+        <Logout
+          size={32}
+          id="search"
+          className={`${
+            editor.isActive ? "" : "rotate-180"
+          } " ml-1 shrink-0 p-1 text-gray-900 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-200 dark:hover:text-gray-300
+`}
+        />
       </button>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" onClose={closeModal}>

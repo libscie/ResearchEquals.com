@@ -31,7 +31,9 @@ export default function SetEditorToInactiveModal({ editor, refetchFn }) {
         <TrashCan
           size={32}
           id="delete-editor"
-          className={`${editor.isActive ? "" : "rotate-180"}`}
+          className={`${
+            editor.isActive ? "" : "rotate-180"
+          } ml-1 shrink-0 p-1 text-gray-900 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-200 dark:hover:text-gray-300`}
         />
       </button>
       <Transition appear show={isOpen} as={Fragment}>

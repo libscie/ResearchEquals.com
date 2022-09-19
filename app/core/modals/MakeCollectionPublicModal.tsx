@@ -2,6 +2,8 @@ import { useMutation, useRouter } from "blitz"
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import toast from "react-hot-toast"
+import { CheckmarkOutline } from "@carbon/icons-react"
+
 import makePublic from "../../collections/mutations/makePublic"
 
 export default function MakeCollectionPublicModal({ collection, refetchFn }) {
@@ -18,12 +20,32 @@ export default function MakeCollectionPublicModal({ collection, refetchFn }) {
 
   return (
     <>
-      <button
-        className="mx-4 rounded-md bg-red-100 py-2 px-4 text-sm font-medium leading-4 text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
-        onClick={openModal}
-      >
-        Make public
-      </button>
+      <div className="sticky top-0 z-50 flex  w-full bg-amber-50 py-4 px-2 text-center dark:bg-amber-800">
+        <div className="mx-auto flex">
+          <div className="inline-block align-middle">
+            <CheckmarkOutline
+              size={32}
+              className="inline-block h-5 w-5 stroke-current align-middle text-amber-500 dark:text-amber-200"
+              aria-hidden="true"
+            />
+          </div>
+          <div className="mx-3 text-amber-800 dark:text-amber-100">
+            <h3 className="inline-block align-middle text-sm font-normal leading-4 text-amber-800 dark:text-amber-100">
+              This collection is not yet public.
+            </h3>
+          </div>
+          <div className="">
+            <button
+              type="button"
+              className="rounded border border-amber-500 px-2 py-1.5 text-sm font-medium leading-4 text-amber-500 hover:bg-amber-100 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:ring-offset-2 focus:ring-offset-amber-50 dark:border-amber-200 dark:text-amber-200 dark:hover:bg-amber-900"
+              onClick={openModal}
+            >
+              Make public
+            </button>
+          </div>
+        </div>
+      </div>
+
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" onClose={closeModal}>
           <div className="min-h-screen px-4 text-center">
@@ -56,16 +78,27 @@ export default function MakeCollectionPublicModal({ collection, refetchFn }) {
                 <Dialog.Title as="h3" className="text-lg font-medium leading-6">
                   Confirm
                 </Dialog.Title>
+
                 <div className="mt-2">
                   <p className="text-sm">
-                    Once you make the collection public you can no longer change the title and
-                    subtitle. Please confirm you want to make the collection public.
+                    Once you make the collection public you cannot change the title and subtitle
+                    (except after upgrading).
                   </p>
+                  {!collection.title ? (
+                    <p className="text-sm">
+                      You cannot make this collection public yet. Please add a title first.
+                    </p>
+                  ) : (
+                    <p className="text-sm">
+                      Please confirm you want to make the collection public.
+                    </p>
+                  )}
                 </div>
                 <div className="mt-4">
                   <button
                     type="button"
-                    className="mr-2 inline-flex rounded-md bg-green-50 py-2 px-4 text-sm font-medium text-green-700 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-green-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+                    className="mr-2 inline-flex rounded-md bg-amber-50 py-2 px-4 text-sm font-medium text-amber-700 hover:bg-amber-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-amber-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+                    disabled={!collection.title && true}
                     onClick={async () => {
                       toast.promise(makePublicMutation({ collectionId: collection.id }), {
                         loading: "Making public...",
