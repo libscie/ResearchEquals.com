@@ -1,11 +1,6 @@
 import { Dialog, Transition, Tab, RadioGroup } from "@headlessui/react"
 import { Fragment, useState } from "react"
 import { CheckmarkFilled, Close, CloseFilled } from "@carbon/icons-react"
-import { useRecoilState } from "recoil"
-import { useMutation } from "blitz"
-
-import createIndividualCollection from "../../collections/mutations/createIndividualCollection"
-import { toast } from "react-hot-toast"
 import PayCreateCollectionModal from "./PayCreateCollectionModal"
 
 const plans = [
