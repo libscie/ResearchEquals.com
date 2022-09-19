@@ -34,15 +34,17 @@ export default function MakeCollectionPublicModal({ collection, email }) {
     <>
       <button
         type="button"
-        className="mx-auto flex rounded-md bg-indigo-50 py-2 px-4 text-sm font-medium text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-indigo-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+        className="flex w-full rounded-md bg-indigo-50 py-2 px-4 align-middle text-sm font-medium text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-indigo-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
         onClick={openModal}
       >
-        <Upgrade
-          size={32}
-          className="h-4 w-4 fill-current pt-1 text-indigo-500"
-          aria-hidden="true"
-        />
-        Upgrade
+        <span className="mx-auto flex">
+          <Upgrade
+            size={32}
+            className="h-4 w-4 fill-current pt-1 text-indigo-500"
+            aria-hidden="true"
+          />
+          Upgrade
+        </span>
       </button>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" onClose={closeModal}>
@@ -96,7 +98,7 @@ export default function MakeCollectionPublicModal({ collection, email }) {
                           onChange={(data) => {
                             setUpgrade(data.target.value)
                           }}
-                          className="text-sm"
+                          className="mt-2 rounded-md text-sm dark:bg-gray-900"
                         >
                           <option className="text-sm" value={CollectionTypes.COLLABORATIVE}>
                             {capitalizeFirstLetter(CollectionTypes.COLLABORATIVE)} - Five editors,

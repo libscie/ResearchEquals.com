@@ -19,12 +19,7 @@ export default function SetEditorToInactiveModal({ editor, refetchFn }) {
 
   return (
     <>
-      <button
-        // className="mx-4 rounded-md bg-red-100 py-2 px-4 text-sm font-medium leading-4 text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
-        onClick={openModal}
-      >
-        {/* Add label */}
-        {/* Add classname */}
+      <button onClick={openModal}>
         <label htmlFor="search" className="sr-only">
           Set editor to {`${editor.isActive ? "inactive" : "active"}`}
         </label>
@@ -33,7 +28,7 @@ export default function SetEditorToInactiveModal({ editor, refetchFn }) {
           id="search"
           className={`${
             editor.isActive ? "" : "rotate-180"
-          } " ml-1 shrink-0 p-1 text-gray-900 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-200 dark:hover:text-gray-300
+          } "ml-2 shrink-0 p-1 text-gray-900 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-200 dark:hover:text-gray-300
 `}
         />
       </button>

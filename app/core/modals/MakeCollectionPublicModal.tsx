@@ -1,4 +1,4 @@
-import { useMutation, useRouter } from "blitz"
+import { useMutation } from "blitz"
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import toast from "react-hot-toast"
@@ -20,7 +20,7 @@ export default function MakeCollectionPublicModal({ collection, refetchFn }) {
 
   return (
     <>
-      <div className="sticky top-0 z-50 flex  w-full bg-amber-50 py-4 px-2 text-center dark:bg-amber-800">
+      <div className="z-5 sticky top-0 flex  w-full bg-amber-50 py-4 px-2 text-center dark:bg-amber-800">
         <div className="mx-auto flex">
           <div className="inline-block align-middle">
             <CheckmarkOutline

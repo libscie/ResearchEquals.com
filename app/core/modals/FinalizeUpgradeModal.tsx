@@ -2,12 +2,14 @@ import { useMutation } from "blitz"
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import toast from "react-hot-toast"
-import { TrashCan } from "@carbon/icons-react"
-import deleteEditor from "../../collections/mutations/deleteEditor"
+import { CheckmarkOutline } from "@carbon/icons-react"
 
-export default function SetEditorToInactiveModal({ editor, refetchFn }) {
+import makePublic from "../../collections/mutations/makePublic"
+import upgradeCollection from "../../collections/mutations/upgradeCollection"
+
+export default function FinalizeUpgradeModal({ collection, refetchFn }) {
   let [isOpen, setIsOpen] = useState(false)
-  const [deleteEditorMutation] = useMutation(deleteEditor)
+  const [upgradeCollectionMutation] = useMutation(upgradeCollection)
 
   function closeModal() {
     setIsOpen(false)
@@ -19,18 +21,32 @@ export default function SetEditorToInactiveModal({ editor, refetchFn }) {
 
   return (
     <>
-      <button onClick={openModal}>
-        <label htmlFor="delete-editor" className="sr-only">
-          Delete editor
-        </label>
-        <TrashCan
-          size={32}
-          id="delete-editor"
-          className={`${
-            editor.isActive ? "" : "rotate-180"
-          } shrink-0 p-1 text-gray-900 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-200 dark:hover:text-gray-300`}
-        />
-      </button>
+      <div className="z-5 sticky top-0 flex  w-full bg-pink-50 py-4 px-2 text-center dark:bg-pink-800">
+        <div className="mx-auto flex">
+          <div className="inline-block align-middle">
+            <CheckmarkOutline
+              size={32}
+              className="inline-block h-5 w-5 stroke-current align-middle text-pink-500 dark:text-pink-200"
+              aria-hidden="true"
+            />
+          </div>
+          <div className="mx-3 text-pink-800 dark:text-pink-100">
+            <h3 className="inline-block align-middle text-sm font-normal leading-4 text-pink-800 dark:text-pink-100">
+              Finish upgrading your collection. Update your title and subtitle.
+            </h3>
+          </div>
+          <div className="">
+            <button
+              type="button"
+              className="rounded border border-pink-500 px-2 py-1.5 text-sm font-medium leading-4 text-pink-500 hover:bg-pink-100 focus:outline-none focus:ring-2 focus:ring-pink-600 focus:ring-offset-2 focus:ring-offset-pink-50 dark:border-pink-200 dark:text-pink-200 dark:hover:bg-pink-900"
+              onClick={openModal}
+            >
+              Upgrade Title
+            </button>
+          </div>
+        </div>
+      </div>
+
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" onClose={closeModal}>
           <div className="min-h-screen px-4 text-center">
@@ -61,31 +77,36 @@ export default function SetEditorToInactiveModal({ editor, refetchFn }) {
             >
               <div className="my-8 inline-block w-full max-w-md transform overflow-hidden rounded border-gray-300 bg-white p-6 text-left align-middle text-gray-900 shadow-xl transition-all dark:border dark:border-gray-600 dark:bg-gray-900 dark:text-gray-200">
                 <Dialog.Title as="h3" className="text-lg font-medium leading-6">
-                  Confirm deletion
+                  Confirm
                 </Dialog.Title>
+
                 <div className="mt-2">
                   <p className="text-sm">
-                    This editor will be permanently removed from the collection. Their comments on
-                    collected works will remain. You cannot remove the owner of the collection.
+                    Once you upgrade the collection you cannot change the title and subtitle.
+                  </p>
+                  <p className="text-sm">
+                    Please confirm you want to upgrade the collection to the current title and
+                    subtitle.
                   </p>
                 </div>
                 <div className="mt-4">
                   <button
                     type="button"
-                    className="mr-2 inline-flex rounded-md bg-red-50 py-2 px-4 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+                    className="mr-2 inline-flex rounded-md bg-pink-50 py-2 px-4 text-sm font-medium text-pink-700 hover:bg-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-pink-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+                    disabled={!collection.title && true}
                     onClick={async () => {
-                      toast.promise(deleteEditorMutation({ editorId: editor.id }), {
-                        loading: "Deleting editor...",
+                      toast.promise(upgradeCollectionMutation({ collectionId: collection.id }), {
+                        loading: "Updating collection...",
                         success: () => {
                           refetchFn()
                           closeModal()
-                          return `Deleted editor!`
+                          return "Collection is now upgraded!"
                         },
-                        error: "Failed to delete editor...",
+                        error: "Something went wrong...",
                       })
                     }}
                   >
-                    Delete editor
+                    Upgrade Collection
                   </button>
                   <button
                     type="button"
