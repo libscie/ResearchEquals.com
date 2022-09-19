@@ -234,6 +234,7 @@ model Collection {
   updatedAt  DateTime  @updatedAt
   public     Boolean   @default(false)
   active     Boolean   @default(true)
+  upgraded   Boolean   @default(false)
   finishedAt DateTime?
 
   type             CollectionType @relation(fields: [collectionTypeId], references: [id])
