@@ -3,7 +3,7 @@ import Layout from "app/core/layouts/Layout"
 import { JsonObject } from "prisma"
 import { MembershipRole } from "@prisma/client"
 import moment from "moment"
-import { TrashCan, LogoTwitter } from "@carbon/icons-react"
+import { LogoTwitter } from "@carbon/icons-react"
 
 import Navbar from "../../../core/components/Navbar"
 import getDrafts from "../../../core/queries/getDrafts"
@@ -38,6 +38,7 @@ import addComment from "app/collections/mutations/addComment"
 import DeleteSubmissionModal from "../../../core/modals/DeleteSubmissionModal"
 import MakeCollectionPublicModal from "../../../core/modals/MakeCollectionPublicModal"
 import UpgradeCollectionModal from "../../../core/modals/UpgradeCollectionModal"
+import HandleSubmissionToCollectionModal from "../../../core/modals/HandleSubmissionToCollectionModal"
 
 export async function getServerSideProps(context) {
   // Expires in 30 minutes
@@ -107,6 +108,7 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
               collection={collection}
               user={currentUser}
               selfId={editorIdSelf}
+              isAdmin={editorIsAdmin}
               refetchFn={refetch}
             />
           </div>
@@ -189,9 +191,15 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
                               Originally published{" "}
                               {moment(submission.module.publishedAt!).fromNow()}
                             </p>
+                            {submission.submittedBy && (
+                              <p className="text-xs">
+                                Submitted by {submission.editor!.workspace.firstName}{" "}
+                                {submission.editor!.workspace.lastName}
+                              </p>
+                            )}
                           </div>
                           <div>
-                            {submission.editor.id === editorIdSelf && submission.comment === null && (
+                            {submission.editor!.id === editorIdSelf && submission.comment === null && (
                               <>
                                 <Formik
                                   initialValues={{
@@ -252,19 +260,14 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
                               <p className="flex">
                                 <img
                                   src={submission.editor!.workspace!.avatar!}
-                                  alt={`Avatar of ${submission.editor.workspace.firstName}
-                                ${submission.editor.workspace.lastName}`}
+                                  alt={`Avatar of ${submission.editor!.workspace.firstName}
+                                ${submission.editor!.workspace.lastName}`}
                                   className="h-6 w-6 rounded-full"
                                 />
-                                {submission.editor.workspace.firstName}{" "}
-                                {submission.editor.workspace.lastName}
+                                {submission.editor!.workspace.firstName}{" "}
+                                {submission.editor!.workspace.lastName}
                               </p>
-                              {submission.submittedBy && (
-                                <p className="text-xs">
-                                  Submitted by {submission.editor.workspace.firstName}{" "}
-                                  {submission.editor.workspace.lastName}
-                                </p>
-                              )}
+
                               {/* Tweet button */}
                               {/* https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/guides/web-intent */}
                             </div>
@@ -279,10 +282,12 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
                                 <LogoTwitter size={32} className="fill-current text-indigo-400" />
                               </a>
                             )}
-                            <DeleteSubmissionModal
-                              submissionId={submission.id}
-                              refetchFn={refetch}
-                            />
+                            {editorIsAdmin && (
+                              <DeleteSubmissionModal
+                                submissionId={submission.id}
+                                refetchFn={refetch}
+                              />
+                            )}
                           </div>
                         </div>
                         {/* If no comment add option to add one */}
@@ -292,14 +297,53 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
                 )
               })}
             </div>
-
-            {/* Show cards for each accepted submission */}
-            {/* <div>{JSON.stringify(collection!.submissions)}</div> */}
           </div>
           <div className="col-span-2">
             <h2>Submissions</h2>
-            {/* TODO: Make conditional */}
-            <UpgradeCollectionModal collection={collection} email={currentUser!.email} />
+            {collection?.type.type != "COMMUNITY" ? (
+              <UpgradeCollectionModal collection={collection} email={currentUser!.email} />
+            ) : (
+              <>
+                {collection.submissions.map((submission) => {
+                  return (
+                    <>
+                      {submission.accepted === null && (
+                        <>
+                          <h3>{submission.module.title}</h3>
+                          {/* doi */}
+                          <p>
+                            {submission.module.prefix}/{submission.module.suffix}
+                          </p>
+                          <p>Submitted {moment(submission.createdAt).fromNow()}</p>
+                          <p className="text-xs">
+                            {/* TODO: Need to manage this for just name */}
+                            Submitted by {submission.submittedBy!.firstName}{" "}
+                            {submission.submittedBy!.lastName}
+                          </p>
+                          <p>
+                            Originally published {moment(submission.module.publishedAt).fromNow()}
+                          </p>
+                          {/* accept submission */}
+                          <HandleSubmissionToCollectionModal
+                            submission={submission}
+                            editorId={editorIdSelf}
+                            accept={true}
+                            refetchFn={refetch}
+                          />
+                          {/* decline submission */}
+                          <HandleSubmissionToCollectionModal
+                            submission={submission}
+                            editorId={editorIdSelf}
+                            accept={false}
+                            refetchFn={refetch}
+                          />
+                        </>
+                      )}
+                    </>
+                  )
+                })}
+              </>
+            )}
           </div>
         </div>
       </main>
@@ -365,67 +409,69 @@ const Description = ({ collection, refetchFn }) => {
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
-const Editors = ({ collection, selfId, refetchFn, user }) => {
+const Editors = ({ collection, isAdmin, selfId, refetchFn, user }) => {
   const [addEditorMutation] = useMutation(addEditor)
   return (
     <div>
       <h3 className="text-center text-sm">Editors</h3>
-      {collection.type.type === "INDIVIDUAL" ||
+      {(isAdmin && collection.type.type === "INDIVIDUAL") ||
       (collection.type.type === "COLLABORATIVE" && collection.editors.length >= 5) ? (
         <UpgradeCollectionModal collection={collection} email={user.email} />
       ) : (
         <>
-          <Autocomplete
-            className="h-full"
-            openOnFocus={true}
-            defaultActiveItemId="0"
-            getSources={({ query }) => [
-              {
-                sourceId: "products",
-                async onSelect(params) {
-                  const { item, setQuery } = params
-                  toast.promise(
-                    addEditorMutation({
-                      collectionId: collection.id,
-                      workspaceId: parseInt(item.objectID),
-                    }),
-                    {
-                      loading: "Adding editor...",
-                      success: () => {
-                        refetchFn()
-                        return "Added editor!"
-                      },
-                      error: "Failed to add editor...",
-                    }
-                  )
-                },
-                getItems() {
-                  return getAlgoliaResults({
-                    searchClient,
-                    queries: [
+          {isAdmin && (
+            <Autocomplete
+              className="h-full"
+              openOnFocus={true}
+              defaultActiveItemId="0"
+              getSources={({ query }) => [
+                {
+                  sourceId: "products",
+                  async onSelect(params) {
+                    const { item, setQuery } = params
+                    toast.promise(
+                      addEditorMutation({
+                        collectionId: collection.id,
+                        workspaceId: parseInt(item.objectID),
+                      }),
                       {
-                        indexName: `${process.env.ALGOLIA_PREFIX}_workspaces`,
-                        query,
-                      },
-                    ],
-                  })
-                },
-                templates: {
-                  item({ item, components }) {
-                    return (
-                      <>
-                        {item.__autocomplete_indexName.match(/_workspaces/g) ? (
-                          <SearchResultWorkspace item={item} />
-                        ) : (
-                          ""
-                        )}
-                      </>
+                        loading: "Adding editor...",
+                        success: () => {
+                          refetchFn()
+                          return "Added editor!"
+                        },
+                        error: "Failed to add editor...",
+                      }
                     )
                   },
+                  getItems() {
+                    return getAlgoliaResults({
+                      searchClient,
+                      queries: [
+                        {
+                          indexName: `${process.env.ALGOLIA_PREFIX}_workspaces`,
+                          query,
+                        },
+                      ],
+                    })
+                  },
+                  templates: {
+                    item({ item, components }) {
+                      return (
+                        <>
+                          {item.__autocomplete_indexName.match(/_workspaces/g) ? (
+                            <SearchResultWorkspace item={item} />
+                          ) : (
+                            ""
+                          )}
+                        </>
+                      )
+                    },
+                  },
                 },
-              },
-            ]}
-          />
+              ]}
+            />
+          )}
         </>
       )}
       {collection.editors.map((editor) => {
@@ -433,7 +479,7 @@ const Editors = ({ collection, selfId, refetchFn, user }) => {
           <>
             <EditorCard
               editor={editor}
-              isAdmin={true}
+              isAdmin={isAdmin}
               isSelf={selfId === editor.id}
               refetchFn={refetchFn}
             />
@@ -465,7 +511,7 @@ const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
           {JSON.stringify(isSelf)}
         </div>
         <p>@{editor.workspace.handle}</p>
-        {isAdmin && !isSelf && (
+        {isAdmin && (
           <>
             <select
               onChange={(info) => {
@@ -473,7 +519,10 @@ const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
                   changeEditorRoleMutation({ editorId: editor.id, role: info.target.value }),
                   {
                     loading: `Changing role to ${info.target.value.toLowerCase()}...`,
-                    success: `Changed role to ${info.target.value.toLowerCase()}!`,
+                    success: () => {
+                      refetchFn()
+                      return `Changed role to ${info.target.value.toLowerCase()}!`
+                    },
                     error: "Failed to change role...",
                   }
                 )
