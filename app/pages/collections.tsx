@@ -35,9 +35,14 @@ const CollectionsPage: BlitzPage = () => {
       <main className="relative flex">
         {collections.map((collection) => {
           return (
-            <Link key={collection.suffix} href={`/collections/${collection.suffix}/admin`}>
-              <a>{collection.title}</a>
-            </Link>
+            <>
+              <Link key={collection.suffix} href={`/collections/${collection.suffix}`}>
+                <a className="underline">{collection.title}</a>
+              </Link>{" "}
+              <Link key={collection.suffix} href={`/collections/${collection.suffix}/admin`}>
+                <a>(Admin portal; {collection.type.type})</a>
+              </Link>
+            </>
           )
         })}
       </main>
