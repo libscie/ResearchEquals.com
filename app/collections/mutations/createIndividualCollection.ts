@@ -69,8 +69,10 @@ export default resolver.pipe(resolver.authorize(), async ({}, ctx) => {
         mimeType: "image",
       } as Prisma.JsonObject,
       header: {
-        cdnUrl: workspace?.avatar,
-        originalUrl: workspace?.avatar,
+        cdnUrl:
+          "https://images.unsplash.com/photo-1663275162414-64dba99065a2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1528&q=80",
+        originalUrl:
+          "https://images.unsplash.com/photo-1663275162414-64dba99065a2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1528&q=80",
         mimeType: "image",
       } as Prisma.JsonObject,
       editors: {
