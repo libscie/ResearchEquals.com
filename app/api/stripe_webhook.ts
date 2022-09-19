@@ -63,8 +63,10 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
                 mimeType: "image/jpeg",
               } as Prisma.JsonObject,
               header: {
-                cdnUrl: "https://ucarecdn.com/d531f64b-70a5-485e-8b6c-e0df28f0db21/",
-                originalUrl: "https://ucarecdn.com/d531f64b-70a5-485e-8b6c-e0df28f0db21/",
+                cdnUrl:
+                  "https://images.unsplash.com/photo-1663275162414-64dba99065a2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1528&q=80",
+                originalUrl:
+                  "https://images.unsplash.com/photo-1663275162414-64dba99065a2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1528&q=80",
                 mimeType: "image/jpeg",
               } as Prisma.JsonObject,
               editors: {
