@@ -57,6 +57,7 @@ import ContributorsBadge from "../../../collections/components/ContributorsBadge
 import EditorsBadge from "../../../collections/components/EditorsBadge"
 import AdminWorkCard from "../../../collections/components/AdminWorkCard"
 import AdminSubmission from "app/collections/components/AdminSubmission"
+import FinalizeUpgradeModal from "../../../core/modals/FinalizeUpgradeModal"
 
 export async function getServerSideProps(context) {
   // Expires in 30 minutes
@@ -78,7 +79,7 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
   const router = useRouter()
   const [drafts] = useQuery(getDrafts, { session })
   const [invitations] = useQuery(getInvitedModules, { session })
-  const [{ collection, editorIdSelf, editorIsAdmin }, { refetch }] = useQuery(
+  const [{ collection, editorIdSelf, editorIsAdmin, pendingSubmissions }, { refetch }] = useQuery(
     getCollectionInfo,
     router!.query!.suffix! as string
   )
@@ -98,9 +99,11 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
         refetchFn={refetch}
       />
       <main className="relative">
-        {/* TODO: add conditions for when not ready to be made public */}
         {!collection?.public && (
           <MakeCollectionPublicModal collection={collection} refetchFn={refetch} />
+        )}
+        {collection?.upgraded && (
+          <FinalizeUpgradeModal collection={collection} refetchFn={refetch} />
         )}
         <HeaderImage
           collection={collection}
@@ -108,14 +111,19 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
           signature={signature}
           expire={expire}
         />
-        <div className="grid xl:grid-cols-8">
+        {/* TODO: Differentiate order for mobile */}
+        {/* Avatar */}
+        {/* Title */}
+        <div className="inline-block w-full xl:grid xl:grid-cols-8">
           <div className="col-span-2 mx-4 p-4">
-            <Icon
-              collection={collection}
-              refetchFn={refetch}
-              signature={signature}
-              expire={expire}
-            />
+            {collection!.type.type !== "INDIVIDUAL" && (
+              <Icon
+                collection={collection}
+                refetchFn={refetch}
+                signature={signature}
+                expire={expire}
+              />
+            )}
             <Editors
               collection={collection}
               user={currentUser}
@@ -124,20 +132,21 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
               refetchFn={refetch}
             />
           </div>
-          {/* Works */}
-          <div className="col-span-4">
+          <div className="col-span-4 mx-4 px-4">
             <Title collection={collection} refetchFn={refetch} />
             {collection!.type.type !== "INDIVIDUAL" && (
               <AdminSubtitle collection={collection} refetchFn={refetch} />
             )}
-            <div className="w-full text-center align-middle">
+            <div className="my-4 w-full text-center align-middle">
               <Doi collection={collection} />
               <ActivityBadge collection={collection} />
-              <EditorsBadge collection={collection} />
-              <ContributorsBadge collection={collection} />
+              {collection!.type.type !== "INDIVIDUAL" && <EditorsBadge collection={collection} />}
+              {collection!.type.type !== "INDIVIDUAL" && (
+                <ContributorsBadge collection={collection} />
+              )}
             </div>
             <AdminDescription collection={collection} refetchFn={refetch} />
-            <h2 className="text-xl">Collected works</h2>
+            <h2 className="my-4 text-xl">Collected works</h2>
             <div>
               <Autocomplete
                 className=""
@@ -265,13 +274,17 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
               })}
             </div>
           </div>
-          <div className="col-span-2 p-4">
+          <div className="col-span-2 mx-4 p-4">
             <h2 className="my-2 text-center text-lg font-bold">Pending Submissions</h2>
-            {collection?.type.type != "COMMUNITY" ? (
+
+            {/* {pendingSubmissions.submissions.length} */}
+            {collection?.type.type != "COMMUNITY" && (
               <div className="mx-auto w-full align-middle">
                 <UpgradeCollectionModal collection={collection} email={currentUser!.email} />
               </div>
-            ) : (
+            )}
+            {pendingSubmissions?.submissions.length! > 0 &&
+            collection?.type.type === "COMMUNITY" ? (
               <>
                 {collection.submissions.map((submission, index) => {
                   return (
@@ -284,6 +297,20 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
                   )
                 })}
               </>
+            ) : (
+              <div className="mx-8">
+                <div className="relative my-4 mx-4 flex w-full flex-grow flex-col rounded-lg border-2 border-dashed border-gray-800 text-center focus:outline-none focus:ring-2 focus:ring-indigo-500  focus:ring-offset-2 dark:border-white">
+                  <div className="table h-full w-full flex-grow">
+                    <div className="h-28 w-1/4 sm:table-cell"></div>
+                    <span className="mx-auto table-cell align-middle text-sm font-medium leading-4">
+                      <>
+                        <div className="mx-4">No pending submissions. Maybe request some?</div>
+                      </>
+                    </span>
+                    <div className="hidden w-1/4 sm:table-cell"></div>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
         </div>
@@ -306,8 +333,10 @@ const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGO
 const Editors = ({ collection, isAdmin, selfId, refetchFn, user }) => {
   const [addEditorMutation] = useMutation(addEditor)
   return (
-    <div>
-      <h3 className="text-center text-lg font-bold">Editors</h3>
+    <div className="my-2">
+      <h3 className="my-2 text-center text-lg font-bold">
+        Editor{collection.editors.length > 1 && "s"}
+      </h3>
       {(isAdmin && collection.type.type === "INDIVIDUAL") ||
       (collection.type.type === "COLLABORATIVE" && collection.editors.length >= 5) ? (
         <UpgradeCollectionModal collection={collection} email={user.email} />
@@ -368,18 +397,20 @@ const Editors = ({ collection, isAdmin, selfId, refetchFn, user }) => {
           )}
         </>
       )}
-      {collection.editors.map((editor) => {
-        return (
-          <>
-            <EditorCard
-              editor={editor}
-              isAdmin={isAdmin}
-              isSelf={selfId === editor.id}
-              refetchFn={refetchFn}
-            />
-          </>
-        )
-      })}
+      <div className="my-4">
+        {collection.editors.map((editor) => {
+          return (
+            <>
+              <EditorCard
+                editor={editor}
+                isAdmin={isAdmin}
+                isSelf={selfId === editor.id}
+                refetchFn={refetchFn}
+              />
+            </>
+          )
+        })}
+      </div>
     </div>
   )
 }
@@ -389,10 +420,6 @@ const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
 
   return (
     <>
-      {/* add actions if OWNER | ADMIN */}
-      {/* 1 - Change role */}
-      {/* 2 - Delete editor - with confirmation */}
-      {/* 3 - Make editor inactive */}
       <div className={`flex ${editor.isActive ? "" : "opacity-50"} my-2`}>
         <img src={editor.workspace.avatar} className="mx-2 h-12 w-12 rounded-full" />
         <div className="inline-block flex-grow">
@@ -444,7 +471,7 @@ const Title = ({ collection, refetchFn }) => {
 
   return (
     <>
-      {collection.title === null || !collection.public ? (
+      {collection.title === null || !collection.public || collection.upgraded ? (
         <>
           <Formik
             initialValues={{
@@ -453,7 +480,7 @@ const Title = ({ collection, refetchFn }) => {
             onSubmit={() => {}}
           >
             <Form
-              className="w-full "
+              className="my-4 w-full"
               onBlur={(values) => {
                 if (collection.title != values.target.defaultValue) {
                   toast.promise(
@@ -479,6 +506,7 @@ const Title = ({ collection, refetchFn }) => {
               <Field
                 id="title"
                 name="title"
+                // TODO: This is causing a bug
                 placeholder={collection.title || "Your title here"}
                 type="text"
                 className="w-full select-none overflow-auto border-0 bg-white text-center text-6xl focus:ring-0 dark:bg-gray-900 "
@@ -487,7 +515,7 @@ const Title = ({ collection, refetchFn }) => {
           </Formik>
         </>
       ) : (
-        <h2 className="my-2 w-full border-0 bg-white text-center text-6xl focus:ring-0 dark:bg-gray-900">
+        <h2 className="my-4 w-full border-0 bg-white text-center text-6xl focus:ring-0 dark:bg-gray-900">
           {collection.title}
         </h2>
       )}

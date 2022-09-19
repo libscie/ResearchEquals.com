@@ -86,6 +86,7 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
             },
             data: {
               collectionTypeId: parseInt(event.data.object.metadata.id),
+              upgraded: true,
             },
           })
           break
