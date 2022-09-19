@@ -8,6 +8,9 @@ export default resolver.pipe(resolver.authorize(), async (suffix: string, ctx: C
     },
     include: {
       submissions: {
+        orderBy: {
+          updatedAt: "desc",
+        },
         include: {
           submittedBy: true,
           module: true,

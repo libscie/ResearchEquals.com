@@ -5,6 +5,7 @@ export default resolver.pipe(
   resolver.authorize(),
   async ({ editorId }: { editorId: number }, ctx) => {
     // TODO: throw if only one editorship left
+    // TODO: Throw if last admin
     const editorship = await db.editorship.delete({
       where: {
         id: editorId,
