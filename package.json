@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@algolia/autocomplete-js": "1.7.1",
-    "@carbon/icons-react": "11.7.0",
+    "@carbon/icons-react": "11.8.0",
     "@faker-js/faker": "7.5.0",
     "@floating-ui/dom": "1.0.1",
     "@headlessui/react": "1.7.2",
