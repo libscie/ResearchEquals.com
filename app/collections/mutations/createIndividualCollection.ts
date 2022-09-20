@@ -61,6 +61,7 @@ export default resolver.pipe(resolver.authorize(), async ({}, ctx) => {
     data: {
       title: `${collectionName}'s collection`,
       suffix: generatedSuffix,
+      description: "This collection is still being set up.",
       collectionTypeId: collection!.id,
       public: true,
       icon: {
