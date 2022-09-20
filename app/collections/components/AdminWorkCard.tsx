@@ -97,7 +97,7 @@ const WorkComment = ({ submission, index, editorIdSelf, refetchFn, editorIsAdmin
               )
             }}
           >
-            <Form className="flex">
+            <Form className="flex h-full">
               <label
                 htmlFor={`submission-comment-${submission.id}-${index}-form`}
                 className="sr-only"

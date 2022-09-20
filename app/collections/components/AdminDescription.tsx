@@ -36,7 +36,7 @@ const Description = ({ collection, refetchFn }) => {
   })
 
   return (
-    <div className="">
+    <div className="mx-4 my-8 xl:mx-0">
       <h2 className="text-xl">A message from your editor{collection.editors.length > 1 && "s"}</h2>
       <form
         onSubmit={formik.handleSubmit}

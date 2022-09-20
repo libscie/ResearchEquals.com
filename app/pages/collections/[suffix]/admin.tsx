@@ -58,6 +58,7 @@ import EditorsBadge from "../../../collections/components/EditorsBadge"
 import AdminWorkCard from "../../../collections/components/AdminWorkCard"
 import AdminSubmission from "app/collections/components/AdminSubmission"
 import FinalizeUpgradeModal from "../../../core/modals/FinalizeUpgradeModal"
+import { useMediaPredicate } from "react-media-hook"
 
 export async function getServerSideProps(context) {
   // Expires in 30 minutes
@@ -83,9 +84,10 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
     getCollectionInfo,
     router!.query!.suffix! as string
   )
-  const [addWorkMutation] = useMutation(addWork)
   const [addCommentMutation] = useMutation(addComment)
-  const [createReferenceMutation] = useMutation(createReferenceModule)
+  const mdWindow = useMediaPredicate("(min-width: 768px)")
+  const lgWindow = useMediaPredicate("(min-width: 1024px)")
+  const xlWindow = useMediaPredicate("(min-width: 1280px)")
 
   return (
     <>
@@ -112,208 +114,112 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
           expire={expire}
         />
         {/* TODO: Differentiate order for mobile */}
-        {/* Avatar */}
-        {/* Title */}
-        <div className="inline-block w-full xl:grid xl:grid-cols-8">
-          <div className="col-span-2 mx-4 p-4">
-            {collection!.type.type !== "INDIVIDUAL" && (
-              <Icon
-                collection={collection}
-                refetchFn={refetch}
-                signature={signature}
-                expire={expire}
-              />
-            )}
-            <Editors
-              collection={collection}
-              user={currentUser}
-              selfId={editorIdSelf}
-              isAdmin={editorIsAdmin}
-              refetchFn={refetch}
-            />
-          </div>
-          <div className="col-span-4 mx-4 px-4">
-            <Title collection={collection} refetchFn={refetch} />
-            {collection!.type.type !== "INDIVIDUAL" && (
-              <AdminSubtitle collection={collection} refetchFn={refetch} />
-            )}
-            <div className="my-4 w-full text-center align-middle">
-              <Doi collection={collection} />
-              <ActivityBadge collection={collection} />
-              {collection!.type.type !== "INDIVIDUAL" && <EditorsBadge collection={collection} />}
-              {collection!.type.type !== "INDIVIDUAL" && (
-                <ContributorsBadge collection={collection} />
-              )}
-            </div>
-            <AdminDescription collection={collection} refetchFn={refetch} />
-            <h2 className="my-4 text-xl">Collected works</h2>
-            <div>
-              <Autocomplete
-                className=""
-                openOnFocus={false}
-                defaultActiveItemId="0"
-                getSources={({ query }) => [
-                  {
-                    sourceId: "products",
-                    async onSelect(params) {
-                      const { item, setQuery } = params
-                      toast.promise(
-                        addWorkMutation({
-                          collectionId: collection!.id,
-                          editorId: editorIdSelf,
-                          moduleId: parseInt(item.objectID),
-                        }),
-                        {
-                          loading: "Adding work to collection...",
-                          success: () => {
-                            refetch()
-                            return "Added work to collection!"
-                          },
-                          error: "Failed to add work to collection...",
-                        }
-                      )
-                    },
-                    getItems() {
-                      return getAlgoliaResults({
-                        searchClient,
-                        queries: [
-                          {
-                            indexName: `${process.env.ALGOLIA_PREFIX}_modules`,
-                            query,
-                          },
-                        ],
-                      })
-                    },
-                    templates: {
-                      item({ item, components }) {
-                        return (
-                          <>
-                            {item.__autocomplete_indexName.match(/_modules/g) ? (
-                              <SearchResultModule item={item} />
-                            ) : (
-                              ""
-                            )}
-                          </>
-                        )
-                      },
-                      noResults() {
-                        const matchedQuery = query.match(/10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
-
-                        return (
-                          <>
-                            {/* https://www.crossref.org/blog/dois-and-matching-regular-expressions/ */}
-                            {matchedQuery ? (
-                              <>
-                                <button
-                                  className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200"
-                                  onClick={async () => {
-                                    toast.promise(
-                                      createReferenceMutation({
-                                        doi: matchedQuery.slice(-1)[0].endsWith("/")
-                                          ? matchedQuery.slice(-1)[0].slice(0, -1)
-                                          : matchedQuery.slice(-1)[0],
-                                      }),
-                                      {
-                                        loading: "Searching...",
-                                        success: (data) => {
-                                          toast.promise(
-                                            addWorkMutation({
-                                              collectionId: collection!.id,
-                                              editorId: editorIdSelf,
-                                              moduleId: data.id,
-                                            }),
-                                            {
-                                              loading: "Adding work to collection...",
-                                              success: () => {
-                                                refetch()
-                                                return "Added work to collection!"
-                                              },
-                                              error: "Failed to add work to collection...",
-                                            }
-                                          )
-
-                                          refetch()
-
-                                          return "Record added to database"
-                                        },
-                                        error: "Could not add record.",
-                                      }
-                                    )
-                                  }}
-                                >
-                                  Click here to add {matchedQuery.slice(-1)} to ResearchEquals
-                                  database
-                                </button>
-                              </>
-                            ) : (
-                              <p className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200">
-                                Input a DOI to add
-                              </p>
-                            )}
-                          </>
-                        )
-                      },
-                    },
-                  },
-                ]}
-              />
-              {collection?.submissions.map((submission, index) => {
-                return (
-                  <>
-                    {submission.accepted && (
-                      <AdminWorkCard
-                        submission={submission}
-                        index={index}
-                        editorIdSelf={editorIdSelf}
-                        editorIsAdmin={editorIsAdmin}
-                        refetchFn={refetch}
-                      />
-                    )}
-                  </>
-                )
-              })}
-            </div>
-          </div>
-          <div className="col-span-2 mx-4 p-4">
-            <h2 className="my-2 text-center text-lg font-bold">Pending Submissions</h2>
-
-            {/* {pendingSubmissions.submissions.length} */}
-            {collection?.type.type != "COMMUNITY" && (
-              <div className="mx-auto w-full align-middle">
-                <UpgradeCollectionModal collection={collection} email={currentUser!.email} />
-              </div>
-            )}
-            {pendingSubmissions?.submissions.length! > 0 &&
-            collection?.type.type === "COMMUNITY" ? (
-              <>
-                {collection.submissions.map((submission, index) => {
-                  return (
-                    <AdminSubmission
-                      submission={submission}
-                      editorIdSelf={editorIdSelf}
+        {/* mobile */}
+        {!xlWindow && (
+          <>
+            <div className="w-full">
+              <div className="flex">
+                <div className="top-[50%] mx-auto mx-4 w-[25%] p-4 ">
+                  {collection!.type.type !== "INDIVIDUAL" && (
+                    <Icon
+                      collection={collection}
                       refetchFn={refetch}
-                      key={`submission-${index}`}
+                      signature={signature}
+                      expire={expire}
                     />
-                  )
-                })}
-              </>
-            ) : (
-              <div className="mx-8">
-                <div className="relative my-4 mx-4 flex w-full flex-grow flex-col rounded-lg border-2 border-dashed border-gray-800 text-center focus:outline-none focus:ring-2 focus:ring-indigo-500  focus:ring-offset-2 dark:border-white">
-                  <div className="table h-full w-full flex-grow">
-                    <div className="h-28 w-1/4 sm:table-cell"></div>
-                    <span className="mx-auto table-cell align-middle text-sm font-medium leading-4">
-                      <>
-                        <div className="mx-4">No pending submissions. Maybe request some?</div>
-                      </>
-                    </span>
-                    <div className="hidden w-1/4 sm:table-cell"></div>
+                  )}
+                </div>
+                <div className="flex-grow">
+                  <Title collection={collection} refetchFn={refetch} />
+                  {collection!.type.type !== "INDIVIDUAL" && (
+                    <AdminSubtitle collection={collection} refetchFn={refetch} />
+                  )}
+                  <div className="my-4 w-full text-center align-middle">
+                    <Doi collection={collection} />
+                    <ActivityBadge collection={collection} />
+                    {collection!.type.type !== "INDIVIDUAL" && (
+                      <EditorsBadge collection={collection} />
+                    )}
+                    {collection!.type.type !== "INDIVIDUAL" && (
+                      <ContributorsBadge collection={collection} />
+                    )}
                   </div>
                 </div>
               </div>
-            )}
+              <Editors
+                collection={collection}
+                user={currentUser}
+                selfId={editorIdSelf}
+                isAdmin={editorIsAdmin}
+                refetchFn={refetch}
+              />
+              <AdminDescription collection={collection} refetchFn={refetch} />
+              <PendingSubmissions
+                collection={collection}
+                currentUser={currentUser}
+                editorIdSelf={editorIdSelf}
+                pendingSubmissions={pendingSubmissions}
+                refetchFn={refetch}
+              />
+              <CollectedWorks
+                collection={collection}
+                editorIdSelf={editorIdSelf}
+                refetchFn={refetch}
+                editorIsAdmin={editorIsAdmin}
+              />
+            </div>
+          </>
+        )}
+        {/* desktop */}
+        {xlWindow && (
+          <div className="inline-block w-full md:grid md:grid-cols-4 xl:grid-cols-8">
+            <div className="col-span-1 mx-4 p-4 xl:col-span-2">
+              {collection!.type.type !== "INDIVIDUAL" && (
+                <Icon
+                  collection={collection}
+                  refetchFn={refetch}
+                  signature={signature}
+                  expire={expire}
+                />
+              )}
+              <Editors
+                collection={collection}
+                user={currentUser}
+                selfId={editorIdSelf}
+                isAdmin={editorIsAdmin}
+                refetchFn={refetch}
+              />
+            </div>
+            <div className="col-span-4 mx-4 px-4">
+              <Title collection={collection} refetchFn={refetch} />
+              {collection!.type.type !== "INDIVIDUAL" && (
+                <AdminSubtitle collection={collection} refetchFn={refetch} />
+              )}
+              <div className="my-4 w-full text-center align-middle">
+                <Doi collection={collection} />
+                <ActivityBadge collection={collection} />
+                {collection!.type.type !== "INDIVIDUAL" && <EditorsBadge collection={collection} />}
+                {collection!.type.type !== "INDIVIDUAL" && (
+                  <ContributorsBadge collection={collection} />
+                )}
+              </div>
+              <AdminDescription collection={collection} refetchFn={refetch} />
+              <CollectedWorks
+                collection={collection}
+                editorIdSelf={editorIdSelf}
+                refetchFn={refetch}
+                editorIsAdmin={editorIsAdmin}
+              />
+            </div>
+            <PendingSubmissions
+              collection={collection}
+              currentUser={currentUser}
+              editorIdSelf={editorIdSelf}
+              pendingSubmissions={pendingSubmissions}
+              refetchFn={refetch}
+            />
           </div>
-        </div>
+        )}
       </main>
     </>
   )
@@ -333,10 +239,8 @@ const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGO
 const Editors = ({ collection, isAdmin, selfId, refetchFn, user }) => {
   const [addEditorMutation] = useMutation(addEditor)
   return (
-    <div className="my-2">
-      <h3 className="my-2 text-center text-lg font-bold">
-        Editor{collection.editors.length > 1 && "s"}
-      </h3>
+    <div className="my-2 mx-4 xl:mx-0">
+      <h3 className="my-4 text-xl">Editor{collection.editors.length > 1 && "s"}</h3>
       {(isAdmin && collection.type.type === "INDIVIDUAL") ||
       (collection.type.type === "COLLABORATIVE" && collection.editors.length >= 5) ? (
         <UpgradeCollectionModal collection={collection} email={user.email} />
@@ -509,16 +413,199 @@ const Title = ({ collection, refetchFn }) => {
                 // TODO: This is causing a bug
                 placeholder={collection.title || "Your title here"}
                 type="text"
-                className="w-full select-none overflow-auto border-0 bg-white text-center text-6xl focus:ring-0 dark:bg-gray-900 "
+                className="w-full select-none overflow-auto border-0 bg-white text-center text-3xl focus:ring-0 dark:bg-gray-900 md:text-5xl lg:text-6xl "
               />
             </Form>
           </Formik>
         </>
       ) : (
-        <h2 className="my-4 w-full border-0 bg-white text-center text-6xl focus:ring-0 dark:bg-gray-900">
+        <h2 className="my-4 w-full border-0 bg-white text-center text-3xl focus:ring-0 dark:bg-gray-900 md:text-5xl lg:text-6xl">
           {collection.title}
         </h2>
       )}
     </>
+  )
+}
+
+const PendingSubmissions = ({
+  collection,
+  currentUser,
+  editorIdSelf,
+  pendingSubmissions,
+  refetchFn,
+}) => {
+  return (
+    <div className="col-span-2 m-4 xl:p-4">
+      <h2 className="my-4 text-xl">Pending Submissions</h2>
+      {collection?.type.type != "COMMUNITY" && (
+        <div className="mx-auto w-full align-middle">
+          <UpgradeCollectionModal collection={collection} email={currentUser!.email} />
+        </div>
+      )}
+      {pendingSubmissions?.submissions.length! > 0 && collection?.type.type === "COMMUNITY" ? (
+        <>
+          {collection.submissions.map((submission, index) => {
+            return (
+              <AdminSubmission
+                submission={submission}
+                editorIdSelf={editorIdSelf}
+                refetchFn={refetchFn}
+                key={`submission-${index}`}
+              />
+            )
+          })}
+        </>
+      ) : (
+        <div className="">
+          <div className="relative flex w-full flex-grow flex-col rounded-lg border-2 border-dashed border-gray-800 text-center focus:outline-none focus:ring-2 focus:ring-indigo-500  focus:ring-offset-2 dark:border-white">
+            <div className="table h-full w-full flex-grow">
+              <div className="h-28 w-1/4 sm:table-cell"></div>
+              <span className="mx-auto table-cell align-middle text-sm font-medium leading-4">
+                <>
+                  <div className="">No pending submissions. Maybe request some?</div>
+                </>
+              </span>
+              <div className="hidden w-1/4 sm:table-cell"></div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+const CollectedWorks = ({ collection, editorIdSelf, refetchFn, editorIsAdmin }) => {
+  const [addWorkMutation] = useMutation(addWork)
+  const [createReferenceMutation] = useMutation(createReferenceModule)
+
+  return (
+    <div className="mx-4 my-8 xl:mx-0">
+      <h2 className="my-4 text-xl">Collected works</h2>
+      <div>
+        <Autocomplete
+          className=""
+          openOnFocus={false}
+          defaultActiveItemId="0"
+          getSources={({ query }) => [
+            {
+              sourceId: "products",
+              async onSelect(params) {
+                const { item, setQuery } = params
+                toast.promise(
+                  addWorkMutation({
+                    collectionId: collection!.id,
+                    editorId: editorIdSelf,
+                    moduleId: parseInt(item.objectID),
+                  }),
+                  {
+                    loading: "Adding work to collection...",
+                    success: () => {
+                      refetchFn()
+                      return "Added work to collection!"
+                    },
+                    error: "Failed to add work to collection...",
+                  }
+                )
+              },
+              getItems() {
+                return getAlgoliaResults({
+                  searchClient,
+                  queries: [
+                    {
+                      indexName: `${process.env.ALGOLIA_PREFIX}_modules`,
+                      query,
+                    },
+                  ],
+                })
+              },
+              templates: {
+                item({ item, components }) {
+                  return (
+                    <>
+                      {item.__autocomplete_indexName.match(/_modules/g) ? (
+                        <SearchResultModule item={item} />
+                      ) : (
+                        ""
+                      )}
+                    </>
+                  )
+                },
+                noResults() {
+                  const matchedQuery = query.match(/10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
+
+                  return (
+                    <>
+                      {/* https://www.crossref.org/blog/dois-and-matching-regular-expressions/ */}
+                      {matchedQuery ? (
+                        <>
+                          <button
+                            className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200"
+                            onClick={async () => {
+                              toast.promise(
+                                createReferenceMutation({
+                                  doi: matchedQuery.slice(-1)[0].endsWith("/")
+                                    ? matchedQuery.slice(-1)[0].slice(0, -1)
+                                    : matchedQuery.slice(-1)[0],
+                                }),
+                                {
+                                  loading: "Searching...",
+                                  success: (data) => {
+                                    toast.promise(
+                                      addWorkMutation({
+                                        collectionId: collection!.id,
+                                        editorId: editorIdSelf,
+                                        moduleId: data.id,
+                                      }),
+                                      {
+                                        loading: "Adding work to collection...",
+                                        success: () => {
+                                          refetchFn()
+                                          return "Added work to collection!"
+                                        },
+                                        error: "Failed to add work to collection...",
+                                      }
+                                    )
+
+                                    refetchFn()
+
+                                    return "Record added to database"
+                                  },
+                                  error: "Could not add record.",
+                                }
+                              )
+                            }}
+                          >
+                            Click here to add {matchedQuery.slice(-1)} to ResearchEquals database
+                          </button>
+                        </>
+                      ) : (
+                        <p className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200">
+                          Input a DOI to add
+                        </p>
+                      )}
+                    </>
+                  )
+                },
+              },
+            },
+          ]}
+        />
+        {collection?.submissions.map((submission, index) => {
+          return (
+            <>
+              {submission.accepted && (
+                <AdminWorkCard
+                  submission={submission}
+                  index={index}
+                  editorIdSelf={editorIdSelf}
+                  editorIsAdmin={editorIsAdmin}
+                  refetchFn={refetchFn}
+                />
+              )}
+            </>
+          )
+        })}
+      </div>
+    </div>
   )
 }

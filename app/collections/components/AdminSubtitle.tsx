@@ -45,13 +45,13 @@ const Subtitle = ({ collection, refetchFn }) => {
                 name="subtitle"
                 placeholder={collection.subtitle || "Your subtitle here"}
                 type="text"
-                className="w-full border-0 text-center text-base font-medium leading-5 focus:ring-0 dark:bg-gray-900 "
+                className="w-full border-0 text-center text-sm font-medium leading-5 focus:ring-0 dark:bg-gray-900 md:text-base "
               />
             </Form>
           </Formik>
         </>
       ) : (
-        <h2 className="mx-auto text-center text-base font-medium leading-5">
+        <h2 className="mx-auto text-center text-sm font-medium leading-5 md:text-base">
           {collection.subtitle}
         </h2>
       )}

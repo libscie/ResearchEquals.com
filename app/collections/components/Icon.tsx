@@ -15,14 +15,14 @@ const Icon = ({ collection, refetchFn, signature, expire }) => {
       {collection.type.type === "INDIVIDUAL" ? (
         <img
           src={collection?.icon!["cdnUrl"]}
-          className="mx-auto mb-2 max-w-[33%] rounded-full xl:max-w-[75%]"
+          className="mx-auto mb-2 max-w-[75%] rounded-full"
           alt={`Icon of ${collection.title}`}
         />
       ) : (
         <>
           <img
             src={collection?.icon!["cdnUrl"]}
-            className="mx-auto my-2 max-h-56 max-w-[33%] hover:cursor-pointer hover:opacity-75 dark:invert xl:max-w-[75%]"
+            className="mx-auto my-2 max-h-56 max-w-[75%] hover:cursor-pointer hover:opacity-75 dark:invert"
             alt={`Icon of ${collection.title}`}
             onClick={() => {
               widgetApiIcon!["current"].openDialog()
