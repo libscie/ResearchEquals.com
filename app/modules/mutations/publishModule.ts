@@ -2,12 +2,10 @@ import { NotFoundError, resolver } from "blitz"
 import db from "db"
 import moment from "moment"
 import algoliasearch from "algoliasearch"
-import axios from "axios"
-import FormData from "form-data"
-import { Readable } from "stream"
 import generateCrossRefXml from "../../core/crossref/generateCrossRefXml"
 import { Cite } from "../../core/crossref/citation_list"
 import { isURI, URI } from "../../core/crossref/ai_program"
+import submitToCrossRef from "app/core/utils/submitToCrossRef"
 
 const client = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_ADMIN_KEY!)
 const index = client.initIndex(`${process.env.ALGOLIA_PREFIX}_modules`)
@@ -110,22 +108,7 @@ export default resolver.pipe(
       resolve_url: resolveUrl,
     })
 
-    const xmlStream = new Readable()
-    xmlStream._read = () => {}
-    xmlStream.push(xmlData)
-    xmlStream.push(null)
-
-    const form = new FormData()
-    form.append("operation", "doMDUpload")
-    form.append("login_id", process.env.CROSSREF_LOGIN_ID)
-    form.append("login_passwd", process.env.CROSSREF_LOGIN_PASSWD)
-    form.append("fname", xmlStream, {
-      filename: `${module!.suffix}.xml`,
-      contentType: "text/xml",
-      knownLength: (xmlStream as any)._readableState!.length,
-    })
-
-    await axios.post(process.env.CROSSREF_URL!, form, { headers: form.getHeaders() })
+    await submitToCrossRef({ xmlData, suffix: module!.suffix })
 
     const publishedModule = await db.module.update({
       where: {
