@@ -140,7 +140,7 @@ const Collection: BlitzPage = () => {
                       <EditorsBadge collection={collection} />
                     )}
                     {collection!.type.type !== "INDIVIDUAL" && (
-                      <ContributorsBadge collection={collection} />
+                      <ContributorsBadge collection={{}} nrContributors={contributors.length} />
                     )}
                     {pendingSubmissions.length! > 0 && (
                       <PendingBadge submissions={pendingSubmissions} />
@@ -188,7 +188,7 @@ const Collection: BlitzPage = () => {
                 <ActivityBadge collection={collection} />
                 {collection!.type.type !== "INDIVIDUAL" && <EditorsBadge collection={collection} />}
                 {collection!.type.type !== "INDIVIDUAL" && (
-                  <ContributorsBadge collection={collection} />
+                  <ContributorsBadge collection={{}} nrContributors={contributors.length} />
                 )}
                 {pendingSubmissions.length! > 0 && (
                   <PendingBadge submissions={pendingSubmissions} />
@@ -365,7 +365,7 @@ const PendingBadge = ({ submissions }) => {
 
 const AdminBanner = ({ suffix }) => {
   return (
-    <div className="sticky top-0 z-50 flex  w-full bg-fuchsia-50 py-4 px-2 text-center dark:bg-fuchsia-800">
+    <div className="z-5 sticky top-0 flex  w-full bg-fuchsia-50 py-4 px-2 text-center dark:bg-fuchsia-800">
       <div className="mx-auto flex">
         <div className="inline-block align-middle">
           <UserAdmin

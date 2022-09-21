@@ -92,7 +92,7 @@ const CollectionsPage: BlitzPage = () => {
                           <DoiCollection collection={collection} />
                           <ActivityBadge collection={collection} />
                           <EditorsBadge collection={collection} />
-                          <ContributorsBadge collection={collection} />
+                          <ContributorsBadge collection={collection} nrContributors="" />
                         </div>
                       </div>
                     )}

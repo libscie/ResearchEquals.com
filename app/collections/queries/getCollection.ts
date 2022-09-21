@@ -62,7 +62,6 @@ export default resolver.pipe(async (suffix: string, ctx: Ctx) => {
       accepted: null,
     },
   })
-  // TODO: Only unique contributors
   const contributors = await db.submission.findMany({
     where: {
       accepted: true,
@@ -71,9 +70,18 @@ export default resolver.pipe(async (suffix: string, ctx: Ctx) => {
         submittedBy: null,
       },
     },
-    include: {
+    select: {
       submittedBy: true,
     },
+  })
+  const uniqContributors = contributors.filter((value, index) => {
+    const _value = JSON.stringify(value)
+    return (
+      index ===
+      contributors.findIndex((obj) => {
+        return JSON.stringify(obj) === _value
+      })
+    )
   })
   const isFollowing = await db.collection.findFirst({
     where: {
@@ -96,7 +104,7 @@ export default resolver.pipe(async (suffix: string, ctx: Ctx) => {
     collection,
     isAdmin,
     pendingSubmissions,
-    contributors,
+    contributors: uniqContributors,
     isFollowing: isFollowing!.followers.length > 0,
   }
 })

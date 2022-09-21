@@ -110,9 +110,13 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
                   )}
                 </div>
                 <div className="flex-grow">
-                  <AdminTitle collection={collection} refetchFn={refetch} />
+                  <AdminTitle collection={collection} refetchFn={refetch} isAdmin={editorIsAdmin} />
                   {collection!.type.type !== "INDIVIDUAL" && (
-                    <AdminSubtitle collection={collection} refetchFn={refetch} />
+                    <AdminSubtitle
+                      collection={collection}
+                      refetchFn={refetch}
+                      isAdmin={editorIsAdmin}
+                    />
                   )}
                   <div className="my-4 w-full text-center align-middle">
                     <Doi collection={collection} />
@@ -121,7 +125,7 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
                       <EditorsBadge collection={collection} />
                     )}
                     {collection!.type.type !== "INDIVIDUAL" && (
-                      <ContributorsBadge collection={collection} />
+                      <ContributorsBadge collection={collection} nrContributors={{}} />
                     )}
                   </div>
                 </div>
@@ -133,7 +137,11 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
                 isAdmin={editorIsAdmin}
                 refetchFn={refetch}
               />
-              <AdminDescription collection={collection} refetchFn={refetch} />
+              <AdminDescription
+                collection={collection}
+                refetchFn={refetch}
+                isAdmin={editorIsAdmin}
+              />
               <PendingSubmissions
                 collection={collection}
                 currentUser={currentUser}
@@ -171,19 +179,27 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
               />
             </div>
             <div className="col-span-4 mx-4 px-4">
-              <AdminTitle collection={collection} refetchFn={refetch} />
+              <AdminTitle collection={collection} refetchFn={refetch} isAdmin={editorIsAdmin} />
               {collection!.type.type !== "INDIVIDUAL" && (
-                <AdminSubtitle collection={collection} refetchFn={refetch} />
+                <AdminSubtitle
+                  collection={collection}
+                  refetchFn={refetch}
+                  isAdmin={editorIsAdmin}
+                />
               )}
               <div className="my-4 w-full text-center align-middle">
                 <Doi collection={collection} />
                 <ActivityBadge collection={collection} />
                 {collection!.type.type !== "INDIVIDUAL" && <EditorsBadge collection={collection} />}
                 {collection!.type.type !== "INDIVIDUAL" && (
-                  <ContributorsBadge collection={collection} />
+                  <ContributorsBadge collection={collection} nrContributors={{}} />
                 )}
               </div>
-              <AdminDescription collection={collection} refetchFn={refetch} />
+              <AdminDescription
+                collection={collection}
+                refetchFn={refetch}
+                isAdmin={editorIsAdmin}
+              />
               <AdminCollectedWorks
                 collection={collection}
                 editorIdSelf={editorIdSelf}
