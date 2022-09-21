@@ -37,7 +37,7 @@ const CollectionsPage: BlitzPage = () => {
         refetchFn={refetch}
       />
       <main className="w-full p-8">
-        <div className="collections mx-auto grid grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-4 lg:grid-cols-7">
+        <div className="collections mx-auto grid grid-cols-2 grid-cols-3 gap-x-8 gap-y-12 md:grid-cols-4 lg:grid-cols-6">
           {collections.map((collection, index) => {
             return (
               <Link key={collection.suffix} href={`/collections/${collection.suffix}`}>
@@ -48,10 +48,10 @@ const CollectionsPage: BlitzPage = () => {
                           collection.submissions.length > 4 ? "4" : collection.submissions.length
                         }`
                       : collection.type.type === "COLLABORATIVE"
-                      ? `col-span-2 bg-teal-200 text-lg dark:bg-teal-600 collection-${
+                      ? `col-span-2 row-span-2 bg-teal-200 text-lg dark:bg-teal-600 collection-${
                           collection.submissions.length > 4 ? "4" : collection.submissions.length
                         }-teal`
-                      : `bg-amber-200 text-base dark:bg-amber-600 collection-${
+                      : `col-span-1 bg-amber-200 text-base dark:bg-amber-600 md:col-span-1 collection-${
                           collection.submissions.length > 4 ? "4" : collection.submissions.length
                         }-amber`
                   }  cursor-pointer rounded-md bg-cover bg-center`}
