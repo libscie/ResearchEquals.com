@@ -45,7 +45,7 @@ const OnboardingQuests = ({ data, expire, signature, refetch }) => {
       />
       <OnboardingProfile data={data} />
       <OnboardingDraft data={data.workspace} refetch={refetch} />
-      <OnboardingCollection data={data} refetch={refetch} />
+      <OnboardingCollection data={data.workspace} refetch={refetch} />
       <OnboardingDiscord data={data.workspace} refetch={refetch} />
     </>
   )
@@ -404,7 +404,8 @@ const OnboardingDraft = ({ data, refetch }) => {
 const OnboardingCollection = ({ data, refetch }) => {
   return (
     <>
-      {true ? (
+      {/* TODO: Add conditional logic */}
+      {data.editorships.length === 0 ? (
         <div
           key="draft-onboarding-quest"
           className="onboarding my-2 flex w-full flex-col rounded-r border-l-4 border-orange-400 bg-orange-50 p-4 dark:border-orange-200 dark:bg-orange-900 lg:my-0"
