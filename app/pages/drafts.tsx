@@ -49,12 +49,7 @@ const DraftsContents = ({ expire, signature, currentWorkspace, session, user }) 
 
   return (
     <>
-      <div
-        className="flex w-screen divide-x divide-gray-100 dark:divide-gray-600"
-        style={{
-          height: biggerWindow ? "calc(100vh - 73px - 55px)" : "100%",
-        }}
-      >
+      <div className="flex h-full w-screen divide-x divide-gray-100 dark:divide-gray-600">
         {drafts.length > 0 ? (
           <>
             <div
