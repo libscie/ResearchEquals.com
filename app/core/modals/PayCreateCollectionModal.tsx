@@ -1,4 +1,4 @@
-import { Link, useMutation, useQuery, useRouter } from "blitz"
+import { Link, useMutation, useQuery, useRouter, useSession } from "blitz"
 import { Fragment, useEffect, useState } from "react"
 import { Dialog, Switch, Transition } from "@headlessui/react"
 import { Close, Checkmark } from "@carbon/icons-react"
@@ -15,7 +15,6 @@ export default function PayCreateCollectionModal({ user, price, type, workspace 
   const [waiver, setWaiver] = useState(false)
   const [createIndividualCollectionMutation] = useMutation(createIndividualCollection)
   const [generatedSuffix] = useQuery(getCollectionSuffix, {})
-
   const router = useRouter()
   function closeModal() {
     setIsOpen(false)
@@ -115,98 +114,108 @@ export default function PayCreateCollectionModal({ user, price, type, workspace 
                       </div>
                     </>
                   ) : (
-                    <form
-                      action={`/api/checkout_sessions_collections?email=${encodeURIComponent(
-                        user.email
-                      )}&workspaceId=${
-                        workspace.id
-                      }&collectionType=${type}&suffix=${generatedSuffix}`}
-                      method="POST"
-                    >
-                      <div className="mt-2">
-                        <p className="text-base text-gray-500 dark:text-gray-300">
-                          Once you create this collection, you cannot delete it.
-                        </p>
-                        <p className="text-base text-gray-500 dark:text-gray-300">
-                          Because you chose a {type.toLowerCase()} collection, creating it costs €
-                          {price / 100} (incl. VAT).
-                        </p>
-                      </div>
-                      <div className="my-4 flex">
-                        <Switch
-                          checked={waiver}
-                          onChange={setWaiver}
-                          className={classNames(
-                            waiver ? "bg-emerald-600" : "bg-gray-200 dark:bg-gray-700",
-                            "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0"
-                          )}
-                        >
-                          <span className="sr-only">Waive right to withdrawal</span>
-                          <span
+                    <>
+                      <form
+                        action={
+                          user != null
+                            ? `/api/checkout_sessions_collections?email=${encodeURIComponent(
+                                user.email
+                              )}&workspaceId=${
+                                workspace.id
+                              }&collectionType=${type}&suffix=${generatedSuffix}`
+                            : ""
+                        }
+                        method="POST"
+                      >
+                        <div className="mt-2">
+                          <p className="text-base text-gray-500 dark:text-gray-300">
+                            Once you create this collection, you cannot delete it.
+                          </p>
+                          <p className="text-base text-gray-500 dark:text-gray-300">
+                            Because you chose a {type.toLowerCase()} collection, creating it costs €
+                            {price / 100} (incl. VAT).
+                          </p>
+                        </div>
+                        <div className="my-4 flex">
+                          <Switch
+                            checked={waiver}
+                            onChange={setWaiver}
                             className={classNames(
-                              waiver ? "translate-x-5" : "translate-x-0",
-                              "pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+                              waiver ? "bg-emerald-600" : "bg-gray-200 dark:bg-gray-700",
+                              "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0"
                             )}
                           >
+                            <span className="sr-only">Waive right to withdrawal</span>
                             <span
                               className={classNames(
-                                waiver
-                                  ? "opacity-0 duration-100 ease-out"
-                                  : "opacity-100 duration-200 ease-in",
-                                "absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                                waiver ? "translate-x-5" : "translate-x-0",
+                                "pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
                               )}
-                              aria-hidden="true"
                             >
-                              <Close
-                                size={32}
-                                className="h-3 w-3 stroke-current stroke-2 text-gray-400"
-                              />
+                              <span
+                                className={classNames(
+                                  waiver
+                                    ? "opacity-0 duration-100 ease-out"
+                                    : "opacity-100 duration-200 ease-in",
+                                  "absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                                )}
+                                aria-hidden="true"
+                              >
+                                <Close
+                                  size={32}
+                                  className="h-3 w-3 stroke-current stroke-2 text-gray-400"
+                                />
+                              </span>
+                              <span
+                                className={classNames(
+                                  waiver
+                                    ? "opacity-100 duration-200 ease-in"
+                                    : "opacity-0 duration-100 ease-out",
+                                  "absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                                )}
+                                aria-hidden="true"
+                              >
+                                <Checkmark
+                                  size={32}
+                                  className="h-3 w-3 stroke-current stroke-2 text-emerald-600"
+                                />
+                              </span>
                             </span>
-                            <span
-                              className={classNames(
-                                waiver
-                                  ? "opacity-100 duration-200 ease-in"
-                                  : "opacity-0 duration-100 ease-out",
-                                "absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
-                              )}
-                              aria-hidden="true"
-                            >
-                              <Checkmark
-                                size={32}
-                                className="h-3 w-3 stroke-current stroke-2 text-emerald-600"
-                              />
-                            </span>
-                          </span>
-                        </Switch>
-                        <p className=" mx-2 text-sm text-gray-500 dark:text-gray-300">
-                          Yes, I agree that Liberate Science GmbH creates the collection immediately
-                          and irrevocably. I knowingly consent to waive my{" "}
-                          <Link href="/right-of-withdrawal">
-                            <a className="underline" target="_blank">
-                              right of withdrawal
-                            </a>
-                          </Link>{" "}
-                          by completing my purchase.
-                        </p>
-                      </div>
-                      <div className="mt-4">
-                        <button
-                          type="submit"
-                          role="link"
-                          className="mr-2 inline-flex justify-center rounded-md bg-emerald-50 py-2 px-4 text-sm font-medium text-emerald-700 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-emerald-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
-                          disabled={!waiver}
-                        >
-                          Pay and Create
-                        </button>
-                        <button
-                          type="button"
-                          className="mr-2 inline-flex justify-center rounded-md bg-red-50 py-2 px-4 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
-                          onClick={closeModal}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </form>
+                          </Switch>
+                          <p className=" mx-2 text-sm text-gray-500 dark:text-gray-300">
+                            Yes, I agree that Liberate Science GmbH creates the collection
+                            immediately and irrevocably. I knowingly consent to waive my{" "}
+                            <Link href="/right-of-withdrawal">
+                              <a className="underline" target="_blank">
+                                right of withdrawal
+                              </a>
+                            </Link>{" "}
+                            by completing my purchase.
+                          </p>
+                        </div>
+                        <div className="mt-4">
+                          <button
+                            className="mr-2 inline-flex justify-center rounded-md bg-emerald-50 py-2 px-4 text-sm font-medium text-emerald-700 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-emerald-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+                            disabled={!waiver}
+                            onClick={(e) => {
+                              if (user === null) {
+                                e.preventDefault()
+                                toast.error("Need to be logged in for this.")
+                              }
+                            }}
+                          >
+                            Pay and Create
+                          </button>
+                          <button
+                            type="button"
+                            className="mr-2 inline-flex justify-center rounded-md bg-red-50 py-2 px-4 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+                            onClick={closeModal}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </form>
+                    </>
                   )}
                 </>
               </div>
