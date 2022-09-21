@@ -390,8 +390,8 @@ const seed = async () => {
                   create: {
                     handle: faker.internet.userName().toLowerCase(),
                     avatar: `https://eu.ui-avatars.com/api/?rounded=true&background=574cfa&color=ffffff&name=${faker.internet.userName()}`,
-                    firstName: faker.name.findName(),
-                    lastName: faker.name.findName(),
+                    firstName: faker.name.firstName(),
+                    lastName: faker.name.lastName(),
                     url: faker.internet.url(),
                   },
                 },
