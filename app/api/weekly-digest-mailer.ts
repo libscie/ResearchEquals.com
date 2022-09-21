@@ -26,9 +26,6 @@ export default CronJob(
 
     // find workspaces
     const workspaces = await db.workspace.findMany({
-      where: {
-        id: 52, // TODO: Remove because this was for testing
-      },
       include: {
         members: {
           include: {

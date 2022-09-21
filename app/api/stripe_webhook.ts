@@ -53,7 +53,6 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
     case "payment_intent.succeeded":
       switch (event.data.object.metadata.product) {
         case "collection-type":
-          // TODO: Split for type of collection
           await db.collection.create({
             data: {
               title: "Your title here",

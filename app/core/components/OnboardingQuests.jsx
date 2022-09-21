@@ -404,7 +404,6 @@ const OnboardingDraft = ({ data, refetch }) => {
 const OnboardingCollection = ({ data, refetch }) => {
   return (
     <>
-      {/* TODO: Add conditional logic */}
       {data.editorships.length === 0 ? (
         <div
           key="draft-onboarding-quest"
