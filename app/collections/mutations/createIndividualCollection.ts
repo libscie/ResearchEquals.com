@@ -69,16 +69,16 @@ export default resolver.pipe(resolver.authorize(), async ({}, ctx) => {
       collectionTypeId: collection!.id,
       public: true,
       icon: {
-        cdnUrl: workspace?.avatar,
-        originalUrl: workspace?.avatar,
-        mimeType: "image",
+        cdnUrl: "https://ucarecdn.com/89f51e88-ab60-40fe-826d-4e86ed938424/RBadge.svg",
+        originalUrl: "https://ucarecdn.com/89f51e88-ab60-40fe-826d-4e86ed938424/RBadge.svg",
+        mimeType: "image/svg+xml",
       } as Prisma.JsonObject,
       header: {
         cdnUrl:
-          "https://images.unsplash.com/photo-1663275162414-64dba99065a2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1528&q=80",
+          "https://ucarecdn.com/92add952-fe09-469d-91e9-4b86659dfe83/magipatternseamless1663788590153.jpg",
         originalUrl:
-          "https://images.unsplash.com/photo-1663275162414-64dba99065a2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1528&q=80",
-        mimeType: "image",
+          "https://ucarecdn.com/92add952-fe09-469d-91e9-4b86659dfe83/magipatternseamless1663788590153.jpg",
+        mimeType: "image/jpeg",
       } as Prisma.JsonObject,
       editors: {
         create: {
