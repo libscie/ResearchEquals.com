@@ -21,6 +21,11 @@ const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invit
         current: router.asPath === Routes.Graph().pathname,
       },
       {
+        name: "Collections",
+        href: Routes.CollectionsPage(),
+        current: router.asPath === `/collections`,
+      },
+      {
         name: "Dashboard",
         href: Routes.Dashboard(),
         current: router.asPath === Routes.Dashboard().pathname,
@@ -41,11 +46,6 @@ const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invit
         name: "My Modules",
         href: Routes.HandlePage({ handle: currentWorkspace!.handle }),
         current: router.asPath === `/${currentWorkspace!.handle}`,
-      },
-      {
-        name: "Collections",
-        href: Routes.CollectionsPage(),
-        current: router.asPath === `/collections`,
       },
     ]
   }
