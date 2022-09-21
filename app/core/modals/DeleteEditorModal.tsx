@@ -81,7 +81,9 @@ export default function SetEditorToInactiveModal({ editor, refetchFn }) {
                           closeModal()
                           return `Deleted editor!`
                         },
-                        error: "Failed to delete editor...",
+                        error: (e) => {
+                          return e.toString()
+                        },
                       })
                     }}
                   >
