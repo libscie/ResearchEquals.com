@@ -25,6 +25,7 @@ export default async function getSignature({ session, changeDays }) {
       followers: true,
       following: true,
       authorships: true,
+      editorships: true,
     },
   })
 
