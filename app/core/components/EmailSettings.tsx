@@ -48,7 +48,9 @@ const EmailSettings = ({ user, setIsOpen }) => {
             values[`${membership.workspace.handle}-approvals`] !=
               emailNotifications[`${membership.workspace.handle}-approvals`] ||
             values[`${membership.workspace.handle}-weeklyDigest`] !=
-              emailNotifications[`${membership.workspace.handle}-weeklyDigest`]
+              emailNotifications[`${membership.workspace.handle}-weeklyDigest`] ||
+            values[`${membership.workspace.handle}-collections`] !=
+              emailNotifications[`${membership.workspace.handle}-collections`]
           )
             toast.promise(
               changeMemberEmailsMutation({
@@ -56,6 +58,7 @@ const EmailSettings = ({ user, setIsOpen }) => {
                 invitations: values[`${membership.workspace.handle}-invitations`],
                 approvals: values[`${membership.workspace.handle}-approvals`],
                 weeklyDigest: values[`${membership.workspace.handle}-weeklyDigest`],
+                collections: values[`${membership.workspace.handle}-collections`],
               }),
               {
                 loading: `Updating emails for @${membership.workspace.handle}...`,
@@ -123,13 +126,14 @@ const EmailSettings = ({ user, setIsOpen }) => {
             )}
           </div>
         </div>
-        <table className="m-2 w-full">
+        <table className="m-2 w-full text-gray-900 dark:text-gray-200">
           <thead>
             <tr>
               <th className=""></th>
               <th className="text-sm font-medium underline">Invitations</th>
               <th className="text-sm font-medium underline">Approvals</th>
               <th className="text-sm font-medium underline">Weekly Digest</th>
+              <th className="text-sm font-medium underline">Collections</th>
             </tr>
           </thead>
           <tbody>
@@ -139,7 +143,7 @@ const EmailSettings = ({ user, setIsOpen }) => {
                   <td className="flex">
                     <img
                       src={membership.workspace.avatar}
-                      className="mx-1 inline-block h-6 h-full w-6 align-middle"
+                      className="mx-1 inline-block h-6 h-full w-6 rounded-full align-middle"
                     />
                     <span className="inline-block h-full align-middle"> </span>
                     <p className="inline-block align-middle text-sm line-clamp-1">
@@ -202,6 +206,24 @@ const EmailSettings = ({ user, setIsOpen }) => {
                           formik.values[`${membership.workspace.handle}-weeklyDigest`]
                         }
                         {...formik.getFieldProps(`${membership.workspace.handle}-weeklyDigest`)}
+                      />
+                    )}
+                  </td>
+                  <td className="">
+                    {formik.values.emailConsent ? (
+                      <input
+                        type="checkbox"
+                        id={`${membership.workspace.handle}-collections`}
+                        defaultChecked={formik.values[`${membership.workspace.handle}-collections`]}
+                        {...formik.getFieldProps(`${membership.workspace.handle}-collections`)}
+                      />
+                    ) : (
+                      <input
+                        type="checkbox"
+                        disabled
+                        className="disabled:opacity-25"
+                        defaultChecked={formik.values[`${membership.workspace.handle}-collections`]}
+                        {...formik.getFieldProps(`${membership.workspace.handle}-collections`)}
                       />
                     )}
                   </td>
