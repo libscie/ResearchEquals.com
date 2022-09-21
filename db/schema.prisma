@@ -137,6 +137,7 @@ model Membership {
   emailInvitations  Boolean @default(true)
   emailApprovals    Boolean @default(true)
   emailWeeklyDigest Boolean @default(true)
+  emailCollections  Boolean @default(true)
 
   @@unique([workspaceId, invitedEmail])
 }
