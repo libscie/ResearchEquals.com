@@ -1,7 +1,7 @@
 import { resolver, Ctx, AuthorizationError } from "blitz"
 import db from "db"
 
-export default resolver.pipe(resolver.authorize(), async (suffix: string, ctx: Ctx) => {
+export default resolver.pipe(async (suffix: string, ctx: Ctx) => {
   const collection = await db.collection.findFirst({
     where: {
       suffix,
@@ -62,6 +62,7 @@ export default resolver.pipe(resolver.authorize(), async (suffix: string, ctx: C
       accepted: null,
     },
   })
+  // TODO: Only unique contributors
   const contributors = await db.submission.findMany({
     where: {
       accepted: true,
@@ -86,8 +87,8 @@ export default resolver.pipe(resolver.authorize(), async (suffix: string, ctx: C
       },
     },
   })
-  console.log(isFollowing)
 
+  console.log(ownCollections!.editors)
   const isAdmin =
     ownCollections!.editors[0]!.role === "OWNER" || ownCollections!.editors[0]!.role === "ADMIN"
 

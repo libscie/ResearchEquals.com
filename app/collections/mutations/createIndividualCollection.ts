@@ -6,6 +6,7 @@ import { isURI } from "app/core/crossref/ai_program"
 import submitToCrossRef from "app/core/utils/submitToCrossRef"
 
 export default resolver.pipe(resolver.authorize(), async ({}, ctx) => {
+  if (ctx.session.$publicData.userId === null) throw new Error("Need to log in first")
   // Find relevant collection ID
   const collection = await db.collectionType.findFirst({
     where: {
