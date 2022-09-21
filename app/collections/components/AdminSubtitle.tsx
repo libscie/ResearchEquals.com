@@ -3,12 +3,12 @@ import { Field, Form, Formik } from "formik"
 import toast from "react-hot-toast"
 import changeSubtitle from "../mutations/changeSubtitle"
 
-const Subtitle = ({ collection, refetchFn }) => {
+const Subtitle = ({ collection, refetchFn, isAdmin }) => {
   const [changeSubtitleMutation, { isSuccess: isSubtitleSuccess }] = useMutation(changeSubtitle)
 
   return (
     <>
-      {collection.subtitle === null || !collection.public || collection.upgraded ? (
+      {(collection.subtitle === null || !collection.public || collection.upgraded) && isAdmin ? (
         <>
           <Formik
             initialValues={{

@@ -3,12 +3,12 @@ import { Field, Form, Formik } from "formik"
 import toast from "react-hot-toast"
 import changeTitle from "../mutations/changeTitle"
 
-const AdminTitle = ({ collection, refetchFn }) => {
+const AdminTitle = ({ collection, refetchFn, isAdmin }) => {
   const [changeTitleMutation] = useMutation(changeTitle)
 
   return (
     <>
-      {collection.title === null || !collection.public || collection.upgraded ? (
+      {(collection.title === null || !collection.public || collection.upgraded) && isAdmin ? (
         <>
           <Formik
             initialValues={{
