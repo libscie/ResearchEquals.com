@@ -7,9 +7,11 @@ import {
   useMutation,
   Router,
   Routes,
+  NotFoundError,
 } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import { UserAdmin, LogoTwitter, UserFollow } from "@carbon/icons-react"
+import { Suspense } from "react"
 
 import Navbar from "../../core/components/Navbar"
 import { useCurrentUser } from "../../core/hooks/useCurrentUser"
@@ -37,8 +39,63 @@ import ViewDescription from "../../collections/components/ViewDescription"
 import ViewCollectedWorks from "../../collections/components/ViewCollectedWorks"
 import ViewEditors from "../../collections/components/ViewEditors"
 import followCollection from "../../collections/mutations/followCollection"
+import db from "db"
+import addWork from "app/collections/mutations/addWork"
+import createReferenceModule from "app/modules/mutations/createReferenceModule"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
+
+export async function getServerSideProps(context) {
+  const collection = await db.collection.findFirst({
+    where: {
+      suffix: context.params.suffix.toLowerCase(),
+    },
+    include: {
+      submissions: {
+        orderBy: {
+          updatedAt: "desc",
+        },
+        include: {
+          submittedBy: true,
+          module: true,
+          editor: {
+            include: {
+              workspace: true,
+            },
+          },
+        },
+      },
+      editors: {
+        orderBy: {
+          id: "asc",
+        },
+        include: {
+          workspace: {
+            include: {
+              members: {
+                include: {
+                  user: {
+                    select: {
+                      id: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      type: true,
+    },
+  })
+
+  if (!collection) throw new NotFoundError()
+  return {
+    props: {
+      collection,
+    },
+  }
+}
 
 const Collection: BlitzPage = () => {
   const currentUser = useCurrentUser()
@@ -50,7 +107,6 @@ const Collection: BlitzPage = () => {
   const [{ collection, isAdmin, pendingSubmissions, contributors, isFollowing }, { refetch }] =
     useQuery(getCollection, router.query.suffix as string)
   const xlWindow = useMediaPredicate("(min-width: 1280px)")
-
   return (
     <>
       <Navbar
@@ -158,10 +214,10 @@ const Collection: BlitzPage = () => {
   )
 }
 
-const CollectionPage = () => {
-  const router = useRouter()
-  const [{ collection, isAdmin, pendingSubmissions, contributors, isFollowing }, { refetch }] =
-    useQuery(getCollection, router.query.suffix as string)
+const CollectionPage = ({ collection }) => {
+  // const router = useRouter()
+  // const [{ collection, isAdmin, pendingSubmissions, contributors, isFollowing }, { refetch }] =
+  //   useQuery(getCollection, router.query.suffix as string)
 
   return (
     <Layout
@@ -247,8 +303,7 @@ const SocialActivity = ({ collection, refetchFn, isFollowing }) => {
           `Check out this @ResearchEquals Collection: \n"${collection!.title}"\n`
         )}&url=${encodeURIComponent(
           `https://doi.org/${process.env.DOI_PREFIX}/${collection?.suffix}`
-        )}
-                  `}
+        )}`}
       >
         <a
           type="a"
@@ -341,6 +396,7 @@ const AdminBanner = ({ suffix }) => {
 
 const AddSubmmision = ({ collection, currentWorkspace, refetchFn }) => {
   const [addSubmissionMutation] = useMutation(addSubmission)
+  const [createReferenceMutation] = useMutation(createReferenceModule)
 
   return (
     <div className="mx-4 my-8 xl:mr-4 xl:ml-0">
@@ -384,6 +440,7 @@ const AddSubmmision = ({ collection, currentWorkspace, refetchFn }) => {
                   ],
                 })
               },
+
               templates: {
                 item({ item, components }) {
                   return (
@@ -392,6 +449,62 @@ const AddSubmmision = ({ collection, currentWorkspace, refetchFn }) => {
                         <SearchResultModule item={item} />
                       ) : (
                         ""
+                      )}
+                    </>
+                  )
+                },
+                noResults() {
+                  const matchedQuery = query.match(/10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
+
+                  return (
+                    <>
+                      {/* https://www.crossref.org/blog/dois-and-matching-regular-expressions/ */}
+                      {matchedQuery ? (
+                        <>
+                          <button
+                            className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200"
+                            onClick={async () => {
+                              toast.promise(
+                                createReferenceMutation({
+                                  doi: matchedQuery.slice(-1)[0].endsWith("/")
+                                    ? matchedQuery.slice(-1)[0].slice(0, -1)
+                                    : matchedQuery.slice(-1)[0],
+                                }),
+                                {
+                                  loading: "Searching...",
+                                  success: (data) => {
+                                    toast.promise(
+                                      addSubmissionMutation({
+                                        collectionId: collection!.id,
+                                        workspaceId: currentWorkspace!.id,
+                                        moduleId: data.id,
+                                      }),
+                                      {
+                                        loading: "Adding work to collection...",
+                                        success: () => {
+                                          refetchFn()
+                                          return "Added work to collection!"
+                                        },
+                                        error: "Failed to add work to collection...",
+                                      }
+                                    )
+
+                                    refetchFn()
+
+                                    return "Record added to database"
+                                  },
+                                  error: "Could not add record.",
+                                }
+                              )
+                            }}
+                          >
+                            Click here to add {matchedQuery.slice(-1)} to ResearchEquals database
+                          </button>
+                        </>
+                      ) : (
+                        <p className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200">
+                          Input a DOI to add
+                        </p>
                       )}
                     </>
                   )
