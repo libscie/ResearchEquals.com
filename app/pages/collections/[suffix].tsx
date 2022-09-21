@@ -40,7 +40,7 @@ import followCollection from "../../collections/mutations/followCollection"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
-const CollectionPage: BlitzPage = () => {
+const Collection: BlitzPage = () => {
   const currentUser = useCurrentUser()
   const session = useSession()
   const currentWorkspace = useCurrentWorkspace()
@@ -158,11 +158,31 @@ const CollectionPage: BlitzPage = () => {
   )
 }
 
-CollectionPage.getLayout = (page) => (
-  <Layout title="R= Collection">
-    <LayoutLoader>{page}</LayoutLoader>
-  </Layout>
-)
+const CollectionPage = () => {
+  const router = useRouter()
+  const [{ collection, isAdmin, pendingSubmissions, contributors, isFollowing }, { refetch }] =
+    useQuery(getCollection, router.query.suffix as string)
+
+  return (
+    <Layout
+      title="R= Collection"
+      headChildren={
+        <>
+          <link
+            rel="alternate"
+            type="application/rss+xml"
+            title={`RSS Feed for ${collection!.title}`}
+            href={`/api/rss/collections/${collection!.suffix}`}
+          />
+        </>
+      }
+    >
+      <LayoutLoader>
+        <Collection />
+      </LayoutLoader>
+    </Layout>
+  )
+}
 
 export default CollectionPage
 
