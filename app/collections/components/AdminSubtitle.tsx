@@ -43,7 +43,7 @@ const Subtitle = ({ collection, refetchFn }) => {
               <Field
                 id="subtitle"
                 name="subtitle"
-                placeholder={collection.subtitle || "Your subtitle here"}
+                placeholder={collection.subtitle}
                 type="text"
                 className="w-full border-0 text-center text-sm font-medium leading-5 focus:ring-0 dark:bg-gray-900 md:text-base "
               />

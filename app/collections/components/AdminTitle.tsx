@@ -43,8 +43,7 @@ const AdminTitle = ({ collection, refetchFn }) => {
               <Field
                 id="title"
                 name="title"
-                // TODO: This is causing a bug
-                placeholder={collection.title || "Your title here"}
+                placeholder={collection.title}
                 type="text"
                 className="w-full select-none overflow-auto border-0 bg-white text-center text-3xl focus:ring-0 dark:bg-gray-900 md:text-5xl lg:text-6xl "
               />

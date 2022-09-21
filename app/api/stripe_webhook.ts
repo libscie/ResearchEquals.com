@@ -56,12 +56,14 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
           // TODO: Split for type of collection
           await db.collection.create({
             data: {
+              title: "Your title here",
+              subtitle: "Your subtitle here",
               suffix: event.data.object.metadata.suffix,
               collectionTypeId: parseInt(event.data.object.metadata.collectionId),
               icon: {
                 cdnUrl: "https://ucarecdn.com/89f51e88-ab60-40fe-826d-4e86ed938424/RBadge.svg",
                 originalUrl: "https://ucarecdn.com/89f51e88-ab60-40fe-826d-4e86ed938424/RBadge.svg",
-                mimeType: "image/jpeg",
+                mimeType: "image/svg+xml",
               } as Prisma.JsonObject,
               header: {
                 cdnUrl:
