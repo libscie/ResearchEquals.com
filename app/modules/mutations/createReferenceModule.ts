@@ -13,7 +13,7 @@ function capitalizeFirstLetter(string) {
 export default resolver.pipe(resolver.authorize(), async ({ doi }, ctx) => {
   try {
     // Will auto-throw if resource not found
-    const cr = await axios.get(`https://api.crossref.org/works/${doi}&mailto=info@libscie.org`)
+    const cr = await axios.get(`https://api.crossref.org/works/${doi}?mailto=info@libscie.org`)
     const metadata = cr.data.message
 
     const crType = capitalizeFirstLetter(metadata.type.replace("-", " "))

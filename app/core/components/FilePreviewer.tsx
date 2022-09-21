@@ -34,7 +34,7 @@ const MainFileViewer = ({ mainFile, module }) => {
           )}
           {/* Preview PDF */}
           {mainFile.mimeType.startsWith("application/pdf") ? (
-            <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.15.349/build/pdf.worker.min.js">
+            <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.worker.min.js">
               <div style={{ height: "750px" }} className="max-w-screen text-gray-900">
                 <Viewer fileUrl={mainFile.cdnUrl} />
               </div>
