@@ -101,9 +101,10 @@ export default resolver.pipe(async (suffix: string, ctx: Ctx) => {
         },
       },
     })
-    console.log(ownCollections)
-    isAdmin =
-      ownCollections!.editors[0]!.role === "OWNER" || ownCollections!.editors[0]!.role === "ADMIN"
+    if (ownCollections!.editors.length > 0) {
+      isAdmin =
+        ownCollections!.editors[0]!.role === "OWNER" || ownCollections!.editors[0]!.role === "ADMIN"
+    }
   }
 
   return {
