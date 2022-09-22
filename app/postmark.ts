@@ -41,3 +41,17 @@ export async function sendCollectionSubmission(data: Object, to: string) {
   message.ReplyTo = "Chris Hartgerink <ceo@libscie.org>"
   await postmark().sendEmailWithTemplate(message)
 }
+
+export async function acceptSubmission(data: Object, to: string) {
+  const message = new TemplatedMessage(from, "submission-accepted", data, to)
+  message.MessageStream = "broadcast"
+  message.ReplyTo = "Chris Hartgerink <ceo@libscie.org>"
+  await postmark().sendEmailWithTemplate(message)
+}
+
+export async function rejectSubmission(data: Object, to: string) {
+  const message = new TemplatedMessage(from, "submission-rejected", data, to)
+  message.MessageStream = "broadcast"
+  message.ReplyTo = "Chris Hartgerink <ceo@libscie.org>"
+  await postmark().sendEmailWithTemplate(message)
+}

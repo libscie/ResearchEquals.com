@@ -43,7 +43,10 @@ export default Queue("api/collection-submission-mailer", async (submissionId: nu
       if (member.emailCollections && member.user?.emailConsent && member.user.emailIsVerified) {
         await sendCollectionSubmission(
           {
-            name: `${submission.submittedBy?.firstName} ${submission.submittedBy?.lastName}`,
+            name:
+              submission.submittedBy?.firstName && submission.submittedBy?.lastName
+                ? `${submission.submittedBy?.firstName} ${submission.submittedBy?.lastName}`
+                : submission.submittedBy?.handle,
             collection: submission.collection.title,
             title: submission.module.title,
             workspaceUrl: `${process.env.APP_ORIGIN}/${submission.submittedBy?.handle}`,

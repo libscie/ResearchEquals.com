@@ -1,8 +1,8 @@
-import { acceptSubmission } from "app/postmark"
+import { acceptSubmission, rejectSubmission } from "app/postmark"
 import { Queue } from "quirrel/next"
 import db from "../../db"
 
-export default Queue("api/collection-accepted-mailer", async (submissionId: number) => {
+export default Queue("api/collection-rejected-mailer", async (submissionId: number) => {
   const submission = await db.submission.findFirst({
     where: {
       id: submissionId,
@@ -58,7 +58,7 @@ export default Queue("api/collection-accepted-mailer", async (submissionId: numb
   // send an email to all editors
   submission?.submittedBy?.members.map(async (member) => {
     if (member.emailCollections && member.user?.emailConsent && member.user.emailIsVerified) {
-      await acceptSubmission(
+      await rejectSubmission(
         {
           editor:
             submission.editor?.workspace.firstName && submission.editor?.workspace.lastName

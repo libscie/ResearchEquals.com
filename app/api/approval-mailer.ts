@@ -40,6 +40,8 @@ export default Queue("api/approval-mailer", async (moduleId: number) => {
       ) {
         await sendApproval(
           {
+            // TODO: This name should be checked
+            // https://github.com/libscie/ResearchEquals.com/issues/730
             name: `${author.workspace?.firstName} ${author.workspace?.lastName}`,
             title: module.title,
             url: `${process.env.APP_ORIGIN}/drafts?suffix=${module.suffix}`,
