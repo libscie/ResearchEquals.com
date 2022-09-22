@@ -1,24 +1,31 @@
-import { sendApproval } from "app/postmark"
+import { sendCollectionSubmission } from "app/postmark"
 import { Queue } from "quirrel/next"
 import db from "../../db"
 
-export default Queue("api/approval-mailer", async (moduleId: number) => {
-  const module = await db.module.findFirst({
+export default Queue("api/collection-submission-mailer", async (submissionId: number) => {
+  // get submission
+  const submission = await db.submission.findFirst({
     where: {
-      id: moduleId,
+      id: submissionId,
     },
     include: {
-      authors: {
+      module: true,
+      submittedBy: true,
+      collection: {
         include: {
-          workspace: {
+          editors: {
             include: {
-              members: {
+              workspace: {
                 include: {
-                  user: {
-                    select: {
-                      emailConsent: true,
-                      email: true,
-                      emailIsVerified: true,
+                  members: {
+                    include: {
+                      user: {
+                        select: {
+                          emailConsent: true,
+                          email: true,
+                          emailIsVerified: true,
+                        },
+                      },
                     },
                   },
                 },
@@ -30,23 +37,42 @@ export default Queue("api/approval-mailer", async (moduleId: number) => {
     },
   })
 
-  module?.authors.map(async (author) => {
-    author.workspace?.members.map(async (member) => {
-      if (
-        member.emailApprovals &&
-        member.user?.emailConsent &&
-        member.user.emailIsVerified &&
-        author.acceptedInvitation
-      ) {
-        await sendApproval(
+  // send an email to all editors
+  submission?.collection.editors.map(async (editor) => {
+    editor.workspace.members.map(async (member) => {
+      if (member.emailCollections && member.user?.emailConsent && member.user.emailIsVerified) {
+        await sendCollectionSubmission(
           {
-            name: `${author.workspace?.firstName} ${author.workspace?.lastName}`,
-            title: module.title,
-            url: `${process.env.APP_ORIGIN}/drafts?suffix=${module.suffix}`,
+            name: `${submission.submittedBy?.firstName} ${submission.submittedBy?.lastName}`,
+            collection: submission.collection.title,
+            title: submission.module.title,
+            workspaceUrl: `${process.env.APP_ORIGIN}/${submission.submittedBy?.handle}`,
+            submissionUrl: `https://doi.org/${submission.module.prefix}/${submission.module.suffix}`,
+            adminUrl: `${process.env.APP_ORIGIN}/collections/${submission.collection.suffix}/admin`,
           },
           member.user?.email
         )
       }
     })
   })
+  // submission.
+  // module?.authors.map(async (author) => {
+  //   author.workspace?.members.map(async (member) => {
+  //     if (
+  //       member.emailApprovals &&
+  //       member.user?.emailConsent &&
+  //       member.user.emailIsVerified &&
+  //       author.acceptedInvitation
+  //     ) {
+  //       await sendApproval(
+  //         {
+  //           name: `${author.workspace?.firstName} ${author.workspace?.lastName}`,
+  //           title: module.title,
+  //           url: `${process.env.APP_ORIGIN}/drafts?suffix=${module.suffix}`,
+  //         },
+  //         member.user?.email
+  //       )
+  //     }
+  //   })
+  // })
 })

@@ -1,5 +1,6 @@
 import { resolver } from "blitz"
 import db from "db"
+import collectionSubmissionMailer from "../../api/collection-submission-mailer"
 
 export default resolver.pipe(
   resolver.authorize(),
@@ -22,6 +23,21 @@ export default resolver.pipe(
           },
         },
       },
+    })
+
+    const submission = await db.submission.findFirst({
+      where: {
+        collectionId,
+        moduleId,
+        workspaceId,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    })
+
+    await collectionSubmissionMailer.enqueue(submission!.id, {
+      id: submission!.id.toString(),
     })
 
     return collection
