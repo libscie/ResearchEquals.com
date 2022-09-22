@@ -12,6 +12,7 @@ import ActivityBadge from "app/collections/components/ActivityBadge"
 import DoiCollection from "app/collections/components/DoiCollection"
 import EditorsBadge from "app/collections/components/EditorsBadge"
 import ContributorsBadge from "app/collections/components/ContributorsBadge"
+import CollectionsModal from "app/core/modals/CollectionsModal"
 
 const CollectionsPage: BlitzPage = () => {
   const currentUser = useCurrentUser()
@@ -101,6 +102,26 @@ const CollectionsPage: BlitzPage = () => {
               </Link>
             )
           })}
+        </div>
+        <div className="collection-4-sky my-12 rounded-md bg-sky-200 dark:bg-sky-700">
+          <div className="mx-auto max-w-2xl py-16 px-4 text-center sm:py-20 sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
+              <span className="block font-serif">Start collecting today.</span>
+            </h2>
+            <p className="mt-4 text-lg leading-6 text-gray-900 dark:text-gray-200">
+              This is your opportunity to become your own editor.
+            </p>
+            <CollectionsModal
+              styling=""
+              button={
+                <button className="mt-8 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-sky-50 px-5 py-3 text-base font-medium text-sky-700  hover:bg-sky-100 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-sky-500 dark:hover:border-gray-400 dark:hover:bg-gray-700 sm:w-auto">
+                  Create a collection
+                </button>
+              }
+              user={currentUser}
+              workspace={currentWorkspace}
+            />
+          </div>
         </div>
       </main>
     </>

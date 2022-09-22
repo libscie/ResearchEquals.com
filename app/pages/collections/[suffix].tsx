@@ -107,6 +107,7 @@ const Collection: BlitzPage = () => {
   const [{ collection, isAdmin, pendingSubmissions, contributors, isFollowing }, { refetch }] =
     useQuery(getCollection, router.query.suffix as string)
   const xlWindow = useMediaPredicate("(min-width: 1280px)")
+  console.log(currentWorkspace === null)
   return (
     <>
       <Navbar
@@ -156,7 +157,7 @@ const Collection: BlitzPage = () => {
               <ViewDescription collection={collection} />
               <ViewEditors collection={collection} />
               <ViewCollectedWorks collection={collection} />
-              {collection!.type.type === "COMMUNITY" && (
+              {collection!.type.type === "COMMUNITY" && currentWorkspace != null && (
                 <>
                   <AddSubmmision
                     collection={collection}
@@ -197,7 +198,7 @@ const Collection: BlitzPage = () => {
               <ViewDescription collection={collection} />
               <ViewCollectedWorks collection={collection} />
             </div>
-            {collection!.type.type === "COMMUNITY" && (
+            {collection!.type.type === "COMMUNITY" && currentWorkspace != null && (
               <div className="col-span-2 w-full">
                 <AddSubmmision
                   collection={collection}
@@ -259,7 +260,9 @@ const SocialActivity = ({ collection, refetchFn, isFollowing }) => {
                 refetchFn()
                 return "Unfollowed!"
               },
-              error: "Error",
+              error: (e) => {
+                return e.toString()
+              },
             })
           }}
         >
@@ -283,7 +286,9 @@ const SocialActivity = ({ collection, refetchFn, isFollowing }) => {
                 refetchFn()
                 return "Followed!"
               },
-              error: "Error",
+              error: (e) => {
+                return e.toString()
+              },
             })
           }}
         >

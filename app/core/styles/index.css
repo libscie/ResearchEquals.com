@@ -302,3 +302,18 @@ body {
       20px 20px 1px #99f6e4;
   }
 }
+
+.collection-4-sky {
+  -webkit-box-shadow: 5px 5px 1px #7dd3fc, 10px 10px 1px #38bdf8, 15px 15px 1px #0ea5e9,
+    20px 20px 1px #0284c7;
+  box-shadow: 5px 5px 1px #7dd3fc, 10px 10px 1px #38bdf8, 15px 15px 1px #0ea5e9,
+    20px 20px 1px #0284c7;
+}
+@media (prefers-color-scheme: dark) {
+  .collection-4-sky {
+    -webkit-box-shadow: 5px 5px 1px #0284c7, 10px 10px 1px #0ea5e9, 15px 15px 1px #38bdf8,
+      20px 20px 1px #7dd3fc;
+    box-shadow: 5px 5px 1px #0284c7, 10px 10px 1px #0ea5e9, 15px 15px 1px #38bdf8,
+      20px 20px 1px #7dd3fc;
+  }
+}
