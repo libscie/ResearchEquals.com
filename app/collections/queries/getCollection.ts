@@ -44,18 +44,7 @@ export default resolver.pipe(async (suffix: string, ctx: Ctx) => {
       type: true,
     },
   })
-  const ownCollections = await db.collection.findFirst({
-    where: {
-      id: collection!.id,
-    },
-    include: {
-      editors: {
-        where: {
-          workspaceId: ctx.session.$publicData.workspaceId,
-        },
-      },
-    },
-  })
+
   const pendingSubmissions = await db.submission.findMany({
     where: {
       collectionId: collection!.id,
@@ -83,6 +72,7 @@ export default resolver.pipe(async (suffix: string, ctx: Ctx) => {
       })
     )
   })
+
   const isFollowing = await db.collection.findFirst({
     where: {
       id: collection?.id,
@@ -96,9 +86,25 @@ export default resolver.pipe(async (suffix: string, ctx: Ctx) => {
     },
   })
 
-  console.log(ownCollections!.editors)
-  const isAdmin =
-    ownCollections!.editors[0]!.role === "OWNER" || ownCollections!.editors[0]!.role === "ADMIN"
+  let isAdmin = false
+  if (ctx.session.$publicData.workspaceId) {
+    console.log("yes")
+    const ownCollections = await db.collection.findFirst({
+      where: {
+        id: collection!.id,
+      },
+      include: {
+        editors: {
+          where: {
+            workspaceId: ctx.session.$publicData.workspaceId,
+          },
+        },
+      },
+    })
+    console.log(ownCollections)
+    isAdmin =
+      ownCollections!.editors[0]!.role === "OWNER" || ownCollections!.editors[0]!.role === "ADMIN"
+  }
 
   return {
     collection,
