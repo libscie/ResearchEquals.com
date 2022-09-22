@@ -9,7 +9,7 @@ const AdminSubmission = ({ submission, editorIdSelf, refetchFn }) => {
     <>
       {submission.accepted === null && (
         <>
-          <div>
+          <div className="my-8">
             <Link href={`https://doi.org/${submission.module.prefix}/${submission.module.suffix}`}>
               <a
                 className="text-lg"
@@ -25,12 +25,14 @@ const AdminSubmission = ({ submission, editorIdSelf, refetchFn }) => {
                   Originally published {moment(submission.module.publishedAt).fromNow()}
                 </p>
                 <p className="text-sm">
-                  {/* TODO: Need to manage this for just name */}
-                  Submitted by {submission.submittedBy!.firstName}{" "}
-                  {submission.submittedBy!.lastName}
+                  {/* TODO: Need o manage this for just name */}
+                  Submitted by{" "}
+                  {submission.submittedBy!.firstName && submission.submittedBy!.lastName
+                    ? `${submission.submittedBy!.firstName} ${submission.submittedBy!.lastName}`
+                    : submission.submittedBy.handle}
                 </p>
               </div>
-              <div className="right-0 mx-auto inline-block h-full w-full text-center">
+              <div className="right-0 mx-auto inline-block h-full w-full text-right">
                 {/* accept submission */}
                 <HandleSubmissionToCollectionModal
                   submission={submission}

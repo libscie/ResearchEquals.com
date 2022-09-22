@@ -63,8 +63,8 @@ const CollectionsPage: BlitzPage = () => {
                         <>
                           <img
                             src={collection.icon!["cdnUrl"]!}
-                            className="max-w-56 mx-4 inline-block max-h-12 w-auto align-middle"
-                            alt=""
+                            className="max-w-56 mx-4 inline-block max-h-12 w-auto align-middle dark:invert"
+                            alt={`Icon of ${collection.title}`}
                             loading="lazy"
                           />
                           <div>
@@ -85,7 +85,7 @@ const CollectionsPage: BlitzPage = () => {
                             dangerouslySetInnerHTML={{
                               __html: collection.description as string,
                             }}
-                            className="quilljs-collection text-white"
+                            className="quilljs-collection text-gray-900 dark:text-white"
                           />
                         </p>
                         <div className="scale-90">

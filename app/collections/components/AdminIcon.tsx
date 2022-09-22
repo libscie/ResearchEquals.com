@@ -28,6 +28,7 @@ const Icon = ({ collection, refetchFn, signature, expire }) => {
               widgetApiIcon!["current"].openDialog()
             }}
           />
+          <p className="text-xs">*We recommend uploading an icon in the color black.</p>
           <Widget
             publicKey={process.env.UPLOADCARE_PUBLIC_KEY ?? ""}
             secureSignature={signature}
