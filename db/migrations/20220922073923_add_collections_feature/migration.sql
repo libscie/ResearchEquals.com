@@ -7,6 +7,9 @@
 -- CreateEnum
 CREATE TYPE "CollectionTypes" AS ENUM ('INDIVIDUAL', 'COLLABORATIVE', 'COMMUNITY');
 
+-- AlterTable
+ALTER TABLE "Membership" ADD COLUMN     "emailCollections" BOOLEAN NOT NULL DEFAULT true;
+
 -- DropTable
 DROP TABLE "ReleaseList";
 
@@ -18,9 +21,9 @@ CREATE TABLE "Submission" (
     "accepted" BOOLEAN,
     "collectionId" INTEGER NOT NULL,
     "moduleId" INTEGER NOT NULL,
-    "comment" VARCHAR(280) NOT NULL,
-    "editorshipId" INTEGER NOT NULL,
-    "workspaceId" INTEGER NOT NULL,
+    "comment" VARCHAR(280),
+    "editorshipId" INTEGER,
+    "workspaceId" INTEGER,
     "pinPosition" INTEGER,
 
     CONSTRAINT "Submission_pkey" PRIMARY KEY ("id")
@@ -32,6 +35,8 @@ CREATE TABLE "Collection" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "public" BOOLEAN NOT NULL DEFAULT false,
+    "active" BOOLEAN NOT NULL DEFAULT true,
+    "upgraded" BOOLEAN NOT NULL DEFAULT false,
     "finishedAt" TIMESTAMP(3),
     "collectionTypeId" INTEGER NOT NULL,
     "suffix" TEXT,
@@ -63,6 +68,7 @@ CREATE TABLE "Editorship" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "role" "MembershipRole" NOT NULL DEFAULT 'USER',
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
     "collectionId" INTEGER NOT NULL,
     "workspaceId" INTEGER NOT NULL,
 
@@ -100,10 +106,10 @@ ALTER TABLE "Submission" ADD CONSTRAINT "Submission_collectionId_fkey" FOREIGN K
 ALTER TABLE "Submission" ADD CONSTRAINT "Submission_moduleId_fkey" FOREIGN KEY ("moduleId") REFERENCES "Module"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Submission" ADD CONSTRAINT "Submission_editorshipId_fkey" FOREIGN KEY ("editorshipId") REFERENCES "Editorship"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Submission" ADD CONSTRAINT "Submission_editorshipId_fkey" FOREIGN KEY ("editorshipId") REFERENCES "Editorship"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Submission" ADD CONSTRAINT "Submission_workspaceId_fkey" FOREIGN KEY ("workspaceId") REFERENCES "Workspace"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Submission" ADD CONSTRAINT "Submission_workspaceId_fkey" FOREIGN KEY ("workspaceId") REFERENCES "Workspace"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Collection" ADD CONSTRAINT "Collection_collectionTypeId_fkey" FOREIGN KEY ("collectionTypeId") REFERENCES "CollectionType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
