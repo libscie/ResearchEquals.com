@@ -1,13 +1,13 @@
 import { Dialog, Transition, Tab, RadioGroup } from "@headlessui/react"
 import { Fragment, useState } from "react"
 import { CheckmarkFilled, Close, CloseFilled } from "@carbon/icons-react"
-import { useRecoilState } from "recoil"
-import { collectionsModalAtom } from "../utils/Atoms"
+import PayCreateCollectionModal from "./PayCreateCollectionModal"
 
 const plans = [
   {
     name: "Individual collection",
-    price: "Free",
+    tag: "INDIVIDUAL",
+    price: 0,
     note: "Limited to 1 active collection per workspace",
     features: [
       { title: "Unique collection DOI", available: true },
@@ -21,7 +21,8 @@ const plans = [
   },
   {
     name: "Collaborative collection",
-    price: "€14.99",
+    tag: "COLLABORATIVE",
+    price: 1499,
     note: "",
     features: [
       { title: "Unique collection DOI", available: true },
@@ -35,7 +36,8 @@ const plans = [
   },
   {
     name: "Community collection",
-    price: "€149.99",
+    tag: "COMMUNITY",
+    price: 14999,
     note: "",
     features: [
       { title: "Unique collection DOI", available: true },
@@ -50,7 +52,7 @@ const plans = [
 ]
 
 export default function CollectionsModal({ button, styling, user, workspace }) {
-  let [isOpen, setIsOpen] = useRecoilState(collectionsModalAtom)
+  let [isOpen, setIsOpen] = useState(false)
   const [selected, setSelected] = useState(plans[0])
 
   return (
@@ -68,7 +70,7 @@ export default function CollectionsModal({ button, styling, user, workspace }) {
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="fixed inset-0 z-10 overflow-y-auto"
+          className="z-999 fixed inset-0 overflow-y-auto"
           onClose={() => {
             setIsOpen(false)
           }}
@@ -177,9 +179,9 @@ export default function CollectionsModal({ button, styling, user, workspace }) {
                                       </div>
                                       <div className="mt-2 mr-2 text-center ">
                                         <span className=" text-4xl font-bold tracking-tight text-white">
-                                          {plan.price}
+                                          {plan.price === 0 ? "Free" : `€${plan.price / 100}`}
                                         </span>
-                                        {plan.price !== "Free" ? (
+                                        {plan.price > 0 ? (
                                           <span className="text-base font-medium text-gray-500">
                                             {" "}
                                             incl. VAT
@@ -222,13 +224,14 @@ export default function CollectionsModal({ button, styling, user, workspace }) {
                         </div>
                       </RadioGroup>
                       <div className="group relative my-4 rounded bg-indigo-600 text-white">
-                        <button
-                          className={`font-heading tracking-px w-full cursor-not-allowed overflow-hidden rounded-md p-1 text-sm font-semibold uppercase`}
-                        >
-                          <div className="border-gradient-to-r relative overflow-hidden rounded-md from-indigo-500 px-9 py-5">
-                            <p className="relative z-10">Coming soon...</p>
-                          </div>
-                        </button>
+                        <PayCreateCollectionModal
+                          user={user}
+                          type={selected?.tag}
+                          price={selected?.price}
+                          workspace={workspace}
+                        />
+                        {/* </>
+                        )} */}
                       </div>
                     </div>
                   </div>

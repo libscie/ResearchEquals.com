@@ -21,6 +21,7 @@ export default async function getCurrentUser(_ = null, { session }: Ctx) {
           emailInvitations: true,
           emailApprovals: true,
           emailWeeklyDigest: true,
+          emailCollections: true,
           workspace: {
             select: {
               avatar: true,

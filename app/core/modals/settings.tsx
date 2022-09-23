@@ -21,6 +21,7 @@ export default function SettingsModal({ button, styling, user, workspace }) {
       [`${membership.workspace.handle}-invitations`]: membership.emailInvitations,
       [`${membership.workspace.handle}-approvals`]: membership.emailApprovals,
       [`${membership.workspace.handle}-weeklyDigest`]: membership.emailWeeklyDigest,
+      [`${membership.workspace.handle}-collections`]: membership.emailCollections,
     }
   })[0]
 

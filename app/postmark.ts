@@ -29,7 +29,28 @@ export async function sendApproval(data: Object, to: string) {
 }
 
 export async function sendDigest(data: Object, to: string) {
-  const message = new TemplatedMessage(from, "weekly-digest", data, to)
+  const message = new TemplatedMessage(from, "weekly-digest-1", data, to)
+  message.MessageStream = "broadcast"
+  message.ReplyTo = "Chris Hartgerink <ceo@libscie.org>"
+  await postmark().sendEmailWithTemplate(message)
+}
+
+export async function sendCollectionSubmission(data: Object, to: string) {
+  const message = new TemplatedMessage(from, "collection-submission", data, to)
+  message.MessageStream = "broadcast"
+  message.ReplyTo = "Chris Hartgerink <ceo@libscie.org>"
+  await postmark().sendEmailWithTemplate(message)
+}
+
+export async function acceptSubmission(data: Object, to: string) {
+  const message = new TemplatedMessage(from, "submission-accepted", data, to)
+  message.MessageStream = "broadcast"
+  message.ReplyTo = "Chris Hartgerink <ceo@libscie.org>"
+  await postmark().sendEmailWithTemplate(message)
+}
+
+export async function rejectSubmission(data: Object, to: string) {
+  const message = new TemplatedMessage(from, "submission-rejected", data, to)
   message.MessageStream = "broadcast"
   message.ReplyTo = "Chris Hartgerink <ceo@libscie.org>"
   await postmark().sendEmailWithTemplate(message)

@@ -26,9 +26,9 @@ export default CronJob(
 
     // find workspaces
     const workspaces = await db.workspace.findMany({
-      where: {
-        id: 52, // TODO: Remove because this was for testing
-      },
+      // where: {
+      //   id: 101,
+      // },
       include: {
         members: {
           include: {
@@ -58,7 +58,7 @@ export default CronJob(
     })
 
     workspaces.map(async (workspace) => {
-      const followedWorkspaces = await db.workspace.findFirst({
+      const workspaceInfo = await db.workspace.findFirst({
         where: {
           id: workspace.id,
         },
@@ -72,11 +72,25 @@ export default CronJob(
               },
             },
           },
+          followingCollections: {
+            include: {
+              submissions: {
+                include: {
+                  module: true,
+                  editor: {
+                    include: {
+                      workspace: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
         },
       })
 
       let newModules = [] as any
-      followedWorkspaces?.following.map((following) => {
+      workspaceInfo?.following.map((following) => {
         return following.authorships.map((author) => {
           if (
             author.module.published &&
@@ -118,14 +132,44 @@ export default CronJob(
         },
       })
 
+      let collections = workspaceInfo?.followingCollections.map((collection) => {
+        let submissions = collection.submissions.map((submission) => {
+          if (submission.updatedAt.getTime()! > lastWeek.getTime()) {
+            return {
+              name: submission.module.title,
+              url: `https://doi.org/${submission.module.prefix}/${submission.module.suffix}`,
+              quote:
+                submission.comment &&
+                `(${submission.editor?.workspace.firstName} says: "${submission.comment}")`,
+            }
+          }
+        })
+        if (submissions[0] === undefined) {
+          submissions = []
+        }
+        const js = {
+          name: collection.title,
+          url: `https://doi.org/${process.env.DOI_PREFIX}/collections/${collection.suffix}`,
+          submissions,
+        }
+        if (js.submissions.length > 0) {
+          return js
+        }
+      })
+      if (collections![0] === undefined) {
+        collections = []
+      }
       workspace.members.map(async (member) => {
         if (
           member.emailInvitations &&
           member.user?.emailConsent &&
           member.user.emailIsVerified &&
-          (newModules.length > 0 || myDrafts.length > 0 || invitations.length > 0)
+          (newModules.length > 0 ||
+            myDrafts.length > 0 ||
+            invitations.length > 0 ||
+            collections!.length > 0)
+          // true
         ) {
-          // TODO: conditional on that there is something to provide a digest on!
           await sendDigest(
             {
               title: "ResearchEquals weekly",
@@ -159,11 +203,12 @@ export default CronJob(
                   url: `${process.env.APP_ORIGIN}/${workspace.handle}`,
                 }
               }),
+              collections: collections,
               product_url: process.env.APP_ORIGIN,
               product_name: "ResearchEquals",
               company_name: "Liberate Science GmbH",
             },
-            member.user.email
+            member.user!.email
           )
         }
       })

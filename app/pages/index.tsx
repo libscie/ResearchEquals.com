@@ -23,7 +23,7 @@ import {
   TextAlignLeft,
   Video,
   CircleFill,
-  Bullhorn,
+  Fire,
 } from "@carbon/icons-react"
 import Xarrows from "react-xarrows"
 import { useMediaPredicate } from "react-media-hook"
@@ -102,21 +102,12 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
               <div>
                 <div className="mt-20">
                   <div className="mt-6 leading-5 sm:max-w-xl">
-                    <CollectionsModal
-                      styling=""
-                      button={
-                        <button className="my-2 inline-flex items-center rounded-full bg-orange-100 px-3 py-0.5 text-sm font-medium text-orange-800 hover:bg-orange-300 hover:text-orange-900">
-                          <Bullhorn
-                            className="mx-1 text-orange-800 hover:text-orange-900"
-                            size={24}
-                          />
-                          Coming soon: Collections
-                        </button>
-                      }
-                      user={currentUser}
-                      workspace={currentWorkspace}
-                    />
-
+                    <Link href={Routes.CollectionsPage()}>
+                      <button className="my-2 inline-flex items-center rounded-full bg-rose-100 px-3 py-0.5 text-sm font-medium text-rose-800 hover:bg-rose-300 hover:text-rose-900">
+                        <Fire className="mx-1 text-rose-800 hover:text-rose-900" size={24} />
+                        Collections are live!
+                      </button>
+                    </Link>
                     <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
                       {t("hero")}
                     </h1>

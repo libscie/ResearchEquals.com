@@ -2,15 +2,19 @@ import { Element, Text } from "xast"
 
 export interface Titles extends Element {
   name: "titles"
-  children: [Title]
+  children: (Title | Subtitle)[]
 }
 
 export interface Title extends Element {
   name: "title"
   children: [Text]
 }
+export interface Subtitle extends Element {
+  name: "subtitle"
+  children: [Text]
+}
 
-const titles = (title: string): Titles => {
+const titles = (title: string, subtitle?: string): Titles => {
   const js: Titles = {
     type: "element",
     name: "titles",
@@ -26,6 +30,19 @@ const titles = (title: string): Titles => {
         ],
       },
     ],
+  }
+
+  if (subtitle) {
+    js.children.push({
+      type: "element",
+      name: "subtitle",
+      children: [
+        {
+          type: "text",
+          value: subtitle,
+        },
+      ],
+    })
   }
 
   return js
