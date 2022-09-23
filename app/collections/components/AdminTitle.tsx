@@ -12,7 +12,7 @@ const AdminTitle = ({ collection, refetchFn, isAdmin }) => {
         <>
           <Formik
             initialValues={{
-              title: "",
+              title: collection.title,
             }}
             onSubmit={() => {}}
           >
