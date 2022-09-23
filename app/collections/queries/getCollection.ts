@@ -88,7 +88,6 @@ export default resolver.pipe(async (suffix: string, ctx: Ctx) => {
 
   let isAdmin = false
   if (ctx.session.$publicData.workspaceId) {
-    console.log("yes")
     const ownCollections = await db.collection.findFirst({
       where: {
         id: collection!.id,

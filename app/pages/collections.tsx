@@ -70,13 +70,15 @@ const CollectionsPage: BlitzPage = () => {
                           />
                           <div>
                             <span className="inline-block h-full align-middle"> </span>
-                            <h2 className="inline-block align-middle font-serif font-medium leading-6">
+                            <h2 className="inline-block text-ellipsis align-middle font-serif font-medium leading-6">
                               {collection.title}
                             </h2>
                           </div>
                         </>
                       ) : (
-                        <h2 className="font-serif font-medium leading-6">{collection.title}</h2>
+                        <h2 className="overflow-hidden text-ellipsis font-serif font-medium leading-6 ">
+                          {collection.title}
+                        </h2>
                       )}
                     </div>
                     {collection.type.type === "COMMUNITY" && (
