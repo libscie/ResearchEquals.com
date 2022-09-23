@@ -12,7 +12,7 @@ const Subtitle = ({ collection, refetchFn, isAdmin }) => {
         <>
           <Formik
             initialValues={{
-              subtitle: "",
+              subtitle: collection.subtitle,
             }}
             onSubmit={() => {}}
           >
