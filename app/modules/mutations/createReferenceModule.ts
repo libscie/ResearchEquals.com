@@ -2,6 +2,7 @@ import { resolver } from "blitz"
 import db, { Prisma } from "db"
 import axios from "axios"
 import algoliasearch from "algoliasearch"
+import he from "he"
 
 const client = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_ADMIN_KEY!)
 const index = client.initIndex(`${process.env.ALGOLIA_PREFIX}_modules`)
@@ -37,7 +38,7 @@ export default resolver.pipe(resolver.authorize(), async ({ doi }, ctx) => {
         suffix: metadata.DOI.split("/").slice(1).join("/"),
         isbn: metadata.ISBN ? metadata.ISBN[0] : undefined,
         url: `https://doi.org/${metadata.DOI}`,
-        title: metadata.title[0],
+        title: he.decode(metadata.title[0]),
         description: metadata.abstract,
         type: {
           connectOrCreate: {
@@ -100,7 +101,7 @@ export default resolver.pipe(resolver.authorize(), async ({ doi }, ctx) => {
         isbn: undefined, // Not used in schema
         url: `https://doi.org/${metadata.data.id}`,
         language: metadata.data.attributes.language || "en",
-        title: metadata.data.attributes.titles[0].title,
+        title: he.decode(metadata.data.attributes.titles[0].title),
         description: metadata.data.attributes.descriptions[0]
           ? metadata.data.attributes.descriptions[0].description
           : undefined,
