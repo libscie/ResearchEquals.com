@@ -4,9 +4,13 @@ import toast from "react-hot-toast"
 import filesize from "filesize"
 
 import deleteSupportingFile from "../../modules/mutations/deleteSupportingFile"
+import { useState } from "react"
+import { Modal } from "../modals/Modal"
 
 const EditSupportingFileDisplay = ({ name, size, url, uuid, moduleId, setQueryData }) => {
   const [deleteMutation] = useMutation(deleteSupportingFile)
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false)
+
   return (
     <div className="my-2 flex">
       <a
@@ -24,7 +28,23 @@ const EditSupportingFileDisplay = ({ name, size, url, uuid, moduleId, setQueryDa
           <TrashCan
             size={24}
             className="inline-block h-6 w-6 fill-current align-middle text-red-500"
-            onClick={async () => {
+            onClick={() => setConfirmDeleteOpen(true)}
+            aria-label="Delete file"
+          />
+          <Modal
+            title="Confirm removing a supporting file"
+            body={
+              <span>
+                The supporting file, &quot;<span className="font-bold">{name}</span>&quot;, will be
+                removed.
+              </span>
+            }
+            primaryAction="Remove"
+            primaryButtonClass="text-red-700 hover:bg-red-200 focus:ring-red-500 focus:ring-offset-0 focus:ring-2 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+            isOpen={confirmDeleteOpen}
+            setIsOpen={setConfirmDeleteOpen}
+            onSubmit={async () => {
+              console.log("Deleting")
               toast.promise(deleteMutation({ id: moduleId, uuid }), {
                 loading: "Deleting...",
                 success: (data) => {
@@ -34,7 +54,6 @@ const EditSupportingFileDisplay = ({ name, size, url, uuid, moduleId, setQueryDa
                 error: "Something went wrong...",
               })
             }}
-            aria-label="Delete file"
           />
         </button>
         <a href={url} target="_blank" download rel="noreferrer">
