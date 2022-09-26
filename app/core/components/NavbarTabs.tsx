@@ -54,7 +54,7 @@ const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invit
     return (
       <>
         <div className="mx-auto w-full overflow-x-auto border-b border-gray-100 bg-white px-4 text-gray-900 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-200 sm:px-6 lg:px-8">
-          <div className="hidden sm:block">
+          <div className="hidden lg:block">
             <nav className="flex space-x-8" aria-label="Tabs">
               <button
                 onClick={() => {
