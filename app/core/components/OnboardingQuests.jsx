@@ -1,6 +1,6 @@
 import { useMutation, useQuery, Link } from "blitz"
 import { Widget } from "@uploadcare/react-widget"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { Formik, Form } from "formik"
 import {
   Email,
@@ -112,10 +112,13 @@ const OnboardingEmail = ({ data }) => {
 const OnboardingEmailAccept = ({ data }) => {
   const [emailConsentMutation, { isSuccess }] = useMutation(changeEmailConsent)
   const [emailNotifications, setEmailNotifications] = useRecoilState(emailNotificationsAtom)
+  const [showCard, setShowCard] = useState(
+    data.emailConsent === null || emailNotifications.emailConsent === null
+  )
 
   return (
     <>
-      {data.emailConsent === null || emailNotifications.emailConsent === null ? (
+      {showCard && (
         <div className="onboarding my-2 flex w-full flex-col rounded-r border-l-4 border-cyan-400 bg-cyan-50 p-4 dark:border-cyan-200 dark:bg-cyan-900 lg:my-0">
           <div className="flex flex-grow">
             <div className="">
@@ -138,7 +141,14 @@ const OnboardingEmailAccept = ({ data }) => {
           <div className="block text-right text-cyan-700 dark:text-cyan-200">
             <p className="mt-3 text-sm md:mt-0 md:ml-6">
               {isSuccess ? (
-                <p className="whitespace-nowrap font-medium  underline">Got it!</p>
+                <p className="whitespace-nowrap font-medium underline">
+                  <a
+                    className="hover:cursor-pointer hover:text-blue-600"
+                    onClick={() => setShowCard(false)}
+                  >
+                    Got it!
+                  </a>
+                </p>
               ) : (
                 <p className="whitespace-nowrap font-medium  underline">
                   <button
@@ -170,12 +180,10 @@ const OnboardingEmailAccept = ({ data }) => {
                     <ThumbsDown size={16} className="inline" />
                   </button>
                 </p>
-              )}{" "}
+              )}
             </p>
           </div>
         </div>
-      ) : (
-        ""
       )}
     </>
   )
