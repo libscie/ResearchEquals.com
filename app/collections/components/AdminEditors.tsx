@@ -7,6 +7,7 @@ import DeleteEditorModal from "app/core/modals/DeleteEditorModal"
 import SetEditorToInactiveModal from "app/core/modals/SetEditorToInactiveModal"
 import UpgradeCollectionModal from "app/core/modals/UpgradeCollectionModal"
 import { Link, Routes, useMutation } from "blitz"
+import { useState } from "react"
 import toast from "react-hot-toast"
 import addEditor from "../mutations/addEditor"
 import changeEditorRole from "../mutations/changeEditorRole"
@@ -15,6 +16,7 @@ const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGO
 
 const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
   const [changeEditorRoleMutation] = useMutation(changeEditorRole)
+  const [currentRole, setCurrentRole] = useState(editor.role)
 
   return (
     <>
@@ -40,6 +42,7 @@ const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
                     loading: `Changing role to ${info.target.value.toLowerCase()}...`,
                     success: () => {
                       refetchFn()
+                      setCurrentRole(info.target.value)
                       return `Changed role to ${info.target.value.toLowerCase()}!`
                     },
                     error: (err) => {
@@ -48,7 +51,7 @@ const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
                   }
                 )
               }}
-              defaultValue={editor.role}
+              value={currentRole}
               className="placeholder-font-normal block appearance-none rounded-md border border-gray-400 bg-white px-4 py-2 pr-6 text-sm font-normal placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border-gray-600 dark:bg-transparent dark:text-gray-200 "
             >
               {Object.values(MembershipRole).map((role) => {
