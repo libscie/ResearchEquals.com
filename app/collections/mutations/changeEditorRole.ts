@@ -23,6 +23,9 @@ export default resolver.pipe(
         ownerAdmins += 1
       }
     }
+    // Predict the number of owners and admins after the requested change
+    if (role === "OWNER" || role === "ADMIN") ownerAdmins += 1
+
     if (ownerAdmins === 1) throw new Error("Cannot change your role as last admin or owner.")
 
     const editorship = await db.editorship.update({
