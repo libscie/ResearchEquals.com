@@ -17,9 +17,11 @@ export default resolver.pipe(
       },
     })
 
+    // Set up the counter for the number of owners and admin users
     let ownerAdmins = 0
     let owners = 0
 
+    // Count the total number of existing owners and admin members
     for (const element of oldEditorship?.collection.editors!) {
       if (element.role === "OWNER" || element.role === "ADMIN") {
         ownerAdmins += 1
@@ -34,6 +36,7 @@ export default resolver.pipe(
       if (e.id === editorId && e.role === "OWNER" && role === "ADMIN") owners -= 1
     })
 
+    // Throw an error when changing the last admin or owner
     if (ownerAdmins === 1) throw new Error("Cannot change your role as last admin or owner.")
 
     // Throw an error if there will be no owners after the change
