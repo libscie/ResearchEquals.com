@@ -24,23 +24,22 @@ const MainFileViewer = ({ mainFile }) => {
   }, [])
   return (
     <>
-      {mainFile.name ? (
+      {mainFile.name && (
         <>
           {/* Preview image */}
-          {mainFile.isImage ? (
-            <img src={mainFile.cdnUrl} className="mx-auto my-2 h-auto w-full" />
-          ) : (
-            ""
+          {mainFile.isImage && (
+            <img
+              src={mainFile.cdnUrl}
+              className="mx-auto my-2 h-auto w-full"
+            />
           )}
           {/* Preview PDF */}
-          {mainFile.mimeType.startsWith("application/pdf") ? (
+          {mainFile.mimeType.startsWith("application/pdf") && (
             <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.worker.min.js">
               <div style={{ height: "750px" }} className="max-w-screen text-gray-900">
                 <Viewer fileUrl={mainFile.cdnUrl} />
               </div>
             </Worker>
-          ) : (
-            ""
           )}
           {/* Preview Markdown */}
           {mainFile.mimeType.startsWith("text/markdown") ? (
@@ -102,8 +101,6 @@ const MainFileViewer = ({ mainFile }) => {
             ""
           )}
         </>
-      ) : (
-        ""
       )}
     </>
   )
