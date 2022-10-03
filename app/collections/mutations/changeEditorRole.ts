@@ -17,27 +17,14 @@ export default resolver.pipe(
       },
     })
 
-    // Set up the counter for the number of owners and admin users
-    let ownerAdmins = 0
-    let owners = 0
+    const currentEditors = oldEditorship?.collection.editors
+    // Predict the future state of editors after the requested change
+    const futureEditors = currentEditors?.map((editor) =>
+      editor.id === editorId ? { ...editor, role } : editor
+    )
 
-    // Count the total number of existing owners and admin members
-    for (const element of oldEditorship?.collection.editors!) {
-      if (element.role === "OWNER" || element.role === "ADMIN") {
-        ownerAdmins += 1
-      }
-      if (element.role === "OWNER") owners += 1
-    }
-    // Predict the number of owners and admins after the requested change
-    if (role === "OWNER" || role === "ADMIN") ownerAdmins += 1
-
-    // Predict the number of owners after the requested change
-    oldEditorship?.collection.editors.forEach((e) => {
-      if (e.id === editorId && e.role === "OWNER" && role === "ADMIN") owners -= 1
-    })
-
-    // Throw an error when changing the last admin or owner
-    if (ownerAdmins === 1) throw new Error("Cannot change your role as last admin or owner.")
+    // Count the predicted number of owners
+    const owners = futureEditors?.filter((e) => e.role === "OWNER").length
 
     // Throw an error if there will be no owners after the change
     if (owners === 0) throw new Error("There should be at least one owner.")
