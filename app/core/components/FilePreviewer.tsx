@@ -79,24 +79,22 @@ const MainFileViewer = ({ mainFile }) => {
             </div>
           )}
           {/* Preview Office files */}
-          {mainFile.mimeType.startsWith("application/vnd.ms-excel") ||
-          mainFile.mimeType.startsWith(
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-          ) ||
-          mainFile.mimeType.startsWith(
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-          ) ||
-          mainFile.mimeType.startsWith(
-            "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-          ) ? (
+          {(mainFile.mimeType.startsWith("application/vnd.ms-excel") ||
+            mainFile.mimeType.startsWith(
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            ) ||
+            mainFile.mimeType.startsWith(
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            ) ||
+            mainFile.mimeType.startsWith(
+              "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            )) && (
             <iframe
               src={`https://view.officeapps.live.com/op/embed.aspx?src=${mainFile.cdnUrl}`}
               width="100%"
               height="800px"
               frameBorder="0"
             ></iframe>
-          ) : (
-            ""
           )}
         </>
       )}
