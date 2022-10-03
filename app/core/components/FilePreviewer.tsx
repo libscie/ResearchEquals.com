@@ -42,7 +42,7 @@ const MainFileViewer = ({ mainFile }) => {
             </Worker>
           )}
           {/* Preview Markdown */}
-          {mainFile.mimeType.startsWith("text/markdown") ? (
+          {mainFile.mimeType.startsWith("text/markdown") && (
             <div className="coc">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm, remarkMath]}
@@ -77,8 +77,6 @@ const MainFileViewer = ({ mainFile }) => {
                 {mainFileMarkdown}
               </ReactMarkdown>
             </div>
-          ) : (
-            ""
           )}
           {/* Preview Office files */}
           {mainFile.mimeType.startsWith("application/vnd.ms-excel") ||
