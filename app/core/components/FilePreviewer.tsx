@@ -29,6 +29,7 @@ const MainFileViewer = ({ mainFile }) => {
           {/* Preview image */}
           {mainFile.isImage && (
             <img
+              alt="An image of the main file"
               src={mainFile.cdnUrl}
               className="mx-auto my-2 h-auto w-full"
             />
