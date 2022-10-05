@@ -27,7 +27,7 @@ const AuthorAvatarsNew = ({ authors, size, toDisplay }) => {
           <>
             <div>
               <span className="inline-block h-full align-middle"> </span>
-              <span className="inline-flex align-middle items-center px-3 py-0.5 rounded-full text-xs leading-4 font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 ring-1 ring-gray-300 dark:ring-gray-600 max-h-8 shadow-sm dark:shadow-none">
+              <span className="inline-flex max-h-8 items-center rounded-full bg-white px-3 py-0.5 align-middle text-xs font-medium leading-4 text-gray-700 shadow-sm ring-1 ring-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:shadow-none dark:ring-gray-600">
                 + {authors.length - toDisplay}
               </span>
             </div>
