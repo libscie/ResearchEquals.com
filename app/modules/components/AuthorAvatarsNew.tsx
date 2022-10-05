@@ -9,14 +9,12 @@ const AuthorAvatarsNew = ({ authors, size, toDisplay }) => {
           <Fragment key={author.id}>
             {index < toDisplay ? (
               <Link href={Routes.HandlePage({ handle: author.workspace.handle })}>
-                <a target="_blank">
-                  <img
-                    className={`relative inline-block ${size} rounded-full ring-1 ring-white transition ease-in-out hover:scale-110 dark:ring-gray-800`}
-                    src={author.workspace.avatar}
-                    alt={`Avatar of ${author.workspace.handle}`}
-                    style={{ zIndex: 100 - index }}
-                  />
-                </a>
+                <img
+                  className={`relative inline-block ${size} rounded-full ring-1 ring-white transition ease-in-out hover:scale-110 dark:ring-gray-800`}
+                  src={author.workspace.avatar}
+                  alt={`Avatar of ${author.workspace.handle}`}
+                  style={{ zIndex: 100 - index }}
+                />
               </Link>
             ) : (
               ""
