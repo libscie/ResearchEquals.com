@@ -1,11 +1,12 @@
 import { Link, Routes } from "blitz"
+import { Fragment } from "react"
 
 const AuthorAvatarsNew = ({ authors, size, toDisplay }) => {
   return (
     <>
       <div className="relative z-0 flex -space-x-1 overflow-hidden p-1">
         {authors.map((author, index) => (
-          <>
+          <Fragment key={author.id}>
             {index < toDisplay ? (
               <Link href={Routes.HandlePage({ handle: author.workspace.handle })}>
                 <a target="_blank">
@@ -20,7 +21,7 @@ const AuthorAvatarsNew = ({ authors, size, toDisplay }) => {
             ) : (
               ""
             )}
-          </>
+          </Fragment>
         ))}
         {authors.length >= toDisplay && !(authors.length === toDisplay) ? (
           <>
