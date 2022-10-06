@@ -10,6 +10,7 @@ import remarkMath from "remark-math"
 import rehypeKatex from "rehype-katex"
 import "katex/dist/katex.min.css" // `rehype-katex` does not import the CSS for you
 import { useEffect, useState } from "react"
+import { Image } from "blitz"
 
 const MainFileViewer = ({ mainFile, module }) => {
   const prefersDarkMode = useMediaPredicate("(prefers-color-scheme: dark)")
@@ -28,7 +29,13 @@ const MainFileViewer = ({ mainFile, module }) => {
         <>
           {/* Preview image */}
           {mainFile.isImage ? (
-            <img src={mainFile.cdnUrl} className="mx-auto my-2 h-auto w-full" />
+            <Image
+              alt="The main image for the module"
+              src={mainFile.cdnUrl}
+              className="mx-auto my-2 h-auto w-full"
+              width={mainFile.originalImageInfo.width}
+              height={mainFile.originalImageInfo.height}
+            />
           ) : (
             ""
           )}
