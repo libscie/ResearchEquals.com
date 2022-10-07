@@ -1,7 +1,7 @@
 import { Download, TrashCan } from "@carbon/icons-react"
 import { useMutation } from "blitz"
 import toast from "react-hot-toast"
-import filesize from "filesize"
+import { filesize } from "filesize"
 
 import deleteSupportingFile from "../../modules/mutations/deleteSupportingFile"
 
