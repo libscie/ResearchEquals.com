@@ -90,7 +90,7 @@
     "zod": "3.19.1"
   },
   "devDependencies": {
-    "@types/node": "18.7.18",
+    "@types/node": "18.8.3",
     "@types/react": "17.0.38",
     "@types/unist": "2.0.6",
     "@types/xast": "1.0.2",
