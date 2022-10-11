@@ -20,7 +20,7 @@ export default function MakeCollectionPublicModal({ collection, refetchFn }) {
 
   return (
     <>
-      <div className="z-100 sticky top-0 flex  w-full bg-amber-50 py-4 px-2 text-center dark:bg-amber-800">
+      <div className="sticky top-0 z-50 flex w-full bg-amber-50 py-4 px-2 text-center dark:bg-amber-800">
         <div className="mx-auto flex">
           <div className="inline-block align-middle">
             <CheckmarkOutline
