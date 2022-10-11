@@ -429,6 +429,25 @@ const ModulePage = ({ module }) => {
             name="twitter:image"
             content={`https://ucarecdn.com/f65e7eca-bd38-48ab-ad79-ddcafa184431/`}
           />
+          {/* Zotero Metadata - TODO: Refactor these meta tags */}
+          {/* Title */}
+          <meta name="citation_title" content={module.title} key="citation_title" />
+          {/* Date */}
+          <meta name="citation_date" content={module.publishedAt} key="citation_date" />
+          {/* DOI */}
+          <meta name="citation_doi" content={`10.53962/${module.suffix}`} key="citation_doi" />
+          {/* Abstract */}
+          <meta name="citation_abstract" content={module.description} key="citation_abstract" />
+          {/* Language */}
+          <meta name="citation_language" content={module.language} key="citation_language" />
+          {/* Authors */}
+          {module.authors.map((author) => (
+            <meta
+              key={author.id}
+              name="citation_author"
+              content={`${author.workspace.lastName}, ${author.workspace.firstName}`}
+            />
+          ))}
         </>
       }
     >
