@@ -10,7 +10,11 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
-export default resolver.pipe(resolver.authorize(), async ({ doi }, ctx) => {
+interface Input {
+  doi: string
+}
+
+export default resolver.pipe(resolver.authorize(), async ({ doi }: Input, ctx) => {
   try {
     // Will auto-throw if resource not found
     const cr = await axios.get(`https://api.crossref.org/works/${doi}?mailto=info@libscie.org`)
