@@ -1,5 +1,5 @@
 import { resolver } from "blitz"
-import db, { Prisma } from "db"
+import db from "db"
 import axios from "axios"
 import algoliasearch from "algoliasearch"
 
