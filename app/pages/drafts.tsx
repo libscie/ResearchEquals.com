@@ -49,7 +49,7 @@ const DraftsContents = ({ expire, signature, currentWorkspace, session, user }) 
 
   return (
     <>
-      <div className="flex h-full w-screen divide-x divide-gray-100 dark:divide-gray-600">
+      <div className="flex w-screen flex-grow divide-x divide-gray-100 dark:divide-gray-600">
         {drafts.length > 0 ? (
           <>
             <div
@@ -117,7 +117,7 @@ const DraftsContents = ({ expire, signature, currentWorkspace, session, user }) 
             </div>
           </>
         ) : (
-          <div className="relative my-4 mx-4 flex w-full flex-grow flex-col rounded-lg border-2 border-dashed border-gray-800 text-center focus:outline-none focus:ring-2 focus:ring-indigo-500  focus:ring-offset-2 dark:border-white">
+          <div className="relative my-4 mx-4 flex w-full flex-col rounded-lg border-2 border-dashed border-gray-800 text-center focus:outline-none focus:ring-2 focus:ring-indigo-500  focus:ring-offset-2 dark:border-white">
             <div className="table h-full w-full flex-grow">
               <div className="h-28 w-1/4 sm:table-cell"></div>
               <span className="mx-auto table-cell align-middle text-sm font-medium leading-4">
@@ -153,7 +153,7 @@ const DraftsPage = ({ expire, signature }) => {
         invitations={invitations}
         refetchFn={refetch}
       />
-      <main className="relative flex">
+      <main className="relative flex flex-grow">
         <DraftsContents
           expire={expire}
           signature={signature}
