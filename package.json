@@ -32,7 +32,7 @@
   "dependencies": {
     "@algolia/autocomplete-js": "1.7.1",
     "@carbon/icons-react": "11.10.0",
-    "@faker-js/faker": "7.5.0",
+    "@faker-js/faker": "7.6.0",
     "@headlessui/react": "1.7.3",
     "@prisma/client": "4.4.0",
     "@react-pdf-viewer/core": "3.7.0",
