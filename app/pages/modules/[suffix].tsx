@@ -116,7 +116,6 @@ const Module = ({ module, mainFile, supportingRaw }) => {
     arrowColor = "transparent"
   }
 
-  console.log(mainFile)
   useEffect(() => {
     if (mainFile.mimeType === "text/markdown") {
       fetch(mainFile.cdnUrl)
