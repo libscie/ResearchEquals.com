@@ -6,7 +6,7 @@ import { CheckmarkOutline } from "@carbon/icons-react"
 
 import makePublic from "../../collections/mutations/makePublic"
 
-export default function MakeCollectionPublicModal({ collection, refetchFn }) {
+export default function MakeCollectionPublicModal({ collection, refetchFn, workspace }) {
   let [isOpen, setIsOpen] = useState(false)
   const [makePublicMutation] = useMutation(makePublic)
 
@@ -17,6 +17,10 @@ export default function MakeCollectionPublicModal({ collection, refetchFn }) {
   function openModal() {
     setIsOpen(true)
   }
+
+  // Get current user's role in this collection
+  const currentEditorship = workspace.editorships.find((e) => e.collectionId === collection.id)
+  const currentRole = currentEditorship.role
 
   return (
     <>
@@ -35,13 +39,15 @@ export default function MakeCollectionPublicModal({ collection, refetchFn }) {
             </h3>
           </div>
           <div className="">
-            <button
-              type="button"
-              className="rounded border border-amber-500 px-2 py-1.5 text-sm font-medium leading-4 text-amber-500 hover:bg-amber-100 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:ring-offset-2 focus:ring-offset-amber-50 dark:border-amber-200 dark:text-amber-200 dark:hover:bg-amber-900"
-              onClick={openModal}
-            >
-              Make public
-            </button>
+            {currentRole !== "USER" && (
+              <button
+                type="button"
+                className="rounded border border-amber-500 px-2 py-1.5 text-sm font-medium leading-4 text-amber-500 hover:bg-amber-100 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:ring-offset-2 focus:ring-offset-amber-50 dark:border-amber-200 dark:text-amber-200 dark:hover:bg-amber-900"
+                onClick={openModal}
+              >
+                Make public
+              </button>
+            )}
           </div>
         </div>
       </div>
