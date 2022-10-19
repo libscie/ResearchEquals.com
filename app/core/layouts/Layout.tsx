@@ -55,7 +55,7 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
           </Link>{" "}
           Publishing not possible until resolved.
         </div> */}
-          <div className="flex-grow">{children}</div>
+          <div className="flex flex-grow flex-col">{children}</div>
         </div>
       </RecoilRoot>
       <Footer />
