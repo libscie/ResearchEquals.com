@@ -55,7 +55,6 @@ const citation_list = ({ citations }: { citations: Cite[] }): CitationList => {
     name: "citation_list",
     children: citations.map((citation, index) => {
       const { publishedWhere, authors, title, prefix, suffix, publishedAt } = citation
-      console.log(authors)
 
       const datetime = typeof publishedAt === "string" ? new Date(publishedAt) : publishedAt
       const citationJs: Citation = {
