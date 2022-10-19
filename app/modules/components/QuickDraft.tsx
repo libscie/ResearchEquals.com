@@ -210,11 +210,9 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             >
                               <option className="text-gray-900" value=""></option>
                               {moduleTypes.map((type) => (
-                                <>
-                                  <option value={type.id} className="text-gray-900">
-                                    {type.name}
-                                  </option>
-                                </>
+                                <option key={type.id} value={type.id} className="text-gray-900">
+                                  {type.name}
+                                </option>
                               ))}
                             </select>
                           </div>
@@ -255,15 +253,17 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             >
                               <option className="text-gray-900" value=""></option>
                               {licenses.map((license) => (
-                                <>
-                                  <option value={license.id} className="text-gray-900">
-                                    {license.name} (
-                                    {license.price > 0
-                                      ? `${license.price / 100}EUR incl. VAT`
-                                      : "Free"}
-                                    )
-                                  </option>
-                                </>
+                                <option
+                                  key={license.id}
+                                  value={license.id}
+                                  className="text-gray-900"
+                                >
+                                  {license.name} (
+                                  {license.price > 0
+                                    ? `${license.price / 100}EUR incl. VAT`
+                                    : "Free"}
+                                  )
+                                </option>
                               ))}
                             </select>
                           </div>
@@ -336,11 +336,13 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                               {...formik.getFieldProps("language")}
                             >
                               {ISO6391.getAllNames().map((lang) => (
-                                <>
-                                  <option value={ISO6391.getCode(lang)} className="text-gray-900">
-                                    {ISO6391.getCode(lang) + " - " + lang}
-                                  </option>
-                                </>
+                                <option
+                                  key={lang}
+                                  value={ISO6391.getCode(lang)}
+                                  className="text-gray-900"
+                                >
+                                  {ISO6391.getCode(lang) + " - " + lang}
+                                </option>
                               ))}
                             </select>
                           </div>
