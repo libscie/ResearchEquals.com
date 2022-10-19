@@ -116,6 +116,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
     arrowColor = "transparent"
   }
 
+  console.log(mainFile)
   useEffect(() => {
     if (mainFile.mimeType === "text/markdown") {
       fetch(mainFile.cdnUrl)
@@ -430,17 +431,27 @@ const ModulePage = ({ module }) => {
             content={`https://ucarecdn.com/f65e7eca-bd38-48ab-ad79-ddcafa184431/`}
           />
           {/* Zotero Metadata - TODO: Refactor these meta tags */}
-          {/* Title */}
+          {/* https://www.zotero.org/support/dev/exposing_metadata */}
           <meta name="citation_title" content={module.title} key="citation_title" />
-          {/* Date */}
           <meta name="citation_date" content={module.publishedAt} key="citation_date" />
-          {/* DOI */}
+          <meta
+            name="citation_journal_title"
+            content="ResearchEquals"
+            key="citation_journal_title"
+          />
+          <meta
+            name="citation_publisher"
+            content="Liberate Science GmbH"
+            key="citation_publisher"
+          />
           <meta name="citation_doi" content={`10.53962/${module.suffix}`} key="citation_doi" />
-          {/* Abstract */}
+          <meta
+            name="citation_public_url"
+            content={`https://doi.org/10.53962/${module.suffix}`}
+            key="citation_public_url"
+          />
           <meta name="citation_abstract" content={module.description} key="citation_abstract" />
-          {/* Language */}
           <meta name="citation_language" content={module.language} key="citation_language" />
-          {/* Authors */}
           {module.authors.map((author) => (
             <meta
               key={author.id}
@@ -448,6 +459,9 @@ const ModulePage = ({ module }) => {
               content={`${author.workspace.lastName}, ${author.workspace.firstName}`}
             />
           ))}
+          {mainFile.mimeType.startsWith("application/pdf") && (
+            <meta name="citation_pdf_url" content={mainFile.cdnUrl} key="citation_pdf_url" />
+          )}
         </>
       }
     >
