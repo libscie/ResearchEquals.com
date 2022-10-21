@@ -306,7 +306,7 @@ const OnboardingAvatar = ({ data, expire, signature, refetch }) => {
         >
           <div className="flex flex-grow">
             <div className="">
-              <UserAvatar size={32} className="h-5 w-5 text-indigo-400 dark:text-indigo-200" />
+              <UserAvatar size={32} className="h-5 w-5 text-indigo-400 dark:text-indigo-200" aria-hidden="true" />
             </div>
             <div className="ml-3 flex-1 text-indigo-800 dark:text-indigo-200 md:flex">
               <p className="mr-2 text-sm">
