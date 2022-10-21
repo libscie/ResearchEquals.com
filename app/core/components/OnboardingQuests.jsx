@@ -141,13 +141,8 @@ const OnboardingEmailAccept = ({ data }) => {
           <div className="block text-right text-cyan-700 dark:text-cyan-200">
             <p className="mt-3 text-sm md:mt-0 md:ml-6">
               {isSuccess ? (
-                <p className="whitespace-nowrap font-medium underline">
-                  <a
-                    className="hover:cursor-pointer hover:text-blue-600"
-                    onClick={() => setShowCard(false)}
-                  >
+                <button className="whitespace-nowrap font-medium underline hover:cursor-pointer hover:text-blue-600" onClick={() => setShowCard(false)}>
                     Got it!
-                  </a>
                 </p>
               ) : (
                 <p className="whitespace-nowrap font-medium  underline">
