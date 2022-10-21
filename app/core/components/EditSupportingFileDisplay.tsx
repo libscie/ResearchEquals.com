@@ -35,8 +35,7 @@ const EditSupportingFileDisplay = ({ name, size, url, uuid, moduleId, setQueryDa
             title="Confirm deletion"
             body={
               <span>
-                The supporting file, &quot;<span className="font-bold">{name}</span>&quot;, will be
-                removed.
+            Upon confirmation, the supporting file &quot;{name}&quot; will be permanently deleted. Are you sure you want to delete this file?
               </span>
             }
             primaryAction="Delete File"
