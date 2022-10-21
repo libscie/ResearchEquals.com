@@ -95,8 +95,7 @@ export default resolver.pipe(resolver.authorize(), async ({ doi }: Input, ctx) =
         const metadata = cr.data
         const module = await db.module.create({
           data: {
-            publis
-            d: true,
+            published: true,
             publishedAt: new Date(
               metadata.data.attributes.publicationYear.toString() ||
                 metadata.data.attributes.published
