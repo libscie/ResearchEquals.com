@@ -11,6 +11,8 @@ import rehypeKatex from "rehype-katex"
 import "katex/dist/katex.min.css" // `rehype-katex` does not import the CSS for you
 import { useEffect, useState } from "react"
 
+const PDFJS_DIST_VERSION = process.env.PDFJS_DIST_VERSION
+
 const MainFileViewer = ({ mainFile, module }) => {
   const prefersDarkMode = useMediaPredicate("(prefers-color-scheme: dark)")
   const [mainFileMarkdown, setMarkdown] = useState("")
@@ -34,7 +36,9 @@ const MainFileViewer = ({ mainFile, module }) => {
           )}
           {/* Preview PDF */}
           {mainFile.mimeType.startsWith("application/pdf") ? (
-            <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.worker.min.js">
+            <Worker
+              workerUrl={`https://unpkg.com/pdfjs-dist@${PDFJS_DIST_VERSION}/build/pdf.worker.min.js`}
+            >
               <div style={{ height: "750px" }} className="max-w-screen text-gray-900">
                 <Viewer fileUrl={mainFile.cdnUrl} />
               </div>
