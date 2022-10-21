@@ -39,7 +39,7 @@ const EditSupportingFileDisplay = ({ name, size, url, uuid, moduleId, setQueryDa
                 removed.
               </span>
             }
-            primaryAction="Remove"
+            primaryAction="Delete File"
             primaryButtonClass="text-red-700 hover:bg-red-200 focus:ring-red-500 focus:ring-offset-0 focus:ring-2 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
             isOpen={confirmDeleteOpen}
             setIsOpen={setConfirmDeleteOpen}
