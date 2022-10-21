@@ -44,7 +44,6 @@ const EditSupportingFileDisplay = ({ name, size, url, uuid, moduleId, setQueryDa
             isOpen={confirmDeleteOpen}
             setIsOpen={setConfirmDeleteOpen}
             onSubmit={async () => {
-              console.log("Deleting")
               toast.promise(deleteMutation({ id: moduleId, uuid }), {
                 loading: "Deleting...",
                 success: (data) => {
