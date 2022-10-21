@@ -32,7 +32,7 @@ const EditSupportingFileDisplay = ({ name, size, url, uuid, moduleId, setQueryDa
             aria-label="Delete file"
           />
           <Modal
-            title="Confirm removing a supporting file"
+            title="Confirm deletion"
             body={
               <span>
                 The supporting file, &quot;<span className="font-bold">{name}</span>&quot;, will be
