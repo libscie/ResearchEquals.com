@@ -25,6 +25,28 @@ export default resolver.pipe(
 
     if (nrEditors?.editors.length! >= 5 && nrEditors?.type.type === "COLLABORATIVE")
       throw new Error("Please upgrade if you want to add more editors.")
+
+    const workspace = await db.workspace.findFirst({
+      where: {
+        id: workspaceId,
+      },
+      include: {
+        editorships: {
+          include: {
+            collection: {
+              include: {
+                type: true,
+              },
+            },
+          },
+        },
+      },
+    })
+
+    if (!workspace?.firstName || !workspace.lastName) {
+      throw Error("This author needs to complete their profile first.")
+    }
+
     const collection = await db.collection.update({
       where: {
         id: collectionId,
