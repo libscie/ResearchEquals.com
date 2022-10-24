@@ -45,7 +45,7 @@
     "blitz": "0.45.5",
     "concurrently": "7.4.0",
     "dagre": "0.8.5",
-    "eslint": "8.25.0",
+    "eslint": "8.26.0",
     "feed": "4.2.2",
     "filesize": "10.0.5",
     "form-data": "4.0.0",
