@@ -222,7 +222,7 @@ const CollectionPage = ({ collection }) => {
 
   return (
     <Layout
-      title="R= Collection"
+      title={`R= | ${collection.title}`}
       headChildren={
         <>
           <link
@@ -231,6 +231,25 @@ const CollectionPage = ({ collection }) => {
             title={`RSS Feed for ${collection!.title}`}
             href={`/api/rss/collections/${collection!.suffix}`}
           />
+          <meta name="twitter:title" content={collection.title} />
+          <meta property="twitter:domain" content="researchequals.com" />
+          <meta
+            property="twitter:url"
+            content={`https://researchequals.com/collections/${collection.suffix}`}
+          />
+          {collection.type.type === "COMMUNITY" && (
+            <>
+              <meta property="og:image" content={`${collection.header["cdnUrl"]}`} />
+              <meta property="og:image:secure_url" content={`${collection.header["cdnUrl"]}`} />
+              <meta
+                property="og:image:alt"
+                content={`Header image of the Collection ${collection.title}.`}
+              />
+              <meta name="twitter:card" content="summary_large_image" />
+
+              <meta name="twitter:image" content={`${collection.header["cdnUrl"]}`} />
+            </>
+          )}
         </>
       }
     >
@@ -305,7 +324,7 @@ const SocialActivity = ({ collection, refetchFn, isFollowing }) => {
       {/* Share */}
       <Link
         href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-          `Check out this @ResearchEquals Collection: \n"${collection!.title}"\n`
+          `Check out "${collection!.title}", a @ResearchEquals Collection:\n`
         )}&url=${encodeURIComponent(
           `https://doi.org/${process.env.DOI_PREFIX}/${collection?.suffix}`
         )}`}

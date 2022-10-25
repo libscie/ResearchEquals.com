@@ -202,6 +202,10 @@ export default function PayCreateCollectionModal({ user, price, type, workspace 
                                 e.preventDefault()
                                 toast.error("Need to be logged in for this.")
                               }
+                              if (!workspace.firstName || !workspace.lastName) {
+                                e.preventDefault()
+                                toast.error("You must add your author names first.")
+                              }
                             }}
                           >
                             Pay and Create
