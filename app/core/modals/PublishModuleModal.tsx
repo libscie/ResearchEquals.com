@@ -221,7 +221,7 @@ export default function PublishModule({
                         <form
                           action={`/api/checkout_sessions?email=${encodeURIComponent(
                             user.email
-                          )}&prod_id=${module.license.prod_id}&price_data=${payWhat}&suffix=${
+                          )}&prod_id=${module.license!.prod_id}&price_data=${payWhat}&suffix=${
                             module.suffix
                           }&module_id=${module.id}`}
                           method="POST"
