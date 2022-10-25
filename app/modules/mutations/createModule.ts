@@ -4,7 +4,7 @@ import generateSuffix from "./generateSuffix"
 
 export default resolver.pipe(
   resolver.authorize(),
-  async ({ title, description, typeId, licenseId, authors, displayColor }, ctx) => {
+  async ({ title, description, typeId, licenseId, authors, language, displayColor }, ctx) => {
     const authorInvitations = authors.map((author) => {
       return {
         workspaceId: author,
@@ -25,6 +25,7 @@ export default resolver.pipe(
         displayColor,
         title,
         description,
+        language,
         type: {
           connect: { id: typeId },
         },

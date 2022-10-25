@@ -1,12 +1,19 @@
 import { Link, Routes, useMutation } from "blitz"
 import { Menu, Popover, Transition } from "@headlessui/react"
 import { Fragment } from "react"
-import { Add, Settings, Notification, NotificationNew } from "@carbon/icons-react"
+import {
+  Add,
+  Settings,
+  Notification,
+  NotificationNew,
+  WatsonHealthStackedScrolling_1,
+} from "@carbon/icons-react"
 
 import logout from "../../auth/mutations/logout"
 import SettingsModal from "../modals/settings"
 import QuickDraft from "../../modules/components/QuickDraft"
 import InvitationNotification from "./InvitationNotification"
+import CollectionsModal from "../modals/CollectionsModal"
 
 const FullWidthMenu = ({
   currentUser,
@@ -33,11 +40,15 @@ const FullWidthMenu = ({
               >
                 <span className="sr-only">View notifications</span>
                 {invitedModules.length > 0 ? (
-                  <NotificationNew size={32} className="h-6 w-6" aria-hidden="true" />
+                  <NotificationNew
+                    size={32}
+                    className="flex h-6 w-6 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    aria-hidden="true"
+                  />
                 ) : (
                   <Notification
                     size={32}
-                    className="h-6 w-6 cursor-not-allowed"
+                    className="flex h-6 w-6 cursor-not-allowed text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     aria-hidden="true"
                   />
                 )}
@@ -54,9 +65,7 @@ const FullWidthMenu = ({
                 <Popover.Panel className="max-w-72 absolute left-1/2 z-10 mt-3 w-72 -translate-x-1/2 transform rounded-md bg-white px-4 shadow-lg ring-1 ring-gray-400 ring-opacity-5 dark:bg-gray-800 dark:ring-gray-600 dark:ring-opacity-100 sm:px-0">
                   <ul className="divide-y dark:divide-gray-600">
                     {invitedModules.map((invited) => (
-                      <>
-                        <InvitationNotification invited={invited} />
-                      </>
+                      <InvitationNotification key={invited.id} invited={invited} />
                     ))}
                   </ul>
                 </Popover.Panel>
@@ -64,6 +73,20 @@ const FullWidthMenu = ({
             </>
           )}
         </Popover>
+        <span className="sr-only">Create collection</span>
+        <CollectionsModal
+          styling="ml-1 shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
+          button={
+            <WatsonHealthStackedScrolling_1
+              size={32}
+              className="flex h-6 w-6 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              aria-hidden="true"
+            />
+          }
+          user={currentUser}
+          workspace={currentWorkspace}
+        />
+
         <span className="sr-only">Open settings</span>
         <SettingsModal
           styling="ml-1 shrink-0 p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
@@ -113,6 +136,23 @@ const FullWidthMenu = ({
                   </button>
                 )}
               </Menu.Item>
+              {currentUser.role === "SUPERADMIN" && (
+                <Menu.Item key="dropdown-superadmin">
+                  {({ active }) => (
+                    <button
+                      className={`${
+                        active ? "bg-gray-100 text-gray-900 dark:bg-gray-700 " : "text-gray-500"
+                      }
+                  block w-full py-2 px-4 text-left text-sm font-normal leading-5 dark:text-gray-200`}
+                      onClick={async () => {
+                        router.push(Routes.Admin())
+                      }}
+                    >
+                      Admin
+                    </button>
+                  )}
+                </Menu.Item>
+              )}
               <Menu.Item key="dropdown-logout">
                 {({ active }) => (
                   <button

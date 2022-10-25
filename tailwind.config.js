@@ -9,6 +9,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ["Noto Sans Display", "system-ui"],
+        serif: ["Noto Serif", "system-ui"],
       },
       spacing: {
         120: "35rem",

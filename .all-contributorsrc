@@ -230,6 +230,25 @@
       "contributions": [
         "maintenance"
       ]
+    },
+    {
+      "login": "nasainsbury",
+      "name": "Nathan Sainsbury",
+      "avatar_url": "https://avatars.githubusercontent.com/u/58425475?v=4",
+      "profile": "https://github.com/nasainsbury",
+      "contributions": [
+        "code",
+        "design"
+      ]
+    },
+    {
+      "login": "weblate",
+      "name": "Weblate (bot)",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1607653?v=4",
+      "profile": "https://weblate.org/hosting/",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,

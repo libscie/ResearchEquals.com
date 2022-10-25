@@ -49,6 +49,7 @@ const seed = async () => {
     { wikidata: "Q60752967", name: "Preregistration", schema: "CreativeWork" },
     { wikidata: "Q429785", name: "Poster", schema: "Poster" },
     { wikidata: "Q59094171", name: "Ethical review", schema: "CreativeWork" },
+    { wikidata: "Q580922", name: "Preprint", schema: "CreativeWork" },
   ]
 
   // This adds the record or updates the existing one
@@ -226,6 +227,57 @@ const seed = async () => {
         price_id: "price_1KCTBbLmgtJbKHNGQSZHsNO0",
       },
     })
+
+    // Add collections pricing
+    // [PROD] Individual collection
+    await db.collectionType.upsert({
+      where: {
+        type: "INDIVIDUAL",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 0,
+      },
+      // This is the original
+      create: {
+        type: "INDIVIDUAL",
+        price: 0,
+      },
+    })
+    // [PROD] Collaborative collection
+    await db.collectionType.upsert({
+      where: {
+        type: "COLLABORATIVE",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 1499,
+        price_id: "price_1LgCMbLmgtJbKHNGvX5LHLoo",
+      },
+      // This is the original
+      create: {
+        type: "COLLABORATIVE",
+        price: 1499,
+        price_id: "price_1LgCMbLmgtJbKHNGvX5LHLoo",
+      },
+    })
+    // [PROD] Community collection
+    await db.collectionType.upsert({
+      where: {
+        type: "COMMUNITY",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 14999,
+        price_id: "price_1LgCLQLmgtJbKHNGNoiEKuv1",
+      },
+      // This is the original
+      create: {
+        type: "COMMUNITY",
+        price: 14999,
+        price_id: "price_1LgCLQLmgtJbKHNGNoiEKuv1",
+      },
+    })
   }
 
   // Do this when not in production
@@ -383,6 +435,57 @@ const seed = async () => {
       },
     })
 
+    // Add collections pricing
+    // Individual collection
+    await db.collectionType.upsert({
+      where: {
+        type: "INDIVIDUAL",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 0,
+      },
+      // This is the original
+      create: {
+        type: "INDIVIDUAL",
+        price: 0,
+      },
+    })
+    // Collaborative collection
+    await db.collectionType.upsert({
+      where: {
+        type: "COLLABORATIVE",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 1499,
+        price_id: "price_1LgCBCLmgtJbKHNG3r9B3C1C",
+      },
+      // This is the original
+      create: {
+        type: "COLLABORATIVE",
+        price: 1499,
+        price_id: "price_1LgCBCLmgtJbKHNG3r9B3C1C",
+      },
+    })
+    // Community collection
+    await db.collectionType.upsert({
+      where: {
+        type: "COMMUNITY",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 14999,
+        price_id: "price_1LgCCSLmgtJbKHNG0hJCGKhd",
+      },
+      // This is the original
+      create: {
+        type: "COMMUNITY",
+        price: 14999,
+        price_id: "price_1LgCCSLmgtJbKHNG0hJCGKhd",
+      },
+    })
+
     let user
     for (let index = 0; index < 50; index++) {
       user = await db.user.create({
@@ -396,9 +499,9 @@ const seed = async () => {
                 workspace: {
                   create: {
                     handle: faker.internet.userName().toLowerCase(),
-                    avatar: faker.image.abstract(),
-                    firstName: faker.name.findName(),
-                    lastName: faker.name.findName(),
+                    avatar: `https://eu.ui-avatars.com/api/?rounded=true&background=574cfa&color=ffffff&name=${faker.internet.userName()}`,
+                    firstName: faker.name.firstName(),
+                    lastName: faker.name.lastName(),
                     url: faker.internet.url(),
                   },
                 },

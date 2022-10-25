@@ -1,6 +1,8 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
+import { BlitzApiRequest, BlitzApiResponse } from "blitz"
+import db from "db"
 
-export default async function handler(req, res) {
+const CreateSessionModule = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
   if (
     !req.query.email ||
     !(req.query.price_id || (req.query.price_data && req.query.prod_id)) ||
@@ -11,6 +13,11 @@ export default async function handler(req, res) {
   } else {
     if (req.method === "POST" && req.query.price_id) {
       try {
+        const license = await db.license.findFirst({
+          where: {
+            price_id: req.query.price_id as string,
+          },
+        })
         // Create Checkout Sessions from body params.
         const session = await stripe.checkout.sessions.create({
           customer_email: req.query.email,
@@ -32,6 +39,8 @@ export default async function handler(req, res) {
               suffix: req.query.suffix,
               doi: `${process.env.DOI_PREFIX}/${req.query.suffix}`,
               module_id: req.query.module_id,
+              product: "module-license",
+              id: license?.name,
             },
           },
           tax_id_collection: {
@@ -52,7 +61,7 @@ export default async function handler(req, res) {
           line_items: [
             {
               price_data: {
-                unit_amount: req.query.price_data * 100,
+                unit_amount: (req.query.price_data as any) * 100,
                 currency: "eur",
                 // TODO: This is hardcoded but could be better
                 // Still needs updating for the production
@@ -72,6 +81,7 @@ export default async function handler(req, res) {
               suffix: req.query.suffix,
               doi: `${process.env.DOI_PREFIX}/${req.query.suffix}`,
               module_id: req.query.module_id,
+              product: "module-license",
             },
           },
           tax_id_collection: {
@@ -88,3 +98,5 @@ export default async function handler(req, res) {
     }
   }
 }
+
+export default CreateSessionModule

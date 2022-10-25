@@ -1,0 +1,60 @@
+name: 🐛 Bug Report
+description: File a bug report
+title: "🐛 "
+labels: ["bug", "triage"]
+assignees:
+  - chartgerink, nsunami
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing a bug report! 
+
+        Please help us help you by providing accurate and complete information.
+        Mind the [Code of Conduct](https://www.researchequals.com/coc) in your report. 
+
+        We understand bugs can be frustrating; we will not tolerate that being taken out on our maintainers. If you are frustrated right now, take a break before you file this bug.
+  - type: input
+    id: URL
+    attributes:
+      label: URL of the Page
+      description: On what URL does the bug happen?
+      placeholder: ex. https://researchequals.com/
+    validations:
+      required: false
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What happened, and what did you expect to happen?
+      placeholder: You can upload a screenshot or a screen recording here.
+    validations:
+      required: true
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to reproduce
+      description: How can we reproduce the issue?
+      placeholder: |
+        1. XXXXX
+        2. XXXXX
+        3. XXXXX
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: What browser(s) did you use?
+      multiple: true
+      options:
+        - Firefox
+        - Chrome
+        - Safari
+        - Microsoft Edge
+        - Other
+  - type: textarea
+    id: anything-else
+    attributes:
+      label: Anything else?
+      description: Is there anything else you'd like to share?
+      placeholder: This is a great place to share an emoji or a GIF that captures how this bug makes you feel.
+    validations:
+      required: false

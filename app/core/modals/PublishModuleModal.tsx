@@ -5,13 +5,26 @@ import { CheckmarkOutline } from "@carbon/icons-react"
 import { Close, Checkmark } from "@carbon/icons-react"
 
 import publishModule from "../../modules/mutations/publishModule"
+import useCurrentModule from "../../modules/queries/useCurrentModule"
 import toast from "react-hot-toast"
+import type { Prisma, User } from "@prisma/client"
+import { UseCurrentWorkspace } from "../hooks/useCurrentWorkspace"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
 
-export default function PublishModule({ module, user, workspace }) {
+type ModuleEdit = NonNullable<Prisma.PromiseReturnType<typeof useCurrentModule>>
+
+export default function PublishModule({
+  module,
+  user,
+  workspace,
+}: {
+  module: ModuleEdit
+  user: Prisma.UserGetPayload<true>
+  workspace: UseCurrentWorkspace
+}) {
   let [isOpen, setIsOpen] = useState(false)
   const [waiver, setWaiver] = useState(false)
   const [payWhat, setPayWhat] = useState(5)
@@ -19,7 +32,9 @@ export default function PublishModule({ module, user, workspace }) {
   const [publishModuleMutation] = useMutation(publishModule)
   const router = useRouter()
   const publishCount =
-    workspace.authorships.filter((authorship) => authorship.module.published).length + 1
+    ((Array.isArray(workspace?.authorships) &&
+      workspace?.authorships?.filter((authorship) => authorship.module.published).length) ||
+      0) + 1
 
   function closeModal() {
     setIsOpen(false)
@@ -42,7 +57,7 @@ export default function PublishModule({ module, user, workspace }) {
         <div className="ml-3 flex-grow text-emerald-800 dark:text-emerald-100">
           <h3 className="inline-block align-middle text-sm font-normal leading-4 text-emerald-800 dark:text-emerald-100">
             This module is ready for publication. Would you like to{" "}
-            {module.license.price > 0 ? "pay and" : ""} publish it now?
+            {module?.license?.price && module.license.price > 0 ? "pay and" : ""} publish it now?
           </h3>
         </div>
         <div className="">
@@ -87,7 +102,7 @@ export default function PublishModule({ module, user, workspace }) {
                 <Dialog.Title as="h3" className="text-lg font-medium leading-6">
                   Confirm publication
                 </Dialog.Title>
-                {module.license.price === 0 ? (
+                {!module.license || module.license.price === 0 ? (
                   <>
                     <div className="mt-2">
                       <p className="text-base text-gray-500 dark:text-gray-300">
@@ -262,9 +277,9 @@ export default function PublishModule({ module, user, workspace }) {
                   <>
                     <form
                       action={`/api/checkout_sessions?email=${encodeURIComponent(
-                        user.email
-                      )}&price_id=${module.license.price_id}&suffix=${module.suffix}&module_id=${
-                        module.id
+                        user?.email
+                      )}&price_id=${module?.license?.price_id}&suffix=${module?.suffix}&module_id=${
+                        module?.id
                       }`}
                       method="POST"
                     >

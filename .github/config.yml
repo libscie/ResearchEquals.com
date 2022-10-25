@@ -1,0 +1,32 @@
+# Configuration for welcome - https://github.com/behaviorbot/welcome
+
+# Configuration for new-issue-welcome - https://github.com/behaviorbot/new-issue-welcome
+
+# Comment to be posted to on first time issues
+newIssueWelcomeComment: >
+  [![Welcome Banner](https://zenodo.org/api/iiif/v2/0c0188d3-d03c-4830-a6e3-00405f5c22fa:8ff47a85-7250-4d86-8e48-2f346b48b2c1:BannerWelcome.jpg/full/750,/0/default.jpg)](https://zenodo.org/record/3695300)
+  :partying_face: :tada: Welcome to _ResearchEquals_! :partying_face: :tada:
+  Thanks for your input on the project! :sparkling_heart:
+  <br>If you haven't yet, please make sure to check out our [house rules](https://researchequals.com/coc).
+  If you want to connect informally with the _ResearchEquals_ community, you're invited to chat with us in our [Discord channel](https://discord.gg/SefsGJWWSw).
+# Configuration for new-pr-welcome - https://github.com/behaviorbot/new-pr-welcome
+# Comment to be posted to on PRs from first time contributors in your repository
+newPRWelcomeComment: >
+  [![Thank You Banner](https://zenodo.org/api/iiif/v2/0c0188d3-d03c-4830-a6e3-00405f5c22fa:7fbd97cf-283b-480c-b8e1-11866e26245c:BannerThanks.jpg/full/750,/0/default.jpg)](https://zenodo.org/record/3695300)
+  :sparkling_heart: Thanks for opening this pull request! :sparkling_heart:
+  The _ResearchEquals_ community appreciates your time and effort to contribute to the project.
+  Please make sure you have read our [house rules](https://researchequals.com/coc) and be considerate towards people. 
+
+  A few things to note:
+  - We appreciate your contribution regardless of whether it ends up in production!
+  - Issues tagged as a "good first issue" are a great way to contribute to this project - thanks if this PR is related to one already!
+
+  All PRs get reviewed - depending on the size it may take some time and revision rounds. If this PR is not based on an open issue, we expect you to participate in a back and forth so we can understand what's changed and why.
+# Configuration for first-pr-merge - https://github.com/behaviorbot/first-pr-merge
+# Comment to be posted to on pull requests merged by a first time user
+firstPRMergeComment: >
+  [![Congratulations Banner](https://zenodo.org/api/iiif/v2/0c0188d3-d03c-4830-a6e3-00405f5c22fa:32fbdb89-ae1b-434e-830c-88ade86724cc:BannerCongratulations.jpg/full/750,/0/default.jpg)](https://zenodo.org/record/3695300)
+  Congrats on merging your first pull request! :tada:
+  We here at _ResearchEquals_ are proud of you! :sparkling_heart:
+  Thank you so much for your contribution :gift: 
+  Want to continue contributing? :purple_heart: How about [claiming an issue](https://github.com/libscie/ResearchEquals.com/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)?

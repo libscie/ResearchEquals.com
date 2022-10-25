@@ -12,6 +12,8 @@ export default async function getSignature({ session, changeDays }) {
       hashedPassword: false,
       email: true,
       emailIsVerified: true,
+      emailConsent: true,
+      marketingConsent: true,
     },
   })
 
@@ -23,6 +25,7 @@ export default async function getSignature({ session, changeDays }) {
       followers: true,
       following: true,
       authorships: true,
+      editorships: true,
     },
   })
 

@@ -6,6 +6,7 @@ import { useFormik } from "formik"
 import { Fragment, useState } from "react"
 import { z } from "zod"
 import { Checkmark, Close, InformationSquareFilled } from "@carbon/icons-react"
+import ISO6391 from "iso-639-1"
 
 import createModule from "../mutations/createModule"
 import toast from "react-hot-toast"
@@ -23,6 +24,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
       main: "",
       type: "",
       license: "",
+      language: "en",
       displayColor: "#574cfa",
     },
     validate: validateZodSchema(
@@ -31,6 +33,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
         description: z.string(),
         type: z.string().min(1),
         license: z.string().min(1),
+        language: z.enum([...ISO6391.getAllCodes()] as any),
         displayColor: z.string().min(1),
       })
     ),
@@ -41,6 +44,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
           description: values.description,
           typeId: parseInt(values.type),
           licenseId: parseInt(values.license),
+          language: values.language,
           authors: [],
           displayColor: values.displayColor,
         }),
@@ -82,6 +86,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
     formik.setFieldValue("main", "")
     formik.setFieldValue("type", "")
     formik.setFieldValue("license", "")
+    formik.setFieldValue("language", "en")
     formik.setFieldValue("displayColor", "#574cfa")
   }
 
@@ -205,11 +210,9 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             >
                               <option className="text-gray-900" value=""></option>
                               {moduleTypes.map((type) => (
-                                <>
-                                  <option value={type.id} className="text-gray-900">
-                                    {type.name}
-                                  </option>
-                                </>
+                                <option key={type.id} value={type.id} className="text-gray-900">
+                                  {type.name}
+                                </option>
                               ))}
                             </select>
                           </div>
@@ -250,15 +253,17 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             >
                               <option className="text-gray-900" value=""></option>
                               {licenses.map((license) => (
-                                <>
-                                  <option value={license.id} className="text-gray-900">
-                                    {license.name} (
-                                    {license.price > 0
-                                      ? `${license.price / 100}EUR incl. VAT`
-                                      : "Pay what you want"}
-                                    )
-                                  </option>
-                                </>
+                                <option
+                                  key={license.id}
+                                  value={license.id}
+                                  className="text-gray-900"
+                                >
+                                  {license.name} (
+                                  {license.price > 0
+                                    ? `${license.price / 100}EUR incl. VAT`
+                                    : "Pay what you want"}
+                                  )
+                                </option>
                               ))}
                             </select>
                           </div>
@@ -309,6 +314,36 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                               >
                                 Pink
                               </option>
+                            </select>
+                          </div>
+                        </div>
+                        <div className="my-4">
+                          <label
+                            htmlFor="language"
+                            className="my-1 block text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
+                          >
+                            Language{" "}
+                            {formik.touched.language && formik.errors.language
+                              ? " - " + formik.errors.language
+                              : null}
+                            <p className="text-xs">Publish in your preferred language.</p>
+                          </label>
+                          <div className="mt-1">
+                            <select
+                              id="language"
+                              required
+                              className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-400 bg-white px-3 py-2 text-sm font-normal placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border-gray-600 dark:bg-transparent dark:text-gray-200 "
+                              {...formik.getFieldProps("language")}
+                            >
+                              {ISO6391.getAllNames().map((lang) => (
+                                <option
+                                  key={lang}
+                                  value={ISO6391.getCode(lang)}
+                                  className="text-gray-900"
+                                >
+                                  {ISO6391.getCode(lang) + " - " + lang}
+                                </option>
+                              ))}
                             </select>
                           </div>
                         </div>

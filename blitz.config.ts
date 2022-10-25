@@ -1,4 +1,7 @@
 import { BlitzConfig, sessionMiddleware, simpleRolesIsAuthorized } from "blitz"
+import pjson from "./package.json"
+
+const PDFJS_DIST_VERSION = pjson.dependencies["pdfjs-dist"]
 
 const config: BlitzConfig = {
   images: {
@@ -20,12 +23,18 @@ const config: BlitzConfig = {
     ALGOLIA_PREFIX: process.env.ALGOLIA_PREFIX,
     DOI_PREFIX: process.env.DOI_PREFIX,
     STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY,
+    PDFJS_DIST_VERSION: PDFJS_DIST_VERSION,
   },
   pageExtensions: ["tsx", "ts", "jsx", "js"],
   webpack(config, options) {
     config.module.rules.push({})
 
     return config
+  },
+  i18n: {
+    // https://github.com/libscie/ResearchEquals.com/wiki/Localization
+    locales: ["en"],
+    defaultLocale: "en",
   },
   /* Uncomment this to customize the webpack config
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {

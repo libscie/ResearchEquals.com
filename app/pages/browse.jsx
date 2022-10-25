@@ -2,6 +2,7 @@ import Navbar from "app/core/components/Navbar"
 import Layout from "app/core/layouts/Layout"
 import { useInfiniteQuery, useQuery, useRouter, useSession, Link, Routes } from "blitz"
 import React from "react"
+import { Fire } from "@carbon/icons-react"
 
 import getBrowseData from "../core/queries/getBrowseData"
 import LayoutLoader from "../core/components/LayoutLoader"
@@ -48,24 +49,20 @@ const BrowseWorkspaces = () => {
         <React.Fragment key={i}>
           <div className="my-4 grid grid-cols-2 gap-4 gap-y-10 md:grid-cols-3 xl:grid-cols-4">
             {page.workspaces.map((workspace) => (
-              <>
-                <>
-                  <Link href={Routes.HandlePage({ handle: workspace.handle })}>
-                    <a className="mx-auto text-center">
-                      <img
-                        src={workspace.avatar}
-                        alt={`Avatar of ${workspace.handle}`}
-                        className="mx-auto h-28 w-28 rounded-full"
-                      />
-                      <p className="mx-auto my-2 text-center">
-                        {workspace.firstName && workspace.lastName
-                          ? `${workspace.firstName} ${workspace.lastName}`
-                          : `@${workspace.handle}`}{" "}
-                      </p>
-                    </a>
-                  </Link>
-                </>
-              </>
+              <Link key={workspace.id} href={Routes.HandlePage({ handle: workspace.handle })}>
+                <a className="mx-auto text-center">
+                  <img
+                    src={workspace.avatar}
+                    alt={`Avatar of ${workspace.handle}`}
+                    className="mx-auto h-28 w-28 rounded-full"
+                  />
+                  <p className="mx-auto my-2 text-center">
+                    {workspace.firstName && workspace.lastName
+                      ? `${workspace.firstName} ${workspace.lastName}`
+                      : `@${workspace.handle}`}{" "}
+                  </p>
+                </a>
+              </Link>
             ))}
           </div>
         </React.Fragment>
@@ -106,6 +103,32 @@ const Browse = () => {
         invitations={invitations}
         refetchFn={refetch}
       />
+      <div className="sticky top-0 z-50 flex w-full bg-rose-50 py-4 px-2 text-center dark:bg-rose-800">
+        <div className="mx-auto flex">
+          <div className="inline-block align-middle">
+            <Fire
+              size={32}
+              className="inline-block h-5 w-5 stroke-current align-middle text-rose-500 dark:text-rose-200"
+              aria-hidden="true"
+            />
+          </div>
+          <div className="mx-3 text-rose-800 dark:text-rose-100">
+            <h3 className="inline-block align-middle text-sm font-normal leading-4 text-rose-800 dark:text-rose-100">
+              Looking for ResearchEquals Collections?
+            </h3>
+          </div>
+          <div className="">
+            <Link href={Routes.CollectionsPage()}>
+              <button
+                type="button"
+                className="rounded border border-rose-500 px-2 py-1.5 text-sm font-medium leading-4 text-rose-500 hover:bg-rose-100 focus:outline-none focus:ring-2 focus:ring-rose-600 focus:ring-offset-2 focus:ring-offset-rose-50 dark:border-rose-200 dark:text-rose-200 dark:hover:bg-rose-900"
+              >
+                Browse Collections
+              </button>
+            </Link>
+          </div>
+        </div>
+      </div>
       <div className="grid-cols-2 2xl:mx-4 2xl:grid">
         <BrowseContent />
         <BrowseWorkspaces />

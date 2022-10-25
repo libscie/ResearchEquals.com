@@ -1,18 +1,39 @@
 import { Dialog, Transition, Tab } from "@headlessui/react"
-import { Fragment, useState } from "react"
+import { Fragment, useEffect, useState } from "react"
 import { Close } from "@carbon/icons-react"
+import { useRecoilState } from "recoil"
+import { emailNotificationsAtom, settingsModalAtom } from "../utils/Atoms"
 
 import WorkspaceSettings from "../components/WorkspaceSettings"
 import AccountSettings from "../components/AccountSettings"
+import EmailSettings from "../components/EmailSettings"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
 
 export default function SettingsModal({ button, styling, user, workspace }) {
-  let [isOpen, setIsOpen] = useState(false)
-  let [categories] = useState(["Workspace", "Account"])
+  let [isOpen, setIsOpen] = useRecoilState(settingsModalAtom)
+  let [categories] = useState(["Workspace", "Account", "Emails"])
+  const [emailNotifications, setEmailNotifications] = useRecoilState(emailNotificationsAtom)
+  let x = user.memberships.map((membership) => {
+    return {
+      [`${membership.workspace.handle}-invitations`]: membership.emailInvitations,
+      [`${membership.workspace.handle}-approvals`]: membership.emailApprovals,
+      [`${membership.workspace.handle}-weeklyDigest`]: membership.emailWeeklyDigest,
+      [`${membership.workspace.handle}-collections`]: membership.emailCollections,
+    }
+  })[0]
 
+  useEffect(() => {
+    if (JSON.stringify(emailNotifications) === "{}") {
+      setEmailNotifications({
+        emailConsent: false,
+        marketingConsent: false,
+        ...x,
+      })
+    }
+  }, [])
   return (
     <>
       <button
@@ -109,6 +130,9 @@ export default function SettingsModal({ button, styling, user, workspace }) {
                       </Tab.Panel>
                       <Tab.Panel key="account-panel" className="">
                         <AccountSettings user={user} setIsOpen={setIsOpen} />
+                      </Tab.Panel>
+                      <Tab.Panel key="emails-panel" className="">
+                        <EmailSettings user={user} setIsOpen={setIsOpen} />
                       </Tab.Panel>
                     </Tab.Panels>
                   </Tab.Group>

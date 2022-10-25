@@ -7,6 +7,8 @@ import { Add } from "@carbon/icons-react"
 import addMain from "../mutations/addMain"
 import EditMainFileDisplay from "../../core/components/EditMainFileDisplay"
 import { fileSizeLimit, fileTypeLimit } from "../../core/utils/fileTypeLimit"
+import uploadcareError from "../../core/utils/uploadcareError"
+import FilePreviewer from "../../core/components/FilePreviewer"
 
 const validators = [fileTypeLimit, fileSizeLimit]
 
@@ -25,14 +27,17 @@ const EditMainFile = ({
   return (
     <>
       {Object.keys(mainFile).length > 0 ? (
-        <EditMainFileDisplay
-          name={mainFile.name}
-          size={mainFile.size}
-          url={mainFile.cdnUrl}
-          uuid={mainFile.uuid}
-          moduleId={moduleEdit.id}
-          setQueryData={setQueryData}
-        />
+        <>
+          <EditMainFileDisplay
+            name={mainFile.name}
+            size={mainFile.size}
+            url={mainFile.cdnUrl}
+            uuid={mainFile.uuid}
+            moduleId={moduleEdit.id}
+            setQueryData={setQueryData}
+          />
+          <FilePreviewer module={module} mainFile={mainFile} />
+        </>
       ) : user.emailIsVerified ? (
         <>
           <button
@@ -51,6 +56,7 @@ const EditMainFile = ({
               previewStep
               validators={validators}
               clearable
+              localeTranslations={uploadcareError}
               onChange={async (info) => {
                 // TODO: Only store upon save
                 try {
