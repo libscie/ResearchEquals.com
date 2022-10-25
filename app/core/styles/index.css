@@ -227,6 +227,8 @@ how to remove the virtical space around the range input in IE*/
   input[type="range"].pwyw {
     margin: 0;
     /*Edge starts the margin from the thumb, not the track as other browsers do*/
+  }
+}
 .terms-diff strong {
   color: green;
 }
