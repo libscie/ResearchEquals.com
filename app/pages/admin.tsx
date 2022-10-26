@@ -9,6 +9,8 @@ import {
 } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import { useQuill } from "react-quilljs"
+import updateCrossRefCollection from "../collections/mutations/updateCrossRefCollection"
+
 import "quill/dist/quill.snow.css"
 
 import Navbar from "../core/components/Navbar"
@@ -34,6 +36,7 @@ const Admin: BlitzPage = () => {
   const [invitations] = useQuery(getInvitedModules, { session })
   const [adminInfo] = useQuery(getAdminInfo, null)
   const [updateCrossRefMutation] = useMutation(updateCrossRef)
+  const [updateCrossRefCollectionMutation] = useMutation(updateCrossRefCollection)
   const [broadcastMutation] = useMutation(broadcastMessage)
   const { quill, quillRef } = useQuill()
   const [countSubmit, setCountSubmit] = useState(0)
@@ -205,7 +208,7 @@ const Admin: BlitzPage = () => {
         </div>
         {/* Collection DOI reminting */}
         <div>
-          <h2 className="mx-auto my-8 text-center text-lg font-normal">Collection reminting</h2>
+          <h2 className="mx-auto my-8 text-center text-lg font-normal">Collection DOI reminting</h2>
           <div className="flex flex-col">
             <div className="">
               <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -256,11 +259,14 @@ const Admin: BlitzPage = () => {
                           <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
                             <button
                               onClick={async () => {
-                                // toast.promise(updateCrossRefMutation({ id: module.id }), {
-                                //   loading: "Updating...",
-                                //   success: "Updated metadata with CrossRef",
-                                //   error: "That did not work",
-                                // })
+                                toast.promise(
+                                  updateCrossRefCollectionMutation({ id: collection.id }),
+                                  {
+                                    loading: "Updating...",
+                                    success: "Updated collection metadata with CrossRef",
+                                    error: "That did not work",
+                                  }
+                                )
                               }}
                               className="whitespace-nowrap rounded border-0 bg-indigo-100 px-4 py-2 text-sm font-normal leading-5 text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
                             >
