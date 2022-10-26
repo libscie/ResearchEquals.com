@@ -1,18 +1,18 @@
 import { Dialog, Transition } from "@headlessui/react"
 import React, { Fragment } from "react"
+import PropTypes from "prop-types"
 
-export const Modal = (props) => {
-  const {
-    isOpen,
-    setIsOpen,
-    title,
-    body,
-    onSubmit,
-    primaryAction = "Ok",
-    primaryButtonClass,
-    secondaryAction = "Cancel",
-    secondaryButtonClass,
-  } = props
+export const Modal = ({
+  isOpen,
+  setIsOpen,
+  title,
+  body,
+  onSubmit,
+  primaryAction = "Ok",
+  primaryButtonClass,
+  secondaryAction = "Cancel",
+  secondaryButtonClass,
+}) => {
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -88,4 +88,16 @@ export const Modal = (props) => {
       </Transition>
     </>
   )
+}
+
+Modal.propTypes = {
+  isOpen: PropTypes.bool,
+  setIsOpen: PropTypes.func,
+  title: PropTypes.string,
+  body: PropTypes.element,
+  onSubmit: PropTypes.func,
+  primaryAction: PropTypes.string,
+  primaryButtonClass: PropTypes.string,
+  secondaryAction: PropTypes.string,
+  secondaryButtonClass: PropTypes.string,
 }
