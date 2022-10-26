@@ -261,7 +261,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                                   {license.name} (
                                   {license.price > 0
                                     ? `${license.price / 100}EUR incl. VAT`
-                                    : "Free"}
+                                    : "Pay what you want"}
                                   )
                                 </option>
                               ))}

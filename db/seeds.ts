@@ -84,12 +84,14 @@ const seed = async () => {
       // This contains the latest update, change this to update the price
       update: {
         price: 0,
+        prod_id: "prod_M0VJdtMgxTMRvS",
       },
       // This is the original
       create: {
         url: "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
         name: "CC0 Public Domain Dedication",
         price: 0,
+        prod_id: "prod_M0VJdtMgxTMRvS",
       },
     })
 
@@ -101,12 +103,14 @@ const seed = async () => {
       // This contains the latest update, change this to update the price
       update: {
         price: 0,
+        prod_id: "prod_M0VKT0n4i9hFlz",
       },
       // This is the original
       create: {
         url: "https://creativecommons.org/licenses/by/4.0/legalcode",
         name: "CC BY 4.0",
         price: 0,
+        prod_id: "prod_M0VKT0n4i9hFlz",
       },
     })
 
@@ -287,12 +291,14 @@ const seed = async () => {
       // This contains the latest update, change this to update the price
       update: {
         price: 0,
+        prod_id: "prod_M0VIEuGW4US4mL",
       },
       // This is the original
       create: {
         url: "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
         name: "CC0 Public Domain Dedication",
         price: 0,
+        prod_id: "prod_M0VIEuGW4US4mL",
       },
     })
 
@@ -304,12 +310,14 @@ const seed = async () => {
       // This contains the latest update, change this to update the price
       update: {
         price: 0,
+        prod_id: "prod_M0VJVhT9ulOw1c",
       },
       // This is the original
       create: {
         url: "https://creativecommons.org/licenses/by/4.0/legalcode",
         name: "CC BY 4.0",
         price: 0,
+        prod_id: "prod_M0VJVhT9ulOw1c",
       },
     })
 
