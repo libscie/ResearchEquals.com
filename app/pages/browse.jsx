@@ -103,7 +103,7 @@ const Browse = () => {
         invitations={invitations}
         refetchFn={refetch}
       />
-      <div className="sticky top-0 z-50 flex w-full bg-rose-50 py-4 px-2 text-center dark:bg-rose-800">
+      <div className="sticky top-0 z-10 flex w-full bg-rose-50 py-4 px-2 text-center dark:bg-rose-800">
         <div className="mx-auto flex">
           <div className="inline-block align-middle">
             <Fire
