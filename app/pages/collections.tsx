@@ -13,6 +13,7 @@ import DoiCollection from "app/collections/components/DoiCollection"
 import EditorsBadge from "app/collections/components/EditorsBadge"
 import ContributorsBadge from "app/collections/components/ContributorsBadge"
 import CollectionsModal from "app/core/modals/CollectionsModal"
+import getDraftCollections from "../collections/queries/getDraftCollections"
 
 const CollectionsPage: BlitzPage = () => {
   const currentUser = useCurrentUser()
@@ -23,8 +24,7 @@ const CollectionsPage: BlitzPage = () => {
   const [invitations] = useQuery(getInvitedModules, { session })
   // get collections
   const [collections] = useQuery(getCollections, null)
-  // get my collections
-  // get followed collections
+  const [draftCollections] = useQuery(getDraftCollections, { session: session.workspaceId })
 
   return (
     <>
@@ -38,6 +38,86 @@ const CollectionsPage: BlitzPage = () => {
         refetchFn={refetch}
       />
       <main className="w-full p-8">
+        {session.workspaceId && draftCollections.length > 0 && (
+          <>
+            <h2 className="mb-4 text-center text-3xl font-extrabold">Your Collections</h2>
+            <div className="collections mx-auto grid grid-cols-2 grid-cols-3 gap-x-8 gap-y-12 md:grid-cols-4 lg:grid-cols-6">
+              {draftCollections.map((collection, index) => {
+                return (
+                  <Link key={collection.suffix} href={`/collections/${collection.suffix}/admin`}>
+                    <div
+                      className={`${
+                        collection.type.type === "COMMUNITY"
+                          ? `col-span-3 row-span-4 bg-indigo-200 text-2xl dark:bg-indigo-600 lg:row-span-2 collection-${
+                              collection.submissions.length > 4
+                                ? "4"
+                                : collection.submissions.length
+                            }`
+                          : collection.type.type === "COLLABORATIVE"
+                          ? `col-span-2 row-span-2 bg-teal-200 text-lg dark:bg-teal-600 collection-${
+                              collection.submissions.length > 4
+                                ? "4"
+                                : collection.submissions.length
+                            }-teal`
+                          : `col-span-1 bg-amber-200 text-base dark:bg-amber-600 md:col-span-1 collection-${
+                              collection.submissions.length > 4
+                                ? "4"
+                                : collection.submissions.length
+                            }-amber`
+                      }  cursor-pointer rounded-md bg-cover bg-center`}
+                      key={`${collection.title}-${index}`}
+                    >
+                      <div className="relative flex h-full flex-col">
+                        <div className="mx-auto flex w-full p-4">
+                          {collection.type.type != "INDIVIDUAL" ? (
+                            <>
+                              <img
+                                src={collection.icon!["cdnUrl"]!}
+                                className="max-w-56 mx-4 inline-block max-h-12 w-auto align-middle dark:invert"
+                                alt={`Icon of ${collection.title}`}
+                                loading="lazy"
+                              />
+                              <div>
+                                <span className="inline-block h-full align-middle"> </span>
+                                <h2 className="inline-block text-ellipsis align-middle font-serif font-medium leading-6">
+                                  {collection.title}
+                                </h2>
+                              </div>
+                            </>
+                          ) : (
+                            <h2 className="overflow-hidden text-ellipsis font-serif font-medium leading-6 ">
+                              {collection.title}
+                            </h2>
+                          )}
+                        </div>
+                        {collection.type.type === "COMMUNITY" && (
+                          <div className="flex p-4">
+                            <p className="flex-grow text-xs line-clamp-2">
+                              <span
+                                dangerouslySetInnerHTML={{
+                                  __html: collection.description as string,
+                                }}
+                                className="quilljs-collection text-gray-900 dark:text-white"
+                              />
+                            </p>
+                            <div className="scale-90">
+                              <DoiCollection collection={collection} />
+                              <EditorsBadge collection={collection} />
+                              <ContributorsBadge collection={collection} nrContributors="" />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </Link>
+                )
+              })}
+            </div>
+          </>
+        )}
+        {session.workspaceId && draftCollections.length > 0 && (
+          <h2 className="my-8 text-center text-3xl font-extrabold">All Collections</h2>
+        )}
         <div className="collections mx-auto grid grid-cols-2 grid-cols-3 gap-x-8 gap-y-12 md:grid-cols-4 lg:grid-cols-6">
           {collections.map((collection, index) => {
             return (
