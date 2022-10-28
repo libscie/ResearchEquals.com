@@ -43,6 +43,8 @@ import CollectionsModal from "../core/modals/CollectionsModal"
 
 import "../core/i18n"
 import { useTranslation } from "react-i18next"
+import Button from "app/core/components/Button"
+
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const licenses = await db.license.findMany({
@@ -96,199 +98,27 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
         refetchFn={refetch}
       />
       <main className="bg-white dark:bg-gray-900 lg:relative">
-        <div className="" id="hero">
-          <div className="overflow-hidden pt-8 sm:pt-12 lg:relative lg:py-32">
-            <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-24 lg:px-8">
-              <div>
-                <div className="mt-20">
-                  <div className="mt-6 leading-5 sm:max-w-xl">
-                    <Link href={Routes.CollectionsPage()}>
-                      <button className="my-2 inline-flex items-center rounded-full bg-rose-100 px-3 py-0.5 text-sm font-medium text-rose-800 hover:bg-rose-300 hover:text-rose-900">
-                        <Fire className="mx-1 text-rose-800 hover:text-rose-900" size={24} />
-                        Collections are live!
-                      </button>
-                    </Link>
-                    <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
-                      {t("hero")}
-                    </h1>
-                    <p className="my-4 text-xl text-gray-800 dark:text-gray-50">
-                      {t("hero_subtitle")}
-                    </p>
-                    <button
-                      className="inline-flex items-center justify-center scroll-smooth whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-normal leading-5 text-white shadow-sm hover:bg-indigo-700"
-                      onClick={() => {
-                        document!.getElementById("step-module")!.scrollIntoView()
-                      }}
-                    >
-                      Learn more
-                    </button>
-                    <Link href="/browse">
-                      <a className="mx-4 whitespace-nowrap rounded-md border-0 bg-indigo-100 px-4 py-2 font-normal leading-5 text-indigo-700 hover:bg-indigo-200 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">
-                        Browse modules
-                      </a>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="min-h-full py-12 sm:mx-auto sm:max-w-3xl sm:px-6 sm:py-16">
-              <div className="py-12 sm:relative sm:mt-12 sm:py-16 lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-                <div className="hidden sm:block"></div>
-                <div className="relative max-w-full pl-4 sm:mx-auto sm:max-w-full sm:px-0 lg:max-w-none lg:pl-12">
-                  <div className="z-50 grid grid-flow-row grid-cols-4 gap-16 sm:grid-cols-4">
-                    <div></div>
-                    <div
-                      id="step-1"
-                      className="module h-28 w-28 bg-pink-600 text-center text-white md:h-28  md:w-28"
-                    >
-                      <span className="inline-block h-full align-middle"></span>
-                      <CircleStroke
-                        id="step-1-button"
-                        className="justify-middle inline-block h-6 w-6 fill-current stroke-current stroke-2 align-middle text-white"
-                      />
-                    </div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div
-                      id="step-2"
-                      className="module h-28 w-28 bg-indigo-600 text-center text-white md:h-28  md:w-28"
-                    >
-                      <span className="inline-block h-full align-middle"></span>
-                      <CircleFill
-                        id="step-2-button"
-                        className="justify-middle inline-block h-6 w-6 fill-current stroke-current stroke-2 align-middle text-white"
-                      />
-                    </div>
-                    <div></div>
-                    <div
-                      id="step-3"
-                      className="module h-28 w-28 bg-emerald-600 text-center text-white md:h-28  md:w-28"
-                    >
-                      <span className="inline-block h-full align-middle"></span>
-                      <CircleFill
-                        id="step-3-button"
-                        className="justify-middle inline-block h-6 w-6 fill-current stroke-current stroke-2 align-middle text-white"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <section
+          id="hero"
+          className="bg-indigo-50 py-10 dark:bg-transparent md:py-28 md:text-center"
+        >
+          <div className="flex flex-col items-center gap-4 px-7">
+            <h1 className="max-w-5xl text-4xl font-bold text-slate-800 dark:text-white md:text-7xl md:font-extrabold">
+              Your research journey made visible &amp; accessible
+            </h1>
+            <p className="max-w-[800px] text-base text-slate-600 dark:text-slate-300 md:text-xl">
+              Join a community of researchers who are building a new movement of research: open
+              access, collaborative, and free for all.
+            </p>
+            {/* TODO CTA_LINK */}
+            {/* <Link href="<CTA_LINK>" passHref> */}
+            <Button color="primary" className="mt-4 w-auto" onClick={() => router.push("/browse")}>
+              Give Research Equals a Try
+            </Button>
+            {/* </Link> */}
           </div>
-        </div>
-        {/* Arrows */}
-        <Xarrows
-          start="step-1-button"
-          end="step-2"
-          showHead={false}
-          curveness={3}
-          dashness
-          color={prefersDarkMode ? "white" : "#0f172a"}
-          startAnchor="right"
-          endAnchor="top"
-        />
-        <Xarrows
-          start="step-2-button"
-          end="step-3"
-          showHead={false}
-          dashness
-          curveness={3}
-          color={prefersDarkMode ? "white" : "#0f172a"}
-          startAnchor="bottom"
-          endAnchor="top"
-        />
-        <Xarrows
-          start="step-3-button"
-          end="step-module"
-          showHead={false}
-          dashness
-          color={prefersDarkMode ? "white" : "#0f172a"}
-          startAnchor="auto"
-          endAnchor="top"
-        />
+        </section>
 
-        <Xarrows
-          start="step-module"
-          end="document-steps"
-          showHead={false}
-          dashness
-          color={prefersDarkMode ? "white" : "#0f172a"}
-          startAnchor="bottom"
-          endAnchor="top"
-        />
-        {biggerWindow ? (
-          <>
-            <Xarrows
-              start="step-module"
-              end="data-module"
-              showHead={false}
-              dashness
-              color={prefersDarkMode ? "rgba(255, 255, 255, 0.4)" : "rgba(0, 0, 0, 0.4)"}
-              startAnchor="left"
-              endAnchor="auto"
-            />
-            <Xarrows
-              start="step-module"
-              end="video-module"
-              showHead={false}
-              dashness
-              color={prefersDarkMode ? "rgba(255, 255, 255, 0.4)" : "rgba(0, 0, 0, 0.4)"}
-              startAnchor="left"
-              endAnchor="auto"
-            />
-            <Xarrows
-              start="step-module"
-              end="code-module"
-              showHead={false}
-              dashness
-              color={prefersDarkMode ? "rgba(255, 255, 255, 0.4)" : "rgba(0, 0, 0, 0.4)"}
-              startAnchor="left"
-              endAnchor="auto"
-            />
-            <Xarrows
-              start="step-module"
-              end="text-module"
-              showHead={false}
-              dashness
-              color={prefersDarkMode ? "rgba(255, 255, 255, 0.4)" : "rgba(0, 0, 0, 0.4)"}
-              startAnchor="left"
-              endAnchor="auto"
-            />
-          </>
-        ) : (
-          ""
-        )}
-
-        <Xarrows
-          start="document-steps"
-          end="publish-free"
-          showHead={false}
-          dashness
-          color={prefersDarkMode ? "white" : "#0f172a"}
-          startAnchor="bottom"
-          endAnchor="top"
-        />
-        <Xarrows
-          start="document-steps"
-          end="pay-to-close"
-          showHead={false}
-          dashness
-          curveness={1.5}
-          color={prefersDarkMode ? "white" : "#0f172a"}
-          startAnchor="bottom"
-          endAnchor="top"
-        />
-        <Xarrows
-          start="publish-free"
-          end="final-call"
-          showHead={false}
-          dashness
-          color={prefersDarkMode ? "white" : "#0f172a"}
-          startAnchor="bottom"
-          endAnchor="top"
-        />
         {/* Modular explanations */}
         <div className="mx-6 max-w-full pt-16 text-white sm:max-w-7xl lg:text-left xl:mx-auto">
           <div className="flex">
