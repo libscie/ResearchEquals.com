@@ -1,6 +1,7 @@
 import {
   BlitzPage,
   GetStaticProps,
+  Image,
   InferGetStaticPropsType,
   Link,
   Routes,
@@ -45,6 +46,7 @@ import "../core/i18n"
 import { useTranslation } from "react-i18next"
 import Button from "app/core/components/Button"
 
+import Hero from "public/images/home/hero.png"
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const licenses = await db.license.findMany({
@@ -118,7 +120,17 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
             {/* </Link> */}
           </div>
         </section>
-
+        <section id="hero-image" className="bg-indigo-50 py-10 px-6 dark:bg-transparent xl:py-20">
+          <div className="mx-auto max-w-7xl px-4 xl:px-0">
+            <Image
+              src={Hero}
+              alt="Resource Equals"
+              layout="responsive"
+              width={2560}
+              height={1880}
+            />
+          </div>
+        </section>
         {/* Modular explanations */}
         <div className="mx-6 max-w-full pt-16 text-white sm:max-w-7xl lg:text-left xl:mx-auto">
           <div className="flex">
