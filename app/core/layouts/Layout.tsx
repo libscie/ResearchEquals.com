@@ -34,9 +34,9 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
         open={isAnnouncementBannerOpen}
         onClose={() => setAnnouncementBannerOpen(false)}
       >
-        Want to learn about &#123;Topic&#125;? <br className="md:hidden" />
+        Want to learn about research modules? <br className="md:hidden" />
         <Link href="/">
-          <a className="underline">👉 Join a Research Equals Cohort</a>
+          <a className="underline"> 👉 Join a ResearchEquals Cohort</a>
         </Link>
       </AnnouncementBanner>
       <Toaster position="bottom-center" reverseOrder={false} />
