@@ -46,6 +46,7 @@ import { ApproachSection } from "app/core/components/home/ApproachSection"
 import { PublishYourJourneySection } from "app/core/components/home/PublishYourJourneySection"
 import { OpenAccessSection } from "app/core/components/home/OpenAccessSection"
 import { CollectionsSection } from "app/core/components/home/CollectionsSection"
+import { TestimonialsSection } from "app/core/components/home/TestimonialsSection"
 import { Hero } from "app/core/components/home/Hero"
 import { ModuleDiagram } from "app/core/components/home/ModuleDiagram"
 
@@ -102,6 +103,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
         <PublishYourJourneySection />
         <OpenAccessSection />
         <CollectionsSection />
+        <TestimonialsSection />
       </main>
     </>
   )
