@@ -75,11 +75,6 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
   const router = useRouter()
   const [drafts, { refetch }] = useQuery(getDrafts, { session })
   const [invitations] = useQuery(getInvitedModules, { session })
-  const { t, i18n } = useTranslation()
-
-  useEffect(() => {
-    i18n.changeLanguage(router.locale)
-  }, [])
 
   const freeLicenses = licenses.filter((license) => license.price === 0)
   const payToClose = licenses.filter((license) => license.price > 0)
