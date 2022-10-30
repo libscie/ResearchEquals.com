@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast"
 import { RecoilRoot } from "recoil"
 
 import Footer from "../components/Footer"
+import AnnouncementBanner from "../components/AnnouncementBanner"
 
 type LayoutProps = {
   title?: string
@@ -25,8 +26,19 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
     }
   }, [cookieAccepted])
 
+  const [isAnnouncementBannerOpen, setAnnouncementBannerOpen] = useState(true)
+
   return (
     <>
+      <AnnouncementBanner
+        open={isAnnouncementBannerOpen}
+        onClose={() => setAnnouncementBannerOpen(false)}
+      >
+        Want to learn about &#123;Topic&#125;? <br className="md:hidden" />
+        <Link href="/">
+          <a className="underline">👉 Join a Research Equals Cohort</a>
+        </Link>
+      </AnnouncementBanner>
       <Toaster position="bottom-center" reverseOrder={false} />
       <Head>
         <title>{title || "ResearchEquals"}</title>
