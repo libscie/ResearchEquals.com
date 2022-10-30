@@ -4,8 +4,9 @@ import { ArrowRight } from "@carbon/icons-react"
 import Container from "./Container"
 import NotchedCard from "./NotchedCard"
 import Collections from "public/images/home/collections.png"
+import CollectionsModal from "app/core/modals/CollectionsModal"
 
-export const CollectionsSection = () => {
+export const CollectionsSection = ({ currentUser, currentWorkspace }) => {
   return (
     <section className="bg-amber-300 lg:bg-transparent">
       <Container className="md:px-10 md:pt-16 md:pb-24">
@@ -19,15 +20,17 @@ export const CollectionsSection = () => {
               Curate &amp; share all types of research work and publication. Keep track of relevant
               and interesting work in your field.
             </p>
-            {/* TODO CTA_LINK */}
-            {/* <Link href="<CTA_LINK>"> */}
-            <a href="">
-              <span className="flex items-center text-lg font-bold">
-                Learn more
-                <ArrowRight />
-              </span>
-            </a>
-            {/* </Link> */}
+            <CollectionsModal
+              button={
+                <span className="flex items-center text-lg font-bold">
+                  Learn more
+                  <ArrowRight />
+                </span>
+              }
+              styling={undefined}
+              user={currentUser}
+              workspace={currentWorkspace}
+            />
           </div>
           <div className="mr-[min(calc(25%-100px),20px)]">
             <Image
