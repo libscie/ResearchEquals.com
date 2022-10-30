@@ -1,34 +1,13 @@
 import {
   BlitzPage,
   GetStaticProps,
-  Image,
   InferGetStaticPropsType,
-  Link,
-  Routes,
   useQuery,
   useRouter,
   useSession,
 } from "blitz"
 import Layout from "app/core/layouts/Layout"
-import {
-  CurrencyEuro,
-  Save,
-  Checkmark,
-  Favorite,
-  CircleStroke,
-  TableSplit,
-  Terminal,
-  Language,
-  Alarm,
-  Events,
-  TextAlignLeft,
-  Video,
-  CircleFill,
-  Fire,
-} from "@carbon/icons-react"
-import Xarrows from "react-xarrows"
 import { useMediaPredicate } from "react-media-hook"
-import ReactTooltip from "react-tooltip"
 
 import Navbar from "../core/components/Navbar"
 import db from "db"
@@ -38,9 +17,7 @@ import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import getDrafts from "app/core/queries/getDrafts"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 
-import React, { useEffect } from "react"
-import { createRoot } from "react-dom/client"
-import CollectionsModal from "../core/modals/CollectionsModal"
+import React from "react"
 
 import { ApproachSection } from "app/core/components/home/ApproachSection"
 import { PublishYourJourneySection } from "app/core/components/home/PublishYourJourneySection"
