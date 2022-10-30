@@ -16,7 +16,7 @@ export const OpenAccessSection = ({ freeLicenses, payToClose }) => {
             you can pay to close.
           </p>
         </div>
-        <div className="flex flex-col items-center gap-10 py-10 px-8 lg:flex-row lg:items-end lg:justify-center lg:py-20 lg:px-16">
+        <div className="flex flex-col items-center gap-10 py-10 px-8 lg:flex-row lg:items-start lg:justify-center lg:py-20 lg:px-16">
           <div className="w-full max-w-[500px] space-y-10 rounded-2xl bg-indigo-700 px-6 py-10 text-white md:px-12 md:pt-16 md:pb-28 lg:px-16">
             <span className="lg:-ml-18 -ml-14 rounded-lg bg-amber-200 py-[10px] px-3 text-sm font-bold text-black md:-ml-32 md:text-lg lg:px-12">
               Free &amp; Open Access
