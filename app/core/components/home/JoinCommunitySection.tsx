@@ -1,0 +1,21 @@
+import React from "react"
+import Container from "./Container"
+import Button from "./Button"
+
+export const JoinCommunitySection = () => {
+  return (
+    <section className="bg-indigo-700 text-white ">
+      <Container className="flex flex-col items-center gap-10 py-20 md:py-24 lg:flex-row lg:justify-between lg:gap-6">
+        <p className="text-center text-3xl font-bold md:text-5xl lg:text-left">
+          Join a community of people who are building open access research
+        </p>
+        {/* TODO CTA_LINK */}
+        {/* <Link href="<CTA_LINK>" passHref> */}
+        <Button variant="outlined" color="inherit" className="lg:min-w-[340px]">
+          Sign up for ResearchEquals
+        </Button>
+        {/* </Link> */}
+      </Container>
+    </section>
+  )
+}
