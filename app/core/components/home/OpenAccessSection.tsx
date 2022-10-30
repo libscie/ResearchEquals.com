@@ -41,7 +41,7 @@ export const OpenAccessSection = ({ freeLicenses, payToClose }) => {
                 <li key={idx} className="flex items-center gap-4 text-base lg:text-lg">
                   <CheckmarkFilled size={"1.5rem"} />
                   {data.url ? (
-                    <a href={data.url} rel="nofollow noreferrer">
+                    <a href={data.url} rel="nofollow noreferrer" target="_blank">
                       {data.name}
                     </a>
                   ) : (
@@ -87,7 +87,7 @@ export const OpenAccessSection = ({ freeLicenses, payToClose }) => {
                       })}
                     >
                       {data.url ? (
-                        <a href={data.url} rel="nofollow noreferrer">
+                        <a href={data.url} rel="nofollow noreferrer" target="_blank">
                           {data.name}
                         </a>
                       ) : (
