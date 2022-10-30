@@ -1,6 +1,7 @@
-import { Image, Link } from "blitz"
+import { Link } from "blitz"
 import React from "react"
 import Container from "./home/Container"
+import ResearchEqualsLogo from "./ResearchEqualsLogo"
 
 export const FooterApollo = () => {
   return (
@@ -9,22 +10,10 @@ export const FooterApollo = () => {
         <div className="flex flex-col gap-10 px-8 text-center text-white lg:p-0">
           <div className="flex items-end justify-center gap-4 lg:justify-start lg:gap-6">
             <span className="h-14 w-14 lg:h-20 lg:w-20">
-              <Image
-                src="/images/logo.svg"
-                alt="ResearchEquals"
-                width={80}
-                height={80}
-                layout="responsive"
-              />
+              <ResearchEqualsLogo />
             </span>
-            <span className="w-40 md:h-8 md:w-60 lg:h-10">
-              <Image
-                src="/images/logo-text.svg"
-                alt="ResearchEquals"
-                width={233}
-                height={43}
-                layout="responsive"
-              />
+            <span className="w-40 text-4xl md:h-8 md:w-60 lg:h-10">
+              <span className="font-serif italic">Research</span>Equals
             </span>
           </div>
           <p className="max-w-[480px] text-base lg:text-lg">
