@@ -43,6 +43,7 @@ import { createRoot } from "react-dom/client"
 import CollectionsModal from "../core/modals/CollectionsModal"
 
 import { ApproachSection } from "app/core/components/home/ApproachSection"
+import { PublishYourJourneySection } from "app/core/components/home/PublishYourJourneySection"
 import { Hero } from "app/core/components/home/Hero"
 import { ModuleDiagram } from "app/core/components/home/ModuleDiagram"
 
@@ -96,6 +97,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
         <Hero />
         <ModuleDiagram />
         <ApproachSection />
+        <PublishYourJourneySection />
       </main>
     </>
   )
