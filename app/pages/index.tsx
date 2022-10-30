@@ -124,7 +124,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
           <div className="mx-auto max-w-7xl px-4 xl:px-0">
             <Image
               src={Hero}
-              alt="Resource Equals"
+              alt="A diagram showing connections among research modules"
               layout="responsive"
               width={2560}
               height={1880}
