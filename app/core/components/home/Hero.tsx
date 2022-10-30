@@ -1,4 +1,4 @@
-import { useRouter } from "blitz"
+import { Link, useRouter } from "blitz"
 import React, { useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import Button from "./Button"
@@ -21,12 +21,11 @@ export const Hero = () => {
         <p className="max-w-[800px] text-base text-slate-600 dark:text-slate-300 md:text-xl">
           {t("hero_subtitle")}
         </p>
-        {/* TODO CTA_LINK */}
-        {/* <Link href="<CTA_LINK>" passHref> */}
-        <Button color="primary" className="mt-4 w-auto" onClick={() => router.push("/browse")}>
-          Give Research Equals a Try
-        </Button>
-        {/* </Link> */}
+        <Link href="/signup" passHref>
+          <Button color="primary" className="mt-4 w-auto">
+            Give ResearchEquals a Try
+          </Button>
+        </Link>
       </div>
     </section>
   )

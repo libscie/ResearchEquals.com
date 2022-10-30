@@ -107,8 +107,8 @@ export const ApproachSection = () => {
             <ApproachBox key={idx} data={data} className="w-full" />
           ))}
         </div>
-        <Link href="/browse" passHref>
-          <Button color="primary">Give Research Equals a Try</Button>
+        <Link href="/signup" passHref>
+          <Button color="primary">Give ResearchEquals a Try</Button>
         </Link>
       </div>
     </section>
