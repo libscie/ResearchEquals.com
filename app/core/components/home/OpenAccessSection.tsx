@@ -3,60 +3,7 @@ import cx from "classnames"
 import Container from "./Container"
 import { CheckmarkFilled } from "@carbon/icons-react"
 
-const FREE_ACCESS_DATA: { label: string; href?: string }[] = [
-  {
-    label: "Publish research modules",
-  },
-  {
-    label: "Create & share collections",
-  },
-  {
-    label: "Collaborate with others",
-  },
-  {
-    label: "CC0 Public Domain Dedication",
-    href: "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
-  },
-  {
-    label: "CC BY 4.0",
-    href: "https://creativecommons.org/licenses/by/4.0/legalcode",
-  },
-]
-
-const COPYRIGHT_DATA: { price: number; label: string; href?: string }[] = [
-  {
-    price: 149.99,
-    label: "CC BY-SA 4.0",
-    href: "https://creativecommons.org/licenses/by-sa/4.0/legalcode",
-  },
-  {
-    price: 194.99,
-    label: "CC BY-NC 4.0",
-    href: "https://creativecommons.org/licenses/by-nc/4.0/legalcode",
-  },
-  {
-    price: 249.99,
-    label: "CC BY-ND 4.0",
-    href: "https://creativecommons.org/licenses/by-nd/4.0/legalcode",
-  },
-  {
-    price: 329.99,
-    label: "CC BY-NC-SA 4.0",
-    href: "https://creativecommons.org/licenses/by-nc-sa/4.0/",
-  },
-  {
-    price: 429.99,
-    label: "CC BY-NC-ND 4.0",
-    href: "https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode",
-  },
-  {
-    price: 549.99,
-    label: "All rights reserved",
-    href: "https://en.wikipedia.org/wiki/All_rights_reserved",
-  },
-]
-
-export const OpenAccessSection = () => {
+export const OpenAccessSection = ({ freeLicenses, payToClose }) => {
   return (
     <section>
       <Container className="pt-10">
@@ -90,15 +37,15 @@ export const OpenAccessSection = () => {
               <h3 className="text-3xl font-bold lg:text-4xl">Zero Cost</h3>
             </div>
             <ul className="list-none space-y-6">
-              {FREE_ACCESS_DATA.map((data, idx) => (
+              {freeLicenses.map((data, idx) => (
                 <li key={idx} className="flex items-center gap-4 text-base lg:text-lg">
                   <CheckmarkFilled size={"1.5rem"} />
-                  {data.href ? (
-                    <a href={data.href} rel="nofollow noreferrer">
-                      {data.label}
+                  {data.url ? (
+                    <a href={data.url} rel="nofollow noreferrer">
+                      {data.name}
                     </a>
                   ) : (
-                    <span>{data.label}</span>
+                    <span>{data.name}</span>
                   )}
                 </li>
               ))}
@@ -122,7 +69,7 @@ export const OpenAccessSection = () => {
             </div>
             <table className="w-full table-auto">
               <tbody>
-                {COPYRIGHT_DATA.map((data, idx) => (
+                {payToClose.map((data, idx) => (
                   <tr key={idx}>
                     <td
                       className={cx("py-4 pr-4 text-base font-semibold lg:text-xl", {
@@ -132,19 +79,19 @@ export const OpenAccessSection = () => {
                       {new Intl.NumberFormat("en-US", {
                         style: "currency",
                         currency: "EUR",
-                      }).format(data.price)}
+                      }).format(data.price / 100)}
                     </td>
                     <td
                       className={cx("w-full py-4 pl-4 text-base lg:text-lg", {
                         "border-t border-slate-700": idx > 0,
                       })}
                     >
-                      {data.href ? (
-                        <a href={data.href} rel="nofollow noreferrer">
-                          {data.label}
+                      {data.url ? (
+                        <a href={data.url} rel="nofollow noreferrer">
+                          {data.name}
                         </a>
                       ) : (
-                        data.label
+                        data.name
                       )}
                     </td>
                   </tr>

@@ -79,7 +79,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
         <ModuleDiagram />
         <ApproachSection />
         <PublishYourJourneySection />
-        <OpenAccessSection />
+        <OpenAccessSection payToClose={payToClose} freeLicenses={freeLicenses} />
         <CollectionsSection />
         <TestimonialsSection />
         <JoinCommunitySection />
