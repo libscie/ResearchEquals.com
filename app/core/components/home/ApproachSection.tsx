@@ -8,6 +8,7 @@ import OldWayDark from "public/images/home/old-way-dark.svg"
 import NewWay from "public/images/home/new-way.svg"
 import NewWayDark from "public/images/home/new-way-dark.svg"
 import React from "react"
+import { Link } from "blitz"
 
 const APPROACH_DATA: {
   icon: string | ReactChild
@@ -106,10 +107,9 @@ export const ApproachSection = () => {
             <ApproachBox key={idx} data={data} className="w-full" />
           ))}
         </div>
-        {/* TODO CTA_LINK */}
-        {/* <Link href="<CTA_LINK>" passHref> */}
-        <Button color="primary">Give Research Equals a Try</Button>
-        {/* </Link> */}
+        <Link href="/browse" passHref>
+          <Button color="primary">Give Research Equals a Try</Button>
+        </Link>
       </div>
     </section>
   )
