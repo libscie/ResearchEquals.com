@@ -19,7 +19,7 @@ const APPROACH_DATA: {
   imageDark?: string | StaticImageData
 }[] = [
   {
-    icon: <Close />,
+    icon: <Close size={"1.5rem"} />,
     color: "red",
     caption: "THE OLD WAY OF DOING RESEARCH",
     title: "The hard work you put in research is invisible and undocumented",
@@ -27,7 +27,7 @@ const APPROACH_DATA: {
     imageDark: OldWayDark,
   },
   {
-    icon: <Checkmark />,
+    icon: <Checkmark size={"1.5rem"} />,
     color: "indigo",
     caption: "THE RESEARCHEQUALS PROCESS",
     title: "Get a clear picture of your research journey from start to finish",
