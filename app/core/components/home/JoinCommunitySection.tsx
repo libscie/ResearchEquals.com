@@ -1,6 +1,7 @@
 import React from "react"
 import Container from "./Container"
 import Button from "./Button"
+import { Link } from "blitz"
 
 export const JoinCommunitySection = () => {
   return (
@@ -9,12 +10,11 @@ export const JoinCommunitySection = () => {
         <p className="text-center text-3xl font-bold md:text-5xl lg:text-left">
           Join a community of people who are building open access research
         </p>
-        {/* TODO CTA_LINK */}
-        {/* <Link href="<CTA_LINK>" passHref> */}
-        <Button variant="outlined" color="inherit" className="lg:min-w-[340px]">
-          Sign up for ResearchEquals
-        </Button>
-        {/* </Link> */}
+        <Link href="/signup" passHref>
+          <Button variant="outlined" color="inherit" className="lg:min-w-[340px]">
+            Sign up for ResearchEquals
+          </Button>
+        </Link>
       </Container>
     </section>
   )
