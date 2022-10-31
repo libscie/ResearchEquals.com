@@ -30,7 +30,8 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
 
   return (
     <>
-      <AnnouncementBanner
+      {/* UNCOMMENT IF announcemen banner needs to be used */}
+      {/* <AnnouncementBanner
         open={isAnnouncementBannerOpen}
         onClose={() => setAnnouncementBannerOpen(false)}
       >
@@ -38,7 +39,7 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
         <Link href="/">
           <a className="underline"> 👉 Join a ResearchEquals Cohort</a>
         </Link>
-      </AnnouncementBanner>
+      </AnnouncementBanner> */}
       <Toaster position="bottom-center" reverseOrder={false} />
       <Head>
         <title>{title || "ResearchEquals"}</title>
