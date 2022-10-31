@@ -5,7 +5,7 @@ import TestimonialCard from "./TestimonialCard"
 import AvatarImage from "public/images/home/avatar.png"
 
 const DUMMY_TESTIMONIAL = {
-  name: "Jane Doe",
+  name: "Dan Rudmann",
   message:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Volutpat, interdum amet velit ipsum feugiat nulla mattis ut.",
   position: "Researcher",
@@ -19,10 +19,31 @@ const TESTIMONIALS_DATA: {
   position?: string
   className?: string
 }[] = [
-  { className: "md:hover:bg-indigo-700" },
-  { className: "md:hover:bg-pink-700" },
-  { className: "md:hover:bg-cyan-600" },
-].map((data) => ({ ...data, ...DUMMY_TESTIMONIAL }))
+  {
+    name: "TBD",
+    message:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Volutpat, interdum amet velit ipsum feugiat nulla mattis ut.",
+    position: "Researcher",
+    image: AvatarImage,
+    className: "md:hover:bg-indigo-700",
+  },
+  {
+    name: "TBD",
+    message:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Volutpat, interdum amet velit ipsum feugiat nulla mattis ut.",
+    position: "Researcher",
+    image: AvatarImage,
+    className: "md:hover:bg-pink-700",
+  },
+  {
+    name: "TBD",
+    message:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Volutpat, interdum amet velit ipsum feugiat nulla mattis ut.",
+    position: "Researcher",
+    image: AvatarImage,
+    className: "md:hover:bg-cyan-600",
+  },
+]
 
 export const TestimonialsSection = () => {
   return (
@@ -33,8 +54,8 @@ export const TestimonialsSection = () => {
             Freedom to publish your unique research process
           </h2>
           <p className="max-w-[640px] text-base text-slate-600 dark:text-slate-300 md:text-lg">
-            From students, researchers to published authors, ResearchEquals can help you publish
-            your research in your own terms.
+            From students, researchers, to published authors, ResearchEquals helps you publish your
+            research on your own terms.
           </p>
         </div>
         <div className="flex flex-col gap-6 lg:flex-row">

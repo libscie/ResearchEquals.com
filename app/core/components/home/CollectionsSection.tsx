@@ -17,8 +17,11 @@ export const CollectionsSection = ({ currentUser, currentWorkspace }) => {
             </div>
             <h2 className="text-3xl font-bold md:text-5xl">Collections</h2>
             <p className="text-base text-slate-600 md:text-lg">
-              If it has a DOI, you can collect it. Curate, share, and keep track of all types of
-              research work with your community. Create one for free and upgrade if you need it.
+              If it has a DOI, you can collect it.
+            </p>
+            <p className="text-base text-slate-600 md:text-lg">
+              Curate, share, and keep track of research on your own, with others, or with your
+              entire community.
             </p>
             <CollectionsModal
               button={

@@ -3,7 +3,7 @@ const ResearchEqualsLogoType = () => {
     <>
       <svg
         width="580.921"
-        className="h-12 w-auto fill-current text-indigo-600 dark:text-white"
+        className="h-12 w-auto fill-current text-white"
         xmlns="http://www.w3.org/2000/svg"
         height="113.41"
         id="screenshot-8d180d00-ee2f-11ec-a602-31d3e7357c9e"
