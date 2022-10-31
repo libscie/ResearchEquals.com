@@ -1,27 +1,22 @@
 import { Link } from "blitz"
 import React from "react"
 import Container from "./home/Container"
-import ResearchEqualsLogo from "./ResearchEqualsLogo"
+import ResearchEqualsLogoType from "./ResearchEqualsLogoType"
 
 export const FooterApollo = () => {
   return (
     <footer className="bg-slate-900">
-      <Container className="flex flex-col items-center gap-10 pt-20 lg:flex-row lg:items-start  lg:justify-between lg:gap-0 lg:text-left">
-        <div className="flex flex-col gap-10 px-8 text-center text-white lg:p-0">
-          <div className="flex items-end justify-center gap-4 lg:justify-start lg:gap-6">
-            <span className="h-14 w-14 lg:h-20 lg:w-20">
-              <ResearchEqualsLogo />
-            </span>
-            <span className="w-40 text-4xl md:h-8 md:w-60 lg:h-10">
-              <span className="font-serif italic">Research</span>Equals
-            </span>
+      <Container className="flex flex-col items-center gap-10 pt-20 lg:flex-row lg:items-start lg:justify-between lg:gap-0 lg:text-left">
+        <div className="flex flex-col gap-10 px-8 text-white lg:p-0">
+          <div className="flex items-end gap-4 lg:justify-start lg:gap-6">
+            <ResearchEqualsLogoType />
           </div>
-          <p className="max-w-[480px] text-base lg:text-lg">
+          <p className="max-w-[480px] text-sm lg:text-lg">
             A research platform made by fellow researchers with a passion for open science and
             technology.
           </p>
-          <div className="flex flex-col items-center gap-4 text-slate-400 lg:items-start">
-            <div>Powered By:</div>
+          <div className="flex flex-col gap-4 text-slate-400 lg:items-start">
+            <div>Powered by:</div>
             <a href="https://libscie.org/">
               <svg
                 width="200"

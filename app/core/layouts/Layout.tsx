@@ -6,6 +6,7 @@ import { RecoilRoot } from "recoil"
 
 import Footer from "../components/Footer"
 import AnnouncementBanner from "../components/AnnouncementBanner"
+import { FooterApollo } from "../components/FooterApollo"
 
 type LayoutProps = {
   title?: string
@@ -71,7 +72,8 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
           <div className="flex flex-grow flex-col">{children}</div>
         </div>
       </RecoilRoot>
-      <Footer />
+      {title === "ResearchEquals.com" ? <FooterApollo /> : <Footer />}
+
       <CookieConsent
         location="bottom"
         style={{
