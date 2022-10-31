@@ -35,11 +35,12 @@ const EditSupportingFileDisplay = ({ name, size, url, uuid, moduleId, setQueryDa
             title="Confirm deletion"
             body={
               <span>
-            Upon confirmation, the supporting file &quot;{name}&quot; will be permanently deleted. Are you sure you want to delete this file?
+                Upon confirmation, the supporting file &quot;{name}&quot; will be permanently
+                deleted. Are you sure you want to delete this file?
               </span>
             }
             primaryAction="Delete File"
-            primaryButtonClass="text-red-700 hover:bg-red-200 focus:ring-red-500 focus:ring-offset-0 focus:ring-2 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+            primaryButtonClass="rounded-md bg-red-50 py-2 px-4 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
             isOpen={confirmDeleteOpen}
             setIsOpen={setConfirmDeleteOpen}
             onSubmit={async () => {
