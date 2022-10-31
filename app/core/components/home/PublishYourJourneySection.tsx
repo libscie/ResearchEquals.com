@@ -2,12 +2,12 @@ import React from "react"
 import cx from "classnames"
 import Container, { ContainerProps } from "./Container"
 import { Image } from "blitz"
-import CreateModule from "public/images/home/create-module.png"
-import CreateModuleDark from "public/images/home/create-module-dark.png"
+import CreateModule from "public/images/home/create-module.svg"
+import CreateModuleDark from "public/images/home/create-module-dark.svg"
 import AddLink from "public/images/home/add-link.svg"
 import AddLinkDark from "public/images/home/add-link-dark.svg"
-import Collaborate from "public/images/home/collaborate.png"
-import CollaborateDark from "public/images/home/collaborate-dark.png"
+import Collaborate from "public/images/home/collaborate.svg"
+import CollaborateDark from "public/images/home/collaborate-dark.svg"
 
 type StepsType = {
   title: string

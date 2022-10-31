@@ -3,7 +3,7 @@ import React from "react"
 import { ArrowRight } from "@carbon/icons-react"
 import Container from "./Container"
 import NotchedCard from "./NotchedCard"
-import Collections from "public/images/home/collections.png"
+import Collections from "public/images/home/collections.svg"
 import CollectionsModal from "app/core/modals/CollectionsModal"
 
 export const CollectionsSection = ({ currentUser, currentWorkspace }) => {
