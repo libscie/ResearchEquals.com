@@ -13,7 +13,7 @@ import DoiCollection from "app/collections/components/DoiCollection"
 import EditorsBadge from "app/collections/components/EditorsBadge"
 import ContributorsBadge from "app/collections/components/ContributorsBadge"
 import CollectionsModal from "app/core/modals/CollectionsModal"
-import getDraftCollections from "../collections/queries/getDraftCollections"
+import getMyCollections from "../collections/queries/getMyCollections"
 
 const CollectionsPage: BlitzPage = () => {
   const currentUser = useCurrentUser()
@@ -24,7 +24,7 @@ const CollectionsPage: BlitzPage = () => {
   const [invitations] = useQuery(getInvitedModules, { session })
   // get collections
   const [collections] = useQuery(getCollections, null)
-  const [draftCollections] = useQuery(getDraftCollections, { session: session.workspaceId })
+  const [draftCollections] = useQuery(getMyCollections, { session: session.workspaceId })
 
   return (
     <>
