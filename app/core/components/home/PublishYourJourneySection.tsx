@@ -24,7 +24,7 @@ const STEPS_DATA: StepsType[] = [
   {
     title: "Create a module for all types of research.",
     description:
-      "Publish all outputs of your research like text, data, code, media and anything else that you like. Each step gets a DOI.",
+      "Publish any outputs of your research. Text, data, code, media, and anything else that you like. Each step gets a DOI.",
     image: {
       src: CreateModule,
       srcDark: CreateModuleDark,
@@ -44,7 +44,7 @@ const STEPS_DATA: StepsType[] = [
     },
   },
   {
-    title: "Collaborate & keep everyone on the loop",
+    title: "Collaborate & keep everyone in the loop",
     description:
       "See all activity that is happening on your research. Get approvals from your co-authors before publishing.",
     image: {
@@ -96,11 +96,11 @@ export const PublishYourJourneySection = () => {
       <Container className="flex flex-col items-center gap-10 py-10 md:gap-0 md:py-0">
         <div className="flex flex-col items-center gap-6 md:py-20">
           <h2 className="max-w-[720px] text-3xl font-bold text-slate-800 dark:text-white md:text-6xl">
-            Publish each step of your journey wherever your research takes you
+            Publish each step of your journey, wherever your research takes you
           </h2>
           <p className="max-w-[640px] text-slate-600 dark:text-slate-300 md:text-lg">
-            See the whole picture from which your research findings arise. Be able to trace, link
-            and see the connections between each step of your research.
+            See the whole picture from which your research findings arise. Be able to trace, link,
+            and see the connections between each step of research.
           </p>
         </div>
         {STEPS_DATA.map((data, idx) => (

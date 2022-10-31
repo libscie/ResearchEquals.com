@@ -22,7 +22,7 @@ const APPROACH_DATA: {
     icon: <Close size={"1.5rem"} />,
     color: "red",
     caption: "THE OLD WAY OF DOING RESEARCH",
-    title: "The hard work you put in research is invisible and undocumented",
+    title: "The hard work you put in remains invisible and undocumented",
     image: OldWay,
     imageDark: OldWayDark,
   },

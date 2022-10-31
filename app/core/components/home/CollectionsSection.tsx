@@ -1,4 +1,4 @@
-import { Image } from "blitz"
+import { Image, Link, Routes } from "blitz"
 import React from "react"
 import { ArrowRight } from "@carbon/icons-react"
 import Container from "./Container"
@@ -15,10 +15,10 @@ export const CollectionsSection = ({ currentUser, currentWorkspace }) => {
             <div className="inline-flex rounded-lg bg-indigo-700 px-4 py-2 text-white">
               ✨ New feature!
             </div>
-            <h2 className="text-3xl font-bold md:text-5xl">Create collections</h2>
+            <h2 className="text-3xl font-bold md:text-5xl">Collections</h2>
             <p className="text-base text-slate-600 md:text-lg">
-              Curate &amp; share all types of research work and publication. Keep track of relevant
-              and interesting work in your field.
+              If it has a DOI, you can collect it. Curate, share, and keep track of all types of
+              research work with your community. Create one for free and upgrade if you need it.
             </p>
             <CollectionsModal
               button={
@@ -33,13 +33,17 @@ export const CollectionsSection = ({ currentUser, currentWorkspace }) => {
             />
           </div>
           <div className="mr-[min(calc(25%-100px),20px)]">
-            <Image
-              src={Collections}
-              alt="Collections"
-              width={1148}
-              height={1021}
-              layout="intrinsic"
-            />
+            <Link href="https://www.researchequals.com/collections/jf14-3a">
+              <a target="_blank" className="cursor-pointer">
+                <Image
+                  src={Collections}
+                  alt="Collections"
+                  width={1148}
+                  height={1021}
+                  layout="intrinsic"
+                />
+              </a>
+            </Link>
           </div>
         </NotchedCard>
       </Container>
