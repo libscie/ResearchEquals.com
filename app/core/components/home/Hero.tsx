@@ -23,7 +23,7 @@ export const Hero = () => {
         </p>
         <Link href="/signup" passHref>
           <Button color="primary" className="mt-4 w-auto">
-            Give ResearchEquals a Try
+            {t("primary_cta")}
           </Button>
         </Link>
       </div>
