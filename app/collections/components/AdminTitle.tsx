@@ -52,6 +52,10 @@ const AdminTitle = ({ collection, refetchFn, isAdmin }) => {
               className="w-full select-none overflow-auto border-0 bg-white text-center text-3xl focus:ring-0 dark:bg-gray-900 md:text-5xl lg:text-6xl "
               {...formik.getFieldProps("title")}
             />
+            {formik.touched.title && formik.errors.title ? (
+              <span className="text-red-500">{` - ${formik.errors.title}`}</span>
+            ) : null}
+
             <button
               type="submit"
               className="mx-auto my-1 flex rounded-md bg-emerald-50 py-2 px-4 text-sm font-medium text-emerald-700 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-emerald-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"

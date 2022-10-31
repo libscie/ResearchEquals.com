@@ -52,6 +52,9 @@ const Subtitle = ({ collection, refetchFn, isAdmin }) => {
               className="w-full border-0 text-center text-sm font-medium leading-5 focus:ring-0 dark:bg-gray-900 md:text-base "
               {...formik.getFieldProps("subtitle")}
             />
+            {formik.touched.subtitle && formik.errors.subtitle ? (
+              <span className="text-red-500">{` - ${formik.errors.subtitle}`}</span>
+            ) : null}
             <button
               type="submit"
               className="mx-auto my-1 flex rounded-md bg-emerald-50 py-2 px-4 text-sm font-medium text-emerald-700 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-emerald-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
