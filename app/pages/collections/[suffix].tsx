@@ -430,7 +430,7 @@ const AddSubmmision = ({ collection, currentWorkspace, refetchFn }) => {
       {collection?.type.type === "COMMUNITY" && (
         <Autocomplete
           className="w-full"
-          openOnFocus={false}
+          openOnFocus={true}
           defaultActiveItemId="0"
           getSources={({ query }) => [
             {
