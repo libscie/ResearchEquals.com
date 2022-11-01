@@ -20,6 +20,19 @@ const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
   const [currentRole, setCurrentRole] = useState(editor.role)
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
 
+  const onChangeEditorRole = (editorId, role) => {
+    toast.promise(changeEditorRoleMutation({ editorId: editorId, role: role }), {
+      loading: `Changing role to ${role.toLowerCase()}...`,
+      success: () => {
+        refetchFn()
+        return `Changed role to ${role.toLowerCase()}!`
+      },
+      error: (err) => {
+        return `${err}`
+      },
+    })
+  }
+
   return (
     <>
       <div className={`flex ${editor.isActive ? "" : "opacity-50"} my-2`}>
@@ -42,19 +55,7 @@ const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
                 if (isSelf && isAdmin && info.target.value === "USER") {
                   return setIsConfirmOpen(true)
                 }
-                toast.promise(
-                  changeEditorRoleMutation({ editorId: editor.id, role: info.target.value }),
-                  {
-                    loading: `Changing role to ${info.target.value.toLowerCase()}...`,
-                    success: () => {
-                      refetchFn()
-                      return `Changed role to ${info.target.value.toLowerCase()}!`
-                    },
-                    error: (err) => {
-                      return `${err}`
-                    },
-                  }
-                )
+                onChangeEditorRole(editor.id, info.target.value)
               }}
               value={currentRole}
               className="placeholder-font-normal block appearance-none rounded-md border border-gray-400 bg-white px-4 py-2 pr-6 text-sm font-normal placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border-gray-600 dark:bg-transparent dark:text-gray-200 "
@@ -78,19 +79,7 @@ const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
               isOpen={isConfirmOpen}
               setIsOpen={setIsConfirmOpen}
               onSubmit={async () => {
-                toast.promise(
-                  changeEditorRoleMutation({ editorId: editor.id, role: currentRole }),
-                  {
-                    loading: `Changing role to ${currentRole.toLowerCase()}...`,
-                    success: () => {
-                      refetchFn()
-                      return `Changed role to ${currentRole.toLowerCase()}!`
-                    },
-                    error: (err) => {
-                      return `${err}`
-                    },
-                  }
-                )
+                onChangeEditorRole(editor.id, currentRole)
               }}
               onCancel={() => setCurrentRole(editor.role)}
             />
