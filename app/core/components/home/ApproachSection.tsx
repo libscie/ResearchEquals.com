@@ -108,7 +108,7 @@ export const ApproachSection = () => {
           ))}
         </div>
         <Link href="/signup" passHref>
-          <Button color="primary">Give ResearchEquals a Try</Button>
+          <Button color="primary">Publish Openly with ResearchEquals</Button>
         </Link>
       </div>
     </section>
