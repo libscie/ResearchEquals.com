@@ -5,7 +5,7 @@ const PDFJS_DIST_VERSION = pjson.dependencies["pdfjs-dist"]
 
 const config: BlitzConfig = {
   images: {
-    domains: ["eu.ui-avatars.com"],
+    domains: ["eu.ui-avatars.com", "ucarecdn.com"],
   },
   middleware: [
     sessionMiddleware({
