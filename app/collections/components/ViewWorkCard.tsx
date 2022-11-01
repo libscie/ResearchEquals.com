@@ -56,7 +56,7 @@ const WorkComment = ({ submission, index }) => {
       {submission.comment && submission.comment != "" && (
         <>
           {/* for inspiration https://shuffle.dev/components/all/all/testimonials */}
-          <blockquote className="my-1 border-l-2 border-indigo-600 bg-indigo-100 p-2 font-serif text-xl italic dark:border-indigo-500 dark:bg-indigo-800">
+          <blockquote className="my-4 border-l-2 border-indigo-600 bg-indigo-100 p-2 font-serif text-xl italic dark:border-indigo-500 dark:bg-indigo-800 sm:my-1">
             {submission.comment}
           </blockquote>
           <div className="my-2 flex w-full">
@@ -82,9 +82,10 @@ const WorkComment = ({ submission, index }) => {
                 {/* <span className="inline-block h-full align-middle"></span> */}
                 <a
                   href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                    submission.comment
-                  )}&via=ResearchEquals
-                  `}
+                    `"${submission.comment}"\n-${submission.editor.workspace.firstName} ${submission.editor.workspace.lastName} on`
+                  )}&url=${encodeURIComponent(
+                    `https://doi.org/${submission.module.prefix}/${submission.module.suffix}`
+                  )}&via=ResearchEquals`}
                   target="_blank"
                   rel="noreferrer"
                 >

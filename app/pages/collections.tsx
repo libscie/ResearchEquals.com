@@ -65,12 +65,8 @@ const CollectionsPage: BlitzPage = () => {
               This is your opportunity to become your own editor.
             </p>
             <CollectionsModal
-              styling=""
-              button={
-                <button className="mt-8 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-sky-50 px-5 py-3 text-base font-medium text-sky-700  hover:bg-sky-100 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-sky-500 dark:hover:border-gray-400 dark:hover:bg-gray-700 sm:w-auto">
-                  Create a collection
-                </button>
-              }
+              styling="mt-8 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-sky-50 px-5 py-3 text-base font-medium text-sky-700  hover:bg-sky-100 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-sky-500 dark:hover:border-gray-400 dark:hover:bg-gray-700 sm:w-auto"
+              button={"Create a collection"}
               user={currentUser}
               workspace={currentWorkspace}
             />

@@ -24,7 +24,7 @@ export default function MakeCollectionPublicModal({ collection, refetchFn, works
 
   return (
     <>
-      <div className="sticky top-0 z-50 flex w-full bg-amber-50 py-4 px-2 text-center dark:bg-amber-800">
+      <div className="sticky top-0 z-10 flex w-full bg-amber-50 py-4 px-2 text-center dark:bg-amber-800">
         <div className="mx-auto flex">
           <div className="inline-block align-middle">
             <CheckmarkOutline
@@ -88,7 +88,7 @@ export default function MakeCollectionPublicModal({ collection, refetchFn, works
                 <div className="mt-2">
                   <p className="text-sm">
                     Once you make the collection public you cannot change the title and subtitle
-                    (except after upgrading).
+                    {collection.type.type !== "COMMUNITY" && " (except after upgrading)"}.
                   </p>
                   {!collection.title ? (
                     <p className="text-sm">

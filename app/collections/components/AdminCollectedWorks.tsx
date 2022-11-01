@@ -20,7 +20,7 @@ const CollectedWorks = ({ collection, editorIdSelf, refetchFn, editorIsAdmin }) 
       <div>
         <Autocomplete
           className=""
-          openOnFocus={false}
+          openOnFocus={true}
           defaultActiveItemId="0"
           getSources={({ query }) => [
             {
