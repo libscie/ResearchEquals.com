@@ -23,7 +23,7 @@ const TESTIMONIALS_DATA: {
   {
     name: "Dan Rudmann, PhD",
     message:
-      "Scholarly publishing is at its best when it embraces both a diversity of forms and dialogical connection. ResearchEquals is designed in a way that embraces these practices.",
+      "Scholarly publishing is at its best when it enables both a diversity of forms and open dialogue. ResearchEquals is designed in a way that embraces these practices.",
     position: "Digital Scholarship Librarian, Leiden University",
     image: "https://ucarecdn.com/370f0b00-140d-4bac-a007-16cbb5cbe0f4/-/preview/200x200/",
     className: "md:hover:bg-pink-700",
