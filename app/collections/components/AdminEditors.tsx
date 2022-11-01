@@ -4,6 +4,7 @@ import algoliasearch from "algoliasearch"
 import Autocomplete from "app/core/components/Autocomplete"
 import SearchResultWorkspace from "app/core/components/SearchResultWorkspace"
 import DeleteEditorModal from "app/core/modals/DeleteEditorModal"
+import { Modal } from "app/core/modals/Modal"
 import SetEditorToInactiveModal from "app/core/modals/SetEditorToInactiveModal"
 import UpgradeCollectionModal from "app/core/modals/UpgradeCollectionModal"
 import { Link, Routes, useMutation } from "blitz"
@@ -17,6 +18,7 @@ const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGO
 const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
   const [changeEditorRoleMutation] = useMutation(changeEditorRole)
   const [currentRole, setCurrentRole] = useState(editor.role)
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false)
 
   return (
     <>
@@ -36,13 +38,16 @@ const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
           <>
             <select
               onChange={(info) => {
+                setCurrentRole(info.target.value)
+                if (isSelf && isAdmin && info.target.value === "USER") {
+                  return setIsConfirmOpen(true)
+                }
                 toast.promise(
                   changeEditorRoleMutation({ editorId: editor.id, role: info.target.value }),
                   {
                     loading: `Changing role to ${info.target.value.toLowerCase()}...`,
                     success: () => {
                       refetchFn()
-                      setCurrentRole(info.target.value)
                       return `Changed role to ${info.target.value.toLowerCase()}!`
                     },
                     error: (err) => {
@@ -60,6 +65,35 @@ const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
             </select>
             <SetEditorToInactiveModal editor={editor} refetchFn={refetchFn} />
             <DeleteEditorModal editor={editor} refetchFn={refetchFn} />
+            <Modal
+              title="Confirm changing your role to a user"
+              body={
+                <span>
+                  Are you sure you want to remove yourself as {currentRole.toLowerCase()} of this
+                  collection? By doing so, you will lose access to the admin panel.
+                </span>
+              }
+              primaryAction="Assign yourself as a user"
+              primaryButtonClass="rounded-md bg-red-50 py-2 px-4 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+              isOpen={isConfirmOpen}
+              setIsOpen={setIsConfirmOpen}
+              onSubmit={async () => {
+                toast.promise(
+                  changeEditorRoleMutation({ editorId: editor.id, role: currentRole }),
+                  {
+                    loading: `Changing role to ${currentRole.toLowerCase()}...`,
+                    success: () => {
+                      refetchFn()
+                      return `Changed role to ${currentRole.toLowerCase()}!`
+                    },
+                    error: (err) => {
+                      return `${err}`
+                    },
+                  }
+                )
+              }}
+              onCancel={() => setCurrentRole(editor.role)}
+            />
           </>
         )}
       </div>
