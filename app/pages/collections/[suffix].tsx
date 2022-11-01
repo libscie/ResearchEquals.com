@@ -552,15 +552,15 @@ const AddSubmmision = ({ collection, currentWorkspace, refetchFn }) => {
             body={
               <div>
                 <span>Upon confirmation, you will submit the following work:</span>
-                <span className=" bg-gray-50 p-4 line-clamp-3 dark:bg-gray-800">
+                <span className="my-2 bg-gray-50 p-4 line-clamp-3 dark:bg-gray-800">
                   <Link href={`https://doi.org/${selectedWorkParams?.item?.doi}`} passHref>
-                    <a target={"_blank"}>{selectedWorkParams?.item?.name}</a>
+                    <a target="_blank">{selectedWorkParams?.item?.name}</a>
                   </Link>
                 </span>
                 Do you want to submit this work to the collection?
               </div>
             }
-            primaryAction="Submit work"
+            primaryAction="Submit Work"
             isOpen={isConfirmationOpen}
             setIsOpen={setIsConfirmationOpen}
             onSubmit={async () => {
