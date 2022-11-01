@@ -71,8 +71,9 @@ const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
               title="Confirm role change"
               body={
                 <span>
-                  Are you sure you want to remove yourself as {currentRole.toLowerCase()} of this
-                  collection? By doing so, you will lose access to the admin panel.
+                  Are you sure you want to remove yourself as {editor.role.toLowerCase()} of this
+                  collection? You cannot undo this and will no longer be able to administrate the
+                  editors of this collection.
                 </span>
               }
               primaryAction="Change Role"
