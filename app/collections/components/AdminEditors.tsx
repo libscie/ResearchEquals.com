@@ -28,6 +28,7 @@ const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
         return `Changed role to ${role.toLowerCase()}!`
       },
       error: (err) => {
+        setCurrentRole(editor.role)
         return `${err}`
       },
     })
