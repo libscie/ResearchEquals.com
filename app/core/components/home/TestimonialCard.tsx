@@ -1,7 +1,7 @@
 import React, { HTMLAttributes } from "react"
 import cx from "classnames"
 import NotchedCard from "./NotchedCard"
-import { Image } from "blitz"
+import { Image, Link } from "blitz"
 
 export type TestimonialProp = {
   data: {
@@ -9,11 +9,12 @@ export type TestimonialProp = {
     message: string
     position?: string
     image?: string | StaticImageData
+    link?: string
   }
 } & HTMLAttributes<HTMLDivElement>
 
 const TestimonialCard = ({
-  data: { name, message, position, image },
+  data: { name, message, position, image, link },
   ...props
 }: TestimonialProp) => {
   return (
@@ -30,10 +31,12 @@ const TestimonialCard = ({
         </div>
       )}
       <p className="text-base md:text-lg">“{message}”</p>
-      <div>
-        <div className="font-bold">{name}</div>
-        {position && <div>{position}</div>}
-      </div>
+      <Link href={link!}>
+        <a target="_blank">
+          <div className="font-bold">{name}</div>
+          {position && <div>{position}</div>}
+        </a>
+      </Link>
     </NotchedCard>
   )
 }
