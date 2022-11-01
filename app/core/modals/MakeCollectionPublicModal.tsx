@@ -88,7 +88,7 @@ export default function MakeCollectionPublicModal({ collection, refetchFn, works
                 <div className="mt-2">
                   <p className="text-sm">
                     Once you make the collection public you cannot change the title and subtitle
-                    (except after upgrading).
+                    {collection.type.type !== "COMMUNITY" && " (except after upgrading)"}.
                   </p>
                   {!collection.title ? (
                     <p className="text-sm">
