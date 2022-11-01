@@ -55,11 +55,11 @@ export const Modal = ({
                 <div className="mt-4">
                   <button
                     type="button"
-                    className={`mr-2 inline-flex rounded-md border py-2 px-4 text-sm font-medium ${
+                    className={`mr-2 inline-flex rounded-md py-2 px-4 text-sm font-medium ${
                       primaryButtonClass
                         ? primaryButtonClass
                         : // Style the primary button (default is success)
-                          `bg-emerald-50 py-2 px-4 text-sm font-medium text-emerald-700 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-emerald-500 dark:hover:border-gray-400 dark:hover:bg-gray-700`
+                          `bg-emerald-50 text-emerald-700 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-emerald-500 dark:hover:border-gray-400 dark:hover:bg-gray-700`
                     }`}
                     onClick={async () => {
                       onSubmit()

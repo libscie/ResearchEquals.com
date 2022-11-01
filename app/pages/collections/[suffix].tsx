@@ -11,7 +11,7 @@ import {
 } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import { UserAdmin, LogoTwitter, UserFollow } from "@carbon/icons-react"
-import { Suspense } from "react"
+import { Suspense, useState } from "react"
 
 import Navbar from "../../core/components/Navbar"
 import { useCurrentUser } from "../../core/hooks/useCurrentUser"
@@ -42,6 +42,7 @@ import followCollection from "../../collections/mutations/followCollection"
 import db from "db"
 import addWork from "app/collections/mutations/addWork"
 import createReferenceModule from "app/modules/mutations/createReferenceModule"
+import { Modal } from "app/core/modals/Modal"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
@@ -422,121 +423,151 @@ const AddSubmmision = ({ collection, currentWorkspace, refetchFn }) => {
   const [addSubmissionMutation] = useMutation(addSubmission)
   const [createReferenceMutation] = useMutation(createReferenceModule)
 
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
+  const [selectedWorkParams, setSelectedWorkParams] = useState({} as any)
+
+  const onConfirm = (params) => {
+    const { item, setQuery } = params
+    toast.promise(
+      addSubmissionMutation({
+        collectionId: collection!.id,
+        workspaceId: currentWorkspace!.id,
+        moduleId: parseInt(item.objectID),
+      }),
+      {
+        loading: "Submitting work to collection...",
+        success: () => {
+          refetchFn()
+          return "Submitted work to collection!"
+        },
+        error: "Failed to add work to collection...",
+      }
+    )
+  }
+
   return (
     <div className="mx-4 my-8 xl:mr-4 xl:ml-0">
       <h3 className="my-4 text-xl">Become a Contributor</h3>
       <p className="text-sm">Find your DOI below and submit.</p>
 
       {collection?.type.type === "COMMUNITY" && (
-        <Autocomplete
-          className="w-full"
-          openOnFocus={true}
-          defaultActiveItemId="0"
-          getSources={({ query }) => [
-            {
-              sourceId: "products",
-              async onSelect(params) {
-                const { item, setQuery } = params
-                toast.promise(
-                  addSubmissionMutation({
-                    collectionId: collection!.id,
-                    workspaceId: currentWorkspace!.id,
-                    moduleId: parseInt(item.objectID),
-                  }),
-                  {
-                    loading: "Submitting work to collection...",
-                    success: () => {
-                      refetchFn()
-                      return "Submitted work to collection!"
-                    },
-                    error: "Failed to add work to collection...",
-                  }
-                )
-              },
-              getItems() {
-                return getAlgoliaResults({
-                  searchClient,
-                  queries: [
-                    {
-                      indexName: `${process.env.ALGOLIA_PREFIX}_modules`,
-                      query,
-                    },
-                  ],
-                })
-              },
-
-              templates: {
-                item({ item, components }) {
-                  return (
-                    <>
-                      {item.__autocomplete_indexName.match(/_modules/g) ? (
-                        <SearchResultModule item={item} />
-                      ) : (
-                        ""
-                      )}
-                    </>
-                  )
+        <>
+          <Autocomplete
+            className="w-full"
+            openOnFocus={false}
+            defaultActiveItemId="0"
+            getSources={({ query }) => [
+              {
+                sourceId: "products",
+                async onSelect(params) {
+                  setSelectedWorkParams(params)
+                  setIsConfirmationOpen(true)
                 },
-                noResults() {
-                  const matchedQuery = query.match(/10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
+                getItems() {
+                  return getAlgoliaResults({
+                    searchClient,
+                    queries: [
+                      {
+                        indexName: `${process.env.ALGOLIA_PREFIX}_modules`,
+                        query,
+                      },
+                    ],
+                  })
+                },
 
-                  return (
-                    <>
-                      {/* https://www.crossref.org/blog/dois-and-matching-regular-expressions/ */}
-                      {matchedQuery ? (
-                        <>
-                          <button
-                            className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200"
-                            onClick={async () => {
-                              toast.promise(
-                                createReferenceMutation({
-                                  doi: matchedQuery.slice(-1)[0].endsWith("/")
-                                    ? matchedQuery.slice(-1)[0].slice(0, -1)
-                                    : matchedQuery.slice(-1)[0],
-                                }),
-                                {
-                                  loading: "Searching...",
-                                  success: (data) => {
-                                    toast.promise(
-                                      addSubmissionMutation({
-                                        collectionId: collection!.id,
-                                        workspaceId: currentWorkspace!.id,
-                                        moduleId: data.id,
-                                      }),
-                                      {
-                                        loading: "Adding work to collection...",
-                                        success: () => {
-                                          refetchFn()
-                                          return "Added work to collection!"
-                                        },
-                                        error: "Failed to add work to collection...",
-                                      }
-                                    )
+                templates: {
+                  item({ item, components }) {
+                    return (
+                      <>
+                        {item.__autocomplete_indexName.match(/_modules/g) ? (
+                          <SearchResultModule item={item} />
+                        ) : (
+                          ""
+                        )}
+                      </>
+                    )
+                  },
+                  noResults() {
+                    const matchedQuery = query.match(/10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
 
-                                    refetchFn()
+                    return (
+                      <>
+                        {/* https://www.crossref.org/blog/dois-and-matching-regular-expressions/ */}
+                        {matchedQuery ? (
+                          <>
+                            <button
+                              className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200"
+                              onClick={async () => {
+                                toast.promise(
+                                  createReferenceMutation({
+                                    doi: matchedQuery.slice(-1)[0].endsWith("/")
+                                      ? matchedQuery.slice(-1)[0].slice(0, -1)
+                                      : matchedQuery.slice(-1)[0],
+                                  }),
+                                  {
+                                    loading: "Searching...",
+                                    success: (data) => {
+                                      toast.promise(
+                                        addSubmissionMutation({
+                                          collectionId: collection!.id,
+                                          workspaceId: currentWorkspace!.id,
+                                          moduleId: data.id,
+                                        }),
+                                        {
+                                          loading: "Adding work to collection...",
+                                          success: () => {
+                                            refetchFn()
+                                            return "Added work to collection!"
+                                          },
+                                          error: "Failed to add work to collection...",
+                                        }
+                                      )
 
-                                    return "Record added to database"
-                                  },
-                                  error: "Could not add record.",
-                                }
-                              )
-                            }}
-                          >
-                            Click here to add {matchedQuery.slice(-1)} to ResearchEquals database
-                          </button>
-                        </>
-                      ) : (
-                        <p className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200">
-                          Input a DOI to add
-                        </p>
-                      )}
-                    </>
-                  )
+                                      refetchFn()
+
+                                      return "Record added to database"
+                                    },
+                                    error: "Could not add record.",
+                                  }
+                                )
+                              }}
+                            >
+                              Click here to add {matchedQuery.slice(-1)} to ResearchEquals database
+                            </button>
+                          </>
+                        ) : (
+                          <p className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200">
+                            Input a DOI to add
+                          </p>
+                        )}
+                      </>
+                    )
+                  },
                 },
               },
-            },
-          ]}
-        />
+            ]}
+          />
+          <Modal
+            title="Confirm submission"
+            body={
+              <div>
+                <span>Upon confirmation, you will submit the following work:</span>
+                <span className="my-2 bg-gray-50 p-4 line-clamp-3 dark:bg-gray-800">
+                  <Link href={`https://doi.org/${selectedWorkParams?.item?.doi}`} passHref>
+                    <a target="_blank">{selectedWorkParams?.item?.name}</a>
+                  </Link>
+                </span>
+                Do you want to submit this work to the collection?
+              </div>
+            }
+            primaryAction="Submit Work"
+            isOpen={isConfirmationOpen}
+            setIsOpen={setIsConfirmationOpen}
+            onSubmit={async () => {
+              onConfirm(selectedWorkParams)
+            }}
+          />
+        </>
       )}
     </div>
   )
