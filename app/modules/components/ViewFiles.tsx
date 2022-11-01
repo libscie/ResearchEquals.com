@@ -1,5 +1,5 @@
 import { Download } from "@carbon/icons-react"
-import filesize from "filesize"
+import { filesize } from "filesize"
 
 const ViewFiles = ({ name, size, url }) => {
   return (

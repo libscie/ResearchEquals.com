@@ -47,6 +47,10 @@ export default resolver.pipe(resolver.authorize(), async ({}, ctx) => {
     },
   })
 
+  if (!workspace?.firstName || !workspace.lastName) {
+    throw Error("Please add your author names first.")
+  }
+
   workspace?.editorships.map((edits) => {
     if (edits.collection.collectionTypeId === collection?.id) {
       throw Error("Limited to 1 individual collection per workspace")

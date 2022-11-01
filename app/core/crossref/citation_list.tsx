@@ -81,7 +81,7 @@ const citation_list = ({ citations }: { citations: Cite[] }): CitationList => {
             children: [
               {
                 type: "text",
-                value: authors[0].name,
+                value: authors.length > 0 ? authors[0].name : "N/A",
               },
             ],
           } as CitationAuthor,
