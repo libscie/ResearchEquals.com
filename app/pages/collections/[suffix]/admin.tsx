@@ -83,7 +83,11 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
       />
       <main className="relative">
         {!collection?.public && (
-          <MakeCollectionPublicModal collection={collection} refetchFn={refetch} />
+          <MakeCollectionPublicModal
+            collection={collection}
+            refetchFn={refetch}
+            workspace={currentWorkspace}
+          />
         )}
         {collection?.upgraded && (
           <FinalizeUpgradeModal collection={collection} refetchFn={refetch} />

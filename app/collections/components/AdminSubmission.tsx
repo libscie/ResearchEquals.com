@@ -11,10 +11,9 @@ const AdminSubmission = ({ submission, editorIdSelf, refetchFn }) => {
         <>
           <div className="my-8">
             <Link href={`https://doi.org/${submission.module.prefix}/${submission.module.suffix}`}>
-              <a
-                className="text-lg"
-                dangerouslySetInnerHTML={{ __html: submission.module.title }}
-              />
+              <a className="text-lg" target="_blank">
+                {submission.module.title}
+              </a>
             </Link>
             {/* doi */}
             <div className="grid grid-cols-2">

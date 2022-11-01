@@ -407,6 +407,7 @@ const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticP
                       </li>
                     ))}
                   </ul>
+                  <p className="my-2 text-lg">Support us by paying what you want.</p>
                 </>
               ) : (
                 ""

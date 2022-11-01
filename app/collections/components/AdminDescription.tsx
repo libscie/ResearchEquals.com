@@ -22,47 +22,49 @@ const Description = ({ collection, refetchFn, isAdmin }) => {
     }
   }, [quill])
 
-  // console.log(quill.root.innerHTML)
   const formik = useFormik({
     initialValues: {
-      description: "",
+      description: collection.description,
     },
     validate: validateZodSchema(
       z.object({
         description: z.string(),
       })
     ),
-    onSubmit: async (values) => {},
+    onSubmit: async (values) => {
+      if (quill.root.innerHTML != collection.description) {
+        toast.promise(
+          changeDescriptionMutation({
+            id: collection.id,
+            description: quill.root.innerHTML,
+          }),
+          {
+            loading: "Saving description",
+            success: () => {
+              refetchFn()
+              return "Updated description"
+            },
+            error: "Update failed",
+          }
+        )
+      }
+    },
   })
 
   return (
     <div className="mx-4 my-8 xl:mx-0">
       <h2 className="text-xl">A message from your editor{collection.editors.length > 1 && "s"}</h2>
       {isAdmin ? (
-        <form
-          onSubmit={formik.handleSubmit}
-          onBlur={() => {
-            if (quill.root.innerHTML != collection.description) {
-              toast.promise(
-                changeDescriptionMutation({
-                  id: collection.id,
-                  description: quill.root.innerHTML,
-                }),
-                {
-                  loading: "Saving updates",
-                  success: () => {
-                    refetchFn()
-                    return "Updated description"
-                  },
-                  error: "Update failed",
-                }
-              )
-            }
-          }}
-        >
-          <div className="mt-4 mb-16 h-auto w-full">
+        <form onSubmit={formik.handleSubmit}>
+          <div className="my-4 h-auto w-full">
             <div ref={quillRef} className="" />
           </div>
+          <button
+            type="submit"
+            className="mx-auto my-1 flex rounded-md bg-emerald-50 py-2 px-4 text-sm font-medium text-emerald-700 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-emerald-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+          >
+            Save Description
+          </button>
         </form>
       ) : (
         <div dangerouslySetInnerHTML={{ __html: collection.description }} className="quilljs" />

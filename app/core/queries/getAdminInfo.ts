@@ -20,5 +20,11 @@ export default resolver.pipe(resolver.authorize(), async (input, ctx: Ctx) => {
     },
   })
 
-  return modules
+  const collections = await db.collection.findMany({
+    where: {
+      public: true,
+    },
+  })
+
+  return { modules, collections }
 })

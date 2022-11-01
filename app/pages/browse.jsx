@@ -49,24 +49,20 @@ const BrowseWorkspaces = () => {
         <React.Fragment key={i}>
           <div className="my-4 grid grid-cols-2 gap-4 gap-y-10 md:grid-cols-3 xl:grid-cols-4">
             {page.workspaces.map((workspace) => (
-              <>
-                <>
-                  <Link href={Routes.HandlePage({ handle: workspace.handle })}>
-                    <a className="mx-auto text-center">
-                      <img
-                        src={workspace.avatar}
-                        alt={`Avatar of ${workspace.handle}`}
-                        className="mx-auto h-28 w-28 rounded-full"
-                      />
-                      <p className="mx-auto my-2 text-center">
-                        {workspace.firstName && workspace.lastName
-                          ? `${workspace.firstName} ${workspace.lastName}`
-                          : `@${workspace.handle}`}{" "}
-                      </p>
-                    </a>
-                  </Link>
-                </>
-              </>
+              <Link key={workspace.id} href={Routes.HandlePage({ handle: workspace.handle })}>
+                <a className="mx-auto text-center">
+                  <img
+                    src={workspace.avatar}
+                    alt={`Avatar of ${workspace.handle}`}
+                    className="mx-auto h-28 w-28 rounded-full"
+                  />
+                  <p className="mx-auto my-2 text-center">
+                    {workspace.firstName && workspace.lastName
+                      ? `${workspace.firstName} ${workspace.lastName}`
+                      : `@${workspace.handle}`}{" "}
+                  </p>
+                </a>
+              </Link>
             ))}
           </div>
         </React.Fragment>
@@ -107,7 +103,7 @@ const Browse = () => {
         invitations={invitations}
         refetchFn={refetch}
       />
-      <div className="z-100 sticky top-0 flex  w-full bg-rose-50 py-4 px-2 text-center dark:bg-rose-800">
+      <div className="sticky top-0 z-10 flex w-full bg-rose-50 py-4 px-2 text-center dark:bg-rose-800">
         <div className="mx-auto flex">
           <div className="inline-block align-middle">
             <Fire
