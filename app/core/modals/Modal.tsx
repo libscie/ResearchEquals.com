@@ -8,7 +8,9 @@ export const Modal = ({
   title,
   body,
   onSubmit,
-  onCancel,
+  onCancel = () => {
+    null
+  },
   primaryAction = "Ok",
   primaryButtonClass,
   secondaryAction = "Cancel",
