@@ -258,6 +258,18 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "Dan-Rudmann",
+      "name": "Dan Rudmann",
+      "avatar_url": "https://avatars.githubusercontent.com/u/52978069?v=4",
+      "profile": "https://github.com/Dan-Rudmann",
+      "contributions": [
+        "content",
+        "mentoring",
+        "review",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
