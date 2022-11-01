@@ -8,6 +8,7 @@ export const Modal = ({
   title,
   body,
   onSubmit,
+  onCancel,
   primaryAction = "Ok",
   primaryButtonClass,
   secondaryAction = "Cancel",
@@ -76,7 +77,10 @@ export const Modal = ({
                         : // Style the secondary button (default is cancel)
                           `bg-indigo-100 text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:border-gray-400 dark:hover:bg-gray-700`
                     }`}
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => {
+                      onCancel()
+                      setIsOpen(false)
+                    }}
                   >
                     {secondaryAction}
                   </button>
@@ -96,6 +100,7 @@ Modal.propTypes = {
   title: PropTypes.string,
   body: PropTypes.element,
   onSubmit: PropTypes.func,
+  onCancel: PropTypes.func,
   primaryAction: PropTypes.string,
   primaryButtonClass: PropTypes.string,
   secondaryAction: PropTypes.string,
