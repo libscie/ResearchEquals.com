@@ -68,7 +68,7 @@ const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
             <SetEditorToInactiveModal editor={editor} refetchFn={refetchFn} />
             <DeleteEditorModal editor={editor} refetchFn={refetchFn} />
             <Modal
-              title="Confirm changing your role to a user"
+              title="Confirm role change"
               body={
                 <span>
                   Are you sure you want to remove yourself as {currentRole.toLowerCase()} of this
