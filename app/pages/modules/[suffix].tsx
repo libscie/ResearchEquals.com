@@ -266,7 +266,7 @@ const Module = ({ module, mainFile, supportingRaw }) => {
             size={mainFile.size}
             url={`/api/modules/main/${module.suffix}`}
           />
-          <FilePreviewer mainFile={mainFile} />
+          <FilePreviewer module={module} mainFile={mainFile} />
         </div>
         <div className="mb-28 grid-cols-2 gap-x-4 md:grid">
           {supportingRaw.files.length > 0 ? (
