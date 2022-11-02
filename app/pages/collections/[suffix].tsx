@@ -532,7 +532,7 @@ const AddSubmmision = ({ collection, currentWorkspace, refetchFn }) => {
                                       setSelectedDoiWorkData(data)
                                       setIsConfirmationOpen(true)
 
-                                      return "Confirm your submission"
+                                      return "Record added to database"
                                     },
                                     error: "Could not add record.",
                                   }
