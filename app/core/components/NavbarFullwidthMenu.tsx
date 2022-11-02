@@ -65,9 +65,7 @@ const FullWidthMenu = ({
                 <Popover.Panel className="max-w-72 absolute left-1/2 z-10 mt-3 w-72 -translate-x-1/2 transform rounded-md bg-white px-4 shadow-lg ring-1 ring-gray-400 ring-opacity-5 dark:bg-gray-800 dark:ring-gray-600 dark:ring-opacity-100 sm:px-0">
                   <ul className="divide-y dark:divide-gray-600">
                     {invitedModules.map((invited) => (
-                      <>
-                        <InvitationNotification invited={invited} />
-                      </>
+                      <InvitationNotification key={invited.id} invited={invited} />
                     ))}
                   </ul>
                 </Popover.Panel>

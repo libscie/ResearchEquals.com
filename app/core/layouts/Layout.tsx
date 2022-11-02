@@ -5,6 +5,8 @@ import { Toaster } from "react-hot-toast"
 import { RecoilRoot } from "recoil"
 
 import Footer from "../components/Footer"
+import AnnouncementBanner from "../components/AnnouncementBanner"
+import { FooterApollo } from "../components/FooterApollo"
 
 type LayoutProps = {
   title?: string
@@ -25,8 +27,20 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
     }
   }, [cookieAccepted])
 
+  const [isAnnouncementBannerOpen, setAnnouncementBannerOpen] = useState(true)
+
   return (
     <>
+      {/* UNCOMMENT IF announcemen banner needs to be used */}
+      {/* <AnnouncementBanner
+        open={isAnnouncementBannerOpen}
+        onClose={() => setAnnouncementBannerOpen(false)}
+      >
+        Want to learn about research modules? <br className="md:hidden" />
+        <Link href="/">
+          <a className="underline"> 👉 Join a ResearchEquals Cohort</a>
+        </Link>
+      </AnnouncementBanner> */}
       <Toaster position="bottom-center" reverseOrder={false} />
       <Head>
         <title>{title || "ResearchEquals"}</title>
@@ -55,10 +69,11 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
           </Link>{" "}
           Publishing not possible until resolved.
         </div> */}
-          <div className="flex-grow">{children}</div>
+          <div className="flex flex-grow flex-col">{children}</div>
         </div>
       </RecoilRoot>
-      <Footer />
+      {title === "ResearchEquals.com" ? <FooterApollo /> : <Footer />}
+
       <CookieConsent
         location="bottom"
         style={{

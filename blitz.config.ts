@@ -1,8 +1,11 @@
 import { BlitzConfig, sessionMiddleware, simpleRolesIsAuthorized } from "blitz"
+import pjson from "./package.json"
+
+const PDFJS_DIST_VERSION = pjson.dependencies["pdfjs-dist"]
 
 const config: BlitzConfig = {
   images: {
-    domains: ["eu.ui-avatars.com"],
+    domains: ["eu.ui-avatars.com", "ucarecdn.com"],
   },
   middleware: [
     sessionMiddleware({
@@ -20,6 +23,7 @@ const config: BlitzConfig = {
     ALGOLIA_PREFIX: process.env.ALGOLIA_PREFIX,
     DOI_PREFIX: process.env.DOI_PREFIX,
     STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY,
+    PDFJS_DIST_VERSION: PDFJS_DIST_VERSION,
   },
   pageExtensions: ["tsx", "ts", "jsx", "js"],
   webpack(config, options) {

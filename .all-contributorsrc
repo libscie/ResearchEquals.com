@@ -249,6 +249,27 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "RobbievanAert",
+      "name": "Robbie van Aert",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11198300?v=4",
+      "profile": "https://github.com/RobbievanAert",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "Dan-Rudmann",
+      "name": "Dan Rudmann",
+      "avatar_url": "https://avatars.githubusercontent.com/u/52978069?v=4",
+      "profile": "https://github.com/Dan-Rudmann",
+      "contributions": [
+        "content",
+        "mentoring",
+        "review",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
@@ -257,5 +278,6 @@
   "projectOwner": "libscie",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "skipCi": true
+  "skipCi": true,
+  "commitConvention": "angular"
 }

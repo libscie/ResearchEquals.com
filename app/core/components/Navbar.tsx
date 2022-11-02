@@ -23,7 +23,7 @@ const Navbar = ({
 }) => {
   return (
     <>
-      <div className="z-50 mx-auto w-full border-b border-gray-100 bg-white px-4 dark:border-gray-600 dark:bg-gray-900 sm:px-6 lg:px-8">
+      <div className="z-10 mx-auto w-full border-b border-gray-100 bg-white px-4 dark:border-gray-600 dark:bg-gray-900 sm:px-6 lg:px-8">
         <div className="relative flex justify-between lg:gap-8 xl:grid xl:grid-cols-12">
           <div className="flex md:absolute md:inset-y-0 md:left-0 lg:static xl:col-span-2">
             <div className="my-2 flex shrink-0 items-center">

@@ -429,6 +429,38 @@ const ModulePage = ({ module }) => {
             name="twitter:image"
             content={`https://ucarecdn.com/f65e7eca-bd38-48ab-ad79-ddcafa184431/`}
           />
+          {/* Zotero Metadata - TODO: Refactor these meta tags */}
+          {/* https://www.zotero.org/support/dev/exposing_metadata */}
+          <meta name="citation_title" content={module.title} key="citation_title" />
+          <meta name="citation_date" content={module.publishedAt} key="citation_date" />
+          <meta
+            name="citation_journal_title"
+            content="ResearchEquals"
+            key="citation_journal_title"
+          />
+          <meta
+            name="citation_publisher"
+            content="Liberate Science GmbH"
+            key="citation_publisher"
+          />
+          <meta name="citation_doi" content={`10.53962/${module.suffix}`} key="citation_doi" />
+          <meta
+            name="citation_public_url"
+            content={`https://doi.org/10.53962/${module.suffix}`}
+            key="citation_public_url"
+          />
+          <meta name="citation_abstract" content={module.description} key="citation_abstract" />
+          <meta name="citation_language" content={module.language} key="citation_language" />
+          {module.authors.map((author) => (
+            <meta
+              key={author.id}
+              name="citation_author"
+              content={`${author.workspace.lastName}, ${author.workspace.firstName}`}
+            />
+          ))}
+          {mainFile.mimeType.startsWith("application/pdf") && (
+            <meta name="citation_pdf_url" content={mainFile.cdnUrl} key="citation_pdf_url" />
+          )}
         </>
       }
     >

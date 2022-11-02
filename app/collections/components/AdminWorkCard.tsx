@@ -158,9 +158,10 @@ const WorkComment = ({ submission, index, editorIdSelf, refetchFn, editorIsAdmin
                 {/* <span className="inline-block h-full align-middle"></span> */}
                 <a
                   href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                    submission.comment
-                  )}&via=ResearchEquals
-                  `}
+                    `"${submission.comment}"\n-${submission.editor.workspace.firstName} ${submission.editor.workspace.lastName} on`
+                  )}&url=${encodeURIComponent(
+                    `https://doi.org/${submission.module.prefix}/${submission.module.suffix}`
+                  )}&via=ResearchEquals`}
                   target="_blank"
                   rel="noreferrer"
                 >

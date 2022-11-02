@@ -70,7 +70,7 @@ export default function CollectionsModal({ button, styling, user, workspace }) {
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="z-999 fixed inset-0 overflow-y-auto"
+          className="fixed inset-0 z-50 overflow-y-auto"
           onClose={() => {
             setIsOpen(false)
           }}

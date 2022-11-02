@@ -95,7 +95,9 @@ const Editors = ({ collection, isAdmin, selfId, refetchFn, user }) => {
                           refetchFn()
                           return "Added editor!"
                         },
-                        error: "Failed to add editor...",
+                        error: (e) => {
+                          return e.toString()
+                        },
                       }
                     )
                   },
