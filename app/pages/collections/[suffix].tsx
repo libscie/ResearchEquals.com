@@ -426,6 +426,8 @@ const AddSubmmision = ({ collection, currentWorkspace, refetchFn }) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
   const [selectedWorkParams, setSelectedWorkParams] = useState({} as any)
 
+  const [selectedWorkType, setSelectedWorkType] = useState("")
+
   const onConfirm = (params) => {
     const { item, setQuery } = params
     toast.promise(
@@ -445,6 +447,24 @@ const AddSubmmision = ({ collection, currentWorkspace, refetchFn }) => {
     )
   }
 
+  const [selectedDoiWorkData, setSelectedDoiWorkData] = useState({} as any)
+  const onDoiSubmitConfirm = (data) => {
+    toast.promise(
+      addSubmissionMutation({
+        collectionId: collection!.id,
+        workspaceId: currentWorkspace!.id,
+        moduleId: data.id,
+      }),
+      {
+        loading: "Adding work to collection...",
+        success: () => {
+          refetchFn()
+          return "Added work to collection!"
+        },
+        error: "Failed to add work to collection...",
+      }
+    )
+  }
   return (
     <div className="mx-4 my-8 xl:mr-4 xl:ml-0">
       <h3 className="my-4 text-xl">Become a Contributor</h3>
@@ -460,6 +480,7 @@ const AddSubmmision = ({ collection, currentWorkspace, refetchFn }) => {
               {
                 sourceId: "products",
                 async onSelect(params) {
+                  setSelectedWorkType("module")
                   setSelectedWorkParams(params)
                   setIsConfirmationOpen(true)
                 },
@@ -507,25 +528,11 @@ const AddSubmmision = ({ collection, currentWorkspace, refetchFn }) => {
                                   {
                                     loading: "Searching...",
                                     success: (data) => {
-                                      toast.promise(
-                                        addSubmissionMutation({
-                                          collectionId: collection!.id,
-                                          workspaceId: currentWorkspace!.id,
-                                          moduleId: data.id,
-                                        }),
-                                        {
-                                          loading: "Adding work to collection...",
-                                          success: () => {
-                                            refetchFn()
-                                            return "Added work to collection!"
-                                          },
-                                          error: "Failed to add work to collection...",
-                                        }
-                                      )
+                                      setSelectedWorkType("doi")
+                                      setSelectedDoiWorkData(data)
+                                      setIsConfirmationOpen(true)
 
-                                      refetchFn()
-
-                                      return "Record added to database"
+                                      return "Confirm your submission"
                                     },
                                     error: "Could not add record.",
                                   }
@@ -553,9 +560,16 @@ const AddSubmmision = ({ collection, currentWorkspace, refetchFn }) => {
               <div>
                 <span>Upon confirmation, you will submit the following work:</span>
                 <span className="my-2 bg-gray-50 p-4 line-clamp-3 dark:bg-gray-800">
-                  <Link href={`https://doi.org/${selectedWorkParams?.item?.doi}`} passHref>
-                    <a target="_blank">{selectedWorkParams?.item?.name}</a>
-                  </Link>
+                  {selectedWorkType === "module" && (
+                    <Link href={`https://doi.org/${selectedWorkParams?.item?.doi}`} passHref>
+                      <a target="_blank">{selectedWorkParams?.item?.name}</a>
+                    </Link>
+                  )}
+                  {selectedWorkType === "doi" && (
+                    <Link href={`https://doi.org/${selectedDoiWorkData?.doi}`} passHref>
+                      <a target="_blank">{selectedDoiWorkData?.title}</a>
+                    </Link>
+                  )}
                 </span>
                 Do you want to submit this work to the collection?
               </div>
@@ -564,7 +578,8 @@ const AddSubmmision = ({ collection, currentWorkspace, refetchFn }) => {
             isOpen={isConfirmationOpen}
             setIsOpen={setIsConfirmationOpen}
             onSubmit={async () => {
-              onConfirm(selectedWorkParams)
+              selectedWorkType === "module" && onConfirm(selectedWorkParams)
+              selectedWorkType === "doi" && onDoiSubmitConfirm(selectedDoiWorkData)
             }}
           />
         </>
