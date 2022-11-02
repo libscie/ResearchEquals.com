@@ -37,7 +37,7 @@ const MainFileViewer = ({ mainFile, module }) => {
             />
           )}
           {/* Preview PDF */}
-          {mainFile.mimeType.startsWith("application/pdf") ? (
+          {mainFile.mimeType.startsWith("application/pdf") && (
             <Worker
               workerUrl={`https://unpkg.com/pdfjs-dist@${PDFJS_DIST_VERSION}/build/pdf.worker.min.js`}
             >
