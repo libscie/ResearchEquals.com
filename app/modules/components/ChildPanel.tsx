@@ -9,7 +9,7 @@ const ChildPanel = ({ openObject, openFunction, module }) => {
   return (
     <>
       <Transition.Root show={openObject} as={Fragment}>
-        <Dialog as="div" className="fixed inset-0 overflow-hidden" onClose={openFunction}>
+        <Dialog as="div" className="fixed inset-0 z-30 overflow-hidden" onClose={openFunction}>
           <div className="absolute inset-0 overflow-hidden">
             <Dialog.Overlay className="fixed inset-0 bg-gray-900 bg-opacity-25 transition-opacity" />
 
