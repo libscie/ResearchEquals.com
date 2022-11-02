@@ -33,8 +33,8 @@ const MainFileViewer = ({ mainFile, module }) => {
               alt="The main image for the module"
               src={mainFile.cdnUrl}
               className="mx-auto my-2 h-auto w-full"
-              width={mainFile.originalImageInfo.width || 300}
-              height={mainFile.originalImageInfo.height || 300}
+              width={mainFile?.originalImageInfo?.width || 300}
+              height={mainFile?.originalImageInfo?.height || 300}
             />
           ) : (
             ""
