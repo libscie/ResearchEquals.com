@@ -26,16 +26,18 @@ const MainFileViewer = ({ mainFile, module }) => {
   }, [])
   return (
     <>
-      {mainFile.name ? (
+      {mainFile.name && (
         <>
           {/* Preview image */}
-          {mainFile.isImage ? (
-            <img src={mainFile.cdnUrl} className="mx-auto my-2 h-auto w-full" />
-          ) : (
-            ""
+          {mainFile.isImage && (
+            <img
+              alt="An image of the main file"
+              src={mainFile.cdnUrl}
+              className="mx-auto my-2 h-auto w-full"
+            />
           )}
           {/* Preview PDF */}
-          {mainFile.mimeType.startsWith("application/pdf") ? (
+          {mainFile.mimeType.startsWith("application/pdf") && (
             <Worker
               workerUrl={`https://unpkg.com/pdfjs-dist@${PDFJS_DIST_VERSION}/build/pdf.worker.min.js`}
             >
@@ -43,11 +45,9 @@ const MainFileViewer = ({ mainFile, module }) => {
                 <Viewer fileUrl={mainFile.cdnUrl} />
               </div>
             </Worker>
-          ) : (
-            ""
           )}
           {/* Preview Markdown */}
-          {mainFile.mimeType.startsWith("text/markdown") ? (
+          {mainFile.mimeType.startsWith("text/markdown") && (
             <div className="coc">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm, remarkMath]}
@@ -82,32 +82,26 @@ const MainFileViewer = ({ mainFile, module }) => {
                 {mainFileMarkdown}
               </ReactMarkdown>
             </div>
-          ) : (
-            ""
           )}
           {/* Preview Office files */}
-          {mainFile.mimeType.startsWith("application/vnd.ms-excel") ||
-          mainFile.mimeType.startsWith(
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-          ) ||
-          mainFile.mimeType.startsWith(
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-          ) ||
-          mainFile.mimeType.startsWith(
-            "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-          ) ? (
+          {(mainFile.mimeType.startsWith("application/vnd.ms-excel") ||
+            mainFile.mimeType.startsWith(
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            ) ||
+            mainFile.mimeType.startsWith(
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            ) ||
+            mainFile.mimeType.startsWith(
+              "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            )) && (
             <iframe
               src={`https://view.officeapps.live.com/op/embed.aspx?src=${mainFile.cdnUrl}`}
               width="100%"
               height="800px"
               frameBorder="0"
             ></iframe>
-          ) : (
-            ""
           )}
         </>
-      ) : (
-        ""
       )}
     </>
   )
