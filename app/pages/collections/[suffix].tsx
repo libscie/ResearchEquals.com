@@ -456,7 +456,7 @@ const AddSubmmision = ({ collection, currentWorkspace, refetchFn }) => {
         moduleId: data.id,
       }),
       {
-        loading: "Adding work to collection...",
+        loading: "Submitting work to collection...",
         success: () => {
           refetchFn()
           return "Added work to collection!"
