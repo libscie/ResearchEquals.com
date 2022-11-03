@@ -461,7 +461,7 @@ const AddSubmmision = ({ collection, currentWorkspace, refetchFn }) => {
           refetchFn()
           return "Submitted work to collection!"
         },
-        error: "Failed to add work to collection...",
+        error: "Failed to submit work to collection...",
       }
     )
   }
