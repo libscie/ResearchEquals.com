@@ -4,9 +4,11 @@ import algoliasearch from "algoliasearch"
 import Autocomplete from "app/core/components/Autocomplete"
 import SearchResultWorkspace from "app/core/components/SearchResultWorkspace"
 import DeleteEditorModal from "app/core/modals/DeleteEditorModal"
+import { Modal } from "app/core/modals/Modal"
 import SetEditorToInactiveModal from "app/core/modals/SetEditorToInactiveModal"
 import UpgradeCollectionModal from "app/core/modals/UpgradeCollectionModal"
 import { Link, Routes, useMutation } from "blitz"
+import { useState } from "react"
 import toast from "react-hot-toast"
 import addEditor from "../mutations/addEditor"
 import changeEditorRole from "../mutations/changeEditorRole"
@@ -15,6 +17,22 @@ const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGO
 
 const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
   const [changeEditorRoleMutation] = useMutation(changeEditorRole)
+  const [currentRole, setCurrentRole] = useState(editor.role)
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false)
+
+  const onChangeEditorRole = (editorId, role) => {
+    toast.promise(changeEditorRoleMutation({ editorId: editorId, role: role }), {
+      loading: `Changing role to ${role.toLowerCase()}...`,
+      success: () => {
+        refetchFn()
+        return `Changed role to ${role.toLowerCase()}!`
+      },
+      error: (err) => {
+        setCurrentRole(editor.role)
+        return `${err}`
+      },
+    })
+  }
 
   return (
     <>
@@ -34,21 +52,13 @@ const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
           <>
             <select
               onChange={(info) => {
-                toast.promise(
-                  changeEditorRoleMutation({ editorId: editor.id, role: info.target.value }),
-                  {
-                    loading: `Changing role to ${info.target.value.toLowerCase()}...`,
-                    success: () => {
-                      refetchFn()
-                      return `Changed role to ${info.target.value.toLowerCase()}!`
-                    },
-                    error: (err) => {
-                      return `${err}`
-                    },
-                  }
-                )
+                setCurrentRole(info.target.value)
+                if (isSelf && isAdmin && info.target.value === "USER") {
+                  return setIsConfirmOpen(true)
+                }
+                onChangeEditorRole(editor.id, info.target.value)
               }}
-              defaultValue={editor.role}
+              value={currentRole}
               className="placeholder-font-normal block appearance-none rounded-md border border-gray-400 bg-white px-4 py-2 pr-6 text-sm font-normal placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border-gray-600 dark:bg-transparent dark:text-gray-200 "
             >
               {Object.values(MembershipRole).map((role) => {
@@ -57,6 +67,24 @@ const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
             </select>
             <SetEditorToInactiveModal editor={editor} refetchFn={refetchFn} />
             <DeleteEditorModal editor={editor} refetchFn={refetchFn} />
+            <Modal
+              title="Confirm role change"
+              body={
+                <span>
+                  Are you sure you want to remove yourself as {editor.role.toLowerCase()} of this
+                  collection? You cannot undo this and will no longer be able to administrate the
+                  editors of this collection.
+                </span>
+              }
+              primaryAction="Change Role"
+              primaryButtonClass="rounded-md bg-red-50 py-2 px-4 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+              isOpen={isConfirmOpen}
+              setIsOpen={setIsConfirmOpen}
+              onSubmit={async () => {
+                onChangeEditorRole(editor.id, currentRole)
+              }}
+              onCancel={() => setCurrentRole(editor.role)}
+            />
           </>
         )}
       </div>
