@@ -566,7 +566,7 @@ const AddSubmmision = ({ collection, currentWorkspace, refetchFn }) => {
                     </Link>
                   )}
                   {selectedWorkType === "doi" && (
-                    <Link href={`https://doi.org/${selectedDoiWorkData?.doi}`} passHref>
+                    <Link href={selectedDoiWorkData.url} passHref>
                       <a target="_blank">{selectedDoiWorkData?.title}</a>
                     </Link>
                   )}
