@@ -1,12 +1,16 @@
 import { Download, TrashCan } from "@carbon/icons-react"
 import { useMutation } from "blitz"
 import toast from "react-hot-toast"
-import filesize from "filesize"
+import { filesize } from "filesize"
 
 import deleteSupportingFile from "../../modules/mutations/deleteSupportingFile"
+import { useState } from "react"
+import { Modal } from "../modals/Modal"
 
 const EditSupportingFileDisplay = ({ name, size, url, uuid, moduleId, setQueryData }) => {
   const [deleteMutation] = useMutation(deleteSupportingFile)
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false)
+
   return (
     <div className="my-2 flex">
       <a
@@ -24,7 +28,22 @@ const EditSupportingFileDisplay = ({ name, size, url, uuid, moduleId, setQueryDa
           <TrashCan
             size={24}
             className="inline-block h-6 w-6 fill-current align-middle text-red-500"
-            onClick={async () => {
+            onClick={() => setConfirmDeleteOpen(true)}
+            aria-label="Delete file"
+          />
+          <Modal
+            title="Confirm deletion"
+            body={
+              <span>
+                Upon confirmation, the supporting file &quot;{name}&quot; will be permanently
+                deleted. Are you sure you want to delete this file?
+              </span>
+            }
+            primaryAction="Delete File"
+            primaryButtonClass="rounded-md bg-red-50 py-2 px-4 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+            isOpen={confirmDeleteOpen}
+            setIsOpen={setConfirmDeleteOpen}
+            onSubmit={async () => {
               toast.promise(deleteMutation({ id: moduleId, uuid }), {
                 loading: "Deleting...",
                 success: (data) => {
@@ -34,7 +53,6 @@ const EditSupportingFileDisplay = ({ name, size, url, uuid, moduleId, setQueryDa
                 error: "Something went wrong...",
               })
             }}
-            aria-label="Delete file"
           />
         </button>
         <a href={url} target="_blank" download rel="noreferrer">

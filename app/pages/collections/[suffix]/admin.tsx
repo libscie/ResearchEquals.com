@@ -83,7 +83,11 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
       />
       <main className="relative">
         {!collection?.public && (
-          <MakeCollectionPublicModal collection={collection} refetchFn={refetch} />
+          <MakeCollectionPublicModal
+            collection={collection}
+            refetchFn={refetch}
+            workspace={currentWorkspace}
+          />
         )}
         {collection?.upgraded && (
           <FinalizeUpgradeModal collection={collection} refetchFn={refetch} />
@@ -290,7 +294,7 @@ const CollectedWorks = ({ collection, editorIdSelf, refetchFn, editorIsAdmin }) 
       <div>
         <Autocomplete
           className=""
-          openOnFocus={false}
+          openOnFocus={true}
           defaultActiveItemId="0"
           getSources={({ query }) => [
             {

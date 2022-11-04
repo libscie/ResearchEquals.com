@@ -139,6 +139,96 @@ button.react-flow__controls-button {
   }
 }
 
+input[type="range"].pwyw {
+  width: 100%;
+  margin: 7.05px 0;
+  background-color: transparent;
+  -webkit-appearance: none;
+}
+input[type="range"].pwyw:focus {
+  outline: none;
+}
+input[type="range"].pwyw::-webkit-slider-runnable-track {
+  background: rgba(129, 140, 248, 0.78);
+  border: 0;
+  border-radius: 25px;
+  width: 100%;
+  height: 5.9px;
+  cursor: pointer;
+}
+input[type="range"].pwyw::-webkit-slider-thumb {
+  margin-top: -7.05px;
+  width: 20px;
+  height: 20px;
+  background: #574cfa;
+  border: 1.8px solid #ffffff;
+  border-radius: 50px;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+input[type="range"].pwyw:focus::-webkit-slider-runnable-track {
+  background: #8690f8;
+}
+input[type="range"].pwyw::-moz-range-track {
+  background: rgba(129, 140, 248, 0.78);
+  border: 0;
+  border-radius: 25px;
+  width: 100%;
+  height: 5.9px;
+  cursor: pointer;
+}
+input[type="range"].pwyw::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #574cfa;
+  border: 1.8px solid #ffffff;
+  border-radius: 50px;
+  cursor: pointer;
+}
+input[type="range"].pwyw::-ms-track {
+  background: transparent;
+  border-color: transparent;
+  border-width: 7.05px 0;
+  color: transparent;
+  width: 100%;
+  height: 5.9px;
+  cursor: pointer;
+}
+input[type="range"].pwyw::-ms-fill-lower {
+  background: #7c88f8;
+  border: 0;
+  border-radius: 50px;
+}
+input[type="range"].pwyw::-ms-fill-upper {
+  background: rgba(129, 140, 248, 0.78);
+  border: 0;
+  border-radius: 50px;
+}
+input[type="range"].pwyw::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  background: #574cfa;
+  border: 1.8px solid #ffffff;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-top: 0px;
+  /*Needed to keep the Edge thumb centred*/
+}
+input[type="range"].pwyw:focus::-ms-fill-lower {
+  background: rgba(129, 140, 248, 0.78);
+}
+input[type="range"].pwyw:focus::-ms-fill-upper {
+  background: #8690f8;
+}
+/*TODO: Use one of the selectors from https://stackoverflow.com/a/20541859/7077589 and figure out
+how to remove the virtical space around the range input in IE*/
+@supports (-ms-ime-align: auto) {
+  /* Pre-Chromium Edge only styles, selector taken from hhttps://stackoverflow.com/a/32202953/7077589 */
+  input[type="range"].pwyw {
+    margin: 0;
+    /*Edge starts the margin from the thumb, not the track as other browsers do*/
+  }
+}
 .terms-diff strong {
   color: green;
 }
@@ -160,12 +250,28 @@ body {
 
 .workquote:has(blockquote) {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  /* grid-template-columns: 1fr; */
 }
 
 .workquote:has(form) {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  /* grid-template-columns: 1fr; */
+}
+
+@media (min-width: 600px) {
+  .workquote:has(blockquote) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: 1fr;
+  }
+
+  .workquote:has(form) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: 1fr;
+  }
 }
 
 .collection-1 {

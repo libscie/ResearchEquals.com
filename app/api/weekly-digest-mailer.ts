@@ -26,9 +26,6 @@ export default CronJob(
 
     // find workspaces
     const workspaces = await db.workspace.findMany({
-      // where: {
-      //   id: 101,
-      // },
       include: {
         members: {
           include: {
@@ -107,6 +104,7 @@ export default CronJob(
       const myDrafts = await db.authorship.findMany({
         where: {
           acceptedInvitation: true,
+          module: { published: false },
           workspaceId: workspace.id,
         },
         include: {

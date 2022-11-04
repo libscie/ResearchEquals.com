@@ -12,6 +12,8 @@ import "katex/dist/katex.min.css" // `rehype-katex` does not import the CSS for 
 import { useEffect, useState } from "react"
 import { Image } from "blitz"
 
+const PDFJS_DIST_VERSION = process.env.PDFJS_DIST_VERSION
+
 const MainFileViewer = ({ mainFile, module }) => {
   const prefersDarkMode = useMediaPredicate("(prefers-color-scheme: dark)")
   const [mainFileMarkdown, setMarkdown] = useState("")
@@ -25,10 +27,10 @@ const MainFileViewer = ({ mainFile, module }) => {
   }, [])
   return (
     <>
-      {mainFile.name ? (
+      {mainFile.name && (
         <>
           {/* Preview image */}
-          {mainFile.isImage ? (
+          {mainFile.isImage && (
             <Image
               alt="The main image for the module"
               src={mainFile.cdnUrl}
@@ -36,21 +38,19 @@ const MainFileViewer = ({ mainFile, module }) => {
               width={mainFile?.originalImageInfo?.width || 300}
               height={mainFile?.originalImageInfo?.height || 300}
             />
-          ) : (
-            ""
           )}
           {/* Preview PDF */}
-          {mainFile.mimeType.startsWith("application/pdf") ? (
-            <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.worker.min.js">
+          {mainFile.mimeType.startsWith("application/pdf") && (
+            <Worker
+              workerUrl={`https://unpkg.com/pdfjs-dist@${PDFJS_DIST_VERSION}/build/pdf.worker.min.js`}
+            >
               <div style={{ height: "750px" }} className="max-w-screen text-gray-900">
                 <Viewer fileUrl={mainFile.cdnUrl} />
               </div>
             </Worker>
-          ) : (
-            ""
           )}
           {/* Preview Markdown */}
-          {mainFile.mimeType.startsWith("text/markdown") ? (
+          {mainFile.mimeType.startsWith("text/markdown") && (
             <div className="coc">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm, remarkMath]}
@@ -85,32 +85,26 @@ const MainFileViewer = ({ mainFile, module }) => {
                 {mainFileMarkdown}
               </ReactMarkdown>
             </div>
-          ) : (
-            ""
           )}
           {/* Preview Office files */}
-          {mainFile.mimeType.startsWith("application/vnd.ms-excel") ||
-          mainFile.mimeType.startsWith(
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-          ) ||
-          mainFile.mimeType.startsWith(
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-          ) ||
-          mainFile.mimeType.startsWith(
-            "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-          ) ? (
+          {(mainFile.mimeType.startsWith("application/vnd.ms-excel") ||
+            mainFile.mimeType.startsWith(
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            ) ||
+            mainFile.mimeType.startsWith(
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            ) ||
+            mainFile.mimeType.startsWith(
+              "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            )) && (
             <iframe
               src={`https://view.officeapps.live.com/op/embed.aspx?src=${mainFile.cdnUrl}`}
               width="100%"
               height="800px"
               frameBorder="0"
             ></iframe>
-          ) : (
-            ""
           )}
         </>
-      ) : (
-        ""
       )}
     </>
   )

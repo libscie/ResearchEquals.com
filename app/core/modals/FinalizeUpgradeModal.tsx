@@ -21,7 +21,7 @@ export default function FinalizeUpgradeModal({ collection, refetchFn }) {
 
   return (
     <>
-      <div className="z-5 sticky top-0 flex  w-full bg-pink-50 py-4 px-2 text-center dark:bg-pink-800">
+      <div className="sticky top-0 z-10 flex  w-full bg-pink-50 py-4 px-2 text-center dark:bg-pink-800">
         <div className="mx-auto flex">
           <div className="inline-block align-middle">
             <CheckmarkOutline

@@ -1,3 +1,5 @@
+import he from "he"
+
 const SearchResultModule = ({ item }) => {
   return (
     <>
@@ -19,7 +21,7 @@ const SearchResultModule = ({ item }) => {
             {item.type}
           </p>
           <p className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200">
-            {item.name}
+            {he.decode(item.name)}
           </p>
         </div>
       </div>

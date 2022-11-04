@@ -3,10 +3,15 @@ import { BlitzApiRequest, BlitzApiResponse } from "blitz"
 import db from "db"
 
 const CreateSessionModule = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
-  if (!req.query.email || !req.query.price_id || !req.query.suffix || !req.query.module_id) {
+  if (
+    !req.query.email ||
+    !(req.query.price_id || (req.query.price_data && req.query.prod_id)) ||
+    !req.query.suffix ||
+    !req.query.module_id
+  ) {
     res.status(500).end("Incomplete request")
   } else {
-    if (req.method === "POST") {
+    if (req.method === "POST" && req.query.price_id) {
       try {
         const license = await db.license.findFirst({
           where: {
@@ -36,6 +41,47 @@ const CreateSessionModule = async (req: BlitzApiRequest, res: BlitzApiResponse) 
               module_id: req.query.module_id,
               product: "module-license",
               id: license?.name,
+            },
+          },
+          tax_id_collection: {
+            enabled: true,
+          },
+        })
+        res.redirect(303, session.url)
+      } catch (err) {
+        res.status(err.statusCode || 500).json(err.message)
+      }
+    } else if (req.method === "POST" && req.query.price_data && req.query.prod_id) {
+      try {
+        // Create Checkout Sessions from body params.
+        const session = await stripe.checkout.sessions.create({
+          customer_email: req.query.email,
+          submit_type: "pay",
+          billing_address_collection: "auto",
+          line_items: [
+            {
+              price_data: {
+                unit_amount: (req.query.price_data as any) * 100,
+                currency: "eur",
+                // TODO: This is hardcoded but could be better
+                // Still needs updating for the production
+                product: req.query.prod_id,
+                tax_behavior: "inclusive",
+              },
+              quantity: 1,
+            },
+          ],
+          mode: "payment",
+          success_url: `${req.headers.origin}/modules/${req.query.suffix}?success=true`,
+          cancel_url: `${req.headers.origin}/drafts?suffix=${req.query.suffix}`,
+          automatic_tax: { enabled: true },
+          payment_intent_data: {
+            metadata: {
+              description: `License fee for ${process.env.DOI_PREFIX}/${req.query.suffix}`,
+              suffix: req.query.suffix,
+              doi: `${process.env.DOI_PREFIX}/${req.query.suffix}`,
+              module_id: req.query.module_id,
+              product: "module-license",
             },
           },
           tax_id_collection: {

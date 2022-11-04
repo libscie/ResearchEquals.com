@@ -17,13 +17,17 @@ export default resolver.pipe(
       },
     })
 
-    let ownerAdmins = 0
-    for (const element of oldEditorship?.collection.editors!) {
-      if (element.role === "OWNER" || element.role === "ADMIN") {
-        ownerAdmins += 1
-      }
-    }
-    if (ownerAdmins === 1) throw new Error("Cannot change your role as last admin or owner.")
+    const currentEditors = oldEditorship?.collection.editors
+    // Predict the future state of editors after the requested change
+    const futureEditors = currentEditors?.map((editor) =>
+      editor.id === editorId ? { ...editor, role } : editor
+    )
+
+    // Count the predicted number of owners
+    const owners = futureEditors?.filter((e) => e.role === "OWNER").length
+
+    // Throw an error if there will be no owners after the change
+    if (owners === 0) throw new Error("There should be at least one owner.")
 
     const editorship = await db.editorship.update({
       where: {

@@ -59,6 +59,7 @@ model License {
   name      String?
   price     Int      @default(0)
   price_id  String?
+  prod_id   String?
   modules   Module[]
 }
 
