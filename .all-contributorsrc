@@ -270,6 +270,15 @@
         "review",
         "ideas"
       ]
+    },
+    {
+      "login": "marioangst",
+      "name": "Mario Angst",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19803038?v=4",
+      "profile": "http://marioangst.com",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
