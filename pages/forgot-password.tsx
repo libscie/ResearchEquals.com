@@ -1,4 +1,6 @@
-import { BlitzPage, Link, Routes, useMutation, validateZodSchema } from "blitz"
+import Link from "next/link";
+import { useMutation } from "@blitzjs/rpc";
+import { BlitzPage, Routes } from "@blitzjs/next";
 import Layout from "app/core/layouts/Layout"
 import forgotPassword from "app/auth/mutations/forgotPassword"
 import ResearchEqualsLogo from "app/core/components/ResearchEqualsLogo"
