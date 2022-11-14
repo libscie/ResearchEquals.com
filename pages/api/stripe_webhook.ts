@@ -1,11 +1,13 @@
-import { BlitzApiRequest, BlitzApiResponse, Ctx } from "blitz"
+import { api } from "app/blitz-server"
+import { NextApiRequest, NextApiResponse } from "next"
+import { Ctx } from "blitz"
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
 import db, { Prisma } from "db"
 import moment from "moment"
 import algoliasearch from "algoliasearch"
-import { isURI } from "../core/crossref/ai_program"
+import { isURI } from "app/core/crossref/ai_program"
 import submitToCrossRef from "app/core/utils/submitToCrossRef"
-import moduleXml from "../core/utils/moduleXml"
+import moduleXml from "app/core/utils/moduleXml"
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET
 
@@ -14,7 +16,7 @@ const index = client.initIndex(`${process.env.ALGOLIA_PREFIX}_modules`)
 
 // Many Thanks to this post 🙏
 // https://www.aleksandra.codes/stripe-with-blitz
-const getRawData = (req: BlitzApiRequest): Promise<string> => {
+const getRawData = (req: NextApiRequest): Promise<string> => {
   return new Promise((resolve) => {
     let buffer = ""
     req.on("data", (chunk) => {
@@ -27,7 +29,7 @@ const getRawData = (req: BlitzApiRequest): Promise<string> => {
   })
 }
 
-const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
+const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
   const rawData: string = await getRawData(req)
   let event
 
@@ -90,7 +92,7 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
         case "module-license":
           const datetime = Date.now()
           // TODO: Can be simplified along with publishModule.ts
-          const module = await db.module.findFirst({
+          const currentModule = await db.module.findFirst({
             where: {
               id: parseInt(event.data.object.metadata.module_id),
             },
@@ -117,12 +119,12 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
             },
           })
 
-          if (!module!.main) throw Error("Main file is empty")
+          if (!currentModule!.main) throw Error("Main file is empty")
 
-          const licenseUrl = module?.license?.url ?? ""
+          const licenseUrl = currentModule?.license?.url ?? ""
           if (!isURI(licenseUrl)) throw Error("License URL is not a valid URI")
 
-          const resolveUrl = `${process.env.APP_ORIGIN}/modules/${module!.suffix}`
+          const resolveUrl = `${process.env.APP_ORIGIN}/modules/${currentModule!.suffix}`
           if (!isURI(resolveUrl)) throw Error("Resolve URL is not a valid URI")
 
           await submitToCrossRef({
@@ -131,7 +133,7 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
               licenseUrl,
               resolveUrl,
             }),
-            suffix: module!.suffix,
+            suffix: currentModule!.suffix,
           })
 
           const publishedModule = await db.module.update({
@@ -179,7 +181,7 @@ const webhook = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
   res.end(JSON.stringify({ event: event.type }))
 }
 
-export default webhook
+export default api(webhook)
 
 export const config = {
   api: {

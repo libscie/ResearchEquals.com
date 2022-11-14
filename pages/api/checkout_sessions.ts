@@ -1,8 +1,10 @@
+import { api } from "app/blitz-server"
+import { NextApiRequest, NextApiResponse } from "next"
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
-import { BlitzApiRequest, BlitzApiResponse } from "blitz"
 import db from "db"
+import { getSession } from "@blitzjs/auth"
 
-const CreateSessionModule = async (req: BlitzApiRequest, res: BlitzApiResponse) => {
+const CreateSessionModule = async (req: NextApiRequest, res: NextApiResponse) => {
   if (
     !req.query.email ||
     !(req.query.price_id || (req.query.price_data && req.query.prod_id)) ||
@@ -99,4 +101,4 @@ const CreateSessionModule = async (req: BlitzApiRequest, res: BlitzApiResponse) 
   }
 }
 
-export default CreateSessionModule
+export default api(CreateSessionModule)

@@ -1,8 +1,9 @@
-import { BlitzApiHandler } from "blitz"
+import { api } from "app/blitz-server";
+import { NextApiHandler } from "next";
 import db from "db"
 import https from "https"
 
-const handler: BlitzApiHandler = async (req, res) => {
+const handler: NextApiHandler = async (req, res) => {
   const {
     query: { suffix },
   } = req
@@ -35,4 +36,4 @@ const handler: BlitzApiHandler = async (req, res) => {
   })
 }
 
-export default handler
+export default api(handler);

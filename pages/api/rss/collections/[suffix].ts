@@ -1,9 +1,10 @@
-import { BlitzApiHandler } from "blitz"
+import { api } from "app/blitz-server"
+import { NextApiHandler } from "next"
 import db from "db"
 import { Feed } from "feed"
 
 // https://github.com/jpmonette/feed
-const rssFeedCollection: BlitzApiHandler = async (req, res) => {
+const rssFeedCollection: NextApiHandler = async (req, res) => {
   const {
     query: { suffix },
   } = req
@@ -60,4 +61,4 @@ const rssFeedCollection: BlitzApiHandler = async (req, res) => {
   })
 }
 
-export default rssFeedCollection
+export default api(rssFeedCollection)

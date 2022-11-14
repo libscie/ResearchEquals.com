@@ -1,9 +1,10 @@
-import { BlitzApiHandler } from "blitz"
+import { api } from "app/blitz-server";
+import { NextApiHandler } from "next";
 import { PrismaClient, Prisma } from "@prisma/client"
 import db from "db"
 import https from "https"
 
-const handler: BlitzApiHandler = async (req, res) => {
+const handler: NextApiHandler = async (req, res) => {
   const {
     query: { suffix, filename },
   } = req
@@ -46,4 +47,4 @@ const handler: BlitzApiHandler = async (req, res) => {
   })
 }
 
-export default handler
+export default api(handler);

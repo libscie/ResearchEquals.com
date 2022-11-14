@@ -3,7 +3,7 @@ import { Queue } from "quirrel/next"
 import db from "../../db"
 
 export default Queue("api/approval-mailer", async (moduleId: number) => {
-  const module = await db.module.findFirst({
+  const currentModule = await db.module.findFirst({
     where: {
       id: moduleId,
     },
@@ -30,7 +30,7 @@ export default Queue("api/approval-mailer", async (moduleId: number) => {
     },
   })
 
-  module?.authors.map(async (author) => {
+  currentModule?.authors.map(async (author) => {
     author.workspace?.members.map(async (member) => {
       if (
         member.emailApprovals &&
@@ -43,8 +43,8 @@ export default Queue("api/approval-mailer", async (moduleId: number) => {
             // TODO: This name should be checked
             // https://github.com/libscie/ResearchEquals.com/issues/730
             name: `${author.workspace?.firstName} ${author.workspace?.lastName}`,
-            title: module.title,
-            url: `${process.env.APP_ORIGIN}/drafts?suffix=${module.suffix}`,
+            title: currentModule.title,
+            url: `${process.env.APP_ORIGIN}/drafts?suffix=${currentModule.suffix}`,
           },
           member.user?.email
         )

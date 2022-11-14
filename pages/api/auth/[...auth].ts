@@ -1,4 +1,4 @@
-import { passportAuth } from "blitz"
+import { passportAuth } from "@blitzjs/auth"
 import db from "db"
 import { Strategy as OrcidStrategy } from "passport-orcid"
 import algoliasearch from "algoliasearch"
