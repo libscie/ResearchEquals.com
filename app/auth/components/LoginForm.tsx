@@ -27,11 +27,13 @@ export const LoginForm = (props: LoginFormProps) => {
       })
     ),
     onSubmit: async (values) => {
-      toast.promise(loginMutation(values), {
-        loading: "Logging in...",
-        success: "Logged in!",
-        error: "Please check your log in credentials",
-      })
+      toast
+        .promise(loginMutation(values), {
+          loading: "Logging in...",
+          success: "Logged in!",
+          error: "Please check your log in credentials",
+        })
+        .catch(() => {})
     },
   })
   return (

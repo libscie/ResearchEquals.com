@@ -19,20 +19,22 @@ const Subtitle = ({ collection, refetchFn, isAdmin }) => {
       })
     ),
     onSubmit: async (values) => {
-      toast.promise(
-        changeSubtitleMutation({
-          id: collection.id,
-          subtitle: values.subtitle,
-        }),
-        {
-          loading: "Updating subtitle...",
-          success: () => {
-            refetchFn()
-            return "Updated subtitle"
-          },
-          error: "Failed to update subtitle",
-        }
-      )
+      toast
+        .promise(
+          changeSubtitleMutation({
+            id: collection.id,
+            subtitle: values.subtitle,
+          }),
+          {
+            loading: "Updating subtitle...",
+            success: () => {
+              refetchFn()
+              return "Updated subtitle"
+            },
+            error: "Failed to update subtitle",
+          }
+        )
+        .catch(() => {})
     },
   })
 

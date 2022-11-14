@@ -17,7 +17,7 @@ const ResetPasswordPage: BlitzPage = () => {
 
   // Redirect to home when no token is found
   useEffect(() => {
-    if (!query.token) router.push("/")
+    if (!query.token) router.push("/").catch(() => {})
   })
 
   const formik = useFormik({
@@ -36,16 +36,16 @@ const ResetPasswordPage: BlitzPage = () => {
       if (values.password !== values.passwordConfirmation) {
         toast.error("Passwords do not match")
       } else {
-        try {
-          toast.promise(resetPasswordMutation(values), {
+        toast
+          .promise(resetPasswordMutation(values), {
             loading: "Resetting...",
             success: "Reset!",
             error: "Reset unsuccessful",
           })
-        } catch (error) {
-          // TODO: Add better error logging
-          alert(error.toString())
-        }
+          .catch((error) => {
+            // TODO: Add better error logging
+            alert(error.toString())
+          })
       }
     },
   })

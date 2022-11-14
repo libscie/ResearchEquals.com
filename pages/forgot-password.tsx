@@ -21,15 +21,15 @@ const ForgotPasswordPage: BlitzPage = () => {
       })
     ),
     onSubmit: async (values) => {
-      try {
-        toast.promise(forgotPasswordMutation(values), {
+      toast
+        .promise(forgotPasswordMutation(values), {
           loading: "Loading...",
           success: "Success!",
           error: "That did not work",
         })
-      } catch (error) {
-        alert(error.toString())
-      }
+        .catch((error) => {
+          alert(error.toString())
+        })
     },
   })
 

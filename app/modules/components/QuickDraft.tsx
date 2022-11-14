@@ -41,30 +41,32 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
       })
     ),
     onSubmit: async (values) => {
-      toast.promise(
-        createModuleMutation({
-          title: values.title,
-          description: values.description,
-          typeId: parseInt(values.type),
-          licenseId: parseInt(values.license),
-          language: values.language,
-          authors: [],
-          displayColor: values.displayColor,
-        }),
-        {
-          loading: "Creating draft...",
-          success: (data) => {
-            refetchFn()
-            setCreateOpen(false)
-            formikReset()
-            router.push(`/drafts?suffix=${data}`)
-            return "Created!"
-          },
-          error: (error) => {
-            return error
-          },
-        }
-      )
+      toast
+        .promise(
+          createModuleMutation({
+            title: values.title,
+            description: values.description,
+            typeId: parseInt(values.type),
+            licenseId: parseInt(values.license),
+            language: values.language,
+            authors: [],
+            displayColor: values.displayColor,
+          }),
+          {
+            loading: "Creating draft...",
+            success: (data) => {
+              refetchFn()
+              setCreateOpen(false)
+              formikReset()
+              router.push(`/drafts?suffix=${data}`).catch(() => {})
+              return "Created!"
+            },
+            error: (error) => {
+              return error
+            },
+          }
+        )
+        .catch(() => {})
       // try {
       //   await createModuleMutation({
       //     title: values.title,
@@ -84,13 +86,13 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
   })
 
   const formikReset = () => {
-    formik.setFieldValue("title", "")
-    formik.setFieldValue("description", "")
-    formik.setFieldValue("main", "")
-    formik.setFieldValue("type", "")
-    formik.setFieldValue("license", "")
-    formik.setFieldValue("language", "en")
-    formik.setFieldValue("displayColor", "#574cfa")
+    formik.setFieldValue("title", "").catch(() => {})
+    formik.setFieldValue("description", "").catch(() => {})
+    formik.setFieldValue("main", "").catch(() => {})
+    formik.setFieldValue("type", "").catch(() => {})
+    formik.setFieldValue("license", "").catch(() => {})
+    formik.setFieldValue("language", "en").catch(() => {})
+    formik.setFieldValue("displayColor", "#574cfa").catch(() => {})
   }
 
   return (

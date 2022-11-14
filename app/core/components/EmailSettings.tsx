@@ -29,17 +29,19 @@ const EmailSettings = ({ user, setIsOpen }) => {
           values.emailConsent != user.emailConsent ||
           values.marketingConsent != user.marketingConsent
         ) {
-          toast.promise(
-            changeEmailMutation({
-              emailConsent: values.emailConsent,
-              marketingConsent: values.marketingConsent,
-            }),
-            {
-              loading: "Updating email settings...",
-              success: "Updated email settings!",
-              error: "Please check your settings",
-            }
-          )
+          toast
+            .promise(
+              changeEmailMutation({
+                emailConsent: values.emailConsent,
+                marketingConsent: values.marketingConsent,
+              }),
+              {
+                loading: "Updating email settings...",
+                success: "Updated email settings!",
+                error: "Please check your settings",
+              }
+            )
+            .catch(() => {})
         }
 
         user.memberships.map((membership) => {
@@ -53,20 +55,22 @@ const EmailSettings = ({ user, setIsOpen }) => {
             values[`${membership.workspace.handle}-collections`] !=
               emailNotifications[`${membership.workspace.handle}-collections`]
           )
-            toast.promise(
-              changeMemberEmailsMutation({
-                id: membership.id,
-                invitations: values[`${membership.workspace.handle}-invitations`],
-                approvals: values[`${membership.workspace.handle}-approvals`],
-                weeklyDigest: values[`${membership.workspace.handle}-weeklyDigest`],
-                collections: values[`${membership.workspace.handle}-collections`],
-              }),
-              {
-                loading: `Updating emails for @${membership.workspace.handle}...`,
-                success: `Updated emails for @${membership.workspace.handle}!`,
-                error: "Please check your settings",
-              }
-            )
+            toast
+              .promise(
+                changeMemberEmailsMutation({
+                  id: membership.id,
+                  invitations: values[`${membership.workspace.handle}-invitations`],
+                  approvals: values[`${membership.workspace.handle}-approvals`],
+                  weeklyDigest: values[`${membership.workspace.handle}-weeklyDigest`],
+                  collections: values[`${membership.workspace.handle}-collections`],
+                }),
+                {
+                  loading: `Updating emails for @${membership.workspace.handle}...`,
+                  success: `Updated emails for @${membership.workspace.handle}!`,
+                  error: "Please check your settings",
+                }
+              )
+              .catch(() => {})
         })
 
         setIsOpen(false)

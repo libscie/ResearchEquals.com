@@ -34,20 +34,22 @@ const Description = ({ collection, refetchFn, isAdmin }) => {
     ),
     onSubmit: async (values) => {
       if (quill.root.innerHTML != collection.description) {
-        toast.promise(
-          changeDescriptionMutation({
-            id: collection.id,
-            description: quill.root.innerHTML,
-          }),
-          {
-            loading: "Saving description",
-            success: () => {
-              refetchFn()
-              return "Updated description"
-            },
-            error: "Update failed",
-          }
-        )
+        toast
+          .promise(
+            changeDescriptionMutation({
+              id: collection.id,
+              description: quill.root.innerHTML,
+            }),
+            {
+              loading: "Saving description",
+              success: () => {
+                refetchFn()
+                return "Updated description"
+              },
+              error: "Update failed",
+            }
+          )
+          .catch(() => {})
       }
     },
   })

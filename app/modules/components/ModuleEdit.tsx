@@ -105,16 +105,16 @@ const ModuleEdit = ({
         description: values.description,
         licenseId: parseInt(values.license),
       })
-      setQueryData(updatedModule)
+      setQueryData(updatedModule).catch(() => {})
       setIsEditing(false)
     },
   })
 
   useEffect(() => {
-    formik.setFieldValue("type", moduleEdit!.type.id.toString())
-    formik.setFieldValue("title", moduleEdit!.title)
-    formik.setFieldValue("description", moduleEdit!.description)
-    formik.setFieldValue("license", moduleEdit!.license!.id.toString())
+    formik.setFieldValue("type", moduleEdit!.type.id.toString()).catch(() => {})
+    formik.setFieldValue("title", moduleEdit!.title).catch(() => {})
+    formik.setFieldValue("description", moduleEdit!.description).catch(() => {})
+    formik.setFieldValue("license", moduleEdit!.license!.id.toString()).catch(() => {})
   }, [moduleEdit])
 
   const ownAuthorship = moduleEdit?.authors.find(
@@ -167,20 +167,22 @@ const ModuleEdit = ({
                     <button
                       className="bg-orange my-1 rounded border border-orange-300 px-4 py-2 text-xs font-medium leading-4 text-orange-500 shadow-sm hover:bg-orange-100 dark:border-orange-200 dark:bg-orange-800 dark:text-orange-200 dark:hover:border-orange-200 dark:hover:bg-orange-700"
                       onClick={async () => {
-                        toast.promise(
-                          approveAuthorshipMutation({
-                            id: ownAuthorship!.id,
-                            suffix: moduleEdit!.suffix,
-                          }),
-                          {
-                            loading: "Loading",
-                            success: (data) => {
-                              setQueryData(data)
-                              return "Version approved for publication"
-                            },
-                            error: "Uh-oh something went wrong.",
-                          }
-                        )
+                        toast
+                          .promise(
+                            approveAuthorshipMutation({
+                              id: ownAuthorship!.id,
+                              suffix: moduleEdit!.suffix,
+                            }),
+                            {
+                              loading: "Loading",
+                              success: (data) => {
+                                setQueryData(data).catch(() => {})
+                                return "Version approved for publication"
+                              },
+                              error: "Uh-oh something went wrong.",
+                            }
+                          )
+                          .catch(() => {})
                       }}
                     >
                       Approve to publish
@@ -253,21 +255,23 @@ const ModuleEdit = ({
                     sourceId: "products",
                     async onSelect(params) {
                       const { item, setQuery } = params
-                      toast.promise(
-                        addParentMutation({
-                          currentId: module?.id,
-                          connectId: item.objectID,
-                        }),
-                        {
-                          loading: "Adding link...",
-                          success: (data) => {
-                            setQueryData(data)
+                      toast
+                        .promise(
+                          addParentMutation({
+                            currentId: module?.id,
+                            connectId: item.objectID,
+                          }),
+                          {
+                            loading: "Adding link...",
+                            success: (data) => {
+                              setQueryData(data).catch(() => {})
 
-                            return `Linked to: "${item.name}"`
-                          },
-                          error: "Failed to add link...",
-                        }
-                      )
+                              return `Linked to: "${item.name}"`
+                            },
+                            error: "Failed to add link...",
+                          }
+                        )
+                        .catch(() => {})
                     },
                     getItems() {
                       return getAlgoliaResults({
@@ -296,36 +300,40 @@ const ModuleEdit = ({
                                 <button
                                   className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200"
                                   onClick={async () => {
-                                    toast.promise(
-                                      createReferenceMutation({
-                                        doi: matchedQuery.slice(-1)[0].endsWith("/")
-                                          ? matchedQuery.slice(-1)[0].slice(0, -1)
-                                          : matchedQuery.slice(-1)[0],
-                                      }),
-                                      {
-                                        loading: "Searching...",
-                                        success: (data) => {
-                                          toast.promise(
-                                            addParentMutation({
-                                              currentId: module?.id,
-                                              connectId: data.id,
-                                            }),
-                                            {
-                                              loading: "Adding link...",
-                                              success: (info) => {
-                                                setQueryData(info)
+                                    toast
+                                      .promise(
+                                        createReferenceMutation({
+                                          doi: matchedQuery.slice(-1)[0].endsWith("/")
+                                            ? matchedQuery.slice(-1)[0].slice(0, -1)
+                                            : matchedQuery.slice(-1)[0],
+                                        }),
+                                        {
+                                          loading: "Searching...",
+                                          success: (data) => {
+                                            toast
+                                              .promise(
+                                                addParentMutation({
+                                                  currentId: module?.id,
+                                                  connectId: data.id,
+                                                }),
+                                                {
+                                                  loading: "Adding link...",
+                                                  success: (info) => {
+                                                    setQueryData(info).catch(() => {})
 
-                                                return `Linked to: "${data.title}"`
-                                              },
-                                              error: "Failed to add link...",
-                                            }
-                                          )
+                                                    return `Linked to: "${data.title}"`
+                                                  },
+                                                  error: "Failed to add link...",
+                                                }
+                                              )
+                                              .catch(() => {})
 
-                                          return "Record added to database"
-                                        },
-                                        error: "Could not add record.",
-                                      }
-                                    )
+                                            return "Record added to database"
+                                          },
+                                          error: "Could not add record.",
+                                        }
+                                      )
+                                      .catch(() => {})
                                   }}
                                 >
                                   Click here to add {matchedQuery.slice(-1)} to ResearchEquals
@@ -463,21 +471,23 @@ const ModuleEdit = ({
                   async onSelect(params) {
                     const { item, setQuery } = params
                     if (item.suffix) {
-                      toast.promise(
-                        addReferenceMutation({
-                          currentId: moduleEdit?.id,
-                          connectId: item.objectID,
-                        }),
-                        {
-                          loading: "Adding reference...",
-                          success: (data) => {
-                            setQueryData(data)
+                      toast
+                        .promise(
+                          addReferenceMutation({
+                            currentId: moduleEdit?.id,
+                            connectId: item.objectID,
+                          }),
+                          {
+                            loading: "Adding reference...",
+                            success: (data) => {
+                              setQueryData(data).catch(() => {})
 
-                            return "Added reference!"
-                          },
-                          error: "Failed to add reference...",
-                        }
-                      )
+                              return "Added reference!"
+                            },
+                            error: "Failed to add reference...",
+                          }
+                        )
+                        .catch(() => {})
                     }
                   },
                   getItems() {
@@ -514,36 +524,40 @@ const ModuleEdit = ({
                               <button
                                 className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200"
                                 onClick={async () => {
-                                  toast.promise(
-                                    createReferenceMutation({
-                                      doi: matchedQuery.slice(-1)[0].endsWith("/")
-                                        ? matchedQuery.slice(-1)[0].slice(0, -1)
-                                        : matchedQuery.slice(-1)[0],
-                                    }),
-                                    {
-                                      loading: "Searching...",
-                                      success: (data) => {
-                                        toast.promise(
-                                          addReferenceMutation({
-                                            currentId: moduleEdit?.id,
-                                            connectId: data.id,
-                                          }),
-                                          {
-                                            loading: "Adding reference...",
-                                            success: (data) => {
-                                              setQueryData(data)
+                                  toast
+                                    .promise(
+                                      createReferenceMutation({
+                                        doi: matchedQuery.slice(-1)[0].endsWith("/")
+                                          ? matchedQuery.slice(-1)[0].slice(0, -1)
+                                          : matchedQuery.slice(-1)[0],
+                                      }),
+                                      {
+                                        loading: "Searching...",
+                                        success: (data) => {
+                                          toast
+                                            .promise(
+                                              addReferenceMutation({
+                                                currentId: moduleEdit?.id,
+                                                connectId: data.id,
+                                              }),
+                                              {
+                                                loading: "Adding reference...",
+                                                success: (data) => {
+                                                  setQueryData(data).catch(() => {})
 
-                                              return "Added reference!"
-                                            },
-                                            error: "Failed to add reference...",
-                                          }
-                                        )
+                                                  return "Added reference!"
+                                                },
+                                                error: "Failed to add reference...",
+                                              }
+                                            )
+                                            .catch(() => {})
 
-                                        return "Reference added to database"
-                                      },
-                                      error: "Could not add reference.",
-                                    }
-                                  )
+                                          return "Reference added to database"
+                                        },
+                                        error: "Could not add reference.",
+                                      }
+                                    )
+                                    .catch(() => {})
                                 }}
                               >
                                 Click here to add {matchedQuery.slice(-1)} to ResearchEquals
@@ -572,20 +586,22 @@ const ModuleEdit = ({
                       size={24}
                       className="inline-block h-6 w-6 fill-current align-middle text-red-500"
                       onClick={async () => {
-                        toast.promise(
-                          deleteReferenceMutation({
-                            currentId: moduleEdit?.id,
-                            disconnectId: reference.id,
-                          }),
-                          {
-                            loading: "Deleting reference...",
-                            success: (data) => {
-                              setQueryData(data)
-                              return `Removed reference: "${reference.title}"`
-                            },
-                            error: "Failed to delete reference...",
-                          }
-                        )
+                        toast
+                          .promise(
+                            deleteReferenceMutation({
+                              currentId: moduleEdit?.id,
+                              disconnectId: reference.id,
+                            }),
+                            {
+                              loading: "Deleting reference...",
+                              success: (data) => {
+                                setQueryData(data).catch(() => {})
+                                return `Removed reference: "${reference.title}"`
+                              },
+                              error: "Failed to delete reference...",
+                            }
+                          )
+                          .catch(() => {})
                       }}
                       aria-label="Delete reference"
                     />

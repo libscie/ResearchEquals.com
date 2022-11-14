@@ -18,13 +18,15 @@ const VerifyMail: BlitzPage = () => {
 
     Router.prefetch("/dashboard")
 
-    verifyEmail({ code, userId }).then((success) => {
-      if (success) {
-        Router.replace("/dashboard")
-      } else {
-        setError(true)
-      }
-    })
+    verifyEmail({ code, userId })
+      .then((success) => {
+        if (success) {
+          router.replace("/dashboard").catch(() => {})
+        } else {
+          setError(true)
+        }
+      })
+      .catch(() => {})
   }, [code, setError, verifyEmail])
 
   return (
