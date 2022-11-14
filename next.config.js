@@ -1,18 +1,13 @@
-import { BlitzConfig, sessionMiddleware, simpleRolesIsAuthorized } from "blitz"
-import pjson from "./package.json"
+const { withBlitz } = require("@blitzjs/next")
+const pjson = require("./package.json")
 
 const PDFJS_DIST_VERSION = pjson.dependencies["pdfjs-dist"]
 
-const config: BlitzConfig = {
+const config = {
   images: {
     domains: ["eu.ui-avatars.com", "ucarecdn.com"],
   },
-  middleware: [
-    sessionMiddleware({
-      cookiePrefix: "web-app-tbd",
-      isAuthorized: simpleRolesIsAuthorized,
-    }),
-  ],
+
   env: {
     UPLOADCARE_PUBLIC_KEY: process.env.UPLOADCARE_PUBLIC_KEY,
     ORCID_CLIENT_ID: process.env.ORCID_CLIENT_ID,
@@ -25,12 +20,15 @@ const config: BlitzConfig = {
     STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY,
     PDFJS_DIST_VERSION: PDFJS_DIST_VERSION,
   },
+
   pageExtensions: ["tsx", "ts", "jsx", "js"],
+
   webpack(config, options) {
     config.module.rules.push({})
 
     return config
   },
+
   i18n: {
     // https://github.com/libscie/ResearchEquals.com/wiki/Localization
     locales: ["en"],
@@ -45,4 +43,4 @@ const config: BlitzConfig = {
   },
   */
 }
-module.exports = config
+module.exports = withBlitz(config)
