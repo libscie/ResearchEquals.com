@@ -1,4 +1,6 @@
-import { BlitzPage, validateZodSchema, useMutation, Routes, Link } from "blitz"
+import Link from "next/link"
+import { useMutation } from "@blitzjs/rpc"
+import { BlitzPage, Routes } from "@blitzjs/next"
 import Layout from "app/core/layouts/Layout"
 import { useFormik } from "formik"
 import { z } from "zod"
@@ -6,9 +8,9 @@ import { useState } from "react"
 import { Switch } from "@headlessui/react"
 import { Close, Checkmark } from "@carbon/icons-react"
 import toast from "react-hot-toast"
-
-import signup from "../mutations/signup"
-import ResearchEqualsLogo from "../../core/components/ResearchEqualsLogo"
+import signup from "app/auth/mutations/signup"
+import ResearchEqualsLogo from "app/core/components/ResearchEqualsLogo"
+import { validateZodSchema } from "blitz"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -43,19 +45,21 @@ const SignupPage: BlitzPage = () => {
     ),
     onSubmit: async (values) => {
       try {
-        toast.promise(signupMutation(values), {
-          loading: "Signing up...",
-          success: "Success!",
-          error: (error) => {
-            if (error.code === "P2002" && error.meta?.target?.includes("email")) {
-              return "This email is already being used"
-            } else if (error.code === "P2002" && error.meta?.target?.includes("handle")) {
-              return "This handle is already being used"
-            } else {
-              return error.toString()
-            }
-          },
-        })
+        toast
+          .promise(signupMutation(values), {
+            loading: "Signing up...",
+            success: "Success!",
+            error: (error) => {
+              if (error.code === "P2002" && error.meta?.target?.includes("email")) {
+                return "This email is already being used"
+              } else if (error.code === "P2002" && error.meta?.target?.includes("handle")) {
+                return "This handle is already being used"
+              } else {
+                return error.toString()
+              }
+            },
+          })
+          .catch(() => {})
       } catch (error) {}
     },
   })
