@@ -1,4 +1,7 @@
-import { BlitzPage, useQuery, useRouter, useSession } from "blitz"
+import { useSession } from "@blitzjs/auth";
+import { useRouter } from "next/router";
+import { useQuery } from "@blitzjs/rpc";
+import { BlitzPage } from "@blitzjs/next";
 import Layout from "app/core/layouts/Layout"
 import Markdown from "markdown-it"
 

@@ -1,17 +1,13 @@
-import {
-  BlitzPage,
-  GetStaticProps,
-  InferGetStaticPropsType,
-  useQuery,
-  useRouter,
-  useSession,
-} from "blitz"
+import { gSP } from "app/blitz-server"
+import { useSession } from "@blitzjs/auth"
+import { useRouter } from "next/router"
+import { useQuery } from "@blitzjs/rpc"
+import { BlitzPage } from "@blitzjs/next"
+import { InferGetStaticPropsType } from "next"
 import Layout from "app/core/layouts/Layout"
 import { useMediaPredicate } from "react-media-hook"
 
-import Navbar from "../core/components/Navbar"
 import db from "db"
-import LayoutLoader from "../core/components/LayoutLoader"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import getDrafts from "app/core/queries/getDrafts"
@@ -27,8 +23,12 @@ import { TestimonialsSection } from "app/core/components/home/TestimonialsSectio
 import { JoinCommunitySection } from "app/core/components/home/JoinCommunitySection"
 import { Hero } from "app/core/components/home/Hero"
 import { ModuleDiagram } from "app/core/components/home/ModuleDiagram"
+import Navbar from "app/core/components/Navbar"
+import LayoutLoader from "app/core/components/LayoutLoader"
 
-export const getStaticProps: GetStaticProps = async (context) => {
+type TLicenses = Awaited<ReturnType<typeof db.license.findMany>>
+
+export const getStaticProps = gSP(async (context) => {
   const licenses = await db.license.findMany({
     where: {
       source: "ResearchEquals",
@@ -48,9 +48,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
       licenses,
     },
   }
-}
+})
 
-const Home: BlitzPage = ({ licenses }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Home: BlitzPage<{ licenses: TLicenses }> = ({
+  licenses,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const prefersDarkMode = useMediaPredicate("(prefers-color-scheme: dark)")
   const biggerWindow = useMediaPredicate("(min-width: 640px)")
   const currentUser = useCurrentUser()

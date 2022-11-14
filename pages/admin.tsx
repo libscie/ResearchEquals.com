@@ -1,12 +1,8 @@
-import {
-  BlitzPage,
-  useQuery,
-  useRouter,
-  useSession,
-  Link,
-  useMutation,
-  validateZodSchema,
-} from "blitz"
+import Link from "next/link";
+import { useSession } from "@blitzjs/auth";
+import { useRouter } from "next/router";
+import { useQuery, useMutation } from "@blitzjs/rpc";
+import { BlitzPage } from "@blitzjs/next";
 import Layout from "app/core/layouts/Layout"
 import { useQuill } from "react-quilljs"
 import updateCrossRefCollection from "../collections/mutations/updateCrossRefCollection"

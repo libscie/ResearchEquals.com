@@ -1,55 +1,51 @@
-import {
-  BlitzPage,
-  useSession,
-  useQuery,
-  useRouter,
-  Link,
-  useMutation,
-  Router,
-  Routes,
-  NotFoundError,
-} from "blitz"
+import { gSSP } from "app/blitz-server"
+import Link from "next/link"
+import { useRouter, Router } from "next/router"
+import { useQuery, useMutation } from "@blitzjs/rpc"
+import { useSession } from "@blitzjs/auth"
+import { BlitzPage, Routes } from "@blitzjs/next"
 import Layout from "app/core/layouts/Layout"
 import { UserAdmin, LogoTwitter, UserFollow } from "@carbon/icons-react"
 import { Suspense, useState } from "react"
 
-import Navbar from "../../core/components/Navbar"
-import { useCurrentUser } from "../../core/hooks/useCurrentUser"
+import Navbar from "app/core/components/Navbar"
+import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
-import { useCurrentWorkspace } from "../../core/hooks/useCurrentWorkspace"
+import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import LayoutLoader from "app/core/components/LayoutLoader"
 import getDrafts from "app/core/queries/getDrafts"
-import getCollection from "../../collections/queries/getCollection"
-import SearchResultModule from "../../core/components/SearchResultModule"
+import getCollection from "app/collections/queries/getCollection"
+import SearchResultModule from "app/core/components/SearchResultModule"
 import { getAlgoliaResults } from "@algolia/autocomplete-js"
 import toast from "react-hot-toast"
 import Autocomplete from "app/core/components/Autocomplete"
 import algoliasearch from "algoliasearch"
-import addSubmission from "../../collections/mutations/addSubmission"
+import addSubmission from "app/collections/mutations/addSubmission"
 import { useMediaPredicate } from "react-media-hook"
-import ViewHeaderImage from "../../collections/components/ViewHeaderImage"
-import ViewIcon from "../../collections/components/ViewIcon"
-import ViewTitle from "../../collections/components/ViewTitle"
-import ViewSubtitle from "../../collections/components/ViewSubtitle"
-import DoiCollection from "../../collections/components/DoiCollection"
-import ActivityBadge from "../../collections/components/ActivityBadge"
+import ViewHeaderImage from "app/collections/components/ViewHeaderImage"
+import ViewIcon from "app/collections/components/ViewIcon"
+import ViewTitle from "app/collections/components/ViewTitle"
+import ViewSubtitle from "app/collections/components/ViewSubtitle"
+import DoiCollection from "app/collections/components/DoiCollection"
+import ActivityBadge from "app/collections/components/ActivityBadge"
 import EditorsBadge from "app/collections/components/EditorsBadge"
 import ContributorsBadge from "app/collections/components/ContributorsBadge"
-import ViewDescription from "../../collections/components/ViewDescription"
-import ViewCollectedWorks from "../../collections/components/ViewCollectedWorks"
-import ViewEditors from "../../collections/components/ViewEditors"
-import followCollection from "../../collections/mutations/followCollection"
+import ViewDescription from "app/collections/components/ViewDescription"
+import ViewCollectedWorks from "app/collections/components/ViewCollectedWorks"
+import ViewEditors from "app/collections/components/ViewEditors"
+import followCollection from "app/collections/mutations/followCollection"
 import db from "db"
 import addWork from "app/collections/mutations/addWork"
 import createReferenceModule from "app/modules/mutations/createReferenceModule"
 import { Modal } from "app/core/modals/Modal"
+import { NotFoundError } from "blitz"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
-export async function getServerSideProps(context) {
+export const getServerSideProps = gSSP(async function getServerSideProps(context) {
   const collection = await db.collection.findFirst({
     where: {
-      suffix: context.params.suffix.toLowerCase(),
+      suffix: context.params?.suffix?.toString().toLowerCase(),
     },
     include: {
       submissions: {
@@ -96,7 +92,7 @@ export async function getServerSideProps(context) {
       collection,
     },
   }
-}
+})
 
 const Collection: BlitzPage = () => {
   const currentUser = useCurrentUser()

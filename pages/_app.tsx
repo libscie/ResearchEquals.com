@@ -1,19 +1,21 @@
+import { withBlitz } from "app/blitz-client"
+import { useRouter } from "next/router"
+import { useQueryErrorResetBoundary } from "@blitzjs/rpc"
+import { AuthenticationError, AuthorizationError } from "blitz"
+
 import {
   AppProps,
   ErrorBoundary,
-  ErrorComponent,
-  AuthenticationError,
-  AuthorizationError,
+  ErrorComponent as DefaultErrorComponent,
   ErrorFallbackProps,
-  useQueryErrorResetBoundary,
-  Router,
-} from "blitz"
+} from "@blitzjs/next"
+
 import LoginForm from "app/auth/components/LoginForm"
 
 import "app/core/styles/index.css"
 import "app/core/styles/algolia.css"
 
-export default function App({ Component, pageProps }: AppProps) {
+export default withBlitz(function App({ Component, pageProps }: AppProps) {
   const getLayout = Component.getLayout || ((page) => page)
 
   return (
@@ -24,24 +26,29 @@ export default function App({ Component, pageProps }: AppProps) {
       {getLayout(<Component {...pageProps} />)}
     </ErrorBoundary>
   )
-}
+})
 
 function RootErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
+  const router = useRouter()
+
   if (error instanceof AuthenticationError) {
-    Router.push("/login")
+    router.push("/login").finally(null)
     resetErrorBoundary()
 
     return null
   } else if (error instanceof AuthorizationError) {
     return (
-      <ErrorComponent
+      <DefaultErrorComponent
         statusCode={error.statusCode}
         title="Sorry, you are not authorized to access this"
       />
     )
   } else {
     return (
-      <ErrorComponent statusCode={error.statusCode || 400} title={error.message || error.name} />
+      <DefaultErrorComponent
+        statusCode={error.statusCode || 400}
+        title={error.message || error.name}
+      />
     )
   }
 }

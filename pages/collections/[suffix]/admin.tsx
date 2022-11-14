@@ -1,47 +1,52 @@
-import { useSession, useQuery, useRouter, useMutation, Routes, Link } from "blitz"
+import { gSSP } from "app/blitz-server"
+import Link from "next/link"
+import { Routes } from "@blitzjs/next"
+import { useRouter } from "next/router"
+import { useQuery, useMutation } from "@blitzjs/rpc"
+import { useSession } from "@blitzjs/auth"
 import Layout from "app/core/layouts/Layout"
 import { MembershipRole } from "@prisma/client"
 
-import Navbar from "../../../core/components/Navbar"
-import getDrafts from "../../../core/queries/getDrafts"
-import { useCurrentUser } from "../../../core/hooks/useCurrentUser"
+import Navbar from "app/core/components/Navbar"
+import getDrafts from "app/core/queries/getDrafts"
+import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
-import generateSignature from "../../../signature"
+import generateSignature from "app/signature"
 import LayoutLoader from "app/core/components/LayoutLoader"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 import getCollectionInfo from "app/collections/queries/getCollectionInfo"
 import toast from "react-hot-toast"
-import Autocomplete from "../../../core/components/Autocomplete"
+import Autocomplete from "app/core/components/Autocomplete"
 import algoliasearch from "algoliasearch"
 import { getAlgoliaResults } from "@algolia/autocomplete-js"
-import SearchResultWorkspace from "../../../core/components/SearchResultWorkspace"
-import addEditor from "../../../collections/mutations/addEditor"
+import SearchResultWorkspace from "app/core/components/SearchResultWorkspace"
+import addEditor from "app/collections/mutations/addEditor"
 import changeEditorRole from "app/collections/mutations/changeEditorRole"
-import SearchResultModule from "../../../core/components/SearchResultModule"
+import SearchResultModule from "app/core/components/SearchResultModule"
 import addWork from "app/collections/mutations/addWork"
 import SetEditorToInactiveModal from "app/core/modals/SetEditorToInactiveModal"
-import DeleteEditorModal from "../../../core/modals/DeleteEditorModal"
+import DeleteEditorModal from "app/core/modals/DeleteEditorModal"
 import addComment from "app/collections/mutations/addComment"
-import MakeCollectionPublicModal from "../../../core/modals/MakeCollectionPublicModal"
-import UpgradeCollectionModal from "../../../core/modals/UpgradeCollectionModal"
-import HeaderImage from "../../../collections/components/AdminHeaderImage"
-import Icon from "../../../collections/components/AdminIcon"
-import AdminSubtitle from "../../../collections/components/AdminSubtitle"
-import Doi from "../../../collections/components/DoiCollection"
-import AdminDescription from "../../../collections/components/AdminDescription"
+import MakeCollectionPublicModal from "app/core/modals/MakeCollectionPublicModal"
+import UpgradeCollectionModal from "app/core/modals/UpgradeCollectionModal"
+import HeaderImage from "app/collections/components/AdminHeaderImage"
+import Icon from "app/collections/components/AdminIcon"
+import AdminSubtitle from "app/collections/components/AdminSubtitle"
+import Doi from "app/collections/components/DoiCollection"
+import AdminDescription from "app/collections/components/AdminDescription"
 import createReferenceModule from "app/modules/mutations/createReferenceModule"
-import ActivityBadge from "../../../collections/components/ActivityBadge"
-import ContributorsBadge from "../../../collections/components/ContributorsBadge"
-import EditorsBadge from "../../../collections/components/EditorsBadge"
-import AdminWorkCard from "../../../collections/components/AdminWorkCard"
+import ActivityBadge from "app/collections/components/ActivityBadge"
+import ContributorsBadge from "app/collections/components/ContributorsBadge"
+import EditorsBadge from "app/collections/components/EditorsBadge"
+import AdminWorkCard from "app/collections/components/AdminWorkCard"
 import AdminSubmission from "app/collections/components/AdminSubmission"
-import FinalizeUpgradeModal from "../../../core/modals/FinalizeUpgradeModal"
+import FinalizeUpgradeModal from "app/core/modals/FinalizeUpgradeModal"
 import { useMediaPredicate } from "react-media-hook"
-import AdminTitle from "../../../collections/components/AdminTitle"
-import AdminCollectedWorks from "../../../collections/components/AdminCollectedWorks"
-import AdminEditors from "../../../collections/components/AdminEditors"
+import AdminTitle from "app/collections/components/AdminTitle"
+import AdminCollectedWorks from "app/collections/components/AdminCollectedWorks"
+import AdminEditors from "app/collections/components/AdminEditors"
 
-export async function getServerSideProps(context) {
+export const getServerSideProps = gSSP(async function getServerSideProps(context) {
   // Expires in 30 minutes
   const expire = Math.round(Date.now() / 1000) + 60 * 30
   const signature = generateSignature(process.env.UPLOADCARE_SECRET_KEY, expire.toString())
@@ -52,7 +57,7 @@ export async function getServerSideProps(context) {
       signature,
     },
   }
-}
+})
 
 const CollectionsAdmin = ({ expire, signature }, context) => {
   const currentUser = useCurrentUser()
@@ -301,21 +306,23 @@ const CollectedWorks = ({ collection, editorIdSelf, refetchFn, editorIsAdmin }) 
               sourceId: "products",
               async onSelect(params) {
                 const { item, setQuery } = params
-                toast.promise(
-                  addWorkMutation({
-                    collectionId: collection!.id,
-                    editorId: editorIdSelf,
-                    moduleId: parseInt(item.objectID),
-                  }),
-                  {
-                    loading: "Adding work to collection...",
-                    success: () => {
-                      refetchFn()
-                      return "Added work to collection!"
-                    },
-                    error: "Failed to add work to collection...",
-                  }
-                )
+                toast
+                  .promise(
+                    addWorkMutation({
+                      collectionId: collection!.id,
+                      editorId: editorIdSelf,
+                      moduleId: parseInt(item.objectID),
+                    }),
+                    {
+                      loading: "Adding work to collection...",
+                      success: () => {
+                        refetchFn()
+                        return "Added work to collection!"
+                      },
+                      error: "Failed to add work to collection...",
+                    }
+                  )
+                  .catch(() => {})
               },
               getItems() {
                 return getAlgoliaResults({
@@ -351,38 +358,42 @@ const CollectedWorks = ({ collection, editorIdSelf, refetchFn, editorIsAdmin }) 
                           <button
                             className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200"
                             onClick={async () => {
-                              toast.promise(
-                                createReferenceMutation({
-                                  doi: matchedQuery.slice(-1)[0].endsWith("/")
-                                    ? matchedQuery.slice(-1)[0].slice(0, -1)
-                                    : matchedQuery.slice(-1)[0],
-                                }),
-                                {
-                                  loading: "Searching...",
-                                  success: (data) => {
-                                    toast.promise(
-                                      addWorkMutation({
-                                        collectionId: collection!.id,
-                                        editorId: editorIdSelf,
-                                        moduleId: data.id,
-                                      }),
-                                      {
-                                        loading: "Adding work to collection...",
-                                        success: () => {
-                                          refetchFn()
-                                          return "Added work to collection!"
-                                        },
-                                        error: "Failed to add work to collection...",
-                                      }
-                                    )
+                              toast
+                                .promise(
+                                  createReferenceMutation({
+                                    doi: matchedQuery.slice(-1)[0].endsWith("/")
+                                      ? matchedQuery.slice(-1)[0].slice(0, -1)
+                                      : matchedQuery.slice(-1)[0],
+                                  }),
+                                  {
+                                    loading: "Searching...",
+                                    success: (data) => {
+                                      toast
+                                        .promise(
+                                          addWorkMutation({
+                                            collectionId: collection!.id,
+                                            editorId: editorIdSelf,
+                                            moduleId: data.id,
+                                          }),
+                                          {
+                                            loading: "Adding work to collection...",
+                                            success: () => {
+                                              refetchFn()
+                                              return "Added work to collection!"
+                                            },
+                                            error: "Failed to add work to collection...",
+                                          }
+                                        )
+                                        .catch(() => {})
 
-                                    refetchFn()
+                                      refetchFn()
 
-                                    return "Record added to database"
-                                  },
-                                  error: "Could not add record.",
-                                }
-                              )
+                                      return "Record added to database"
+                                    },
+                                    error: "Could not add record.",
+                                  }
+                                )
+                                .catch(() => {})
                             }}
                           >
                             Click here to add {matchedQuery.slice(-1)} to ResearchEquals database

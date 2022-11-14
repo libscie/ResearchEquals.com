@@ -1,34 +1,31 @@
-import {
-  Link,
-  useSession,
-  useQuery,
-  useRouter,
-  useRouterQuery,
-  useInfiniteQuery,
-  Routes,
-} from "blitz"
+import { gSSP } from "app/blitz-server"
+import Link from "next/link"
+import { Routes } from "@blitzjs/next"
+import { useRouter } from "next/router"
+import { useQuery, useInfiniteQuery } from "@blitzjs/rpc"
+import { useSession } from "@blitzjs/auth"
 import Layout from "app/core/layouts/Layout"
 import React, { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import { ArrowUp, ArrowDown } from "@carbon/icons-react"
 
-import getDashboardData from "../core/queries/getDashboardData"
-import Navbar from "../core/components/Navbar"
-import OnboardingQuests from "../core/components/OnboardingQuests"
-import getFeed from "../workspaces/queries/getFeed"
+import getDashboardData from "app/core/queries/getDashboardData"
+import Navbar from "app/core/components/Navbar"
+import OnboardingQuests from "app/core/components/OnboardingQuests"
+import getFeed from "app/workspaces/queries/getFeed"
 import generateSignature from "app/signature"
-import WhoToFollow from "../core/components/WhoToFollow"
-import LayoutLoader from "../core/components/LayoutLoader"
+import WhoToFollow from "app/core/components/WhoToFollow"
+import LayoutLoader from "app/core/components/LayoutLoader"
 import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import ModuleBoxFeed from "app/core/components/ModuleBoxFeed"
-import ViewFollowers from "../modules/components/ViewFollowers"
+import ViewFollowers from "app/modules/components/ViewFollowers"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
 
-export async function getServerSideProps(context) {
+export const getServerSideProps = gSSP(async function getServerSideProps(context) {
   // Expires in 30 minutes
   const expire = Math.round(Date.now() / 1000) + 60 * 30
   const signature = generateSignature(process.env.UPLOADCARE_SECRET_KEY, expire.toString())
@@ -39,7 +36,7 @@ export async function getServerSideProps(context) {
       signature,
     },
   }
-}
+})
 
 const DashboardContent = ({
   expire,
@@ -265,7 +262,7 @@ const DashboardContent = ({
 const Dashboard = ({ expire, signature }) => {
   const currentUser = useCurrentUser()
   const session = useSession()
-  const query = useRouterQuery()
+  const query = useRouter().query
   const [ownWorkspace, { refetch: refetchWorkspace }] = useQuery(getCurrentWorkspace, null)
   const router = useRouter()
   // TODO: Add user select

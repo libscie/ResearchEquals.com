@@ -1,6 +1,8 @@
+import { useSession } from "@blitzjs/auth"
+import { useRouter } from "next/router"
+import { useQuery } from "@blitzjs/rpc"
 import Navbar from "app/core/components/Navbar"
 import Layout from "app/core/layouts/Layout"
-import { useQuery, useRouter, useSession } from "blitz"
 import React, { useEffect, useState } from "react"
 import ReactFlow, {
   Background,
@@ -13,14 +15,14 @@ import dagre from "dagre"
 import { useMediaPredicate } from "react-media-hook"
 import { Connect } from "@carbon/icons-react"
 
-import LayoutLoader from "../core/components/LayoutLoader"
+import LayoutLoader from "app/core/components/LayoutLoader"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import getDrafts from "app/core/queries/getDrafts"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
-import getNodes from "../core/queries/getNodes"
-import InputNode from "../core/components/InputNode"
-import DefaultNode from "../core/components/DefaultNode"
+import getNodes from "app/core/queries/getNodes"
+import InputNode from "app/core/components/InputNode"
+import DefaultNode from "app/core/components/DefaultNode"
 
 const nodeTypes = { inputNode: InputNode, defaultNode: DefaultNode }
 

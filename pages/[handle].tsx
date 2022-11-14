@@ -1,29 +1,35 @@
+import { gSSP } from "app/blitz-server"
+import Link from "next/link"
+import { useSession } from "@blitzjs/auth"
+import { usePaginatedQuery, useQuery } from "@blitzjs/rpc"
+import { useRouter } from "next/router"
 import Layout from "app/core/layouts/Layout"
 import db from "db"
-import { Link, useRouter, usePaginatedQuery, useParams, useQuery, useSession } from "blitz"
 import { Suspense } from "react"
 import moment from "moment"
 import { Calendar, UserFollow, Link as Link32 } from "@carbon/icons-react"
 
-import Navbar from "../core/components/Navbar"
-import getHandleFeed from "../workspaces/queries/getHandleFeed"
-import ModuleCard from "../core/components/ModuleCard"
+import Navbar from "app/core/components/Navbar"
+import getHandleFeed from "app/workspaces/queries/getHandleFeed"
+import ModuleCard from "app/core/components/ModuleCard"
 import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
-import HandlePanel from "../modules/components/HandlePanel"
-import FeedPagination from "../core/components/FeedPagination"
-import LayoutLoader from "../core/components/LayoutLoader"
+import HandlePanel from "app/modules/components/HandlePanel"
+import FeedPagination from "app/core/components/FeedPagination"
+import LayoutLoader from "app/core/components/LayoutLoader"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import getDrafts from "app/core/queries/getDrafts"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 import generateSignature from "app/signature"
-import FollowHandleButton from "../core/components/FollowHandleButton"
-import HandleAvatar from "../core/components/HandleAvatar"
+import FollowHandleButton from "app/core/components/FollowHandleButton"
+import HandleAvatar from "app/core/components/HandleAvatar"
+import { useParams } from "@blitzjs/next"
 
 const ITEMS_PER_PAGE = 10
 
-export const getServerSideProps = async ({ params }) => {
-  const handle = params!.handle.toLowerCase()
+export const getServerSideProps = gSSP(async ({ params }) => {
+  const handle = params!.handle?.toString().toLowerCase()
+
   const workspace = await db.workspace.findFirst({
     where: { handle },
     include: {
@@ -47,7 +53,7 @@ export const getServerSideProps = async ({ params }) => {
   const signature = generateSignature(process.env.UPLOADCARE_SECRET_KEY, expire.toString())
 
   return { props: { workspace, expire, signature } }
-}
+})
 
 const Handle = ({ workspace, expire, signature }) => {
   const currentUser = useCurrentUser()
@@ -274,7 +280,7 @@ const HandleFeed = ({ handle }) => {
                 <>
                   <li
                     onClick={() => {
-                      router.push(`/modules/${module.suffix}`)
+                      router.push(`/modules/${module.suffix}`).catch(() => {})
                     }}
                     className="cursor-pointer"
                   >

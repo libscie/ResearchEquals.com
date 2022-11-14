@@ -1,15 +1,18 @@
-import { BlitzPage, useSession, useQuery, useRouterQuery, Router, useRouter } from "blitz"
+import { Router, useRouter } from "next/router"
+import { useQuery } from "@blitzjs/rpc"
+import { useSession } from "@blitzjs/auth"
+import { BlitzPage } from "@blitzjs/next"
 import Layout from "app/core/layouts/Layout"
 import { Suspense, useEffect, useState } from "react"
 import { ProgressBarRound } from "@carbon/icons-react"
 import moment from "moment"
 
-import Navbar from "../core/components/Navbar"
-import { useCurrentUser } from "../core/hooks/useCurrentUser"
-import ModuleCard from "../core/components/ModuleCard"
+import Navbar from "app/core/components/Navbar"
+import { useCurrentUser } from "app/core/hooks/useCurrentUser"
+import ModuleCard from "app/core/components/ModuleCard"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
-import ModuleInvitation from "../modules/components/ModuleInvitation"
-import { useCurrentWorkspace } from "../core/hooks/useCurrentWorkspace"
+import ModuleInvitation from "app/modules/components/ModuleInvitation"
+import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import { useMediaPredicate } from "react-media-hook"
 import LayoutLoader from "app/core/components/LayoutLoader"
 import getDrafts from "app/core/queries/getDrafts"
@@ -21,7 +24,8 @@ const Invitations = ({ currentWorkspace }) => {
   const biggerWindow = useMediaPredicate("(min-width: 1024px)")
   const [invitations, { refetch }] = useQuery(getInvitedModules, { session })
   const user = useCurrentUser()
-  const query = useRouterQuery()
+  const router = useRouter()
+  const query = router.query
 
   useEffect(() => {
     if (query.suffix) {
@@ -59,7 +63,9 @@ const Invitations = ({ currentWorkspace }) => {
                     onClick={() => {
                       setModule(draft)
                       setInboxOpen(biggerWindow)
-                      Router.push("/invitations", { query: { suffix: draft.suffix } })
+                      router
+                        .push("/invitations", { query: { suffix: draft.suffix } })
+                        .catch(() => {})
                     }}
                     className="cursor-pointer"
                   >

@@ -1,21 +1,24 @@
-import { useSession, useQuery, useRouterQuery, Router, useRouter } from "blitz"
+import { gSSP } from "app/blitz-server"
+import { Router, useRouter } from "next/router"
+import { useQuery } from "@blitzjs/rpc"
+import { useSession } from "@blitzjs/auth"
 import Layout from "app/core/layouts/Layout"
 import { Suspense, useEffect, useState } from "react"
 import moment from "moment"
 
-import Navbar from "../core/components/Navbar"
-import getDrafts from "../core/queries/getDrafts"
-import ModuleEdit from "../modules/components/ModuleEdit"
-import { useCurrentUser } from "../core/hooks/useCurrentUser"
-import ModuleCard from "../core/components/ModuleCard"
+import Navbar from "app/core/components/Navbar"
+import getDrafts from "app/core/queries/getDrafts"
+import ModuleEdit from "app/modules/components/ModuleEdit"
+import { useCurrentUser } from "app/core/hooks/useCurrentUser"
+import ModuleCard from "app/core/components/ModuleCard"
 import { useMediaPredicate } from "react-media-hook"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
-import generateSignature from "../signature"
+import generateSignature from "app/signature"
 import LayoutLoader from "app/core/components/LayoutLoader"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
-import Ripple from "../core/components/Ripple"
+import Ripple from "app/core/components/Ripple"
 
-export async function getServerSideProps(context) {
+export const getServerSideProps = gSSP(async function getServerSideProps(context) {
   // Expires in 30 minutes
   const expire = Math.round(Date.now() / 1000) + 60 * 30
   const signature = generateSignature(process.env.UPLOADCARE_SECRET_KEY, expire.toString())
@@ -26,13 +29,14 @@ export async function getServerSideProps(context) {
       signature,
     },
   }
-}
+})
 
 const DraftsContents = ({ expire, signature, currentWorkspace, session, user }) => {
   const [currentModule, setModule] = useState<any>(undefined)
   const [inboxOpen, setInboxOpen] = useState(true)
   const [drafts, { refetch: getDraftsAgain }] = useQuery(getDrafts, { session })
-  const query = useRouterQuery()
+  const router = useRouter()
+  const query = useRouter().query
   const biggerWindow = useMediaPredicate("(min-width: 1024px)")
 
   useEffect(() => {
@@ -68,7 +72,7 @@ const DraftsContents = ({ expire, signature, currentWorkspace, session, user }) 
                       onClick={() => {
                         setModule(draft)
                         setInboxOpen(biggerWindow)
-                        Router.push("/drafts", { query: { suffix: draft.suffix } })
+                        router.push("/drafts", { query: { suffix: draft.suffix } }).catch(() => {})
                       }}
                       className="cursor-pointer"
                     >

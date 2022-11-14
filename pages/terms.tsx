@@ -1,8 +1,11 @@
-import { BlitzPage, useQuery, useRouter, useSession } from "blitz"
+import { useSession } from "@blitzjs/auth"
+import { useRouter } from "next/router"
+import { useQuery } from "@blitzjs/rpc"
+import { BlitzPage } from "@blitzjs/next"
 import Layout from "app/core/layouts/Layout"
 import Markdown from "markdown-it"
 
-import Navbar from "../core/components/Navbar"
+import Navbar from "app/core/components/Navbar"
 import LayoutLoader from "app/core/components/LayoutLoader"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
