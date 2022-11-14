@@ -1,5 +1,7 @@
+import { useMutation } from "@blitzjs/rpc";
+import { Router, useRouter } from "next/router";
+import { BlitzPage, useParam } from "@blitzjs/next";
 import verifyEmailMutation from "app/auth/mutations/verify-email"
-import { BlitzPage, Router, useMutation, useParam, useRouterQuery } from "blitz"
 import { useEffect, useState } from "react"
 import Layout from "app/core/layouts/Layout"
 

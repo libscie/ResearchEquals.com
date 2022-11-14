@@ -1,12 +1,7 @@
-import {
-  BlitzPage,
-  useRouterQuery,
-  Link,
-  useMutation,
-  Routes,
-  validateZodSchema,
-  useRouter,
-} from "blitz"
+import Link from "next/link";
+import { useMutation } from "@blitzjs/rpc";
+import { useRouter } from "next/router";
+import { BlitzPage, Routes } from "@blitzjs/next";
 import Layout from "app/core/layouts/Layout"
 import resetPassword from "app/auth/mutations/resetPassword"
 import ResearchEqualsLogo from "app/core/components/ResearchEqualsLogo"
@@ -16,7 +11,7 @@ import toast from "react-hot-toast"
 import { useEffect } from "react"
 
 const ResetPasswordPage: BlitzPage = () => {
-  const query = useRouterQuery()
+  const query = useRouter().query;
   const [resetPasswordMutation] = useMutation(resetPassword)
   const router = useRouter()
 
