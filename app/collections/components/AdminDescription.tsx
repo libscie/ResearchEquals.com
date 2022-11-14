@@ -1,4 +1,5 @@
-import { useMutation, validateZodSchema } from "blitz"
+import { useMutation } from "@blitzjs/rpc"
+import { validateZodSchema } from "blitz"
 import { useFormik } from "formik"
 import "quill/dist/quill.snow.css"
 import { useEffect } from "react"

@@ -1,4 +1,5 @@
-import { useRouter, useMutation } from "blitz"
+import { useMutation } from "@blitzjs/rpc";
+import { useRouter } from "next/router";
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 

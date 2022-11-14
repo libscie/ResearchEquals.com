@@ -1,9 +1,12 @@
-import { AuthenticationError, Link, useMutation, Routes, validateZodSchema } from "blitz"
+import Link from "next/link"
+import { Routes } from "@blitzjs/next"
+import { useMutation } from "@blitzjs/rpc"
 import login from "app/auth/mutations/login"
 import { useFormik } from "formik"
 import { z } from "zod"
 import ResearchEqualsLogo from "app/core/components/ResearchEqualsLogo"
 import toast from "react-hot-toast"
+import { validateZodSchema } from "blitz"
 
 type LoginFormProps = {
   onSuccess?: () => void

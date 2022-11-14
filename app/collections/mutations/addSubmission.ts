@@ -1,6 +1,6 @@
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
-import collectionSubmissionMailer from "../../api/collection-submission-mailer"
+import collectionSubmissionMailer from "pages/api/collection-submission-mailer"
 
 export default resolver.pipe(
   resolver.authorize(),

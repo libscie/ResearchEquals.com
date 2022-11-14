@@ -1,4 +1,4 @@
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc";
 import db, { Prisma } from "db"
 import generateSuffix from "../../modules/mutations/generateSuffix"
 import { generateCollectionXml } from "../../core/crossref/generateCrossRefXml"

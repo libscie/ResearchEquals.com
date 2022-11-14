@@ -1,4 +1,5 @@
-import { Link, Routes } from "blitz"
+import Link from "next/link";
+import { Routes } from "@blitzjs/next";
 import { Undo } from "@carbon/icons-react"
 import CollectionsModal from "../modals/CollectionsModal"
 

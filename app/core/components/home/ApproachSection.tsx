@@ -1,5 +1,6 @@
+import Link from "next/link";
+import Image from "next/image";
 import cx from "classnames"
-import Image from "next/image"
 import type { HTMLAttributes, ReactChild, ReactNode } from "react"
 import { Close, Checkmark } from "@carbon/icons-react"
 import Button from "./Button"
@@ -8,7 +9,6 @@ import OldWayDark from "public/images/home/old-way-dark.svg"
 import NewWay from "public/images/home/new-way.svg"
 import NewWayDark from "public/images/home/new-way-dark.svg"
 import React from "react"
-import { Link } from "blitz"
 
 const APPROACH_DATA: {
   icon: string | ReactChild

@@ -1,5 +1,5 @@
+import { useMutation } from "@blitzjs/rpc";
 import { Download, TrashCan } from "@carbon/icons-react"
-import { useMutation } from "blitz"
 import toast from "react-hot-toast"
 import { filesize } from "filesize"
 

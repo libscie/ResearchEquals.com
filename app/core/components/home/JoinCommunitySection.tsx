@@ -1,7 +1,7 @@
+import Link from "next/link";
 import React from "react"
 import Container from "./Container"
 import Button from "./Button"
-import { Link } from "blitz"
 
 export const JoinCommunitySection = () => {
   return (

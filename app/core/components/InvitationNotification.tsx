@@ -1,4 +1,4 @@
-import { Link } from "blitz"
+import Link from "next/link";
 import moment from "moment"
 
 const InvitationNotification = ({ invited }) => {

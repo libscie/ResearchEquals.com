@@ -1,12 +1,13 @@
+import { useMutation } from "@blitzjs/rpc"
 import changePassword from "app/auth/mutations/changePassword"
 import changeEmail from "app/users/mutations/changeEmail"
-import { useMutation, validateZodSchema } from "blitz"
 import { useFormik } from "formik"
 import toast from "react-hot-toast"
 import { z } from "zod"
 import { Checkmark, Close } from "@carbon/icons-react"
 
 import DeleteModal from "../modals/delete"
+import { validateZodSchema } from "blitz"
 
 const WorkspaceSettings = ({ user, setIsOpen }) => {
   const [changePasswordMutation] = useMutation(changePassword)

@@ -1,7 +1,7 @@
-import { addMinutes, NotFoundError, resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
+import { addMinutes } from "blitz"
 import db from "db"
-
-import invitationMailer from "../../api/invitation-mailer"
+import invitationMailer from "pages/api/invitation-mailer"
 
 export default resolver.pipe(
   resolver.authorize(),

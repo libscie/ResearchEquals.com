@@ -1,7 +1,7 @@
+import { useMutation } from "@blitzjs/rpc"
 import { getAlgoliaResults } from "@algolia/autocomplete-js"
 import algoliasearch from "algoliasearch"
 import SearchResultModule from "app/core/components/SearchResultModule"
-import { useMutation } from "blitz"
 import toast from "react-hot-toast"
 import AdminWorkCard from "./AdminWorkCard"
 import addWork from "../mutations/addWork"

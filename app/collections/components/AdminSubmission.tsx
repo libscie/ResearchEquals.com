@@ -1,5 +1,5 @@
+import Link from "next/link";
 import Admin from "app/pages/admin"
-import { Link } from "blitz"
 import moment from "moment"
 import HandleSubmissionToCollectionModal from "../../core/modals/HandleSubmissionToCollectionModal"
 import DoiSubmission from "./DoiSubmission"

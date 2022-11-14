@@ -1,4 +1,4 @@
-import { Image } from "blitz"
+import Image from "next/image";
 import React from "react"
 import HeroImage from "public/images/home/hero.svg"
 

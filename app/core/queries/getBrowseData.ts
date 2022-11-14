@@ -1,4 +1,5 @@
-import { paginate, resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
+import { paginate } from "blitz"
 import db, { Prisma } from "db"
 
 export default async function getBrowseData({ skip = 0, take = 100 }) {

@@ -1,4 +1,4 @@
-import { useMutation, validateZodSchema } from "blitz"
+import { useMutation } from "@blitzjs/rpc"
 import { useFormik } from "formik"
 import toast from "react-hot-toast"
 import { z } from "zod"
@@ -7,6 +7,7 @@ import changeEmailConsent from "../../users/mutations/changeEmailConsent"
 import changeMemberEmails from "../../memberships/mutations/changeMemberEmails"
 import { emailNotificationsAtom } from "../utils/Atoms"
 import { useRecoilState } from "recoil"
+import { validateZodSchema } from "blitz"
 
 const EmailSettings = ({ user, setIsOpen }) => {
   const [emailNotifications, setEmailNotifications] = useRecoilState(emailNotificationsAtom)

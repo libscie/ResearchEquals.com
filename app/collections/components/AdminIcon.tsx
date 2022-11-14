@@ -1,5 +1,5 @@
+import { useMutation } from "@blitzjs/rpc";
 import { Widget, WidgetAPI } from "@uploadcare/react-widget"
-import { useMutation } from "blitz"
 import { Ref, useRef } from "react"
 import toast from "react-hot-toast"
 import { JsonObject } from "prisma"

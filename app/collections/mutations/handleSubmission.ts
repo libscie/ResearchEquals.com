@@ -1,8 +1,7 @@
-import collectionRejectedMailer from "app/api/collection-rejected-mailer"
-import { acceptSubmission } from "app/postmark"
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
-import collectionAcceptedMailer from "../../api/collection-accepted-mailer"
+import collectionAcceptedMailer from "pages/api/collection-accepted-mailer"
+import collectionRejectedMailer from "pages/api/collection-rejected-mailer"
 
 export default resolver.pipe(
   resolver.authorize(),

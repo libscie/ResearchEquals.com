@@ -1,6 +1,6 @@
+import { useMutation } from "@blitzjs/rpc";
 import { Widget } from "@uploadcare/react-widget"
 import { useRef } from "react"
-import { useMutation } from "blitz"
 import changeAvatar from "../../workspaces/mutations/changeAvatar"
 import toast from "react-hot-toast"
 

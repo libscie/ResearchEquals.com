@@ -1,4 +1,6 @@
-import { Link, Routes, useMutation } from "blitz"
+import Link from "next/link";
+import { useMutation } from "@blitzjs/rpc";
+import { Routes } from "@blitzjs/next";
 
 const EditorCard = ({ editor }) => {
   return (

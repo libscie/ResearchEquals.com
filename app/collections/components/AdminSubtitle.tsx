@@ -1,9 +1,10 @@
-import { useMutation, validateZodSchema } from "blitz"
+import { useMutation } from "@blitzjs/rpc"
 import { Field, Form, Formik } from "formik"
 import toast from "react-hot-toast"
 import changeSubtitle from "../mutations/changeSubtitle"
 import { useFormik } from "formik"
 import { z } from "zod"
+import { validateZodSchema } from "blitz"
 
 const Subtitle = ({ collection, refetchFn, isAdmin }) => {
   const [changeSubtitleMutation, { isSuccess: isSubtitleSuccess }] = useMutation(changeSubtitle)

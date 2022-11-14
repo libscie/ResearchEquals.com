@@ -1,6 +1,8 @@
+import Link from "next/link";
+import { useQuery } from "@blitzjs/rpc";
+import { Routes } from "@blitzjs/next";
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
-import { Link, Routes, useQuery } from "blitz"
 import FollowButton from "app/workspaces/components/FollowButton"
 import UnfollowButton from "app/workspaces/components/UnfollowButton"
 import { Close } from "@carbon/icons-react"

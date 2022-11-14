@@ -1,6 +1,6 @@
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
-import approvalMailer from "../../api/approval-mailer"
+import approvalMailer from "pages/api/approval-mailer"
 
 export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
   await db.authorship.update({

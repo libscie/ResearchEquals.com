@@ -1,7 +1,8 @@
+import Link from "next/link"
+import { useMutation } from "@blitzjs/rpc"
 import changeBio from "app/workspaces/mutations/changeBio"
 import changePronouns from "app/workspaces/mutations/changePronouns"
 import changeUrl from "app/workspaces/mutations/changeUrl"
-import { Link, useMutation, validateZodSchema } from "blitz"
 import { useFormik } from "formik"
 import { z } from "zod"
 import { Checkmark, Close } from "@carbon/icons-react"
@@ -18,6 +19,7 @@ import {
   workspaceUrlAtom,
 } from "../utils/Atoms"
 import { useEffect } from "react"
+import { validateZodSchema } from "blitz"
 
 const WorkspaceSettings = ({ workspace, setIsOpen }) => {
   const [changeFirstNameMutation] = useMutation(changeFirstName)

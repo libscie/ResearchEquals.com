@@ -1,4 +1,6 @@
-import { useQuery, useMutation, Link, Routes } from "blitz"
+import Link from "next/link"
+import { Routes } from "@blitzjs/next"
+import { useQuery, useMutation } from "@blitzjs/rpc"
 import { useState } from "react"
 import { Prisma } from "prisma"
 import toast from "react-hot-toast"

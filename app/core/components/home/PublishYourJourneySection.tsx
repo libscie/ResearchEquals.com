@@ -1,7 +1,7 @@
+import Image from "next/image";
 import React from "react"
 import cx from "classnames"
 import Container, { ContainerProps } from "./Container"
-import { Image } from "blitz"
 import CreateModule from "public/images/home/create-module.svg"
 import CreateModuleDark from "public/images/home/create-module-dark.svg"
 import AddLink from "public/images/home/add-link.svg"

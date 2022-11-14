@@ -1,5 +1,6 @@
+import Link from "next/link";
+import { Routes } from "@blitzjs/next";
 import AuthorAvatarsNew from "app/modules/components/AuthorAvatarsNew"
-import { Link, Routes } from "blitz"
 
 const ModuleBoxFeed = ({ modules, fetchNextPage, hasNextPage, isFetchingNextPage }) => {
   return (

@@ -1,4 +1,4 @@
-import { Link } from "blitz"
+import Link from "next/link"
 
 function onlyUnique(value, index, self) {
   return self.indexOf(value) === index

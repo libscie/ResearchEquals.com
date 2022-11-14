@@ -1,9 +1,8 @@
+import Link from "next/link"
 import { Listbox, Transition, Dialog } from "@headlessui/react"
 import { Close, Menu, NotificationNew, Notification } from "@carbon/icons-react"
-
 import { Fragment, useState } from "react"
 import ResearchEqualsLogo from "../components/ResearchEqualsLogo"
-import { Link } from "blitz"
 import moment from "moment"
 import InvitationNotification from "../components/InvitationNotification"
 

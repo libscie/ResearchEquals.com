@@ -1,7 +1,8 @@
+import Link from "next/link";
+import { Routes } from "@blitzjs/next";
 import React, { memo } from "react"
 import { Handle, NodeProps, Position } from "react-flow-renderer"
 import { Launch } from "@carbon/icons-react"
-import { Link, Routes } from "blitz"
 
 // https://github.com/wbkd/react-flow/blob/main/src/components/Nodes/DefaultNode.tsx
 const DefaultNode = ({

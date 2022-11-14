@@ -1,4 +1,6 @@
-import { useQuery, useMutation, Link, validateZodSchema, Routes } from "blitz"
+import Link from "next/link"
+import { Routes } from "@blitzjs/next"
+import { useQuery, useMutation } from "@blitzjs/rpc"
 import { useState, useEffect } from "react"
 import algoliasearch from "algoliasearch"
 import { z } from "zod"

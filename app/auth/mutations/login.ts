@@ -1,4 +1,5 @@
-import { resolver, SecurePassword, AuthenticationError } from "blitz"
+import { SecurePassword } from "@blitzjs/auth";
+import { resolver } from "@blitzjs/rpc";
 import db from "db"
 import { Ctx } from "blitz"
 

@@ -1,4 +1,4 @@
-import { useMutation, useQuery, validateZodSchema } from "blitz"
+import { useMutation, useQuery } from "@blitzjs/rpc"
 import moment from "moment"
 import algoliasearch from "algoliasearch"
 import ISO6391 from "iso-639-1"
@@ -10,6 +10,7 @@ import { z } from "zod"
 import editModuleScreen from "../mutations/editModuleScreen"
 import getTypes from "../../core/queries/getTypes"
 import getLicenses from "app/core/queries/getLicenses"
+import { validateZodSchema } from "blitz"
 
 const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
   const [editModuleScreenMutation] = useMutation(editModuleScreen)

@@ -1,4 +1,4 @@
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc";
 import db from "db"
 import axios from "axios"
 import algoliasearch from "algoliasearch"

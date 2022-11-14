@@ -1,4 +1,4 @@
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc";
 import db from "db"
 import { Ctx } from "blitz"
 import { isURI } from "app/core/crossref/ai_program"
