@@ -1,15 +1,17 @@
-import { useMutation } from "@blitzjs/rpc";
-import { Router, useRouter } from "next/router";
-import { BlitzPage, useParam } from "@blitzjs/next";
+import { useMutation } from "@blitzjs/rpc"
+import { useRouter } from "next/router"
+import { BlitzPage, useParam } from "@blitzjs/next"
 import verifyEmailMutation from "app/auth/mutations/verify-email"
 import { useEffect, useState } from "react"
 import Layout from "app/core/layouts/Layout"
+import { useSession } from "@blitzjs/auth"
 
 const VerifyMail: BlitzPage = () => {
   const code = useParam("code", "string")
   const [verifyEmail] = useMutation(verifyEmailMutation)
   const [error, setError] = useState(false)
-  const userId = useRouterQuery().userId
+  const userId = useSession().userId
+  const router = useRouter()
 
   useEffect(() => {
     if (!code) {

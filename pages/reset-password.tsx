@@ -1,7 +1,6 @@
-import Link from "next/link";
-import { useMutation } from "@blitzjs/rpc";
-import { useRouter } from "next/router";
-import { BlitzPage, Routes } from "@blitzjs/next";
+import Link from "next/link"
+import { useMutation } from "@blitzjs/rpc"
+import { BlitzPage, Routes, useRouterQuery } from "@blitzjs/next"
 import Layout from "app/core/layouts/Layout"
 import resetPassword from "app/auth/mutations/resetPassword"
 import ResearchEqualsLogo from "app/core/components/ResearchEqualsLogo"
@@ -9,11 +8,13 @@ import { z } from "zod"
 import { useFormik } from "formik"
 import toast from "react-hot-toast"
 import { useEffect } from "react"
+import { validateZodSchema } from "blitz"
+import { useRouter } from "next/router"
 
 const ResetPasswordPage: BlitzPage = () => {
-  const query = useRouter().query;
   const [resetPasswordMutation] = useMutation(resetPassword)
   const router = useRouter()
+  const query = useRouterQuery()
 
   // Redirect to home when no token is found
   useEffect(() => {

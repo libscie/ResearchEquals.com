@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { useMutation, useQuery } from "@blitzjs/rpc";
+import Link from "next/link"
+import { useMutation, useQuery } from "@blitzjs/rpc"
 import { Widget } from "@uploadcare/react-widget"
 import { useRef, useState } from "react"
 import { Formik, Form } from "formik"

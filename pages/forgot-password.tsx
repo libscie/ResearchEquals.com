@@ -1,12 +1,13 @@
-import Link from "next/link";
-import { useMutation } from "@blitzjs/rpc";
-import { BlitzPage, Routes } from "@blitzjs/next";
+import Link from "next/link"
+import { useMutation } from "@blitzjs/rpc"
+import { BlitzPage, Routes } from "@blitzjs/next"
 import Layout from "app/core/layouts/Layout"
 import forgotPassword from "app/auth/mutations/forgotPassword"
 import ResearchEqualsLogo from "app/core/components/ResearchEqualsLogo"
 import { useFormik } from "formik"
 import { z } from "zod"
 import toast from "react-hot-toast"
+import { validateZodSchema } from "blitz"
 
 const ForgotPasswordPage: BlitzPage = () => {
   const [forgotPasswordMutation, { isSuccess }] = useMutation(forgotPassword)
