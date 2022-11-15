@@ -23,17 +23,19 @@ const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
 
   const onChangeEditorRole = (editorId, role) => {
-    toast.promise(changeEditorRoleMutation({ editorId: editorId, role: role }), {
-      loading: `Changing role to ${role.toLowerCase()}...`,
-      success: () => {
-        refetchFn()
-        return `Changed role to ${role.toLowerCase()}!`
-      },
-      error: (err) => {
-        setCurrentRole(editor.role)
-        return `${err}`
-      },
-    })
+    toast
+      .promise(changeEditorRoleMutation({ editorId: editorId, role: role }), {
+        loading: `Changing role to ${role.toLowerCase()}...`,
+        success: () => {
+          refetchFn()
+          return `Changed role to ${role.toLowerCase()}!`
+        },
+        error: (err) => {
+          setCurrentRole(editor.role)
+          return `${err}`
+        },
+      })
+      .catch(() => {})
   }
 
   return (
@@ -114,22 +116,24 @@ const Editors = ({ collection, isAdmin, selfId, refetchFn, user }) => {
                   sourceId: "products",
                   async onSelect(params) {
                     const { item, setQuery } = params
-                    toast.promise(
-                      addEditorMutation({
-                        collectionId: collection.id,
-                        workspaceId: parseInt(item.objectID),
-                      }),
-                      {
-                        loading: "Adding editor...",
-                        success: () => {
-                          refetchFn()
-                          return "Added editor!"
-                        },
-                        error: (e) => {
-                          return e.toString()
-                        },
-                      }
-                    )
+                    toast
+                      .promise(
+                        addEditorMutation({
+                          collectionId: collection.id,
+                          workspaceId: parseInt(item.objectID),
+                        }),
+                        {
+                          loading: "Adding editor...",
+                          success: () => {
+                            refetchFn()
+                            return "Added editor!"
+                          },
+                          error: (e) => {
+                            return e.toString()
+                          },
+                        }
+                      )
+                      .catch(() => {})
                   },
                   getItems() {
                     return getAlgoliaResults({

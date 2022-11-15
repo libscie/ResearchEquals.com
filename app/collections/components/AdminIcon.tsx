@@ -1,4 +1,4 @@
-import { useMutation } from "@blitzjs/rpc";
+import { useMutation } from "@blitzjs/rpc"
 import { Widget, WidgetAPI } from "@uploadcare/react-widget"
 import { Ref, useRef } from "react"
 import toast from "react-hot-toast"
@@ -38,8 +38,8 @@ const Icon = ({ collection, refetchFn, signature, expire }) => {
             previewStep
             clearable
             onChange={async (info) => {
-              try {
-                toast.promise(
+              toast
+                .promise(
                   changeIconMutation({
                     id: collection.id,
                     iconInfo: info as JsonObject,
@@ -53,9 +53,9 @@ const Icon = ({ collection, refetchFn, signature, expire }) => {
                     error: "That did not work",
                   }
                 )
-              } catch (err) {
-                alert(err)
-              }
+                .catch((err) => {
+                  alert(err)
+                })
             }}
           />
         </>

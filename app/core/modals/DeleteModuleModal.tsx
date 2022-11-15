@@ -1,5 +1,5 @@
-import { useRouter } from "next/router";
-import { useMutation } from "@blitzjs/rpc";
+import { useRouter } from "next/router"
+import { useMutation } from "@blitzjs/rpc"
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import deleteModule from "app/modules/mutations/deleteModule"
@@ -77,10 +77,11 @@ export default function DeleteModule({ module, setModule, fetchDrafts }) {
                         })
                         .then(fetchDrafts)
                         .then(() => {
-                          router.push("/drafts")
+                          router.push("/drafts").catch(() => {})
                           setModule(undefined)
                           closeModal()
                         })
+                        .catch(() => {})
                     }}
                   >
                     Delete

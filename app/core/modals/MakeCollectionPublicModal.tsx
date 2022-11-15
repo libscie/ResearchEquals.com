@@ -1,4 +1,4 @@
-import { useMutation } from "@blitzjs/rpc";
+import { useMutation } from "@blitzjs/rpc"
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import toast from "react-hot-toast"
@@ -106,15 +106,17 @@ export default function MakeCollectionPublicModal({ collection, refetchFn, works
                     className="mr-2 inline-flex rounded-md bg-amber-50 py-2 px-4 text-sm font-medium text-amber-700 hover:bg-amber-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-amber-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                     disabled={!collection.title && true}
                     onClick={async () => {
-                      toast.promise(makePublicMutation({ collectionId: collection.id }), {
-                        loading: "Making public...",
-                        success: () => {
-                          refetchFn()
-                          closeModal()
-                          return "Collection is now public!"
-                        },
-                        error: "Something went wrong...",
-                      })
+                      toast
+                        .promise(makePublicMutation({ collectionId: collection.id }), {
+                          loading: "Making public...",
+                          success: () => {
+                            refetchFn()
+                            closeModal()
+                            return "Collection is now public!"
+                          },
+                          error: "Something went wrong...",
+                        })
+                        .catch(() => {})
                     }}
                   >
                     Make public

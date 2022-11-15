@@ -1,27 +1,28 @@
-import Link from "next/link";
-import { useSession } from "@blitzjs/auth";
-import { useRouter } from "next/router";
-import { useQuery, useMutation } from "@blitzjs/rpc";
-import { BlitzPage } from "@blitzjs/next";
+import Link from "next/link"
+import { useSession } from "@blitzjs/auth"
+import { useRouter } from "next/router"
+import { useQuery, useMutation } from "@blitzjs/rpc"
+import { BlitzPage } from "@blitzjs/next"
 import Layout from "app/core/layouts/Layout"
 import { useQuill } from "react-quilljs"
-import updateCrossRefCollection from "../collections/mutations/updateCrossRefCollection"
+import updateCrossRefCollection from "app/collections/mutations/updateCrossRefCollection"
 
 import "quill/dist/quill.snow.css"
 
-import Navbar from "../core/components/Navbar"
-import LayoutLoader from "../core/components/LayoutLoader"
+import Navbar from "app/core/components/Navbar"
+import LayoutLoader from "app/core/components/LayoutLoader"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import getDrafts from "app/core/queries/getDrafts"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
-import getAdminInfo from "../core/queries/getAdminInfo"
+import getAdminInfo from "app/core/queries/getAdminInfo"
 import toast from "react-hot-toast"
-import updateCrossRef from "../modules/mutations/updateCrossRef"
+import updateCrossRef from "app/modules/mutations/updateCrossRef"
 import { z } from "zod"
 import { useFormik } from "formik"
-import broadcastMessage from "../core/mutations/broadcast-message"
+import broadcastMessage from "app/core/mutations/broadcast-message"
 import { useState } from "react"
+import { validateZodSchema } from "blitz"
 
 const Admin: BlitzPage = () => {
   const currentUser = useCurrentUser()
@@ -57,18 +58,20 @@ const Admin: BlitzPage = () => {
         )
         setCountSubmit(countSubmit + 1)
       } else {
-        toast.promise(
-          broadcastMutation({
-            subject: values.subject,
-            htmlContent: quill.root.innerHTML,
-            textContent: quill.getText(),
-          }),
-          {
-            loading: "Sending...",
-            success: <b>Broadcast successful!</b>,
-            error: "Broadcast failed.",
-          }
-        )
+        toast
+          .promise(
+            broadcastMutation({
+              subject: values.subject,
+              htmlContent: quill.root.innerHTML,
+              textContent: quill.getText(),
+            }),
+            {
+              loading: "Sending...",
+              success: <b>Broadcast successful!</b>,
+              error: "Broadcast failed.",
+            }
+          )
+          .catch(() => {})
         setCountSubmit(0)
       }
     },
@@ -182,11 +185,13 @@ const Admin: BlitzPage = () => {
                           <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
                             <button
                               onClick={async () => {
-                                toast.promise(updateCrossRefMutation({ id: module.id }), {
-                                  loading: "Updating...",
-                                  success: "Updated metadata with CrossRef",
-                                  error: "That did not work",
-                                })
+                                toast
+                                  .promise(updateCrossRefMutation({ id: module.id }), {
+                                    loading: "Updating...",
+                                    success: "Updated metadata with CrossRef",
+                                    error: "That did not work",
+                                  })
+                                  .catch(() => {})
                               }}
                               className="whitespace-nowrap rounded border-0 bg-indigo-100 px-4 py-2 text-sm font-normal leading-5 text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
                             >
@@ -255,14 +260,16 @@ const Admin: BlitzPage = () => {
                           <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
                             <button
                               onClick={async () => {
-                                toast.promise(
-                                  updateCrossRefCollectionMutation({ id: collection.id }),
-                                  {
-                                    loading: "Updating...",
-                                    success: "Updated collection metadata with CrossRef",
-                                    error: "That did not work",
-                                  }
-                                )
+                                toast
+                                  .promise(
+                                    updateCrossRefCollectionMutation({ id: collection.id }),
+                                    {
+                                      loading: "Updating...",
+                                      success: "Updated collection metadata with CrossRef",
+                                      error: "That did not work",
+                                    }
+                                  )
+                                  .catch(() => {})
                               }}
                               className="whitespace-nowrap rounded border-0 bg-indigo-100 px-4 py-2 text-sm font-normal leading-5 text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
                             >

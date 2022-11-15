@@ -1,5 +1,5 @@
-import { useMutation } from "@blitzjs/rpc";
-import { useRouter } from "next/router";
+import { useMutation } from "@blitzjs/rpc"
+import { useRouter } from "next/router"
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 
@@ -87,7 +87,7 @@ export default function DeleteModal() {
                       onClick={async () => {
                         try {
                           await deleteUserMutation()
-                          router.push("/")
+                          router.push("/").catch(() => {})
                         } catch (err) {
                           throw err
                         }

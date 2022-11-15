@@ -1,5 +1,5 @@
-import { BlitzPage } from "@blitzjs/next";
-import { useRouter } from "next/router";
+import { BlitzPage } from "@blitzjs/next"
+import { useRouter } from "next/router"
 import Layout from "app/core/layouts/Layout"
 import { LoginForm } from "app/auth/components/LoginForm"
 
@@ -12,7 +12,7 @@ const LoginPage: BlitzPage = () => {
         const next = router.query.next
           ? decodeURIComponent(router.query.next as string)
           : "/dashboard"
-        router.push(next)
+        router.push(next).catch(() => {})
       }}
     />
   )

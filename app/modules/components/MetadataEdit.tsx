@@ -52,12 +52,12 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
   })
 
   useEffect(() => {
-    formik.setFieldValue("type", module.type.id.toString())
-    formik.setFieldValue("title", module.title)
-    formik.setFieldValue("description", module.description)
-    formik.setFieldValue("license", module.license!.id.toString())
-    formik.setFieldValue("displayColor", module.displayColor)
-    formik.setFieldValue("language", module.language)
+    formik.setFieldValue("type", module.type.id.toString()).catch(() => {})
+    formik.setFieldValue("title", module.title).catch(() => {})
+    formik.setFieldValue("description", module.description).catch(() => {})
+    formik.setFieldValue("license", module.license!.id.toString()).catch(() => {})
+    formik.setFieldValue("displayColor", module.displayColor).catch(() => {})
+    formik.setFieldValue("language", module.language).catch(() => {})
   }, [module])
 
   return (

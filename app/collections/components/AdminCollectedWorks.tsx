@@ -27,21 +27,23 @@ const CollectedWorks = ({ collection, editorIdSelf, refetchFn, editorIsAdmin }) 
               sourceId: "products",
               async onSelect(params) {
                 const { item, setQuery } = params
-                toast.promise(
-                  addWorkMutation({
-                    collectionId: collection!.id,
-                    editorId: editorIdSelf,
-                    moduleId: parseInt(item.objectID),
-                  }),
-                  {
-                    loading: "Adding work to collection...",
-                    success: () => {
-                      refetchFn()
-                      return "Added work to collection!"
-                    },
-                    error: "Failed to add work to collection...",
-                  }
-                )
+                toast
+                  .promise(
+                    addWorkMutation({
+                      collectionId: collection!.id,
+                      editorId: editorIdSelf,
+                      moduleId: parseInt(item.objectID),
+                    }),
+                    {
+                      loading: "Adding work to collection...",
+                      success: () => {
+                        refetchFn()
+                        return "Added work to collection!"
+                      },
+                      error: "Failed to add work to collection...",
+                    }
+                  )
+                  .catch(() => {})
               },
               getItems() {
                 return getAlgoliaResults({
@@ -77,38 +79,42 @@ const CollectedWorks = ({ collection, editorIdSelf, refetchFn, editorIsAdmin }) 
                           <button
                             className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200"
                             onClick={async () => {
-                              toast.promise(
-                                createReferenceMutation({
-                                  doi: matchedQuery.slice(-1)[0].endsWith("/")
-                                    ? matchedQuery.slice(-1)[0].slice(0, -1)
-                                    : matchedQuery.slice(-1)[0],
-                                }),
-                                {
-                                  loading: "Searching...",
-                                  success: (data) => {
-                                    toast.promise(
-                                      addWorkMutation({
-                                        collectionId: collection!.id,
-                                        editorId: editorIdSelf,
-                                        moduleId: data.id,
-                                      }),
-                                      {
-                                        loading: "Adding work to collection...",
-                                        success: () => {
-                                          refetchFn()
-                                          return "Added work to collection!"
-                                        },
-                                        error: "Failed to add work to collection...",
-                                      }
-                                    )
+                              toast
+                                .promise(
+                                  createReferenceMutation({
+                                    doi: matchedQuery.slice(-1)[0].endsWith("/")
+                                      ? matchedQuery.slice(-1)[0].slice(0, -1)
+                                      : matchedQuery.slice(-1)[0],
+                                  }),
+                                  {
+                                    loading: "Searching...",
+                                    success: (data) => {
+                                      toast
+                                        .promise(
+                                          addWorkMutation({
+                                            collectionId: collection!.id,
+                                            editorId: editorIdSelf,
+                                            moduleId: data.id,
+                                          }),
+                                          {
+                                            loading: "Adding work to collection...",
+                                            success: () => {
+                                              refetchFn()
+                                              return "Added work to collection!"
+                                            },
+                                            error: "Failed to add work to collection...",
+                                          }
+                                        )
+                                        .catch(() => {})
 
-                                    refetchFn()
+                                      refetchFn()
 
-                                    return "Record added to database"
-                                  },
-                                  error: "Could not add record.",
-                                }
-                              )
+                                      return "Record added to database"
+                                    },
+                                    error: "Could not add record.",
+                                  }
+                                )
+                                .catch(() => {})
                             }}
                           >
                             Click here to add {matchedQuery.slice(-1)} to ResearchEquals database

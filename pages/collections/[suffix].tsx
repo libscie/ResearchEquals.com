@@ -270,16 +270,18 @@ const SocialActivity = ({ collection, refetchFn, isFollowing }) => {
           type="button"
           className="my-2 flex w-full rounded-md bg-indigo-50 py-2 px-4 align-middle text-sm font-medium text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-indigo-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
           onClick={() => {
-            toast.promise(followCollectionMutation({ followedId: collection!.id, follow: false }), {
-              loading: "Unfollowing",
-              success: () => {
-                refetchFn()
-                return "Unfollowed!"
-              },
-              error: (e) => {
-                return e.toString()
-              },
-            })
+            toast
+              .promise(followCollectionMutation({ followedId: collection!.id, follow: false }), {
+                loading: "Unfollowing",
+                success: () => {
+                  refetchFn()
+                  return "Unfollowed!"
+                },
+                error: (e) => {
+                  return e.toString()
+                },
+              })
+              .catch(() => {})
           }}
         >
           <span className="mx-auto flex">
@@ -296,16 +298,18 @@ const SocialActivity = ({ collection, refetchFn, isFollowing }) => {
           type="button"
           className="my-2 flex w-full rounded-md bg-indigo-50 py-2 px-4 align-middle text-sm font-medium text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-indigo-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
           onClick={() => {
-            toast.promise(followCollectionMutation({ followedId: collection!.id, follow: true }), {
-              loading: "Following",
-              success: () => {
-                refetchFn()
-                return "Followed!"
-              },
-              error: (e) => {
-                return e.toString()
-              },
-            })
+            toast
+              .promise(followCollectionMutation({ followedId: collection!.id, follow: true }), {
+                loading: "Following",
+                success: () => {
+                  refetchFn()
+                  return "Followed!"
+                },
+                error: (e) => {
+                  return e.toString()
+                },
+              })
+              .catch(() => {})
           }}
         >
           <span className="mx-auto flex">
@@ -426,40 +430,44 @@ const AddSubmmision = ({ collection, currentWorkspace, refetchFn }) => {
 
   const onConfirm = (params) => {
     const { item, setQuery } = params
-    toast.promise(
-      addSubmissionMutation({
-        collectionId: collection!.id,
-        workspaceId: currentWorkspace!.id,
-        moduleId: parseInt(item.objectID),
-      }),
-      {
-        loading: "Submitting work to collection...",
-        success: () => {
-          refetchFn()
-          return "Submitted work to collection!"
-        },
-        error: "Failed to add work to collection...",
-      }
-    )
+    toast
+      .promise(
+        addSubmissionMutation({
+          collectionId: collection!.id,
+          workspaceId: currentWorkspace!.id,
+          moduleId: parseInt(item.objectID),
+        }),
+        {
+          loading: "Submitting work to collection...",
+          success: () => {
+            refetchFn()
+            return "Submitted work to collection!"
+          },
+          error: "Failed to add work to collection...",
+        }
+      )
+      .catch(() => {})
   }
 
   const [selectedDoiWorkData, setSelectedDoiWorkData] = useState({} as any)
   const onDoiSubmitConfirm = (data) => {
-    toast.promise(
-      addSubmissionMutation({
-        collectionId: collection!.id,
-        workspaceId: currentWorkspace!.id,
-        moduleId: data.id,
-      }),
-      {
-        loading: "Submitting work to collection...",
-        success: () => {
-          refetchFn()
-          return "Submitted work to collection!"
-        },
-        error: "Failed to submit work to collection...",
-      }
-    )
+    toast
+      .promise(
+        addSubmissionMutation({
+          collectionId: collection!.id,
+          workspaceId: currentWorkspace!.id,
+          moduleId: data.id,
+        }),
+        {
+          loading: "Submitting work to collection...",
+          success: () => {
+            refetchFn()
+            return "Submitted work to collection!"
+          },
+          error: "Failed to submit work to collection...",
+        }
+      )
+      .catch(() => {})
   }
   return (
     <div className="mx-4 my-8 xl:mr-4 xl:ml-0">
@@ -515,24 +523,26 @@ const AddSubmmision = ({ collection, currentWorkspace, refetchFn }) => {
                             <button
                               className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200"
                               onClick={async () => {
-                                toast.promise(
-                                  createReferenceMutation({
-                                    doi: matchedQuery.slice(-1)[0].endsWith("/")
-                                      ? matchedQuery.slice(-1)[0].slice(0, -1)
-                                      : matchedQuery.slice(-1)[0],
-                                  }),
-                                  {
-                                    loading: "Searching...",
-                                    success: (data) => {
-                                      setSelectedWorkType("doi")
-                                      setSelectedDoiWorkData(data)
-                                      setIsConfirmationOpen(true)
+                                toast
+                                  .promise(
+                                    createReferenceMutation({
+                                      doi: matchedQuery.slice(-1)[0].endsWith("/")
+                                        ? matchedQuery.slice(-1)[0].slice(0, -1)
+                                        : matchedQuery.slice(-1)[0],
+                                    }),
+                                    {
+                                      loading: "Searching...",
+                                      success: (data) => {
+                                        setSelectedWorkType("doi")
+                                        setSelectedDoiWorkData(data)
+                                        setIsConfirmationOpen(true)
 
-                                      return "Record added to database"
-                                    },
-                                    error: "Could not add record.",
-                                  }
-                                )
+                                        return "Record added to database"
+                                      },
+                                      error: "Could not add record.",
+                                    }
+                                  )
+                                  .catch(() => {})
                               }}
                             >
                               Click here to add {matchedQuery.slice(-1)} to ResearchEquals database

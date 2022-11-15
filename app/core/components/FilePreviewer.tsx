@@ -22,6 +22,7 @@ const MainFileViewer = ({ mainFile, module }) => {
       fetch(mainFile.cdnUrl)
         .then((response) => response.text())
         .then((body) => setMarkdown(body))
+        .catch(() => {})
     }
   }, [])
   return (

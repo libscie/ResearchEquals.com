@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { useMutation } from "@blitzjs/rpc";
-import { Routes } from "@blitzjs/next";
+import Link from "next/link"
+import { useMutation } from "@blitzjs/rpc"
+import { Routes } from "@blitzjs/next"
 import { Fragment } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import { Checkmark, Close, TrashCan } from "@carbon/icons-react"
@@ -80,25 +80,27 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                           <button
                             className="px-2 hover:bg-gray-50 dark:hover:bg-gray-800"
                             onClick={async () => {
-                              toast.promise(
-                                deleteParentMutation({
-                                  currentId: moduleEdit.id,
-                                  disconnectId: module.id,
-                                }),
-                                {
-                                  loading: "Removing...",
-                                  success: (data) => {
-                                    setQueryData(data)
+                              toast
+                                .promise(
+                                  deleteParentMutation({
+                                    currentId: moduleEdit.id,
+                                    disconnectId: module.id,
+                                  }),
+                                  {
+                                    loading: "Removing...",
+                                    success: (data) => {
+                                      setQueryData(data)
 
-                                    if (data.parents.length === 0) {
-                                      setOpen(false)
-                                    }
+                                      if (data.parents.length === 0) {
+                                        setOpen(false)
+                                      }
 
-                                    return `Removed link to: "${module.title}"`
-                                  },
-                                  error: "That link is not going anywhere...",
-                                }
-                              )
+                                      return `Removed link to: "${module.title}"`
+                                    },
+                                    error: "That link is not going anywhere...",
+                                  }
+                                )
+                                .catch(() => {})
                             }}
                           >
                             <TrashCan
