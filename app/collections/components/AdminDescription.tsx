@@ -27,11 +27,7 @@ const Description = ({ collection, refetchFn, isAdmin }) => {
     initialValues: {
       description: collection.description,
     },
-    validate: validateZodSchema(
-      z.object({
-        description: z.string(),
-      })
-    ),
+    validate: validateZodSchema(z.string()),
     onSubmit: async (values) => {
       if (quill.root.innerHTML != collection.description) {
         toast
