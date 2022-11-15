@@ -73,7 +73,7 @@ const ModuleInvitation = ({
                   error: "Hmm that didn't work...",
                 }
               )
-              refetch()
+              refetch().catch(() => {})
               setModule(undefined)
             }}
           >
@@ -93,7 +93,7 @@ const ModuleInvitation = ({
                   error: "Hmm that didn't work...",
                 }
               )
-              refetch()
+              refetch().catch(() => {})
               setModule(undefined)
             }}
           >
@@ -140,7 +140,7 @@ const ModuleInvitation = ({
           </button>
         </div>
       </div>
-      <MetadataInvite module={moduleEdit} />
+      <MetadataInvite currentModule={moduleEdit} />
       <Xarrows
         start="moduleCurrent"
         end="modulePrevious"

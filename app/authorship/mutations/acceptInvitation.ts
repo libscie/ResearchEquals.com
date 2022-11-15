@@ -11,7 +11,7 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
     },
   })
 
-  const module = await db.module.findFirst({
+  const currentModule = await db.module.findFirst({
     where: {
       suffix,
     },
@@ -64,5 +64,5 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix }) => {
     },
   })
 
-  return module!
+  return currentModule!
 })

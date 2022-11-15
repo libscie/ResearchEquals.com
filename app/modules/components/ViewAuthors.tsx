@@ -9,7 +9,7 @@ import { Close } from "@carbon/icons-react"
 
 import getCurrentWorkspace from "../../workspaces/queries/getCurrentWorkspace"
 
-const ViewAuthors = ({ button, module }) => {
+const ViewAuthors = ({ button, currentModule }) => {
   const [viewAuthorsOpen, setViewAuthorsOpen] = useState(false)
   const [ownWorkspace, { refetch }] = useQuery(getCurrentWorkspace, null)
 
@@ -64,7 +64,7 @@ const ViewAuthors = ({ button, module }) => {
                     {/* Replace with your content */}
 
                     <ul className="relative flex-1 divide-y divide-gray-400 dark:divide-gray-600">
-                      {module.authors.map((author) => (
+                      {currentModule.authors.map((author) => (
                         <>
                           <li className="flex py-2 px-2">
                             <div className="mr-2 flex">
