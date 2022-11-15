@@ -14,6 +14,8 @@ function classNames(...classes) {
 }
 
 export default function PayCreateCollectionModal({ user, price, type, workspace }) {
+  const antiCSRFToken = getAntiCSRFToken()
+
   let [isOpen, setIsOpen] = useState(false)
   const [waiver, setWaiver] = useState(false)
   const [createIndividualCollectionMutation] = useMutation(createIndividualCollection)
@@ -132,6 +134,7 @@ export default function PayCreateCollectionModal({ user, price, type, workspace 
                         }
                         method="POST"
                       >
+                        <input type="hidden" name="anti-csrf" value={antiCSRFToken} />
                         <div className="mt-2">
                           <p className="text-base text-gray-500 dark:text-gray-300">
                             Once you create this collection, you cannot delete it.
