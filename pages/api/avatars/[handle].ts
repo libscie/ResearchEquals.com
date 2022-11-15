@@ -13,7 +13,7 @@ const handler: NextApiHandler = async (req, res) => {
   })
 
   const mimetype = !author?.avatar!.match(/ucarecdn/g) ? "image/svg+xml" : "image"
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     https
       .get(author?.avatar!, (response) => {
         var data = [] as any
@@ -39,4 +39,4 @@ const handler: NextApiHandler = async (req, res) => {
   })
 }
 
-export default api(handler);
+export default api(handler)

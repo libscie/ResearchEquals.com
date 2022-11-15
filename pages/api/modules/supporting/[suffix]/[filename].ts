@@ -15,7 +15,7 @@ const handler: NextApiHandler = async (req, res) => {
 
   const files = currentModule?.supporting as Prisma.JsonArray
 
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     files["files"].filter((file) => {
       if (file.original_filename === filename) {
         https

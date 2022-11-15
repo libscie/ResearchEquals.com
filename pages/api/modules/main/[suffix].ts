@@ -11,7 +11,7 @@ const handler: NextApiHandler = async (req, res) => {
   const currentModule = await db.module.findFirst({
     where: { suffix: suffix?.toString(), published: true },
   })
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     https
       .get(currentModule?.main!["cdnUrl"], (response) => {
         var data = [] as any

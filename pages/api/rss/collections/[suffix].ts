@@ -53,7 +53,7 @@ const rssFeedCollection: NextApiHandler = async (req, res) => {
     })
   })
 
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     res.statusCode = 200
     res.setHeader("Content-Type", "application/rss+xml")
     res.end(feed.rss2().toString())
