@@ -34,6 +34,7 @@ import approveAuthorship from "app/authorship/mutations/approveAuthorship"
 import SettingsModal from "../../core/modals/settings"
 import { Module, User, Workspace } from "@prisma/client"
 import { UseCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
+import { validateZodSchema } from "blitz"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
