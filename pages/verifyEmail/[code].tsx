@@ -18,7 +18,7 @@ const VerifyMail: BlitzPage = () => {
       return
     }
 
-    Router.prefetch("/dashboard")
+    router.prefetch("/dashboard").catch(() => {})
 
     verifyEmail({ code, userId })
       .then((success) => {
