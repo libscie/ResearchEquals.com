@@ -7,7 +7,7 @@ import { validateZodSchema } from "blitz"
 import changeCollectionTitle from "../mutations/changeCollectionTitle"
 
 const AdminTitle = ({ collection, refetchFn, isAdmin }) => {
-  const [changeTitleMutation] = useMutation(changeTitle)
+  const [changeTitleMutation] = useMutation(changeCollectionTitle)
 
   const formik = useFormik({
     initialValues: {
