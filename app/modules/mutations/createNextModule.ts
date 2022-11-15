@@ -1,4 +1,4 @@
-import { resolver } from "@blitzjs/rpc";
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import generateSuffix from "./generateSuffix"
 
@@ -13,7 +13,7 @@ export default resolver.pipe(
       },
     ]
 
-    const module = await db.module.create({
+    const currentModule = await db.module.create({
       data: {
         prefix: process.env.DOI_PREFIX,
         suffix: await generateSuffix(undefined),
@@ -36,6 +36,6 @@ export default resolver.pipe(
       },
     })
 
-    return module.suffix
+    return currentModule.suffix
   }
 )

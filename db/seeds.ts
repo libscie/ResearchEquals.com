@@ -532,11 +532,11 @@ const seed = async () => {
 
     let datetime
     let suffix
-    let module
+    let currentModule
     for (let index = 0; index < 10; index++) {
       datetime = Date.now()
       suffix = await generateSuffix(undefined)
-      module = await db.module.create({
+      currentModule = await db.module.create({
         data: {
           prefix: "10.53962",
           suffix: await generateSuffix(undefined),
@@ -605,14 +605,14 @@ const seed = async () => {
       })
       await modIndex.saveObject({
         objectID: module.id,
-        doi: `${process.env.DOI_PREFIX}/${module.suffix}`,
-        suffix: module.suffix,
-        license: module.license?.url,
-        type: module.type.name,
+        doi: `${process.env.DOI_PREFIX}/${currentModule.suffix}`,
+        suffix: currentModule.suffix,
+        license: currentModule.license?.url,
+        type: currentModule.type.name,
         // It's called name and not title to improve Algolia search
-        name: module.title,
-        description: module.description,
-        publishedAt: module.publishedAt,
+        name: currentModule.title,
+        description: currentModule.description,
+        publishedAt: currentModule.publishedAt,
       })
     }
   }

@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useMutation } from "@blitzjs/rpc";
+import Link from "next/link"
+import { useRouter } from "next/router"
+import { useMutation } from "@blitzjs/rpc"
 import { Fragment, useState } from "react"
 import { Dialog, Switch, Transition } from "@headlessui/react"
 import { CheckmarkOutline } from "@carbon/icons-react"
@@ -19,11 +19,11 @@ function classNames(...classes) {
 type ModuleEdit = NonNullable<Prisma.PromiseReturnType<typeof useCurrentModule>>
 
 export default function PublishModule({
-  module,
+  currentModule,
   user,
   workspace,
 }: {
-  module: ModuleEdit
+  currentModule: ModuleEdit
   user: Prisma.UserGetPayload<true>
   workspace: UseCurrentWorkspace
 }) {
@@ -59,7 +59,8 @@ export default function PublishModule({
         <div className="ml-3 flex-grow text-emerald-800 dark:text-emerald-100">
           <h3 className="inline-block align-middle text-sm font-normal leading-4 text-emerald-800 dark:text-emerald-100">
             This module is ready for publication. Would you like to{" "}
-            {module?.license?.price && module.license.price > 0 ? "pay and" : ""} publish it now?
+            {currentModule?.license?.price && currentModule.license.price > 0 ? "pay and" : ""}{" "}
+            publish it now?
           </h3>
         </div>
         <div className="">
@@ -104,7 +105,7 @@ export default function PublishModule({
                 <Dialog.Title as="h3" className="text-lg font-medium leading-6">
                   Confirm publication
                 </Dialog.Title>
-                {!module.license || module.license.price === 0 ? (
+                {!currentModule.license || currentModule.license.price === 0 ? (
                   <>
                     <div className="mt-2">
                       <p className="text-base text-gray-500 dark:text-gray-300">
@@ -223,9 +224,11 @@ export default function PublishModule({
                         <form
                           action={`/api/checkout_sessions?email=${encodeURIComponent(
                             user.email
-                          )}&prod_id=${module.license!.prod_id}&price_data=${payWhat}&suffix=${
-                            module.suffix
-                          }&module_id=${module.id}`}
+                          )}&prod_id=${
+                            currentModule.license!.prod_id
+                          }&price_data=${payWhat}&suffix=${currentModule.suffix}&module_id=${
+                            currentModule.id
+                          }`}
                           method="POST"
                         >
                           <div className="mt-4">
@@ -254,12 +257,12 @@ export default function PublishModule({
                             data-splitbee-event={`Publish module`}
                             className="mr-2 inline-flex justify-center rounded-md bg-emerald-50 py-2 px-4 text-sm font-medium text-emerald-700 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-emerald-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                             onClick={async () => {
-                              await toast.promise(publishModuleMutation({ id: module.id }), {
+                              await toast.promise(publishModuleMutation({ id: currentModule.id }), {
                                 loading: "Publishing...",
                                 success: "Published!",
                                 error: "Uh-oh something went wrong.",
                               })
-                              router.push(`/modules/${module.suffix}`)
+                              router.push(`/modules/${currentModule.suffix}`).catch(() => {})
                             }}
                           >
                             Publish
@@ -280,16 +283,16 @@ export default function PublishModule({
                     <form
                       action={`/api/checkout_sessions?email=${encodeURIComponent(
                         user?.email
-                      )}&price_id=${module?.license?.price_id}&suffix=${module?.suffix}&module_id=${
-                        module?.id
-                      }`}
+                      )}&price_id=${currentModule?.license?.price_id}&suffix=${
+                        currentModule?.suffix
+                      }&module_id=${module?.id}`}
                       method="POST"
                     >
                       <div className="mt-2">
                         <p className="text-base text-gray-500 dark:text-gray-300">
                           Once you publish this module, you cannot delete it. Because you chose a{" "}
-                          {module.license.name} license, publishing costs{" "}
-                          {module.license.price / 100} euro (incl. VAT).
+                          {currentModule.license.name} license, publishing costs{" "}
+                          {currentModule.license.price / 100} euro (incl. VAT).
                         </p>
                       </div>
                       <div className="my-4 flex">

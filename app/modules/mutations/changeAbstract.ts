@@ -1,8 +1,8 @@
-import { resolver } from "@blitzjs/rpc";
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 
 export default resolver.pipe(resolver.authorize(), async ({ id, description }) => {
-  const module = await db.module.update({
+  const currentModule = await db.module.update({
     where: { id },
     data: { description },
   })
@@ -10,7 +10,7 @@ export default resolver.pipe(resolver.authorize(), async ({ id, description }) =
   // Force all authors to reapprove for publishing
   await db.authorship.updateMany({
     where: {
-      moduleId: module.id,
+      moduleId: currentModule.id,
     },
     data: {
       readyToPublish: false,

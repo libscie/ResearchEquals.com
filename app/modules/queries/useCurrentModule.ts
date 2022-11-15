@@ -1,7 +1,7 @@
 import db from "db"
 
 export default async function getCurrentWorkspace({ suffix }: { suffix: string }) {
-  const module = await db.module.findFirst({
+  const currentModule = await db.module.findFirst({
     where: { suffix },
     include: {
       references: {
@@ -55,5 +55,5 @@ export default async function getCurrentWorkspace({ suffix }: { suffix: string }
     },
   })
 
-  return module
+  return currentModule
 }

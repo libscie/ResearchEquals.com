@@ -1,4 +1,4 @@
-import { resolver } from "@blitzjs/rpc";
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import axios from "axios"
 import algoliasearch from "algoliasearch"
@@ -28,7 +28,7 @@ export default resolver.pipe(resolver.authorize(), async ({ doi }: Input, ctx) =
       licenseUrl = filter && filter.length > 0 ? filter[0].URL : undefined
     }
 
-    const module = await db.module.create({
+    const currentModule = await db.module.create({
       data: {
         published: true,
         publishedAt: new Date(
@@ -75,25 +75,25 @@ export default resolver.pipe(resolver.authorize(), async ({ doi }: Input, ctx) =
       },
     })
     await index.saveObject({
-      objectID: module.id,
-      doi: `${module.prefix}/${module.suffix}`,
-      suffix: module.suffix,
-      license: module.license?.url,
-      type: module.type.name,
+      objectID: currentModule.id,
+      doi: `${currentModule.prefix}/${currentModule.suffix}`,
+      suffix: currentModule.suffix,
+      license: currentModule.license?.url,
+      type: currentModule.type.name,
       // It's called name and not title to improve Algolia search
-      name: module.title,
-      description: module.description,
-      publishedAt: module.publishedAt,
-      displayColor: module.displayColor,
+      name: currentModule.title,
+      description: currentModule.description,
+      publishedAt: currentModule.publishedAt,
+      displayColor: currentModule.displayColor,
     })
 
-    return module
+    return currentModule
   } catch (error) {
     if (error?.response?.status === 404) {
       try {
         const cr = await axios.get(`https://api.datacite.org/dois/${doi}`)
         const metadata = cr.data
-        const module = await db.module.create({
+        const currentModule = await db.module.create({
           data: {
             published: true,
             publishedAt: new Date(
@@ -149,18 +149,18 @@ export default resolver.pipe(resolver.authorize(), async ({ doi }: Input, ctx) =
           },
         })
         await index.saveObject({
-          objectID: module.id,
-          doi: `${module.prefix}/${module.suffix}`,
-          suffix: module.suffix,
-          license: module.license?.url,
-          type: module.type.name,
+          objectID: currentModule.id,
+          doi: `${currentModule.prefix}/${currentModule.suffix}`,
+          suffix: currentModule.suffix,
+          license: currentModule.license?.url,
+          type: currentModule.type.name,
           // It's called name and not title to improve Algolia search
-          name: module.title,
-          description: module.description,
-          publishedAt: module.publishedAt,
-          displayColor: module.displayColor,
+          name: currentModule.title,
+          description: currentModule.description,
+          publishedAt: currentModule.publishedAt,
+          displayColor: currentModule.displayColor,
         })
-        return module
+        return currentModule
       } catch (error) {
         if (error?.response?.status === 404)
           throw new Error("Cannot find the reference in CrossRef or DataCite")

@@ -1,4 +1,4 @@
-import { resolver } from "@blitzjs/rpc";
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 
 export default resolver.pipe(resolver.authorize(), async ({ id, rank, suffix }) => {
@@ -11,7 +11,7 @@ export default resolver.pipe(resolver.authorize(), async ({ id, rank, suffix }) 
     },
   })
 
-  const module = await db.module.findFirst({
+  const currentModule = await db.module.findFirst({
     where: {
       suffix,
     },
@@ -64,5 +64,5 @@ export default resolver.pipe(resolver.authorize(), async ({ id, rank, suffix }) 
     },
   })
 
-  return module
+  return currentModule
 })

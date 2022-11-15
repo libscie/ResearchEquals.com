@@ -4,7 +4,7 @@ import db from "db"
 export default resolver.pipe(
   resolver.authorize(),
   async ({ id, typeId, title, description, licenseId, displayColor, language }) => {
-    const module = await db.module.update({
+    const currentModule = await db.module.update({
       where: { id },
       data: {
         type: {
@@ -27,7 +27,7 @@ export default resolver.pipe(
     // Force all authors to reapprove for publishing
     await db.authorship.updateMany({
       where: {
-        moduleId: module.id,
+        moduleId: currentModule.id,
       },
       data: {
         readyToPublish: false,

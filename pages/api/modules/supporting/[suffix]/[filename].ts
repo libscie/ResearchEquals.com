@@ -1,5 +1,5 @@
-import { api } from "app/blitz-server";
-import { NextApiHandler } from "next";
+import { api } from "app/blitz-server"
+import { NextApiHandler } from "next"
 import { PrismaClient, Prisma } from "@prisma/client"
 import db from "db"
 import https from "https"
@@ -9,11 +9,11 @@ const handler: NextApiHandler = async (req, res) => {
     query: { suffix, filename },
   } = req
 
-  const module = await db.module.findFirst({
+  const currentModule = await db.module.findFirst({
     where: { suffix: suffix?.toString(), published: true },
   })
 
-  const files = module?.supporting as Prisma.JsonArray
+  const files = currentModule?.supporting as Prisma.JsonArray
 
   return new Promise((resolve, reject) => {
     files["files"].filter((file) => {
@@ -47,4 +47,4 @@ const handler: NextApiHandler = async (req, res) => {
   })
 }
 
-export default api(handler);
+export default api(handler)
