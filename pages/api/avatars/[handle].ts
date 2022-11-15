@@ -1,5 +1,5 @@
-import { api } from "app/blitz-server";
-import { NextApiHandler } from "next";
+import { api } from "app/blitz-server"
+import { NextApiHandler } from "next"
 import db from "db"
 import https from "https"
 

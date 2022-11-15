@@ -1,6 +1,6 @@
 import { resolver } from "@blitzjs/rpc"
 import db from "db"
-import { Ctx } from "blitz"
+import { Ctx, NotFoundError } from "blitz"
 
 export default resolver.pipe(
   resolver.authorize(),

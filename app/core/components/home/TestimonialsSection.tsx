@@ -2,6 +2,7 @@ import React from "react"
 import cx from "classnames"
 import Container from "./Container"
 import TestimonialCard from "./TestimonialCard"
+import { StaticImageData } from "next/image"
 
 const TESTIMONIALS_DATA: {
   name: string

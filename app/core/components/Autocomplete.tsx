@@ -1,7 +1,6 @@
 import { autocomplete } from "@algolia/autocomplete-js"
 import React, { createElement, Fragment, useEffect, useRef } from "react"
-import { createRoot } from "react-dom/client"
-import type { Root } from "react-dom"
+import { createRoot, Root } from "react-dom/client"
 
 function Autocomplete(props) {
   const containerRef = useRef<HTMLDivElement | null>(null)

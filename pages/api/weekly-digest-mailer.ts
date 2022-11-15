@@ -1,6 +1,6 @@
 import db from "db"
 import { CronJob } from "quirrel/blitz"
-import { sendDigest } from "../postmark"
+import { sendDigest } from "app/postmark"
 
 // https://stackoverflow.com/questions/6117814/get-week-of-year-in-javascript-like-in-php
 function getWeekNumber(d) {

@@ -1,8 +1,8 @@
-import { resolver } from "@blitzjs/rpc";
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import { z } from "zod"
 import { Ctx } from "blitz"
-import CollectionPage from "app/pages/collections/[suffix]"
+import CollectionPage from "pages/collections/[suffix]"
 
 const FollowCollection = z.object({
   followedId: z.number(),

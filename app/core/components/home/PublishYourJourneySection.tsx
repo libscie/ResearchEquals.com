@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image"
 import React from "react"
 import cx from "classnames"
 import Container, { ContainerProps } from "./Container"

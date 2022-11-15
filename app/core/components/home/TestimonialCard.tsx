@@ -1,5 +1,5 @@
-import Link from "next/link";
-import Image from "next/image";
+import Link from "next/link"
+import Image, { StaticImageData } from "next/image"
 import React, { HTMLAttributes } from "react"
 import cx from "classnames"
 import NotchedCard from "./NotchedCard"

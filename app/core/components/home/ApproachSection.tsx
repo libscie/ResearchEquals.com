@@ -1,5 +1,5 @@
-import Link from "next/link";
-import Image from "next/image";
+import Link from "next/link"
+import Image, { StaticImageData } from "next/image"
 import cx from "classnames"
 import type { HTMLAttributes, ReactChild, ReactNode } from "react"
 import { Close, Checkmark } from "@carbon/icons-react"
