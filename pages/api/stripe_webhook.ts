@@ -129,7 +129,7 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
 
           await submitToCrossRef({
             xmlData: moduleXml({
-              module,
+              currentModule,
               licenseUrl,
               resolveUrl,
             }),
