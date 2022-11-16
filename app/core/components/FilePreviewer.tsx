@@ -10,6 +10,7 @@ import remarkMath from "remark-math"
 import rehypeKatex from "rehype-katex"
 import "katex/dist/katex.min.css" // `rehype-katex` does not import the CSS for you
 import { useEffect, useState } from "react"
+import { Image } from "blitz"
 
 const PDFJS_DIST_VERSION = process.env.PDFJS_DIST_VERSION
 
@@ -31,10 +32,12 @@ const MainFileViewer = ({ mainFile, module }) => {
         <>
           {/* Preview image */}
           {mainFile.isImage && (
-            <img
-              alt="An image of the main file"
+            <Image
+              alt="The main image for the module"
               src={mainFile.cdnUrl}
               className="mx-auto my-2 h-auto w-full"
+              width={mainFile?.originalImageInfo?.width || 300}
+              height={mainFile?.originalImageInfo?.height || 300}
             />
           )}
           {/* Preview PDF */}

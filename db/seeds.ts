@@ -536,6 +536,7 @@ const seed = async () => {
     for (let index = 0; index < 10; index++) {
       datetime = Date.now()
       suffix = await generateSuffix(undefined)
+      const catImage = `https://ucarecdn.com/fea4c143-6382-467d-a500-23826acbb1e4/`
       currentModule = await db.module.create({
         data: {
           prefix: "10.53962",
@@ -550,12 +551,12 @@ const seed = async () => {
             name: faker.system.fileName(),
             size: 603268,
             uuid: faker.datatype.uuid(),
-            cdnUrl: faker.image.cats(),
+            cdnUrl: catImage,
             isImage: true,
             isStored: true,
             mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             sourceInfo: { file: {}, source: "local" },
-            originalUrl: faker.image.cats(),
+            originalUrl: catImage,
             cdnUrlModifiers: null,
             originalImageInfo: null,
           },
