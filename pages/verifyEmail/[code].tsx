@@ -5,6 +5,7 @@ import verifyEmailMutation from "app/auth/mutations/verify-email"
 import { useEffect, useState } from "react"
 import Layout from "app/core/layouts/Layout"
 import { useSession } from "@blitzjs/auth"
+import LayoutLoader from "app/core/components/LayoutLoader"
 
 const VerifyMail: BlitzPage = () => {
   const code = useParam("code", "string")
@@ -60,5 +61,11 @@ const VerifyMail: BlitzPage = () => {
     </div>
   )
 }
+
+VerifyMail.getLayout = (page) => (
+  <Layout>
+    <LayoutLoader>{page}</LayoutLoader>
+  </Layout>
+)
 
 export default VerifyMail
