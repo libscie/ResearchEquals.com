@@ -10,7 +10,7 @@ import remarkMath from "remark-math"
 import rehypeKatex from "rehype-katex"
 import "katex/dist/katex.min.css" // `rehype-katex` does not import the CSS for you
 import { useEffect, useState } from "react"
-import { Image } from "blitz"
+import Image from "next/image"
 
 const PDFJS_DIST_VERSION = process.env.PDFJS_DIST_VERSION
 
