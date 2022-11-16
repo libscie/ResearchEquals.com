@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { Routes } from "@blitzjs/next";
+import Link from "next/link"
+import { Routes } from "@blitzjs/next"
 import { Fragment } from "react"
 
 const AuthorAvatarsNew = ({ authors, size, toDisplay }) => {

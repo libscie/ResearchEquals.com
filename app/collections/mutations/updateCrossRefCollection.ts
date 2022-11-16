@@ -1,4 +1,4 @@
-import { resolver } from "@blitzjs/rpc";
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import { isURI } from "../../core/crossref/ai_program"
 import submitToCrossRef from "app/core/utils/submitToCrossRef"

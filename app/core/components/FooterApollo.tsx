@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "next/link"
 import React from "react"
 import Container from "./home/Container"
 import ResearchEqualsLogoType from "./ResearchEqualsLogoType"

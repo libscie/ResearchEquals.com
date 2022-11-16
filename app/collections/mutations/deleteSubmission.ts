@@ -1,5 +1,5 @@
-import { resolver } from "@blitzjs/rpc";
-import { addMinutes } from "blitz";
+import { resolver } from "@blitzjs/rpc"
+import { addMinutes } from "blitz"
 import db, { MembershipRole } from "db"
 
 export default resolver.pipe(

@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { Routes } from "@blitzjs/next";
+import Link from "next/link"
+import { Routes } from "@blitzjs/next"
 import FollowButton from "app/workspaces/components/FollowButton"
 import UnfollowButton from "app/workspaces/components/UnfollowButton"
 

@@ -1,4 +1,4 @@
-import { resolver } from "@blitzjs/rpc";
+import { resolver } from "@blitzjs/rpc"
 import db, { Prisma } from "db"
 import { Ctx } from "blitz"
 

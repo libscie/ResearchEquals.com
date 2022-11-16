@@ -1,4 +1,4 @@
-import { invoke, useMutation } from "@blitzjs/rpc";
+import { invoke, useMutation } from "@blitzjs/rpc"
 import { Widget } from "@uploadcare/react-widget"
 import { useRef } from "react"
 import toast from "react-hot-toast"

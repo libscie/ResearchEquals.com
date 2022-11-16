@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { useMutation } from "@blitzjs/rpc";
-import { Routes } from "@blitzjs/next";
+import Link from "next/link"
+import { useMutation } from "@blitzjs/rpc"
+import { Routes } from "@blitzjs/next"
 import { Fragment, useState } from "react"
 import { Transition, Dialog } from "@headlessui/react"
 import { Add, Close, Menu } from "@carbon/icons-react"

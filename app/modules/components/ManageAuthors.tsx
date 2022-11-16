@@ -1,4 +1,4 @@
-import { useMutation } from "@blitzjs/rpc";
+import { useMutation } from "@blitzjs/rpc"
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import { Checkmark, Close } from "@carbon/icons-react"

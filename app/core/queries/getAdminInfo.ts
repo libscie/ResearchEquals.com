@@ -1,5 +1,5 @@
-import { resolver } from "@blitzjs/rpc";
-import { Ctx } from "blitz";
+import { resolver } from "@blitzjs/rpc"
+import { Ctx } from "blitz"
 import db from "db"
 import * as z from "zod"
 

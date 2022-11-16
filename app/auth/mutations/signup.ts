@@ -1,5 +1,5 @@
-import { SecurePassword } from "@blitzjs/auth";
-import { resolver } from "@blitzjs/rpc";
+import { SecurePassword } from "@blitzjs/auth"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import { Signup } from "app/auth/validations"
 import { sendEmailWithTemplate } from "app/postmark"

@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { useMutation } from "@blitzjs/rpc";
-import { Routes } from "@blitzjs/next";
+import Link from "next/link"
+import { useMutation } from "@blitzjs/rpc"
+import { Routes } from "@blitzjs/next"
 import { Menu, Popover, Transition } from "@headlessui/react"
 import { Fragment } from "react"
 import {

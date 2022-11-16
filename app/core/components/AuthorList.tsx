@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { useSession } from "@blitzjs/auth";
-import { Routes } from "@blitzjs/next";
+import Link from "next/link"
+import { useSession } from "@blitzjs/auth"
+import { Routes } from "@blitzjs/next"
 import React from "react"
 import { ChevronUp, ChevronDown, Checkmark, Subtract } from "@carbon/icons-react"
 

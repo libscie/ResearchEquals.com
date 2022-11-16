@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { Routes } from "@blitzjs/next";
+import Link from "next/link"
+import { Routes } from "@blitzjs/next"
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import moment from "moment"

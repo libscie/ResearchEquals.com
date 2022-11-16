@@ -1,5 +1,5 @@
-import { SecurePassword, hash256 } from "@blitzjs/auth";
-import { resolver } from "@blitzjs/rpc";
+import { SecurePassword, hash256 } from "@blitzjs/auth"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import { ResetPassword } from "../validations"
 import login from "./login"

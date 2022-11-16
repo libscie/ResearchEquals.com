@@ -1,6 +1,6 @@
-import Link from "next/link";
-import Image from "next/image";
-import { Routes } from "@blitzjs/next";
+import Link from "next/link"
+import Image from "next/image"
+import { Routes } from "@blitzjs/next"
 import React from "react"
 import { ArrowRight } from "@carbon/icons-react"
 import Container from "./Container"
