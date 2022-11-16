@@ -2,7 +2,7 @@ import { Viewer, Worker } from "@react-pdf-viewer/core"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
-import { a11yLight, a11yDark } from "react-syntax-highlighter/dist/cjs/styles/prism"
+import { prism, a11yDark } from "react-syntax-highlighter/dist/cjs/styles/prism"
 import { useMediaPredicate } from "react-media-hook"
 
 import "@react-pdf-viewer/core/lib/styles/index.css"
@@ -62,7 +62,7 @@ const MainFileViewer = ({ mainFile, module }) => {
                     const match = /language-(\w+)/.exec(className || "")
                     return !inline && match ? (
                       <SyntaxHighlighter
-                        style={prefersDarkMode ? a11yDark : a11yLight}
+                        style={prefersDarkMode ? a11yDark : prism}
                         language={match[1]}
                         PreTag="div"
                         class="coc"
