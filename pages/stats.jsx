@@ -1,8 +1,8 @@
-import Link from "next/link";
-import { Routes } from "@blitzjs/next";
-import { useSession } from "@blitzjs/auth";
-import { useRouter } from "next/router";
-import { useInfiniteQuery, useQuery } from "@blitzjs/rpc";
+import Link from "next/link"
+import { Routes } from "@blitzjs/next"
+import { useSession } from "@blitzjs/auth"
+import { useRouter } from "next/router"
+import { useInfiniteQuery, useQuery } from "@blitzjs/rpc"
 import Navbar from "app/core/components/Navbar"
 import Layout from "app/core/layouts/Layout"
 import getBrowseGraphData from "app/core/queries/getBrowseGraphData"
@@ -24,15 +24,15 @@ import {
   PolarRadiusAxis,
 } from "recharts"
 
-import getBrowseData from "../core/queries/getBrowseData"
-import LayoutLoader from "../core/components/LayoutLoader"
+import getBrowseData from "app/core/queries/getBrowseData"
+import LayoutLoader from "app/core/components/LayoutLoader"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import getDrafts from "app/core/queries/getDrafts"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 import ModuleBoxFeed from "app/core/components/ModuleBoxFeed"
-import getBrowseWorkspaceData from "../core/queries/getBrowseWorkspaceData"
-import getBrowseWorkspaceGraphData from "../core/queries/getBrowseWorkspaceGraphData"
+import getBrowseWorkspaceData from "app/core/queries/getBrowseWorkspaceData"
+import getBrowseWorkspaceGraphData from "app/core/queries/getBrowseWorkspaceGraphData"
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
