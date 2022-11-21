@@ -10,6 +10,8 @@ updates:
     schedule:
       interval: "weekly"
       day: "wednesday"
+      time: "00:00"
+      timezone: "Europe/Berlin"
     labels:
       - "Maintenance"
     open-pull-requests-limit: 999
