@@ -32,7 +32,6 @@ const HeaderImage = ({ collection, refetchFn, signature, expire }) => {
             previewStep
             clearable
             onChange={async (info) => {
-              console.log(JSON.stringify(info))
               toast
                 .promise(
                   changeHeaderMutation({
