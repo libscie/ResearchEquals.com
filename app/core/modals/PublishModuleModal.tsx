@@ -134,7 +134,7 @@ export default function PublishModule({
                           Pay what you want price
                         </label>
                         <span className="my-2 flex text-sm text-gray-500 dark:text-gray-200">
-                          I want to support Researchequals with
+                          I want to support ResearchEquals with
                           <p className="flex">
                             <span className="inline-block h-full align-middle"></span>
                             <p className="my-auto mx-1 inline-block align-middle text-base">
