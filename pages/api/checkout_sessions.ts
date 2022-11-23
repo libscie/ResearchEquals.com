@@ -49,7 +49,7 @@ const CreateSessionModule = async (req: NextApiRequest, res: NextApiResponse) =>
             enabled: true,
           },
         })
-        res.redirect(303, session.url)
+        res.status(200).json({ url: session.url })
       } catch (err) {
         res.status(err.statusCode || 500).json(err.message)
       }
@@ -90,7 +90,7 @@ const CreateSessionModule = async (req: NextApiRequest, res: NextApiResponse) =>
             enabled: true,
           },
         })
-        res.redirect(303, session.url)
+        res.status(200).json({ url: session.url })
       } catch (err) {
         res.status(err.statusCode || 500).json(err.message)
       }

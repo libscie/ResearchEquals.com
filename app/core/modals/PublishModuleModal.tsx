@@ -11,6 +11,8 @@ import useCurrentModule from "../../modules/queries/useCurrentModule"
 import toast from "react-hot-toast"
 import type { Prisma, User } from "@prisma/client"
 import { UseCurrentWorkspace } from "../hooks/useCurrentWorkspace"
+import { getAntiCSRFToken } from "@blitzjs/auth"
+import handlePayment from "../utils/handlePayment"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -45,6 +47,8 @@ export default function PublishModule({
   function openModal() {
     setIsOpen(true)
   }
+
+  const antiCSRFToken = getAntiCSRFToken()
 
   return (
     <>
@@ -221,19 +225,24 @@ export default function PublishModule({
                         </p>
                       </div>
                       {payWhat > 0 ? (
-                        <form
-                          action={`/api/checkout_sessions?email=${encodeURIComponent(
-                            user.email
-                          )}&prod_id=${
-                            currentModule.license!.prod_id
-                          }&price_data=${payWhat}&suffix=${currentModule.suffix}&module_id=${
-                            currentModule.id
-                          }`}
-                          method="POST"
-                        >
+                        <form>
                           <div className="mt-4">
                             <button
-                              type="submit"
+                              type="button"
+                              onClick={() =>
+                                handlePayment(
+                                  `/api/checkout_sessions?email=${encodeURIComponent(
+                                    user.email
+                                  )}&prod_id=${
+                                    currentModule.license!.prod_id
+                                  }&price_data=${payWhat}&suffix=${
+                                    currentModule.suffix
+                                  }&module_id=${currentModule.id}`,
+                                  router,
+                                  toast,
+                                  antiCSRFToken
+                                )
+                              }
                               role="link"
                               data-splitbee-event={`Publish module`}
                               className="mr-2 inline-flex justify-center rounded-md bg-emerald-50 py-2 px-4 text-sm font-medium text-emerald-700 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-emerald-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
@@ -280,14 +289,7 @@ export default function PublishModule({
                   </>
                 ) : (
                   <>
-                    <form
-                      action={`/api/checkout_sessions?email=${encodeURIComponent(
-                        user?.email
-                      )}&price_id=${currentModule?.license?.price_id}&suffix=${
-                        currentModule?.suffix
-                      }&module_id=${module?.id}`}
-                      method="POST"
-                    >
+                    <form>
                       <div className="mt-2">
                         <p className="text-base text-gray-500 dark:text-gray-300">
                           Once you publish this module, you cannot delete it. Because you chose a{" "}
@@ -354,7 +356,19 @@ export default function PublishModule({
                       </div>
                       <div className="mt-4">
                         <button
-                          type="submit"
+                          type="button"
+                          onClick={() =>
+                            handlePayment(
+                              `/api/checkout_sessions?email=${encodeURIComponent(
+                                user?.email
+                              )}&price_id=${currentModule?.license?.price_id}&suffix=${
+                                currentModule?.suffix
+                              }&module_id=${currentModule?.id}`,
+                              router,
+                              toast,
+                              antiCSRFToken
+                            )
+                          }
                           role="link"
                           data-splitbee-event={`Publish module`}
                           className="mr-2 inline-flex justify-center rounded-md bg-emerald-50 py-2 px-4 text-sm font-medium text-emerald-700 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-emerald-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
