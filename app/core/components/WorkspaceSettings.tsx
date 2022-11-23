@@ -89,7 +89,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
                 {
                   loading: "Saving...",
                   success: "Updated first name",
-                  error: "Hmm that didn't work first name...",
+                  error: "Hmm that first name didn't work...",
                 }
               )
               .catch(() => {})
