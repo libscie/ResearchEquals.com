@@ -3,7 +3,7 @@ import { setupBlitzClient } from "@blitzjs/next"
 import { BlitzRpcPlugin } from "@blitzjs/rpc"
 
 export const authConfig = {
-  cookiePrefix: "web-app-tbd",
+  cookiePrefix: "researchequals",
 }
 
 export const { withBlitz } = setupBlitzClient({
