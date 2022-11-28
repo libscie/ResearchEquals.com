@@ -41,7 +41,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
       })
     ),
     onSubmit: async (values) => {
-      toast
+      await toast
         .promise(
           createModuleMutation({
             title: values.title,
@@ -54,19 +54,18 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
           }),
           {
             loading: "Creating draft...",
-            success: (data) => {
-              refetchFn()
-              setCreateOpen(false)
-              formikReset()
-              router.push(`/drafts?suffix=${data}`).catch(() => {})
-              return "Created!"
-            },
+            success: "Created!",
             error: (error) => {
               return error
             },
           }
         )
-        .catch(() => {})
+        .then(async (data) => {
+          refetchFn()
+          setCreateOpen(false)
+          formikReset()
+          await router.push(`/drafts?suffix=${data}`)
+        })
       // try {
       //   await createModuleMutation({
       //     title: values.title,
