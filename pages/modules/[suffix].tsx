@@ -218,7 +218,7 @@ const Module = ({ currentModule, mainFile, supportingRaw }) => {
         )}
         <button
           onClick={async () => {
-            toast
+            await toast
               .promise(
                 createNextModuleMutation({
                   title: currentModule.title,
@@ -229,27 +229,23 @@ const Module = ({ currentModule, mainFile, supportingRaw }) => {
                 }),
                 {
                   loading: "Creating draft...",
-                  success: (data) => {
-                    refetch()
-                      .then(() => {
-                        router.push(`/drafts?suffix=${data}`).catch(() => {})
-                      })
-                      .catch(() => {})
-
-                    return (
-                      <>
-                        Next step created.
-                        <Link href={`/drafts?suffix=${data}`}>
-                          <a className="ml-1 underline">View draft.</a>
-                        </Link>
-                      </>
-                    )
-                  },
+                  success: (data) => (
+                    <>
+                      Next step created.
+                      <Link href={`/drafts?suffix=${data}`}>
+                        <a className="ml-1 underline">View draft.</a>
+                      </Link>
+                    </>
+                  ),
                   error: "Sign up to do this",
                 },
                 { duration: 10000 }
               )
-              .catch(() => {})
+              .then(async (data) => {
+                await refetch().then(async () => {
+                  await router.push(`/drafts?suffix=${data}`)
+                })
+              })
           }}
           className={`${(previousOpen || leadsToOpen) && !biggerWindow ? "hidden" : "inline"}`}
         >
