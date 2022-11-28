@@ -283,7 +283,7 @@ const Dashboard = ({ expire, signature }) => {
         invitations={data.invitedModules}
         refetchFn={refetch}
       />
-      <main className="mx-auto max-w-7xl">
+      <main className="mx-auto w-full max-w-7xl">
         <DashboardContent
           expire={expire}
           signature={signature}

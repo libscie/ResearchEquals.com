@@ -266,7 +266,7 @@ const Module = ({ currentModule, mainFile, supportingRaw }) => {
           endAnchor="left"
         />
       </div>
-      <article className="my-4 mx-4 max-w-3xl md:mx-auto">
+      <article className="my-4 mx-4 max-w-3xl md:mx-auto md:w-full">
         <MetadataImmutable currentModule={currentModule} />
         <div className="my-8">
           <h2 className="text-lg">Main file</h2>
