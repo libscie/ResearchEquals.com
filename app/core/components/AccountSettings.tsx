@@ -29,39 +29,23 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
       })
     ),
     onSubmit: async (values) => {
-      try {
-        try {
-          if (user!.email! !== values.email) {
-            toast
-              .promise(changeEmailMutation(values), {
-                loading: "Saving...",
-                success: "Updated email",
-                error: "Hmm that didn't work...",
-              })
-              .catch(() => {})
-          }
-        } catch (error) {
-          toast.error("You cannot use this email")
-        }
+      if (user!.email! !== values.email) {
+        await toast.promise(changeEmailMutation(values), {
+          loading: "Saving...",
+          success: "Updated email",
+          error: "Hmm that didn't work...",
+        })
+      }
 
-        if (values.newPassword !== values.newRepeat && values.newPassword !== "") {
-          alert("Please check the new password for typo's")
-        } else if (values.newPassword !== "") {
-          try {
-            toast
-              .promise(changePasswordMutation(values), {
-                loading: "Saving...",
-                success: "Updated password",
-                error: "Hmm that didn't work...",
-              })
-              .catch(() => {})
-            setIsOpen(false)
-          } catch (error) {
-            toast.error("Password needs to be at least 10 characters")
-          }
-        }
-      } catch (error) {
-        alert(error.toString())
+      if (values.newPassword !== values.newRepeat && values.newPassword !== "") {
+        alert("Please check the new password for typo's")
+      } else if (values.newPassword !== "") {
+        await toast.promise(changePasswordMutation(values), {
+          loading: "Saving...",
+          success: "Updated password",
+          error: "Password needs to be at least 10 characters",
+        })
+        setIsOpen(false)
       }
     },
   })
