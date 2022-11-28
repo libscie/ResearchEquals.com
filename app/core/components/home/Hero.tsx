@@ -10,7 +10,9 @@ export const Hero = () => {
   const router = useRouter()
 
   useEffect(() => {
-    i18n.changeLanguage(router.locale).catch(() => {})
+    i18n.changeLanguage(router.locale).catch((error) => {
+      console.log(error)
+    })
   }, [])
 
   return (

@@ -127,7 +127,9 @@ const Module = ({ currentModule, mainFile, supportingRaw }) => {
       fetch(mainFile.cdnUrl)
         .then((response) => response.text())
         .then((body) => setMarkdown(body))
-        .catch(() => {})
+        .catch((error) => {
+          console.log(error)
+        })
     }
   }, [])
 

@@ -18,7 +18,10 @@ const ResetPasswordPage: BlitzPage = () => {
 
   // Redirect to home when no token is found
   useEffect(() => {
-    if (!query.token) router.push("/").catch(() => {})
+    if (!query.token)
+      router.push("/").catch((error) => {
+        console.log(error)
+      })
   })
 
   const formik = useFormik({

@@ -19,17 +19,21 @@ const VerifyMail: BlitzPage = () => {
       return
     }
 
-    router.prefetch("/dashboard").catch(() => {})
+    router.prefetch("/dashboard").catch((error) => {
+      console.log(error)
+    })
 
     verifyEmail({ code, userId })
       .then((success) => {
         if (success) {
-          router.replace("/dashboard").catch(() => {})
+          router.replace("/dashboard").catch((error) => console.log(error))
         } else {
           setError(true)
         }
       })
-      .catch(() => {})
+      .catch((error) => {
+        console.log(error)
+      })
   }, [code, setError, verifyEmail])
 
   return (
