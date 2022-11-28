@@ -30,22 +30,20 @@ const Description = ({ collection, refetchFn, isAdmin }) => {
     validate: validateZodSchema(z.string()),
     onSubmit: async (values) => {
       if (quill.root.innerHTML != collection.description) {
-        toast
-          .promise(
-            changeDescriptionMutation({
-              id: collection.id,
-              description: quill.root.innerHTML,
-            }),
-            {
-              loading: "Saving description",
-              success: () => {
-                refetchFn()
-                return "Updated description"
-              },
-              error: "Update failed",
-            }
-          )
-          .catch(() => {})
+        await toast.promise(
+          changeDescriptionMutation({
+            id: collection.id,
+            description: quill.root.innerHTML,
+          }),
+          {
+            loading: "Saving description",
+            success: () => {
+              refetchFn()
+              return "Updated description"
+            },
+            error: "Update failed",
+          }
+        )
       }
     },
   })

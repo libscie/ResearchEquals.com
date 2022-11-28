@@ -106,7 +106,7 @@ const ModuleEdit = ({
         description: values.description,
         licenseId: parseInt(values.license),
       })
-      setQueryData(updatedModule).catch(() => {})
+      await setQueryData(updatedModule)
       setIsEditing(false)
     },
   })

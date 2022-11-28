@@ -58,20 +58,18 @@ const Admin: BlitzPage = () => {
         )
         setCountSubmit(countSubmit + 1)
       } else {
-        toast
-          .promise(
-            broadcastMutation({
-              subject: values.subject,
-              htmlContent: quill.root.innerHTML,
-              textContent: quill.getText(),
-            }),
-            {
-              loading: "Sending...",
-              success: <b>Broadcast successful!</b>,
-              error: "Broadcast failed.",
-            }
-          )
-          .catch(() => {})
+        await toast.promise(
+          broadcastMutation({
+            subject: values.subject,
+            htmlContent: quill.root.innerHTML,
+            textContent: quill.getText(),
+          }),
+          {
+            loading: "Sending...",
+            success: <b>Broadcast successful!</b>,
+            error: "Broadcast failed.",
+          }
+        )
         setCountSubmit(0)
       }
     },
@@ -185,13 +183,11 @@ const Admin: BlitzPage = () => {
                           <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
                             <button
                               onClick={async () => {
-                                toast
-                                  .promise(updateCrossRefMutation({ id: module.id }), {
-                                    loading: "Updating...",
-                                    success: "Updated metadata with CrossRef",
-                                    error: "That did not work",
-                                  })
-                                  .catch(() => {})
+                                await toast.promise(updateCrossRefMutation({ id: module.id }), {
+                                  loading: "Updating...",
+                                  success: "Updated metadata with CrossRef",
+                                  error: "That did not work",
+                                })
                               }}
                               className="whitespace-nowrap rounded border-0 bg-indigo-100 px-4 py-2 text-sm font-normal leading-5 text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
                             >
@@ -260,16 +256,14 @@ const Admin: BlitzPage = () => {
                           <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
                             <button
                               onClick={async () => {
-                                toast
-                                  .promise(
-                                    updateCrossRefCollectionMutation({ id: collection.id }),
-                                    {
-                                      loading: "Updating...",
-                                      success: "Updated collection metadata with CrossRef",
-                                      error: "That did not work",
-                                    }
-                                  )
-                                  .catch(() => {})
+                                await toast.promise(
+                                  updateCrossRefCollectionMutation({ id: collection.id }),
+                                  {
+                                    loading: "Updating...",
+                                    success: "Updated collection metadata with CrossRef",
+                                    error: "That did not work",
+                                  }
+                                )
                               }}
                               className="whitespace-nowrap rounded border-0 bg-indigo-100 px-4 py-2 text-sm font-normal leading-5 text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
                             >

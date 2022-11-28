@@ -80,25 +80,23 @@ const WorkComment = ({ submission, index, editorIdSelf, refetchFn, editorIsAdmin
               comment: "",
             }}
             onSubmit={async (values) => {
-              toast
-                .promise(
-                  addCommentMutation({
-                    id: submission.id,
-                    comment: values.comment,
-                  }),
-                  {
-                    loading: "Adding comment",
-                    success: (data) => {
-                      refetchFn()
+              await toast.promise(
+                addCommentMutation({
+                  id: submission.id,
+                  comment: values.comment,
+                }),
+                {
+                  loading: "Adding comment",
+                  success: (data) => {
+                    refetchFn()
 
-                      return "Added comment!"
-                    },
-                    error: (err) => {
-                      return `${err}`
-                    },
-                  }
-                )
-                .catch(() => {})
+                    return "Added comment!"
+                  },
+                  error: (err) => {
+                    return `${err}`
+                  },
+                }
+              )
             }}
           >
             <Form className="flex h-full">

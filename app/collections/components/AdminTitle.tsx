@@ -19,22 +19,20 @@ const AdminTitle = ({ collection, refetchFn, isAdmin }) => {
       })
     ),
     onSubmit: async (values) => {
-      toast
-        .promise(
-          changeTitleMutation({
-            id: collection.id,
-            title: values.title,
-          }),
-          {
-            loading: "Updating title...",
-            success: () => {
-              refetchFn()
-              return "Updated title"
-            },
-            error: "Failed to update title",
-          }
-        )
-        .catch(() => {})
+      await toast.promise(
+        changeTitleMutation({
+          id: collection.id,
+          title: values.title,
+        }),
+        {
+          loading: "Updating title...",
+          success: () => {
+            refetchFn()
+            return "Updated title"
+          },
+          error: "Failed to update title",
+        }
+      )
     },
   })
 

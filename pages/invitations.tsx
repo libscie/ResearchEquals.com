@@ -60,12 +60,10 @@ const Invitations = ({ currentWorkspace }) => {
               {invitations.map((draft) => (
                 <>
                   <li
-                    onClick={() => {
+                    onClick={async () => {
                       setModule(draft)
                       setInboxOpen(biggerWindow)
-                      router
-                        .push("/invitations", { query: { suffix: draft.suffix } })
-                        .catch(() => {})
+                      await router.push("/invitations", { query: { suffix: draft.suffix } })
                     }}
                     className="cursor-pointer"
                   >

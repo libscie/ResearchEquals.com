@@ -72,19 +72,17 @@ export default function SetEditorToInactiveModal({ editor, refetchFn }) {
                     type="button"
                     className="mr-2 inline-flex rounded-md bg-red-50 py-2 px-4 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                     onClick={async () => {
-                      toast
-                        .promise(deleteEditorMutation({ editorId: editor.id }), {
-                          loading: "Deleting editor...",
-                          success: () => {
-                            refetchFn()
-                            closeModal()
-                            return `Deleted editor!`
-                          },
-                          error: (e) => {
-                            return e.toString()
-                          },
-                        })
-                        .catch(() => {})
+                      await toast.promise(deleteEditorMutation({ editorId: editor.id }), {
+                        loading: "Deleting editor...",
+                        success: () => {
+                          refetchFn()
+                          closeModal()
+                          return `Deleted editor!`
+                        },
+                        error: (e) => {
+                          return e.toString()
+                        },
+                      })
                     }}
                   >
                     Delete editor

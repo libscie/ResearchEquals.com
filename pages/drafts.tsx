@@ -69,10 +69,10 @@ const DraftsContents = ({ expire, signature, currentWorkspace, session, user }) 
                 {drafts.map((draft) => (
                   <>
                     <li
-                      onClick={() => {
+                      onClick={async () => {
                         setModule(draft)
                         setInboxOpen(biggerWindow)
-                        router.push("/drafts", { query: { suffix: draft.suffix } }).catch(() => {})
+                        await router.push("/drafts", { query: { suffix: draft.suffix } })
                       }}
                       className="cursor-pointer"
                     >

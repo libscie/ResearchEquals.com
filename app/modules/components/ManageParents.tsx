@@ -80,27 +80,25 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                           <button
                             className="px-2 hover:bg-gray-50 dark:hover:bg-gray-800"
                             onClick={async () => {
-                              toast
-                                .promise(
-                                  deleteParentMutation({
-                                    currentId: moduleEdit.id,
-                                    disconnectId: module.id,
-                                  }),
-                                  {
-                                    loading: "Removing...",
-                                    success: (data) => {
-                                      setQueryData(data)
+                              await toast.promise(
+                                deleteParentMutation({
+                                  currentId: moduleEdit.id,
+                                  disconnectId: module.id,
+                                }),
+                                {
+                                  loading: "Removing...",
+                                  success: (data) => {
+                                    setQueryData(data)
 
-                                      if (data.parents.length === 0) {
-                                        setOpen(false)
-                                      }
+                                    if (data.parents.length === 0) {
+                                      setOpen(false)
+                                    }
 
-                                      return `Removed link to: "${module.title}"`
-                                    },
-                                    error: "That link is not going anywhere...",
-                                  }
-                                )
-                                .catch(() => {})
+                                    return `Removed link to: "${module.title}"`
+                                  },
+                                  error: "That link is not going anywhere...",
+                                }
+                              )
                             }}
                           >
                             <TrashCan

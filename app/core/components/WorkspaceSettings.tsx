@@ -81,18 +81,16 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         if (values.firstName !== workspace.firstName) {
           try {
             z.string().parse(values.firstName)
-            toast
-              .promise(
-                changeFirstNameMutation({
-                  firstName: values.firstName,
-                }),
-                {
-                  loading: "Saving...",
-                  success: "Updated first name",
-                  error: "Hmm that first name didn't work...",
-                }
-              )
-              .catch(() => {})
+            await toast.promise(
+              changeFirstNameMutation({
+                firstName: values.firstName,
+              }),
+              {
+                loading: "Saving...",
+                success: "Updated first name",
+                error: "Hmm that first name didn't work...",
+              }
+            )
           } catch (error) {
             toast.error("First name needs to be a string")
           }
@@ -101,18 +99,16 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         if (values.lastName !== workspace.lastName) {
           try {
             z.string().parse(values.lastName)
-            toast
-              .promise(
-                changeLastNameMutation({
-                  lastName: values.lastName,
-                }),
-                {
-                  loading: "Saving...",
-                  success: "Updated last name",
-                  error: "Hmm that didn't work...",
-                }
-              )
-              .catch(() => {})
+            await toast.promise(
+              changeLastNameMutation({
+                lastName: values.lastName,
+              }),
+              {
+                loading: "Saving...",
+                success: "Updated last name",
+                error: "Hmm that didn't work...",
+              }
+            )
           } catch (error) {
             toast.error("Last name needs to be a string")
           }
@@ -121,18 +117,16 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         if (values.bio !== workspace.bio) {
           try {
             z.string().parse(values.bio)
-            toast
-              .promise(
-                changeBioMutation({
-                  bio: values.bio,
-                }),
-                {
-                  loading: "Saving...",
-                  success: "Updated bio",
-                  error: "Hmm that didn't work...",
-                }
-              )
-              .catch(() => {})
+            await toast.promise(
+              changeBioMutation({
+                bio: values.bio,
+              }),
+              {
+                loading: "Saving...",
+                success: "Updated bio",
+                error: "Hmm that didn't work...",
+              }
+            )
           } catch (error) {
             toast.error("Bio needs to be a string")
           }
@@ -141,18 +135,16 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         if (values.pronouns !== workspace.pronouns) {
           try {
             z.string().max(20).parse(values.pronouns)
-            toast
-              .promise(
-                changePronounsMutation({
-                  pronouns: values.pronouns,
-                }),
-                {
-                  loading: "Saving...",
-                  success: "Updated pronouns",
-                  error: "Hmm that didn't work...",
-                }
-              )
-              .catch(() => {})
+            await toast.promise(
+              changePronounsMutation({
+                pronouns: values.pronouns,
+              }),
+              {
+                loading: "Saving...",
+                success: "Updated pronouns",
+                error: "Hmm that didn't work...",
+              }
+            )
           } catch (error) {
             toast.error("Pronouns can be 20 characters")
           }
@@ -161,20 +153,18 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         if (values.profileUrl !== workspace.url && values.profileUrl !== "") {
           try {
             z.string().url().parse(values.profileUrl)
-            toast
-              .promise(
-                changeUrlMutation({
-                  url: values.profileUrl,
-                }),
-                {
-                  loading: "Saving...",
-                  success: "Updated URL",
-                  error: (e) => {
-                    return `Error: ${e}`
-                  },
-                }
-              )
-              .catch(() => {})
+            await toast.promise(
+              changeUrlMutation({
+                url: values.profileUrl,
+              }),
+              {
+                loading: "Saving...",
+                success: "Updated URL",
+                error: (e) => {
+                  return `Error: ${e}`
+                },
+              }
+            )
           } catch (error) {
             toast.error("Enter a valid URL")
           }

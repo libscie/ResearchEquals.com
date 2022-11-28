@@ -271,7 +271,7 @@ export default function PublishModule({
                                 success: "Published!",
                                 error: "Uh-oh something went wrong.",
                               })
-                              router.push(`/modules/${currentModule.suffix}`).catch(() => {})
+                              await router.push(`/modules/${currentModule.suffix}`)
                             }}
                           >
                             Publish

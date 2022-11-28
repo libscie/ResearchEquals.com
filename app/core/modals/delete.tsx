@@ -87,7 +87,7 @@ export default function DeleteModal() {
                       onClick={async () => {
                         try {
                           await deleteUserMutation()
-                          router.push("/").catch(() => {})
+                          await router.push("/")
                         } catch (err) {
                           throw err
                         }

@@ -26,16 +26,14 @@ const EditFileDisplay = ({ name, size, url, uuid, moduleId, setQueryData }) => {
             size={24}
             className="inline-block h-6 w-6 fill-current align-middle text-red-500"
             onClick={async () => {
-              toast
-                .promise(deleteMainMutation({ id: moduleId, uuid }), {
-                  loading: "Deleting...",
-                  success: (data) => {
-                    setQueryData(data)
-                    return `Removed ${name}`
-                  },
-                  error: "Something went wrong...",
-                })
-                .catch(() => {})
+              await toast.promise(deleteMainMutation({ id: moduleId, uuid }), {
+                loading: "Deleting...",
+                success: (data) => {
+                  setQueryData(data)
+                  return `Removed ${name}`
+                },
+                error: "Something went wrong...",
+              })
             }}
             aria-label="Delete file"
           />

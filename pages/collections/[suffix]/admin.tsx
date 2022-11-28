@@ -306,23 +306,21 @@ const CollectedWorks = ({ collection, editorIdSelf, refetchFn, editorIsAdmin }) 
               sourceId: "products",
               async onSelect(params) {
                 const { item, setQuery } = params
-                toast
-                  .promise(
-                    addWorkMutation({
-                      collectionId: collection!.id,
-                      editorId: editorIdSelf,
-                      moduleId: parseInt(item.objectID),
-                    }),
-                    {
-                      loading: "Adding work to collection...",
-                      success: () => {
-                        refetchFn()
-                        return "Added work to collection!"
-                      },
-                      error: "Failed to add work to collection...",
-                    }
-                  )
-                  .catch(() => {})
+                await toast.promise(
+                  addWorkMutation({
+                    collectionId: collection!.id,
+                    editorId: editorIdSelf,
+                    moduleId: parseInt(item.objectID),
+                  }),
+                  {
+                    loading: "Adding work to collection...",
+                    success: () => {
+                      refetchFn()
+                      return "Added work to collection!"
+                    },
+                    error: "Failed to add work to collection...",
+                  }
+                )
               },
               getItems() {
                 return getAlgoliaResults({

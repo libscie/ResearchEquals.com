@@ -79,24 +79,22 @@ export default function SetEditorToInactiveModal({ editor, refetchFn }) {
                       type="button"
                       className="mr-2 inline-flex rounded-md bg-red-50 py-2 px-4 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                       onClick={async () => {
-                        toast
-                          .promise(
-                            changeEditorActiveMutation({
-                              editorId: editor.id,
-                              active: !editor.isActive,
-                            }),
-                            {
-                              loading: `Setting to ${editor.isActive ? "inactive" : "active"}...`,
-                              success: () => {
-                                // alert("success")
-                                refetchFn()
-                                closeModal()
-                                return `Changed to ${editor.isActive ? "inactive" : "active"}!`
-                              },
-                              error: "Failed to change activity...",
-                            }
-                          )
-                          .catch(() => {})
+                        await toast.promise(
+                          changeEditorActiveMutation({
+                            editorId: editor.id,
+                            active: !editor.isActive,
+                          }),
+                          {
+                            loading: `Setting to ${editor.isActive ? "inactive" : "active"}...`,
+                            success: () => {
+                              // alert("success")
+                              refetchFn()
+                              closeModal()
+                              return `Changed to ${editor.isActive ? "inactive" : "active"}!`
+                            },
+                            error: "Failed to change activity...",
+                          }
+                        )
                       }}
                     >
                       Set to inactive
@@ -106,24 +104,22 @@ export default function SetEditorToInactiveModal({ editor, refetchFn }) {
                       type="button"
                       className="mr-2 inline-flex rounded-md bg-green-50 py-2 px-4 text-sm font-medium text-green-700 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-green-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                       onClick={async () => {
-                        toast
-                          .promise(
-                            changeEditorActiveMutation({
-                              editorId: editor.id,
-                              active: !editor.isActive,
-                            }),
-                            {
-                              loading: `Setting to ${editor.isActive ? "inactive" : "active"}...`,
-                              success: () => {
-                                // alert("success")
-                                refetchFn()
-                                closeModal()
-                                return `Changed to ${editor.isActive ? "inactive" : "active"}!`
-                              },
-                              error: "Failed to change activity...",
-                            }
-                          )
-                          .catch(() => {})
+                        await toast.promise(
+                          changeEditorActiveMutation({
+                            editorId: editor.id,
+                            active: !editor.isActive,
+                          }),
+                          {
+                            loading: `Setting to ${editor.isActive ? "inactive" : "active"}...`,
+                            success: () => {
+                              // alert("success")
+                              refetchFn()
+                              closeModal()
+                              return `Changed to ${editor.isActive ? "inactive" : "active"}!`
+                            },
+                            error: "Failed to change activity...",
+                          }
+                        )
                       }}
                     >
                       Set to active

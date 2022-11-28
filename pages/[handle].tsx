@@ -279,8 +279,8 @@ const HandleFeed = ({ handle }) => {
               {modules.map((module) => (
                 <>
                   <li
-                    onClick={() => {
-                      router.push(`/modules/${module.suffix}`).catch(() => {})
+                    onClick={async () => {
+                      await router.push(`/modules/${module.suffix}`)
                     }}
                     className="cursor-pointer"
                   >

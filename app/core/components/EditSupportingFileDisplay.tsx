@@ -44,16 +44,14 @@ const EditSupportingFileDisplay = ({ name, size, url, uuid, moduleId, setQueryDa
             isOpen={confirmDeleteOpen}
             setIsOpen={setConfirmDeleteOpen}
             onSubmit={async () => {
-              toast
-                .promise(deleteMutation({ id: moduleId, uuid }), {
-                  loading: "Deleting...",
-                  success: (data) => {
-                    setQueryData(data)
-                    return `Removed ${name}`
-                  },
-                  error: "Something went wrong...",
-                })
-                .catch(() => {})
+              await toast.promise(deleteMutation({ id: moduleId, uuid }), {
+                loading: "Deleting...",
+                success: (data) => {
+                  setQueryData(data)
+                  return `Removed ${name}`
+                },
+                error: "Something went wrong...",
+              })
             }}
           />
         </button>

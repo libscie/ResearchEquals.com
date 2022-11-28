@@ -73,7 +73,7 @@ const ModuleInvitation = ({
                   error: "Hmm that didn't work...",
                 }
               )
-              refetch().catch(() => {})
+              await refetch()
               setModule(undefined)
             }}
           >
@@ -93,7 +93,7 @@ const ModuleInvitation = ({
                   error: "Hmm that didn't work...",
                 }
               )
-              refetch().catch(() => {})
+              await refetch()
               setModule(undefined)
             }}
           >

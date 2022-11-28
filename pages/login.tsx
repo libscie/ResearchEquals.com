@@ -8,11 +8,11 @@ const LoginPage: BlitzPage = () => {
 
   return (
     <LoginForm
-      onSuccess={() => {
+      onSuccess={async () => {
         const next = router.query.next
           ? decodeURIComponent(router.query.next as string)
           : "/dashboard"
-        router.push(next).catch(() => {})
+        await router.push(next)
       }}
     />
   )
