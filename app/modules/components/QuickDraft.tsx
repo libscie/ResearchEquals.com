@@ -85,13 +85,16 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
   })
 
   const formikReset = () => {
-    formik.setFieldValue("title", "").catch(() => {})
-    formik.setFieldValue("description", "").catch(() => {})
-    formik.setFieldValue("main", "").catch(() => {})
-    formik.setFieldValue("type", "").catch(() => {})
-    formik.setFieldValue("license", "").catch(() => {})
-    formik.setFieldValue("language", "en").catch(() => {})
-    formik.setFieldValue("displayColor", "#574cfa").catch(() => {})
+    const updateFormik = async () => {
+      await formik.setFieldValue("title", "")
+      await formik.setFieldValue("description", "")
+      await formik.setFieldValue("main", "")
+      await formik.setFieldValue("type", "")
+      await formik.setFieldValue("license", "")
+      await formik.setFieldValue("language", "en")
+      await formik.setFieldValue("displayColor", "#574cfa")
+    }
+    updateFormik().catch((error) => console.log(error))
   }
 
   return (
