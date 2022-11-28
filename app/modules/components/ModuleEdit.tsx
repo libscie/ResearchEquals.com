@@ -112,10 +112,13 @@ const ModuleEdit = ({
   })
 
   useEffect(() => {
-    formik.setFieldValue("type", moduleEdit!.type.id.toString()).catch(() => {})
-    formik.setFieldValue("title", moduleEdit!.title).catch(() => {})
-    formik.setFieldValue("description", moduleEdit!.description).catch(() => {})
-    formik.setFieldValue("license", moduleEdit!.license!.id.toString()).catch(() => {})
+    const updateFormik = async () => {
+      await formik.setFieldValue("type", moduleEdit!.type.id.toString())
+      await formik.setFieldValue("title", moduleEdit!.title)
+      await formik.setFieldValue("description", moduleEdit!.description)
+      await formik.setFieldValue("license", moduleEdit!.license!.id.toString())
+    }
+    updateFormik().catch((error) => console.log(error))
   }, [moduleEdit])
 
   const ownAuthorship = moduleEdit?.authors.find(
