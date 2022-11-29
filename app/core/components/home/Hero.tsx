@@ -1,4 +1,5 @@
-import { Link, useRouter } from "blitz"
+import Link from "next/link"
+import { useRouter } from "next/router"
 import React, { useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import Button from "./Button"
@@ -9,7 +10,9 @@ export const Hero = () => {
   const router = useRouter()
 
   useEffect(() => {
-    i18n.changeLanguage(router.locale)
+    i18n.changeLanguage(router.locale).catch((error) => {
+      console.log(error)
+    })
   }, [])
 
   return (

@@ -1,8 +1,8 @@
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 
 export default resolver.pipe(resolver.authorize(), async ({ currentId, disconnectId }) => {
-  const module = await db.module.update({
+  const currentModule = await db.module.update({
     where: { id: currentId },
     data: {
       references: {
@@ -52,5 +52,5 @@ export default resolver.pipe(resolver.authorize(), async ({ currentId, disconnec
     },
   })
 
-  return module
+  return currentModule
 })

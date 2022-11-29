@@ -1,4 +1,5 @@
-import { resolver, Ctx, AuthorizationError } from "blitz"
+import { resolver } from "@blitzjs/rpc"
+import { AuthorizationError, Ctx } from "blitz"
 import db from "db"
 
 export default resolver.pipe(resolver.authorize(), async (suffix: string, ctx: Ctx) => {

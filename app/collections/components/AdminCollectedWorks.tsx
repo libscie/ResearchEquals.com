@@ -1,7 +1,7 @@
+import { useMutation } from "@blitzjs/rpc"
 import { getAlgoliaResults } from "@algolia/autocomplete-js"
 import algoliasearch from "algoliasearch"
 import SearchResultModule from "app/core/components/SearchResultModule"
-import { useMutation } from "blitz"
 import toast from "react-hot-toast"
 import AdminWorkCard from "./AdminWorkCard"
 import addWork from "../mutations/addWork"
@@ -27,7 +27,7 @@ const CollectedWorks = ({ collection, editorIdSelf, refetchFn, editorIsAdmin }) 
               sourceId: "products",
               async onSelect(params) {
                 const { item, setQuery } = params
-                toast.promise(
+                await toast.promise(
                   addWorkMutation({
                     collectionId: collection!.id,
                     editorId: editorIdSelf,
@@ -77,38 +77,38 @@ const CollectedWorks = ({ collection, editorIdSelf, refetchFn, editorIsAdmin }) 
                           <button
                             className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200"
                             onClick={async () => {
-                              toast.promise(
-                                createReferenceMutation({
-                                  doi: matchedQuery.slice(-1)[0].endsWith("/")
-                                    ? matchedQuery.slice(-1)[0].slice(0, -1)
-                                    : matchedQuery.slice(-1)[0],
-                                }),
-                                {
-                                  loading: "Searching...",
-                                  success: (data) => {
-                                    toast.promise(
-                                      addWorkMutation({
-                                        collectionId: collection!.id,
-                                        editorId: editorIdSelf,
-                                        moduleId: data.id,
-                                      }),
-                                      {
-                                        loading: "Adding work to collection...",
-                                        success: () => {
-                                          refetchFn()
-                                          return "Added work to collection!"
-                                        },
-                                        error: "Failed to add work to collection...",
-                                      }
-                                    )
+                              await toast
+                                .promise(
+                                  createReferenceMutation({
+                                    doi: matchedQuery.slice(-1)[0].endsWith("/")
+                                      ? matchedQuery.slice(-1)[0].slice(0, -1)
+                                      : matchedQuery.slice(-1)[0],
+                                  }),
+                                  {
+                                    loading: "Searching...",
+                                    success: "Record added to database",
+                                    error: "Could not add record.",
+                                  }
+                                )
+                                .then(async (data) => {
+                                  await toast.promise(
+                                    addWorkMutation({
+                                      collectionId: collection!.id,
+                                      editorId: editorIdSelf,
+                                      moduleId: data.id,
+                                    }),
+                                    {
+                                      loading: "Adding work to collection...",
+                                      success: () => {
+                                        refetchFn()
+                                        return "Added work to collection!"
+                                      },
+                                      error: "Failed to add work to collection...",
+                                    }
+                                  )
 
-                                    refetchFn()
-
-                                    return "Record added to database"
-                                  },
-                                  error: "Could not add record.",
-                                }
-                              )
+                                  refetchFn()
+                                })
                             }}
                           >
                             Click here to add {matchedQuery.slice(-1)} to ResearchEquals database

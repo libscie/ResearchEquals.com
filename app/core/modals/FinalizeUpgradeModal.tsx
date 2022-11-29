@@ -1,4 +1,4 @@
-import { useMutation } from "blitz"
+import { useMutation } from "@blitzjs/rpc"
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import toast from "react-hot-toast"
@@ -95,15 +95,18 @@ export default function FinalizeUpgradeModal({ collection, refetchFn }) {
                     className="mr-2 inline-flex rounded-md bg-pink-50 py-2 px-4 text-sm font-medium text-pink-700 hover:bg-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-pink-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                     disabled={!collection.title && true}
                     onClick={async () => {
-                      toast.promise(upgradeCollectionMutation({ collectionId: collection.id }), {
-                        loading: "Updating collection...",
-                        success: () => {
-                          refetchFn()
-                          closeModal()
-                          return "Collection is now upgraded!"
-                        },
-                        error: "Something went wrong...",
-                      })
+                      await toast.promise(
+                        upgradeCollectionMutation({ collectionId: collection.id }),
+                        {
+                          loading: "Updating collection...",
+                          success: () => {
+                            refetchFn()
+                            closeModal()
+                            return "Collection is now upgraded!"
+                          },
+                          error: "Something went wrong...",
+                        }
+                      )
                     }}
                   >
                     Upgrade Collection

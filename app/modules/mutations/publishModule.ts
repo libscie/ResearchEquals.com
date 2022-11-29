@@ -1,4 +1,4 @@
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import moment from "moment"
 import algoliasearch from "algoliasearch"
@@ -15,7 +15,7 @@ export default resolver.pipe(
     const datetime = Date.now()
 
     // TODO: Can be simplified along with stripe_webhook.ts
-    const module = await db.module.findFirst({
+    const currentModule = await db.module.findFirst({
       where: {
         id,
       },
@@ -42,22 +42,22 @@ export default resolver.pipe(
       },
     })
 
-    if (!module!.main) throw Error("Main file is empty")
+    if (!currentModule!.main) throw Error("Main file is empty")
 
-    const licenseUrl = module?.license?.url ?? ""
+    const licenseUrl = currentModule?.license?.url ?? ""
     if (!isURI(licenseUrl)) throw Error("License URL is not a valid URI")
 
-    const resolveUrl = `${process.env.APP_ORIGIN}/modules/${module!.suffix}`
+    const resolveUrl = `${process.env.APP_ORIGIN}/modules/${currentModule!.suffix}`
 
     if (!isURI(resolveUrl)) throw Error("Resolve URL is not a valid URI")
 
     await submitToCrossRef({
       xmlData: moduleXml({
-        module,
+        currentModule,
         licenseUrl,
         resolveUrl,
       }),
-      suffix: module!.suffix,
+      suffix: currentModule!.suffix,
     })
 
     const publishedModule = await db.module.update({
@@ -68,7 +68,7 @@ export default resolver.pipe(
         published: true,
         publishedAt: moment(datetime).format(),
         publishedWhere: "ResearchEquals",
-        url: `https://doi.org/${process.env.DOI_PREFIX}/${module!.suffix}`,
+        url: `https://doi.org/${process.env.DOI_PREFIX}/${currentModule!.suffix}`,
       },
       include: {
         license: true,

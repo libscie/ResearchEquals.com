@@ -1,5 +1,6 @@
+import Link from "next/link"
+import { useMutation } from "@blitzjs/rpc"
 import Autocomplete from "app/core/components/Autocomplete"
-import { Link, useMutation } from "blitz"
 import moment from "moment"
 import toast from "react-hot-toast"
 import algoliasearch from "algoliasearch"
@@ -74,8 +75,8 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
                         sourceId: "products",
                         async onSelect(params) {
                           const { item, setQuery } = params
-                          try {
-                            toast.promise(
+                          toast
+                            .promise(
                               addAuthorMutation({
                                 authorId: item.objectID,
                                 moduleId: module.id,
@@ -113,22 +114,23 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
                               },
                               { duration: 10000 }
                             )
-                            // const updatedModule = await addAuthorMutation({
-                            //   authorId: item.objectID,
-                            //   moduleId: module.id,
-                            //   authorshipRank:
-                            //     Math.max.apply(
-                            //       Math,
-                            //       module.authors.map(function (o) {
-                            //         return o.authorshipRank
-                            //       })
-                            //     ) + 1,
-                            // })
-                            // toast.success("Author invited")
-                            // setQueryData(updatedModule)
-                          } catch (error) {
-                            toast.error("Something went wrong")
-                          }
+                            .catch((error) => {
+                              toast.error("Something went wrong")
+                            })
+                          // const updatedModule = await addAuthorMutation({
+                          //   authorId: item.objectID,
+                          //   moduleId: module.id,
+                          //   authorshipRank:
+                          //     Math.max.apply(
+                          //       Math,
+                          //       module.authors.map(function (o) {
+                          //         return o.authorshipRank
+                          //       })
+                          //     ) + 1,
+                          // })
+                          // toast.success("Author invited")
+                          // setQueryData(updatedModule)
+
                           setQuery("")
                         },
                         getItems() {

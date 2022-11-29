@@ -1,3 +1,6 @@
+import Link from "next/link"
+import { useMutation } from "@blitzjs/rpc"
+import { Routes } from "@blitzjs/next"
 import { getAlgoliaResults } from "@algolia/autocomplete-js"
 import { MembershipRole } from "@prisma/client"
 import algoliasearch from "algoliasearch"
@@ -7,7 +10,6 @@ import DeleteEditorModal from "app/core/modals/DeleteEditorModal"
 import { Modal } from "app/core/modals/Modal"
 import SetEditorToInactiveModal from "app/core/modals/SetEditorToInactiveModal"
 import UpgradeCollectionModal from "app/core/modals/UpgradeCollectionModal"
-import { Link, Routes, useMutation } from "blitz"
 import { useState } from "react"
 import toast from "react-hot-toast"
 import addEditor from "../mutations/addEditor"
@@ -20,8 +22,8 @@ const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
   const [currentRole, setCurrentRole] = useState(editor.role)
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
 
-  const onChangeEditorRole = (editorId, role) => {
-    toast.promise(changeEditorRoleMutation({ editorId: editorId, role: role }), {
+  const onChangeEditorRole = async (editorId, role) => {
+    await toast.promise(changeEditorRoleMutation({ editorId: editorId, role: role }), {
       loading: `Changing role to ${role.toLowerCase()}...`,
       success: () => {
         refetchFn()
@@ -51,12 +53,12 @@ const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
         {isAdmin && (
           <>
             <select
-              onChange={(info) => {
+              onChange={async (info) => {
                 setCurrentRole(info.target.value)
                 if (isSelf && isAdmin && info.target.value === "USER") {
                   return setIsConfirmOpen(true)
                 }
-                onChangeEditorRole(editor.id, info.target.value)
+                await onChangeEditorRole(editor.id, info.target.value)
               }}
               value={currentRole}
               className="placeholder-font-normal block appearance-none rounded-md border border-gray-400 bg-white px-4 py-2 pr-6 text-sm font-normal placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border-gray-600 dark:bg-transparent dark:text-gray-200 "
@@ -81,7 +83,7 @@ const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
               isOpen={isConfirmOpen}
               setIsOpen={setIsConfirmOpen}
               onSubmit={async () => {
-                onChangeEditorRole(editor.id, currentRole)
+                await onChangeEditorRole(editor.id, currentRole)
               }}
               onCancel={() => setCurrentRole(editor.role)}
             />
@@ -112,7 +114,7 @@ const Editors = ({ collection, isAdmin, selfId, refetchFn, user }) => {
                   sourceId: "products",
                   async onSelect(params) {
                     const { item, setQuery } = params
-                    toast.promise(
+                    await toast.promise(
                       addEditorMutation({
                         collectionId: collection.id,
                         workspaceId: parseInt(item.objectID),

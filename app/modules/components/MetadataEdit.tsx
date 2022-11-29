@@ -1,4 +1,4 @@
-import { useMutation, useQuery, validateZodSchema } from "blitz"
+import { useMutation, useQuery } from "@blitzjs/rpc"
 import moment from "moment"
 import algoliasearch from "algoliasearch"
 import ISO6391 from "iso-639-1"
@@ -10,6 +10,7 @@ import { z } from "zod"
 import editModuleScreen from "../mutations/editModuleScreen"
 import getTypes from "../../core/queries/getTypes"
 import getLicenses from "app/core/queries/getLicenses"
+import { validateZodSchema } from "blitz"
 
 const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
   const [editModuleScreenMutation] = useMutation(editModuleScreen)
@@ -51,12 +52,15 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
   })
 
   useEffect(() => {
-    formik.setFieldValue("type", module.type.id.toString())
-    formik.setFieldValue("title", module.title)
-    formik.setFieldValue("description", module.description)
-    formik.setFieldValue("license", module.license!.id.toString())
-    formik.setFieldValue("displayColor", module.displayColor)
-    formik.setFieldValue("language", module.language)
+    const updateFormik = async () => {
+      await formik.setFieldValue("type", module.type.id.toString())
+      await formik.setFieldValue("title", module.title)
+      await formik.setFieldValue("description", module.description)
+      await formik.setFieldValue("license", module.license!.id.toString())
+      await formik.setFieldValue("displayColor", module.displayColor)
+      await formik.setFieldValue("language", module.language)
+    }
+    updateFormik().catch((error) => console.log(error))
   }, [module])
 
   return (

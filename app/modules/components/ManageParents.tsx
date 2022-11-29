@@ -1,6 +1,8 @@
+import Link from "next/link"
+import { useMutation } from "@blitzjs/rpc"
+import { Routes } from "@blitzjs/next"
 import { Fragment } from "react"
 import { Dialog, Transition } from "@headlessui/react"
-import { Link, Routes, useMutation } from "blitz"
 import { Checkmark, Close, TrashCan } from "@carbon/icons-react"
 
 import ModuleCard from "app/core/components/ModuleCard"
@@ -78,7 +80,7 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                           <button
                             className="px-2 hover:bg-gray-50 dark:hover:bg-gray-800"
                             onClick={async () => {
-                              toast.promise(
+                              await toast.promise(
                                 deleteParentMutation({
                                   currentId: moduleEdit.id,
                                   disconnectId: module.id,

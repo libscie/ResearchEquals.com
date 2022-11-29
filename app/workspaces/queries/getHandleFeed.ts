@@ -1,4 +1,5 @@
-import { paginate, resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
+import { paginate } from "blitz"
 import db from "db"
 
 export default resolver.pipe(async ({ handle, orderBy, skip = 0, take = 100 }, ctx) => {

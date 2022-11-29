@@ -1,13 +1,13 @@
 import generateCrossRefXml from "../crossref/generateCrossRefXml"
 import { Cite } from "../../core/crossref/citation_list"
 
-const moduleXml = ({ module, licenseUrl, resolveUrl }) => {
+const moduleXml = ({ currentModule, licenseUrl, resolveUrl }) => {
   const xmlData = generateCrossRefXml({
     schema: "5.3.1",
-    type: module!.type!.name,
-    title: module!.title,
-    language: module!.language,
-    authors: module!.authors!.map((author) => {
+    type: currentModule!.type!.name,
+    title: currentModule!.title,
+    language: currentModule!.language,
+    authors: currentModule!.authors!.map((author) => {
       const js = {
         firstName: author.workspace?.firstName,
         lastName: author.workspace?.lastName,
@@ -17,9 +17,9 @@ const moduleXml = ({ module, licenseUrl, resolveUrl }) => {
       return js
     }),
     citations:
-      module!.references.length === 0
+      currentModule!.references.length === 0
         ? []
-        : module?.references.map(
+        : currentModule?.references.map(
             ({ authors, authorsRaw, publishedAt, publishedWhere, suffix, prefix, title }) => {
               const refJs: Cite = {
                 publishedWhere: publishedWhere!,
@@ -54,9 +54,9 @@ const moduleXml = ({ module, licenseUrl, resolveUrl }) => {
               return refJs
             }
           ) ?? [],
-    abstractText: module!.description!,
+    abstractText: currentModule!.description!,
     license_url: licenseUrl,
-    doi: `${module!.prefix}/${module!.suffix}`,
+    doi: `${currentModule!.prefix}/${currentModule!.suffix}`,
     resolve_url: resolveUrl,
   })
 

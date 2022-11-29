@@ -1,5 +1,5 @@
+import { useMutation } from "@blitzjs/rpc"
 import { Widget, WidgetAPI } from "@uploadcare/react-widget"
-import { useMutation } from "blitz"
 import { Ref, useRef } from "react"
 import toast from "react-hot-toast"
 import { JsonObject } from "prisma"
@@ -32,9 +32,8 @@ const HeaderImage = ({ collection, refetchFn, signature, expire }) => {
             previewStep
             clearable
             onChange={async (info) => {
-              console.log(JSON.stringify(info))
-              try {
-                toast.promise(
+              toast
+                .promise(
                   changeHeaderMutation({
                     id: collection.id,
                     headerInfo: info as JsonObject,
@@ -48,9 +47,9 @@ const HeaderImage = ({ collection, refetchFn, signature, expire }) => {
                     error: "That did not work",
                   }
                 )
-              } catch (err) {
-                alert(err)
-              }
+                .catch((err) => {
+                  alert(err)
+                })
             }}
           />
         </>

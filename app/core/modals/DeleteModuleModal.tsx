@@ -1,4 +1,5 @@
-import { useMutation, useRouter } from "blitz"
+import { useRouter } from "next/router"
+import { useMutation } from "@blitzjs/rpc"
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import deleteModule from "app/modules/mutations/deleteModule"
@@ -68,15 +69,15 @@ export default function DeleteModule({ module, setModule, fetchDrafts }) {
                     type="button"
                     className="mr-2 inline-flex rounded-md bg-red-50 py-2 px-4 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                     onClick={async () => {
-                      toast
+                      await toast
                         .promise(deleteModuleMutation({ id: module.id }), {
                           loading: "Deleting...",
                           success: "Deleted!",
                           error: "Something went wrong...",
                         })
                         .then(fetchDrafts)
-                        .then(() => {
-                          router.push("/drafts")
+                        .then(async () => {
+                          await router.push("/drafts")
                           setModule(undefined)
                           closeModal()
                         })

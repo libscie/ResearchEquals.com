@@ -1,6 +1,6 @@
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
-import invitationMailer from "../../api/invitation-mailer"
+import invitationMailer from "pages/api/invitation-mailer"
 
 export default resolver.pipe(resolver.authorize(), async ({ workspaceId, moduleId }) => {
   // Cancel email queue
@@ -28,7 +28,7 @@ export default resolver.pipe(resolver.authorize(), async ({ workspaceId, moduleI
     },
   })
 
-  const module = await db.module.findFirst({
+  const currentModule = await db.module.findFirst({
     where: {
       id: moduleId,
     },
@@ -81,5 +81,5 @@ export default resolver.pipe(resolver.authorize(), async ({ workspaceId, moduleI
     },
   })
 
-  return module!
+  return currentModule!
 })

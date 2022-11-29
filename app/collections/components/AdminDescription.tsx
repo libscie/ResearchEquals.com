@@ -1,4 +1,5 @@
-import { useMutation, validateZodSchema } from "blitz"
+import { useMutation } from "@blitzjs/rpc"
+import { validateZodSchema } from "blitz"
 import { useFormik } from "formik"
 import "quill/dist/quill.snow.css"
 import { useEffect } from "react"
@@ -26,14 +27,10 @@ const Description = ({ collection, refetchFn, isAdmin }) => {
     initialValues: {
       description: collection.description,
     },
-    validate: validateZodSchema(
-      z.object({
-        description: z.string(),
-      })
-    ),
+    validate: validateZodSchema(z.string()),
     onSubmit: async (values) => {
       if (quill.root.innerHTML != collection.description) {
-        toast.promise(
+        await toast.promise(
           changeDescriptionMutation({
             id: collection.id,
             description: quill.root.innerHTML,

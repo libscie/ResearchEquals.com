@@ -1,6 +1,6 @@
+import { useMutation } from "@blitzjs/rpc"
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
-import { useMutation } from "blitz"
 import { Checkmark, Close } from "@carbon/icons-react"
 
 import updateAuthorRank from "../../authorship/mutations/updateAuthorRank"

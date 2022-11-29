@@ -1,9 +1,9 @@
-import { NotFoundError, resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import { Prisma } from "prisma"
 
 export default resolver.pipe(resolver.authorize(), async ({ id, json }) => {
-  const module = await db.module.update({
+  const currentModule = await db.module.update({
     where: { id },
     data: { main: json as Prisma.JsonObject },
   })

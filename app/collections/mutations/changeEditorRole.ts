@@ -1,4 +1,4 @@
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db, { MembershipRole } from "db"
 
 export default resolver.pipe(

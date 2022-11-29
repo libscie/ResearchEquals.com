@@ -1,6 +1,7 @@
+import Link from "next/link"
+import { Routes } from "@blitzjs/next"
 import { Fragment } from "react"
 import { Dialog, Transition } from "@headlessui/react"
-import { Link, Routes } from "blitz"
 import moment from "moment"
 import { Close } from "@carbon/icons-react"
 import ModuleCard from "../../core/components/ModuleCard"

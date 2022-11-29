@@ -1,9 +1,9 @@
-import { NotFoundError, resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import { sendEmailWithTemplate } from "app/postmark"
 import { url } from "app/url"
 import * as verifyEmail from "app/auth/verify-email"
-import { Ctx } from "blitz"
+import { Ctx, NotFoundError } from "blitz"
 
 export default resolver.pipe(resolver.authorize(), async ({ email }, ctx: Ctx) => {
   const user = await db.user.findFirst({ where: { id: ctx.session.userId! } })

@@ -1,12 +1,13 @@
-import { useMutation, validateZodSchema } from "blitz"
+import { useMutation } from "@blitzjs/rpc"
 import { Field, Form, Formik } from "formik"
 import toast from "react-hot-toast"
-import changeTitle from "../mutations/changeTitle"
 import { useFormik } from "formik"
 import { z } from "zod"
+import { validateZodSchema } from "blitz"
+import changeCollectionTitle from "../mutations/changeCollectionTitle"
 
 const AdminTitle = ({ collection, refetchFn, isAdmin }) => {
-  const [changeTitleMutation] = useMutation(changeTitle)
+  const [changeTitleMutation] = useMutation(changeCollectionTitle)
 
   const formik = useFormik({
     initialValues: {
@@ -18,7 +19,7 @@ const AdminTitle = ({ collection, refetchFn, isAdmin }) => {
       })
     ),
     onSubmit: async (values) => {
-      toast.promise(
+      await toast.promise(
         changeTitleMutation({
           id: collection.id,
           title: values.title,

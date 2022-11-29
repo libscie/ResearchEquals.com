@@ -1,9 +1,13 @@
-import { Link, useMutation, useRouter } from "blitz"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import { useMutation } from "@blitzjs/rpc"
 import { Fragment, useState } from "react"
 import { Dialog, Switch, Transition } from "@headlessui/react"
 import toast from "react-hot-toast"
 import { Close, Upgrade, Checkmark } from "@carbon/icons-react"
 import { CollectionTypes } from "@prisma/client"
+import { getAntiCSRFToken } from "@blitzjs/auth"
+import handlePayment from "../utils/handlePayment"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -29,6 +33,9 @@ export default function MakeCollectionPublicModal({ collection, email }) {
   function openModal() {
     setIsOpen(true)
   }
+
+  const router = useRouter()
+  const antiCSRFToken = getAntiCSRFToken()
 
   return (
     <>
@@ -78,14 +85,7 @@ export default function MakeCollectionPublicModal({ collection, email }) {
                 <Dialog.Title as="h3" className="text-lg font-medium leading-6">
                   Upgrade collection
                 </Dialog.Title>
-                <form
-                  action={`/api/checkout_sessions_collections_upgrade?email=${encodeURIComponent(
-                    email
-                  )}&collectionType=${upgrade}&suffix=${collection.suffix}&collectionId=${
-                    collection.id
-                  }&oldCollectionType=${collection.type.type}`}
-                  method="POST"
-                >
+                <form>
                   <div className="mt-2">
                     {collection.type.type === CollectionTypes.INDIVIDUAL ? (
                       <>
@@ -176,7 +176,19 @@ export default function MakeCollectionPublicModal({ collection, email }) {
                   </div>
                   <div className="mt-4">
                     <button
-                      type="submit"
+                      type="button"
+                      onClick={() =>
+                        handlePayment(
+                          `/api/checkout_sessions_collections_upgrade?email=${encodeURIComponent(
+                            email
+                          )}&collectionType=${upgrade}&suffix=${collection.suffix}&collectionId=${
+                            collection.id
+                          }&oldCollectionType=${collection.type.type}`,
+                          router,
+                          toast,
+                          antiCSRFToken
+                        )
+                      }
                       role="link"
                       className="mr-2 inline-flex justify-center rounded-md bg-emerald-50 py-2 px-4 text-sm font-medium text-emerald-700 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-emerald-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                       disabled={!waiver}

@@ -1,4 +1,5 @@
-import { hash256, Ctx } from "blitz"
+import { hash256 } from "@blitzjs/auth"
+import { Ctx } from "blitz"
 import forgotPassword from "./forgotPassword"
 import db from "db"
 

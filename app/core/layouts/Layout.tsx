@@ -1,5 +1,7 @@
+import Head from "next/head"
+import Link from "next/link"
+import { Routes } from "@blitzjs/next"
 import { ReactNode, useEffect, useState } from "react"
-import { Head, Link, Routes } from "blitz"
 import CookieConsent, { Cookies, getCookieConsentValue } from "react-cookie-consent"
 import { Toaster } from "react-hot-toast"
 import { RecoilRoot } from "recoil"

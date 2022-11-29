@@ -1,4 +1,5 @@
-import { Link, Routes } from "blitz"
+import Link from "next/link"
+import { Routes } from "@blitzjs/next"
 import { LogoDiscord, LogoGithub, LogoTwitter } from "@carbon/icons-react"
 import LibscieLogo from "./LibscieLogo"
 

@@ -1,12 +1,12 @@
-import { addMinutes, NotFoundError, resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
+import { addMinutes } from "blitz"
 import db from "db"
-
-import invitationMailer from "../../api/invitation-mailer"
+import invitationMailer from "pages/api/invitation-mailer"
 
 export default resolver.pipe(
   resolver.authorize(),
   async ({ authorId, moduleId, authorshipRank }, ctx) => {
-    const module = await db.module.update({
+    const currentModule = await db.module.update({
       where: {
         id: moduleId,
       },
@@ -79,6 +79,6 @@ export default resolver.pipe(
       }
     )
 
-    return module
+    return currentModule
   }
 )

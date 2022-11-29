@@ -1,7 +1,9 @@
+import Link from "next/link"
+import { useRouter } from "next/router"
+import { useMutation, useQuery } from "@blitzjs/rpc"
 import { Dialog, Transition } from "@headlessui/react"
 import getLicenses from "app/core/queries/getLicenses"
 import getTypes from "app/core/queries/getTypes"
-import { Link, useMutation, useQuery, validateZodSchema, useRouter } from "blitz"
 import { useFormik } from "formik"
 import { Fragment, useState } from "react"
 import { z } from "zod"
@@ -10,6 +12,7 @@ import ISO6391 from "iso-639-1"
 
 import createModule from "../mutations/createModule"
 import toast from "react-hot-toast"
+import { validateZodSchema } from "blitz"
 
 const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
   const [openCreate, setCreateOpen] = useState(false)
@@ -38,30 +41,31 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
       })
     ),
     onSubmit: async (values) => {
-      toast.promise(
-        createModuleMutation({
-          title: values.title,
-          description: values.description,
-          typeId: parseInt(values.type),
-          licenseId: parseInt(values.license),
-          language: values.language,
-          authors: [],
-          displayColor: values.displayColor,
-        }),
-        {
-          loading: "Creating draft...",
-          success: (data) => {
-            refetchFn()
-            setCreateOpen(false)
-            formikReset()
-            router.push(`/drafts?suffix=${data}`)
-            return "Created!"
-          },
-          error: (error) => {
-            return error
-          },
-        }
-      )
+      await toast
+        .promise(
+          createModuleMutation({
+            title: values.title,
+            description: values.description,
+            typeId: parseInt(values.type),
+            licenseId: parseInt(values.license),
+            language: values.language,
+            authors: [],
+            displayColor: values.displayColor,
+          }),
+          {
+            loading: "Creating draft...",
+            success: "Created!",
+            error: (error) => {
+              return error
+            },
+          }
+        )
+        .then(async (data) => {
+          refetchFn()
+          setCreateOpen(false)
+          formikReset()
+          await router.push(`/drafts?suffix=${data}`)
+        })
       // try {
       //   await createModuleMutation({
       //     title: values.title,
@@ -81,13 +85,16 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
   })
 
   const formikReset = () => {
-    formik.setFieldValue("title", "")
-    formik.setFieldValue("description", "")
-    formik.setFieldValue("main", "")
-    formik.setFieldValue("type", "")
-    formik.setFieldValue("license", "")
-    formik.setFieldValue("language", "en")
-    formik.setFieldValue("displayColor", "#574cfa")
+    const updateFormik = async () => {
+      await formik.setFieldValue("title", "")
+      await formik.setFieldValue("description", "")
+      await formik.setFieldValue("main", "")
+      await formik.setFieldValue("type", "")
+      await formik.setFieldValue("license", "")
+      await formik.setFieldValue("language", "en")
+      await formik.setFieldValue("displayColor", "#574cfa")
+    }
+    updateFormik().catch((error) => console.log(error))
   }
 
   return (

@@ -74,6 +74,10 @@ If you want to develop the Stripe payment pipeline, you can activate using the f
 stripe listen --forward-to localhost:3000/api/stripe_webhook
 ```
 
+### Project Structure
+
+All website pages are in `/pages`, database schemas, migrations, and seeds in `/db`, translations in `/langs`, mailer functions in `/mailers`, public files and images in `/public`, and tests in `/test`.
+
 ## Maintainers :building_construction:
 
 These people spend their time making sure the platform is operational and improves over time. They're always available for messages of appreciation :purple_heart:

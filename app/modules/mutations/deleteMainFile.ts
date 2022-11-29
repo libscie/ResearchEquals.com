@@ -1,9 +1,9 @@
-import { NotFoundError, resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import axios from "axios"
 
 export default resolver.pipe(resolver.authorize(), async ({ id, uuid }) => {
-  const module = await db.module.update({
+  const currentModule = await db.module.update({
     where: { id },
     data: { main: {} },
   })
@@ -11,7 +11,7 @@ export default resolver.pipe(resolver.authorize(), async ({ id, uuid }) => {
   // Force all authors to reapprove for publishing
   await db.authorship.updateMany({
     where: {
-      moduleId: module.id,
+      moduleId: currentModule.id,
     },
     data: {
       readyToPublish: false,

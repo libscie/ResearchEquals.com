@@ -1,4 +1,4 @@
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db, { Prisma } from "db"
 import generateSuffix from "./generateSuffix"
 
@@ -18,7 +18,7 @@ export default resolver.pipe(
       authorshipRank: 0,
     })
 
-    const module = await db.module.create({
+    const currentModule = await db.module.create({
       data: {
         prefix: process.env.DOI_PREFIX,
         suffix: await generateSuffix(undefined),
@@ -38,6 +38,6 @@ export default resolver.pipe(
       },
     })
 
-    return module.suffix
+    return currentModule.suffix
   }
 )

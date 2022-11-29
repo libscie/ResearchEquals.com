@@ -1,4 +1,4 @@
-import { useMutation, validateZodSchema } from "blitz"
+import { useMutation } from "@blitzjs/rpc"
 import { useFormik } from "formik"
 import toast from "react-hot-toast"
 import { z } from "zod"
@@ -7,6 +7,7 @@ import changeEmailConsent from "../../users/mutations/changeEmailConsent"
 import changeMemberEmails from "../../memberships/mutations/changeMemberEmails"
 import { emailNotificationsAtom } from "../utils/Atoms"
 import { useRecoilState } from "recoil"
+import { validateZodSchema } from "blitz"
 
 const EmailSettings = ({ user, setIsOpen }) => {
   const [emailNotifications, setEmailNotifications] = useRecoilState(emailNotificationsAtom)
@@ -28,7 +29,7 @@ const EmailSettings = ({ user, setIsOpen }) => {
           values.emailConsent != user.emailConsent ||
           values.marketingConsent != user.marketingConsent
         ) {
-          toast.promise(
+          await toast.promise(
             changeEmailMutation({
               emailConsent: values.emailConsent,
               marketingConsent: values.marketingConsent,
@@ -41,7 +42,7 @@ const EmailSettings = ({ user, setIsOpen }) => {
           )
         }
 
-        user.memberships.map((membership) => {
+        user.memberships.map(async (membership) => {
           if (
             values[`${membership.workspace.handle}-invitations`] !=
               emailNotifications[`${membership.workspace.handle}-invitations`] ||
@@ -52,7 +53,7 @@ const EmailSettings = ({ user, setIsOpen }) => {
             values[`${membership.workspace.handle}-collections`] !=
               emailNotifications[`${membership.workspace.handle}-collections`]
           )
-            toast.promise(
+            await toast.promise(
               changeMemberEmailsMutation({
                 id: membership.id,
                 invitations: values[`${membership.workspace.handle}-invitations`],

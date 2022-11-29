@@ -1,13 +1,13 @@
-import { NotFoundError, resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import axios from "axios"
 import { Prisma } from "prisma"
 
 export default resolver.pipe(resolver.authorize(), async ({ id, uuid }) => {
-  const module = await db.module.findFirst({
+  const currentModule = await db.module.findFirst({
     where: { id },
   })
-  let supportingFiles = module!.supporting as Prisma.JsonObject
+  let supportingFiles = currentModule!.supporting as Prisma.JsonObject
   supportingFiles.files = supportingFiles.files.filter((file) => file.uuid !== uuid)
 
   // Force all authors to reapprove for publishing
@@ -76,7 +76,7 @@ export default resolver.pipe(resolver.authorize(), async ({ id, uuid }) => {
   // Force all authors to reapprove for publishing
   await db.authorship.updateMany({
     where: {
-      moduleId: module!.id,
+      moduleId: currentModule!.id,
     },
     data: {
       readyToPublish: false,

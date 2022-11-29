@@ -1,4 +1,4 @@
-import { useMutation } from "blitz"
+import { useMutation } from "@blitzjs/rpc"
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import toast from "react-hot-toast"
@@ -93,7 +93,7 @@ export default function AcceptSubmissionToCollectionModal({
                         : "bg-red-50 text-red-700 hover:bg-red-200 focus:ring-red-500 dark:text-red-500"
                     } mr-2 inline-flex rounded-md py-2 px-4 text-sm font-medium focus:outline-none focus:ring-2  focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:hover:border-gray-400 dark:hover:bg-gray-700`}
                     onClick={async () => {
-                      toast.promise(
+                      await toast.promise(
                         handleSubmissionActiveMutation({
                           submissionId: submission.id,
                           editorId,

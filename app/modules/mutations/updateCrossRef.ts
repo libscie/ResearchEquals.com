@@ -1,4 +1,4 @@
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import { isURI } from "../../core/crossref/ai_program"
 import submitToCrossRef from "app/core/utils/submitToCrossRef"
@@ -8,7 +8,7 @@ export default resolver.pipe(resolver.authorize(), async ({ id }: { id: number }
   const datetime = Date.now()
 
   // TODO: Can be simplified along with stripe_webhook.ts and publishModule.ts
-  const module = await db.module.findFirst({
+  const currentModule = await db.module.findFirst({
     where: {
       id,
     },
@@ -35,22 +35,22 @@ export default resolver.pipe(resolver.authorize(), async ({ id }: { id: number }
     },
   })
 
-  if (!module!.main) throw Error("Main file is empty")
+  if (!currentModule!.main) throw Error("Main file is empty")
 
-  const licenseUrl = module?.license?.url ?? ""
+  const licenseUrl = currentModule?.license?.url ?? ""
   if (!isURI(licenseUrl)) throw Error("License URL is not a valid URI")
 
-  const resolveUrl = `${process.env.APP_ORIGIN}/modules/${module!.suffix}`
+  const resolveUrl = `${process.env.APP_ORIGIN}/modules/${currentModule!.suffix}`
 
   if (!isURI(resolveUrl)) throw Error("Resolve URL is not a valid URI")
 
   await submitToCrossRef({
     xmlData: moduleXml({
-      module,
+      currentModule,
       licenseUrl,
       resolveUrl,
     }),
-    suffix: module!.suffix,
+    suffix: currentModule!.suffix,
   })
   return true
 })

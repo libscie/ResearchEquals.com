@@ -1,10 +1,14 @@
-import { Link, useMutation, useQuery, useRouter, useSession } from "blitz"
+import Link from "next/link"
+import { getAntiCSRFToken, useSession } from "@blitzjs/auth"
+import { useRouter } from "next/router"
+import { useMutation, useQuery } from "@blitzjs/rpc"
 import { Fragment, useEffect, useState } from "react"
 import { Dialog, Switch, Transition } from "@headlessui/react"
 import { Close, Checkmark } from "@carbon/icons-react"
 import { toast } from "react-hot-toast"
 import createIndividualCollection from "../../collections/mutations/createIndividualCollection"
 import getCollectionSuffix from "../../collections/queries/getCollectionSuffix"
+import handlePayment from "../utils/handlePayment"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -23,6 +27,8 @@ export default function PayCreateCollectionModal({ user, price, type, workspace 
   function openModal() {
     setIsOpen(true)
   }
+
+  const antiCSRFToken = getAntiCSRFToken()
 
   return (
     <>
@@ -87,17 +93,18 @@ export default function PayCreateCollectionModal({ user, price, type, workspace 
                           type="submit"
                           role="link"
                           className="mr-2 inline-flex justify-center rounded-md bg-emerald-50 py-2 px-4 text-sm font-medium text-emerald-700 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-emerald-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
-                          onClick={() => {
-                            toast.promise(createIndividualCollectionMutation({}), {
-                              loading: "Creating collection...",
-                              success: (data) => {
-                                router.push(`/collections/${data}/admin`)
-                                return "Created collection!"
-                              },
-                              error: (err) => {
-                                return err.toString()
-                              },
-                            })
+                          onClick={async () => {
+                            await toast
+                              .promise(createIndividualCollectionMutation({}), {
+                                loading: "Creating collection...",
+                                success: "Created collection!",
+                                error: (err) => {
+                                  return err.toString()
+                                },
+                              })
+                              .then(async (data) => {
+                                await router.push(`/collections/${data}/admin`)
+                              })
                             closeModal()
                             // router.push("/collections")
                           }}
@@ -115,18 +122,7 @@ export default function PayCreateCollectionModal({ user, price, type, workspace 
                     </>
                   ) : (
                     <>
-                      <form
-                        action={
-                          user != null
-                            ? `/api/checkout_sessions_collections?email=${encodeURIComponent(
-                                user.email
-                              )}&workspaceId=${
-                                workspace.id
-                              }&collectionType=${type}&suffix=${generatedSuffix}`
-                            : ""
-                        }
-                        method="POST"
-                      >
+                      <form>
                         <div className="mt-2">
                           <p className="text-base text-gray-500 dark:text-gray-300">
                             Once you create this collection, you cannot delete it.
@@ -196,16 +192,27 @@ export default function PayCreateCollectionModal({ user, price, type, workspace 
                         <div className="mt-4">
                           <button
                             className="mr-2 inline-flex justify-center rounded-md bg-emerald-50 py-2 px-4 text-sm font-medium text-emerald-700 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-emerald-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+                            type="button"
                             disabled={!waiver}
                             onClick={(e) => {
                               if (user === null) {
                                 e.preventDefault()
-                                toast.error("Need to be logged in for this.")
+                                return toast.error("Need to be logged in for this.")
                               }
                               if (!workspace.firstName || !workspace.lastName) {
                                 e.preventDefault()
-                                toast.error("You must add your author names first.")
+                                return toast.error("You must add your author names first.")
                               }
+                              handlePayment(
+                                `/api/checkout_sessions_collections?email=${encodeURIComponent(
+                                  user.email
+                                )}&workspaceId=${
+                                  workspace.id
+                                }&collectionType=${type}&suffix=${generatedSuffix}`,
+                                router,
+                                toast,
+                                antiCSRFToken
+                              )
                             }}
                           >
                             Pay and Create

@@ -2,7 +2,7 @@ import { Viewer, Worker } from "@react-pdf-viewer/core"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
-import { a11yLight, a11yDark } from "react-syntax-highlighter/dist/cjs/styles/prism"
+import { prism, a11yDark } from "react-syntax-highlighter/dist/cjs/styles/prism"
 import { useMediaPredicate } from "react-media-hook"
 
 import "@react-pdf-viewer/core/lib/styles/index.css"
@@ -10,7 +10,7 @@ import remarkMath from "remark-math"
 import rehypeKatex from "rehype-katex"
 import "katex/dist/katex.min.css" // `rehype-katex` does not import the CSS for you
 import { useEffect, useState } from "react"
-import { Image } from "blitz"
+import Image from "next/image"
 
 const PDFJS_DIST_VERSION = process.env.PDFJS_DIST_VERSION
 
@@ -23,6 +23,9 @@ const MainFileViewer = ({ mainFile, module }) => {
       fetch(mainFile.cdnUrl)
         .then((response) => response.text())
         .then((body) => setMarkdown(body))
+        .catch((error) => {
+          console.log(error.message)
+        })
     }
   }, [])
   return (
@@ -61,7 +64,7 @@ const MainFileViewer = ({ mainFile, module }) => {
                     const match = /language-(\w+)/.exec(className || "")
                     return !inline && match ? (
                       <SyntaxHighlighter
-                        style={prefersDarkMode ? a11yDark : a11yLight}
+                        style={prefersDarkMode ? a11yDark : prism}
                         language={match[1]}
                         PreTag="div"
                         class="coc"

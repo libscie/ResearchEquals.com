@@ -1,5 +1,5 @@
+import { useMutation } from "@blitzjs/rpc"
 import { Download, TrashCan } from "@carbon/icons-react"
-import { useMutation } from "blitz"
 import toast from "react-hot-toast"
 import { filesize } from "filesize"
 
@@ -44,7 +44,7 @@ const EditSupportingFileDisplay = ({ name, size, url, uuid, moduleId, setQueryDa
             isOpen={confirmDeleteOpen}
             setIsOpen={setConfirmDeleteOpen}
             onSubmit={async () => {
-              toast.promise(deleteMutation({ id: moduleId, uuid }), {
+              await toast.promise(deleteMutation({ id: moduleId, uuid }), {
                 loading: "Deleting...",
                 success: (data) => {
                   setQueryData(data)
