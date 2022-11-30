@@ -32,9 +32,7 @@ const Navbar = ({
           <div className="flex md:absolute md:inset-y-0 md:left-0 lg:static xl:col-span-2">
             <div className="my-2 flex shrink-0 items-center">
               <Link href={Routes.Home()}>
-                <a>
-                  <ResearchEqualsLogo />
-                </a>
+                <ResearchEqualsLogo />
               </Link>
             </div>
           </div>

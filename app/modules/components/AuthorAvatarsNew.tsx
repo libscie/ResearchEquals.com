@@ -9,7 +9,7 @@ const AuthorAvatarsNew = ({ authors, size, toDisplay }) => {
         {authors.map((author, index) => (
           <Fragment key={author.id}>
             {index < toDisplay ? (
-              <Link href={Routes.HandlePage({ handle: author.workspace.handle })}>
+              <Link href={Routes.HandlePage({ handle: author.workspace.handle })} legacyBehavior>
                 <img
                   className={`relative inline-block ${size} rounded-full ring-1 ring-white transition ease-in-out hover:scale-110 dark:ring-gray-800`}
                   src={author.workspace.avatar}

@@ -65,17 +65,17 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                                 ? Routes.ModulePage({ suffix: module.suffix })
                                 : `https://doi.org/${module.prefix}/${module.suffix}`
                             }
+                            target="_blank"
+                            className="flex-grow"
                           >
-                            <a target="_blank" className="flex-grow">
-                              <ModuleCard
-                                type={module.type.name}
-                                title={module.title}
-                                status={`${module.prefix}/${module.suffix}`}
-                                time={moment(module.publishedAt).fromNow()}
-                                timeText="Published"
-                                authors={module.authors}
-                              />
-                            </a>
+                            <ModuleCard
+                              type={module.type.name}
+                              title={module.title}
+                              status={`${module.prefix}/${module.suffix}`}
+                              time={moment(module.publishedAt).fromNow()}
+                              timeText="Published"
+                              authors={module.authors}
+                            />
                           </Link>
                           <button
                             className="px-2 hover:bg-gray-50 dark:hover:bg-gray-800"

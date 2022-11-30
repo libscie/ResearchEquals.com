@@ -54,10 +54,11 @@ const WorkMetadata = ({ submission, editorIsAdmin, refetchFn }) => {
       {submission.submittedBy && (
         <p className="text-xs">
           Submitted by{" "}
-          <Link href={Routes.HandlePage({ handle: submission.editor.workspace.handle })}>
-            <a target="_blank">
-              {submission.editor!.workspace.firstName} {submission.editor!.workspace.lastName}
-            </a>
+          <Link
+            href={Routes.HandlePage({ handle: submission.editor.workspace.handle })}
+            target="_blank"
+          >
+            {submission.editor!.workspace.firstName} {submission.editor!.workspace.lastName}
           </Link>
         </p>
       )}
@@ -147,10 +148,11 @@ const WorkComment = ({ submission, index, editorIdSelf, refetchFn, editorIsAdmin
               />
               <div className="mx-1 inline-block h-full align-middle">
                 <span className="inline-block h-full align-middle"></span>
-                <Link href={Routes.HandlePage({ handle: submission.editor.workspace.handle })}>
-                  <a target="_blank">
-                    {submission.editor!.workspace.firstName} {submission.editor!.workspace.lastName}
-                  </a>
+                <Link
+                  href={Routes.HandlePage({ handle: submission.editor.workspace.handle })}
+                  target="_blank"
+                >
+                  {submission.editor!.workspace.firstName} {submission.editor!.workspace.lastName}
                 </Link>
               </div>
             </span>

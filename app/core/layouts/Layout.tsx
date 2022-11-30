@@ -35,14 +35,14 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
     <>
       {/* UNCOMMENT IF announcemen banner needs to be used */}
       {/* <AnnouncementBanner
-        open={isAnnouncementBannerOpen}
-        onClose={() => setAnnouncementBannerOpen(false)}
-      >
-        Want to learn about research modules? <br className="md:hidden" />
-        <Link href="/">
-          <a className="underline"> 👉 Join a ResearchEquals Cohort</a>
-        </Link>
-      </AnnouncementBanner> */}
+      open={isAnnouncementBannerOpen}
+      onClose={() => setAnnouncementBannerOpen(false)}
+    >
+      Want to learn about research modules? <br className="md:hidden" />
+      <Link href="/">
+        <a className="underline"> 👉 Join a ResearchEquals Cohort</a>
+      </Link>
+    </AnnouncementBanner> */}
       <Toaster position="bottom-center" reverseOrder={false} />
       <Head>
         <title>{title || "ResearchEquals"}</title>
@@ -52,25 +52,25 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
         {/* {cookie ? <script type="text/javascript">{crispCode}</script> : ""} */}
         {/* <script type="text/javascript">{cookie ? crispCode : false}</script> */}
         {/* <div
-          dangerouslySetInnerHTML={{
-            __html:
-              getCookieConsentValue("researchequals-website-cookie") !== "true"
-                ? '<script type="text/javascript"></script'
-                : '<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="cb17dd6e-f56c-4c2c-a85f-463da113e860";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>',
-          }}
-        /> */}
+        dangerouslySetInnerHTML={{
+          __html:
+            getCookieConsentValue("researchequals-website-cookie") !== "true"
+              ? '<script type="text/javascript"></script'
+              : '<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="cb17dd6e-f56c-4c2c-a85f-463da113e860";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>',
+        }}
+      /> */}
         {headChildren}
       </Head>
       <RecoilRoot>
         <div className="flex min-h-screen flex-col bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
           {/* <div className="z-50 w-screen bg-red-700 py-4 text-center text-white">
-          <Link href="https://status.crossref.org/">
-          <a target="_blank" className="underline">
-          CrossRef services are interrupted.
-          </a>
-          </Link>{" "}
-          Publishing not possible until resolved.
-        </div> */}
+        <Link href="https://status.crossref.org/">
+        <a target="_blank" className="underline">
+        CrossRef services are interrupted.
+        </a>
+        </Link>{" "}
+        Publishing not possible until resolved.
+      </div> */}
           <div className="flex flex-grow flex-col">{children}</div>
         </div>
       </RecoilRoot>
@@ -106,10 +106,12 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
       >
         We use cookies for essential website security purposes. You can withdraw your consent for
         optional chat cookies at any time. See also our{" "}
-        <Link href={Routes.PrivacyPage()}>
-          <a className="underline hover:text-white hover:no-underline" target="_blank">
-            Privacy policy
-          </a>
+        <Link
+          href={Routes.PrivacyPage()}
+          className="underline hover:text-white hover:no-underline"
+          target="_blank"
+        >
+          Privacy policy
         </Link>
         .
       </CookieConsent>

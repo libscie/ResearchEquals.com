@@ -35,12 +35,39 @@ const ForgotPasswordPage: BlitzPage = () => {
   })
 
   return (
+    // <div>
+    //   <h1>Forgot your password?</h1>
+    //   {isSuccess ? (
+    //     <div>
+    //       <h2>Request Submitted</h2>
+    //       <p>
+    //         If your email is in our system, you will receive instructions to reset your password
+    //         shortly.
+    //       </p>
+    //     </div>
+    //   ) : (
+    //     <Form
+    //       submitText="Send Reset Password Instructions"
+    //       schema={ForgotPassword}
+    //       initialValues={{ email: "" }}
+    //       onSubmit={async (values) => {
+    //         try {
+    //           await forgotPasswordMutation(values)
+    //         } catch (error) {
+    //           return {
+    //             [FORM_ERROR]: "Sorry, we had an unexpected error. Please try again.",
+    //           }
+    //         }
+    //       }}
+    //     >
+    //       <LabeledTextField name="email" label="Email" placeholder="Email" />
+    //     </Form>
+    //   )}
+    // </div>
     <div className="flex min-h-screen flex-col justify-center bg-gray-100 py-12 text-gray-900 dark:bg-gray-900 dark:text-white sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Link href={Routes.Home()}>
-          <a>
-            <ResearchEqualsLogo />
-          </a>
+          <ResearchEqualsLogo />
         </Link>
         <h1 className="mt-6 text-center text-3xl font-extrabold ">Forgot your password?</h1>
         {isSuccess ? (
@@ -86,36 +113,6 @@ const ForgotPasswordPage: BlitzPage = () => {
         )}
       </div>
     </div>
-    // <div>
-    //   <h1>Forgot your password?</h1>
-
-    //   {isSuccess ? (
-    //     <div>
-    //       <h2>Request Submitted</h2>
-    //       <p>
-    //         If your email is in our system, you will receive instructions to reset your password
-    //         shortly.
-    //       </p>
-    //     </div>
-    //   ) : (
-    //     <Form
-    //       submitText="Send Reset Password Instructions"
-    //       schema={ForgotPassword}
-    //       initialValues={{ email: "" }}
-    //       onSubmit={async (values) => {
-    //         try {
-    //           await forgotPasswordMutation(values)
-    //         } catch (error) {
-    //           return {
-    //             [FORM_ERROR]: "Sorry, we had an unexpected error. Please try again.",
-    //           }
-    //         }
-    //       }}
-    //     >
-    //       <LabeledTextField name="email" label="Email" placeholder="Email" />
-    //     </Form>
-    //   )}
-    // </div>
   )
 }
 

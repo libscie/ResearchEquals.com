@@ -38,9 +38,7 @@ export const LoginForm = (props: LoginFormProps) => {
     <div className="flex min-h-screen flex-col justify-center bg-gray-100 py-12 text-gray-900 dark:bg-gray-900 dark:text-white sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Link href={Routes.Home()}>
-          <a>
-            <ResearchEqualsLogo />
-          </a>
+          <ResearchEqualsLogo />
         </Link>
         <h1 className="mt-6 text-center text-3xl font-extrabold ">Log in to ResearchEquals</h1>
         <div className="my-8 mx-auto rounded bg-white py-4 px-6 shadow dark:bg-gray-800">
@@ -87,10 +85,11 @@ export const LoginForm = (props: LoginFormProps) => {
               </div>
             </div>
             <div className="my-4 text-center text-sm font-medium text-indigo-600 dark:text-gray-200">
-              <Link href={Routes.ForgotPasswordPage()}>
-                <a className="underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0">
-                  Forgot your password?
-                </a>
+              <Link
+                href={Routes.ForgotPasswordPage()}
+                className="underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0"
+              >
+                Forgot your password?
               </Link>
             </div>
             <button
@@ -102,10 +101,11 @@ export const LoginForm = (props: LoginFormProps) => {
           </form>
           <div className="mt-4 text-center text-sm font-medium text-gray-900 dark:text-white">
             Do not have an account?{" "}
-            <Link href={Routes.SignupPage()}>
-              <a className="text-indigo-600 underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:text-gray-200">
-                Sign up
-              </a>
+            <Link
+              href={Routes.SignupPage()}
+              className="text-indigo-600 underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:text-gray-200"
+            >
+              Sign up
             </Link>
           </div>
         </div>

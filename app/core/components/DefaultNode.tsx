@@ -31,10 +31,11 @@ const DefaultNode = ({
               ? Routes.ModulePage({ suffix: data?.module.suffix })
               : `https://doi.org/${data?.module.prefix}/${data?.module.suffix}`
           }
+          target="_blank"
+          rel="noreferrer"
+          className="ml-2 inline-block align-middle"
         >
-          <a target="_blank" rel="noreferrer" className="ml-2 inline-block align-middle">
-            <Launch size={16} />
-          </a>
+          <Launch size={16} />
         </Link>
       </div>
     </div>

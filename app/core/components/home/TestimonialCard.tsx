@@ -32,11 +32,9 @@ const TestimonialCard = ({
         </div>
       )}
       <p className="text-base md:text-lg">“{message}”</p>
-      <Link href={link!}>
-        <a target="_blank">
-          <div className="font-bold">{name}</div>
-          {position && <div>{position}</div>}
-        </a>
+      <Link href={link!} target="_blank">
+        <div className="font-bold">{name}</div>
+        {position && <div>{position}</div>}
       </Link>
     </NotchedCard>
   )

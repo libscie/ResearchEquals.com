@@ -23,19 +23,17 @@ const ModuleBoxFeed = ({ modules, fetchNextPage, hasNextPage, isFetchingNextPage
               className="my-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4"
             >
               {page.modules.map((module) => (
-                <Link key={module.suffix} href={Routes.ModulePage({ suffix: module.suffix })}>
-                  <a
-                    className="module flex cursor-pointer flex-col p-4 text-white"
-                    style={{ backgroundColor: module.displayColor }}
-                  >
-                    <h2 className="mb-2 flex-grow text-base font-normal leading-5">
-                      {module.title}
-                    </h2>
-                    <span className="flex w-full">
-                      <span className="flex-grow align-text-bottom text-gray-300"></span>
-                      <AuthorAvatarsNew authors={module.authors} size="h-6 w-6" toDisplay={4} />
-                    </span>
-                  </a>
+                <Link
+                  key={module.suffix}
+                  href={Routes.ModulePage({ suffix: module.suffix })}
+                  className="module flex cursor-pointer flex-col p-4 text-white"
+                  style={{ backgroundColor: module.displayColor }}
+                >
+                  <h2 className="mb-2 flex-grow text-base font-normal leading-5">{module.title}</h2>
+                  <span className="flex w-full">
+                    <span className="flex-grow align-text-bottom text-gray-300"></span>
+                    <AuthorAvatarsNew authors={module.authors} size="h-6 w-6" toDisplay={4} />
+                  </span>
                 </Link>
               ))}
             </div>

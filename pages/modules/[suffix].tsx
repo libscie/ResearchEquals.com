@@ -232,8 +232,8 @@ const Module = ({ currentModule, mainFile, supportingRaw }) => {
                   success: (data) => (
                     <>
                       Next step created.
-                      <Link href={`/drafts?suffix=${data}`}>
-                        <a className="ml-1 underline">View draft.</a>
+                      <Link href={`/drafts?suffix=${data}`} className="ml-1 underline">
+                        View draft.
                       </Link>
                     </>
                   ),
@@ -307,10 +307,11 @@ const Module = ({ currentModule, mainFile, supportingRaw }) => {
                         <>
                           {reference.authors.map((author, index) => (
                             <>
-                              <Link href={Routes.HandlePage({ handle: author!.workspace!.handle })}>
-                                <a target="_blank">
-                                  {author!.workspace!.lastName}, {author!.workspace!.firstName}
-                                </a>
+                              <Link
+                                href={Routes.HandlePage({ handle: author!.workspace!.handle })}
+                                target="_blank"
+                              >
+                                {author!.workspace!.lastName},{author!.workspace!.firstName}
                               </Link>
                               {index === reference.authors.length - 1 ? "" : "; "}
                             </>
@@ -352,10 +353,9 @@ const Module = ({ currentModule, mainFile, supportingRaw }) => {
                             ? Routes.ModulePage({ suffix: reference.suffix })
                             : reference.url!
                         }
+                        target="_blank"
                       >
-                        <a target="_blank">
-                          <span className="underline">{reference.url}</span>
-                        </a>
+                        <span className="underline">{reference.url}</span>
                       </Link>
                       . <span className="italic">{reference.publishedWhere}</span>.
                     </li>

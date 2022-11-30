@@ -146,13 +146,12 @@ const Handle = ({ workspace, expire, signature }) => {
                     >
                       <path d="M12.6007 8.01734C12.3707 7.91001 12.1533 7.838 11.9473 7.804C11.742 7.76868 11.4127 7.752 10.9567 7.752H9.77266V12.6793H10.9867C11.46 12.6793 11.828 12.6467 12.0907 12.582C12.3533 12.5173 12.572 12.436 12.7473 12.336C12.9227 12.2367 13.0833 12.1147 13.2293 11.9687C13.6967 11.494 13.9307 10.8953 13.9307 10.1713C13.9307 9.45998 13.6907 8.87932 13.21 8.42998C13.0327 8.26331 12.8287 8.12531 12.6007 8.0173V8.01734ZM10 2C5.58134 2 2 5.582 2 10C2 14.418 5.58134 18 10 18C14.4187 18 18 14.418 18 10C18 5.582 14.4187 2 10 2ZM7.34399 13.5327H6.39598V6.908H7.34399V13.5327ZM6.86934 6.21601C6.51001 6.21601 6.21734 5.92534 6.21734 5.564C6.21734 5.20534 6.50933 4.91268 6.86934 4.91268C7.23 4.91268 7.522 5.20467 7.522 5.564C7.52129 5.926 7.23 6.21601 6.86934 6.21601ZM14.656 11.4933C14.4853 11.898 14.242 12.254 13.9253 12.5607C13.6033 12.878 13.2287 13.1153 12.8013 13.2767C12.5514 13.374 12.3227 13.44 12.114 13.474C11.9047 13.5067 11.5067 13.5227 10.918 13.5227H8.82269V6.908H11.056C11.958 6.908 12.67 7.04201 13.1954 7.31267C13.72 7.58266 14.1367 7.98134 14.4467 8.50534C14.7567 9.03001 14.912 9.60268 14.912 10.2213C14.9128 10.6653 14.826 11.0893 14.656 11.4933H14.656Z" />
                     </svg>
-                    <Link href={`https://orcid.org/${workspace.orcid}`}>
-                      <a
-                        target="_blank"
-                        className="text-sm font-normal leading-4 text-gray-500 underline dark:text-gray-200"
-                      >
-                        {workspace.orcid}
-                      </a>
+                    <Link
+                      href={`https://orcid.org/${workspace.orcid}`}
+                      target="_blank"
+                      className="text-sm font-normal leading-4 text-gray-500 underline dark:text-gray-200"
+                    >
+                      {workspace.orcid}
                     </Link>
                   </p>
                 </p>
@@ -168,13 +167,12 @@ const Handle = ({ workspace, expire, signature }) => {
                       className="mr-1 inline-block h-4 w-4 align-middle text-gray-700 dark:text-gray-400"
                       aria-hidden="true"
                     />
-                    <Link href={workspace.url}>
-                      <a
-                        target="_blank"
-                        className="text-sm font-normal leading-4 text-gray-500 underline dark:text-gray-200"
-                      >
-                        {workspace.url}
-                      </a>
+                    <Link
+                      href={workspace.url}
+                      target="_blank"
+                      className="text-sm font-normal leading-4 text-gray-500 underline dark:text-gray-200"
+                    >
+                      {workspace.url}
                     </Link>
                   </p>
                 </p>

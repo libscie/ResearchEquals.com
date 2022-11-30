@@ -170,7 +170,7 @@ const DashboardContent = ({
                 } else {
                   return (
                     <>
-                      <Link href={item.to}>
+                      <Link href={item.to} legacyBehavior>
                         <button
                           className="flex-grow px-4 py-5 text-left hover:bg-gray-50 disabled:opacity-50 dark:hover:bg-gray-800 sm:p-6"
                           disabled={item.stat === 0}

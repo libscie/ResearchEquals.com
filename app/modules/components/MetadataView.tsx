@@ -36,8 +36,8 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
           </div>
           <div className="flex-grow py-2">
             License:{" "}
-            <Link href={module.license!.url!}>
-              <a target="_blank">{module.license!.name}</a>
+            <Link href={module.license!.url!} target="_blank">
+              {module.license!.name}
             </Link>
           </div>
           {ISO6391.getName(module.language) && (

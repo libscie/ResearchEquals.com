@@ -20,8 +20,11 @@ const MetadataImmutable = ({ currentModule }) => {
         <div className="flex-grow py-2">
           {currentModule.published ? (
             <>
-              <Link href={`https://doi.org/${currentModule.prefix}/${currentModule.suffix}`}>
-                <a className="underline">{`${currentModule.prefix}/${currentModule.suffix}`}</a>
+              <Link
+                href={`https://doi.org/${currentModule.prefix}/${currentModule.suffix}`}
+                className="underline"
+              >
+                {`${currentModule.prefix}/${currentModule.suffix}`}
               </Link>
             </>
           ) : (
@@ -31,8 +34,8 @@ const MetadataImmutable = ({ currentModule }) => {
           )}
         </div>
         <div className="flex-grow py-2">
-          <Link href={currentModule.license!.url!}>
-            <a target="_blank">{currentModule.license!.name}</a>
+          <Link href={currentModule.license!.url!} target="_blank">
+            {currentModule.license!.name}
           </Link>
         </div>
         {ISO6391.getName(currentModule.language) && (

@@ -41,13 +41,11 @@ const EditorCard = ({ editor, isAdmin, isSelf, refetchFn }) => {
       <div className={`flex ${editor.isActive ? "" : "opacity-50"} my-2`}>
         <img src={editor.workspace.avatar} className="mx-2 h-12 w-12 rounded-full" />
         <div className="inline-block flex-grow">
-          <Link href={Routes.HandlePage({ handle: editor.workspace.handle })}>
-            <a target="_blank">
-              <p className="line-clamp-1">
-                {editor.workspace.firstName} {editor.workspace.lastName}
-              </p>
-              <p className="text-sm">@{editor.workspace.handle}</p>
-            </a>
+          <Link href={Routes.HandlePage({ handle: editor.workspace.handle })} target="_blank">
+            <p className="line-clamp-1">
+              {editor.workspace.firstName} {editor.workspace.lastName}
+            </p>
+            <p className="text-sm">@{editor.workspace.handle}</p>
           </Link>
         </div>
         {isAdmin && (

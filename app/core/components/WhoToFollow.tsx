@@ -21,16 +21,14 @@ const WhoToFollow = ({ data, workspace, refetch, refetchFeed }) => {
                 className="inline-block h-10 h-full w-10 rounded-full align-middle"
               />
             </div>
-            <Link href={Routes.HandlePage({ handle: author.handle })}>
-              <a className="flex-grow">
-                <span className="inline-block h-full align-middle"></span>
-                <p className="my-auto inline-block align-middle text-sm font-normal leading-4 text-gray-700 dark:text-gray-200">
-                  {author.firstName} {author.lastName}
-                  <p className="text-xs font-normal leading-4 text-gray-500 dark:text-gray-400">
-                    @{author.handle}
-                  </p>
+            <Link href={Routes.HandlePage({ handle: author.handle })} className="flex-grow">
+              <span className="inline-block h-full align-middle"></span>
+              <p className="my-auto inline-block align-middle text-sm font-normal leading-4 text-gray-700 dark:text-gray-200">
+                {author.firstName} {author.lastName}
+                <p className="text-xs font-normal leading-4 text-gray-500 dark:text-gray-400">
+                  @{author.handle}
                 </p>
-              </a>
+              </p>
             </Link>
             {workspace!.following.filter((follow) => follow.handle === author.handle).length > 0 ? (
               <UnfollowButton author={author} refetchFn={refetchFn} />
@@ -41,7 +39,7 @@ const WhoToFollow = ({ data, workspace, refetch, refetchFeed }) => {
         </>
       ))}
       <div className="my-4 text-center">
-        <Link href="/browse">
+        <Link href="/browse" legacyBehavior>
           <button className="whitespace-nowrap rounded border-0 bg-indigo-100 px-4 py-2 text-sm font-normal leading-5 text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">
             Find more authors
           </button>

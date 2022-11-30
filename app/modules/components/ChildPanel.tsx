@@ -52,30 +52,32 @@ const ChildPanel = ({ openObject, openFunction, module }) => {
                         <>
                           <li className="">
                             {child.publishedWhere === "ResearchEquals" ? (
-                              <Link href={Routes.ModulePage({ suffix: child.suffix })}>
-                                <a target="_blank">
-                                  <ModuleCard
-                                    type={child.type.name}
-                                    title={child.title}
-                                    status={`${child.prefix}/${child.suffix}`}
-                                    time={moment(child.publishedAt).fromNow()}
-                                    timeText="Published"
-                                    authors={child.authors}
-                                  />
-                                </a>
+                              <Link
+                                href={Routes.ModulePage({ suffix: child.suffix })}
+                                target="_blank"
+                              >
+                                <ModuleCard
+                                  type={child.type.name}
+                                  title={child.title}
+                                  status={`${child.prefix}/${child.suffix}`}
+                                  time={moment(child.publishedAt).fromNow()}
+                                  timeText="Published"
+                                  authors={child.authors}
+                                />
                               </Link>
                             ) : (
-                              <Link href={`https://doi.org/${child.prefix}/${child.suffix}`}>
-                                <a target="_blank">
-                                  <ModuleCard
-                                    type={child.type.name}
-                                    title={child.title}
-                                    status={`${child.prefix}/${child.suffix}`}
-                                    time={moment(child.publishedAt).fromNow()}
-                                    timeText="Published"
-                                    authors={child.authors}
-                                  />
-                                </a>
+                              <Link
+                                href={`https://doi.org/${child.prefix}/${child.suffix}`}
+                                target="_blank"
+                              >
+                                <ModuleCard
+                                  type={child.type.name}
+                                  title={child.title}
+                                  status={`${child.prefix}/${child.suffix}`}
+                                  time={moment(child.publishedAt).fromNow()}
+                                  timeText="Published"
+                                  authors={child.authors}
+                                />
                               </Link>
                             )}
                           </li>

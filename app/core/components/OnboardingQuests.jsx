@@ -486,16 +486,15 @@ const OnboardingDiscord = () => {
           </div>
           <div className="block text-right text-fuchsia-700 dark:text-fuchsia-200">
             <p className="mt-3 text-sm md:mt-0 md:ml-6">
-              <Link href="https://discord.gg/SefsGJWWSw">
-                <a
-                  target="_blank"
-                  className="underline"
-                  onClick={() => {
-                    setUserDiscord(!userDiscord)
-                  }}
-                >
-                  Join chat <span aria-hidden="true">&rarr;</span>
-                </a>
+              <Link
+                href="https://discord.gg/SefsGJWWSw"
+                target="_blank"
+                className="underline"
+                onClick={() => {
+                  setUserDiscord(!userDiscord)
+                }}
+              >
+                Join chat<span aria-hidden="true">&rarr;</span>
               </Link>
             </p>
           </div>

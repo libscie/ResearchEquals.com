@@ -164,11 +164,10 @@ const Admin: BlitzPage = () => {
                           <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:text-white ">
                             <Link
                               href={`https://api.crossref.org/works/${module.prefix}/${module.suffix}`}
+                              target="_blank"
+                              className="underline"
                             >
-                              <a
-                                target="_blank"
-                                className="underline"
-                              >{`${module.prefix}/${module.suffix}`}</a>
+                              {`${module.prefix}/${module.suffix}`}
                             </Link>
                           </td>
                           <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
@@ -243,11 +242,10 @@ const Admin: BlitzPage = () => {
                           <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:text-white ">
                             <Link
                               href={`https://api.crossref.org/works/${process.env.DOI_PREFIX}/${collection.suffix}`}
+                              target="_blank"
+                              className="underline"
                             >
-                              <a
-                                target="_blank"
-                                className="underline"
-                              >{`${process.env.DOI_PREFIX}/${collection.suffix}`}</a>
+                              {`${process.env.DOI_PREFIX}/${collection.suffix}`}
                             </Link>
                           </td>
                           <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">

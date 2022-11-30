@@ -203,8 +203,11 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             ) : null}
                             <p className="text-xs">
                               Missing something?{" "}
-                              <Link href="mailto:info@libscie.org?subject=Missing module type">
-                                <a className="underline">Let us know!</a>
+                              <Link
+                                href="mailto:info@libscie.org?subject=Missing module type"
+                                className="underline"
+                              >
+                                Let us know!
                               </Link>
                             </p>
                           </label>
@@ -231,13 +234,14 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             className="my-1 flex text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
                           >
                             License{" "}
-                            <Link href="https://creativecommons.org/about/cclicenses">
-                              <a target="_blank">
-                                <InformationSquareFilled
-                                  size={32}
-                                  className="h-5 w-5 fill-current text-gray-700 dark:text-gray-200"
-                                />
-                              </a>
+                            <Link
+                              href="https://creativecommons.org/about/cclicenses"
+                              target="_blank"
+                            >
+                              <InformationSquareFilled
+                                size={32}
+                                className="h-5 w-5 fill-current text-gray-700 dark:text-gray-200"
+                              />
                             </Link>
                             {formik.touched.license && formik.errors.license ? (
                               <span className="text-red-500">- Required</span>
@@ -245,10 +249,12 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                           </label>
                           <p className="text-xs text-gray-700 dark:text-gray-200">
                             Get more information about licenses{" "}
-                            <Link href="https://creativecommons.org/about/cclicenses">
-                              <a className="underline" target="_blank">
-                                here.
-                              </a>
+                            <Link
+                              href="https://creativecommons.org/about/cclicenses"
+                              className="underline"
+                              target="_blank"
+                            >
+                              here.
                             </Link>
                           </p>
                           <div className="mt-1">
