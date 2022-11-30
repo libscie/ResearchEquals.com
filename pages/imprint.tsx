@@ -42,8 +42,8 @@ const Imprint: BlitzPage = () => {
               <div role="doc-subtitle" className="mt-2 max-w-2xl text-2xl">
                 <>
                   <p>
-                    <Link href="https://libscie.org">
-                      <a target="_blank">Liberate Science GmbH</a>
+                    <Link href="https://libscie.org" target="_blank">
+                      Liberate Science GmbH
                     </Link>
                   </p>
                   <p>Ebertystraße 44</p>

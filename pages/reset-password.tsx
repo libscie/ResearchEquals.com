@@ -58,9 +58,7 @@ const ResetPasswordPage: BlitzPage = () => {
     <div className="flex min-h-screen flex-col justify-center bg-gray-100 py-12 text-gray-900 dark:bg-gray-900 dark:text-white sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Link href={Routes.Home()}>
-          <a>
-            <ResearchEqualsLogo />
-          </a>
+          <ResearchEqualsLogo />
         </Link>
         <h1 className="mt-6 text-center text-3xl font-extrabold ">Reset password</h1>
         <div className="my-8 mx-auto rounded bg-white py-4 px-6 shadow dark:bg-gray-800">

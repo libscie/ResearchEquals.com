@@ -590,10 +590,11 @@ const ModuleEdit = ({
                     <>
                       {reference.authors.map((author, index) => (
                         <>
-                          <Link href={Routes.HandlePage({ handle: author!.workspace!.handle })}>
-                            <a target="_blank">
-                              {author!.workspace!.lastName}, {author!.workspace!.firstName}
-                            </a>
+                          <Link
+                            href={Routes.HandlePage({ handle: author!.workspace!.handle })}
+                            target="_blank"
+                          >
+                            {author!.workspace!.lastName},{author!.workspace!.firstName}
                           </Link>
                           {index === reference.authors.length - 1 ? "" : "; "}
                         </>
@@ -634,10 +635,9 @@ const ModuleEdit = ({
                         ? Routes.ModulePage({ suffix: reference.suffix! })
                         : reference.url!
                     }
+                    target="_blank"
                   >
-                    <a target="_blank">
-                      <span className="underline">{reference.url}</span>
-                    </a>
+                    <span className="underline">{reference.url}</span>
                   </Link>
                   . <span className="italic">{reference.publishedWhere}</span>.
                 </li>

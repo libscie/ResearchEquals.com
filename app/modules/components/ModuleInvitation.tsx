@@ -188,10 +188,11 @@ const ModuleInvitation = ({
                       <>
                         {reference.authors.map((author, index) => (
                           <>
-                            <Link href={Routes.HandlePage({ handle: author!.workspace!.handle })}>
-                              <a target="_blank">
-                                {author!.workspace!.lastName}, {author!.workspace!.firstName}
-                              </a>
+                            <Link
+                              href={Routes.HandlePage({ handle: author!.workspace!.handle })}
+                              target="_blank"
+                            >
+                              {author!.workspace!.lastName},{author!.workspace!.firstName}
                             </Link>
                             {index === reference.authors.length - 1 ? "" : "; "}
                           </>
@@ -226,10 +227,8 @@ const ModuleInvitation = ({
                     ({reference.publishedAt?.toISOString().substr(0, 4)}).{" "}
                     <span className="font-semibold">{reference.title}</span>
                     {reference.title.endsWith("." ? "" : ".")}{" "}
-                    <Link href={reference.url!}>
-                      <a target="_blank">
-                        <span className="underline">{reference.url}</span>
-                      </a>
+                    <Link href={reference.url!} target="_blank">
+                      <span className="underline">{reference.url}</span>
                     </Link>
                     . <span className="italic">{reference.publishedWhere}</span>.
                   </li>

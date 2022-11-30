@@ -39,28 +39,28 @@ const DropdownContents = ({
             buttonStyle="w-full py-2 bg-indigo-50 dark:bg-gray-800 text-indigo-700 dark:text-gray-200  border border-transparent text-sm leading-5 font-normal rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:border dark:border-gray-400 dark:hover:bg-gray-700"
             refetchFn={refetchFn}
           />
-          <Link href={Routes.Browse()}>
+          <Link href={Routes.Browse()} legacyBehavior>
             <button className="group block w-full rounded-md px-2 py-2 text-left text-base font-normal leading-5 text-gray-900 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800">
               Browse
             </button>
           </Link>
-          <Link href={Routes.Graph()}>
+          <Link href={Routes.Graph()} legacyBehavior>
             <button className="group block w-full rounded-md px-2 py-2 text-left text-base font-normal leading-5 text-gray-900 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800">
               Map
             </button>
           </Link>
-          <Link href={Routes.CollectionsPage()}>
+          <Link href={Routes.CollectionsPage()} legacyBehavior>
             <button className="group block w-full rounded-md px-2 py-2 text-left text-base font-normal leading-5 text-gray-900 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800">
               Collections
             </button>
           </Link>
-          <Link href={Routes.Dashboard()}>
+          <Link href={Routes.Dashboard()} legacyBehavior>
             <button className="group block w-full rounded-md px-2 py-2 text-left text-base font-normal leading-5 text-gray-900 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800">
               Dashboard
             </button>
           </Link>
 
-          <Link href={Routes.DraftsPage()}>
+          <Link href={Routes.DraftsPage()} legacyBehavior>
             <button className="group block w-full rounded-md px-2 py-2 text-left text-base font-normal leading-5 text-gray-900 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800">
               Drafts
               <span className="ml-3 inline-block rounded-full bg-gray-100 py-0.5 px-2.5 text-xs font-medium text-gray-800 group-hover:bg-indigo-100 group-hover:text-indigo-800 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:group-hover:bg-gray-700 dark:group-hover:text-gray-200">
@@ -68,7 +68,7 @@ const DropdownContents = ({
               </span>
             </button>
           </Link>
-          <Link href={Routes.InvitationsPage()}>
+          <Link href={Routes.InvitationsPage()} legacyBehavior>
             <button className="group block w-full rounded-md px-2 py-2 text-left text-base font-normal leading-5 text-gray-900 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800">
               Invitations
               <span className="ml-3 inline-block rounded-full bg-gray-100 py-0.5 px-2.5 text-xs font-medium text-gray-800 group-hover:bg-indigo-100 group-hover:text-indigo-800 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:group-hover:bg-gray-700 dark:group-hover:text-gray-200">
@@ -76,7 +76,7 @@ const DropdownContents = ({
               </span>
             </button>
           </Link>
-          <Link href={Routes.HandlePage({ handle: currentWorkspace.handle })}>
+          <Link href={Routes.HandlePage({ handle: currentWorkspace.handle })} legacyBehavior>
             <button className="group block w-full rounded-md px-2 py-2 text-left text-base font-normal leading-5 text-gray-900 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800">
               My Modules
             </button>
@@ -102,7 +102,7 @@ const DropdownContents = ({
             </div>
             <DropdownNotificationModal invitedModules={invitedModules} />
           </li>
-          <Link href="#">
+          <Link href="#" legacyBehavior>
             <SettingsModal
               styling="w-full text-left block rounded-md px-2 py-2 text-gray-500 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 text-base leading-5 font-normal"
               button="Settings"
@@ -126,12 +126,12 @@ const DropdownContents = ({
     return (
       <>
         <div className="px-5 pb-2">
-          <Link href={Routes.LoginPage()}>
+          <Link href={Routes.LoginPage()} legacyBehavior>
             <button className="block w-full rounded-md border-0 bg-indigo-100 py-2 px-0 text-sm font-normal leading-5 text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">
               Log in
             </button>
           </Link>
-          <Link href={Routes.SignupPage()}>
+          <Link href={Routes.SignupPage()} legacyBehavior>
             <button className="my-1 block w-full rounded-md bg-indigo-600 py-2 px-0 text-sm font-normal leading-5 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
               Create account
             </button>

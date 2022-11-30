@@ -57,14 +57,12 @@ function AuthorList({
                 <ChevronDown size={32} className="h-5 w-5 text-gray-400" />
               </button>
             </div>
-            <Link href={Routes.HandlePage({ handle: author.workspace.handle })}>
-              <a target="_blank">
-                <img
-                  src={author!.workspace!.avatar}
-                  alt={`Avatar of ${author!.workspace!.handle}`}
-                  className="inline-block h-10 h-full w-10 rounded-full align-middle transition ease-in-out hover:scale-110"
-                />
-              </a>
+            <Link href={Routes.HandlePage({ handle: author.workspace.handle })} target="_blank">
+              <img
+                src={author!.workspace!.avatar}
+                alt={`Avatar of ${author!.workspace!.handle}`}
+                className="inline-block h-10 h-full w-10 rounded-full align-middle transition ease-in-out hover:scale-110"
+              />
             </Link>
           </div>
           <div className="flex-grow">

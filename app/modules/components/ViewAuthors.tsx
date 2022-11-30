@@ -76,16 +76,15 @@ const ViewAuthors = ({ button, currentModule }) => {
                             </div>
                             <div className="flex-grow">
                               <span className="inline-block h-full align-middle"></span>
-                              <Link href={Routes.HandlePage({ handle: author.workspace.handle })}>
-                                <a
-                                  className="my-auto inline-block align-middle text-sm font-normal leading-4 text-gray-700 dark:text-gray-200"
-                                  target="_blank"
-                                >
-                                  {author!.workspace!.firstName} {author!.workspace!.lastName}
-                                  <p className="text-xs font-normal leading-4 text-gray-500 dark:text-gray-400">
-                                    @{author!.workspace!.handle}
-                                  </p>
-                                </a>
+                              <Link
+                                href={Routes.HandlePage({ handle: author.workspace.handle })}
+                                className="my-auto inline-block align-middle text-sm font-normal leading-4 text-gray-700 dark:text-gray-200"
+                                target="_blank"
+                              >
+                                {author!.workspace!.firstName} {author!.workspace!.lastName}
+                                <p className="text-xs font-normal leading-4 text-gray-500 dark:text-gray-400">
+                                  @{author!.workspace!.handle}
+                                </p>
                               </Link>
                             </div>
                             {ownWorkspace ? (

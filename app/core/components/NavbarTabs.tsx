@@ -66,31 +66,31 @@ const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invit
                 <Undo size={32} />{" "}
               </button>
               {tabs.map((tab) => (
-                <Link key={tab.name} href={tab.href}>
-                  <a
-                    className={classNames(
-                      tab.current
-                        ? "bg-gray-100 dark:bg-gray-800"
-                        : "hover:bg-gray-100 dark:hover:bg-gray-800",
-                      // tab.count === 0 ? "pointer-events-none text-gray-400 dark:text-gray-700" : "",
-                      "disabled group my-2 flex whitespace-nowrap rounded-md py-2 px-4 text-sm font-normal leading-5"
-                    )}
-                    aria-current={tab.current ? "page" : undefined}
-                  >
-                    {tab.name}
-                    {tab.count ? (
-                      <span
-                        className={classNames(
-                          tab.current
-                            ? "bg-indigo-100 text-indigo-800 dark:border dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
-                            : "bg-gray-100 text-gray-800 group-hover:bg-indigo-100 group-hover:text-indigo-800 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:group-hover:bg-gray-700 dark:group-hover:text-gray-200",
-                          "ml-3 hidden rounded-full py-0.5 px-2.5 text-xs font-medium md:inline-block"
-                        )}
-                      >
-                        {tab.count}
-                      </span>
-                    ) : null}
-                  </a>
+                <Link
+                  key={tab.name}
+                  href={tab.href}
+                  className={classNames(
+                    tab.current
+                      ? "bg-gray-100 dark:bg-gray-800"
+                      : "hover:bg-gray-100 dark:hover:bg-gray-800",
+                    // tab.count === 0 ? "pointer-events-none text-gray-400 dark:text-gray-700" : "",
+                    "disabled group my-2 flex whitespace-nowrap rounded-md py-2 px-4 text-sm font-normal leading-5"
+                  )}
+                  aria-current={tab.current ? "page" : undefined}
+                >
+                  {tab.name}
+                  {tab.count ? (
+                    <span
+                      className={classNames(
+                        tab.current
+                          ? "bg-indigo-100 text-indigo-800 dark:border dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
+                          : "bg-gray-100 text-gray-800 group-hover:bg-indigo-100 group-hover:text-indigo-800 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:group-hover:bg-gray-700 dark:group-hover:text-gray-200",
+                        "ml-3 hidden rounded-full py-0.5 px-2.5 text-xs font-medium md:inline-block"
+                      )}
+                    >
+                      {tab.count}
+                    </span>
+                  ) : null}
                 </Link>
               ))}
             </nav>

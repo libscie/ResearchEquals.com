@@ -66,9 +66,7 @@ const SignupPage: BlitzPage = () => {
     <div className="flex min-h-screen flex-col justify-center bg-gray-100 py-12 text-gray-900 dark:bg-gray-900 dark:text-white sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Link href={Routes.Home()}>
-          <a>
-            <ResearchEqualsLogo />
-          </a>
+          <ResearchEqualsLogo />
         </Link>
         <h1 className="mt-6 text-center text-3xl font-extrabold ">Join ResearchEquals</h1>
         <div className="my-8 rounded bg-white py-4 px-6 shadow dark:bg-gray-800">
@@ -194,22 +192,20 @@ const SignupPage: BlitzPage = () => {
               </Switch>
               <p className="mx-2 text-base font-normal text-gray-500 dark:text-gray-100">
                 I agree to the{" "}
-                <Link href="/terms">
-                  <a
-                    target="_blank"
-                    className="text-gray-700  underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:text-gray-100"
-                  >
-                    Terms of use
-                  </a>
+                <Link
+                  href="/terms"
+                  target="_blank"
+                  className="text-gray-700  underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:text-gray-100"
+                >
+                  Terms of use
                 </Link>{" "}
                 and to the processing of my personal data according to the{" "}
-                <Link href="/privacy">
-                  <a
-                    target="_blank"
-                    className="text-gray-700  underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:text-gray-100"
-                  >
-                    Privacy policy
-                  </a>
+                <Link
+                  href="/privacy"
+                  target="_blank"
+                  className="text-gray-700  underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:text-gray-100"
+                >
+                  Privacy policy
                 </Link>
               </p>
             </div>
@@ -258,13 +254,12 @@ const SignupPage: BlitzPage = () => {
               </Switch>
               <p className="mx-2 text-base font-normal text-gray-500 dark:text-gray-100">
                 I agree to the{" "}
-                <Link href={Routes.CodeOfConduct()}>
-                  <a
-                    target="_blank"
-                    className="text-gray-700 underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:text-gray-100"
-                  >
-                    Code of Conduct
-                  </a>
+                <Link
+                  href={Routes.CodeOfConduct()}
+                  target="_blank"
+                  className="text-gray-700 underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:text-gray-100"
+                >
+                  Code of Conduct
                 </Link>
               </p>
             </div>

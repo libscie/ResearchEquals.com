@@ -216,10 +216,8 @@ export default function PublishModule({
                         <p className=" mx-2 text-sm text-gray-500 dark:text-gray-300">
                           Yes, I agree that Liberate Science GmbH publishes the content immediately
                           and irrevocably. I knowingly consent to waive my{" "}
-                          <Link href="/right-of-withdrawal">
-                            <a className="underline" target="_blank">
-                              right of withdrawal
-                            </a>
+                          <Link href="/right-of-withdrawal" className="underline" target="_blank">
+                            right of withdrawal
                           </Link>{" "}
                           by completing my purchase.
                         </p>
@@ -346,10 +344,8 @@ export default function PublishModule({
                         <p className=" mx-2 text-sm text-gray-500 dark:text-gray-300">
                           Yes, I agree that Liberate Science GmbH publishes the content immediately
                           and irrevocably. I knowingly consent to waive my{" "}
-                          <Link href="/right-of-withdrawal">
-                            <a className="underline" target="_blank">
-                              right of withdrawal
-                            </a>
+                          <Link href="/right-of-withdrawal" className="underline" target="_blank">
+                            right of withdrawal
                           </Link>{" "}
                           by completing my purchase.
                         </p>

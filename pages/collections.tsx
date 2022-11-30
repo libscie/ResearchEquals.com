@@ -96,6 +96,7 @@ const CollectionCard = ({ collection, isAdmin }) => {
       href={
         isAdmin ? `/collections/${collection.suffix}/admin` : `/collections/${collection.suffix}`
       }
+      legacyBehavior
     >
       <div
         className={`${

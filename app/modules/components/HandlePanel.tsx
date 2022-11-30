@@ -76,13 +76,14 @@ const AuthorPanel = ({ buttonText, title, authors, name }) => {
                               }}
                             >
                               <span className="inline-block h-full align-middle"></span>
-                              <Link href={Routes.HandlePage({ handle: author.handle })}>
-                                <a className="my-auto inline-block overflow-hidden overflow-ellipsis align-middle text-sm font-normal leading-4 text-gray-700 dark:text-gray-200">
-                                  {author.firstName} {author.lastName}
-                                  <p className="text-xs font-normal leading-4 text-gray-500 dark:text-gray-400">
-                                    @{author.handle}
-                                  </p>
-                                </a>
+                              <Link
+                                href={Routes.HandlePage({ handle: author.handle })}
+                                className="my-auto inline-block overflow-hidden overflow-ellipsis align-middle text-sm font-normal leading-4 text-gray-700 dark:text-gray-200"
+                              >
+                                {author.firstName} {author.lastName}
+                                <p className="text-xs font-normal leading-4 text-gray-500 dark:text-gray-400">
+                                  @{author.handle}
+                                </p>
                               </Link>
                             </div>
                             <div>

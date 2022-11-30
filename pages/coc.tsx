@@ -222,8 +222,9 @@ const CodeOfConduct: BlitzPage = () => {
                     0,
                     10
                   )}] Code of Conduct report&body=Dear%20Code%20of%20Conduct%20committee%2C%0A%0AI%20would%20like%20to%20submit%20a%20code%20of%20conduct%20report%20regarding%20%5Breported%20person's%20name%2Fdescription%2C%20organizations%20also%20allowed%5D.%0A%0A%5Bdescription%20of%20the%20incident%5D%20%0A%0AThis%20happened%20on%20%5Bdate%20and%20time%5D%20at%20%5Blocation%5D.%20%0A%0AMy%20name%20is%20%5Breporter%20name%5D%20and%20you%20can%20reach%20me%20at%20%5Bcontact%20info%5D.%20%0A%0AAdditional%20witnesses%20for%20this%20report%20are%3A%20%5Boptional%20witness%20information%5D.%0A%0AKind%20regards`}
+                className="mt-3 text-sm underline md:mt-0 md:ml-6"
               >
-                <a className="mt-3 text-sm underline md:mt-0 md:ml-6">Email report</a>
+                Email report
               </Link>
             </div>
           </div>

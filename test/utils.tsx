@@ -3,6 +3,7 @@ import { renderHook as defaultRenderHook } from "@testing-library/react-hooks"
 import { NextRouter } from "next/router"
 import { BlitzProvider, RouterContext } from "@blitzjs/next"
 import { QueryClient } from "@blitzjs/rpc"
+import { forwardRef } from "react"
 
 export * from "@testing-library/react"
 
@@ -77,6 +78,7 @@ export const mockRouter: NextRouter = {
   basePath: "",
   pathname: "/",
   route: "/",
+  forward: () => {},
   asPath: "/",
   query: {},
   isReady: true,

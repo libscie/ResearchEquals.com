@@ -38,16 +38,18 @@ export const CollectionsSection = ({ currentUser, currentWorkspace }) => {
             />
           </div>
           <div className="mr-[min(calc(25%-100px),20px)]">
-            <Link href="https://www.researchequals.com/collections/jf14-3a">
-              <a target="_blank" className="cursor-pointer">
-                <Image
-                  src={Collections}
-                  alt="Collections"
-                  width={1148}
-                  height={1021}
-                  layout="intrinsic"
-                />
-              </a>
+            <Link
+              href="https://www.researchequals.com/collections/jf14-3a"
+              target="_blank"
+              className="cursor-pointer"
+            >
+              <Image
+                src={Collections}
+                alt="Collections"
+                width={1148}
+                height={1021}
+                layout="intrinsic"
+              />
             </Link>
           </div>
         </NotchedCard>

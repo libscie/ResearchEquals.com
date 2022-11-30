@@ -25,8 +25,8 @@ const MetadataInvite = ({ currentModule }) => {
             </div>
             <div className="flex-grow py-2">
               License:{" "}
-              <Link href={currentModule.license!.url!}>
-                <a target="_blank">{currentModule.license!.name}</a>
+              <Link href={currentModule.license!.url!} target="_blank">
+                {currentModule.license!.name}
               </Link>
             </div>
             {ISO6391.getName(currentModule.language) && (

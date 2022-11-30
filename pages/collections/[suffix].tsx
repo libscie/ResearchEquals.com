@@ -331,22 +331,19 @@ const SocialActivity = ({ collection, refetchFn, isFollowing }) => {
         )}&url=${encodeURIComponent(
           `https://doi.org/${process.env.DOI_PREFIX}/${collection?.suffix}`
         )}`}
+        type="a"
+        className="flex w-full rounded-md bg-indigo-50 py-2 px-4 align-middle text-sm font-medium text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-indigo-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+        target="_blank"
+        rel="noreferrer"
       >
-        <a
-          type="a"
-          className="flex w-full rounded-md bg-indigo-50 py-2 px-4 align-middle text-sm font-medium text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-indigo-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <span className="mx-auto flex">
-            <LogoTwitter
-              size={32}
-              className="h-5 w-5 fill-current pt-1 text-indigo-500"
-              aria-hidden="true"
-            />
-            Share
-          </span>
-        </a>
+        <span className="mx-auto flex">
+          <LogoTwitter
+            size={32}
+            className="h-5 w-5 fill-current pt-1 text-indigo-500"
+            aria-hidden="true"
+          />
+          Share
+        </span>
       </Link>
     </div>
   )
@@ -364,6 +361,7 @@ const ViewContributors = ({ contributors }) => {
               handle: submission.submittedBy?.handle as string,
             })}
             key={`contributor-submission-${submission.submittedBy?.handle}-${index}`}
+            legacyBehavior
           >
             <img
               className="m-1 inline-block h-12 w-12 cursor-pointer rounded-full transition ease-in-out hover:scale-125"
@@ -407,7 +405,7 @@ const AdminBanner = ({ suffix }) => {
           </h3>
         </div>
         <div className="">
-          <Link href={Routes.CollectionsAdmin({ suffix })}>
+          <Link href={Routes.CollectionsAdmin({ suffix })} legacyBehavior>
             <button
               type="button"
               className="rounded border border-fuchsia-500 px-2 py-1.5 text-sm font-medium leading-4 text-fuchsia-500 hover:bg-fuchsia-100 focus:outline-none focus:ring-2 focus:ring-fuchsia-600 focus:ring-offset-2 focus:ring-offset-fuchsia-50 dark:border-fuchsia-200 dark:text-fuchsia-200 dark:hover:bg-fuchsia-900"
@@ -563,13 +561,17 @@ const AddSubmmision = ({ collection, currentWorkspace, refetchFn }) => {
                 <span>Upon confirmation, you will submit the following work:</span>
                 <span className="my-2 bg-gray-50 p-4 line-clamp-3 dark:bg-gray-800">
                   {selectedWorkType === "module" && (
-                    <Link href={`https://doi.org/${selectedWorkParams?.item?.doi}`} passHref>
-                      <a target="_blank">{selectedWorkParams?.item?.name}</a>
+                    <Link
+                      href={`https://doi.org/${selectedWorkParams?.item?.doi}`}
+                      passHref
+                      target="_blank"
+                    >
+                      {selectedWorkParams?.item?.name}
                     </Link>
                   )}
                   {selectedWorkType === "doi" && (
-                    <Link href={selectedDoiWorkData.url} passHref>
-                      <a target="_blank">{selectedDoiWorkData?.title}</a>
+                    <Link href={selectedDoiWorkData.url} passHref target="_blank">
+                      {selectedDoiWorkData?.title}
                     </Link>
                   )}
                 </span>

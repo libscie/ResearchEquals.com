@@ -84,11 +84,11 @@ const ApproachBox = ({
       </div>
       <h3 className="my-2 max-w-md text-2xl font-bold md:mt-6 md:mb-10">{title}</h3>
       <div className={cx({ "dark:hidden": imageDark })}>
-        <Image src={image} alt="title" width={500} height={390} layout="intrinsic" />
+        <Image src={image} alt="title" width={500} height={390} />
       </div>
       {imageDark && (
-        <div className="hidden dark:block">
-          <Image src={imageDark} alt="title" width={500} height={390} layout="intrinsic" />
+        <div className="relative hidden dark:block">
+          <Image src={imageDark} alt="title" width={500} height={390} />
         </div>
       )}
     </div>
@@ -107,7 +107,7 @@ export const ApproachSection = () => {
             <ApproachBox key={idx} data={data} className="w-full" />
           ))}
         </div>
-        <Link href="/signup" passHref>
+        <Link href="/signup" passHref legacyBehavior>
           <Button color="primary">Publish Openly with ResearchEquals</Button>
         </Link>
       </div>
