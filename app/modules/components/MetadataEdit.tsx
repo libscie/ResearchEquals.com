@@ -156,7 +156,9 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
                 </>
               ))}
             </select>
-            {formik.touched.type && formik.errors.type ? <div>{formik.errors.type}</div> : null}
+            {formik.touched.type && formik.errors.type ? (
+              <div>{formik.errors.type.toString()}</div>
+            ) : null}
           </p>
           <p className="text-xl font-medium leading-6 text-gray-900 dark:text-white">
             <label htmlFor="title" className="sr-only block text-sm font-medium text-gray-700">
@@ -170,7 +172,7 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
                 {...formik.getFieldProps("title")}
               />
               {formik.touched.title && formik.errors.title ? (
-                <div>{formik.errors.title}</div>
+                <div>{formik.errors.title.toString()}</div>
               ) : null}
             </div>
           </p>
@@ -197,7 +199,7 @@ const MetadataEdit = ({ module, setQueryData, setIsEditing }) => {
               {...formik.getFieldProps("description")}
             />
             {formik.touched.description && formik.errors.description ? (
-              <div>{formik.errors.description}</div>
+              <div>{formik.errors.description.toString()}</div>
             ) : null}
           </div>
         </div>

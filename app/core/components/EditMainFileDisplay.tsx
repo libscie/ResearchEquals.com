@@ -18,7 +18,7 @@ const EditFileDisplay = ({ name, size, url, uuid, moduleId, setQueryData }) => {
       >
         <span className="inline-block  flex-grow align-middle">{name}</span>
         {/* https://www.npmjs.com/package/filesize */}
-        <span>{filesize(size)}</span>
+        <span>{filesize(size).toString()}</span>
       </a>
       <p className="flex">
         <button className="mx-2">
