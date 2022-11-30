@@ -1,4 +1,4 @@
-import { useMutation } from "blitz"
+import { useMutation } from "@blitzjs/rpc"
 import Autocomplete from "../../core/components/Autocomplete"
 import addParent from "../mutations/addParent"
 import { getAlgoliaResults } from "@algolia/autocomplete-js"

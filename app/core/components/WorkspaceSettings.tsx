@@ -1,7 +1,8 @@
+import Link from "next/link"
+import { useMutation } from "@blitzjs/rpc"
 import changeBio from "app/workspaces/mutations/changeBio"
 import changePronouns from "app/workspaces/mutations/changePronouns"
 import changeUrl from "app/workspaces/mutations/changeUrl"
-import { Link, useMutation, validateZodSchema } from "blitz"
 import { useFormik } from "formik"
 import { z } from "zod"
 import { Checkmark, Close } from "@carbon/icons-react"
@@ -18,6 +19,7 @@ import {
   workspaceUrlAtom,
 } from "../utils/Atoms"
 import { useEffect } from "react"
+import { validateZodSchema } from "blitz"
 
 const WorkspaceSettings = ({ workspace, setIsOpen }) => {
   const [changeFirstNameMutation] = useMutation(changeFirstName)
@@ -79,14 +81,14 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         if (values.firstName !== workspace.firstName) {
           try {
             z.string().parse(values.firstName)
-            toast.promise(
+            await toast.promise(
               changeFirstNameMutation({
                 firstName: values.firstName,
               }),
               {
                 loading: "Saving...",
                 success: "Updated first name",
-                error: "Hmm that didn't work first name...",
+                error: "Hmm that first name didn't work...",
               }
             )
           } catch (error) {
@@ -97,7 +99,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         if (values.lastName !== workspace.lastName) {
           try {
             z.string().parse(values.lastName)
-            toast.promise(
+            await toast.promise(
               changeLastNameMutation({
                 lastName: values.lastName,
               }),
@@ -115,7 +117,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         if (values.bio !== workspace.bio) {
           try {
             z.string().parse(values.bio)
-            toast.promise(
+            await toast.promise(
               changeBioMutation({
                 bio: values.bio,
               }),
@@ -133,7 +135,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         if (values.pronouns !== workspace.pronouns) {
           try {
             z.string().max(20).parse(values.pronouns)
-            toast.promise(
+            await toast.promise(
               changePronounsMutation({
                 pronouns: values.pronouns,
               }),
@@ -151,7 +153,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         if (values.profileUrl !== workspace.url && values.profileUrl !== "") {
           try {
             z.string().url().parse(values.profileUrl)
-            toast.promise(
+            await toast.promise(
               changeUrlMutation({
                 url: values.profileUrl,
               }),

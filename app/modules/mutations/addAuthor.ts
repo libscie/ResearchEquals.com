@@ -1,10 +1,12 @@
-import { NotFoundError, resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
+import { addMinutes } from "blitz"
 import db from "db"
+import invitationMailer from "pages/api/invitation-mailer"
 
 export default resolver.pipe(
   resolver.authorize(),
   async ({ authorId, moduleId, authorshipRank }, ctx) => {
-    const module = await db.module.update({
+    const currentModule = await db.module.update({
       where: {
         id: moduleId,
       },
@@ -50,6 +52,13 @@ export default resolver.pipe(
       },
     })
 
+    const createdAuthor = await db.authorship.findFirst({
+      where: {
+        moduleId,
+        workspaceId: parseInt(authorId),
+      },
+    })
+
     // Force all authors to reapprove for publishing
     await db.authorship.updateMany({
       where: {
@@ -60,6 +69,16 @@ export default resolver.pipe(
       },
     })
 
-    return module
+    const dateimte = new Date()
+    await invitationMailer.enqueue(
+      // authorship id
+      createdAuthor!.id,
+      {
+        runAt: addMinutes(dateimte, 1),
+        id: createdAuthor?.id.toString(),
+      }
+    )
+
+    return currentModule
   }
 )

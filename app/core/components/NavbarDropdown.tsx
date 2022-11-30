@@ -1,12 +1,15 @@
+import Link from "next/link"
+import { useMutation } from "@blitzjs/rpc"
+import { Routes } from "@blitzjs/next"
 import { Fragment, useState } from "react"
 import { Transition, Dialog } from "@headlessui/react"
-import { Link, Routes, useMutation } from "blitz"
 import { Add, Close, Menu } from "@carbon/icons-react"
 import logout from "../../auth/mutations/logout"
 import SettingsModal from "../modals/settings"
 import ResearchEqualsLogo from "./ResearchEqualsLogo"
 import QuickDraft from "../../modules/components/QuickDraft"
 import DropdownNotificationModal from "../modals/DropdownNotificationModal"
+import CollectionsModal from "../modals/CollectionsModal"
 
 const DropdownContents = ({
   currentUser,
@@ -44,6 +47,11 @@ const DropdownContents = ({
           <Link href={Routes.Graph()}>
             <button className="group block w-full rounded-md px-2 py-2 text-left text-base font-normal leading-5 text-gray-900 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800">
               Map
+            </button>
+          </Link>
+          <Link href={Routes.CollectionsPage()}>
+            <button className="group block w-full rounded-md px-2 py-2 text-left text-base font-normal leading-5 text-gray-900 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800">
+              Collections
             </button>
           </Link>
           <Link href={Routes.Dashboard()}>

@@ -63,6 +63,7 @@ export const fileTypeLimit = (fileInfo: FileInfo) => {
     "jpg",
     "jpm",
     "jpx",
+    "js",
     "json",
     "ko",
     "lz",

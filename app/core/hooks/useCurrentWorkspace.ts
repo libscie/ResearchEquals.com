@@ -1,5 +1,7 @@
-import { useQuery } from "blitz"
+import { useQuery } from "@blitzjs/rpc"
 import getCurrentWorkspace from "../../workspaces/queries/getCurrentWorkspace"
+
+export type UseCurrentWorkspace = ReturnType<typeof useCurrentWorkspace>
 
 export const useCurrentWorkspace = () => {
   const [workspace] = useQuery(getCurrentWorkspace, null)

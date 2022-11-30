@@ -1,4 +1,4 @@
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import algoliasearch from "algoliasearch"
 import { verifyCode } from "../verify-email"
@@ -27,10 +27,10 @@ export default resolver.pipe(
     const isValid = await verifyCode(code, hashedPassword)
     if (isValid) {
       await db.user.update({ where: { id: parseInt(userId) }, data: { emailIsVerified: true } })
-
       user!.memberships!.map(async (membership) => {
         await index.saveObject({
           objectID: membership.workspace.id,
+          updatedAt: user?.updatedAt,
           firstName: membership.workspace.firstName,
           lastName: membership.workspace.lastName,
           handle: membership.workspace.handle,

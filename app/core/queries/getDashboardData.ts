@@ -12,6 +12,8 @@ export default async function getSignature({ session, changeDays }) {
       hashedPassword: false,
       email: true,
       emailIsVerified: true,
+      emailConsent: true,
+      marketingConsent: true,
     },
   })
 
@@ -23,6 +25,7 @@ export default async function getSignature({ session, changeDays }) {
       followers: true,
       following: true,
       authorships: true,
+      editorships: true,
     },
   })
 
@@ -187,7 +190,7 @@ export default async function getSignature({ session, changeDays }) {
 
   const followableWorkspaces = await db.workspace.findMany({
     where: {
-      id: { not: { in: [session.workspaceId, ...workspace?.following.map((x) => x.id)!] } },
+      id: { not: { in: [session.workspaceId, ...(workspace?.following.map((x) => x.id) ?? [])] } },
     },
     take: 5,
     skip: Math.max(0, Math.floor(Math.random() * workspaces.length) - 5),

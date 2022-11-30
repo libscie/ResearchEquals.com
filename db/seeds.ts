@@ -49,6 +49,8 @@ const seed = async () => {
     { wikidata: "Q60752967", name: "Preregistration", schema: "CreativeWork" },
     { wikidata: "Q429785", name: "Poster", schema: "Poster" },
     { wikidata: "Q59094171", name: "Ethical review", schema: "CreativeWork" },
+    { wikidata: "Q580922", name: "Preprint", schema: "CreativeWork" },
+    { wikidata: "Q1744627", name: "Classification algorithm", schema: "CreativeWork" },
   ]
 
   // This adds the record or updates the existing one
@@ -83,12 +85,14 @@ const seed = async () => {
       // This contains the latest update, change this to update the price
       update: {
         price: 0,
+        prod_id: "prod_M0VJdtMgxTMRvS",
       },
       // This is the original
       create: {
         url: "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
         name: "CC0 Public Domain Dedication",
         price: 0,
+        prod_id: "prod_M0VJdtMgxTMRvS",
       },
     })
 
@@ -100,12 +104,14 @@ const seed = async () => {
       // This contains the latest update, change this to update the price
       update: {
         price: 0,
+        prod_id: "prod_M0VKT0n4i9hFlz",
       },
       // This is the original
       create: {
         url: "https://creativecommons.org/licenses/by/4.0/legalcode",
         name: "CC BY 4.0",
         price: 0,
+        prod_id: "prod_M0VKT0n4i9hFlz",
       },
     })
 
@@ -222,6 +228,57 @@ const seed = async () => {
         price_id: "price_1KCTBbLmgtJbKHNGQSZHsNO0",
       },
     })
+
+    // Add collections pricing
+    // [PROD] Individual collection
+    await db.collectionType.upsert({
+      where: {
+        type: "INDIVIDUAL",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 0,
+      },
+      // This is the original
+      create: {
+        type: "INDIVIDUAL",
+        price: 0,
+      },
+    })
+    // [PROD] Collaborative collection
+    await db.collectionType.upsert({
+      where: {
+        type: "COLLABORATIVE",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 1499,
+        price_id: "price_1LgCMbLmgtJbKHNGvX5LHLoo",
+      },
+      // This is the original
+      create: {
+        type: "COLLABORATIVE",
+        price: 1499,
+        price_id: "price_1LgCMbLmgtJbKHNGvX5LHLoo",
+      },
+    })
+    // [PROD] Community collection
+    await db.collectionType.upsert({
+      where: {
+        type: "COMMUNITY",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 14999,
+        price_id: "price_1LgCLQLmgtJbKHNGNoiEKuv1",
+      },
+      // This is the original
+      create: {
+        type: "COMMUNITY",
+        price: 14999,
+        price_id: "price_1LgCLQLmgtJbKHNGNoiEKuv1",
+      },
+    })
   }
 
   // Do this when not in production
@@ -235,12 +292,14 @@ const seed = async () => {
       // This contains the latest update, change this to update the price
       update: {
         price: 0,
+        prod_id: "prod_M0VIEuGW4US4mL",
       },
       // This is the original
       create: {
         url: "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
         name: "CC0 Public Domain Dedication",
         price: 0,
+        prod_id: "prod_M0VIEuGW4US4mL",
       },
     })
 
@@ -252,12 +311,14 @@ const seed = async () => {
       // This contains the latest update, change this to update the price
       update: {
         price: 0,
+        prod_id: "prod_M0VJVhT9ulOw1c",
       },
       // This is the original
       create: {
         url: "https://creativecommons.org/licenses/by/4.0/legalcode",
         name: "CC BY 4.0",
         price: 0,
+        prod_id: "prod_M0VJVhT9ulOw1c",
       },
     })
 
@@ -375,6 +436,57 @@ const seed = async () => {
       },
     })
 
+    // Add collections pricing
+    // Individual collection
+    await db.collectionType.upsert({
+      where: {
+        type: "INDIVIDUAL",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 0,
+      },
+      // This is the original
+      create: {
+        type: "INDIVIDUAL",
+        price: 0,
+      },
+    })
+    // Collaborative collection
+    await db.collectionType.upsert({
+      where: {
+        type: "COLLABORATIVE",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 1499,
+        price_id: "price_1LgCBCLmgtJbKHNG3r9B3C1C",
+      },
+      // This is the original
+      create: {
+        type: "COLLABORATIVE",
+        price: 1499,
+        price_id: "price_1LgCBCLmgtJbKHNG3r9B3C1C",
+      },
+    })
+    // Community collection
+    await db.collectionType.upsert({
+      where: {
+        type: "COMMUNITY",
+      },
+      // This contains the latest update, change this to update the price
+      update: {
+        price: 14999,
+        price_id: "price_1LgCCSLmgtJbKHNG0hJCGKhd",
+      },
+      // This is the original
+      create: {
+        type: "COMMUNITY",
+        price: 14999,
+        price_id: "price_1LgCCSLmgtJbKHNG0hJCGKhd",
+      },
+    })
+
     let user
     for (let index = 0; index < 50; index++) {
       user = await db.user.create({
@@ -388,9 +500,9 @@ const seed = async () => {
                 workspace: {
                   create: {
                     handle: faker.internet.userName().toLowerCase(),
-                    avatar: faker.image.abstract(),
-                    firstName: faker.name.findName(),
-                    lastName: faker.name.findName(),
+                    avatar: `https://eu.ui-avatars.com/api/?rounded=true&background=574cfa&color=ffffff&name=${faker.internet.userName()}`,
+                    firstName: faker.name.firstName(),
+                    lastName: faker.name.lastName(),
                     url: faker.internet.url(),
                   },
                 },
@@ -421,11 +533,12 @@ const seed = async () => {
 
     let datetime
     let suffix
-    let module
+    let currentModule
     for (let index = 0; index < 10; index++) {
       datetime = Date.now()
       suffix = await generateSuffix(undefined)
-      module = await db.module.create({
+      const catImage = `https://ucarecdn.com/fea4c143-6382-467d-a500-23826acbb1e4/`
+      currentModule = await db.module.create({
         data: {
           prefix: "10.53962",
           suffix: await generateSuffix(undefined),
@@ -439,12 +552,12 @@ const seed = async () => {
             name: faker.system.fileName(),
             size: 603268,
             uuid: faker.datatype.uuid(),
-            cdnUrl: faker.image.cats(),
+            cdnUrl: catImage,
             isImage: true,
             isStored: true,
             mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             sourceInfo: { file: {}, source: "local" },
-            originalUrl: faker.image.cats(),
+            originalUrl: catImage,
             cdnUrlModifiers: null,
             originalImageInfo: null,
           },
@@ -494,14 +607,14 @@ const seed = async () => {
       })
       await modIndex.saveObject({
         objectID: module.id,
-        doi: `${process.env.DOI_PREFIX}/${module.suffix}`,
-        suffix: module.suffix,
-        license: module.license?.url,
-        type: module.type.name,
+        doi: `${process.env.DOI_PREFIX}/${currentModule.suffix}`,
+        suffix: currentModule.suffix,
+        license: currentModule.license?.url,
+        type: currentModule.type.name,
         // It's called name and not title to improve Algolia search
-        name: module.title,
-        description: module.description,
-        publishedAt: module.publishedAt,
+        name: currentModule.title,
+        description: currentModule.description,
+        publishedAt: currentModule.publishedAt,
       })
     }
   }

@@ -1,4 +1,6 @@
-import { useQuery, useMutation, Link, Routes } from "blitz"
+import Link from "next/link"
+import { Routes } from "@blitzjs/next"
+import { useQuery, useMutation } from "@blitzjs/rpc"
 import { useState } from "react"
 import { Prisma } from "prisma"
 import toast from "react-hot-toast"
@@ -71,7 +73,7 @@ const ModuleInvitation = ({
                   error: "Hmm that didn't work...",
                 }
               )
-              refetch()
+              await refetch()
               setModule(undefined)
             }}
           >
@@ -91,7 +93,7 @@ const ModuleInvitation = ({
                   error: "Hmm that didn't work...",
                 }
               )
-              refetch()
+              await refetch()
               setModule(undefined)
             }}
           >
@@ -138,7 +140,7 @@ const ModuleInvitation = ({
           </button>
         </div>
       </div>
-      <MetadataInvite module={moduleEdit} />
+      <MetadataInvite currentModule={moduleEdit} />
       <Xarrows
         start="moduleCurrent"
         end="modulePrevious"

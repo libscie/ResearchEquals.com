@@ -1,10 +1,10 @@
-import { NotFoundError, resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 
 export default resolver.pipe(
   resolver.authorize(),
-  async ({ id, typeId, title, description, licenseId, displayColor }) => {
-    const module = await db.module.update({
+  async ({ id, typeId, title, description, licenseId, displayColor, language }) => {
+    const currentModule = await db.module.update({
       where: { id },
       data: {
         type: {
@@ -20,13 +20,14 @@ export default resolver.pipe(
             id: licenseId,
           },
         },
+        language,
       },
     })
 
     // Force all authors to reapprove for publishing
     await db.authorship.updateMany({
       where: {
-        moduleId: module.id,
+        moduleId: currentModule.id,
       },
       data: {
         readyToPublish: false,

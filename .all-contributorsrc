@@ -230,6 +230,55 @@
       "contributions": [
         "maintenance"
       ]
+    },
+    {
+      "login": "nasainsbury",
+      "name": "Nathan Sainsbury",
+      "avatar_url": "https://avatars.githubusercontent.com/u/58425475?v=4",
+      "profile": "https://github.com/nasainsbury",
+      "contributions": [
+        "code",
+        "design"
+      ]
+    },
+    {
+      "login": "weblate",
+      "name": "Weblate (bot)",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1607653?v=4",
+      "profile": "https://weblate.org/hosting/",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "RobbievanAert",
+      "name": "Robbie van Aert",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11198300?v=4",
+      "profile": "https://github.com/RobbievanAert",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "Dan-Rudmann",
+      "name": "Dan Rudmann",
+      "avatar_url": "https://avatars.githubusercontent.com/u/52978069?v=4",
+      "profile": "https://github.com/Dan-Rudmann",
+      "contributions": [
+        "content",
+        "mentoring",
+        "review",
+        "ideas"
+      ]
+    },
+    {
+      "login": "marioangst",
+      "name": "Mario Angst",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19803038?v=4",
+      "profile": "http://marioangst.com",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
@@ -238,5 +287,6 @@
   "projectOwner": "libscie",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "skipCi": true
+  "skipCi": true,
+  "commitConvention": "angular"
 }

@@ -1,4 +1,5 @@
-import { resolver, Ctx } from "blitz"
+import { resolver } from "@blitzjs/rpc"
+import { Ctx } from "blitz"
 import db from "db"
 import * as z from "zod"
 
@@ -20,5 +21,11 @@ export default resolver.pipe(resolver.authorize(), async (input, ctx: Ctx) => {
     },
   })
 
-  return modules
+  const collections = await db.collection.findMany({
+    where: {
+      public: true,
+    },
+  })
+
+  return { modules, collections }
 })

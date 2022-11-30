@@ -1,6 +1,8 @@
+import Link from "next/link"
+import { useMutation } from "@blitzjs/rpc"
+import { Routes } from "@blitzjs/next"
 import { Fragment } from "react"
 import { Dialog, Transition } from "@headlessui/react"
-import { Link, Routes, useMutation } from "blitz"
 import { Checkmark, Close, TrashCan } from "@carbon/icons-react"
 
 import ModuleCard from "app/core/components/ModuleCard"
@@ -13,7 +15,7 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="fixed inset-0 overflow-hidden" onClose={setOpen}>
+      <Dialog as="div" className="fixed inset-0 z-30 overflow-hidden" onClose={setOpen}>
         <div className="absolute inset-0 overflow-hidden">
           <Dialog.Overlay className="fixed inset-0 bg-gray-900 bg-opacity-25 transition-opacity" />
 
@@ -78,7 +80,7 @@ const ManageParents = ({ open, setOpen, moduleEdit, setQueryData }) => {
                           <button
                             className="px-2 hover:bg-gray-50 dark:hover:bg-gray-800"
                             onClick={async () => {
-                              toast.promise(
+                              await toast.promise(
                                 deleteParentMutation({
                                   currentId: moduleEdit.id,
                                   disconnectId: module.id,

@@ -1,4 +1,4 @@
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import { sendEmailWithTemplate } from "app/postmark"
 import { url } from "app/url"

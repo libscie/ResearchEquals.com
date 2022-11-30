@@ -1,4 +1,5 @@
-import { AuthenticationError, SecurePassword } from "blitz"
+import { SecurePassword } from "@blitzjs/auth"
+import { AuthenticationError } from "blitz"
 import db from "db"
 
 export const hashPassword = async (password: string) => {

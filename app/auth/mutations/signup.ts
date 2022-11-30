@@ -1,4 +1,5 @@
-import { resolver, SecurePassword } from "blitz"
+import { SecurePassword } from "@blitzjs/auth"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import { Signup } from "app/auth/validations"
 import { sendEmailWithTemplate } from "app/postmark"
@@ -20,6 +21,7 @@ export default resolver.pipe(
       "admin",
       "browse",
       "coc",
+      "collections",
       "dashboard",
       "dpa",
       "drafts",
@@ -41,9 +43,9 @@ export default resolver.pipe(
     if (
       forbiddenHandles.filter((forbiddenHandle) => forbiddenHandle === handle.toLowerCase())
         .length > 0 ||
-      !!handle.match(/\/|\?|\&|\,/g)
+      !handle.match(/^[a-zA-Z0-9_]{1,15}$/g)
     ) {
-      throw Error("Handle not allowed")
+      throw Error("Handle not allowed. Only letters, numbers, and _ allowed. Max. 15 characters.")
     }
     const hashedPassword = await SecurePassword.hash(password.trim())
     const user = await db.user.create({

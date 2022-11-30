@@ -1,7 +1,7 @@
+import { useMutation } from "@blitzjs/rpc"
 import { Download, TrashCan } from "@carbon/icons-react"
-import { useMutation } from "blitz"
 import toast from "react-hot-toast"
-import filesize from "filesize"
+import { filesize } from "filesize"
 
 import deleteMainFile from "../../modules/mutations/deleteMainFile"
 
@@ -26,7 +26,7 @@ const EditFileDisplay = ({ name, size, url, uuid, moduleId, setQueryData }) => {
             size={24}
             className="inline-block h-6 w-6 fill-current align-middle text-red-500"
             onClick={async () => {
-              toast.promise(deleteMainMutation({ id: moduleId, uuid }), {
+              await toast.promise(deleteMainMutation({ id: moduleId, uuid }), {
                 loading: "Deleting...",
                 success: (data) => {
                   setQueryData(data)

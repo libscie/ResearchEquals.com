@@ -1,10 +1,12 @@
+import Link from "next/link"
+import { useMutation } from "@blitzjs/rpc"
 import Autocomplete from "app/core/components/Autocomplete"
-import { Link, useMutation } from "blitz"
 import moment from "moment"
 import toast from "react-hot-toast"
 import algoliasearch from "algoliasearch"
 import { getAlgoliaResults } from "@algolia/autocomplete-js"
 import { Add } from "@carbon/icons-react"
+import ISO6391 from "iso-639-1"
 
 import addAuthor from "../mutations/addAuthor"
 import AuthorAvatarsNew from "./AuthorAvatarsNew"
@@ -27,9 +29,9 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
     <div className="module my-4 bg-gray-100 dark:bg-gray-600" style={{ padding: "1px" }}>
       <div className="module divide-y divide-gray-100 border-0 border-gray-100 bg-white dark:divide-gray-600 dark:border-gray-600 dark:bg-gray-900">
         <div className="divide-y divide-gray-100 text-center text-sm font-normal leading-4 text-gray-500 dark:divide-gray-600 dark:bg-gray-800 dark:text-gray-200 lg:flex lg:divide-y-0 lg:divide-x">
-          <div className="flex-grow py-2">Last updated: {moment(module.updatedAt).fromNow()}</div>
+          <div className="flex-grow py-2">Updated: {moment(module.updatedAt).fromNow()}</div>
           <div className="flex-grow py-2">
-            DOI upon publish:{" "}
+            DOI:{" "}
             <span className="text-gray-300 dark:text-gray-600">{`${module.prefix}/${module.suffix}`}</span>
           </div>
           <div className="flex-grow py-2">
@@ -38,6 +40,9 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
               <a target="_blank">{module.license!.name}</a>
             </Link>
           </div>
+          {ISO6391.getName(module.language) && (
+            <div className="flex-grow py-2">{ISO6391.getName(module.language)}</div>
+          )}
         </div>
         <div className="min-h-32 py-4 px-2">
           <p className="text-sm font-normal leading-4 text-gray-500 dark:text-white">
@@ -70,8 +75,8 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
                         sourceId: "products",
                         async onSelect(params) {
                           const { item, setQuery } = params
-                          try {
-                            toast.promise(
+                          toast
+                            .promise(
                               addAuthorMutation({
                                 authorId: item.objectID,
                                 moduleId: module.id,
@@ -109,22 +114,23 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
                               },
                               { duration: 10000 }
                             )
-                            // const updatedModule = await addAuthorMutation({
-                            //   authorId: item.objectID,
-                            //   moduleId: module.id,
-                            //   authorshipRank:
-                            //     Math.max.apply(
-                            //       Math,
-                            //       module.authors.map(function (o) {
-                            //         return o.authorshipRank
-                            //       })
-                            //     ) + 1,
-                            // })
-                            // toast.success("Author invited")
-                            // setQueryData(updatedModule)
-                          } catch (error) {
-                            toast.error("Something went wrong")
-                          }
+                            .catch((error) => {
+                              toast.error("Something went wrong")
+                            })
+                          // const updatedModule = await addAuthorMutation({
+                          //   authorId: item.objectID,
+                          //   moduleId: module.id,
+                          //   authorshipRank:
+                          //     Math.max.apply(
+                          //       Math,
+                          //       module.authors.map(function (o) {
+                          //         return o.authorshipRank
+                          //       })
+                          //     ) + 1,
+                          // })
+                          // toast.success("Author invited")
+                          // setQueryData(updatedModule)
+
                           setQuery("")
                         },
                         getItems() {

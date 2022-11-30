@@ -1,6 +1,6 @@
+import { useMutation } from "@blitzjs/rpc"
 import { Widget } from "@uploadcare/react-widget"
 import { useRef } from "react"
-import { useMutation } from "blitz"
 import changeAvatar from "../../workspaces/mutations/changeAvatar"
 import toast from "react-hot-toast"
 
@@ -14,7 +14,7 @@ const HandleAvatar = ({ params, workspace, ownWorkspace, expire, signature, refe
         ownWorkspace.handle === params.handle ? (
           <>
             <img
-              src={workspace.avatar}
+              src={`/api/avatars/${workspace.handle}`}
               className="max-w-28 h-28 max-h-28 w-28 rounded-full border border-2 border-gray-900 hover:cursor-pointer hover:border-4 hover:border-indigo-600 dark:border-white"
               alt={`Avatar of ${workspace.handle}`}
               onClick={() => {
@@ -53,7 +53,7 @@ const HandleAvatar = ({ params, workspace, ownWorkspace, expire, signature, refe
         ) : (
           <>
             <img
-              src={workspace.avatar}
+              src={`/api/avatars/${workspace.handle}`}
               className="max-w-28 h-28 max-h-28 w-28 rounded-full border border-2 border-gray-900 dark:border-white "
               alt={`Avatar of ${workspace.handle}`}
             />
@@ -62,7 +62,7 @@ const HandleAvatar = ({ params, workspace, ownWorkspace, expire, signature, refe
       ) : (
         <>
           <img
-            src={workspace.avatar}
+            src={`/api/avatars/${workspace.handle}`}
             className="max-w-28 h-28 max-h-28 w-28 rounded-full border border-2 border-gray-900 dark:border-white "
             alt={`Avatar of ${workspace.handle}`}
           />

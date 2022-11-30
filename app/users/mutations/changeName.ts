@@ -1,7 +1,7 @@
-import { NotFoundError, resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import algoliasearch from "algoliasearch"
-import { Ctx } from "blitz"
+import { Ctx, NotFoundError } from "blitz"
 
 const client = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_ADMIN_KEY!)
 const index = client.initIndex(`${process.env.ALGOLIA_PREFIX}_workspaces`)

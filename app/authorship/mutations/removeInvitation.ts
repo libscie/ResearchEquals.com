@@ -1,7 +1,17 @@
-import { resolver } from "blitz"
+import { resolver } from "@blitzjs/rpc"
 import db from "db"
+import invitationMailer from "pages/api/invitation-mailer"
 
 export default resolver.pipe(resolver.authorize(), async ({ workspaceId, moduleId }) => {
+  // Cancel email queue
+  const createdAuthor = await db.authorship.findFirst({
+    where: {
+      moduleId,
+      workspaceId,
+    },
+  })
+  await invitationMailer.delete(createdAuthor!.id.toString())
+
   await db.authorship.delete({
     where: {
       moduleId_workspaceId: { workspaceId, moduleId },
@@ -18,7 +28,7 @@ export default resolver.pipe(resolver.authorize(), async ({ workspaceId, moduleI
     },
   })
 
-  const module = await db.module.findFirst({
+  const currentModule = await db.module.findFirst({
     where: {
       id: moduleId,
     },
@@ -71,5 +81,5 @@ export default resolver.pipe(resolver.authorize(), async ({ workspaceId, moduleI
     },
   })
 
-  return module!
+  return currentModule!
 })

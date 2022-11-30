@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
 .module {
   --notchSize: 20px;
@@ -135,5 +136,290 @@ button.react-flow__controls-button {
 
   button.react-flow__controls-button:hover {
     background-color: #334155;
+  }
+}
+
+input[type="range"].pwyw {
+  width: 100%;
+  margin: 7.05px 0;
+  background-color: transparent;
+  -webkit-appearance: none;
+}
+input[type="range"].pwyw:focus {
+  outline: none;
+}
+input[type="range"].pwyw::-webkit-slider-runnable-track {
+  background: rgba(129, 140, 248, 0.78);
+  border: 0;
+  border-radius: 25px;
+  width: 100%;
+  height: 5.9px;
+  cursor: pointer;
+}
+input[type="range"].pwyw::-webkit-slider-thumb {
+  margin-top: -7.05px;
+  width: 20px;
+  height: 20px;
+  background: #574cfa;
+  border: 1.8px solid #ffffff;
+  border-radius: 50px;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+input[type="range"].pwyw:focus::-webkit-slider-runnable-track {
+  background: #8690f8;
+}
+input[type="range"].pwyw::-moz-range-track {
+  background: rgba(129, 140, 248, 0.78);
+  border: 0;
+  border-radius: 25px;
+  width: 100%;
+  height: 5.9px;
+  cursor: pointer;
+}
+input[type="range"].pwyw::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #574cfa;
+  border: 1.8px solid #ffffff;
+  border-radius: 50px;
+  cursor: pointer;
+}
+input[type="range"].pwyw::-ms-track {
+  background: transparent;
+  border-color: transparent;
+  border-width: 7.05px 0;
+  color: transparent;
+  width: 100%;
+  height: 5.9px;
+  cursor: pointer;
+}
+input[type="range"].pwyw::-ms-fill-lower {
+  background: #7c88f8;
+  border: 0;
+  border-radius: 50px;
+}
+input[type="range"].pwyw::-ms-fill-upper {
+  background: rgba(129, 140, 248, 0.78);
+  border: 0;
+  border-radius: 50px;
+}
+input[type="range"].pwyw::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  background: #574cfa;
+  border: 1.8px solid #ffffff;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-top: 0px;
+  /*Needed to keep the Edge thumb centred*/
+}
+input[type="range"].pwyw:focus::-ms-fill-lower {
+  background: rgba(129, 140, 248, 0.78);
+}
+input[type="range"].pwyw:focus::-ms-fill-upper {
+  background: #8690f8;
+}
+/*TODO: Use one of the selectors from https://stackoverflow.com/a/20541859/7077589 and figure out
+how to remove the virtical space around the range input in IE*/
+@supports (-ms-ime-align: auto) {
+  /* Pre-Chromium Edge only styles, selector taken from hhttps://stackoverflow.com/a/32202953/7077589 */
+  input[type="range"].pwyw {
+    margin: 0;
+    /*Edge starts the margin from the thumb, not the track as other browsers do*/
+  }
+}
+.terms-diff strong {
+  color: green;
+}
+
+/* .terms-diff p,
+body {
+  font-family: sans-serif;
+} */
+.terms-diff u {
+  color: green;
+}
+.terms-diff del {
+  color: red;
+}
+/*
+.quilljs {
+  background-color: red;
+} */
+
+.workquote:has(blockquote) {
+  display: grid;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  /* grid-template-columns: 1fr; */
+}
+
+.workquote:has(form) {
+  display: grid;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  /* grid-template-columns: 1fr; */
+}
+
+@media (min-width: 600px) {
+  .workquote:has(blockquote) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: 1fr;
+  }
+
+  .workquote:has(form) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: 1fr;
+  }
+}
+
+.collection-1 {
+  -webkit-box-shadow: 5px 5px 1px #a5b4fc;
+  box-shadow: 5px 5px 1px #a5b4fc;
+}
+
+.collection-2 {
+  -webkit-box-shadow: 5px 5px 1px #a5b4fc, 10px 10px 1px #818cf8;
+  box-shadow: 5px 5px 1px #a5b4fc, 10px 10px 1px #818cf8;
+}
+
+.collection-3 {
+  -webkit-box-shadow: 5px 5px 1px #a5b4fc, 10px 10px 1px #818cf8, 15px 15px 1px #6366f1;
+  box-shadow: 5px 5px 1px #a5b4fc, 10px 10px 1px #818cf8, 15px 15px 1px #6366f1;
+}
+
+.collection-4 {
+  -webkit-box-shadow: 5px 5px 1px #a5b4fc, 10px 10px 1px #818cf8, 15px 15px 1px #6366f1,
+    20px 20px 1px #4f46e5;
+  box-shadow: 5px 5px 1px #a5b4fc, 10px 10px 1px #818cf8, 15px 15px 1px #6366f1,
+    20px 20px 1px #4f46e5;
+}
+
+@media (prefers-color-scheme: dark) {
+  .collection-1 {
+    -webkit-box-shadow: 5px 5px 1px #4f46e5;
+    box-shadow: 5px 5px 1px #4f46e5;
+  }
+
+  .collection-2 {
+    -webkit-box-shadow: 5px 5px 1px #4f46e5, 10px 10px 1px #6366f1;
+    box-shadow: 5px 5px 1px #4f46e5, 10px 10px 1px #6366f1;
+  }
+
+  .collection-3 {
+    -webkit-box-shadow: 5px 5px 1px #4f46e5, 10px 10px 1px #6366f1, 15px 15px 1px #818cf8;
+    box-shadow: 5px 5px 1px #4f46e5, 10px 10px 1px #6366f1, 15px 15px 1px #818cf8;
+  }
+
+  .collection-4 {
+    -webkit-box-shadow: 5px 5px 1px #4f46e5, 10px 10px 1px #6366f1, 15px 15px 1px #818cf8,
+      20px 20px 1px #a5b4fc;
+    box-shadow: 5px 5px 1px #4f46e5, 10px 10px 1px #6366f1, 15px 15px 1px #818cf8,
+      20px 20px 1px #a5b4fc;
+  }
+}
+
+.collection-1-amber {
+  -webkit-box-shadow: 5px 5px 1px #fcd34d;
+  box-shadow: 5px 5px 1px #fcd34d;
+}
+
+.collection-2-amber {
+  -webkit-box-shadow: 5px 5px 1px #fcd34d, 10px 10px 1px #fbbf24;
+  box-shadow: 5px 5px 1px #fcd34d, 10px 10px 1px #fbbf24;
+}
+
+.collection-3-amber {
+  -webkit-box-shadow: 5px 5px 1px #fcd34d, 10px 10px 1px #fbbf24, 15px 15px 1px #f59e0b;
+  box-shadow: 5px 5px 1px #fcd34d, 10px 10px 1px #fbbf24, 15px 15px 1px #f59e0b;
+}
+
+.collection-4-amber {
+  -webkit-box-shadow: 5px 5px 1px #fcd34d, 10px 10px 1px #fcd34d, 15px 15px 1px #f59e0b,
+    20px 20px 1px #d97706;
+  box-shadow: 5px 5px 1px #fcd34d, 10px 10px 1px #fcd34d, 15px 15px 1px #f59e0b,
+    20px 20px 1px #d97706;
+}
+
+@media (prefers-color-scheme: dark) {
+  .collection-1-amber {
+    -webkit-box-shadow: 5px 5px 1px #f59e0b;
+    box-shadow: 5px 5px 1px #f59e0b;
+  }
+  .collection-2-amber {
+    -webkit-box-shadow: 5px 5px 1px #f59e0b, 10px 10px 1px #fbbf24;
+    box-shadow: 5px 5px 1px #f59e0b, 10px 10px 1px #fbbf24;
+  }
+  .collection-3-amber {
+    -webkit-box-shadow: 5px 5px 1px #f59e0b, 10px 10px 1px #fbbf24, 15px 15px 1px #fcd34d;
+    box-shadow: 5px 5px 1px #f59e0b, 10px 10px 1px #fbbf24, 15px 15px 1px #fcd34d;
+  }
+  .collection-4-amber {
+    -webkit-box-shadow: 5px 5px 1px #f59e0b, 10px 10px 1px #fbbf24, 15px 15px 1px #fcd34d,
+      20px 20px 1px #fde68a;
+    box-shadow: 5px 5px 1px #f59e0b, 10px 10px 1px #fbbf24, 15px 15px 1px #fcd34d,
+      20px 20px 1px #fde68a;
+  }
+}
+
+.collection-1-teal {
+  -webkit-box-shadow: 5px 5px 1px #5eead4;
+  box-shadow: 5px 5px 1px #5eead4;
+}
+
+.collection-2-teal {
+  -webkit-box-shadow: 5px 5px 1px #5eead4, 10px 10px 1px #2dd4bf;
+  box-shadow: 5px 5px 1px #5eead4, 10px 10px 1px #2dd4bf;
+}
+
+.collection-3-teal {
+  -webkit-box-shadow: 5px 5px 1px #5eead4, 10px 10px 1px #2dd4bf, 15px 15px 1px #14b8a6;
+  box-shadow: 5px 5px 1px #5eead4, 10px 10px 1px #2dd4bf, 15px 15px 1px #14b8a6;
+}
+
+.collection-4-teal {
+  -webkit-box-shadow: 5px 5px 1px #5eead4, 10px 10px 1px #2dd4bf, 15px 15px 1px #14b8a6,
+    20px 20px 1px #0d9488;
+  box-shadow: 5px 5px 1px #5eead4, 10px 10px 1px #2dd4bf, 15px 15px 1px #14b8a6,
+    20px 20px 1px #0d9488;
+}
+
+@media (prefers-color-scheme: dark) {
+  .collection-1-teal {
+    -webkit-box-shadow: 5px 5px 1px #14b8a6;
+    box-shadow: 5px 5px 1px #14b8a6;
+  }
+
+  .collection-2-teal {
+    -webkit-box-shadow: 5px 5px 1px #14b8a6, 10px 10px 1px #2dd4bf;
+    box-shadow: 5px 5px 1px #14b8a6, 10px 10px 1px #2dd4bf;
+  }
+
+  .collection-3-teal {
+    -webkit-box-shadow: 5px 5px 1px #14b8a6, 10px 10px 1px #2dd4bf, 15px 15px 1px #5eead4;
+    box-shadow: 5px 5px 1px #14b8a6, 10px 10px 1px #2dd4bf, 15px 15px 1px #5eead4;
+  }
+
+  .collection-4-teal {
+    -webkit-box-shadow: 5px 5px 1px #14b8a6, 10px 10px 1px #2dd4bf, 15px 15px 1px #5eead4,
+      20px 20px 1px #99f6e4;
+    box-shadow: 5px 5px 1px #14b8a6, 10px 10px 1px #2dd4bf, 15px 15px 1px #5eead4,
+      20px 20px 1px #99f6e4;
+  }
+}
+
+.collection-4-sky {
+  -webkit-box-shadow: 5px 5px 1px #7dd3fc, 10px 10px 1px #38bdf8, 15px 15px 1px #0ea5e9,
+    20px 20px 1px #0284c7;
+  box-shadow: 5px 5px 1px #7dd3fc, 10px 10px 1px #38bdf8, 15px 15px 1px #0ea5e9,
+    20px 20px 1px #0284c7;
+}
+@media (prefers-color-scheme: dark) {
+  .collection-4-sky {
+    -webkit-box-shadow: 5px 5px 1px #0284c7, 10px 10px 1px #0ea5e9, 15px 15px 1px #38bdf8,
+      20px 20px 1px #7dd3fc;
+    box-shadow: 5px 5px 1px #0284c7, 10px 10px 1px #0ea5e9, 15px 15px 1px #38bdf8,
+      20px 20px 1px #7dd3fc;
   }
 }

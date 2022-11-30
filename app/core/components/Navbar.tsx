@@ -1,4 +1,8 @@
-import { Link, Routes, useQuery, useSession, useRouter } from "blitz"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import { useSession } from "@blitzjs/auth"
+import { useQuery } from "@blitzjs/rpc"
+import { Routes } from "@blitzjs/next"
 import { getAlgoliaResults } from "@algolia/autocomplete-js"
 import algoliasearch from "algoliasearch"
 import SearchResultWorkspace from "./SearchResultWorkspace"
@@ -23,7 +27,7 @@ const Navbar = ({
 }) => {
   return (
     <>
-      <div className="z-50 mx-auto w-full border-b border-gray-100 bg-white px-4 dark:border-gray-600 dark:bg-gray-900 sm:px-6 lg:px-8">
+      <div className="z-10 mx-auto w-full border-b border-gray-100 bg-white px-4 dark:border-gray-600 dark:bg-gray-900 sm:px-6 lg:px-8">
         <div className="relative flex justify-between lg:gap-8 xl:grid xl:grid-cols-12">
           <div className="flex md:absolute md:inset-y-0 md:left-0 lg:static xl:col-span-2">
             <div className="my-2 flex shrink-0 items-center">

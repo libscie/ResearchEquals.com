@@ -1,14 +1,18 @@
+import Link from "next/link"
+import { useRouter } from "next/router"
+import { useMutation, useQuery } from "@blitzjs/rpc"
 import { Dialog, Transition } from "@headlessui/react"
 import getLicenses from "app/core/queries/getLicenses"
 import getTypes from "app/core/queries/getTypes"
-import { Link, useMutation, useQuery, validateZodSchema, useRouter } from "blitz"
 import { useFormik } from "formik"
 import { Fragment, useState } from "react"
 import { z } from "zod"
 import { Checkmark, Close, InformationSquareFilled } from "@carbon/icons-react"
+import ISO6391 from "iso-639-1"
 
 import createModule from "../mutations/createModule"
 import toast from "react-hot-toast"
+import { validateZodSchema } from "blitz"
 
 const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
   const [openCreate, setCreateOpen] = useState(false)
@@ -23,6 +27,7 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
       main: "",
       type: "",
       license: "",
+      language: "en",
       displayColor: "#574cfa",
     },
     validate: validateZodSchema(
@@ -31,33 +36,36 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
         description: z.string(),
         type: z.string().min(1),
         license: z.string().min(1),
+        language: z.enum([...ISO6391.getAllCodes()] as any),
         displayColor: z.string().min(1),
       })
     ),
     onSubmit: async (values) => {
-      toast.promise(
-        createModuleMutation({
-          title: values.title,
-          description: values.description,
-          typeId: parseInt(values.type),
-          licenseId: parseInt(values.license),
-          authors: [],
-          displayColor: values.displayColor,
-        }),
-        {
-          loading: "Creating draft...",
-          success: (data) => {
-            refetchFn()
-            setCreateOpen(false)
-            formikReset()
-            router.push(`/drafts?suffix=${data}`)
-            return "Created!"
-          },
-          error: (error) => {
-            return error
-          },
-        }
-      )
+      await toast
+        .promise(
+          createModuleMutation({
+            title: values.title,
+            description: values.description,
+            typeId: parseInt(values.type),
+            licenseId: parseInt(values.license),
+            language: values.language,
+            authors: [],
+            displayColor: values.displayColor,
+          }),
+          {
+            loading: "Creating draft...",
+            success: "Created!",
+            error: (error) => {
+              return error
+            },
+          }
+        )
+        .then(async (data) => {
+          refetchFn()
+          setCreateOpen(false)
+          formikReset()
+          await router.push(`/drafts?suffix=${data}`)
+        })
       // try {
       //   await createModuleMutation({
       //     title: values.title,
@@ -77,12 +85,16 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
   })
 
   const formikReset = () => {
-    formik.setFieldValue("title", "")
-    formik.setFieldValue("description", "")
-    formik.setFieldValue("main", "")
-    formik.setFieldValue("type", "")
-    formik.setFieldValue("license", "")
-    formik.setFieldValue("displayColor", "#574cfa")
+    const updateFormik = async () => {
+      await formik.setFieldValue("title", "")
+      await formik.setFieldValue("description", "")
+      await formik.setFieldValue("main", "")
+      await formik.setFieldValue("type", "")
+      await formik.setFieldValue("license", "")
+      await formik.setFieldValue("language", "en")
+      await formik.setFieldValue("displayColor", "#574cfa")
+    }
+    updateFormik().catch((error) => console.log(error))
   }
 
   return (
@@ -205,11 +217,9 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             >
                               <option className="text-gray-900" value=""></option>
                               {moduleTypes.map((type) => (
-                                <>
-                                  <option value={type.id} className="text-gray-900">
-                                    {type.name}
-                                  </option>
-                                </>
+                                <option key={type.id} value={type.id} className="text-gray-900">
+                                  {type.name}
+                                </option>
                               ))}
                             </select>
                           </div>
@@ -250,15 +260,17 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                             >
                               <option className="text-gray-900" value=""></option>
                               {licenses.map((license) => (
-                                <>
-                                  <option value={license.id} className="text-gray-900">
-                                    {license.name} (
-                                    {license.price > 0
-                                      ? `${license.price / 100}EUR incl. VAT`
-                                      : "Free"}
-                                    )
-                                  </option>
-                                </>
+                                <option
+                                  key={license.id}
+                                  value={license.id}
+                                  className="text-gray-900"
+                                >
+                                  {license.name} (
+                                  {license.price > 0
+                                    ? `${license.price / 100}EUR incl. VAT`
+                                    : "Pay what you want"}
+                                  )
+                                </option>
                               ))}
                             </select>
                           </div>
@@ -309,6 +321,36 @@ const QuickDraft = ({ buttonText, buttonStyle, refetchFn }) => {
                               >
                                 Pink
                               </option>
+                            </select>
+                          </div>
+                        </div>
+                        <div className="my-4">
+                          <label
+                            htmlFor="language"
+                            className="my-1 block text-sm font-medium leading-5 text-gray-700 dark:text-gray-200"
+                          >
+                            Language{" "}
+                            {formik.touched.language && formik.errors.language
+                              ? " - " + formik.errors.language
+                              : null}
+                            <p className="text-xs">Publish in your preferred language.</p>
+                          </label>
+                          <div className="mt-1">
+                            <select
+                              id="language"
+                              required
+                              className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-400 bg-white px-3 py-2 text-sm font-normal placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border-gray-600 dark:bg-transparent dark:text-gray-200 "
+                              {...formik.getFieldProps("language")}
+                            >
+                              {ISO6391.getAllNames().map((lang) => (
+                                <option
+                                  key={lang}
+                                  value={ISO6391.getCode(lang)}
+                                  className="text-gray-900"
+                                >
+                                  {ISO6391.getCode(lang) + " - " + lang}
+                                </option>
+                              ))}
                             </select>
                           </div>
                         </div>

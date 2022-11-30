@@ -1,4 +1,4 @@
-import { useMutation } from "blitz"
+import { useMutation } from "@blitzjs/rpc"
 import toast from "react-hot-toast"
 import followWorkspace from "../mutations/followWorkspace"
 

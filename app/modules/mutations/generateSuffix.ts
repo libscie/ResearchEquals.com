@@ -37,19 +37,27 @@ const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min
 }
 
-const generateSuffix = async (undefined) => {
-  let generatorValue = getRandomInt(17179869184, 34359738367)
+// https://libscie.org/minting-dois-for-research-modules/
+const generateSuffix = async (length = 8) => {
+  const binaryLength = (length - 1) * 5
+  const floorInt = "1" + "0".repeat(binaryLength - 1)
+  const ceilingInt = "1".repeat(binaryLength)
+
+  let generatorValue = getRandomInt(parseInt(floorInt, 2), parseInt(ceilingInt, 2))
   let generatorOutput = ""
 
   generatorValue
     .toString(2)
     .match(/.{1,5}/g)
-    .map((item) => {
-      if (generatorOutput.length > 0 && generatorOutput.length % 4 == 0) {
+    .map((item, index) => {
+      if (index > 0 && index % 4 == 0) {
         generatorOutput += "-"
       }
       generatorOutput += ENCODE_CHARS[parseInt(item, 2)]
     })
+  if ((generatorOutput.length + 1) % 5 == 0) {
+    generatorOutput += "-"
+  }
   generatorOutput += ENCODE_CHARS[generatorValue % 31]
 
   return generatorOutput

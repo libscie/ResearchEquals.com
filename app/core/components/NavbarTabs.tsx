@@ -1,5 +1,7 @@
-import { Link, Routes } from "blitz"
+import Link from "next/link"
+import { Routes } from "@blitzjs/next"
 import { Undo } from "@carbon/icons-react"
+import CollectionsModal from "../modals/CollectionsModal"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -18,6 +20,11 @@ const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invit
         name: "Map",
         href: Routes.Graph(),
         current: router.asPath === Routes.Graph().pathname,
+      },
+      {
+        name: "Collections",
+        href: Routes.CollectionsPage(),
+        current: router.asPath === `/collections`,
       },
       {
         name: "Dashboard",
@@ -48,7 +55,7 @@ const NavTabs = ({ currentUser, currentWorkspace, session, router, drafts, invit
     return (
       <>
         <div className="mx-auto w-full overflow-x-auto border-b border-gray-100 bg-white px-4 text-gray-900 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-200 sm:px-6 lg:px-8">
-          <div className="hidden sm:block">
+          <div className="hidden lg:block">
             <nav className="flex space-x-8" aria-label="Tabs">
               <button
                 onClick={() => {

@@ -1,23 +1,23 @@
-import { useMutation } from "blitz"
+import { invoke, useMutation } from "@blitzjs/rpc"
 import { Widget } from "@uploadcare/react-widget"
 import { useRef } from "react"
 import toast from "react-hot-toast"
 import { Add } from "@carbon/icons-react"
 
 import addSupporting from "../mutations/addSupporting"
-import getSupportingFiles from "../mutations/getSupportingFiles"
+import getSupportingFiles from "../queries/getSupportingFiles"
 import { fileSizeLimit, fileTypeLimit } from "../../core/utils/fileTypeLimit"
+import uploadcareError from "../../core/utils/uploadcareError"
 
 const validators = [fileTypeLimit, fileSizeLimit]
 
 const EditSupportingFiles = ({ setQueryData, moduleEdit, user, workspace, expire, signature }) => {
   const widgetApi = useRef()
   const [addSupportingMutation] = useMutation(addSupporting)
-  const [getSupportingFilesMutation] = useMutation(getSupportingFiles)
 
   const updateSupporting = async (info) => {
     try {
-      const newFiles = await getSupportingFilesMutation({ groupUuid: info.uuid })
+      const newFiles = await invoke(getSupportingFiles, { groupUuid: info.uuid })
       toast.promise(
         addSupportingMutation({
           id: moduleEdit.id,
@@ -61,6 +61,7 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit, user, workspace, expire
               multiple
               multipleMax={10}
               clearable
+              localeTranslations={uploadcareError}
               onChange={updateSupporting}
             />
           </button>
