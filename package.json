@@ -37,7 +37,7 @@
     "@carbon/icons-react": "11.11.0",
     "@faker-js/faker": "7.6.0",
     "@headlessui/react": "1.7.4",
-    "@prisma/client": "4.6.0",
+    "@prisma/client": "4.7.0",
     "@react-pdf-viewer/core": "3.8.0",
     "@tailwindcss/forms": "0.5.3",
     "@tailwindcss/line-clamp": "0.4.2",
