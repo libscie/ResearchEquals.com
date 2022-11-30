@@ -12,7 +12,7 @@ const ViewFiles = ({ name, size, url }) => {
       >
         <span className="inline-block  flex-grow align-middle">{name}</span>
         {/* https://www.npmjs.com/package/filesize */}
-        <span>{filesize(size)}</span>
+        <span>{filesize(size).toString()}</span>
       </a>
       <p className="flex">
         <a href={url} target="_blank" download rel="noreferrer">
