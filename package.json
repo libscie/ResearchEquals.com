@@ -59,7 +59,7 @@
     "iso-639-1": "2.1.15",
     "markdown-it": "13.0.1",
     "moment": "2.29.4",
-    "next": "12.2.0",
+    "next": "13.0.5",
     "passport-orcid": "0.0.4",
     "pdfjs-dist": "3.0.279",
     "postcss": "8.4.18",
