@@ -10,9 +10,10 @@ export const ModuleDiagram = () => {
         <Image
           src={HeroImage}
           alt="A diagram showing connections among research modules"
-          layout="responsive"
+          // layout="responsive"
           width={2560}
           height={1880}
+          className="relative"
         />
       </div>
     </section>
