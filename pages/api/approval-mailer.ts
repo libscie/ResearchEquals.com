@@ -1,8 +1,9 @@
 import { sendApproval } from "app/postmark"
 import { Queue } from "quirrel/next"
-import db from "../../db"
+import db, { User } from "../../db"
 
-export default Queue("api/approval-mailer", async (moduleId: number) => {
+export default Queue("api/approval-mailer", async (payload: { moduleId: number; user: User }) => {
+  const { moduleId, user } = payload
   const currentModule = await db.module.findFirst({
     where: {
       id: moduleId,
@@ -30,6 +31,8 @@ export default Queue("api/approval-mailer", async (moduleId: number) => {
     },
   })
 
+  const currentApprover = currentModule?.authors.find((author) => author.workspaceId === user.id)
+
   currentModule?.authors.map(async (author) => {
     author.workspace?.members.map(async (member) => {
       if (
@@ -42,7 +45,7 @@ export default Queue("api/approval-mailer", async (moduleId: number) => {
           {
             // TODO: This name should be checked
             // https://github.com/libscie/ResearchEquals.com/issues/730
-            name: `${author.workspace?.firstName} ${author.workspace?.lastName}`,
+            name: `${currentApprover?.workspace?.firstName} ${currentApprover?.workspace?.lastName}`,
             title: currentModule.title,
             url: `${process.env.APP_ORIGIN}/drafts?suffix=${currentModule.suffix}`,
           },
