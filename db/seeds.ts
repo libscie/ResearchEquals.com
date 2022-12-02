@@ -487,48 +487,58 @@ const seed = async () => {
       },
     })
 
-    let user
-    for (let index = 0; index < 50; index++) {
-      user = await db.user.create({
-        data: {
-          email: faker.internet.email(),
-          role: "CUSTOMER",
-          memberships: {
-            create: [
-              {
-                role: "OWNER",
-                workspace: {
-                  create: {
-                    handle: faker.internet.userName().toLowerCase(),
-                    avatar: `https://eu.ui-avatars.com/api/?rounded=true&background=574cfa&color=ffffff&name=${faker.internet.userName()}`,
-                    firstName: faker.name.firstName(),
-                    lastName: faker.name.lastName(),
-                    url: faker.internet.url(),
+    // Skip seeding the db if there are more than 50 users
+    const numUsersTarget = 50
+    const numUsers = await db.user.count()
+    if (numUsers > numUsersTarget) {
+      console.log(
+        `Skipping seeding test users since there are already ${numUsers} users in the database.`
+      )
+    }
+    if (numUsers < numUsersTarget) {
+      let user
+      for (let index = 0; index < numUsersTarget; index++) {
+        user = await db.user.create({
+          data: {
+            email: faker.internet.email(),
+            role: "CUSTOMER",
+            memberships: {
+              create: [
+                {
+                  role: "OWNER",
+                  workspace: {
+                    create: {
+                      handle: faker.internet.userName().toLowerCase(),
+                      avatar: `https://eu.ui-avatars.com/api/?rounded=true&background=574cfa&color=ffffff&name=${faker.internet.userName()}`,
+                      firstName: faker.name.firstName(),
+                      lastName: faker.name.lastName(),
+                      url: faker.internet.url(),
+                    },
                   },
                 },
-              },
-            ],
-          },
-        },
-        include: {
-          memberships: {
-            include: {
-              workspace: true,
+              ],
             },
           },
-        },
-      })
-
-      user!.memberships!.map(async (membership) => {
-        await algIndex.saveObject({
-          objectID: membership.workspace.id,
-          firstName: membership.workspace.firstName,
-          lastName: membership.workspace.lastName,
-          handle: membership.workspace.handle,
-          avatar: membership.workspace.avatar,
-          pronouns: membership.workspace.pronouns,
+          include: {
+            memberships: {
+              include: {
+                workspace: true,
+              },
+            },
+          },
         })
-      })
+
+        user!.memberships!.map(async (membership) => {
+          await algIndex.saveObject({
+            objectID: membership.workspace.id,
+            firstName: membership.workspace.firstName,
+            lastName: membership.workspace.lastName,
+            handle: membership.workspace.handle,
+            avatar: membership.workspace.avatar,
+            pronouns: membership.workspace.pronouns,
+          })
+        })
+      }
     }
 
     let datetime
