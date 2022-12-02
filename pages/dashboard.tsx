@@ -118,60 +118,13 @@ const DashboardContent = ({
               {stats.map((item) => {
                 if (item.name === "Followers") {
                   return (
-                    <button
-                      key={item.name}
-                      className="flex-grow px-4 py-5 text-left hover:bg-gray-50 disabled:opacity-50 dark:hover:bg-gray-800 sm:p-6"
-                      disabled={item.stat === 0}
-                      onClick={() => {
-                        setViewFollowers(true)
-                      }}
-                    >
-                      <dt className="text-base font-normal">{item.name}</dt>
-                      <dd className="mt-1 flex items-baseline justify-between md:block lg:flex">
-                        <div className="flex items-baseline text-2xl font-semibold text-indigo-600 dark:text-indigo-200">
-                          {item.stat}
-                          {item.change ? (
-                            <p
-                              className={classNames(
-                                item.change === Infinity
-                                  ? "hidden"
-                                  : item.change > 0
-                                  ? "text-emerald-700 dark:text-emerald-500"
-                                  : "text-red-700 dark:text-red-500",
-                                "ml-2 flex items-baseline text-sm font-semibold"
-                              )}
-                            >
-                              {item.change > 0 ? (
-                                <ArrowUp
-                                  size={32}
-                                  className="h-5 w-5 shrink-0 self-center text-emerald-500"
-                                  aria-hidden="true"
-                                />
-                              ) : (
-                                <ArrowDown
-                                  size={32}
-                                  className="h-5 w-5 shrink-0 self-center text-red-500"
-                                  aria-hidden="true"
-                                />
-                              )}
-                              <span className="sr-only">
-                                {item.change > 0 ? "Increased" : "Decreased"} by
-                              </span>
-                              {item.change}%
-                            </p>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </dd>
-                    </button>
-                  )
-                } else {
-                  return (
-                    <Link key={item.name} href={item.to} legacyBehavior>
+                    <>
                       <button
                         className="flex-grow px-4 py-5 text-left hover:bg-gray-50 disabled:opacity-50 dark:hover:bg-gray-800 sm:p-6"
                         disabled={item.stat === 0}
+                        onClick={() => {
+                          setViewFollowers(true)
+                        }}
                       >
                         <dt className="text-base font-normal">{item.name}</dt>
                         <dd className="mt-1 flex items-baseline justify-between md:block lg:flex">
@@ -212,7 +165,57 @@ const DashboardContent = ({
                           </div>
                         </dd>
                       </button>
-                    </Link>
+                    </>
+                  )
+                } else {
+                  return (
+                    <>
+                      <Link href={item.to} legacyBehavior>
+                        <button
+                          className="flex-grow px-4 py-5 text-left hover:bg-gray-50 disabled:opacity-50 dark:hover:bg-gray-800 sm:p-6"
+                          disabled={item.stat === 0}
+                        >
+                          <dt className="text-base font-normal">{item.name}</dt>
+                          <dd className="mt-1 flex items-baseline justify-between md:block lg:flex">
+                            <div className="flex items-baseline text-2xl font-semibold text-indigo-600 dark:text-indigo-200">
+                              {item.stat}
+                              {item.change ? (
+                                <p
+                                  className={classNames(
+                                    item.change === Infinity
+                                      ? "hidden"
+                                      : item.change > 0
+                                      ? "text-emerald-700 dark:text-emerald-500"
+                                      : "text-red-700 dark:text-red-500",
+                                    "ml-2 flex items-baseline text-sm font-semibold"
+                                  )}
+                                >
+                                  {item.change > 0 ? (
+                                    <ArrowUp
+                                      size={32}
+                                      className="h-5 w-5 shrink-0 self-center text-emerald-500"
+                                      aria-hidden="true"
+                                    />
+                                  ) : (
+                                    <ArrowDown
+                                      size={32}
+                                      className="h-5 w-5 shrink-0 self-center text-red-500"
+                                      aria-hidden="true"
+                                    />
+                                  )}
+                                  <span className="sr-only">
+                                    {item.change > 0 ? "Increased" : "Decreased"} by
+                                  </span>
+                                  {item.change}%
+                                </p>
+                              ) : (
+                                ""
+                              )}
+                            </div>
+                          </dd>
+                        </button>
+                      </Link>
+                    </>
                   )
                 }
               })}
