@@ -24,7 +24,7 @@ export const Hero = () => {
         <p className="max-w-[800px] text-base text-slate-600 dark:text-slate-300 md:text-xl">
           {t("hero_subtitle")}
         </p>
-        <Link href="/signup" passHref legacyBehavior>
+        <Link href="/signup">
           <Button color="primary" className="mt-4 w-auto">
             {t("primary_cta")}
           </Button>
