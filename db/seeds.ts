@@ -541,91 +541,101 @@ const seed = async () => {
       }
     }
 
-    let datetime
-    let suffix
-    let currentModule
-    for (let index = 0; index < 10; index++) {
-      datetime = Date.now()
-      suffix = await generateSuffix(undefined)
-      const catImage = `https://ucarecdn.com/fea4c143-6382-467d-a500-23826acbb1e4/`
-      currentModule = await db.module.create({
-        data: {
-          prefix: "10.53962",
-          suffix: await generateSuffix(undefined),
-          title: faker.lorem.sentence(),
-          description: faker.lorem.sentences(5 * (index + 1)),
-          published: true,
-          publishedWhere: "ResearchEquals",
-          publishedAt: faker.date.past(),
-          url: `https://doi.org/10.53962/${suffix}`,
-          main: {
-            name: faker.system.fileName(),
-            size: 603268,
-            uuid: faker.datatype.uuid(),
-            cdnUrl: catImage,
-            isImage: true,
-            isStored: true,
-            mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            sourceInfo: { file: {}, source: "local" },
-            originalUrl: catImage,
-            cdnUrlModifiers: null,
-            originalImageInfo: null,
+    // Skip seeding modules if there are more than 10 modules
+    const numModulesTarget = 10
+    const numModules = await db.module.count()
+    if (numModules > numModulesTarget) {
+      console.log(
+        `Skipping seeding test modules since there are already ${numModules} modules in the database.`
+      )
+    }
+    if (numModules < numModulesTarget) {
+      let datetime
+      let suffix
+      let currentModule
+      for (let index = 0; index < numModulesTarget; index++) {
+        datetime = Date.now()
+        suffix = await generateSuffix(undefined)
+        const catImage = `https://ucarecdn.com/fea4c143-6382-467d-a500-23826acbb1e4/`
+        currentModule = await db.module.create({
+          data: {
+            prefix: "10.53962",
+            suffix: await generateSuffix(undefined),
+            title: faker.lorem.sentence(),
+            description: faker.lorem.sentences(5 * (index + 1)),
+            published: true,
+            publishedWhere: "ResearchEquals",
+            publishedAt: faker.date.past(),
+            url: `https://doi.org/10.53962/${suffix}`,
+            main: {
+              name: faker.system.fileName(),
+              size: 603268,
+              uuid: faker.datatype.uuid(),
+              cdnUrl: catImage,
+              isImage: true,
+              isStored: true,
+              mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+              sourceInfo: { file: {}, source: "local" },
+              originalUrl: catImage,
+              cdnUrlModifiers: null,
+              originalImageInfo: null,
+            },
+            type: {
+              connect: { id: 2 },
+            },
+            license: {
+              connect: { id: 1 },
+            },
+            authors: {
+              create: [
+                {
+                  workspaceId: 1,
+                  acceptedInvitation: true,
+                },
+                {
+                  workspaceId: 2,
+                  acceptedInvitation: true,
+                },
+                {
+                  workspaceId: 3,
+                  acceptedInvitation: true,
+                },
+                {
+                  workspaceId: 4,
+                  acceptedInvitation: true,
+                },
+                {
+                  workspaceId: 5,
+                  acceptedInvitation: true,
+                },
+                {
+                  workspaceId: 6,
+                  acceptedInvitation: true,
+                },
+                {
+                  workspaceId: 7,
+                  acceptedInvitation: true,
+                },
+              ],
+            },
           },
-          type: {
-            connect: { id: 2 },
+          include: {
+            type: true,
+            license: true,
           },
-          license: {
-            connect: { id: 1 },
-          },
-          authors: {
-            create: [
-              {
-                workspaceId: 1,
-                acceptedInvitation: true,
-              },
-              {
-                workspaceId: 2,
-                acceptedInvitation: true,
-              },
-              {
-                workspaceId: 3,
-                acceptedInvitation: true,
-              },
-              {
-                workspaceId: 4,
-                acceptedInvitation: true,
-              },
-              {
-                workspaceId: 5,
-                acceptedInvitation: true,
-              },
-              {
-                workspaceId: 6,
-                acceptedInvitation: true,
-              },
-              {
-                workspaceId: 7,
-                acceptedInvitation: true,
-              },
-            ],
-          },
-        },
-        include: {
-          type: true,
-          license: true,
-        },
-      })
-      await modIndex.saveObject({
-        objectID: module.id,
-        doi: `${process.env.DOI_PREFIX}/${currentModule.suffix}`,
-        suffix: currentModule.suffix,
-        license: currentModule.license?.url,
-        type: currentModule.type.name,
-        // It's called name and not title to improve Algolia search
-        name: currentModule.title,
-        description: currentModule.description,
-        publishedAt: currentModule.publishedAt,
-      })
+        })
+        await modIndex.saveObject({
+          objectID: module.id,
+          doi: `${process.env.DOI_PREFIX}/${currentModule.suffix}`,
+          suffix: currentModule.suffix,
+          license: currentModule.license?.url,
+          type: currentModule.type.name,
+          // It's called name and not title to improve Algolia search
+          name: currentModule.title,
+          description: currentModule.description,
+          publishedAt: currentModule.publishedAt,
+        })
+      }
     }
   }
 }
