@@ -222,7 +222,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               type="firstName"
               autoComplete="firstName"
               className="placeholder-font-normal block w-11/12 appearance-none rounded border border-gray-300 bg-transparent px-3 py-2 text-sm font-normal placeholder-gray-400 focus:border-indigo-500 focus:outline-none  focus:ring-indigo-500 dark:border-gray-600 "
-              {...formik.getFieldProps("firstName")}
+              defaultValue={workspaceFirstName}
               onChange={(data) => {
                 setWorkspaceFirstName(data.target.value)
               }}
@@ -242,7 +242,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               type="lastName"
               autoComplete="lastName"
               className="placeholder-font-normal block w-11/12 appearance-none rounded border border-gray-300 bg-transparent px-3 py-2 text-sm font-normal placeholder-gray-400 focus:border-indigo-500 focus:outline-none  focus:ring-indigo-500 dark:border-gray-600 "
-              {...formik.getFieldProps("lastName")}
+              defaultValue={workspaceLastName}
               onChange={(data) => {
                 setWorkspaceLastName(data.target.value)
               }}
@@ -258,8 +258,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               rows={4}
               id="bio"
               className="block w-11/12 rounded border border-gray-300 bg-transparent text-gray-900 focus:border-indigo-500 focus:ring-indigo-500  dark:border-gray-600 dark:text-gray-200 sm:text-sm"
-              {...formik.getFieldProps("bio")}
-              defaultValue={workspace.bio}
+              defaultValue={workspaceBio}
               onChange={(data) => {
                 setWorkspaceBio(data.target.value)
               }}
@@ -280,7 +279,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               autoComplete="pronouns"
               placeholder="they/them"
               className="placeholder-font-normal block w-11/12 appearance-none rounded border border-gray-300 bg-transparent px-3 py-2 text-sm font-normal placeholder-gray-400 focus:border-indigo-500 focus:outline-none  focus:ring-indigo-500 dark:border-gray-600 "
-              {...formik.getFieldProps("pronouns")}
+              defaultValue={workspacePronouns}
               onChange={(data) => {
                 setWorkspacePronouns(data.target.value)
               }}
@@ -301,7 +300,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               autoComplete="profileUrl"
               placeholder="https://twitter.com/you"
               className=" placeholder-font-normal block w-11/12 appearance-none rounded border border-gray-300 bg-transparent px-3 py-2  text-sm font-normal placeholder-gray-400 focus:border-indigo-500 focus:outline-none  focus:ring-indigo-500 dark:border-gray-600 "
-              {...formik.getFieldProps("profileUrl")}
+              defaultValue={workspaceUrl}
               onChange={(data) => {
                 setWorkspaceUrl(data.target.value)
               }}
