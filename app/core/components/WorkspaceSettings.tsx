@@ -69,11 +69,11 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
     enableReinitialize: true,
     validate: validateZodSchema(
       z.object({
-        firstName: z.any(),
-        lastName: z.any(),
-        bio: z.any(),
-        pronouns: z.any(),
-        profileUrl: z.any(),
+        firstName: z.string(),
+        lastName: z.string(),
+        bio: z.string(),
+        pronouns: z.string().max(20),
+        profileUrl: z.string().url(),
       })
     ),
     onSubmit: async (values) => {
