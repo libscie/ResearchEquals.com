@@ -97,6 +97,7 @@
           "type": "rds",
           "engine": "postgres",
           "engineVersion": "13",
+          "instanceSize": "db.t3.medium",
           "storage": 100,
           "maxStorage": 1000,
           "private": false,
