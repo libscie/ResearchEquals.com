@@ -96,7 +96,7 @@
           "name": "researchequals-prod-db",
           "type": "rds",
           "engine": "postgres",
-          "engineVersion": "13.7",
+          "engineVersion": "13",
           "storage": 100,
           "maxStorage": 1000,
           "private": false,
