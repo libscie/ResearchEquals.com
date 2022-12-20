@@ -107,7 +107,7 @@ export const ApproachSection = () => {
             <ApproachBox key={idx} data={data} className="w-full" />
           ))}
         </div>
-        <Link href="/signup" passHref legacyBehavior>
+        <Link href="/signup">
           <Button color="primary">Publish Openly with ResearchEquals</Button>
         </Link>
       </div>
