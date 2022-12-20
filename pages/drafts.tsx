@@ -67,25 +67,24 @@ const DraftsContents = ({ expire, signature, currentWorkspace, session, user }) 
               </h1>
               <ul role="list" className="divide-y divide-gray-100 dark:divide-gray-600">
                 {drafts.map((draft) => (
-                  <>
-                    <li
-                      onClick={async () => {
-                        setModule(draft)
-                        setInboxOpen(biggerWindow)
-                        await router.push("/drafts", { query: { suffix: draft.suffix } })
-                      }}
-                      className="cursor-pointer"
-                    >
-                      <ModuleCard
-                        type={draft.type.name}
-                        title={draft.title}
-                        status="Draft"
-                        time={moment(draft.updatedAt).fromNow()}
-                        timeText="Updated"
-                        authors={draft.authors}
-                      />
-                    </li>
-                  </>
+                  <li
+                    key={draft.id}
+                    onClick={async () => {
+                      setModule(draft)
+                      setInboxOpen(biggerWindow)
+                      await router.push("/drafts", { query: { suffix: draft.suffix } })
+                    }}
+                    className="cursor-pointer"
+                  >
+                    <ModuleCard
+                      type={draft.type.name}
+                      title={draft.title}
+                      status="Draft"
+                      time={moment(draft.updatedAt).fromNow()}
+                      timeText="Updated"
+                      authors={draft.authors}
+                    />
+                  </li>
                 ))}
               </ul>
             </div>

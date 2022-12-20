@@ -139,97 +139,91 @@ const EmailSettings = ({ user, setIsOpen }) => {
           </thead>
           <tbody>
             {user.memberships.map((membership) => (
-              <>
-                <tr>
-                  <td className="flex">
-                    <img
-                      src={membership.workspace.avatar}
-                      className="mx-1 inline-block h-6 h-full w-6 rounded-full align-middle"
+              <tr key={membership.id}>
+                <td className="flex">
+                  <img
+                    src={membership.workspace.avatar}
+                    className="mx-1 inline-block h-6 h-full w-6 rounded-full align-middle"
+                  />
+                  <span className="inline-block h-full align-middle"> </span>
+                  <p className="inline-block align-middle text-sm line-clamp-1">
+                    @{membership.workspace.handle}
+                  </p>
+                </td>
+                <td className="">
+                  {formik.values.emailConsent ? (
+                    <input
+                      type="checkbox"
+                      id={`${membership.workspace.handle}-invitations`}
+                      defaultChecked={formik.values[`${membership.workspace.handle}-invitations`]}
+                      {...formik.getFieldProps(`${membership.workspace.handle}-invitations`)}
                     />
-                    <span className="inline-block h-full align-middle"> </span>
-                    <p className="inline-block align-middle text-sm line-clamp-1">
-                      @{membership.workspace.handle}
-                    </p>
-                  </td>
-                  <td className="">
-                    {formik.values.emailConsent ? (
-                      <input
-                        type="checkbox"
-                        id={`${membership.workspace.handle}-invitations`}
-                        defaultChecked={formik.values[`${membership.workspace.handle}-invitations`]}
-                        {...formik.getFieldProps(`${membership.workspace.handle}-invitations`)}
-                      />
-                    ) : (
-                      // <input type="checkbox" className="w-fullalign-middle" />
-                      <input
-                        type="checkbox"
-                        disabled
-                        className="disabled:opacity-25"
-                        defaultChecked={formik.values[`${membership.workspace.handle}-invitations`]}
-                        {...formik.getFieldProps(`${membership.workspace.handle}-invitations`)}
-                      />
-                    )}
-                  </td>
-                  <td className="">
-                    {formik.values.emailConsent ? (
-                      <input
-                        type="checkbox"
-                        id={`${membership.workspace.handle}-approvals`}
-                        defaultChecked={formik.values[`${membership.workspace.handle}-approvals`]}
-                        {...formik.getFieldProps(`${membership.workspace.handle}-approvals`)}
-                      />
-                    ) : (
-                      <input
-                        type="checkbox"
-                        disabled
-                        className="disabled:opacity-25"
-                        defaultChecked={formik.values[`${membership.workspace.handle}-approvals`]}
-                        {...formik.getFieldProps(`${membership.workspace.handle}-approvals`)}
-                      />
-                    )}
-                  </td>
-                  <td className="">
-                    {formik.values.emailConsent ? (
-                      <input
-                        type="checkbox"
-                        id={`${membership.workspace.handle}-weeklyDigest`}
-                        defaultChecked={
-                          formik.values[`${membership.workspace.handle}-weeklyDigest`]
-                        }
-                        {...formik.getFieldProps(`${membership.workspace.handle}-weeklyDigest`)}
-                      />
-                    ) : (
-                      <input
-                        type="checkbox"
-                        disabled
-                        className="disabled:opacity-25"
-                        defaultChecked={
-                          formik.values[`${membership.workspace.handle}-weeklyDigest`]
-                        }
-                        {...formik.getFieldProps(`${membership.workspace.handle}-weeklyDigest`)}
-                      />
-                    )}
-                  </td>
-                  <td className="">
-                    {formik.values.emailConsent ? (
-                      <input
-                        type="checkbox"
-                        id={`${membership.workspace.handle}-collections`}
-                        defaultChecked={formik.values[`${membership.workspace.handle}-collections`]}
-                        {...formik.getFieldProps(`${membership.workspace.handle}-collections`)}
-                      />
-                    ) : (
-                      <input
-                        type="checkbox"
-                        disabled
-                        className="disabled:opacity-25"
-                        defaultChecked={formik.values[`${membership.workspace.handle}-collections`]}
-                        {...formik.getFieldProps(`${membership.workspace.handle}-collections`)}
-                      />
-                    )}
-                  </td>
-                </tr>
-              </>
+                  ) : (
+                    // <input type="checkbox" className="w-fullalign-middle" />
+                    <input
+                      type="checkbox"
+                      disabled
+                      className="disabled:opacity-25"
+                      defaultChecked={formik.values[`${membership.workspace.handle}-invitations`]}
+                      {...formik.getFieldProps(`${membership.workspace.handle}-invitations`)}
+                    />
+                  )}
+                </td>
+                <td className="">
+                  {formik.values.emailConsent ? (
+                    <input
+                      type="checkbox"
+                      id={`${membership.workspace.handle}-approvals`}
+                      defaultChecked={formik.values[`${membership.workspace.handle}-approvals`]}
+                      {...formik.getFieldProps(`${membership.workspace.handle}-approvals`)}
+                    />
+                  ) : (
+                    <input
+                      type="checkbox"
+                      disabled
+                      className="disabled:opacity-25"
+                      defaultChecked={formik.values[`${membership.workspace.handle}-approvals`]}
+                      {...formik.getFieldProps(`${membership.workspace.handle}-approvals`)}
+                    />
+                  )}
+                </td>
+                <td className="">
+                  {formik.values.emailConsent ? (
+                    <input
+                      type="checkbox"
+                      id={`${membership.workspace.handle}-weeklyDigest`}
+                      defaultChecked={formik.values[`${membership.workspace.handle}-weeklyDigest`]}
+                      {...formik.getFieldProps(`${membership.workspace.handle}-weeklyDigest`)}
+                    />
+                  ) : (
+                    <input
+                      type="checkbox"
+                      disabled
+                      className="disabled:opacity-25"
+                      defaultChecked={formik.values[`${membership.workspace.handle}-weeklyDigest`]}
+                      {...formik.getFieldProps(`${membership.workspace.handle}-weeklyDigest`)}
+                    />
+                  )}
+                </td>
+                <td className="">
+                  {formik.values.emailConsent ? (
+                    <input
+                      type="checkbox"
+                      id={`${membership.workspace.handle}-collections`}
+                      defaultChecked={formik.values[`${membership.workspace.handle}-collections`]}
+                      {...formik.getFieldProps(`${membership.workspace.handle}-collections`)}
+                    />
+                  ) : (
+                    <input
+                      type="checkbox"
+                      disabled
+                      className="disabled:opacity-25"
+                      defaultChecked={formik.values[`${membership.workspace.handle}-collections`]}
+                      {...formik.getFieldProps(`${membership.workspace.handle}-collections`)}
+                    />
+                  )}
+                </td>
+              </tr>
             ))}
           </tbody>
         </table>
