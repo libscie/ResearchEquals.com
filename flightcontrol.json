@@ -1,4 +1,5 @@
 {
+  "$schema": "https://app.flightcontrol.dev/schema.json",
   "environments": [
     {
       "id": "production",
@@ -40,7 +41,10 @@
             },
             "CROSSREF_URL": "https://doi.crossref.org/servlet/deposit",
             "DATABASE_URL": {
-              "fromParameterStore": "DATABASE_URL"
+              "fromService": {
+                "id": "researchequals-prod-db",
+                "value": "dbConnectionString"
+              }
             },
             "DOI_PREFIX": "10.53962",
             "ORCID_CLIENT_ID": { "fromParameterStore": "ORCID_CLIENT_ID" },
@@ -86,6 +90,18 @@
               "fromParameterStore": "UPLOADCARE_SECRET_KEY"
             }
           }
+        },
+        {
+          "id": "researchequals-prod-db",
+          "name": "researchequals-prod-db",
+          "type": "rds",
+          "engine": "postgres",
+          "engineVersion": "13",
+          "instanceSize": "db.t3.medium",
+          "storage": 100,
+          "maxStorage": 1000,
+          "private": false,
+          "deletionProtection": true
         }
       ]
     }
