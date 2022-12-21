@@ -275,25 +275,24 @@ const HandleFeed = ({ handle }) => {
             </div>
             <ul role="list" className="divide-y divide-gray-300 dark:divide-gray-600">
               {modules.map((module) => (
-                <>
-                  <li
-                    onClick={async () => {
-                      await router.push(`/modules/${module.suffix}`)
-                    }}
-                    className="cursor-pointer"
-                  >
-                    <a className="w-full text-left focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0">
-                      <ModuleCard
-                        type={module.type.name}
-                        title={module.title}
-                        status={`DOI: 10.53962/${module.suffix}`}
-                        time={moment(module.publishedAt).fromNow()}
-                        timeText="Published"
-                        authors={module.authors}
-                      />
-                    </a>
-                  </li>
-                </>
+                <li
+                  onClick={async () => {
+                    await router.push(`/modules/${module.suffix}`)
+                  }}
+                  className="cursor-pointer"
+                  key={module.id}
+                >
+                  <a className="w-full text-left focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0">
+                    <ModuleCard
+                      type={module.type.name}
+                      title={module.title}
+                      status={`DOI: 10.53962/${module.suffix}`}
+                      time={moment(module.publishedAt).fromNow()}
+                      timeText="Published"
+                      authors={module.authors}
+                    />
+                  </a>
+                </li>
               ))}
             </ul>
           </div>

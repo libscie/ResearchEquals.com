@@ -62,47 +62,45 @@ const AuthorPanel = ({ buttonText, title, authors, name }) => {
                     {/* Replace with your content */}
                     <ul className="relative flex-1 divide-y divide-gray-400 dark:divide-gray-600">
                       {authors.map((author) => (
-                        <>
-                          <li className="flex py-2 px-2">
-                            <img
-                              src={author.avatar}
-                              alt={`Avatar of ${author.handle}`}
-                              className="max-w-14 mr-2 inline-block h-14 h-full max-h-14 w-14 rounded-full align-middle"
-                            />
-                            <div
-                              className="hidden flex-grow xs:flex"
-                              onClick={() => {
-                                setPanelOpen(false)
-                              }}
+                        <li className="flex py-2 px-2" key={author.id}>
+                          <img
+                            src={author.avatar}
+                            alt={`Avatar of ${author.handle}`}
+                            className="max-w-14 mr-2 inline-block h-14 h-full max-h-14 w-14 rounded-full align-middle"
+                          />
+                          <div
+                            className="hidden flex-grow xs:flex"
+                            onClick={() => {
+                              setPanelOpen(false)
+                            }}
+                          >
+                            <span className="inline-block h-full align-middle"></span>
+                            <Link
+                              href={Routes.HandlePage({ handle: author.handle })}
+                              className="my-auto inline-block overflow-hidden overflow-ellipsis align-middle text-sm font-normal leading-4 text-gray-700 dark:text-gray-200"
                             >
-                              <span className="inline-block h-full align-middle"></span>
-                              <Link
-                                href={Routes.HandlePage({ handle: author.handle })}
-                                className="my-auto inline-block overflow-hidden overflow-ellipsis align-middle text-sm font-normal leading-4 text-gray-700 dark:text-gray-200"
-                              >
-                                {author.firstName} {author.lastName}
-                                <p className="text-xs font-normal leading-4 text-gray-500 dark:text-gray-400">
-                                  @{author.handle}
-                                </p>
-                              </Link>
-                            </div>
-                            <div>
-                              {ownWorkspace ? (
-                                ownWorkspace!.handle === author.handle ? (
-                                  ""
-                                ) : ownWorkspace!.following.filter(
-                                    (follow) => follow.handle === author.handle
-                                  ).length > 0 ? (
-                                  <UnfollowButton author={author} refetchFn={refetch} />
-                                ) : (
-                                  <FollowButton author={author} refetchFn={refetch} />
-                                )
-                              ) : (
+                              {author.firstName} {author.lastName}
+                              <p className="text-xs font-normal leading-4 text-gray-500 dark:text-gray-400">
+                                @{author.handle}
+                              </p>
+                            </Link>
+                          </div>
+                          <div>
+                            {ownWorkspace ? (
+                              ownWorkspace!.handle === author.handle ? (
                                 ""
-                              )}
-                            </div>
-                          </li>
-                        </>
+                              ) : ownWorkspace!.following.filter(
+                                  (follow) => follow.handle === author.handle
+                                ).length > 0 ? (
+                                <UnfollowButton author={author} refetchFn={refetch} />
+                              ) : (
+                                <FollowButton author={author} refetchFn={refetch} />
+                              )
+                            ) : (
+                              ""
+                            )}
+                          </div>
+                        </li>
                       ))}
                     </ul>
                     {/* /End replace */}
