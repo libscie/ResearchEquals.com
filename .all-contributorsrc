@@ -279,6 +279,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "cassgvp",
+      "name": "Cassandra Gould van Praag",
+      "avatar_url": "https://avatars.githubusercontent.com/u/43407869?v=4",
+      "profile": "https://www.win.ox.ac.uk/people/cassandra-gould-van-praag",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
