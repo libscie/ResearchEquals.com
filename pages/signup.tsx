@@ -266,7 +266,6 @@ const SignupPage: BlitzPage = () => {
             {termsAccepted && cocAccepted ? (
               <button
                 type="submit"
-                data-splitbee-event="Sign up"
                 className="text-medium w-full rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-transparent"
               >
                 Sign up
