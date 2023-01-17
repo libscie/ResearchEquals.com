@@ -78,7 +78,7 @@
     "react-quilljs": "1.3.3",
     "react-syntax-highlighter": "15.5.0",
     "react-xarrows": "2.0.2",
-    "recharts": "2.2.0",
+    "recharts": "2.3.2",
     "recoil": "0.7.6",
     "recoil-persist": "4.2.0",
     "rehype-katex": "6.0.2",
