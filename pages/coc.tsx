@@ -107,8 +107,6 @@ Internal coordinators are always available, external coordinators are available 
 | Who (alphabetical order)               | Pronouns          |
 |-------------------|-------------------|
 | Chris Hartgerink  | He/him            |
-| Julia Lowndes     | She/her           |
-| Rachael Ainsworth | She/her |
 | Vinodh Ilangovan  | They/them, he/him |
 
 To achieve a space where everyone can be present and contribute, our protocol is set up to, if reasonably possible, grow past the issues that occur *if people are willing to*.
