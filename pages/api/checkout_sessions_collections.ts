@@ -35,6 +35,7 @@ const CreateSessionCollection = async (req: NextApiRequest, res: NextApiResponse
             },
           ],
           mode: "payment",
+          allow_promotion_codes: true,
           success_url: `${req.headers.origin}/collections/${req.query.suffix}/admin?success=true`,
           cancel_url: `${req.headers.origin}`,
           automatic_tax: { enabled: true },
