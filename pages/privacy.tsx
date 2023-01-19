@@ -162,11 +162,9 @@ We use cookies for different purposes, but only if they are strictly necessary t
 
 Typically, these cookies do not contain personal data. However, if that may be the case in certain situations, the processing of such data is based on Art. 6 par. 1 lit. f) GDPR and the aforementioned purposes constitute the legitimate interests we pursue with them.
 
-### 2. Splitbee
+### 2. Plausible
 
-We use the service Splitbee provided by Tobias Lins e.U. Alserbachstraße 10 1090 Vienna. Splitbee helps us to analyze your use of our Site. It collects certain information such as a unique ID, your country, page views, the referrer, the user agent and usage duration. Splitbee does not store an IP Address or any information that would make it possible to identify you as a natural person. Our use of Splitbee also does not store any cookies or other information on your end device. Any processing of personal data for these purposes is based on Art. 6 par. 1 lit. f) GDPR whereas our legitimate interest is to get insights how our Site is used.
-
-You can opt-out by enabling the Do Not Track functionality in your browser.
+We use the service Plausible provided by Plausible Insights OÜ Västriku tn 2, 50403, Tartu, Estonia. Plausible helps us to analyze your use of our Site. It collects certain information such as a unique ID, your country, page views, the referrer, the user agent and usage duration. Plausible does not store an IP Address or any information that would make it possible to identify you as a natural person. Our use of Plausible also does not store any cookies or other information on your end device. Any processing of personal data for these purposes is based on Art. 6 par. 1 lit. f) GDPR whereas our legitimate interest is to get insights how our Site is used.
 
 ### 3. Crisp
 

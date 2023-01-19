@@ -107,8 +107,6 @@ Internal coordinators are always available, external coordinators are available 
 | Who (alphabetical order)               | Pronouns          |
 |-------------------|-------------------|
 | Chris Hartgerink  | He/him            |
-| Julia Lowndes     | She/her           |
-| Rachael Ainsworth | She/her |
 | Vinodh Ilangovan  | They/them, he/him |
 
 To achieve a space where everyone can be present and contribute, our protocol is set up to, if reasonably possible, grow past the issues that occur *if people are willing to*.
@@ -153,7 +151,7 @@ The consequences of rejecting the proposal by the reported person will be delibe
 
 Subsequently, we will reach out to the reported person with a description of the incident, the proposal, and consequences of rejecting it. Both are non-negotiable and non-dependent on declarations of intent.
 
-Finally, a synopsis of the report, the proposal, and the outcome may be posted to [the Liberate Science Blog](https://blog.libscie.org). For natural persons, the synopsis is anonymized.
+Finally, a synopsis of the report, the proposal, and the outcome may be posted to [the Liberate Science Blog](https://libscie.org). For natural persons, the synopsis is anonymized.
 
 ## You have been reported
 
@@ -171,7 +169,7 @@ Appeals to procedures by internal space-coordinators are referred to the externa
 
 Appeals must include a clear case upon submission and proportional outcome change. A case may include for example strong disconfirming evidence that the reported behavior ever occurred, joined with the proportional outcome change that a ban is lifted.
 
-Synopses of appeals will also be posted to the [Liberate Science Blog](https://blog.libscie.org) and crosslinked from the original post, to clearly indicate developments.
+Synopses of appeals will also be posted to the [Liberate Science Blog](https://libscie.org) and crosslinked from the original post, to clearly indicate developments.
 `
 
 const md = new Markdown()

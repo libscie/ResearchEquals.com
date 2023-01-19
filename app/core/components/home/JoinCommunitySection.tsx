@@ -10,7 +10,7 @@ export const JoinCommunitySection = () => {
         <p className="text-center text-3xl font-bold leading-10 md:text-5xl lg:text-left">
           Join a community of people making their research journey visible
         </p>
-        <Link href="/signup" passHref legacyBehavior>
+        <Link href="/signup">
           <Button variant="outlined" color="inherit" className="lg:min-w-[340px]">
             Sign up for ResearchEquals
           </Button>

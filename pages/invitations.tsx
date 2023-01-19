@@ -58,25 +58,24 @@ const Invitations = ({ currentWorkspace }) => {
             </h1>
             <ul role="list" className="divide-y divide-gray-100 dark:divide-gray-600">
               {invitations.map((draft) => (
-                <>
-                  <li
-                    onClick={async () => {
-                      setModule(draft)
-                      setInboxOpen(biggerWindow)
-                      await router.push("/invitations", { query: { suffix: draft.suffix } })
-                    }}
-                    className="cursor-pointer"
-                  >
-                    <ModuleCard
-                      type={draft.type.name}
-                      title={draft.title}
-                      status="Invitation"
-                      time={moment(draft.updatedAt).fromNow()}
-                      timeText="Updated"
-                      authors={draft.authors}
-                    />
-                  </li>
-                </>
+                <li
+                  key={draft.id}
+                  onClick={async () => {
+                    setModule(draft)
+                    setInboxOpen(biggerWindow)
+                    await router.push("/invitations", { query: { suffix: draft.suffix } })
+                  }}
+                  className="cursor-pointer"
+                >
+                  <ModuleCard
+                    type={draft.type.name}
+                    title={draft.title}
+                    status="Invitation"
+                    time={moment(draft.updatedAt).fromNow()}
+                    timeText="Updated"
+                    authors={draft.authors}
+                  />
+                </li>
               ))}
             </ul>
           </div>

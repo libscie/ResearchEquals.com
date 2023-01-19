@@ -176,6 +176,7 @@ const ModuleEdit = ({
                             approveAuthorshipMutation({
                               id: ownAuthorship!.id,
                               suffix: moduleEdit!.suffix,
+                              user,
                             }),
                             {
                               loading: "Loading",
@@ -413,6 +414,9 @@ const ModuleEdit = ({
           <h2 className="my-2 text-lg leading-4 text-gray-500 dark:text-gray-200">
             Supporting file(s)
           </h2>
+          <p className="my-2 text-xs font-normal leading-4 text-gray-900 dark:text-gray-200">
+            Uploading an updated file with same name? Delete the original here first.
+          </p>
           {supportingRaw.files.length > 0 ? (
             <>
               {supportingRaw.files.map((file) => (

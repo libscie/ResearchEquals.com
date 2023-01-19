@@ -13,15 +13,15 @@ import AuthorAvatarsNew from "./AuthorAvatarsNew"
 import SearchResultWorkspace from "../../core/components/SearchResultWorkspace"
 import { useState } from "react"
 import ManageAuthors from "./ManageAuthors"
-import FollowsFromSearch from "./FollowsFromSearch"
 import removeInvitation from "app/authorship/mutations/removeInvitation"
-import ModuleEdit from "./ModuleEdit"
+import { useSession } from "@blitzjs/auth"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
 const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
   const [addAuthorMutation] = useMutation(addAuthor)
   const [removeInvitationMutation] = useMutation(removeInvitation)
+  const session = useSession()
 
   const [manageAuthorsOpen, setManageAuthorsOpen] = useState(false)
 
@@ -117,20 +117,6 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
                             .catch((error) => {
                               toast.error("Something went wrong")
                             })
-                          // const updatedModule = await addAuthorMutation({
-                          //   authorId: item.objectID,
-                          //   moduleId: module.id,
-                          //   authorshipRank:
-                          //     Math.max.apply(
-                          //       Math,
-                          //       module.authors.map(function (o) {
-                          //         return o.authorshipRank
-                          //       })
-                          //     ) + 1,
-                          // })
-                          // toast.success("Author invited")
-                          // setQueryData(updatedModule)
-
                           setQuery("")
                         },
                         getItems() {
@@ -140,6 +126,10 @@ const MetadataView = ({ module, addAuthors, setQueryData, setAddAuthors }) => {
                               {
                                 indexName: `${process.env.ALGOLIA_PREFIX}_workspaces`,
                                 query,
+                                params: {
+                                  hitsPerPage: 10,
+                                  filters: `NOT objectID:${session.workspaceId}`,
+                                },
                               },
                             ],
                           })
