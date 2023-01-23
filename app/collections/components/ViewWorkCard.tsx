@@ -41,11 +41,11 @@ const WorkMetadata = ({ submission }) => {
       {submission.submittedBy && (
         <p className="text-xs">
           Submitted by{" "}
-          <Link
-            href={Routes.HandlePage({ handle: submission.editor.workspace.handle })}
-            target="_blank"
-          >
-            {submission.editor!.workspace.firstName} {submission.editor!.workspace.lastName}
+          <Link href={Routes.HandlePage({ handle: submission.submittedBy.handle })} target="_blank">
+            {submission.submittedBy!.firstName && submission.submittedBy!.lastName
+              ? `${submission.submittedBy!.firstName} ${submission.submittedBy!.lastName}`
+              : submission.submittedBy.handle}
+            {/* {submission.editor!.workspace.firstName} {submission.editor!.workspace.lastName} */}
           </Link>
         </p>
       )}
