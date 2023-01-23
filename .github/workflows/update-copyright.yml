@@ -1,0 +1,20 @@
+name: Update copyright year(s) in license file
+
+on:
+  schedule:
+    - cron: '0 3 1 1 *'
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          prTitle: Update the license year
+          prBody: >
+           ![Happy new year!](https://media.giphy.com/media/l0HlKWbgtjw3DIgLK/giphy.gif?cid=ecf05e47ez3yhyykzt3p1flojrqpaa3tf7axad9j4cnkwau1&rid=giphy.gif&ct=g)
+           If you're reading this while you're celebrating, enjoy! Don't worry about this one :blush:
+      - uses: FantasticFiasco/action-update-license-year@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
