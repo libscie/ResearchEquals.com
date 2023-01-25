@@ -18,7 +18,17 @@ interface Input {
 export default resolver.pipe(resolver.authorize(), async ({ doi }: Input, ctx) => {
   try {
     // Will auto-throw if resource not found
-    const cr = await axios.get(`https://api.crossref.org/works/${doi}?mailto=info@libscie.org`)
+    let cr
+    if (process.env.CROSSREF_METADATA_PLUS) {
+      cr = await axios.get(`https://api.crossref.org/works/${doi}?mailto=info@libscie.org`, {
+        headers: {
+          "Crossref-Plus-API-Token": `Bearer ${process.env.CROSSREF_METADATA_PLUS}`,
+        },
+      })
+    } else {
+      cr = await axios.get(`https://api.crossref.org/works/${doi}?mailto=info@libscie.org`)
+    }
+
     const metadata = cr.data.message
 
     const crType = capitalizeFirstLetter(metadata.type.replace("-", " "))
