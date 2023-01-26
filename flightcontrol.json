@@ -39,6 +39,9 @@
             "CROSSREF_LOGIN_PASSWD": {
               "fromParameterStore": "CROSSREF_LOGIN_PASSWD"
             },
+            "CROSSREF_METADATA_PLUS": {
+              "fromParameterStore": "CROSSREF_METADATA_PLUS"
+            },
             "CROSSREF_URL": "https://doi.crossref.org/servlet/deposit",
             "DATABASE_URL": {
               "fromService": {
