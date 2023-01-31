@@ -12,6 +12,7 @@ import {
   ThumbsDown,
   ThumbsUp,
   WatsonHealthStackedScrolling_1,
+  Sprout,
 } from "@carbon/icons-react"
 import { useRecoilValue, useRecoilState } from "recoil"
 
@@ -31,6 +32,7 @@ import {
 } from "../utils/Atoms"
 import changeEmailConsent from "../../users/mutations/changeEmailConsent"
 import CollectionsModal from "../modals/CollectionsModal"
+import SupportingMemberSignupModal from "../modals/SupportingMemberSignupModal"
 
 const OnboardingQuests = ({ data, expire, signature, refetch }) => {
   return (
@@ -48,6 +50,7 @@ const OnboardingQuests = ({ data, expire, signature, refetch }) => {
       <OnboardingDraft data={data.workspace} refetch={refetch} />
       <OnboardingCollection data={data} refetch={refetch} />
       <OnboardingDiscord data={data.workspace} refetch={refetch} />
+      <OnboardingSupporting data={data.workspace} refetch={refetch} />
     </>
   )
 }
@@ -496,6 +499,53 @@ const OnboardingDiscord = () => {
               >
                 Join chat<span aria-hidden="true">&rarr;</span>
               </Link>
+            </p>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+    </>
+  )
+}
+
+const OnboardingSupporting = () => {
+  const [userDiscord, setUserDiscord] = useState(true)
+
+  return (
+    <>
+      {userDiscord ? (
+        <div
+          key="supporting-onboarding-quest"
+          className="onboarding my-2 flex w-full flex-col rounded-r border-l-4 border-green-400 bg-green-50 p-4 dark:border-green-200 dark:bg-green-900 lg:my-0"
+        >
+          <div className="flex flex-grow">
+            <div className="">
+              <Sprout
+                size={32}
+                className="h-5 w-5 text-green-400 dark:text-green-200"
+                aria-hidden="true"
+              />
+            </div>
+            <div className="ml-3 flex-1 text-green-800 dark:text-green-200 md:flex">
+              <p className="mr-2 text-sm">
+                <span className=" font-bold">Supporting membership</span>{" "}
+                <span>
+                  Co-govern ResearchEquals, prevent buy-outs, and help decide what our profits get
+                  spent on. All part of a supporting membership!
+                </span>
+              </p>
+            </div>
+          </div>
+          <div className="block text-right text-green-700 dark:text-green-200">
+            <p className="mt-3 text-sm md:mt-0 md:ml-6">
+              <SupportingMemberSignupModal
+                button={
+                  <span className="underline">
+                    Subscribe<span aria-hidden="true">&rarr;</span>
+                  </span>
+                }
+              />
             </p>
           </div>
         </div>
