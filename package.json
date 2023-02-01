@@ -99,7 +99,7 @@
     "@types/react": "18.0.27",
     "@types/unist": "2.0.6",
     "@types/xast": "1.0.2",
-    "@typescript-eslint/eslint-plugin": "5.49.0",
+    "@typescript-eslint/eslint-plugin": "5.50.0",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.6",
     "eslint-config-prettier": "8.6.0",
