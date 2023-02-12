@@ -38,7 +38,7 @@
     "@faker-js/faker": "7.6.0",
     "@headlessui/react": "1.7.8",
     "@prisma/client": "4.9.0",
-    "@react-pdf-viewer/core": "3.10.0",
+    "@react-pdf-viewer/core": "3.11.0",
     "@tailwindcss/forms": "0.5.3",
     "@tailwindcss/line-clamp": "0.4.2",
     "@uploadcare/react-widget": "2.4.1",
