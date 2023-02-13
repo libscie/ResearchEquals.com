@@ -34,6 +34,8 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
   let event
 
   const signature = req.headers["stripe-signature"]
+  const datetime = Date.now()
+
   try {
     event = stripe.webhooks.constructEvent(rawData, signature!, endpointSecret)
   } catch (err) {
@@ -90,7 +92,6 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
           break
 
         case "module-license":
-          const datetime = Date.now()
           // TODO: Can be simplified along with publishModule.ts
           const currentModule = await db.module.findFirst({
             where: {
@@ -171,6 +172,20 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
           break
       }
       break
+
+    // This only happens for supporting memberships
+    // if we have other subscriptions this needs to be more precise
+    // eg with metadata product types
+    case "invoice.payment_succeeded":
+      await db.user.update({
+        where: {
+          email: event.data.object.customer_email,
+        },
+        data: {
+          supportingMember: true,
+          supportingMemberSince: moment(datetime).format(),
+        },
+      })
 
     default:
       console.log(`[STRIPE WEBHOOK]: Unhandled event type ${event.type}, id: ${event.id}.`)

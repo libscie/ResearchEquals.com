@@ -13,6 +13,7 @@ export default async function getCurrentUser(_ = null, { session }: Ctx) {
       emailIsVerified: true,
       emailConsent: true,
       marketingConsent: true,
+      supportingMember: true,
       role: true,
       memberships: {
         select: {

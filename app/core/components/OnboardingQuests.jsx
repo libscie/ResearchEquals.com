@@ -50,7 +50,7 @@ const OnboardingQuests = ({ data, expire, signature, refetch }) => {
       <OnboardingDraft data={data.workspace} refetch={refetch} />
       <OnboardingCollection data={data} refetch={refetch} />
       <OnboardingDiscord data={data.workspace} refetch={refetch} />
-      <OnboardingSupporting data={data.workspace} refetch={refetch} />
+      <OnboardingSupporting data={data.user} />
     </>
   )
 }
@@ -509,14 +509,10 @@ const OnboardingDiscord = () => {
   )
 }
 
-const OnboardingSupporting = () => {
-  // TODO: Adjust state
-  const [userDiscord, setUserDiscord] = useState(true)
-
+const OnboardingSupporting = ({ data }) => {
   return (
     <>
-      {/* TODO: Adjust condition */}
-      {userDiscord ? (
+      {!data.supportingMember ? (
         <div
           key="supporting-onboarding-quest"
           className="onboarding my-2 flex w-full flex-col rounded-r border-l-4 border-green-400 bg-green-50 p-4 dark:border-green-200 dark:bg-green-900 lg:my-0"
