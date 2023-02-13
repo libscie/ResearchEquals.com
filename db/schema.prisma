@@ -167,6 +167,7 @@ model User {
   marketingConsent      Boolean?
   supportingMember      Boolean    @default(false)
   supportingMemberSince DateTime?
+  customerId            String?    @unique
 
   tokens      Token[]
   sessions    Session[]
