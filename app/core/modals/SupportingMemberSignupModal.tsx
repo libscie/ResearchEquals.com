@@ -11,7 +11,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
 
-export default function SignupModal({ button, user }) {
+export default function SignupModal({ button }) {
   let [isOpen, setIsOpen] = useState(false)
   const [waiver, setWaiver] = useState(false)
   // Set price to yearly by default
