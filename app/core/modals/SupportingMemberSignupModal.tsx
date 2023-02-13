@@ -1,20 +1,14 @@
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { useMutation } from "@blitzjs/rpc"
 import { Fragment, useState } from "react"
 import { Dialog, Switch, Transition } from "@headlessui/react"
 import toast from "react-hot-toast"
-import { Close, Upgrade, Checkmark, Sprout } from "@carbon/icons-react"
-import { CollectionTypes } from "@prisma/client"
+import { Close, Checkmark } from "@carbon/icons-react"
 import { getAntiCSRFToken } from "@blitzjs/auth"
 import handlePayment from "../utils/handlePayment"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
-}
-
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
 }
 
 export default function SignupModal({ button, user }) {
@@ -23,6 +17,7 @@ export default function SignupModal({ button, user }) {
   // Set price to yearly by default
   const [price, setPrice] = useState(
     // Hardcodes price_id for production and test
+    // TODO: Add Production price
     process.env.ALGOLIA_PREFIX === "production" ? "" : "price_1MWHibLmgtJbKHNGLs3AcfQ1"
   )
 
@@ -36,7 +31,6 @@ export default function SignupModal({ button, user }) {
 
   const router = useRouter()
   const antiCSRFToken = getAntiCSRFToken()
-  console.log(process.env.ALGOLIA_PREFIX)
 
   return (
     <>
@@ -88,6 +82,7 @@ export default function SignupModal({ button, user }) {
                       <option
                         value={
                           // Hardcodes price_id for production and test
+                          // TODO: Add Production price
                           process.env.ALGOLIA_PREFIX === "production"
                             ? ""
                             : "price_1MWHibLmgtJbKHNGLs3AcfQ1"
@@ -98,6 +93,7 @@ export default function SignupModal({ button, user }) {
                       <option
                         value={
                           // Hardcodes price_id for production and test
+                          // TODO: Add Production price
                           process.env.ALGOLIA_PREFIX === "production"
                             ? ""
                             : "price_1MWHibLmgtJbKHNGBMUtwKEL"
