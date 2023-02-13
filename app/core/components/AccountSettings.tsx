@@ -1,13 +1,15 @@
 import { useMutation } from "@blitzjs/rpc"
+import Link from "next/link"
 import changePassword from "app/auth/mutations/changePassword"
 import changeEmail from "app/users/mutations/changeEmail"
 import { useFormik } from "formik"
 import toast from "react-hot-toast"
 import { z } from "zod"
-import { Checkmark, Close } from "@carbon/icons-react"
+import { Checkmark, Close, Sprout, Wheat } from "@carbon/icons-react"
 
 import DeleteModal from "../modals/delete"
 import { validateZodSchema } from "blitz"
+import SupportingMemberSignupModal from "../modals/SupportingMemberSignupModal"
 
 const WorkspaceSettings = ({ user, setIsOpen }) => {
   const [changePasswordMutation] = useMutation(changePassword)
@@ -52,6 +54,57 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
 
   return (
     <>
+      <div className="my-4 px-2">
+        <h3 className="text-sm font-medium text-gray-900 dark:text-gray-200">
+          Supporting membership
+        </h3>
+        <div className="flex w-11/12">
+          <div className="">
+            <div className="my-2 text-xs text-gray-900 dark:text-gray-200">
+              <p>
+                Co-govern ResearchEquals, prevent buy-outs, and help decide what our profits get
+                spent on.
+              </p>
+            </div>
+          </div>
+          <div className="my-0">
+            {user.supportingMember ? (
+              // TODO: Add conditional link and the production URL
+              <Link href="https://billing.stripe.com/p/login/test_14keVF1Qp06l5he5kk">
+                <button
+                  type="button"
+                  className="mx-1 flex rounded-md bg-sky-50 py-2 px-4 text-sm font-medium text-sky-700 hover:bg-sky-200 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-sky-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+                  // onClick={openModal}
+                >
+                  <Wheat
+                    size={32}
+                    className="h-5 w-5 fill-current text-sky-500"
+                    aria-hidden="true"
+                  />
+                  Manage
+                </button>
+              </Link>
+            ) : (
+              <SupportingMemberSignupModal
+                button={
+                  <button
+                    type="button"
+                    className="mx-1 flex rounded-md bg-green-50 py-2 px-4 text-sm font-medium text-green-700 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-green-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+                    // onClick={openModal}
+                  >
+                    <Sprout
+                      size={32}
+                      className="h-5 w-5 fill-current text-green-500"
+                      aria-hidden="true"
+                    />
+                    Support
+                  </button>
+                }
+              />
+            )}
+          </div>
+        </div>
+      </div>
       <form onSubmit={formik.handleSubmit}>
         <div className="my-4 px-2">
           <label

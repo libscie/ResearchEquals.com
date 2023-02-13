@@ -510,10 +510,12 @@ const OnboardingDiscord = () => {
 }
 
 const OnboardingSupporting = () => {
+  // TODO: Adjust state
   const [userDiscord, setUserDiscord] = useState(true)
 
   return (
     <>
+      {/* TODO: Adjust condition */}
       {userDiscord ? (
         <div
           key="supporting-onboarding-quest"
@@ -538,7 +540,7 @@ const OnboardingSupporting = () => {
             </div>
           </div>
           <div className="block text-right text-green-700 dark:text-green-200">
-            <p className="mt-3 text-sm md:mt-0 md:ml-6">
+            <div className="mt-3 text-sm md:mt-0 md:ml-6">
               <SupportingMemberSignupModal
                 button={
                   <span className="underline">
@@ -546,7 +548,7 @@ const OnboardingSupporting = () => {
                   </span>
                 }
               />
-            </p>
+            </div>
           </div>
         </div>
       ) : (
