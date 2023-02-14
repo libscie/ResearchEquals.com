@@ -288,6 +288,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "nuest",
+      "name": "Daniel Nüst",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1325054?v=4",
+      "profile": "https://nordholmen.net",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
