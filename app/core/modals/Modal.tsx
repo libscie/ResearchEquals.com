@@ -71,21 +71,25 @@ export const Modal = ({
                   >
                     {primaryAction}
                   </button>
-                  <button
-                    type="button"
-                    className={`rounded-md py-2 px-4 text-sm font-medium ${
-                      secondaryButtonClass
-                        ? secondaryButtonClass
-                        : // Style the secondary button (default is cancel)
-                          `bg-indigo-100 text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:border-gray-400 dark:hover:bg-gray-700`
-                    }`}
-                    onClick={() => {
-                      onCancel()
-                      setIsOpen(false)
-                    }}
-                  >
-                    {secondaryAction}
-                  </button>
+                  {secondaryAction === "" ? (
+                    ""
+                  ) : (
+                    <button
+                      type="button"
+                      className={`rounded-md py-2 px-4 text-sm font-medium ${
+                        secondaryButtonClass
+                          ? secondaryButtonClass
+                          : // Style the secondary button (default is cancel)
+                            `bg-indigo-100 text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:border-gray-400 dark:hover:bg-gray-700`
+                      }`}
+                      onClick={() => {
+                        onCancel()
+                        setIsOpen(false)
+                      }}
+                    >
+                      {secondaryAction}
+                    </button>
+                  )}
                 </div>
               </div>
             </Transition.Child>
