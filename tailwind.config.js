@@ -1,10 +1,17 @@
 // tailwind.config.js
+const colors = require("tailwindcss/colors")
+
 module.exports = {
   content: ["{pages,app}/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       animation: {
         tilt: "tilt 10s infinite linear",
+      },
+      colors: {
+        sky: colors.sky,
+        teal: colors.teal,
+        rose: colors.rose,
       },
       keyframes: {
         tilt: {
