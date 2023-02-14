@@ -8,6 +8,7 @@ import algoliasearch from "algoliasearch"
 import { isURI } from "app/core/crossref/ai_program"
 import submitToCrossRef from "app/core/utils/submitToCrossRef"
 import moduleXml from "app/core/utils/moduleXml"
+import cancelSupportingMembership from "./cancel-supporting-membership"
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET
 
@@ -184,8 +185,21 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
         data: {
           supportingMember: true,
           supportingMemberSince: moment(datetime).format(),
+          customerId: event.data.object.customer,
         },
       })
+
+    case "customer.subscription.updated":
+      if (event.data.object.cancel_at_period_end) {
+        await cancelSupportingMembership.enqueue(event.data.object.customer, {
+          runAt: new Date(event.data.object.cancel_at * 1000),
+          id: event.data.object.customer,
+        })
+      } else {
+        await cancelSupportingMembership.delete(
+          event.data.object.customer // this is the same ID we set above
+        )
+      }
 
     default:
       console.log(`[STRIPE WEBHOOK]: Unhandled event type ${event.type}, id: ${event.id}.`)
