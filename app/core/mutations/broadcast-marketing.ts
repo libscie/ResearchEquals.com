@@ -1,7 +1,7 @@
 import { ServerClient, TemplatedMessage } from "postmark"
 import db from "db"
 
-const from = process.env.MAIL_FROM ?? "no-reply@libscie.org"
+const from = process.env.MAIL_FROM ?? "ResearchEquals <info@libscie.org>"
 
 const postmark = () => new ServerClient(process.env.POSTMARK_TOKEN ?? "")
 
@@ -9,6 +9,8 @@ async function broadcastMessage({ subject, htmlContent, textContent }) {
   const users = await db.user.findMany({
     where: {
       emailIsVerified: true,
+      emailConsent: true,
+      marketingConsent: true,
     },
   })
 
