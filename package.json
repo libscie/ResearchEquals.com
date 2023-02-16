@@ -30,7 +30,7 @@
     ]
   },
   "dependencies": {
-    "@algolia/autocomplete-js": "1.7.4",
+    "@algolia/autocomplete-js": "1.8.1",
     "@blitzjs/auth": "2.0.0-beta.22",
     "@blitzjs/next": "2.0.0-beta.22",
     "@blitzjs/rpc": "2.0.0-beta.22",
