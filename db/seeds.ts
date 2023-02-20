@@ -53,6 +53,7 @@ const seed = async () => {
     { wikidata: "Q1744627", name: "Classification algorithm", schema: "CreativeWork" },
     { wikidata: "Q642946", name: "Gamebook", schema: "CreativeWork" },
     { wikidata: "Q116740071", name: "Reproducibility Report", schema: "CreativeWork" },
+    { wikidata: "Q7257257", name: "Pubcast", schema: "CreativeWork" },
   ]
 
   // This adds the record or updates the existing one
