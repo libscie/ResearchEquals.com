@@ -49,7 +49,7 @@ The parties agree that their common goal is to keep LibScie in safe hands and th
 
 3. If no Supporting Member calls for a vote within the month, the Shareholder is free to sell their shares.
 
-## 4	Process of the vote and binding decision
+## 4.	Process of the vote and binding decision
 
 1. If one or more Supporting Member call for a vote, LibScie shall set a date for the election as early as possible and take all necessary organizational measures to hold the vote.
 
@@ -57,7 +57,7 @@ The parties agree that their common goal is to keep LibScie in safe hands and th
 
 3. The Shareholder shall be directly bound to this decision in case of prohibition.
 
-## 5	Contractual Penalty
+## 5.	Contractual Penalty
 
 1. If a Shareholder sells any of their shares either in the one-month period without the permission of the Supporting Members or contrary the results of a vote which forbids the sell of shares, each supporting member shall be entitled to receive an appropriate contractual penalty.
 
@@ -65,11 +65,11 @@ The parties agree that their common goal is to keep LibScie in safe hands and th
 
 3. LibScie assumes the contractual penalty owed to the Supporting Members.
 
-## 6	Change of Shareholder
+## 6.	Change of Shareholder
 
 Each new Shareholder shall enter into this Agreement in the role of a Shareholder.
 
-## 7	Term and Termination
+## 7.	Term and Termination
 
 This Agreement enters in force with the conclusion of the Agreement between LibScie and the Supporting Member under the Terms and remains in force until the Supporting Member or LibScie terminates the Agreement.
 
