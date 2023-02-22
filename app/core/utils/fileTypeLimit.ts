@@ -123,6 +123,7 @@ export const fileTypeLimit = (fileInfo: FileInfo) => {
     "tex",
     "toml",
     "txt",
+    "wav",
     "webm",
     "webp",
     "woff",
