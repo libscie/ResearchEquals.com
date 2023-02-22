@@ -28,6 +28,8 @@ const MainFileViewer = ({ mainFile, module }) => {
         })
     }
   }, [])
+
+  // alert(mainFile.mimeType)
   return (
     <>
       {mainFile.name && (
@@ -106,6 +108,14 @@ const MainFileViewer = ({ mainFile, module }) => {
               height="800px"
               frameBorder="0"
             ></iframe>
+          )}
+          {mainFile.mimeType.startsWith("audio/") && (
+            <audio
+              controls
+              src={mainFile.cdnUrl}
+              preload="metadata"
+              className="mx-auto w-full"
+            ></audio>
           )}
         </>
       )}
