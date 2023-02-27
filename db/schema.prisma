@@ -115,6 +115,32 @@ model Workspace {
   editorships Editorship[]
 
   followingCollections Collection[] @relation("WorkspaceToCollection")
+
+  affiliation Affiliation[]
+}
+
+model Organization {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  rorId     String   @unique
+
+  affiliated Affiliation[]
+}
+
+model Affiliation {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  startDate DateTime
+  endDate   DateTime?
+
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId Int
+
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId Int
 }
 
 enum WorkspaceType {
