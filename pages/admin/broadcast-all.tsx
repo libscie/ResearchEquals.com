@@ -116,7 +116,7 @@ const BroadcastAll: BlitzPage = () => {
   )
 }
 
-BroadcastAll.authenticate = true
+BroadcastAll.authenticate = { role: ["SUPERADMIN"] }
 BroadcastAll.suppressFirstRenderFlicker = true
 BroadcastAll.getLayout = (page) => (
   <Layout title="Broadcast (all)">

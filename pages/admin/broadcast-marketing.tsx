@@ -117,7 +117,7 @@ const BroadcastMarketing: BlitzPage = () => {
   )
 }
 
-BroadcastMarketing.authenticate = true
+BroadcastMarketing.authenticate = { role: ["SUPERADMIN"] }
 BroadcastMarketing.suppressFirstRenderFlicker = true
 BroadcastMarketing.getLayout = (page) => (
   <Layout title="Broadcast (marketing)">

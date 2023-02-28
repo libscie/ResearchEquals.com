@@ -136,7 +136,7 @@ const Admin: BlitzPage = () => {
   )
 }
 
-Admin.authenticate = true
+Admin.authenticate = { role: ["SUPERADMIN"] }
 Admin.suppressFirstRenderFlicker = true
 Admin.getLayout = (page) => (
   <Layout title="Admin Panel">

@@ -1,4 +1,3 @@
-import Link from "next/link"
 import { useSession } from "@blitzjs/auth"
 import { useRouter } from "next/router"
 import { useQuery, useMutation } from "@blitzjs/rpc"
@@ -6,7 +5,6 @@ import { BlitzPage } from "@blitzjs/next"
 import Layout from "app/core/layouts/Layout"
 import { useQuill } from "react-quilljs"
 import broadcastSupporting from "../../app/core/mutations/broadcast-supporting"
-
 import "quill/dist/quill.snow.css"
 
 import Navbar from "app/core/components/Navbar"
@@ -117,7 +115,7 @@ const BroadcastSupporting: BlitzPage = () => {
   )
 }
 
-BroadcastSupporting.authenticate = true
+BroadcastSupporting.authenticate = { role: ["SUPERADMIN"] }
 BroadcastSupporting.suppressFirstRenderFlicker = true
 BroadcastSupporting.getLayout = (page) => (
   <Layout title="Broadcast (supporting)">
