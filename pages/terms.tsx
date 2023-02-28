@@ -41,9 +41,13 @@ These Terms of Use ("the Terms") guide the legal relationship between LibScie an
 
 9. "User Account" or "Account": The personal account provided by LibScie to the User on the Platform after the User's registration.
 
-10. “Work”: Any published work included in the ResearchEquals database (e.g., publications that have a DOI), independent of the specific source they are published on.
+10. “Supporting Member”: A User that subscribes for a Supporting Membership.
 
-11. "Workspace" or "Space": The author profile(s) linked to the User Account on the Platform upon registration and additional Workspaces created while logged in to the Account.
+11. “Supporting Membership”: The legal relationship between LibScie and the Supporting Member.
+
+12. “Work”: Any published work included in the ResearchEquals database (e.g., publications that have a DOI), independent of the specific source they are published on.
+
+13. "Workspace" or "Space": The author profile(s) linked to the User Account on the Platform upon registration and additional Workspaces created while logged in to the Account.
 
 ## 3. Conclusion of the Agreement and Registering an Account
 
@@ -55,9 +59,11 @@ These Terms of Use ("the Terms") guide the legal relationship between LibScie an
 
 4. By clicking on "Sign Up", the User asks LibScie to create an Account and Workspace on the Platform. LibScie will send an email with a legally binding offer to open the account and to confirm the User's email address. By clicking on “confirm email”, the User accepts the offer, concludes the contract with LibScie and opens the Account.
 
-5. The User shall keep the Account information, and especially the chosen password, confidential and not disclose it to any third party. Any abuse or suspected abuse shall be reported to LibScie immediately.
+5. By signing up, the User also agrees to the [Liberate Science Code of Conduct](https://researchequals.com/coc) and procedures outlined in it.
 
-6. The User can access these terms anytime on the Platform in the most recent version. The Agreement is concluded in English and the Terms are available in English exclusively.
+6. The User shall keep the Account information, and especially the chosen password, confidential and not disclose it to any third party. Any abuse or suspected abuse shall be reported to LibScie immediately.
+
+7. The User can access these terms anytime on the Platform in the most recent version. The Agreement is concluded in English and the Terms are available in English exclusively.
 
 ## 4. Basic Functions and Rules of the Platform
 
@@ -149,7 +155,85 @@ In cases where research purposes may provide exception to these rules, the User 
 
 4. If a User is removed from a Group Workspace by an Admin or Owner of the Group Workspace, the invitation will not become available again and the invitation is forfeit.
 
-## 8. Payment
+## 8. Supporting Membership
+
+### 8.1 General
+
+1. Users can become Supporting Members.
+
+2. The relationship between the Supporting Member and LibScie is guided by the following provisions.
+
+3. Except for the following provisions, the Supporting Members have no right to participate or determine or control any action or decision of LibScie or LibScie's management. In particular, the Supporting Members have no powers to manage and/or represent LibScie. The Supporting Members will in no way participate in the profits or losses of LibScie whatsoever.
+
+4. The contract about the Supporting Membership is concluded when the User chooses the subscription plan, proceeds to the payment page and makes a binding offer by clicking on “Pay”. LibScie will then accept the offer and send a confirmation email to the User.
+
+### 8.2 Rights of Supporting Members
+
+1. **Information Request:** Each Supporting Member has the right to request specific information from LibScie, pertaining to information that has not yet been shared within the Membership Area.
+
+   1. These requests serve the purpose of transparency and accountability of LibScie to the Supporting Members, comparable to freedom of information requests.
+
+   2. The request may include, but is not limited to, operational statistics (e.g., finances, registrations).
+
+   3. The request does not need to be justified by the requester.
+
+   4. LibScie must provide a response within four (4) weeks upon receipt. LibScie may announce a delayed response before the end of those four weeks, to a maximum of eight (8) weeks after the request was received.
+
+   5. LibScie can deny a request with plausible justification (e.g., previously answered, lack of specificity, privacy objections, not enough resources to fulfill requests, secrecy obligations). LibScie must make best efforts to provide answers to requests to a reasonable extent.
+
+   6. Responses to requests will be distributed among all active Supporting Members at that time.
+
+   7. The requester's identity will not be made public by LibScie.
+
+2. **Right to petition:** Each Supporting Member has the right to petition. Such petition can have a call to a certain action or a call to cease and desist from a certain action as a subject.
+
+   1. LibScie is bound to respond to and take a stand on petitions that are issued by a collective of at least 50 Supporting Members or at least 5% of active Supporting Members. LibScie shall take the subject of the petition into consideration. However, LibScie is not obligated to carry out or implement the requested action or cease and desist in any way.
+
+   2. LibScie must response to a petition in the same timeframe and procedure as for request for information set out in Section 8.2.1.4.
+
+   3. A petition can include a call for a Special Assembly. Such petition must include a set of proposed agenda items and descriptions for each item. LibScie must then schedule a Special Assembly as soon as possible. Where the most recent Assembly or Special Assembly took place not more than eight (8) weeks prior to the moment the petition is handed over to LibScie, LibScie has the right to schedule the petition not before this 8 week period is over.
+
+3. **Poison Pill:** The Supporting Membership shall provide safety that LibScie remains in safe hands. Therefore, LibScie and its shareholders must inform all Supporting Members about any acquisition offers to either itself or to its shareholders that would result in a major shareholder change. [The Poison Pill](https://researchequals.com/legal/poison-pill) is a separate three-sided contract concluded between LibScie, the Supporting Member and the Shareholder, concluded during signup.
+
+### 8.3 Assemblies
+
+1. LibScie shall conduct regular Assemblies for its Supporting Members.
+
+   1. Assemblies convene once every quarter.
+
+   2. Assemblies can be held in-person, virtual or hybrid.
+
+   3. Assemblies must be called six weeks in advance.
+
+   4. Assemblies serve an informational purpose about the most recent developments within LibScie. Assemblies can also include votes (see below Section 8.4).
+
+2. LibScie shall be responsible for the organization. LibScie shall also name a person filling the role of the chair for each Assembly. The chair of an Assembly will decide all matters of process that are not dealt with in this agreement.
+
+3. Agendas for Assemblies shall be announced by Liberate Science at least two workweeks before the date of the Assembly. Supporting members can propose agenda items to LibScie through petitions. They shall be given to LibScie up to three weeks prior to an Assembly to Liberate Science.
+
+4. LibScie may specify additional rules regarding convening and conducting of an Assembly that specify the provisions of these terms. These rules will be communicated to all Supporting Members and be accessible in the Membership Area.
+
+### 8.4 Voting Procedures
+
+1. In case a vote is called, the following voting procedures shall be required:
+
+   1. For a minority vote: >25% of votes cast
+
+   2. Majority vote: >50% of votes cast
+
+   3. Special majority vote: >75% of votes cast
+
+2. Votes are valid if a quorum is reached (i.e., at least 20% of supporting members voted).
+
+### 8.5 Privacy and Confidentiality
+
+1. The Supporting Member agrees to not disclose any information about other Supporting Members to a third party without their consent.
+
+2. The Supporting Member agrees to respect any notices of explicit confidentiality. LibScie as well as any Supporting Members that shares original information may deem them as "confidential", "secret", or other terminology denoting it's circulation is limited to the Supporting Members.
+
+3. The Supporting Member agrees that they may disclose information shared by LibScie, unless it is marked confidential, secret or in a similar way.
+
+## 9. Payment
 
 1. All prices shown on the Platform are final prices including VAT and - if applicable - transport costs.
 
@@ -157,25 +241,27 @@ In cases where research purposes may provide exception to these rules, the User 
 
 3. The payment is due immediately after the conclusion of contract. LibScie uses the payment provider Stripe (of Stripe Payments Europe, Ltd., 1 Grand Canal Street Lower, Grand Canal Dock, Dublin, Ireland). Stripe provides several options to process the payment, including Credit Card, iDeal, Klarna, Apple Pay and Google Pay. LibScie will show the specific options on the Platform. A transfer via SEPA is not supported. The payment process may be subject to separate terms depending on the chosen option.
 
-## 9. Term and Termination
+## 10. Term and Termination
 
 1. The term of this Agreement commences with the User's registration. Both parties can terminate the Agreement with effect to the end of each month by sending a termination notice at least in written form (email to suffice). The User can delete their Account at any time. Deleting the Account will not affect published Research Modules on the Platform and Workspaces linked to these Modules.
 
-2. The right of both parties to terminate this Agreement for good cause shall remain unaffected.
+2. The Term of the Supporting Membership commences with its purchase and lasts either a month or a year, depending on the Supporting Member’s choice. The Parties can terminate the Supporting Membership at any time with effect to the end of the respective contractual period. After this first contractual period, the Membership will automatically renew itself for an indefinite period. The Parties may then terminate the contract with effect to the end of each month. If the Supporting Member is on a yearly payment plan and terminates the contract before the end of the payment period, LibScie shall refund the remaining remuneration between the effective date of termination and the end of the payment period.
 
-3. The licenses granted by the User to LibScie as well as the publication of the metadata of the Research Module on the Platform shall remain unaffected by the termination.
+3. The right of both parties to terminate this Agreement for good cause shall remain unaffected.
 
-## 10. Availability and Maintenance
+4. The licenses granted by the User to LibScie as well as the publication of the metadata of the Research Module on the Platform shall remain unaffected by the termination.
+
+## 11. Availability and Maintenance
 
 1. LibScie shall implement appropriate measures to ensure the continuous availability and error-free functionality of the Platform. However, the User acknowledges that for technical reasons and due to the dependence on external influences, LibScie cannot guarantee the uninterrupted availability of the platform. LibScie provides the User with statistics on its up- and downtimes on [https://up.researchequals.com/](https://up.researchequals.com/).
 
 2. LibScie will occasionally carry out maintenance tasks to ensure the functionality or extension of the platform. These tasks may lead to a temporary impairment of the usability of the Platform. Insofar LibScie shall carry out the maintenance tasks during periods of low use.
 
-## 11. Warranty
+## 12. Warranty
 
 If the User is a Consumer and chooses a Pay to Close License model, the statutory regulations ([Sec. 327 et seq. BGB](https://www.gesetze-im-internet.de/englisch_bgb/englisch_bgb.html#p1204)) regarding the warranty for digital products apply to the publication under the restricted license.
 
-## 12. Liability and Indemnification
+## 13. Liability and Indemnification
 
 1. LibScie shall be liable in accordance with the statutory provisions.
 
@@ -183,11 +269,11 @@ If the User is a Consumer and chooses a Pay to Close License model, the statutor
 
 3. The User agrees to indemnify, defend and hold LibScie, its officers, directors, agents, affiliates, distribution partners, licensors and suppliers harmless from and against any and all claims, actions, proceedings, costs, liabilities, losses and expenses (including, but not limited to, reasonable attorneys' fees) (collectively, “Claims”) suffered or incurred by such indemnified parties resulting from or arising out of any actual or alleged breach of the User's obligations, warranties and guarantees under these Terms or violation of any third party's rights, provided that the breach or violation in question was or would have been a culpable breach or violation. LibScie shall inform the User without delay of any such Claim, and will provide the User with any reasonably available information on the Claim to facilitate the User's cooperation in defending against the Claim. The User shall cooperate as fully as reasonably required in the defense of any Claim. LibScie reserves the right, at its own expense, to assume the exclusive defense and control of any matter subject to indemnification by the User.
 
-## 13. Right of Withdrawal
+## 14. Right of Withdrawal
 
 If the user acts as a Consumer, the User has a fourteen-day right of withdrawal. Regarding this right of withdrawal, please refer to [the Addendum 1](https://researchequals.com/right-of-withdrawal).
 
-## 14. Data Protection
+## 15. Data Protection
 
 1. For a comprehensive information on how LibScie collects, processes or uses personal data of the User in the context of the Agreement and the usage of the Platform, please refer to LibScie's [Privacy Policy](https://researchequals.com/privacy).
 
@@ -197,7 +283,7 @@ If the user acts as a Consumer, the User has a fourteen-day right of withdrawal.
 
 4. The parties agree that LibScie may fulfil any deletion request based on [the Data Processing Agreement](https://researchequals.com/dpa), especially according to its Clause 10 (d), by anonymization of the personal data included in the Content and/or Research Module instead of deleting the Content and/or Research Module itself. For the deletion of the Research Module itself Section 5 of the Terms applies.
 
-## 15. Changes to the Terms
+## 16. Changes to the Terms
 
 1. LibScie has the right to introduce additional functions to the Platform and add corresponding rules to the Terms. LibScie shall announce these changes at least four weeks before they enter into force to the user by email. If the User does not object in text form (e.g. letter, fax, e-mail) within a period of two weeks, beginning with the day following the announcement of the changes, LibScie assumes that the User agrees to the changes.
 
@@ -205,7 +291,7 @@ If the user acts as a Consumer, the User has a fourteen-day right of withdrawal.
 
 3. Otherwise, a change of the terms of use is possible at any time with the consent of the user.
 
-## 16. Miscellaneous
+## 17. Miscellaneous
 
 1. The sole place of jurisdiction for all differences arising out of or in connection with this Agreement shall be Berlin, Germany if the User is a merchant pursuant to the German Commercial Code (Handelsgesetzbuch), a legal entity of public law or a public special fund. Additionally, this shall be the case if the User's place of residence or usual place of residence is unknown at the time of making the complaint is filed or it is moved out of the scope of the German Code of Civil Procedure after the Agreement is concluded. Statutory provisions regarding exclusive jurisdiction shall remain unaffected.
 
@@ -223,8 +309,7 @@ If the user acts as a Consumer, the User has a fourteen-day right of withdrawal.
 
    Legal Representative: Chris Hartgerink
 
-Berlin, September 2022
-
+Berlin, February 2023
 `
 
 const md = new Markdown()
