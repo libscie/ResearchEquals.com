@@ -10,7 +10,7 @@ import CollectionsModal from "app/core/modals/CollectionsModal"
 
 export const CollectionsSection = ({ currentUser, currentWorkspace }) => {
   return (
-    <section className="bg-amber-300 lg:bg-transparent">
+    <section className="bg-amber-300 lg:bg-transparent" id="collection">
       <Container className="md:px-10 md:pt-16 md:pb-24">
         <NotchedCard className="flex flex-col items-center justify-between gap-12 py-10 px-4 md:gap-20 md:py-12 md:px-20 lg:flex-row lg:bg-amber-300">
           <div className="flex max-w-[500px] flex-col items-start gap-4 text-slate-800">
