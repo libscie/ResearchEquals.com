@@ -150,12 +150,16 @@ export default function SignupModal({ button }) {
                       </span>
                     </Switch>
                     <p className=" mx-2 text-sm text-gray-500 dark:text-gray-300">
-                      Yes, I agree that Liberate Science GmbH upgrades the collection immediately
-                      and irrevocably. I knowingly consent to waive my{" "}
-                      <Link href="/right-of-withdrawal" className="underline" target="_blank">
-                        right of withdrawal
+                      Yes, I wish to upgrade my membership and become a Supporting Member. I agree
+                      to the ResearchEquals{" "}
+                      <Link href="/terms" className="underline" target="_blank">
+                        Terms
                       </Link>{" "}
-                      by completing my purchase.
+                      as well as the{" "}
+                      <Link href="/legal/poison-pill" className="underline" target="_blank">
+                        Poison Pill Agreement
+                      </Link>{" "}
+                      between LibScie, its Shareholders and me as a Supporting Member.
                     </p>
                   </div>
                   <div className="mt-4">
