@@ -71,7 +71,7 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
             {user.supportingMember ? (
               <Link
                 href={
-                  process.env.ALGOLIA_PREFIX != "production"
+                  process.env.ALGOLIA_PREFIX === "production"
                     ? "https://billing.stripe.com/p/login/3cs29zdAYgvn9t6eUU"
                     : "https://billing.stripe.com/p/login/test_14keVF1Qp06l5he5kk"
                 }

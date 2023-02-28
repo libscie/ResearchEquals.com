@@ -11,6 +11,7 @@ import { isURI } from "app/core/crossref/ai_program"
 import submitToCrossRef from "app/core/utils/submitToCrossRef"
 import moduleXml from "app/core/utils/moduleXml"
 import cancelSupportingMembership from "./cancel-supporting-membership"
+import { supportingSignup, supportingCancel } from "../../app/postmark"
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET
 
@@ -191,6 +192,7 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
           customerId: event.data.object.customer,
         },
       })
+      await supportingSignup(event.data.object.customer_email)
 
     case "customer.subscription.updated":
       if (event.data.object.cancel_at_period_end) {
@@ -198,6 +200,18 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
           runAt: new Date(event.data.object.cancel_at * 1000),
           id: event.data.object.customer,
         })
+        const user = await db.user.findFirst({
+          where: {
+            customerId: event.data.object.customer,
+          },
+          select: {
+            email: true,
+          },
+        })
+        await supportingCancel(
+          { cancelAt: moment(event.data.object.cancel_at * 1000).format("MMMM Do YYYY") },
+          user!.email
+        )
       } else {
         await cancelSupportingMembership.delete(
           event.data.object.customer // this is the same ID we set above
