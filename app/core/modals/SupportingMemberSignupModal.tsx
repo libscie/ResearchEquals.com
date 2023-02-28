@@ -6,12 +6,14 @@ import toast from "react-hot-toast"
 import { Close, Checkmark } from "@carbon/icons-react"
 import { getAntiCSRFToken } from "@blitzjs/auth"
 import handlePayment from "../utils/handlePayment"
+import { useCurrentUser } from "../hooks/useCurrentUser"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
 
 export default function SignupModal({ button }) {
+  let currentUser = useCurrentUser()
   let [isOpen, setIsOpen] = useState(false)
   const [waiver, setWaiver] = useState(false)
   // Set price to yearly by default
@@ -167,7 +169,7 @@ export default function SignupModal({ button }) {
                       onClick={() =>
                         handlePayment(
                           `/api/checkout_sessions_supporting?email=${encodeURIComponent(
-                            "chris@libscie.org"
+                            currentUser?.email!
                           )}&price_id=${price}`,
                           router,
                           toast,
