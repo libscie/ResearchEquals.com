@@ -2,8 +2,13 @@ import Link from "next/link"
 import React from "react"
 import Container from "./home/Container"
 import ResearchEqualsLogoType from "./ResearchEqualsLogoType"
+// TODO: Add these in to simplify code
+import { LogoDiscord, LogoGithub, LogoTwitter } from "@carbon/icons-react"
+import LibscieLogo from "./LibscieLogo"
 
 export const FooterApollo = () => {
+  const date = new Date()
+
   return (
     <footer className="bg-slate-900">
       <Container className="flex flex-col items-center gap-10 pt-20 lg:flex-row lg:items-start lg:justify-between lg:gap-0 lg:text-left">
@@ -95,11 +100,16 @@ export const FooterApollo = () => {
         <div className="text-link-sm flex max-w-[680px] flex-1 flex-col gap-10 py-10 px-5 text-slate-400 lg:flex-row lg:justify-between lg:gap-8 lg:px-16">
           <div className="flex flex-col gap-4">
             <h5 className="text-sm font-bold text-white">Links</h5>
-            <Link href="/browse">Explore modules</Link>
-            <Link href="/faq">FAQs</Link>
+            <Link href="/terms">Terms</Link>
             <Link href="/privacy">Privacy Policy</Link>
-            <Link href="/terms">Terms &amp; Conditions</Link>
+            <Link href="/coc">Code of Conduct</Link>
             <Link href="/imprint">Imprint</Link>
+            <Link href="/faq">FAQs</Link>
+            <Link href="/browse">Explore modules</Link>
+            {/* // TODO: Add conditional link and the production URL */}
+            <Link href="https://billing.stripe.com/p/login/test_14keVF1Qp06l5he5kk">
+              Cancel subscription
+            </Link>
           </div>
           <div className="flex flex-col gap-4">
             <h5 className="text-sm font-bold text-white">Social Media</h5>
@@ -195,19 +205,22 @@ export const FooterApollo = () => {
         </div>
       </Container>
       <Container className="flex items-center justify-center gap-1 pt-10 pb-20 text-sm text-slate-400 lg:justify-start ">
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 48 48"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-        >
-          <path
-            d="M25.6443 16.2393C25.1429 16.0753 24.593 16 24 16C21.062 16 19 18.2494 19 24C19 25.7934 19.2005 27.2462 19.5656 28.3966L25.6443 16.2393ZM28.4704 19.5313L22.3722 31.7276C22.8746 31.9124 23.4203 32 24 32C27.0825 32 29 29.9663 29 24C29 22.1519 28.816 20.6811 28.4704 19.5313ZM24 2C36.1503 2 46 11.8497 46 24C46 36.1503 36.1503 46 24 46C11.8497 46 2 36.1503 2 24C2 11.8497 11.8497 2 24 2ZM24 6C14.0589 6 6 14.0589 6 24C6 33.9411 14.0589 42 24 42C33.9411 42 42 33.9411 42 24C42 14.0589 33.9411 6 24 6ZM24 12C29.346 12 33 15.8754 33 24C33 32.1246 29.346 36 24 36C18.7714 36 15 31.8858 15 24C15 16.1142 18.7714 12 24 12Z"
+        <span>{date.getFullYear()}</span>
+        <Link href="https://creativecommonspublicdomain/zero/1.0/legalcode" target="_blank">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 48 48"
+            xmlns="http://www.w3.org/2000/svg"
             fill="currentColor"
-          />
-        </svg>
-        <span>2022 CC0 ResearchEquals</span>
+          >
+            <path
+              d="M25.6443 16.2393C25.1429 16.0753 24.593 16 24 16C21.062 16 19 18.2494 19 24C19 25.7934 19.2005 27.2462 19.5656 28.3966L25.6443 16.2393ZM28.4704 19.5313L22.3722 31.7276C22.8746 31.9124 23.4203 32 24 32C27.0825 32 29 29.9663 29 24C29 22.1519 28.816 20.6811 28.4704 19.5313ZM24 2C36.1503 2 46 11.8497 46 24C46 36.1503 36.1503 46 24 46C11.8497 46 2 36.1503 2 24C2 11.8497 11.8497 2 24 2ZM24 6C14.0589 6 6 14.0589 6 24C6 33.9411 14.0589 42 24 42C33.9411 42 42 33.9411 42 24C42 14.0589 33.9411 6 24 6ZM24 12C29.346 12 33 15.8754 33 24C33 32.1246 29.346 36 24 36C18.7714 36 15 31.8858 15 24C15 16.1142 18.7714 12 24 12Z"
+              fill="currentColor"
+            />
+          </svg>
+        </Link>
+        <span>CC0</span>
       </Container>
     </footer>
   )
