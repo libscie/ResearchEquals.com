@@ -17,8 +17,9 @@ export default function SignupModal({ button }) {
   // Set price to yearly by default
   const [price, setPrice] = useState(
     // Hardcodes price_id for production and test
-    // TODO: Add Production price
-    process.env.ALGOLIA_PREFIX === "production" ? "" : "price_1MWHibLmgtJbKHNGLs3AcfQ1"
+    process.env.ALGOLIA_PREFIX === "production"
+      ? "price_1MgXRnLmgtJbKHNGk0QtaUCU"
+      : "price_1MWHibLmgtJbKHNGLs3AcfQ1"
   )
 
   function closeModal() {
@@ -82,9 +83,8 @@ export default function SignupModal({ button }) {
                       <option
                         value={
                           // Hardcodes price_id for production and test
-                          // TODO: Add Production price
                           process.env.ALGOLIA_PREFIX === "production"
-                            ? ""
+                            ? "price_1MgXRnLmgtJbKHNGk0QtaUCU"
                             : "price_1MWHibLmgtJbKHNGLs3AcfQ1"
                         }
                       >
@@ -93,9 +93,8 @@ export default function SignupModal({ button }) {
                       <option
                         value={
                           // Hardcodes price_id for production and test
-                          // TODO: Add Production price
                           process.env.ALGOLIA_PREFIX === "production"
-                            ? ""
+                            ? "price_1MgXRnLmgtJbKHNGALFmoCR7"
                             : "price_1MWHibLmgtJbKHNGBMUtwKEL"
                         }
                       >

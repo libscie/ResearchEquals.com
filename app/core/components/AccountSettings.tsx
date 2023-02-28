@@ -69,8 +69,13 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
           </div>
           <div className="my-0">
             {user.supportingMember ? (
-              // TODO: Add conditional link and the production URL
-              <Link href="https://billing.stripe.com/p/login/test_14keVF1Qp06l5he5kk">
+              <Link
+                href={
+                  process.env.ALGOLIA_PREFIX != "production"
+                    ? "https://billing.stripe.com/p/login/3cs29zdAYgvn9t6eUU"
+                    : "https://billing.stripe.com/p/login/test_14keVF1Qp06l5he5kk"
+                }
+              >
                 <button
                   type="button"
                   className="mx-1 flex rounded-md bg-sky-50 py-2 px-4 text-sm font-medium text-sky-700 hover:bg-sky-200 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-sky-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"

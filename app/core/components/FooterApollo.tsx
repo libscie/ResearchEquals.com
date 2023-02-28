@@ -106,8 +106,13 @@ export const FooterApollo = () => {
             <Link href="/imprint">Imprint</Link>
             <Link href="/faq">FAQs</Link>
             <Link href="/browse">Explore modules</Link>
-            {/* // TODO: Add conditional link and the production URL */}
-            <Link href="https://billing.stripe.com/p/login/test_14keVF1Qp06l5he5kk">
+            <Link
+              href={
+                process.env.ALGOLIA_PREFIX === "production"
+                  ? "https://billing.stripe.com/p/login/3cs29zdAYgvn9t6eUU"
+                  : "https://billing.stripe.com/p/login/test_14keVF1Qp06l5he5kk"
+              }
+            >
               Cancel subscription
             </Link>
           </div>
