@@ -151,6 +151,7 @@ enum MembershipRole {
 
 enum GlobalRole {
   SUPERADMIN
+  SUPPORTING
   CUSTOMER
 }
 
@@ -290,4 +291,21 @@ model Editorship {
   submissions Submission[]
 
   @@unique([workspaceId, collectionId])
+}
+
+model SupportingEvents {
+  id          Int             @id @default(autoincrement())
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  type        SupportingEvent @default(ASSEMBLY)
+  title       String
+  slug        String
+  content     String
+  attachments Json?           @default("{\"files\": []}")
+}
+
+enum SupportingEvent {
+  ASSEMBLY
+  REQUEST
+  PETITION
 }

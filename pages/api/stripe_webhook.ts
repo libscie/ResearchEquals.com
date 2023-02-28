@@ -1,3 +1,5 @@
+import { acceptSubmission } from "app/postmark"
+
 import { api } from "app/blitz-server"
 import { NextApiRequest, NextApiResponse } from "next"
 import { Ctx } from "blitz"
@@ -183,6 +185,7 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
           email: event.data.object.customer_email,
         },
         data: {
+          role: "SUPPORTING",
           supportingMember: true,
           supportingMemberSince: moment(datetime).format(),
           customerId: event.data.object.customer,
