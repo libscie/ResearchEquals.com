@@ -3,7 +3,12 @@ import { useRouter } from "next/router"
 import { useQuery } from "@blitzjs/rpc"
 import { BlitzPage } from "@blitzjs/next"
 import Layout from "app/core/layouts/Layout"
-import { Bullhorn, Network_2, WatsonHealthStackedScrolling_1 } from "@carbon/icons-react"
+import {
+  Bullhorn,
+  CategoryNew,
+  Network_2,
+  WatsonHealthStackedScrolling_1,
+} from "@carbon/icons-react"
 
 import "quill/dist/quill.snow.css"
 
@@ -30,6 +35,15 @@ const actions = [
       "Send an email to all the active supporting members. This is used for announcing general assemblies, or other information we want to send to all supporting members.",
     href: "/admin/broadcast-supporting",
     icon: Bullhorn,
+    iconForeground: "text-yellow-700",
+    iconBackground: "bg-yellow-50",
+  },
+  {
+    title: "Create supporting member event",
+    description:
+      "Add an event in the supporting member area. This can be an assembly, a petition, or an information request.",
+    href: "/admin/supporting-event",
+    icon: CategoryNew,
     iconForeground: "text-yellow-700",
     iconBackground: "bg-yellow-50",
   },
