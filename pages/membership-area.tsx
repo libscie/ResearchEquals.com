@@ -12,6 +12,8 @@ import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import getDrafts from "app/core/queries/getDrafts"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 import moment from "moment"
+import getAdminInfo from "../app/core/queries/getAdminInfo"
+import authSupportingMember from "../app/core/queries/authSupportingMember"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -35,6 +37,7 @@ const MembershipArea: BlitzPage = () => {
   const router = useRouter()
   const [drafts, { refetch }] = useQuery(getDrafts, { session })
   const [invitations] = useQuery(getInvitedModules, { session })
+  const [authSupporting] = useQuery(authSupportingMember, {} as any)
 
   return (
     <>
@@ -99,7 +102,6 @@ const MembershipArea: BlitzPage = () => {
   )
 }
 
-MembershipArea.authenticate = { role: ["SUPERADMIN", "SUPPORTING"] }
 MembershipArea.suppressFirstRenderFlicker = true
 MembershipArea.getLayout = (page) => (
   <Layout title="Membership Area">

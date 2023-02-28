@@ -18,6 +18,7 @@ import { useFormik } from "formik"
 import broadcastMessage from "app/core/mutations/broadcast-all"
 import { useState } from "react"
 import { validateZodSchema } from "blitz"
+import getAdminInfo from "app/core/queries/getAdminInfo"
 
 const BroadcastAll: BlitzPage = () => {
   const currentUser = useCurrentUser()
@@ -29,6 +30,7 @@ const BroadcastAll: BlitzPage = () => {
   const [broadcastMutation] = useMutation(broadcastMessage)
   const { quill, quillRef } = useQuill()
   const [countSubmit, setCountSubmit] = useState(0)
+  const [adminInfo] = useQuery(getAdminInfo, null)
 
   const formik = useFormik({
     initialValues: {

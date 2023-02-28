@@ -22,6 +22,7 @@ import { z } from "zod"
 import { useFormik } from "formik"
 import { useState } from "react"
 import { validateZodSchema } from "blitz"
+import getAdminInfo from "app/core/queries/getAdminInfo"
 
 const CreateSupportingEvent: BlitzPage = () => {
   const currentUser = useCurrentUser()
@@ -33,6 +34,7 @@ const CreateSupportingEvent: BlitzPage = () => {
   const [createEventMutation] = useMutation(createEvent)
   const { quill, quillRef } = useQuill()
   const [countSubmit, setCountSubmit] = useState(0)
+  const [adminInfo] = useQuery(getAdminInfo, null)
 
   const formik = useFormik({
     initialValues: {

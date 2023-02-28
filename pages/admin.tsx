@@ -18,6 +18,7 @@ import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import getDrafts from "app/core/queries/getDrafts"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
+import getAdminInfo from "app/core/queries/getAdminInfo"
 
 const actions = [
   {
@@ -86,6 +87,7 @@ const Admin: BlitzPage = () => {
   const router = useRouter()
   const [drafts, { refetch }] = useQuery(getDrafts, { session })
   const [invitations] = useQuery(getInvitedModules, { session })
+  const [adminInfo] = useQuery(getAdminInfo, null)
 
   return (
     <>

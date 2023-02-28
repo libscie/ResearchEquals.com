@@ -11,6 +11,7 @@ import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 import getDrafts from "app/core/queries/getDrafts"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
+import authSupportingMember from "app/core/queries/authSupportingMember"
 
 const SupportingEventPage = () => {
   const currentUser = useCurrentUser()
@@ -20,6 +21,7 @@ const SupportingEventPage = () => {
   const [drafts, { refetch }] = useQuery(getDrafts, { session })
   const [currentEvent] = useQuery(getCurrentEvent, "ga-1")
   const [invitations] = useQuery(getInvitedModules, { session })
+  const [authSupporting] = useQuery(authSupportingMember, {} as any)
 
   return (
     <Layout title={`${currentEvent!.title} | Membership Area`}>
@@ -45,6 +47,7 @@ const SupportingEventPage = () => {
   )
 }
 
+SupportingEventPage.authenticate = true
 SupportingEventPage.authenticate = { role: ["SUPERADMIN", "SUPPORTING"] }
 SupportingEventPage.suppressFirstRenderFlicker = true
 SupportingEventPage.getLayout = (page) => <LayoutLoader>{page}</LayoutLoader>
