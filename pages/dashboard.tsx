@@ -119,10 +119,9 @@ const DashboardContent = ({
                   width="480"
                   height="480"
                 />
-                <p>
-                  Thank you so much. We look forward to seeing you at our next General Assembly
-                  (second thursday of March, June, September, and December).
-                </p>
+                <p>Thank you so much!</p>
+                <p>If you have issues accessing the Membership Area, please log out and back in.</p>
+                <p>We look forward to seeing you at our next General Assembly.</p>
                 {/* This would be the perfect place to add a badge for folk */}
                 {/* {query.badgeUrl} */}
               </div>
@@ -130,8 +129,12 @@ const DashboardContent = ({
           }
           primaryAction="See you there!"
           primaryButtonClass="bg-indigo-50 text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-indigo-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
-          secondaryAction=""
+          secondaryAction="Go to Membership Area"
+          secondaryButtonClass="bg-green-50 text-green-700 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-green-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
           onSubmit={() => {}}
+          onCancel={() => {
+            router.push("/membership-area")
+          }}
         />
         <div className="text-gray-900 dark:text-gray-200">
           {/* Column 1 */}
