@@ -22,6 +22,11 @@ export default async function getCurrentWorkspace(_ = null, { session }: Ctx) {
           },
         },
       },
+      affiliations: {
+        include: {
+          organization: true,
+        },
+      },
     },
   })
 

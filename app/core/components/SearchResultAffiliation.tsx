@@ -1,0 +1,19 @@
+import he from "he"
+import { Building } from "@carbon/icons-react"
+
+const SearchResultAffiliation = ({ item }) => {
+  return (
+    <>
+      <div className="mx-1 my-1 flex">
+        <div className="mr-2">
+          <Building className="inline-block h-full align-middle " />
+        </div>
+        <div className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200">
+          {he.decode(item.name)}
+        </div>
+      </div>
+    </>
+  )
+}
+
+export default SearchResultAffiliation
