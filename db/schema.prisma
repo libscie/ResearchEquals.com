@@ -116,7 +116,7 @@ model Workspace {
 
   followingCollections Collection[] @relation("WorkspaceToCollection")
 
-  affiliation Affiliation[]
+  affiliations Affiliation[]
 }
 
 model Organization {
@@ -124,6 +124,7 @@ model Organization {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   rorId     String   @unique
+  name      String?
 
   affiliated Affiliation[]
 }
