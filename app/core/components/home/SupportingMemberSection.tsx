@@ -15,7 +15,7 @@ export const SupportingMemberSection = ({ currentUser, currentWorkspace }) => {
             <div className="inline-flex rounded-lg bg-indigo-700 px-4 py-2 text-white">✨ New!</div>
             <h2 className="text-3xl font-bold md:text-5xl">Supporting membership</h2>
             <p className="text-base text-slate-600 md:text-lg">
-              You are one of few who read this far! It seems you like this project?
+              You are one of few who read this far! It seems you like this community.
             </p>
             <p className="text-base text-slate-600 md:text-lg">
               Supporters shape how ResearchEquals evolves. Together, we organize for more impact on

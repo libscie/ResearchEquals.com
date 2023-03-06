@@ -61,7 +61,7 @@ const SupportingMemberPage: BlitzPage = () => {
               You can now govern a publisher like never before.
             </h1>
             <p className="max-w-[800px] text-base text-slate-600 dark:text-slate-300 md:text-xl">
-              As a supporting member we give you power we could easily keep to ourselves.
+              As a supporting member, we give you power we could easily keep to ourselves.
             </p>
             {/* <Link href="/signup"> */}
             {/* <Button color="primary" className="mt-4 w-auto"> */}
@@ -71,7 +71,7 @@ const SupportingMemberPage: BlitzPage = () => {
           </div>
         </section>
         <NoRegular />
-        <InstitutionalSupportingMembers />
+        {/* <InstitutionalSupportingMembers /> */}
         <SupportingMemberPricing />
         <section className="bg-indigo-700 text-white ">
           <Container className="flex flex-col items-center gap-10 py-20 md:py-24 lg:flex-row lg:justify-between lg:gap-6">

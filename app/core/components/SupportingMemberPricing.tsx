@@ -52,7 +52,7 @@ export default function SupportingMemberPricing() {
       <div className="mx-auto max-w-2xl text-center lg:max-w-4xl">
         {/* <h2 className="text-base font-semibold leading-7 text-indigo-600">Pricing</h2> */}
         <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
-          It is the supporters that make us.
+          Supporters make this a community effort.
         </p>
       </div>
       <div className="mx-auto mt-16 grid max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-4xl lg:grid-cols-2">

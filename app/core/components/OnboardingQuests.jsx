@@ -37,6 +37,7 @@ import SupportingMemberSignupModal from "../modals/SupportingMemberSignupModal"
 const OnboardingQuests = ({ data, expire, signature, refetch }) => {
   return (
     <>
+      <OnboardingSupporting data={data.user} />
       <OnboardingEmail data={data.user.emailIsVerified} />
       <OnboardingEmailAccept data={data.user} />
       {/* <OnboardingOrcid data={data.workspace.orcid} /> */}
@@ -50,7 +51,6 @@ const OnboardingQuests = ({ data, expire, signature, refetch }) => {
       <OnboardingDraft data={data.workspace} refetch={refetch} />
       <OnboardingCollection data={data} refetch={refetch} />
       <OnboardingDiscord data={data.workspace} refetch={refetch} />
-      <OnboardingSupporting data={data.user} />
     </>
   )
 }
@@ -527,11 +527,12 @@ const OnboardingSupporting = ({ data }) => {
             </div>
             <div className="ml-3 flex-1 text-green-800 dark:text-green-200 md:flex">
               <p className="mr-2 text-sm">
-                <span className=" font-bold">Supporting membership</span>{" "}
-                <span>
-                  Co-govern ResearchEquals, prevent buy-outs, and help decide what our profits get
-                  spent on. All part of a supporting membership!
-                </span>
+                <Link href="/supporting-member">
+                  <span className=" font-bold">Supporting membership</span>{" "}
+                  <span>
+                    Join assemblies, prevent buy-outs, and help decide where our profits go.
+                  </span>
+                </Link>
               </p>
             </div>
           </div>
