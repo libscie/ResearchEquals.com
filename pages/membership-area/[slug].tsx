@@ -1,7 +1,6 @@
 import { useSession } from "@blitzjs/auth"
 import { useRouter } from "next/router"
 import { useQuery } from "@blitzjs/rpc"
-import getCurrentEvent from "../../app/core/queries/getCurrentEvent"
 import "quill/dist/quill.snow.css"
 
 import Layout from "app/core/layouts/Layout"
@@ -12,14 +11,32 @@ import getDrafts from "app/core/queries/getDrafts"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import authSupportingMember from "app/core/queries/authSupportingMember"
+import { gSSP } from "app/blitz-server"
+import db from "db"
+import { NotFoundError } from "blitz"
 
-const SupportingEventPage = () => {
+export const getServerSideProps = gSSP(async function getServerSideProps(context) {
+  const currentEvent = await db.supportingEvents.findFirst({
+    where: {
+      slug: context?.params?.slug?.toString().toLowerCase(),
+    },
+  })
+
+  if (!currentEvent) throw new NotFoundError()
+  return {
+    props: {
+      currentEvent,
+    },
+  }
+})
+
+const SupportingEventPage = ({ currentEvent }) => {
   const currentUser = useCurrentUser()
   const session = useSession()
   const currentWorkspace = useCurrentWorkspace()
   const router = useRouter()
+  console.log(router)
   const [drafts, { refetch }] = useQuery(getDrafts, { session })
-  const [currentEvent] = useQuery(getCurrentEvent, "ga-1")
   const [invitations] = useQuery(getInvitedModules, { session })
   const [authSupporting] = useQuery(authSupportingMember, {} as any)
 
