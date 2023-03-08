@@ -2,20 +2,6 @@ import Image, { StaticImageData } from "next/image"
 import React from "react"
 import cx from "classnames"
 import Container, { ContainerProps } from "./Container"
-import Assembly from "public/images/supporting-member/assembly.png"
-import AssemblyDark from "public/images/supporting-member/assembly.png"
-import Petition from "public/images/supporting-member/petition.png"
-import PetitionDark from "public/images/supporting-member/petition.png"
-import Request from "public/images/supporting-member/request.png"
-import RequestDark from "public/images/supporting-member/request.png"
-import BusinessDev from "public/images/supporting-member/business-dev.png"
-import BusinessDevDark from "public/images/supporting-member/business-dev.png"
-import PoisonPill from "public/images/supporting-member/poison-pill.png"
-import PoisonPillDark from "public/images/supporting-member/poison-pill.png"
-import AddLink from "public/images/home/add-link.svg"
-import AddLinkDark from "public/images/home/add-link-dark.svg"
-import Collaborate from "public/images/home/collaborate.svg"
-import CollaborateDark from "public/images/home/collaborate-dark.svg"
 
 type StepsType = {
   title: string
@@ -34,8 +20,7 @@ const STEPS_DATA: StepsType[] = [
     description:
       "Every quarter we gather to discuss changes, strategies, and ideas. We vote on what happens with ResearchEquals.",
     image: {
-      src: Assembly,
-      srcDark: AssemblyDark,
+      src: "https://ucarecdn.com/61349a84-e75d-438c-83f5-60d33ff699e8/nounassembly468455.png",
       width: 1200,
       height: 1200,
     },
@@ -45,8 +30,7 @@ const STEPS_DATA: StepsType[] = [
     description:
       "Need more information than we gave? Ask us and we will give it. Like a freedom of information request.",
     image: {
-      src: Request,
-      srcDark: RequestDark,
+      src: "https://ucarecdn.com/86decd35-3714-4808-9623-6781030a822d/nounopinion4320285.png",
       width: 1200,
       height: 1200,
     },
@@ -56,8 +40,7 @@ const STEPS_DATA: StepsType[] = [
     description:
       "You have a direct line to us. Petitions force awareness when we inevitably will lack it.",
     image: {
-      src: Petition,
-      srcDark: PetitionDark,
+      src: "https://ucarecdn.com/e45a6ab6-a559-4579-bb64-516d868a4d3d/nounpetition2367599.png",
       width: 1200,
       height: 1200,
     },
@@ -67,10 +50,9 @@ const STEPS_DATA: StepsType[] = [
     description:
       "We are a for-profit business. We share how we are going to get to profit and you get a say where to invest it.",
     image: {
-      src: BusinessDev,
-      srcDark: BusinessDevDark,
-      width: 800,
-      height: 447,
+      src: "https://ucarecdn.com/c418ef6d-59b3-45d2-8ab3-109156c8d030/nouneuro4116683.png",
+      width: 1200,
+      height: 1200,
     },
   },
   {
@@ -78,10 +60,9 @@ const STEPS_DATA: StepsType[] = [
     description:
       "We will pay you if we are acquired by a third-party without your consent. Literally.",
     image: {
-      src: PoisonPill,
-      srcDark: PoisonPillDark,
-      width: 1248,
-      height: 918,
+      src: "https://ucarecdn.com/b3b0dabc-0d78-4a49-b1a1-db17cf7abae9/nounmedicine48376.png",
+      width: 1200,
+      height: 1200,
     },
   },
 ]
@@ -109,7 +90,7 @@ const StepsContainer = ({
         <p className="text-slate-600 dark:text-slate-300 md:text-lg">{description}</p>
       </div>
       <div className={cx("w-[50%] md:w-[350px]")}>
-        <Image src={src} alt={title} width={width} height={height} layout="responsive" />
+        <Image src={src} alt={title} width={width} height={height} />
       </div>
     </Container>
   )
