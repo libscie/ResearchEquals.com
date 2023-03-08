@@ -36,6 +36,7 @@ export default resolver.pipe(
       "right-of-withdrawal",
       "stats",
       "security",
+      "supporting-member",
       "signup",
       "terms",
     ]

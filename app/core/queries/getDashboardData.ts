@@ -14,6 +14,7 @@ export default async function getSignature({ session, changeDays }) {
       emailIsVerified: true,
       emailConsent: true,
       marketingConsent: true,
+      supportingMember: true,
     },
   })
 

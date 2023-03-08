@@ -26,34 +26,14 @@ import { ModuleDiagram } from "app/core/components/home/ModuleDiagram"
 import Navbar from "app/core/components/Navbar"
 import LayoutLoader from "app/core/components/LayoutLoader"
 import { SupportingMemberSection } from "../app/core/components/home/SupportingMemberSection"
+import Link from "next/link"
+import Button from "../app/core/components/home/Button"
+import { NoRegular } from "../app/core/components/home/NoRegular"
+import Container from "../app/core/components/home/Container"
+import InstitutionalSupportingMembers from "../app/core/components/InstitutionalSupportingMembers"
+import SupportingMemberPricing from "../app/core/components/SupportingMemberPricing"
 
-type TLicenses = Awaited<ReturnType<typeof db.license.findMany>>
-
-export const getStaticProps = gSP(async (context) => {
-  const licenses = await db.license.findMany({
-    where: {
-      source: "ResearchEquals",
-    },
-    orderBy: [
-      {
-        price: "asc",
-      },
-      {
-        name: "asc",
-      },
-    ],
-  })
-
-  return {
-    props: {
-      licenses,
-    },
-  }
-})
-
-const Home: BlitzPage<{ licenses: TLicenses }> = ({
-  licenses,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const SupportingMemberPage: BlitzPage = () => {
   const prefersDarkMode = useMediaPredicate("(prefers-color-scheme: dark)")
   const biggerWindow = useMediaPredicate("(min-width: 640px)")
   const currentUser = useCurrentUser()
@@ -62,9 +42,6 @@ const Home: BlitzPage<{ licenses: TLicenses }> = ({
   const router = useRouter()
   const [drafts, { refetch }] = useQuery(getDrafts, { session })
   const [invitations] = useQuery(getInvitedModules, { session })
-
-  const freeLicenses = licenses.filter((license) => license.price === 0)
-  const payToClose = licenses.filter((license) => license.price > 0)
 
   return (
     <>
@@ -78,27 +55,48 @@ const Home: BlitzPage<{ licenses: TLicenses }> = ({
         refetchFn={refetch}
       />
       <main className="bg-white dark:bg-gray-900 lg:relative">
-        <Hero />
-        <ModuleDiagram />
-        <ApproachSection />
-        <PublishYourJourneySection />
-        <OpenAccessSection payToClose={payToClose} freeLicenses={freeLicenses} />
-        <CollectionsSection currentUser={currentUser} currentWorkspace={currentWorkspace} />
-        <TestimonialsSection />
-        <JoinCommunitySection />
-        <SupportingMemberSection currentUser={currentUser} currentWorkspace={currentWorkspace} />
+        <section id="hero" className="py-10 dark:bg-transparent md:py-28 md:text-center">
+          <div className="flex flex-col items-center gap-4 px-7">
+            <h1 className="max-w-5xl text-4xl font-bold text-slate-800 dark:text-white md:text-7xl md:font-extrabold ">
+              You can now govern a publisher like never before.
+            </h1>
+            <p className="max-w-[800px] text-base text-slate-600 dark:text-slate-300 md:text-xl">
+              As a supporting member, we give you power we could easily keep to ourselves.
+            </p>
+            {/* <Link href="/signup"> */}
+            {/* <Button color="primary" className="mt-4 w-auto"> */}
+
+            {/* </Button> */}
+            {/* </Link> */}
+          </div>
+        </section>
+        <NoRegular />
+        {/* <InstitutionalSupportingMembers /> */}
+        <SupportingMemberPricing />
+        <section className="bg-indigo-700 text-white ">
+          <Container className="flex flex-col items-center gap-10 py-20 md:py-24 lg:flex-row lg:justify-between lg:gap-6">
+            <p className="text-center text-3xl font-bold leading-10 md:text-5xl lg:text-left">
+              Create an account first, become a supporter second.
+            </p>
+            <Link href="/signup">
+              <Button variant="outlined" color="inherit" className="lg:min-w-[340px]">
+                Create account for ResearchEquals
+              </Button>
+            </Link>
+          </Container>
+        </section>
       </main>
     </>
   )
 }
 
-Home.suppressFirstRenderFlicker = true
-Home.getLayout = (page) => (
+SupportingMemberPage.suppressFirstRenderFlicker = true
+SupportingMemberPage.getLayout = (page) => (
   <Layout
-    title="ResearchEquals.com"
+    title="Supporting Membership"
     headChildren={
       <>
-        <meta property="og:title" content="ResearchEquals.com" />
+        <meta property="og:title" content="ResearchEquals Supporting Membership" />
         <meta
           property="og:description"
           content="Step by step publishing of your research, with a new publishing format: Research modules."
@@ -115,4 +113,4 @@ Home.getLayout = (page) => (
   </Layout>
 )
 
-export default Home
+export default SupportingMemberPage

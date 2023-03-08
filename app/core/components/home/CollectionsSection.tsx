@@ -14,21 +14,25 @@ export const CollectionsSection = ({ currentUser, currentWorkspace }) => {
       <Container className="md:px-10 md:pt-16 md:pb-24">
         <NotchedCard className="flex flex-col items-center justify-between gap-12 py-10 px-4 md:gap-20 md:py-12 md:px-20 lg:flex-row lg:bg-amber-300">
           <div className="flex max-w-[500px] flex-col items-start gap-4 text-slate-800">
-            <div className="inline-flex rounded-lg bg-indigo-700 px-4 py-2 text-white">
-              ✨ New feature!
-            </div>
+            {/* <div className="inline-flex rounded-lg bg-indigo-700 px-4 py-2 text-white"> */}
+            {/* ✨ New feature! */}
+            {/* </div> */}
             <h2 className="text-3xl font-bold md:text-5xl">Collections</h2>
             <p className="text-base text-slate-600 md:text-lg">
               If it has a DOI, you can collect it.
             </p>
             <p className="text-base text-slate-600 md:text-lg">
+              Create an overlay journal, curate your lab reading list, or keep track of something
+              else. Start your own at the push of a button.
+            </p>
+            {/* <p className="text-base text-slate-600 md:text-lg">
               Curate, share, and keep track of research on your own, with others, or with your
               entire community.
-            </p>
+            </p> */}
             <CollectionsModal
               button={
                 <span className="flex items-center text-lg font-bold">
-                  Learn more
+                  Start curating
                   <ArrowRight />
                 </span>
               }

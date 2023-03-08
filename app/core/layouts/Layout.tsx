@@ -6,7 +6,6 @@ import CookieConsent, { Cookies, getCookieConsentValue } from "react-cookie-cons
 import { Toaster } from "react-hot-toast"
 import { RecoilRoot } from "recoil"
 
-import Footer from "../components/Footer"
 import AnnouncementBanner from "../components/AnnouncementBanner"
 import { FooterApollo } from "../components/FooterApollo"
 
@@ -78,7 +77,7 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
           <div className="flex flex-grow flex-col">{children}</div>
         </div>
       </RecoilRoot>
-      {title === "ResearchEquals.com" ? <FooterApollo /> : <Footer />}
+      <FooterApollo />
 
       <CookieConsent
         location="bottom"
