@@ -299,7 +299,7 @@ model SupportingEvents {
   updatedAt   DateTime        @updatedAt
   type        SupportingEvent @default(ASSEMBLY)
   title       String
-  slug        String
+  slug        String          @unique
   content     String
   attachments Json?           @default("{\"files\": []}")
 }
