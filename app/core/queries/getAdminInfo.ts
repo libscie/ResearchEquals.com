@@ -5,7 +5,7 @@ import * as z from "zod"
 
 export default resolver.pipe(resolver.authorize(), async (input, ctx: Ctx) => {
   // Only authorize the SUPERADMIN role for this
-  ctx.session.$authorize("SUPERADMIN")
+  ctx.session.$authorize(["SUPERADMIN"])
 
   const modules = await db.module.findMany({
     where: {

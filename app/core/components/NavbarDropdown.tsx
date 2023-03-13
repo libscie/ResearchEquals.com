@@ -110,6 +110,20 @@ const DropdownContents = ({
               workspace={currentWorkspace}
             />
           </Link>
+          {currentUser.role === "SUPERADMIN" && (
+            <Link href={Routes.Admin()}>
+              <button className="block w-full rounded-md px-2 py-2 text-left text-base font-normal leading-5 text-gray-500 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-700">
+                Admin
+              </button>
+            </Link>
+          )}
+          {(currentUser.role === "SUPPORTING" || currentUser.role === "SUPERADMIN") && (
+            <Link href={Routes.MembershipArea()}>
+              <button className="block w-full rounded-md px-2 py-2 text-left text-base font-normal leading-5 text-gray-500 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-700">
+                Membership Area
+              </button>
+            </Link>
+          )}
           <button
             className="block w-full rounded-md px-2 py-2 text-left text-base font-normal leading-5 text-gray-500 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-700"
             onClick={async () => {
@@ -117,7 +131,7 @@ const DropdownContents = ({
               await logoutMutation()
             }}
           >
-            Log out
+            Logout
           </button>
         </div>
       </>

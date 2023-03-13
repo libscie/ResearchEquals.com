@@ -8,6 +8,9 @@ import Layout from "app/core/layouts/Layout"
 import React, { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import { ArrowUp, ArrowDown } from "@carbon/icons-react"
+import useWindowSize from "react-use/lib/useWindowSize"
+import Confetti from "react-confetti"
+import Image from "next/image"
 
 import getDashboardData from "app/core/queries/getDashboardData"
 import Navbar from "app/core/components/Navbar"
@@ -20,6 +23,8 @@ import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import ModuleBoxFeed from "app/core/components/ModuleBoxFeed"
 import ViewFollowers from "app/modules/components/ViewFollowers"
+
+import { Modal } from "../app/core/modals/Modal"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -53,6 +58,8 @@ const DashboardContent = ({
       getNextPageParam: (lastPage) => lastPage.nextPage,
     })
   const [viewFollowers, setViewFollowers] = useState(false)
+  const { width, height } = useWindowSize()
+  const [celebrate, setCelebrate] = useState(false)
 
   const stats = [
     {
@@ -84,6 +91,10 @@ const DashboardContent = ({
     if (query.authError) {
       toast.error("ORCID connection failed.")
     }
+
+    if (query.supporting) {
+      setCelebrate(true)
+    }
   }, [])
 
   const refetchAll = () => {
@@ -94,6 +105,37 @@ const DashboardContent = ({
   if (data) {
     return (
       <>
+        <Modal
+          isOpen={celebrate}
+          setIsOpen={setCelebrate}
+          title="We appreciate your support! 🥰"
+          body={
+            <>
+              <Confetti width={width} height={height} numberOfPieces={200} />
+              <div>
+                <Image
+                  src="https://ucarecdn.com/8c487c87-19f2-42c6-ba15-049c452f735d/supportingmember.gif"
+                  alt="A cute pink dinosaur coming out of a door waving and a heart appearing. It is a GIF on a continuous loop."
+                  width="480"
+                  height="480"
+                />
+                <p>Thank you so much!</p>
+                <p>If you have issues accessing the Membership Area, please log out and back in.</p>
+                <p>We look forward to seeing you at our next General Assembly.</p>
+                {/* This would be the perfect place to add a badge for folk */}
+                {/* {query.badgeUrl} */}
+              </div>
+            </>
+          }
+          primaryAction="See you there!"
+          primaryButtonClass="bg-indigo-50 text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-indigo-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+          secondaryAction="Go to Membership Area"
+          secondaryButtonClass="bg-green-50 text-green-700 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-green-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+          onSubmit={() => {}}
+          onCancel={() => {
+            router.push("/membership-area")
+          }}
+        />
         <div className="text-gray-900 dark:text-gray-200">
           {/* Column 1 */}
           <div className="p-4">

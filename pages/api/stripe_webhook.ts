@@ -1,3 +1,5 @@
+import { acceptSubmission } from "app/postmark"
+
 import { api } from "app/blitz-server"
 import { NextApiRequest, NextApiResponse } from "next"
 import { Ctx } from "blitz"
@@ -8,6 +10,8 @@ import algoliasearch from "algoliasearch"
 import { isURI } from "app/core/crossref/ai_program"
 import submitToCrossRef from "app/core/utils/submitToCrossRef"
 import moduleXml from "app/core/utils/moduleXml"
+import cancelSupportingMembership from "./cancel-supporting-membership"
+import { supportingSignup, supportingCancel } from "../../app/postmark"
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET
 
@@ -34,6 +38,8 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
   let event
 
   const signature = req.headers["stripe-signature"]
+  const datetime = Date.now()
+
   try {
     event = stripe.webhooks.constructEvent(rawData, signature!, endpointSecret)
   } catch (err) {
@@ -90,7 +96,6 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
           break
 
         case "module-license":
-          const datetime = Date.now()
           // TODO: Can be simplified along with publishModule.ts
           const currentModule = await db.module.findFirst({
             where: {
@@ -171,6 +176,47 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
           break
       }
       break
+
+    // This only happens for supporting memberships
+    // if we have other subscriptions this needs to be more precise
+    // eg with metadata product types
+    case "invoice.payment_succeeded":
+      await db.user.update({
+        where: {
+          email: event.data.object.customer_email,
+        },
+        data: {
+          role: "SUPPORTING",
+          supportingMember: true,
+          supportingMemberSince: moment(datetime).format(),
+          customerId: event.data.object.customer,
+        },
+      })
+      await supportingSignup(event.data.object.customer_email)
+
+    case "customer.subscription.updated":
+      if (event.data.object.cancel_at_period_end) {
+        await cancelSupportingMembership.enqueue(event.data.object.customer, {
+          runAt: new Date(event.data.object.cancel_at * 1000),
+          id: event.data.object.customer,
+        })
+        const user = await db.user.findFirst({
+          where: {
+            customerId: event.data.object.customer,
+          },
+          select: {
+            email: true,
+          },
+        })
+        await supportingCancel(
+          { cancelAt: moment(event.data.object.cancel_at * 1000).format("MMMM Do YYYY") },
+          user!.email
+        )
+      } else {
+        await cancelSupportingMembership.delete(
+          event.data.object.customer // this is the same ID we set above
+        )
+      }
 
     default:
       console.log(`[STRIPE WEBHOOK]: Unhandled event type ${event.type}, id: ${event.id}.`)

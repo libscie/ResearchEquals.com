@@ -403,7 +403,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               id="profileUrl"
               type="url"
               autoComplete="profileUrl"
-              placeholder="https://twitter.com/you"
+              placeholder="https://yourname.com"
               className=" placeholder-font-normal block w-11/12 appearance-none rounded border border-gray-300 bg-transparent px-3 py-2  text-sm font-normal placeholder-gray-400 focus:border-indigo-500 focus:outline-none  focus:ring-indigo-500 dark:border-gray-600 "
               defaultValue={workspaceUrl}
               onChange={(data) => {

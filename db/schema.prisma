@@ -178,20 +178,24 @@ enum MembershipRole {
 
 enum GlobalRole {
   SUPERADMIN
+  SUPPORTING
   CUSTOMER
 }
 
 model User {
-  id               Int        @id @default(autoincrement())
-  createdAt        DateTime   @default(now())
-  updatedAt        DateTime   @updatedAt
-  name             String?
-  email            String     @unique
-  emailIsVerified  Boolean    @default(false)
-  hashedPassword   String?
-  role             GlobalRole
-  emailConsent     Boolean?
-  marketingConsent Boolean?
+  id                    Int        @id @default(autoincrement())
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+  name                  String?
+  email                 String     @unique
+  emailIsVerified       Boolean    @default(false)
+  hashedPassword        String?
+  role                  GlobalRole
+  emailConsent          Boolean?
+  marketingConsent      Boolean?
+  supportingMember      Boolean    @default(false)
+  supportingMemberSince DateTime?
+  customerId            String?    @unique
 
   tokens      Token[]
   sessions    Session[]
@@ -314,4 +318,21 @@ model Editorship {
   submissions Submission[]
 
   @@unique([workspaceId, collectionId])
+}
+
+model SupportingEvents {
+  id          Int             @id @default(autoincrement())
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  type        SupportingEvent @default(ASSEMBLY)
+  title       String
+  slug        String          @unique
+  content     String
+  attachments Json?           @default("{\"files\": []}")
+}
+
+enum SupportingEvent {
+  ASSEMBLY
+  REQUEST
+  PETITION
 }

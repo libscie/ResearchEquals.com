@@ -324,27 +324,6 @@ const SocialActivity = ({ collection, refetchFn, isFollowing }) => {
           </span>
         </button>
       )}
-      {/* Share */}
-      <Link
-        href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-          `Check out "${collection!.title}", a @ResearchEquals Collection:\n`
-        )}&url=${encodeURIComponent(
-          `https://doi.org/${process.env.DOI_PREFIX}/${collection?.suffix}`
-        )}`}
-        type="a"
-        className="flex w-full rounded-md bg-indigo-50 py-2 px-4 align-middle text-sm font-medium text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-indigo-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
-        target="_blank"
-        rel="noreferrer"
-      >
-        <span className="mx-auto flex">
-          <LogoTwitter
-            size={32}
-            className="h-5 w-5 fill-current pt-1 text-indigo-500"
-            aria-hidden="true"
-          />
-          Share
-        </span>
-      </Link>
     </div>
   )
 }
