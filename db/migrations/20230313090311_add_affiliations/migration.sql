@@ -4,6 +4,7 @@ CREATE TABLE "Organization" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "rorId" TEXT NOT NULL,
+    "name" TEXT,
 
     CONSTRAINT "Organization_pkey" PRIMARY KEY ("id")
 );
