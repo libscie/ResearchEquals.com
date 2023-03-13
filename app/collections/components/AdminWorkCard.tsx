@@ -156,22 +156,6 @@ const WorkComment = ({ submission, index, editorIdSelf, refetchFn, editorIsAdmin
               </div>
             </span>
             <span className="flex-grow"></span>
-            {submission.comment && submission.comment != "" && (
-              <span className="inline-block h-full pt-1 align-middle">
-                {/* <span className="inline-block h-full align-middle"></span> */}
-                <a
-                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                    `"${submission.comment}"\n-${submission.editor.workspace.firstName} ${submission.editor.workspace.lastName} on`
-                  )}&url=${encodeURIComponent(
-                    `https://doi.org/${submission.module.prefix}/${submission.module.suffix}`
-                  )}&via=ResearchEquals`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <LogoTwitter size={24} className="fill-current text-indigo-400" />
-                </a>
-              </span>
-            )}
           </div>
         </>
       )}
