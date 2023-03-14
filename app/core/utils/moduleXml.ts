@@ -1,17 +1,29 @@
 import generateCrossRefXml from "../crossref/generateCrossRefXml"
 import { Cite } from "../../core/crossref/citation_list"
+import { ToBePublishedModule } from "app/modules/mutations/publishModule"
+import { URI } from "../crossref/ai_program"
+import { Author } from "../crossref/contributors"
 
-const moduleXml = ({ currentModule, licenseUrl, resolveUrl }) => {
+const moduleXml = ({
+  currentModule,
+  licenseUrl,
+  resolveUrl,
+}: {
+  currentModule: ToBePublishedModule
+  licenseUrl: URI
+  resolveUrl: URI
+}) => {
   const xmlData = generateCrossRefXml({
     schema: "5.3.1",
     type: currentModule!.type!.name,
     title: currentModule!.title,
     language: currentModule!.language,
     authors: currentModule!.authors!.map((author) => {
-      const js = {
+      const js: Author = {
         firstName: author.workspace?.firstName,
         lastName: author.workspace?.lastName,
         orcid: author.workspace?.orcid,
+        affiliations: author.workspace?.affiliations,
       }
 
       return js

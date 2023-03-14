@@ -2,13 +2,13 @@ import { Element, Text } from "xast"
 
 export interface RORAffiliation extends Record<string, unknown> {
   rorId: string
-  name: string
+  name?: string | null
 }
 
 export interface Author {
   firstName?: string | null
   lastName?: string | null
-  affiliations?: (Record<string, unknown> & Record<"organization", RORAffiliation>)[]
+  affiliations?: (Record<string, unknown> & Record<"organization", RORAffiliation>)[] | null
   orcid?: string | null
 }
 
@@ -36,7 +36,7 @@ export interface Affiliations extends Element {
 export interface Institution extends Element {
   type: "element"
   name: "institution"
-  children: [InstitutionName, InstitutionId]
+  children: [InstitutionName, InstitutionId] | [InstitutionId]
 }
 
 /** Identifier for an institution or organization (currently supported: ROR, ISNI, Wikidata). Identifiers must be included as a URI**/
@@ -132,37 +132,39 @@ const dbAuthorToCrossrefAuthor = (author: Author): PersonName["children"] => {
           return {
             type: "element",
             name: authorMap[key],
-            children: value.map(
-              (affiliation) =>
-                ({
-                  type: "element",
-                  name: "institution",
-                  children: [
-                    // needs to be in this order!
-                    {
-                      type: "element",
-                      name: "institution_name",
-                      children: [
-                        {
-                          type: "text",
-                          value: affiliation.organization.name,
-                        },
-                      ],
-                    },
-                    {
-                      type: "element",
-                      name: "institution_id",
-                      attributes: { type: "ror" },
-                      children: [
-                        {
-                          type: "text",
-                          value: `https://ror.org/${affiliation.organization.rorId}`,
-                        },
-                      ],
-                    },
-                  ],
-                } satisfies Institution)
-            ),
+            children: value.map((affiliation) => {
+              const institutionId = {
+                type: "element",
+                name: "institution_id",
+                attributes: { type: "ror" },
+                children: [
+                  {
+                    type: "text",
+                    value: `https://ror.org/${affiliation.organization.rorId}`,
+                  },
+                ],
+              } as InstitutionId
+
+              const institutionName: InstitutionName = {
+                type: "element",
+                name: "institution_name",
+                children: [
+                  {
+                    type: "text",
+                    value: affiliation.organization.name || "",
+                  },
+                ],
+              }
+
+              const institutionChildren: [InstitutionName, InstitutionId] | [InstitutionId] =
+                affiliation.organization.name ? [institutionName, institutionId] : [institutionId]
+
+              return {
+                type: "element",
+                name: "institution",
+                children: institutionChildren,
+              } satisfies Institution
+            }),
           } satisfies Affiliations
         }
 
