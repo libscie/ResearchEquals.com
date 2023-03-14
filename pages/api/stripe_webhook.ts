@@ -12,6 +12,7 @@ import submitToCrossRef from "app/core/utils/submitToCrossRef"
 import moduleXml from "app/core/utils/moduleXml"
 import cancelSupportingMembership from "./cancel-supporting-membership"
 import { supportingSignup, supportingCancel } from "../../app/postmark"
+import { getToBePublishedModule } from "../../app/modules/mutations/publishModule"
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET
 
@@ -97,33 +98,8 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
 
         case "module-license":
           // TODO: Can be simplified along with publishModule.ts
-          const currentModule = await db.module.findFirst({
-            where: {
-              id: parseInt(event.data.object.metadata.module_id),
-            },
-            include: {
-              license: true,
-              type: true,
-              authors: {
-                include: {
-                  workspace: true,
-                },
-                orderBy: {
-                  authorshipRank: "asc",
-                },
-              },
-              references: {
-                include: {
-                  authors: {
-                    include: {
-                      workspace: true,
-                    },
-                  },
-                },
-              },
-            },
-          })
-
+          const id = parseInt(event.data.object.metadata.module_id)
+          const currentModule = await getToBePublishedModule(id)
           if (!currentModule!.main) throw Error("Main file is empty")
 
           const licenseUrl = currentModule?.license?.url ?? ""
