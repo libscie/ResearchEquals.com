@@ -33,6 +33,15 @@ export default resolver.pipe(
       },
     })
 
-    return affiliation
+    const affiliations = await db.affiliation.findMany({
+      where: {
+        workspaceId: workspaceId,
+      },
+      include: {
+        organization: true,
+      },
+    })
+
+    return affiliations
   }
 )

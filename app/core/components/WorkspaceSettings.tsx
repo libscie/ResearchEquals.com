@@ -5,7 +5,7 @@ import changePronouns from "app/workspaces/mutations/changePronouns"
 import changeUrl from "app/workspaces/mutations/changeUrl"
 import { useFormik } from "formik"
 import { z } from "zod"
-import { Checkmark, Close, TrashCan, StopSignFilled } from "@carbon/icons-react"
+import { Checkmark, Close, TrashCan } from "@carbon/icons-react"
 import toast from "react-hot-toast"
 import { useRecoilState, useResetRecoilState } from "recoil"
 
@@ -24,7 +24,8 @@ import Autocomplete from "./Autocomplete"
 import axios from "axios"
 import SearchResultAffiliation from "./SearchResultAffiliation"
 import addAffiliation from "../../workspaces/mutations/addAffiliation"
-import { Modal } from "../modals/Modal"
+import { Affiliation } from "@prisma/client"
+import deleteAffiliation from "../../workspaces/mutations/deleteAffiliation"
 
 const WorkspaceSettings = ({ workspace, setIsOpen }) => {
   const [changeFirstNameMutation] = useMutation(changeFirstName)
@@ -33,6 +34,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
   const [changeBioMutation] = useMutation(changeBio)
   const [changePronounsMutation] = useMutation(changePronouns)
   const [changeUrlMutation] = useMutation(changeUrl)
+  const [deleteAffiliationMutation] = useMutation(deleteAffiliation)
 
   // State management
   const [workspaceFirstName, setWorkspaceFirstName] = useRecoilState(workspaceFirstNameAtom)
@@ -45,7 +47,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
   const resetPronouns = useResetRecoilState(workspacePronounsAtom)
   const [workspaceUrl, setWorkspaceUrl] = useRecoilState(workspaceUrlAtom)
   const resetUrl = useResetRecoilState(workspaceUrlAtom)
-  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false)
+  const [affiliations, setAffiliations] = useState([] as Affiliation[])
 
   useEffect(() => {
     if (workspaceFirstName === "") {
@@ -62,6 +64,9 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
     }
     if (workspaceUrl === "") {
       setWorkspaceUrl(workspace.url)
+    }
+    if (JSON.stringify(affiliations) === "[]") {
+      setAffiliations(workspace.affiliations)
     }
   }, [])
 
@@ -264,96 +269,90 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               : null}
           </label>
           <div className="mt-1 w-11/12 text-sm  font-normal text-gray-900 dark:text-gray-200">
-            <Autocomplete
-              className="h-full"
-              // openOnFocus={true}
-              defaultActiveItemId="0"
-              getSources={({ query }) => [
-                {
-                  sourceId: "products",
-                  async onSelect(params) {
-                    await toast.promise(
-                      addAffiliationMutation({
-                        workspaceId: workspace.id,
-                        rorId: params.item.id,
-                        orgName: params.item.name,
-                      }),
-                      {
-                        loading: "Adding affiliation...",
-                        success: () => {
-                          return "Affiliation added!"
-                        },
-                        error: "Failed to add affiliation...",
-                      }
-                    )
-                  },
-                  async getItems(query) {
-                    const results = await axios.get(
-                      `https://api.ror.org/organizations?query.advanced=${query.query}`
-                    )
+            {JSON.stringify(affiliations) != "[]" ? (
+              <>
+                {affiliations.map((affiliation) => {
+                  if (!!affiliation["organization"]) {
+                    return (
+                      <div
+                        className="my-1 flex px-2 text-gray-900 dark:text-gray-200"
+                        key={affiliation["id"]}
+                      >
+                        <p className="my-1 block flex-grow text-sm font-medium">
+                          {affiliation["organization"].name}
+                        </p>
+                        <p className="flex">
+                          <TrashCan
+                            size={24}
+                            className="inline-block h-6 w-6 fill-current align-middle text-red-500"
+                            onClick={async () => {
+                              await toast.promise(
+                                deleteAffiliationMutation({
+                                  affiliationId: affiliation["id"],
+                                  workspaceId: workspace.id,
+                                }),
+                                {
+                                  loading: "Deleting affiliation...",
+                                  success: (res) => {
+                                    setAffiliations(res as Affiliation[])
 
-                    return results.data.items.slice(0, 5)
-                  },
-                  templates: {
-                    item({ item, index }) {
-                      return <SearchResultAffiliation item={item} />
+                                    return "Affiliation deleted!"
+                                  },
+                                  error: "Failed to delete affiliation...",
+                                }
+                              )
+                            }}
+                            aria-label="Delete file"
+                          />
+                        </p>
+                      </div>
+                    )
+                  }
+                })}
+              </>
+            ) : (
+              <Autocomplete
+                className="h-full"
+                // openOnFocus={true}
+                defaultActiveItemId="0"
+                getSources={({ query }) => [
+                  {
+                    sourceId: "products",
+                    async onSelect(params) {
+                      await toast.promise(
+                        addAffiliationMutation({
+                          workspaceId: workspace.id,
+                          rorId: params.item.id,
+                          orgName: params.item.name,
+                        }),
+                        {
+                          loading: "Adding affiliation...",
+                          success: (res) => {
+                            setAffiliations(res as Affiliation[])
+                            return "Affiliation added!"
+                          },
+                          error: "Failed to add affiliation...",
+                        }
+                      )
+                    },
+                    async getItems(query) {
+                      const results = await axios.get(
+                        `https://api.ror.org/organizations?query.advanced=${query.query}`
+                      )
+
+                      return results.data.items.slice(0, 5)
+                    },
+                    templates: {
+                      item({ item, index }) {
+                        return <SearchResultAffiliation item={item} />
+                      },
                     },
                   },
-                },
-              ]}
-            />
+                ]}
+              />
+            )}
           </div>
         </div>
-        {workspace.affiliations.map((affiliation) => {
-          return (
-            <div
-              className="my-1 flex w-11/12 px-2 text-gray-900 dark:text-gray-200"
-              key={affiliation.organization.rorId}
-            >
-              <p className="my-1 block flex-grow text-sm font-medium">
-                {affiliation.organization.name}
-              </p>
-              <p className="flex">
-                <button className="mx-2">
-                  <TrashCan
-                    size={24}
-                    className="inline-block h-6 w-6 fill-current align-middle text-red-500"
-                    onClick={() => {
-                      setConfirmDeleteOpen(true)
-                    }}
-                    aria-label="Delete file"
-                  />
-                  <Modal
-                    title="Confirm deletion"
-                    body={<span>Text</span>}
-                    primaryAction="Delete File"
-                    primaryButtonClass="rounded-md bg-red-50 py-2 px-4 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
-                    isOpen={confirmDeleteOpen}
-                    setIsOpen={setConfirmDeleteOpen}
-                    onSubmit={async () => {
-                      // await toast.promise(deleteMainMutation({ id: moduleId, uuid }), {
-                      //   loading: "Deleting...",
-                      //   success: (data) => {
-                      //     setQueryData(data)
-                      //     return `Removed ${name}`
-                      //   },
-                      //   error: "Something went wrong...",
-                      // })}
-                    }}
-                    onCancel={() => {}}
-                  />
-                </button>
-                {/* <a href="#" target="_blank" download rel="noreferrer">
-                  <StopSignFilled
-                    size={24}
-                    className="inline-block h-6 w-6 fill-current align-middle text-gray-900 dark:text-gray-200"
-                    aria-label="Download file"
-                  />
-                </a> */}
-              </p>
-            </div>
-          )
-        })}
         <div className="my-4 px-2 text-gray-900 dark:text-gray-200">
           <label htmlFor="bio" className="my-1 block text-sm font-medium">
             Bio {formik.touched.bio && formik.errors.bio ? " - " + formik.errors.bio : null}
