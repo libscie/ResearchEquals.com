@@ -35,14 +35,14 @@ export default resolver.pipe(
       if (workspaceOld!.avatar.match(/ucarecdn/g)) {
         const uuid = /((\w{4,12}-?)){5}/.exec(workspaceOld!.avatar!)![0]
         const datestring = new Date()
-        await axios.delete(`https://api.uploadcare.com/files/${uuid}/`, {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/vnd.uploadcare-v0.5+json",
-            Date: datestring.toUTCString(),
-            Authorization: `Uploadcare.Simple ${process.env.UPLOADCARE_PUBLIC_KEY}:${process.env.UPLOADCARE_SECRET_KEY}`,
-          },
-        })
+        // await axios.delete(`https://api.uploadcare.com/files/${uuid}/`, {
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //     Accept: "application/vnd.uploadcare-v0.5+json",
+        //     Date: datestring.toUTCString(),
+        //     Authorization: `Uploadcare.Simple ${process.env.UPLOADCARE_PUBLIC_KEY}:${process.env.UPLOADCARE_SECRET_KEY}`,
+        //   },
+        // })
       }
     }
 
