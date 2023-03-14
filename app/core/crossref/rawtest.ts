@@ -8,7 +8,16 @@ const main = () => {
     type: "book",
     language: "en",
     title: "ResearchEquals",
-    authors: [{ firstName: "John", lastName: "Doe", orcid: "0000-0003-1050-6809" }],
+    authors: [
+      {
+        firstName: "John",
+        lastName: "Doe",
+        orcid: "0000-0003-1050-6809",
+        affiliations: [
+          { organization: { name: "Liberate Science", rorId: "https://ror.org/0342dzm54" } },
+        ],
+      },
+    ],
     abstractText: "This is falksdjfdlsa;k jfdsl k;afjsdl; ja",
     license_url: "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
     doi: "10.53962/0001",
@@ -30,6 +39,7 @@ const main = () => {
   try {
     valid = libxml.validateAgainstSchemas()
     console.log(libxml.schemasLoadedErrors)
+    console.log(libxml.validationSchemaErrors)
     // valid = await validateXML(xml, join(__dirname, "schemas", "crossref5.3.1.xsd"))
   } catch (e) {
     valid = e
