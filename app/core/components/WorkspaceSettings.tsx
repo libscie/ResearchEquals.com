@@ -302,7 +302,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
                                 }
                               )
                             }}
-                            aria-label="Delete file"
+                            aria-label="Delete affiliation"
                           />
                         </p>
                       </div>
@@ -311,45 +311,54 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
                 })}
               </>
             ) : (
-              <Autocomplete
-                className="h-full"
-                // openOnFocus={true}
-                defaultActiveItemId="0"
-                getSources={({ query }) => [
-                  {
-                    sourceId: "products",
-                    async onSelect(params) {
-                      await toast.promise(
-                        addAffiliationMutation({
-                          workspaceId: workspace.id,
-                          rorId: params.item.id,
-                          orgName: params.item.name,
-                        }),
+              <div className="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6">
+                <div className="flex items-center px-6 py-4 md:mx-auto md:max-w-3xl lg:mx-0 lg:max-w-none xl:px-0">
+                  <div className="flex-grow"></div>
+                  <div className="w-full">
+                    <label htmlFor="search" className="sr-only">
+                      Search affiliation
+                    </label>
+                    <Autocomplete
+                      className="aa h-full"
+                      defaultActiveItemId="0"
+                      getSources={({ query }) => [
                         {
-                          loading: "Adding affiliation...",
-                          success: (res) => {
-                            setAffiliations(res as Affiliation[])
-                            return "Affiliation added!"
+                          sourceId: "products",
+                          async onSelect(params) {
+                            await toast.promise(
+                              addAffiliationMutation({
+                                workspaceId: workspace.id,
+                                rorId: params.item.id,
+                                orgName: params.item.name,
+                              }),
+                              {
+                                loading: "Adding affiliation...",
+                                success: (res) => {
+                                  setAffiliations(res as Affiliation[])
+                                  return "Affiliation added!"
+                                },
+                                error: "Failed to add affiliation...",
+                              }
+                            )
                           },
-                          error: "Failed to add affiliation...",
-                        }
-                      )
-                    },
-                    async getItems(query) {
-                      const results = await axios.get(
-                        `https://api.ror.org/organizations?query.advanced=${query.query}`
-                      )
+                          async getItems(query) {
+                            const results = await axios.get(
+                              `https://api.ror.org/organizations?query.advanced=${query.query}`
+                            )
 
-                      return results.data.items.slice(0, 5)
-                    },
-                    templates: {
-                      item({ item, index }) {
-                        return <SearchResultAffiliation item={item} />
-                      },
-                    },
-                  },
-                ]}
-              />
+                            return results.data.items.slice(0, 5)
+                          },
+                          templates: {
+                            item({ item, index }) {
+                              return <SearchResultAffiliation item={item} />
+                            },
+                          },
+                        },
+                      ]}
+                    />
+                  </div>
+                </div>
+              </div>
             )}
           </div>
         </div>
