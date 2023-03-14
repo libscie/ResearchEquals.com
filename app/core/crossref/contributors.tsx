@@ -140,7 +140,7 @@ const dbAuthorToCrossrefAuthor = (author: Author): PersonName["children"] => {
                 children: [
                   {
                     type: "text",
-                    value: `https://ror.org/${affiliation.organization.rorId}`,
+                    value: affiliation.organization.rorId,
                   },
                 ],
               } as InstitutionId
