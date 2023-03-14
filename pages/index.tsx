@@ -108,6 +108,7 @@ Home.getLayout = (page) => (
           property="og:image:alt"
           content="Screenshot of the homepage of ResearchEquals.com, including the description and a sign up button for release updates."
         />
+        <link rel="me" href="https://akademienl.social/@researchequals" />
       </>
     }
   >
