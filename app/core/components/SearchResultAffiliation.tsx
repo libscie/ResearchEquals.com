@@ -6,9 +6,9 @@ const SearchResultAffiliation = ({ item }) => {
     <>
       <div className="mx-1 my-2 flex">
         <div className="mr-2">
-          <Building className="inline-block h-full align-middle " size={32} />
+          <Building className="inline-block h-full align-middle " size={24} />
         </div>
-        <div className="text-base font-normal leading-4 text-gray-900 dark:text-gray-200">
+        <div className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200">
           {he.decode(item.name)}
         </div>
       </div>
