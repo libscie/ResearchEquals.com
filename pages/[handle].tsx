@@ -7,7 +7,7 @@ import Layout from "app/core/layouts/Layout"
 import db from "db"
 import { Suspense } from "react"
 import moment from "moment"
-import { Calendar, UserFollow, Link as Link32 } from "@carbon/icons-react"
+import { Calendar, UserFollow, Building, Link as Link32 } from "@carbon/icons-react"
 
 import Navbar from "app/core/components/Navbar"
 import getHandleFeed from "app/workspaces/queries/getHandleFeed"
@@ -37,6 +37,11 @@ export const getServerSideProps = gSSP(async ({ params }) => {
       authorships: {
         include: {
           module: true,
+        },
+      },
+      affiliations: {
+        include: {
+          organization: true,
         },
       },
     },
@@ -157,6 +162,34 @@ const Handle = ({ workspace, expire, signature }) => {
                 </p>
               ) : (
                 <></>
+              )}
+              {workspace.affiliations.length > 0 && (
+                <>
+                  {workspace.affiliations.map((affiliation) => {
+                    return (
+                      <p
+                        className="my-2 flex text-sm font-normal leading-4 text-gray-500 dark:text-gray-200"
+                        key={affiliation.organization.rorId}
+                      >
+                        <p>
+                          <span className="inline-block h-full align-middle"> </span>
+                          <Building
+                            size={32}
+                            className="mr-1 inline-block h-4 w-4 align-middle text-gray-700 dark:text-gray-400"
+                            aria-hidden="true"
+                          />
+                          <Link
+                            href={affiliation.organization.rorId}
+                            target="_blank"
+                            className="text-sm font-normal leading-4 text-gray-500 underline dark:text-gray-200"
+                          >
+                            {affiliation.organization.name}
+                          </Link>
+                        </p>
+                      </p>
+                    )
+                  })}
+                </>
               )}
               {workspace.url ? (
                 <p className="my-2 flex text-sm font-normal leading-4 text-gray-500 dark:text-gray-200">
