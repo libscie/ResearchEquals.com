@@ -3,37 +3,13 @@ import db from "db"
 import { isURI } from "../../core/crossref/ai_program"
 import submitToCrossRef from "app/core/utils/submitToCrossRef"
 import moduleXml from "../../core/utils/moduleXml"
+import { getToBePublishedModule } from "./publishModule"
 
 export default resolver.pipe(resolver.authorize(), async ({ id }: { id: number }) => {
   const datetime = Date.now()
 
   // TODO: Can be simplified along with stripe_webhook.ts and publishModule.ts
-  const currentModule = await db.module.findFirst({
-    where: {
-      id,
-    },
-    include: {
-      license: true,
-      type: true,
-      authors: {
-        include: {
-          workspace: true,
-        },
-      },
-      references: {
-        include: {
-          authors: {
-            include: {
-              workspace: true,
-            },
-            orderBy: {
-              authorshipRank: "asc",
-            },
-          },
-        },
-      },
-    },
-  })
+  const currentModule = await getToBePublishedModule(id)
 
   if (!currentModule!.main) throw Error("Main file is empty")
 

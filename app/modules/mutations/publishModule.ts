@@ -3,11 +3,54 @@ import db from "db"
 import moment from "moment"
 import algoliasearch from "algoliasearch"
 import { isURI } from "../../core/crossref/ai_program"
-import submitToCrossRef from "app/core/utils/submitToCrossRef"
+import submitToCrossRef from "../../core/utils/submitToCrossRef"
 import moduleXml from "../../core/utils/moduleXml"
+import { PromiseReturnType } from "blitz"
 
 const client = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_ADMIN_KEY!)
 const index = client.initIndex(`${process.env.ALGOLIA_PREFIX}_modules`)
+
+export const getToBePublishedModule = async (id: number) =>
+  await db.module.findFirst({
+    where: {
+      id,
+    },
+    include: {
+      license: true,
+      type: true,
+      authors: {
+        include: {
+          workspace: {
+            include: {
+              affiliations: {
+                include: {
+                  organization: true,
+                },
+              },
+            },
+          },
+        },
+      },
+      references: {
+        include: {
+          authors: {
+            include: {
+              workspace: true,
+            },
+            orderBy: {
+              authorshipRank: "asc",
+            },
+          },
+        },
+      },
+    },
+  })
+
+/**
+ * Describes the shape of the data you get back from the getPublishModule function
+ * Useful for type checking other functions, such as `moduleXml`
+ */
+export type ToBePublishedModule = PromiseReturnType<typeof getToBePublishedModule>
 
 export default resolver.pipe(
   resolver.authorize(),
@@ -15,33 +58,7 @@ export default resolver.pipe(
     const datetime = Date.now()
 
     // TODO: Can be simplified along with stripe_webhook.ts
-    const currentModule = await db.module.findFirst({
-      where: {
-        id,
-      },
-      include: {
-        license: true,
-        type: true,
-        authors: {
-          include: {
-            workspace: true,
-          },
-        },
-        references: {
-          include: {
-            authors: {
-              include: {
-                workspace: true,
-              },
-              orderBy: {
-                authorshipRank: "asc",
-              },
-            },
-          },
-        },
-      },
-    })
-
+    const currentModule = await getToBePublishedModule(id)
     if (!currentModule!.main) throw Error("Main file is empty")
 
     const licenseUrl = currentModule?.license?.url ?? ""

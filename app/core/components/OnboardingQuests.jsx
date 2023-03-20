@@ -4,6 +4,7 @@ import { Widget } from "@uploadcare/react-widget"
 import { useRef, useState } from "react"
 import { Formik, Form } from "formik"
 import {
+  Building,
   Email,
   UserAvatar,
   User,
@@ -50,6 +51,7 @@ const OnboardingQuests = ({ data, expire, signature, refetch }) => {
       <OnboardingProfile data={data} />
       <OnboardingDraft data={data.workspace} refetch={refetch} />
       <OnboardingCollection data={data} refetch={refetch} />
+      <OnboardingAffiliation data={data} />
       <OnboardingDiscord data={data.workspace} refetch={refetch} />
     </>
   )
@@ -277,6 +279,54 @@ const OnboardingProfile = ({ data }) => {
             </div>
           </div>
           <div className="block text-right text-pink-700 dark:text-pink-200">
+            <button
+              className="mt-3 whitespace-nowrap text-sm font-medium underline hover:text-blue-600 md:mt-0 md:ml-6"
+              onClick={() => {
+                setSettingsModal(!settingsModal)
+              }}
+            >
+              <>
+                Add information <span aria-hidden="true">&rarr;</span>
+              </>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+    </>
+  )
+}
+
+const OnboardingAffiliation = ({ data }) => {
+  // State management
+  const [settingsModal, setSettingsModal] = useRecoilState(settingsModalAtom)
+
+  return (
+    <>
+      {data.workspace.affiliations.length === 0 ? (
+        <div
+          key="onboarding profile-onboarding-quest"
+          className="onboarding my-2 flex w-full flex-col rounded-r border-l-4 border-teal-400 bg-teal-50 p-4 dark:border-teal-200 dark:bg-teal-900 lg:my-0"
+        >
+          <div className="flex flex-grow">
+            <div className="">
+              <Building
+                size={32}
+                className="h-5 w-5 text-teal-800 dark:text-teal-200"
+                aria-hidden="true"
+              />
+            </div>
+            <div className="ml-3 flex-1 text-teal-800 dark:text-teal-200 md:flex">
+              <p className="mr-2 text-sm">
+                <span className=" font-bold">Add affiliation</span>{" "}
+                <span>
+                  Set your affiliation and make sure it gets added to your module metadata.
+                </span>
+              </p>
+            </div>
+          </div>
+          <div className="block text-right text-teal-700 dark:text-teal-200">
             <button
               className="mt-3 whitespace-nowrap text-sm font-medium underline hover:text-blue-600 md:mt-0 md:ml-6"
               onClick={() => {

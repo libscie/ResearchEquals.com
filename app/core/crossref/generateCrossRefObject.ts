@@ -9,6 +9,7 @@ import { URI } from "./ai_program"
 export interface CrossRef extends Root {
   children: (Instruction | DOIBatch)[]
 }
+
 export interface DOIBatch extends Element {
   name: "doi_batch"
   attributes: {
@@ -20,6 +21,7 @@ export interface DOIBatch extends Element {
   }
   children: (Head | Body | BodyJournal)[]
 }
+
 const generateCrossRef = ({
   schema,
   type,

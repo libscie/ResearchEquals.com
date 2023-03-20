@@ -5,7 +5,7 @@ import changePronouns from "app/workspaces/mutations/changePronouns"
 import changeUrl from "app/workspaces/mutations/changeUrl"
 import { useFormik } from "formik"
 import { z } from "zod"
-import { Checkmark, Close } from "@carbon/icons-react"
+import { Checkmark, Close, TrashCan } from "@carbon/icons-react"
 import toast from "react-hot-toast"
 import { useRecoilState, useResetRecoilState } from "recoil"
 
@@ -18,15 +18,23 @@ import {
   workspacePronounsAtom,
   workspaceUrlAtom,
 } from "../utils/Atoms"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { validateZodSchema } from "blitz"
+import Autocomplete from "./Autocomplete"
+import axios from "axios"
+import SearchResultAffiliation from "./SearchResultAffiliation"
+import addAffiliation from "../../workspaces/mutations/addAffiliation"
+import { Affiliation } from "@prisma/client"
+import deleteAffiliation from "../../workspaces/mutations/deleteAffiliation"
 
 const WorkspaceSettings = ({ workspace, setIsOpen }) => {
   const [changeFirstNameMutation] = useMutation(changeFirstName)
   const [changeLastNameMutation] = useMutation(changeLastName)
+  const [addAffiliationMutation] = useMutation(addAffiliation)
   const [changeBioMutation] = useMutation(changeBio)
   const [changePronounsMutation] = useMutation(changePronouns)
   const [changeUrlMutation] = useMutation(changeUrl)
+  const [deleteAffiliationMutation] = useMutation(deleteAffiliation)
 
   // State management
   const [workspaceFirstName, setWorkspaceFirstName] = useRecoilState(workspaceFirstNameAtom)
@@ -39,6 +47,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
   const resetPronouns = useResetRecoilState(workspacePronounsAtom)
   const [workspaceUrl, setWorkspaceUrl] = useRecoilState(workspaceUrlAtom)
   const resetUrl = useResetRecoilState(workspaceUrlAtom)
+  const [affiliations, setAffiliations] = useState([] as Affiliation[])
 
   useEffect(() => {
     if (workspaceFirstName === "") {
@@ -55,6 +64,9 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
     }
     if (workspaceUrl === "") {
       setWorkspaceUrl(workspace.url)
+    }
+    if (JSON.stringify(affiliations) === "[]") {
+      setAffiliations(workspace.affiliations)
     }
   }, [])
 
@@ -106,7 +118,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               {
                 loading: "Saving...",
                 success: "Updated last name",
-                error: "Hmm that didn't work...",
+                error: "Hmm that Fdidn't work...",
               }
             )
           } catch (error) {
@@ -247,6 +259,102 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
                 setWorkspaceLastName(data.target.value)
               }}
             />
+          </div>
+        </div>
+        <div className="my-4 px-2 text-gray-900 dark:text-gray-200">
+          <label htmlFor="affiliation" className="my-1 block text-sm font-medium">
+            Affiliation{" "}
+            {formik.touched.affiliation && formik.errors.affiliation
+              ? " - " + formik.errors.affiliation
+              : null}
+          </label>
+          <div className="mt-1 w-11/12 text-sm  font-normal text-gray-900 dark:text-gray-200">
+            {JSON.stringify(affiliations) != "[]" ? (
+              <>
+                {affiliations.map((affiliation) => {
+                  if (!!affiliation["organization"]) {
+                    return (
+                      <div
+                        className="my-1 flex px-2 text-gray-900 dark:text-gray-200"
+                        key={affiliation["id"]}
+                      >
+                        <p className="my-1 block flex-grow text-sm font-medium">
+                          {affiliation["organization"].name}
+                        </p>
+                        <p className="flex">
+                          <TrashCan
+                            size={24}
+                            className="inline-block h-6 w-6 fill-current align-middle text-red-500"
+                            onClick={async () => {
+                              await toast.promise(
+                                deleteAffiliationMutation({
+                                  affiliationId: affiliation["id"],
+                                  workspaceId: workspace.id,
+                                }),
+                                {
+                                  loading: "Deleting affiliation...",
+                                  success: (res) => {
+                                    setAffiliations(res as Affiliation[])
+
+                                    return "Affiliation deleted!"
+                                  },
+                                  error: "Failed to delete affiliation...",
+                                }
+                              )
+                            }}
+                            aria-label="Delete affiliation"
+                          />
+                        </p>
+                      </div>
+                    )
+                  }
+                })}
+              </>
+            ) : (
+              <div className="w-full">
+                <label htmlFor="search" className="sr-only">
+                  Search affiliation
+                </label>
+                <Autocomplete
+                  className="aa h-full"
+                  defaultActiveItemId="0"
+                  getSources={({ query }) => [
+                    {
+                      sourceId: "products",
+                      async onSelect(params) {
+                        await toast.promise(
+                          addAffiliationMutation({
+                            workspaceId: workspace.id,
+                            rorId: params.item.id,
+                            orgName: params.item.name,
+                          }),
+                          {
+                            loading: "Adding affiliation...",
+                            success: (res) => {
+                              setAffiliations(res as Affiliation[])
+                              return "Affiliation added!"
+                            },
+                            error: "Failed to add affiliation...",
+                          }
+                        )
+                      },
+                      async getItems(query) {
+                        const results = await axios.get(
+                          `https://api.ror.org/organizations?query.advanced=${query.query}`
+                        )
+
+                        return results.data.items.slice(0, 5)
+                      },
+                      templates: {
+                        item({ item, index }) {
+                          return <SearchResultAffiliation item={item} />
+                        },
+                      },
+                    },
+                  ]}
+                />
+              </div>
+            )}
           </div>
         </div>
         <div className="my-4 px-2 text-gray-900 dark:text-gray-200">

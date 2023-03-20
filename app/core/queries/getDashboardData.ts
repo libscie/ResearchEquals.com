@@ -27,6 +27,11 @@ export default async function getSignature({ session, changeDays }) {
       following: true,
       authorships: true,
       editorships: true,
+      affiliations: {
+        include: {
+          organization: true,
+        },
+      },
     },
   })
 
