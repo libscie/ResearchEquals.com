@@ -115,6 +115,61 @@ const BrowseContent = ({ graphData }) => {
   )
 }
 
+const BrowseCollections = ({ graphData }) => {
+  return (
+    <div className="mx-4 py-16 text-gray-900 dark:text-gray-200">
+      <h2 className="text-center text-3xl font-extrabold ">Public Collections</h2>
+      <div className="mx-auto text-center">
+        <ResponsiveContainer width="100%" height={250}>
+          <AreaChart
+            width={1280}
+            height={250}
+            data={graphData.dataCollections}
+            margin={{ top: 10, right: 0, left: 0, bottom: 0 }}
+          >
+            <defs>
+              <linearGradient id="colorCollections" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#0284c7" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#0284c7" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <XAxis
+              dataKey="time"
+              domain={["dataMin", "dataMax"]}
+              name="Time"
+              tickFormatter={(unixTime) => moment(unixTime).format("YYYY-MM-DD")}
+              type="number"
+              tickLine={false}
+              axisLine={false}
+              style={{
+                fontSize: "0.8rem",
+              }}
+            />
+            <YAxis
+              dataKey="collections"
+              name="Collections"
+              tickLine={false}
+              axisLine={false}
+              style={{
+                fontSize: "0.8rem",
+              }}
+              orientation="right"
+            />
+            <Tooltip content={<CustomTooltip />} />
+            <Area
+              type="monotone"
+              dataKey="collections"
+              stroke="#0284c7"
+              fillOpacity={1}
+              fill="url(#colorCollections)"
+            />
+          </AreaChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  )
+}
+
 const BrowseWorkspaces = () => {
   const [workspacePages, { isFetching, isFetchingNextPage, fetchNextPage, hasNextPage }] =
     useInfiniteQuery(getBrowseWorkspaceData, (page = { take: 20, skip: 0 }) => page, {
@@ -257,6 +312,7 @@ const Stats = () => {
       <div className="mx-auto max-w-7xl grid-cols-2 xl:grid">
         <BrowseContent graphData={graphData} />
         <BrowseWorkspaces />
+        <BrowseCollections graphData={graphData} />
         <StatsExtensions graphData={graphData} />
       </div>
     </>
