@@ -71,5 +71,33 @@ export default async function getSignature() {
     })
   })
 
-  return { data, mainExtensions, supportingExtensions }
+  const collections = await db.collection.findMany({
+    where: {
+      public: true,
+    },
+    orderBy: [
+      {
+        createdAt: "asc",
+      },
+    ],
+  })
+
+  let dataCollections = [] as any
+
+  const datesCollections = collections.map((collection) => {
+    return collection.createdAt?.toISOString().substr(0, 10)
+  })
+  const uniqDatesCollections = datesCollections.filter(onlyUnique)
+  uniqDatesCollections.forEach((date, index) => {
+    const epochTime = new Date(date!)
+    dataCollections.push({
+      time: epochTime.getTime(),
+      collections:
+        index !== 0
+          ? itemCounter(dates, date) + dataCollections[index - 1].collections
+          : itemCounter(dates, date),
+    })
+  })
+
+  return { data, mainExtensions, supportingExtensions, dataCollections }
 }
