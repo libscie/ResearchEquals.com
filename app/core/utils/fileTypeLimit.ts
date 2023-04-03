@@ -55,6 +55,7 @@ export const fileTypeLimit = (fileInfo: FileInfo) => {
     "ifc",
     "ifcxml",
     "ifczip",
+    "ino",
     "ipynb",
     "j2k",
     "jp2",
