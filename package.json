@@ -99,7 +99,7 @@
     "@testing-library/react": "14.0.0",
     "@testing-library/react-hooks": "8.0.1",
     "@types/node": "18.14.4",
-    "@types/react": "18.0.28",
+    "@types/react": "18.0.33",
     "@types/unist": "2.0.6",
     "@types/xast": "1.0.2",
     "@typescript-eslint/eslint-plugin": "5.50.0",
