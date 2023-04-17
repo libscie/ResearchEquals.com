@@ -81,7 +81,7 @@
     "react-use": "17.4.0",
     "react-xarrows": "2.0.2",
     "recharts": "2.4.3",
-    "recoil": "0.7.6",
+    "recoil": "0.7.7",
     "recoil-persist": "4.2.0",
     "rehype-katex": "6.0.2",
     "remark-gfm": "3.0.1",
