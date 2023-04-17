@@ -43,7 +43,7 @@
     "@tailwindcss/line-clamp": "0.4.2",
     "@uploadcare/react-widget": "2.4.2",
     "algoliasearch": "4.14.3",
-    "autoprefixer": "10.4.13",
+    "autoprefixer": "10.4.14",
     "axios": "1.3.4",
     "blitz": "2.0.0-beta.23",
     "concurrently": "7.6.0",
