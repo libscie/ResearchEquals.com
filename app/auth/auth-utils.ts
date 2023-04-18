@@ -1,4 +1,4 @@
-import { SecurePassword } from "@blitzjs/auth"
+import { SecurePassword } from "@blitzjs/auth/secure-password"
 import { AuthenticationError } from "blitz"
 import db from "db"
 
