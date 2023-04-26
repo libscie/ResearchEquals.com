@@ -32,6 +32,7 @@ import { NoRegular } from "../app/core/components/home/NoRegular"
 import Container from "../app/core/components/home/Container"
 import InstitutionalSupportingMembers from "../app/core/components/InstitutionalSupportingMembers"
 import SupportingMemberPricing from "../app/core/components/SupportingMemberPricing"
+import getSupporting from "app/users/queries/getSupporting"
 
 const SupportingMemberPage: BlitzPage = () => {
   const prefersDarkMode = useMediaPredicate("(prefers-color-scheme: dark)")
@@ -42,6 +43,12 @@ const SupportingMemberPage: BlitzPage = () => {
   const router = useRouter()
   const [drafts, { refetch }] = useQuery(getDrafts, { session })
   const [invitations] = useQuery(getInvitedModules, { session })
+  const [supporters] = useQuery(getSupporting, null)
+
+  const stats = [
+    { name: "Active supporting members", value: supporters.length },
+    // { name: 'Sponsored memberships available', value: 3 },
+  ]
 
   return (
     <>
@@ -63,15 +70,23 @@ const SupportingMemberPage: BlitzPage = () => {
             <p className="max-w-[800px] text-base text-slate-600 dark:text-slate-300 md:text-xl">
               As a supporting member, we give you power we could easily keep to ourselves.
             </p>
-            {/* <Link href="/signup"> */}
-            {/* <Button color="primary" className="mt-4 w-auto"> */}
-
-            {/* </Button> */}
-            {/* </Link> */}
           </div>
+          <div className="bg-gray-900"></div>
         </section>
-        <NoRegular />
         {/* <InstitutionalSupportingMembers /> */}
+        <NoRegular />
+        <div className="mx-auto grid max-w-2xl  grid-cols-1 md:grid-cols-2">
+          {stats.map((stat) => (
+            <div key={stat.name} className="px-4 py-6 sm:px-6 lg:px-8">
+              <p className="text-sm font-medium leading-6 text-gray-400">{stat.name}</p>
+              <p className="mt-2 flex items-baseline gap-x-2">
+                <span className="text-4xl font-semibold tracking-tight text-slate-800">
+                  {stat.value}
+                </span>
+              </p>
+            </div>
+          ))}
+        </div>
         <SupportingMemberPricing />
         <section className="bg-indigo-700 text-white ">
           <Container className="flex flex-col items-center gap-10 py-20 md:py-24 lg:flex-row lg:justify-between lg:gap-6">
