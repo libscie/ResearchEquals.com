@@ -88,7 +88,7 @@
     "remark-math": "5.1.1",
     "secure-password": "4.0.0",
     "stripe": "12.1.1",
-    "tailwindcss": "3.3.1",
+    "tailwindcss": "3.3.2",
     "typescript": "~5.0",
     "xast-util-to-xml": "3.0.2",
     "xml-js": "1.6.11",
