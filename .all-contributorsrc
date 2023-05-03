@@ -315,6 +315,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "JeffSpies",
+      "name": "Jeffrey Spies",
+      "avatar_url": "https://avatars.githubusercontent.com/u/512000?v=4",
+      "profile": "http://jeffspies.com",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
