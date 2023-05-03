@@ -211,7 +211,7 @@ export const FooterApollo = () => {
       </Container>
       <Container className="flex items-center justify-center gap-1 pt-10 pb-20 text-sm text-slate-400 lg:justify-start ">
         <span>{date.getFullYear()}</span>
-        <Link href="https://creativecommonspublicdomain/zero/1.0/legalcode" target="_blank">
+        <Link href="https://creativecommons.org/publicdomain/zero/1.0/legalcode" target="_blank">
           <svg
             width="14"
             height="14"
