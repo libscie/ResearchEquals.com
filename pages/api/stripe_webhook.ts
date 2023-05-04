@@ -169,6 +169,11 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
         },
       })
       await supportingSignup(event.data.object.customer_email)
+      // If it's a sponsored supporter, make sure to cancel the subscription immediately
+      // Sponsored memberships last only for a year
+      if (event.data.object.lines.data[0].metadata.subType === "sponsored") {
+        await stripe.subscriptions.del(event.data.object.subscription)
+      }
 
     case "customer.subscription.updated":
       if (event.data.object.cancel_at_period_end) {
