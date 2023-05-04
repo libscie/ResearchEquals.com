@@ -123,7 +123,7 @@ const Collection: BlitzPage = () => {
           <>
             <div className="w-full">
               <div className="flex">
-                <div className="top-[50%] mx-auto mx-4 w-[25%] p-4 ">
+                <div className="top-[50%] mx-4 mx-auto w-[25%] p-4 ">
                   {collection!.type.type !== "INDIVIDUAL" && <ViewIcon collection={collection} />}
                 </div>
                 <div className="flex-grow">
@@ -268,7 +268,7 @@ const SocialActivity = ({ collection, refetchFn, isFollowing }) => {
       {isFollowing ? (
         <button
           type="button"
-          className="my-2 flex w-full rounded-md bg-indigo-50 py-2 px-4 align-middle text-sm font-medium text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-indigo-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+          className="my-2 flex w-full rounded-md bg-indigo-50 px-4 py-2 align-middle text-sm font-medium text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-indigo-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
           onClick={async () => {
             await toast.promise(
               followCollectionMutation({ followedId: collection!.id, follow: false }),
@@ -297,7 +297,7 @@ const SocialActivity = ({ collection, refetchFn, isFollowing }) => {
       ) : (
         <button
           type="button"
-          className="my-2 flex w-full rounded-md bg-indigo-50 py-2 px-4 align-middle text-sm font-medium text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-indigo-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+          className="my-2 flex w-full rounded-md bg-indigo-50 px-4 py-2 align-middle text-sm font-medium text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-indigo-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
           onClick={async () => {
             await toast.promise(
               followCollectionMutation({ followedId: collection!.id, follow: true }),
@@ -369,7 +369,7 @@ const PendingBadge = ({ submissions }) => {
 
 const AdminBanner = ({ suffix }) => {
   return (
-    <div className="z-5 sticky top-0 flex  w-full bg-fuchsia-50 py-4 px-2 text-center dark:bg-fuchsia-800">
+    <div className="z-5 sticky top-0 flex  w-full bg-fuchsia-50 px-2 py-4 text-center dark:bg-fuchsia-800">
       <div className="mx-auto flex">
         <div className="inline-block align-middle">
           <UserAdmin
@@ -445,7 +445,7 @@ const AddSubmmision = ({ collection, currentWorkspace, refetchFn }) => {
     )
   }
   return (
-    <div className="mx-4 my-8 xl:mr-4 xl:ml-0">
+    <div className="mx-4 my-8 xl:ml-0 xl:mr-4">
       <h3 className="my-4 text-xl">Become a Contributor</h3>
       <p className="text-sm">Find your DOI below and submit.</p>
 
@@ -538,7 +538,7 @@ const AddSubmmision = ({ collection, currentWorkspace, refetchFn }) => {
             body={
               <div>
                 <span>Upon confirmation, you will submit the following work:</span>
-                <span className="my-2 bg-gray-50 p-4 line-clamp-3 dark:bg-gray-800">
+                <span className="my-2 line-clamp-3 bg-gray-50 p-4 dark:bg-gray-800">
                   {selectedWorkType === "module" && (
                     <Link
                       href={`https://doi.org/${selectedWorkParams?.item?.doi}`}
@@ -561,8 +561,8 @@ const AddSubmmision = ({ collection, currentWorkspace, refetchFn }) => {
             isOpen={isConfirmationOpen}
             setIsOpen={setIsConfirmationOpen}
             onSubmit={async () => {
-              selectedWorkType === "module" && onConfirm(selectedWorkParams)
-              selectedWorkType === "doi" && onDoiSubmitConfirm(selectedDoiWorkData)
+              selectedWorkType === "module" && void onConfirm(selectedWorkParams)
+              selectedWorkType === "doi" && void onDoiSubmitConfirm(selectedDoiWorkData)
             }}
           />
         </>

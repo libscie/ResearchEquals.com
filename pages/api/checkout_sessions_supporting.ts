@@ -1,6 +1,6 @@
 import { api } from "app/blitz-server"
 import { NextApiRequest, NextApiResponse } from "next"
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, { apiVersion: "2020-03-02" })
 
 const CreateSessionSupporting = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!req.query.email || !req.query.price_id) {

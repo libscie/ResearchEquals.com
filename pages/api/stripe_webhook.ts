@@ -3,7 +3,7 @@ import { acceptSubmission } from "app/postmark"
 import { api } from "app/blitz-server"
 import { NextApiRequest, NextApiResponse } from "next"
 import { Ctx } from "blitz"
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, { apiVersion: "2020-03-02" })
 import db, { Prisma } from "db"
 import moment from "moment"
 import algoliasearch from "algoliasearch"
