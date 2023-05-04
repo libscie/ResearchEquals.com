@@ -1,31 +1,17 @@
-import { gSP } from "app/blitz-server"
 import { useSession } from "@blitzjs/auth"
 import { useRouter } from "next/router"
 import { useQuery } from "@blitzjs/rpc"
 import { BlitzPage } from "@blitzjs/next"
-import { InferGetStaticPropsType } from "next"
 import Layout from "app/core/layouts/Layout"
 import { useMediaPredicate } from "react-media-hook"
-
-import db from "db"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import { useCurrentWorkspace } from "app/core/hooks/useCurrentWorkspace"
 import getDrafts from "app/core/queries/getDrafts"
 import getInvitedModules from "app/workspaces/queries/getInvitedModules"
-
 import React from "react"
 
-import { ApproachSection } from "app/core/components/home/ApproachSection"
-import { PublishYourJourneySection } from "app/core/components/home/PublishYourJourneySection"
-import { OpenAccessSection } from "app/core/components/home/OpenAccessSection"
-import { CollectionsSection } from "app/core/components/home/CollectionsSection"
-import { TestimonialsSection } from "app/core/components/home/TestimonialsSection"
-import { JoinCommunitySection } from "app/core/components/home/JoinCommunitySection"
-import { Hero } from "app/core/components/home/Hero"
-import { ModuleDiagram } from "app/core/components/home/ModuleDiagram"
 import Navbar from "app/core/components/Navbar"
 import LayoutLoader from "app/core/components/LayoutLoader"
-import { SupportingMemberSection } from "../app/core/components/home/SupportingMemberSection"
 import Link from "next/link"
 import Button from "../app/core/components/home/Button"
 import { NoRegular } from "../app/core/components/home/NoRegular"
@@ -35,8 +21,6 @@ import SupportingMemberPricing from "../app/core/components/SupportingMemberPric
 import getSupporting from "app/users/queries/getSupporting"
 
 const SupportingMemberPage: BlitzPage = () => {
-  const prefersDarkMode = useMediaPredicate("(prefers-color-scheme: dark)")
-  const biggerWindow = useMediaPredicate("(min-width: 640px)")
   const currentUser = useCurrentUser()
   const session = useSession()
   const currentWorkspace = useCurrentWorkspace()
@@ -47,7 +31,7 @@ const SupportingMemberPage: BlitzPage = () => {
 
   const stats = [
     { name: "Active supporting members", value: supporters.length },
-    // { name: 'Sponsored memberships available', value: 3 },
+    { name: "Sponsored memberships", value: "Coming soon..." },
   ]
 
   return (
@@ -73,16 +57,18 @@ const SupportingMemberPage: BlitzPage = () => {
           </div>
           <div className="bg-gray-900"></div>
         </section>
-        {/* <InstitutionalSupportingMembers /> */}
+        <InstitutionalSupportingMembers />
         <NoRegular />
-        <div className="mx-auto grid max-w-2xl  grid-cols-1 md:grid-cols-2">
+        <div className="mx-auto grid max-w-6xl  grid-cols-1 px-4 sm:px-0 md:grid-cols-2">
           {stats.map((stat) => (
             <div key={stat.name} className="px-4 py-6 sm:px-6 lg:px-8">
-              <p className="text-sm font-medium leading-6 text-gray-400">{stat.name}</p>
-              <p className="mt-2 flex items-baseline gap-x-2">
-                <span className="text-4xl font-semibold tracking-tight text-slate-800">
+              <p className="my-4 flex items-baseline">
+                <span className="text-6xl font-semibold tracking-tight text-slate-800 dark:text-white">
                   {stat.value}
                 </span>
+              </p>
+              <p className="text-base font-bold leading-6 text-gray-900 dark:text-white">
+                {stat.name}
               </p>
             </div>
           ))}
