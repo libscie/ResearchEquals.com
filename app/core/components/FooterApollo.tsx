@@ -97,7 +97,7 @@ export const FooterApollo = () => {
             </a>
           </div>
         </div>
-        <div className="text-link-sm flex max-w-[680px] flex-1 flex-col gap-10 py-10 px-5 text-slate-400 lg:flex-row lg:justify-between lg:gap-8 lg:px-16">
+        <div className="text-link-sm flex max-w-[680px] flex-1 flex-col gap-10 px-5 py-10 text-slate-400 lg:flex-row lg:justify-between lg:gap-8 lg:px-16">
           <div className="flex flex-col gap-4">
             <h5 className="text-sm font-bold text-white">Links</h5>
             <Link href="/terms">Terms</Link>
@@ -209,7 +209,7 @@ export const FooterApollo = () => {
           </div>
         </div>
       </Container>
-      <Container className="flex items-center justify-center gap-1 pt-10 pb-20 text-sm text-slate-400 lg:justify-start ">
+      <Container className="flex items-center justify-center gap-1 pb-20 pt-10 text-sm text-slate-400 lg:justify-start ">
         <span>{date.getFullYear()}</span>
         <Link href="https://creativecommons.org/publicdomain/zero/1.0/legalcode" target="_blank">
           <svg
