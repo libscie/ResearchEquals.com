@@ -11,6 +11,7 @@ const CreateSessionSupporting = async (req: NextApiRequest, res: NextApiResponse
         const coupon = await stripe.coupons.create({
           duration: "forever",
           percent_off: 100,
+          max_redemptions: 1,
         })
 
         // Create Checkout Sessions from body params.

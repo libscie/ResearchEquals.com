@@ -594,7 +594,6 @@ const OnboardingSupporting = ({ data }) => {
                     Subscribe<span aria-hidden="true">&rarr;</span>
                   </span>
                 }
-                sponsored={true}
               />
             </div>
           </div>

@@ -12,7 +12,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
 
-export default function SignupModal({ button, sponsored = false }) {
+export default function SupportingMemberSignupModal({ button, sponsored = false }) {
   let currentUser = useCurrentUser()
   let [isOpen, setIsOpen] = useState(false)
   const [waiver, setWaiver] = useState(false)
@@ -74,7 +74,8 @@ export default function SignupModal({ button, sponsored = false }) {
                   <div className="mt-2">
                     <p className="text-sm">
                       As an individual supporting member, you will get personal invitations to our
-                      quarterly General Assemblies, the governance body for ResearchEquals.
+                      quarterly General Assemblies, the governance body for ResearchEquals.{" "}
+                      {sponsored && "You are eligible for a sponsored membership for one year."}
                     </p>
                     <select
                       onChange={(data) => {
