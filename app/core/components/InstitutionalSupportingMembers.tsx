@@ -11,24 +11,24 @@ const InstitutionalSupportingMembers = () => {
         <h3 className="my-8 text-center text-lg font-bold text-slate-800 dark:text-white md:text-2xl">
           Institutional supporting members
         </h3>
-        <h4 className="my-2 text-center text-sm text-slate-800 dark:text-white md:text-base">
-          Check back May 9th, 2023
-        </h4>
-        {/* <div className="mx-auto grid max-w-lg grid-cols-1 items-center gap-x-8 gap-y-12 py-8 sm:max-w-xl sm:grid-cols-2 sm:gap-x-10 sm:gap-y-14 lg:mx-0 lg:max-w-none">
-          <Link href="https://libscie.org/p/bb218ba0-8e27-4c89-8c03-d7c073b2fa56/">
-            <Tiu />
-          </Link>
-          <Link href="https://libscie.org/p/07ea9ef1-2a67-4cb3-b034-2f19bc18eae2/">
-            <Image
-              src={KuLeuven}
-              alt="A diagram showing connections among research modules"
-              // layout="responsive"
-              width={136}
-              height={100}
-              className="mx-auto max-h-12"
-            />
-          </Link>
-        </div> */}
+        <div className="mx-auto grid max-w-lg grid-cols-1 gap-x-8 gap-y-12 py-8 sm:flex sm:max-w-xl sm:grid-cols-2 sm:gap-x-10 sm:gap-y-14 lg:mx-0 lg:max-w-none">
+          {/* <span className="mx-auto max-h-12">
+            <Link href="https://libscie.org/p/bb218ba0-8e27-4c89-8c03-d7c073b2fa56/">
+              <Tiu />
+            </Link>
+          </span> */}
+          <span className="mx-auto max-h-12">
+            <Link href="https://libscie.org/p/07ea9ef1-2a67-4cb3-b034-2f19bc18eae2/">
+              <Image
+                src={KuLeuven}
+                alt="A diagram showing connections among research modules"
+                // layout="responsive"
+                width={136}
+                height={100}
+              />
+            </Link>
+          </span>
+        </div>
         <div className="mt-8 flex justify-center">
           <p className="relative rounded-full bg-gray-50 px-4 py-1.5 text-sm leading-6 text-gray-600 ring-1  ring-inset ring-gray-900/5 dark:bg-gray-800 dark:text-white">
             <span className="hidden md:inline">
