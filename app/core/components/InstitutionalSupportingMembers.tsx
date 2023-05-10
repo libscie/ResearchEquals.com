@@ -11,7 +11,7 @@ const InstitutionalSupportingMembers = () => {
         <h3 className="my-8 text-center text-lg font-bold text-slate-800 dark:text-white md:text-2xl">
           Institutional supporting members
         </h3>
-        <div className="mx-auto flex max-w-lg gap-x-8 gap-y-12 py-8 sm:max-w-xl sm:grid-cols-2 sm:gap-x-10 sm:gap-y-14 lg:mx-0 lg:max-w-none">
+        <div className="mx-auto grid max-w-lg grid-cols-1 gap-x-8 gap-y-12 py-8 sm:flex sm:max-w-xl sm:grid-cols-2 sm:gap-x-10 sm:gap-y-14 lg:mx-0 lg:max-w-none">
           {/* <span className="mx-auto max-h-12">
             <Link href="https://libscie.org/p/bb218ba0-8e27-4c89-8c03-d7c073b2fa56/">
               <Tiu />
