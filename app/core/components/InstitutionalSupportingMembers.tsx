@@ -12,11 +12,6 @@ const InstitutionalSupportingMembers = () => {
           Institutional supporting members
         </h3>
         <div className="mx-auto grid max-w-lg grid-cols-1 gap-x-8 gap-y-12 py-8 sm:flex sm:max-w-xl sm:grid-cols-2 sm:gap-x-10 sm:gap-y-14 lg:mx-0 lg:max-w-none">
-          {/* <span className="mx-auto max-h-12">
-            <Link href="https://libscie.org/p/bb218ba0-8e27-4c89-8c03-d7c073b2fa56/">
-              <Tiu />
-            </Link>
-          </span> */}
           <span className="mx-auto max-h-12">
             <Link href="https://libscie.org/p/07ea9ef1-2a67-4cb3-b034-2f19bc18eae2/">
               <Image
@@ -26,6 +21,11 @@ const InstitutionalSupportingMembers = () => {
                 width={136}
                 height={100}
               />
+            </Link>
+          </span>
+          <span className="mx-auto max-h-12">
+            <Link href="https://libscie.org/p/bb218ba0-8e27-4c89-8c03-d7c073b2fa56/">
+              <Tiu />
             </Link>
           </span>
         </div>
