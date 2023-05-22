@@ -1,5 +1,6 @@
 import { join } from "path"
-import LibXML from "node-libxml"
+import { Libxml } from "node-libxml"
+
 import generateCrossRefXml from "./generateCrossRefXml"
 
 const main = () => {
@@ -25,7 +26,7 @@ const main = () => {
     citations: [],
   })
 
-  const libxml = new LibXML()
+  const libxml = new Libxml()
 
   const xmlIsWellFormed = libxml.loadXmlFromString(xml)
   console.log({ xmlIsWellFormed })
