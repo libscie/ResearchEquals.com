@@ -84,7 +84,7 @@ const OnboardingEmail = ({ data }) => {
             </div>
           </div>
           <div className="block text-right text-amber-700 dark:text-amber-200">
-            <p className="mt-3 text-sm md:mt-0 md:ml-6">
+            <p className="mt-3 text-sm md:ml-6 md:mt-0">
               {isSuccess ? (
                 <p className="whitespace-nowrap font-medium  underline">Email sent!</p>
               ) : (
@@ -145,7 +145,7 @@ const OnboardingEmailAccept = ({ data }) => {
             </div>
           </div>
           <div className="block text-right text-cyan-700 dark:text-cyan-200">
-            <p className="mt-3 text-sm md:mt-0 md:ml-6">
+            <p className="mt-3 text-sm md:ml-6 md:mt-0">
               {isSuccess ? (
                 <button
                   className="whitespace-nowrap font-medium underline hover:cursor-pointer hover:text-blue-600"
@@ -225,7 +225,7 @@ const OnboardingOrcid = ({ data }) => {
             </div>
           </div>
           <div className="block text-right text-emerald-700 dark:text-emerald-200">
-            <p className="mt-3 text-sm md:mt-0 md:ml-6">
+            <p className="mt-3 text-sm md:ml-6 md:mt-0">
               <a href="/api/auth/orcid" className="whitespace-nowrap font-medium  underline">
                 Connect now <span aria-hidden="true">&rarr;</span>
               </a>
@@ -280,7 +280,7 @@ const OnboardingProfile = ({ data }) => {
           </div>
           <div className="block text-right text-pink-700 dark:text-pink-200">
             <button
-              className="mt-3 whitespace-nowrap text-sm font-medium underline hover:text-blue-600 md:mt-0 md:ml-6"
+              className="mt-3 whitespace-nowrap text-sm font-medium underline hover:text-blue-600 md:ml-6 md:mt-0"
               onClick={() => {
                 setSettingsModal(!settingsModal)
               }}
@@ -328,7 +328,7 @@ const OnboardingAffiliation = ({ data }) => {
           </div>
           <div className="block text-right text-teal-700 dark:text-teal-200">
             <button
-              className="mt-3 whitespace-nowrap text-sm font-medium underline hover:text-blue-600 md:mt-0 md:ml-6"
+              className="mt-3 whitespace-nowrap text-sm font-medium underline hover:text-blue-600 md:ml-6 md:mt-0"
               onClick={() => {
                 setSettingsModal(!settingsModal)
               }}
@@ -374,7 +374,7 @@ const OnboardingAvatar = ({ data, expire, signature, refetch }) => {
             </div>
           </div>
           <div className="block text-right text-indigo-700 dark:text-indigo-200">
-            <p className="mt-3 text-sm md:mt-0 md:ml-6">
+            <p className="mt-3 text-sm md:ml-6 md:mt-0">
               <button
                 className="whitespace-nowrap font-medium underline hover:text-blue-600"
                 onClick={() => {
@@ -441,7 +441,7 @@ const OnboardingDraft = ({ data, refetch }) => {
             </div>
           </div>
           <div className="block text-right text-violet-700 dark:text-violet-200">
-            <p className="mt-3 text-sm md:mt-0 md:ml-6">
+            <p className="mt-3 text-sm md:ml-6 md:mt-0">
               <QuickDraft
                 buttonText={
                   <>
@@ -488,7 +488,7 @@ const OnboardingCollection = ({ data, refetch }) => {
             </div>
           </div>
           <div className="block text-right text-orange-700 dark:text-orange-200">
-            <p className="mt-3 text-sm md:mt-0 md:ml-6">
+            <p className="mt-3 text-sm md:ml-6 md:mt-0">
               <CollectionsModal
                 button={
                   <>
@@ -538,7 +538,7 @@ const OnboardingDiscord = () => {
             </div>
           </div>
           <div className="block text-right text-fuchsia-700 dark:text-fuchsia-200">
-            <p className="mt-3 text-sm md:mt-0 md:ml-6">
+            <p className="mt-3 text-sm md:ml-6 md:mt-0">
               <Link
                 href="https://discord.gg/SefsGJWWSw"
                 target="_blank"
@@ -587,7 +587,7 @@ const OnboardingSupporting = ({ data }) => {
             </div>
           </div>
           <div className="block text-right text-green-700 dark:text-green-200">
-            <div className="mt-3 text-sm md:mt-0 md:ml-6">
+            <div className="mt-3 text-sm md:ml-6 md:mt-0">
               <SupportingMemberSignupModal
                 button={
                   <span className="underline">

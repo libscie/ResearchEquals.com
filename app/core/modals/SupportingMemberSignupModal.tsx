@@ -12,7 +12,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
 
-export default function SignupModal({ button }) {
+export default function SupportingMemberSignupModal({ button, sponsored = false }) {
   let currentUser = useCurrentUser()
   let [isOpen, setIsOpen] = useState(false)
   const [waiver, setWaiver] = useState(false)
@@ -74,7 +74,8 @@ export default function SignupModal({ button }) {
                   <div className="mt-2">
                     <p className="text-sm">
                       As an individual supporting member, you will get personal invitations to our
-                      quarterly General Assemblies, the governance body for ResearchEquals.
+                      quarterly General Assemblies, the governance body for ResearchEquals.{" "}
+                      {sponsored && "You are eligible for a sponsored membership for one year."}
                     </p>
                     <select
                       onChange={(data) => {
@@ -90,18 +91,22 @@ export default function SignupModal({ button }) {
                             : "price_1MWHibLmgtJbKHNGLs3AcfQ1"
                         }
                       >
-                        Yearly - €79.99 (recurring)
+                        Yearly - {sponsored ? "€0" : "€79.99"} (recurring)
                       </option>
-                      <option
-                        value={
-                          // Hardcodes price_id for production and test
-                          process.env.ALGOLIA_PREFIX === "production"
-                            ? "price_1MgXRnLmgtJbKHNGALFmoCR7"
-                            : "price_1MWHibLmgtJbKHNGBMUtwKEL"
-                        }
-                      >
-                        Monthly - €9.99 (recurring){" "}
-                      </option>
+                      {sponsored ? (
+                        ""
+                      ) : (
+                        <option
+                          value={
+                            // Hardcodes price_id for production and test
+                            process.env.ALGOLIA_PREFIX === "production"
+                              ? "price_1MgXRnLmgtJbKHNGALFmoCR7"
+                              : "price_1MWHibLmgtJbKHNGBMUtwKEL"
+                          }
+                        >
+                          Monthly - {sponsored ? "€0" : "€9.99"} (recurring){" "}
+                        </option>
+                      )}
                     </select>
                   </div>
                   <div className="my-4 flex">
@@ -168,23 +173,23 @@ export default function SignupModal({ button }) {
                       type="button"
                       onClick={() =>
                         handlePayment(
-                          `/api/checkout_sessions_supporting?email=${encodeURIComponent(
-                            currentUser?.email!
-                          )}&price_id=${price}`,
+                          `/api/checkout_sessions_supporting${
+                            sponsored ? "_sponsored" : ""
+                          }?email=${encodeURIComponent(currentUser?.email!)}&price_id=${price}`,
                           router,
                           toast,
                           antiCSRFToken
                         )
                       }
                       role="link"
-                      className="mr-2 inline-flex justify-center rounded-md bg-emerald-50 py-2 px-4 text-sm font-medium text-emerald-700 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-emerald-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+                      className="mr-2 inline-flex justify-center rounded-md bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-700 hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-emerald-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                       disabled={!waiver}
                     >
                       Pay and Subscribe
                     </button>
                     <button
                       type="button"
-                      className="mr-2 inline-flex justify-center rounded-md bg-red-50 py-2 px-4 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
+                      className="mr-2 inline-flex justify-center rounded-md bg-red-50 px-4 py-2 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-0 dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-red-500 dark:hover:border-gray-400 dark:hover:bg-gray-700"
                       onClick={closeModal}
                     >
                       Cancel
