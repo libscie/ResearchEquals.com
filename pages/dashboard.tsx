@@ -2,7 +2,7 @@ import { gSSP } from "app/blitz-server"
 import Link from "next/link"
 import { Routes } from "@blitzjs/next"
 import { useRouter } from "next/router"
-import { useQuery, useInfiniteQuery } from "@blitzjs/rpc"
+import { useQuery, useInfiniteQuery, useMutation } from "@blitzjs/rpc"
 import { useSession } from "@blitzjs/auth"
 import Layout from "app/core/layouts/Layout"
 import React, { useEffect, useState } from "react"
@@ -25,6 +25,7 @@ import ModuleBoxFeed from "app/core/components/ModuleBoxFeed"
 import ViewFollowers from "app/modules/components/ViewFollowers"
 
 import { Modal } from "../app/core/modals/Modal"
+import upgradeSupporting from "../app/auth/mutations/upgradeSupporting"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -60,6 +61,8 @@ const DashboardContent = ({
   const [viewFollowers, setViewFollowers] = useState(false)
   const { width, height } = useWindowSize()
   const [celebrate, setCelebrate] = useState(false)
+  const [upgradeSupportingMutation] = useMutation(upgradeSupporting)
+  const session = useSession()
 
   const stats = [
     {
@@ -93,7 +96,13 @@ const DashboardContent = ({
     }
 
     if (query.supporting) {
-      setCelebrate(true)
+      upgradeSupportingMutation()
+        .then(() => {
+          setCelebrate(true)
+        })
+        .catch((e) => {
+          console.log(e)
+        })
     }
   }, [])
 
