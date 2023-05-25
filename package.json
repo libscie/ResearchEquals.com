@@ -104,7 +104,7 @@
     "@types/xast": "1.0.2",
     "@typescript-eslint/eslint-plugin": "5.59.7",
     "eslint": "8.41.0",
-    "eslint-config-next": "13.4.2",
+    "eslint-config-next": "13.4.3",
     "eslint-config-prettier": "8.8.0",
     "jest": "29.5.0",
     "jest-environment-jsdom": "29.5.0",
