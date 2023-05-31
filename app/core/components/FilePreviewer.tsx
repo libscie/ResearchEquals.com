@@ -29,6 +29,8 @@ const MainFileViewer = ({ mainFile, module }) => {
     }
   }, [])
 
+  console.log(mainFile)
+
   // alert(mainFile.mimeType)
   return (
     <>
@@ -55,7 +57,7 @@ const MainFileViewer = ({ mainFile, module }) => {
             </Worker>
           )}
           {/* Preview Markdown */}
-          {mainFile.mimeType.startsWith("text/markdown") && (
+          {(mainFile.mimeType.startsWith("text/markdown") || mainFile.name.endsWith(".md")) && (
             <div className="coc">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm, remarkMath]}
