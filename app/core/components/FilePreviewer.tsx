@@ -17,9 +17,10 @@ const PDFJS_DIST_VERSION = process.env.PDFJS_DIST_VERSION
 const MainFileViewer = ({ mainFile, module }) => {
   const prefersDarkMode = useMediaPredicate("(prefers-color-scheme: dark)")
   const [mainFileMarkdown, setMarkdown] = useState("")
+  const isMarkdown = mainFile.mimeType.startsWith("text/markdown") || mainFile.name.endsWith(".md")
 
   useEffect(() => {
-    if (mainFile.mimeType === "text/markdown") {
+    if (isMarkdown) {
       fetch(mainFile.cdnUrl)
         .then((response) => response.text())
         .then((body) => setMarkdown(body))
@@ -29,7 +30,6 @@ const MainFileViewer = ({ mainFile, module }) => {
     }
   }, [])
 
-  // alert(mainFile.mimeType)
   return (
     <>
       {mainFile.name && (
@@ -55,7 +55,7 @@ const MainFileViewer = ({ mainFile, module }) => {
             </Worker>
           )}
           {/* Preview Markdown */}
-          {mainFile.mimeType.startsWith("text/markdown") && (
+          {isMarkdown && (
             <div className="coc">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm, remarkMath]}
