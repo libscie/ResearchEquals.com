@@ -2,7 +2,7 @@ import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import approvalMailer from "pages/api/approval-mailer"
 
-export default resolver.pipe(resolver.authorize(), async ({ id, suffix, user }) => {
+export default resolver.pipe(resolver.authorize(), async ({ id, suffix, workspace }) => {
   await db.authorship.update({
     where: {
       id,
@@ -66,7 +66,7 @@ export default resolver.pipe(resolver.authorize(), async ({ id, suffix, user }) 
   })
 
   await approvalMailer.enqueue(
-    { moduleId: currentModule!.id, user },
+    { moduleId: currentModule!.id, workspace },
     {
       id: currentModule!.id.toString(),
     }
