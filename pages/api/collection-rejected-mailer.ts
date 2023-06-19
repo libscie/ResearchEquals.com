@@ -68,6 +68,8 @@ export default Queue("api/collection-rejected-mailer", async (submissionId: numb
           collectionUrl: `${process.env.APP_ORIGIN}/collections/${submission.collection.suffix}`,
           title: submission.module.title,
           submissionUrl: `https://doi.org/${submission.module.prefix}/${submission.module.suffix}`,
+          product_name: "ResearchEquals",
+          company_name: "Liberate Science GmbH",
         },
         member.user?.email
       )

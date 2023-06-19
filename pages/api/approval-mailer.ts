@@ -48,6 +48,8 @@ export default Queue("api/approval-mailer", async (payload: { moduleId: number; 
             name: `${currentApprover?.workspace?.firstName} ${currentApprover?.workspace?.lastName}`,
             title: currentModule.title,
             url: `${process.env.APP_ORIGIN}/drafts?suffix=${currentModule.suffix}`,
+            product_name: "ResearchEquals",
+            company_name: "Liberate Science GmbH",
           },
           member.user?.email
         )
