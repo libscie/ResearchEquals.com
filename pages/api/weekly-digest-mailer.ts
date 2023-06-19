@@ -138,7 +138,7 @@ export default CronJob(
               url: `https://doi.org/${submission.module.prefix}/${submission.module.suffix}`,
               quote:
                 submission.comment &&
-                `(${submission.editor?.workspace.firstName} says: "${submission.comment}")`,
+                `(${submission.editor?.workspace.firstName} says: ${submission.comment})`,
             }
           }
         })
@@ -154,9 +154,6 @@ export default CronJob(
           return js
         }
       })
-      if (collections![0] === undefined) {
-        collections = []
-      }
       workspace.members.map(async (member) => {
         if (
           member.emailInvitations &&
@@ -166,7 +163,6 @@ export default CronJob(
             myDrafts.length > 0 ||
             invitations.length > 0 ||
             collections!.length > 0)
-          // true
         ) {
           await sendDigest(
             {
