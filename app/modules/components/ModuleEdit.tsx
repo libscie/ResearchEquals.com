@@ -177,7 +177,7 @@ const ModuleEdit = ({
                             approveAuthorshipMutation({
                               id: ownAuthorship!.id,
                               suffix: moduleEdit!.suffix,
-                              user,
+                              workspace,
                             }),
                             {
                               loading: "Loading",
