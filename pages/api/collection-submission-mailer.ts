@@ -60,24 +60,4 @@ export default Queue("api/collection-submission-mailer", async (submissionId: nu
       }
     })
   })
-  // submission.
-  // module?.authors.map(async (author) => {
-  //   author.workspace?.members.map(async (member) => {
-  //     if (
-  //       member.emailApprovals &&
-  //       member.user?.emailConsent &&
-  //       member.user.emailIsVerified &&
-  //       author.acceptedInvitation
-  //     ) {
-  //       await sendApproval(
-  //         {
-  //           name: `${author.workspace?.firstName} ${author.workspace?.lastName}`,
-  //           title: module.title,
-  //           url: `${process.env.APP_ORIGIN}/drafts?suffix=${module.suffix}`,
-  //         },
-  //         member.user?.email
-  //       )
-  //     }
-  //   })
-  // })
 })
