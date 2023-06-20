@@ -22,6 +22,7 @@ async function broadcastMessage({ subject, htmlContent, textContent }) {
         Subject: subject,
         HtmlBody: htmlContent,
         TextBody: textContent,
+        MessageStream: "broadcast",
       }
     })
   )
