@@ -1,5 +1,3 @@
-import { acceptSubmission } from "app/postmark"
-
 import { api } from "app/blitz-server"
 import { NextApiRequest, NextApiResponse } from "next"
 import { Ctx } from "blitz"

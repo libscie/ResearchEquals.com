@@ -46,6 +46,8 @@ export default Queue(
               name: `${workspace.firstName} ${workspace.lastName}`,
               title: currentModule.title,
               url: `${process.env.APP_ORIGIN}/drafts?suffix=${currentModule.suffix}`,
+              product_name: "ResearchEquals",
+              company_name: "Liberate Science GmbH",
             },
             member.user?.email
           )

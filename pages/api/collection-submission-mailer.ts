@@ -52,6 +52,8 @@ export default Queue("api/collection-submission-mailer", async (submissionId: nu
             workspaceUrl: `${process.env.APP_ORIGIN}/${submission.submittedBy?.handle}`,
             submissionUrl: `https://doi.org/${submission.module.prefix}/${submission.module.suffix}`,
             adminUrl: `${process.env.APP_ORIGIN}/collections/${submission.collection.suffix}/admin`,
+            product_name: "ResearchEquals",
+            company_name: "Liberate Science GmbH",
           },
           member.user?.email
         )
