@@ -18,7 +18,12 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "tsBuildInfoFile": ".tsbuildinfo"
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "exclude": ["node_modules", "**/*.e2e.ts", "cypress"],
   "include": [
@@ -26,6 +31,7 @@
     "**/*.ts",
     "**/*.tsx",
     "app/core/crossref/contributors.jsx",
-    "app/pages/browse.jsx"
+    "app/pages/browse.jsx",
+    ".next/types/**/*.ts"
   ]
 }
