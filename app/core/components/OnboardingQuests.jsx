@@ -35,6 +35,8 @@ import changeEmailConsent from "../../users/mutations/changeEmailConsent"
 import CollectionsModal from "../modals/CollectionsModal"
 import SupportingMemberSignupModal from "../modals/SupportingMemberSignupModal"
 
+const validators = [smallFile]
+
 const OnboardingQuests = ({ data, expire, signature, refetch }) => {
   return (
     <>
@@ -392,6 +394,7 @@ const OnboardingAvatar = ({ data, expire, signature, refetch }) => {
                 imageShrink="480x480"
                 imagesOnly
                 previewStep
+                validators={validators}
                 clearable
                 onChange={async (info) => {
                   try {
