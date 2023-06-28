@@ -101,7 +101,7 @@ const citation_list = ({ citations }: { citations: Cite[] }): CitationList => {
             children: [
               {
                 type: "text",
-                value: `${prefix}/${suffix}`,
+                value: `${prefix}/${encodeURIComponent(suffix)}`,
               },
             ],
           } as DOI,
