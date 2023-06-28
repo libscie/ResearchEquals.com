@@ -173,3 +173,11 @@ export const fileSizeLimit = (fileInfo) => {
     throw new Error("fileMaximumSize")
   }
 }
+
+export const smallFile = (fileInfo) => {
+  // 1024 * 1024 = 1MB
+  // Current limit set to 100MB
+  if (fileInfo.size !== null && fileInfo.size > 1024 * 1024 * 3) {
+    throw new Error("fileMaximumSize")
+  }
+}
