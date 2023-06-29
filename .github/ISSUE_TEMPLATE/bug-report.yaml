@@ -3,7 +3,7 @@ description: File a bug report
 title: "🐛 "
 labels: ["bug", "triage"]
 assignees:
-  - chartgerink, nsunami
+  - chartgerink
 body:
   - type: markdown
     attributes:
