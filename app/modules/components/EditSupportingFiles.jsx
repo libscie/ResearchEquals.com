@@ -1,6 +1,6 @@
 import { invoke, useMutation } from "@blitzjs/rpc"
 import { Widget } from "@uploadcare/react-widget"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import toast from "react-hot-toast"
 import { Add } from "@carbon/icons-react"
 
@@ -14,28 +14,32 @@ const validators = [fileTypeLimit, fileSizeLimit]
 const EditSupportingFiles = ({ setQueryData, moduleEdit, user, workspace, expire, signature }) => {
   const widgetApi = useRef()
   const [addSupportingMutation] = useMutation(addSupporting)
+  const [updateFiles, setUpdate] = useState(false)
 
   const updateSupporting = async (info) => {
-    try {
-      const newFiles = await invoke(getSupportingFiles, { groupUuid: info.uuid })
-      toast.promise(
-        addSupportingMutation({
-          id: moduleEdit.id,
-          newFiles: newFiles.files,
-        }),
-        {
-          loading: "Uploading...",
-          success: (data) => {
-            setQueryData(data)
-            return "Uploaded!"
-          },
-          error: (error) => {
-            return error.toString()
-          },
-        }
-      )
-    } catch (err) {
-      alert(err)
+    if (updateFiles) {
+      try {
+        const newFiles = await invoke(getSupportingFiles, { groupUuid: info.uuid })
+        toast.promise(
+          addSupportingMutation({
+            id: moduleEdit.id,
+            newFiles: newFiles.files,
+          }),
+          {
+            loading: "Uploading...",
+            success: (data) => {
+              setQueryData(data)
+              return "Uploaded!"
+            },
+            error: (error) => {
+              return error.toString()
+            },
+          }
+        )
+        setUpdate(false)
+      } catch (err) {
+        alert(err)
+      }
     }
   }
 
@@ -63,6 +67,9 @@ const EditSupportingFiles = ({ setQueryData, moduleEdit, user, workspace, expire
               clearable
               localeTranslations={uploadcareError}
               onChange={updateSupporting}
+              onDialogClose={() => {
+                setUpdate(true)
+              }}
             />
           </button>
         </>
