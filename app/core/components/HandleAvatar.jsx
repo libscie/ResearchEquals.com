@@ -3,6 +3,9 @@ import { Widget } from "@uploadcare/react-widget"
 import { useRef } from "react"
 import changeAvatar from "../../workspaces/mutations/changeAvatar"
 import toast from "react-hot-toast"
+import { smallFile } from "../utils/fileTypeLimit"
+
+const validators = [smallFile]
 
 const HandleAvatar = ({ params, workspace, ownWorkspace, expire, signature, refetch }) => {
   const widgetApi = useRef()
@@ -30,6 +33,7 @@ const HandleAvatar = ({ params, workspace, ownWorkspace, expire, signature, refe
               imageShrink="480x480"
               imagesOnly
               previewStep
+              validators={validators}
               clearable
               onChange={async (info) => {
                 try {
