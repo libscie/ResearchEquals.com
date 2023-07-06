@@ -44,7 +44,7 @@
     "algoliasearch": "4.17.1",
     "autoprefixer": "10.4.14",
     "axios": "1.4.0",
-    "blitz": "2.0.0-beta.27",
+    "blitz": "2.0.0-beta.30",
     "concurrently": "8.1.0",
     "crisp-sdk-web": "1.0.19",
     "dagre": "0.8.5",
