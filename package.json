@@ -33,7 +33,7 @@
     "@algolia/autocomplete-js": "1.9.4",
     "@blitzjs/auth": "2.0.0-beta.27",
     "@blitzjs/next": "2.0.0-beta.27",
-    "@blitzjs/rpc": "2.0.0-beta.27",
+    "@blitzjs/rpc": "2.0.0-beta.30",
     "@carbon/icons-react": "11.21.0",
     "@faker-js/faker": "8.0.2",
     "@headlessui/react": "1.7.15",
