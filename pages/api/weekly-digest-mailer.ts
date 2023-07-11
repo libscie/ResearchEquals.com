@@ -154,6 +154,7 @@ export default CronJob(
           return js
         }
       })
+      collections = collections?.filter((x) => x)
       workspace.members.map(async (member) => {
         if (
           member.emailInvitations &&
@@ -197,7 +198,7 @@ export default CronJob(
                   url: `${process.env.APP_ORIGIN}/${workspace.handle}`,
                 }
               }),
-              collections: collections?.filter((x) => x),
+              collections: collections,
               product_url: process.env.APP_ORIGIN,
               product_name: "ResearchEquals",
               company_name: "Liberate Science GmbH",
