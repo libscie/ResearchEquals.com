@@ -2,7 +2,7 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-34-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-33-orange.svg?style=flat-square)](#contributors-)
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
@@ -126,7 +126,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="http://metasciencelab.elte.hu/index.php/members/marton-kovacs/"><img src="https://avatars.githubusercontent.com/u/43272864?v=4?s=100" width="100px;" alt="Marton Kovacs"/><br /><sub><b>Marton Kovacs</b></sub></a><br /><a href="#userTesting-marton-balazs-kovacs" title="User Testing">📓</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://minaabadir.ca"><img src="https://avatars.githubusercontent.com/u/3389914?v=4?s=100" width="100px;" alt="Mina Abadir"/><br /><sub><b>Mina Abadir</b></sub></a><br /><a href="#infra-mabadir" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://naoyukisunami.com"><img src="https://avatars.githubusercontent.com/u/17035406?v=4?s=100" width="100px;" alt="Nami Sunami"/><br /><sub><b>Nami Sunami</b></sub></a><br /><a href="#translation-nsunami" title="Translation">🌍</a> <a href="#design-nsunami" title="Design">🎨</a> <a href="#ideas-nsunami" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/libscie/ResearchEquals.com/issues?q=author%3Ansunami" title="Bug reports">🐛</a> <a href="https://github.com/libscie/ResearchEquals.com/commits?author=nsunami" title="Code">💻</a> <a href="https://github.com/libscie/ResearchEquals.com/commits?author=nsunami" title="Documentation">📖</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/nathan-at-jisc"><img src="https://avatars.githubusercontent.com/u/58425475?v=4?s=100" width="100px;" alt="Nathan Sainsbury"/><br /><sub><b>Nathan Sainsbury</b></sub></a><br /><a href="https://github.com/libscie/ResearchEquals.com/issues?q=author%3Anathan-at-jisc" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Senficon"><img src="https://avatars.githubusercontent.com/u/762381?v=4?s=100" width="100px;" alt="senficon"/><br /><sub><b>senficon</b></sub></a><br /><a href="#ideas-senficon" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/nasainsbury"><img src="https://avatars.githubusercontent.com/u/58425475?v=4?s=100" width="100px;" alt="Nathan Sainsbury"/><br /><sub><b>Nathan Sainsbury</b></sub></a><br /><a href="https://github.com/libscie/ResearchEquals.com/commits?author=nasainsbury" title="Code">💻</a> <a href="#design-nasainsbury" title="Design">🎨</a></td>
@@ -143,7 +143,6 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://weblate.org/hosting/"><img src="https://avatars.githubusercontent.com/u/1607653?v=4?s=100" width="100px;" alt="Weblate (bot)"/><br /><sub><b>Weblate (bot)</b></sub></a><br /><a href="#translation-weblate" title="Translation">🌍</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ab-ioi"><img src="https://avatars.githubusercontent.com/u/98346737?v=4?s=100" width="100px;" alt="ab-ioi"/><br /><sub><b>ab-ioi</b></sub></a><br /><a href="#userTesting-ab-ioi" title="User Testing">📓</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/coglebed"><img src="https://avatars.githubusercontent.com/u/73071333?v=4?s=100" width="100px;" alt="coglebed"/><br /><sub><b>coglebed</b></sub></a><br /><a href="#translation-coglebed" title="Translation">🌍</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Senficon"><img src="https://avatars.githubusercontent.com/u/762381?v=4?s=100" width="100px;" alt="senficon"/><br /><sub><b>senficon</b></sub></a><br /><a href="#ideas-senficon" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
   </tbody>
 </table>
