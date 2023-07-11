@@ -98,7 +98,7 @@
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "14.0.0",
     "@testing-library/react-hooks": "8.0.1",
-    "@types/node": "20.3.2",
+    "@types/node": "20.3.3",
     "@types/react": "18.2.13",
     "@types/unist": "2.0.6",
     "@types/xast": "1.0.2",
