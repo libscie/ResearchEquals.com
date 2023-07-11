@@ -154,6 +154,7 @@ export default CronJob(
           return js
         }
       })
+      collections = collections?.filter((x) => x)
       workspace.members.map(async (member) => {
         if (
           member.emailInvitations &&
