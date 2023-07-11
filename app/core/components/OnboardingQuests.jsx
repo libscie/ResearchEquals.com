@@ -16,6 +16,7 @@ import {
   Sprout,
 } from "@carbon/icons-react"
 import { useRecoilValue, useRecoilState } from "recoil"
+import { smallFile } from "../utils/fileTypeLimit"
 
 import changeAvatar from "../../workspaces/mutations/changeAvatar"
 import getSignature from "../../auth/queries/getSignature"
