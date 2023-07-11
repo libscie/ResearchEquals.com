@@ -106,7 +106,7 @@
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.9",
     "eslint-config-prettier": "8.8.0",
-    "jest": "29.5.0",
+    "jest": "29.6.1",
     "jest-environment-jsdom": "29.6.0",
     "lint-staged": "13.2.3",
     "node-libxml": "5.0.1",
