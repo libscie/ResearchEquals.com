@@ -108,7 +108,7 @@
     "eslint-config-prettier": "8.8.0",
     "jest": "29.5.0",
     "jest-environment-jsdom": "29.6.0",
-    "lint-staged": "13.2.2",
+    "lint-staged": "13.2.3",
     "node-libxml": "5.0.1",
     "prettier": "2.8.8",
     "prettier-plugin-prisma": "4.13.0",
