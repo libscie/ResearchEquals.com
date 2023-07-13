@@ -38,6 +38,7 @@ const publication_date = (date?: Date): PublicationDate => {
       {
         type: "element",
         name: "month",
+        attributes: {},
         children: [
           {
             type: "text",
@@ -48,6 +49,7 @@ const publication_date = (date?: Date): PublicationDate => {
       {
         type: "element",
         name: "day",
+        attributes: {},
         children: [
           {
             type: "text",
@@ -58,6 +60,7 @@ const publication_date = (date?: Date): PublicationDate => {
       {
         type: "element",
         name: "year",
+        attributes: {},
         children: [
           {
             type: "text",

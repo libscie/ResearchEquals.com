@@ -36,6 +36,7 @@ const body = ({
   const js: Body = {
     type: "element",
     name: "body",
+    attributes: {},
     children: [
       book({ title, language, authors, abstractText, license_url, doi, resolve_url, citations }),
     ],
@@ -71,6 +72,7 @@ const bodyJournal = ({
   const js: BodyJournal = {
     type: "element",
     name: "body",
+    attributes: {},
     children: [journal({ title, subtitle, authors, doi, resolve_url })],
   }
 

@@ -14,10 +14,12 @@ const abstract = (abstract: string): Abstract => {
   const js: Abstract = {
     type: "element",
     name: "jats:abstract",
+    attributes: {},
     children: [
       {
         type: "element",
         name: "jats:p",
+        attributes: {},
         children: [
           {
             type: "text",

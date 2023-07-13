@@ -53,6 +53,7 @@ const citation_list = ({ citations }: { citations: Cite[] }): CitationList => {
   const js: CitationList = {
     type: "element",
     name: "citation_list",
+    attributes: {},
     children: citations.map((citation, index) => {
       const { publishedWhere, authors, title, prefix, suffix, publishedAt } = citation
 
@@ -88,6 +89,7 @@ const citation_list = ({ citations }: { citations: Cite[] }): CitationList => {
           {
             type: "element",
             name: "cYear",
+            attributes: {},
             children: [
               {
                 type: "text",

@@ -117,5 +117,10 @@
     "ts-jest": "29.1.1",
     "tsx": "3.12.7"
   },
+  "overrides": {
+    "xast-util-to-xml": {
+      "@types/xast": "2.0.0"
+    }
+  },
   "private": true
 }

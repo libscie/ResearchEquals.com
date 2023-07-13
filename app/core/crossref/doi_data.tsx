@@ -17,10 +17,12 @@ const doi_data = ({ doi, url }: { doi: string; url: string }): DoiData => {
   const js: DoiData = {
     type: "element",
     name: "doi_data",
+    attributes: {},
     children: [
       {
         type: "element",
         name: "doi",
+        attributes: {},
         children: [
           {
             type: "text",
@@ -31,6 +33,7 @@ const doi_data = ({ doi, url }: { doi: string; url: string }): DoiData => {
       {
         type: "element",
         name: "resource",
+        attributes: {},
         children: [
           {
             type: "text",
