@@ -32,7 +32,7 @@ function RootErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
   const router = useRouter()
 
   if (error instanceof AuthenticationError) {
-    router.push("/login").finally(null)
+    void router.push("/login").finally(null)
     resetErrorBoundary()
 
     return null
