@@ -57,7 +57,7 @@ export interface PID extends Element {
        * @pattern [hH][tT][tT][pP][sS]:\/\/.{1,50}
        **/
       value: string
-    }
+    },
   ]
 }
 
@@ -75,7 +75,7 @@ export interface InstitutionName extends Element {
        * @maxLength 1024
        **/
       value: string
-    }
+    },
   ]
 }
 
@@ -132,6 +132,7 @@ const dbAuthorToCrossrefAuthor = (author: Author): PersonName["children"] => {
           return {
             type: "element",
             name: authorMap[key],
+            attributes: {},
             children: value.map((affiliation) => {
               const institutionId = {
                 type: "element",
@@ -148,6 +149,7 @@ const dbAuthorToCrossrefAuthor = (author: Author): PersonName["children"] => {
               const institutionName: InstitutionName = {
                 type: "element",
                 name: "institution_name",
+                attributes: {},
                 children: [
                   {
                     type: "text",
@@ -162,6 +164,7 @@ const dbAuthorToCrossrefAuthor = (author: Author): PersonName["children"] => {
               return {
                 type: "element",
                 name: "institution",
+                attributes: {},
                 children: institutionChildren,
               } satisfies Institution
             }),
@@ -173,12 +176,14 @@ const dbAuthorToCrossrefAuthor = (author: Author): PersonName["children"] => {
             return {
               type: "element",
               name: authorMap[key],
+              attributes: {},
               children: [{ type: "text", value }],
             } satisfies GivenName
           case "lastName":
             return {
               type: "element",
               name: authorMap[key],
+              attributes: {},
               children: [{ type: "text", value }],
             } satisfies Surname
 
@@ -210,6 +215,7 @@ const contributors = (authors: Author[]): Contributors => {
   const js: Contributors = {
     type: "element",
     name: "contributors",
+    attributes: {},
     children: authors.map((author, index) => {
       const authorJs: PersonName = {
         type: "element",

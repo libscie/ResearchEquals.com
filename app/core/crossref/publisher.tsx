@@ -18,10 +18,12 @@ const publisher = (publisher?: { name: string; place: string }): Publisher => {
   const js: Publisher = {
     type: "element",
     name: "publisher",
+    attributes: {},
     children: [
       {
         type: "element",
         name: "publisher_name",
+        attributes: {},
         children: [
           {
             type: "text",
@@ -32,6 +34,7 @@ const publisher = (publisher?: { name: string; place: string }): Publisher => {
       {
         type: "element",
         name: "publisher_place",
+        attributes: {},
         children: [
           {
             type: "text",

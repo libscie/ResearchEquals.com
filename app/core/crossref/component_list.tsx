@@ -7,6 +7,7 @@ const component_list = (): ComponentList => {
   const js: ComponentList = {
     type: "element",
     name: "component_list",
+    attributes: {},
     children: [],
   }
 

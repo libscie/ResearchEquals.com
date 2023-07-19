@@ -9,6 +9,7 @@ const full_title = (title: string): FullTitle => {
   const js: FullTitle = {
     type: "element",
     name: "full_title",
+    attributes: {},
     children: [
       {
         type: "text",

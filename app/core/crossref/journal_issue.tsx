@@ -22,6 +22,7 @@ const journal_issue = ({ title, subtitle, authors, doi, resolve_url }: JournalIs
   const js: JournalIssue = {
     type: "element",
     name: "journal_issue",
+    attributes: {},
     children: [
       contributors(authors),
       titles(title, subtitle),

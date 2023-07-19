@@ -15,6 +15,7 @@ const journal = ({ title, subtitle, authors, doi, resolve_url }: JournalIssuePro
   const js: Journal = {
     type: "element",
     name: "journal",
+    attributes: {},
     children: [journal_metadata(), journal_issue({ title, subtitle, authors, doi, resolve_url })],
   }
 

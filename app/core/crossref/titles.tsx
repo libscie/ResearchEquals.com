@@ -18,10 +18,12 @@ const titles = (title: string, subtitle?: string): Titles => {
   const js: Titles = {
     type: "element",
     name: "titles",
+    attributes: {},
     children: [
       {
         type: "element",
         name: "title",
+        attributes: {},
         children: [
           {
             type: "text",
@@ -36,6 +38,7 @@ const titles = (title: string, subtitle?: string): Titles => {
     js.children.push({
       type: "element",
       name: "subtitle",
+      attributes: {},
       children: [
         {
           type: "text",

@@ -40,30 +40,36 @@ const head = ({ registrant, email }: { registrant: string; email: string }): Hea
   const jsHead: Head = {
     type: "element",
     name: "head",
+    attributes: {},
     children: [
       {
         type: "element",
         name: "doi_batch_id",
+        attributes: {},
         children: [{ type: "text", value: datetime.toString() }],
       },
       {
         type: "element",
         name: "timestamp",
+        attributes: {},
         // has to be integer?
         children: [{ type: "text", value: datetime.toString() }],
       },
       {
         type: "element",
         name: "depositor",
+        attributes: {},
         children: [
           {
             type: "element",
             name: "depositor_name",
+            attributes: {},
             children: [{ type: "text", value: registrant }],
           },
           {
             type: "element",
             name: "email_address",
+            attributes: {},
             children: [{ type: "text", value: email }],
           },
         ],
@@ -71,6 +77,7 @@ const head = ({ registrant, email }: { registrant: string; email: string }): Hea
       {
         type: "element",
         name: "registrant",
+        attributes: {},
         children: [{ type: "text", value: registrant }],
       },
     ],

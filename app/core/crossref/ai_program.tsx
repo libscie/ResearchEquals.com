@@ -42,6 +42,7 @@ const aiProgram = ({ url }: AiProgramProps): AiProgram => {
       {
         type: "element",
         name: "free_to_read",
+        attributes: {},
         children: [],
       } as FreeToRead,
       {
