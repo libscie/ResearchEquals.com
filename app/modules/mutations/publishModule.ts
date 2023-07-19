@@ -30,15 +30,15 @@ export const getToBePublishedModule = async (id: number) =>
             },
           },
         },
+        orderBy: {
+          authorshipRank: "asc",
+        },
       },
       references: {
         include: {
           authors: {
             include: {
               workspace: true,
-            },
-            orderBy: {
-              authorshipRank: "asc",
             },
           },
         },
@@ -108,5 +108,5 @@ export default resolver.pipe(
     })
 
     return true
-  }
+  },
 )
