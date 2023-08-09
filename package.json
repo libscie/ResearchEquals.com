@@ -34,7 +34,7 @@
     "@blitzjs/auth": "2.0.0-beta.31",
     "@blitzjs/next": "2.0.0-beta.31",
     "@blitzjs/rpc": "2.0.0-beta.31",
-    "@carbon/icons-react": "11.23.1",
+    "@carbon/icons-react": "11.24.0",
     "@faker-js/faker": "8.0.2",
     "@headlessui/react": "1.7.16",
     "@prisma/client": "5.1.1",
