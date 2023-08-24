@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@algolia/autocomplete-js": "1.11.0",
-    "@blitzjs/auth": "2.0.0-beta.31",
+    "@blitzjs/auth": "2.0.0-beta.32",
     "@blitzjs/next": "2.0.0-beta.32",
     "@blitzjs/rpc": "2.0.0-beta.31",
     "@carbon/icons-react": "11.25.0",
