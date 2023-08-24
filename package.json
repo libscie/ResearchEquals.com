@@ -110,7 +110,7 @@
     "jest-environment-jsdom": "29.6.3",
     "lint-staged": "14.0.1",
     "node-libxml": "5.0.1",
-    "prettier": "3.0.1",
+    "prettier": "3.0.2",
     "prettier-plugin-prisma": "5.0.0",
     "prettier-plugin-tailwindcss": "0.5.3",
     "pretty-quick": "3.1.3",
