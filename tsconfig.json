@@ -23,7 +23,8 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "types": ["jest"]
   },
   "exclude": ["node_modules", "**/*.e2e.ts", "cypress"],
   "include": [
