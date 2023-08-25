@@ -145,7 +145,7 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
             language: publishedModule.language,
           })
           console.log(
-            `[STRIPE WEBHOOK]: Publication complete; type ${event.type}, id: ${event.id}.`
+            `[STRIPE WEBHOOK]: Publication complete; type ${event.type}, id: ${event.id}.`,
           )
           break
       }
@@ -171,7 +171,7 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
       // Sponsored memberships last only for a year
       const isSponsored = event.data.object.lines.data[0].metadata.subType === "sponsored"
       if (isSponsored) {
-        await stripe.subscriptions.del(event.data.object.subscription)
+        await stripe.subscriptions.cancel(event.data.object.subscription)
       }
 
     case "customer.subscription.updated":
@@ -190,11 +190,11 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
         })
         await supportingCancel(
           { cancelAt: moment(event.data.object.cancel_at * 1000).format("MMMM Do YYYY") },
-          user!.email
+          user!.email,
         )
       } else {
         await cancelSupportingMembership.delete(
-          event.data.object.customer // this is the same ID we set above
+          event.data.object.customer, // this is the same ID we set above
         )
       }
 
