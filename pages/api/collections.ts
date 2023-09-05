@@ -15,9 +15,39 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
         },
         public: true,
       },
+      include: {
+        type: true,
+        editors: {
+          include: {
+            workspace: true,
+          },
+        },
+        submissions: {
+          include: {
+            module: true,
+          },
+        },
+      },
     })
   } else {
-    collections = await db.collection.findMany({})
+    collections = await db.collection.findMany({
+      where: {
+        public: true,
+      },
+      include: {
+        type: true,
+        editors: {
+          include: {
+            workspace: true,
+          },
+        },
+        submissions: {
+          include: {
+            module: true,
+          },
+        },
+      },
+    })
   }
 
   res.statusCode = 200
