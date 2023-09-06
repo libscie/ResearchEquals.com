@@ -25,6 +25,12 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
         submissions: {
           include: {
             module: true,
+            editor: {
+              include: {
+                workspace: true,
+              },
+            },
+            submittedBy: true,
           },
         },
       },
@@ -44,6 +50,12 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
         submissions: {
           include: {
             module: true,
+            editor: {
+              include: {
+                workspace: true,
+              },
+            },
+            submittedBy: true,
           },
         },
       },
