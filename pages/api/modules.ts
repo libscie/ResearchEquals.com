@@ -73,6 +73,56 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
         publishedWhere: "ResearchEquals",
         published: true,
       },
+      include: {
+        references: {
+          include: {
+            authors: {
+              include: {
+                workspace: true,
+              },
+            },
+          },
+          orderBy: {
+            title: "asc",
+          },
+        },
+        authors: {
+          orderBy: {
+            authorshipRank: "asc",
+          },
+          include: {
+            workspace: true,
+          },
+        },
+        license: true,
+        type: true,
+        parents: {
+          include: {
+            type: true,
+            authors: {
+              include: {
+                workspace: true,
+              },
+              orderBy: {
+                authorshipRank: "asc",
+              },
+            },
+          },
+        },
+        children: {
+          include: {
+            type: true,
+            authors: {
+              include: {
+                workspace: true,
+              },
+              orderBy: {
+                authorshipRank: "asc",
+              },
+            },
+          },
+        },
+      },
     })
   }
 
