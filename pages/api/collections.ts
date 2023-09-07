@@ -15,10 +15,15 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
         },
         public: true,
       },
+      orderBy: [
+        {
+          updatedAt: "desc",
+        },
+      ],
       include: {
         submissions: {
           orderBy: {
-            updatedAt: "desc",
+            updatedAt: "asc",
           },
           include: {
             submittedBy: true,
@@ -58,6 +63,11 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
       where: {
         public: true,
       },
+      orderBy: [
+        {
+          updatedAt: "desc",
+        },
+      ],
       include: {
         submissions: {
           orderBy: {

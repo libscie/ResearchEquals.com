@@ -16,6 +16,9 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
         publishedWhere: "ResearchEquals",
         published: true,
       },
+      orderBy: {
+        publishedAt: "desc",
+      },
       include: {
         references: {
           include: {
@@ -72,6 +75,9 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
       where: {
         publishedWhere: "ResearchEquals",
         published: true,
+      },
+      orderBy: {
+        publishedAt: "desc",
       },
       include: {
         references: {
