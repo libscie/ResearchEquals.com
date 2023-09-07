@@ -18,7 +18,7 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
       include: {
         submissions: {
           orderBy: {
-            updatedAt: "desc",
+            updatedAt: "asc",
           },
           include: {
             submittedBy: true,
