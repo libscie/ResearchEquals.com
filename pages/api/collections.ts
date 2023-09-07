@@ -16,23 +16,41 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
         public: true,
       },
       include: {
-        type: true,
-        editors: {
-          include: {
-            workspace: true,
-          },
-        },
         submissions: {
+          orderBy: {
+            updatedAt: "desc",
+          },
           include: {
+            submittedBy: true,
             module: true,
             editor: {
               include: {
                 workspace: true,
               },
             },
-            submittedBy: true,
           },
         },
+        editors: {
+          orderBy: {
+            id: "asc",
+          },
+          include: {
+            workspace: {
+              include: {
+                members: {
+                  include: {
+                    user: {
+                      select: {
+                        id: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        type: true,
       },
     })
   } else {
@@ -41,23 +59,41 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
         public: true,
       },
       include: {
-        type: true,
-        editors: {
-          include: {
-            workspace: true,
-          },
-        },
         submissions: {
+          orderBy: {
+            updatedAt: "desc",
+          },
           include: {
+            submittedBy: true,
             module: true,
             editor: {
               include: {
                 workspace: true,
               },
             },
-            submittedBy: true,
           },
         },
+        editors: {
+          orderBy: {
+            id: "asc",
+          },
+          include: {
+            workspace: {
+              include: {
+                members: {
+                  include: {
+                    user: {
+                      select: {
+                        id: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        type: true,
       },
     })
   }
