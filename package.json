@@ -43,7 +43,7 @@
     "@uploadcare/react-widget": "2.4.5",
     "algoliasearch": "4.20.0",
     "autoprefixer": "10.4.15",
-    "axios": "1.5.0",
+    "axios": "1.5.1",
     "blitz": "2.0.0-beta.32",
     "concurrently": "8.2.1",
     "crisp-sdk-web": "1.0.21",
