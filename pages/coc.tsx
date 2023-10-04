@@ -17,9 +17,9 @@ import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 const cocMarkdown = `
 # Code of Conduct
 
-While no document can possibly make provisions for all the ethical and legal dilemmas that you may encounter in the course of your participation with any organisation, this Code provides guidance that is meant to keep you and us on the right course, and to prompt you when further guidance for specific situations may be necessary. The Code does not create any contractual rights enforceable against Liberate Science GmbH.
+We work to make underlying power structures and its consequences visible, and we provide the Code of Conduct (CoC) as a means to do that within our work. The CoC is addresses power issues in our community and ensures we hold ourselves to our values. While no document can possibly make provisions for all the ethical and legal dilemmas that you may encounter in the course of your participation with any organisation, this Code provides guidance that is meant to keep you and us on the right course, and to prompt you when further guidance for specific situations may be necessary. The Code does not create any contractual rights enforceable against Liberate Science GmbH.
 
-It helps each of us to know what is expected of us in a community space. This is not a legal proceeding and we do not aim to arbitrate illegal conduct or be a courtroom. That means that we try to protect our space, not replace the judicial system.
+The CoC helps us create shared expectations in our community spaces. This is not a legal proceeding and we do not aim to arbitrate illegal conduct or be a courtroom. That means that we try to protect our space, not replace the judicial system.
 
 ## Our Pledge
 
@@ -39,13 +39,11 @@ Examples of behavior that contributes to a positive environment for our communit
 
 Examples of unacceptable behavior that can lead to consequences in our community include:
 
-- The use of sexualized language or imagery, and sexual attention or
-advances of any kind
+- The use of sexualized language or imagery, and sexual attention or advances of any kind
 - Trolling, insulting or derogatory comments, and personal or political attacks
 - Public or private harassment
 - Publishing others' private information, such as a physical or email address, without their explicit permission
-- Other conduct which could reasonably be considered inappropriate in a
-professional setting
+- Other conduct which could reasonably be considered inappropriate in a professional setting
 
 These lists are not exhaustive.
 
@@ -64,6 +62,14 @@ This Code of Conduct applies within all community spaces, and also applies when 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community leaders responsible for enforcement ([coc@libscie.org](mailto:coc@libscie.org); see also the entire team). All complaints will be reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the reporter of any incident.
+
+### Recusal policy
+
+Community leader can recuse themselves at any time for handling an incident. Community leaders must be reflexive in assessing whether they can handle an incident report. This is both in terms of capacity of whatever kind (e.g., related unprocessed trauma) and in relational capacity (e.g., a close friend is reported).
+
+Two community leaders must remain to assess the incident. If fewer remain, an external advisor to the case may be requested who will be invited to assess the incident. They will be bound to confidential handling of the incident report.
+
+If a community leader decides to not recuse themselves despite potential conflicts, they must disclose these potential conflicts to the rest of the community leaders. They can then assess and critically evaluate the handling of the incident. If at any point the conflict is deemed to be too influential in the handling, the community leader will be asked to recuse themselves after all.
 
 ## Enforcement Guidelines
 
@@ -103,7 +109,6 @@ have a no-barriers reporting standard, and we actively encourage reports to our 
 
 Internal coordinators are always available, external coordinators are available if you feel there is a conflict in reporting to someone embedded within the space (e.g., about the person themselves, issues with our Liberate Science organizing).
 
-
 | Who (alphabetical order)               | Pronouns          |
 |-------------------|-------------------|
 | Chris Hartgerink  | They/them           |
@@ -119,7 +124,7 @@ We have a no-barriers reporting standard. That means **you do not need to judge 
 
 All legal persons may be reported (e.g., individual persons, organizations).
 
-To make a report, you can reach out to the space-coordinator(s) or email [coc@libscie.org](mailto:coc@libscie.org). In physical events, event specific information will contain additional information on how to recognize who you can make incident reports with on-site.
+To make a report, you can reach out to the space-coordinator(s) or email [coc@libscie.org](mailto:coc@libscie.org). At physical events, event specific information will contain additional information on how to recognize who you can make incident reports with on-site.
 
 Reports are treated as confidential documents and include:
 
@@ -218,7 +223,7 @@ const CodeOfConduct: BlitzPage = () => {
                   .toISOString()
                   .substr(
                     0,
-                    10
+                    10,
                   )}] Code of Conduct report&body=Dear%20Code%20of%20Conduct%20committee%2C%0A%0AI%20would%20like%20to%20submit%20a%20code%20of%20conduct%20report%20regarding%20%5Breported%20person's%20name%2Fdescription%2C%20organizations%20also%20allowed%5D.%0A%0A%5Bdescription%20of%20the%20incident%5D%20%0A%0AThis%20happened%20on%20%5Bdate%20and%20time%5D%20at%20%5Blocation%5D.%20%0A%0AMy%20name%20is%20%5Breporter%20name%5D%20and%20you%20can%20reach%20me%20at%20%5Bcontact%20info%5D.%20%0A%0AAdditional%20witnesses%20for%20this%20report%20are%3A%20%5Boptional%20witness%20information%5D.%0A%0AKind%20regards`}
                 className="mt-3 text-sm underline md:ml-6 md:mt-0"
               >
