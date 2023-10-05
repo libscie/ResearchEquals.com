@@ -92,7 +92,7 @@
     "typescript": "~5.1",
     "xast-util-to-xml": "4.0.0",
     "xml-js": "1.6.11",
-    "zod": "3.22.2"
+    "zod": "3.22.3"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "6.1.3",
