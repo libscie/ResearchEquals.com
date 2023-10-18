@@ -85,7 +85,7 @@
     "recoil-persist": "5.1.0",
     "rehype-katex": "6.0.3",
     "remark-gfm": "3.0.1",
-    "remark-math": "5.1.1",
+    "remark-math": "6.0.0",
     "secure-password": "4.0.0",
     "stripe": "14.1.0",
     "tailwindcss": "3.3.3",
