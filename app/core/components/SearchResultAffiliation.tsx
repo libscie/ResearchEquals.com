@@ -9,7 +9,7 @@ const SearchResultAffiliation = ({ item }) => {
           <Building className="inline-block h-full align-middle " size={24} />
         </div>
         <div className="text-sm font-normal leading-4 text-gray-900 dark:text-gray-200">
-          {he.decode(item.name)}
+          {he.decode(item.names[0].value)}
         </div>
       </div>
     </>

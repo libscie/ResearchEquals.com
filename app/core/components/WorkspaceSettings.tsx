@@ -86,7 +86,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
         bio: z.any(),
         pronouns: z.any(),
         profileUrl: z.any(),
-      })
+      }),
     ),
     onSubmit: async (values) => {
       try {
@@ -101,7 +101,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
                 loading: "Saving...",
                 success: "Updated first name",
                 error: "Hmm that first name didn't work...",
-              }
+              },
             )
           } catch (error) {
             toast.error("First name needs to be a string")
@@ -119,7 +119,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
                 loading: "Saving...",
                 success: "Updated last name",
                 error: "Hmm that Fdidn't work...",
-              }
+              },
             )
           } catch (error) {
             toast.error("Last name needs to be a string")
@@ -137,7 +137,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
                 loading: "Saving...",
                 success: "Updated bio",
                 error: "Hmm that didn't work...",
-              }
+              },
             )
           } catch (error) {
             toast.error("Bio needs to be a string")
@@ -155,7 +155,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
                 loading: "Saving...",
                 success: "Updated pronouns",
                 error: "Hmm that didn't work...",
-              }
+              },
             )
           } catch (error) {
             toast.error("Pronouns can be 20 characters")
@@ -175,7 +175,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
                 error: (e) => {
                   return `Error: ${e}`
                 },
-              }
+              },
             )
           } catch (error) {
             toast.error("Enter a valid URL")
@@ -299,7 +299,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
                                     return "Affiliation deleted!"
                                   },
                                   error: "Failed to delete affiliation...",
-                                }
+                                },
                               )
                             }}
                             aria-label="Delete affiliation"
@@ -322,11 +322,12 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
                     {
                       sourceId: "products",
                       async onSelect(params) {
+                        console.log(params)
                         await toast.promise(
                           addAffiliationMutation({
                             workspaceId: workspace.id,
                             rorId: params.item.id,
-                            orgName: params.item.name,
+                            orgName: params.item.names[0].value,
                           }),
                           {
                             loading: "Adding affiliation...",
@@ -335,14 +336,13 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
                               return "Affiliation added!"
                             },
                             error: "Failed to add affiliation...",
-                          }
+                          },
                         )
                       },
                       async getItems(query) {
                         const results = await axios.get(
-                          `https://api.ror.org/organizations?query.advanced=${query.query}`
+                          `https://api.dev.ror.org/v2/organizations?query.advanced=${query.query}`,
                         )
-
                         return results.data.items.slice(0, 5)
                       },
                       templates: {
