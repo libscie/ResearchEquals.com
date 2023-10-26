@@ -2,7 +2,7 @@
   "name": "researchequals",
   "version": "1.0.0",
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   },
   "scripts": {
     "dev": "concurrently --raw 'blitz dev' 'quirrel'",
