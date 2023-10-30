@@ -155,7 +155,7 @@ Graph.getLayout = (page) => (
           property="og:description"
           content="Step by step publishing of your research, with a new publishing format: Research modules."
         />
-        <meta property="og:image" content="https://og-images.herokuapp.com/api/researchequals" />
+        {/* <meta property="og:image" content="https://og-images.herokuapp.com/api/researchequals" /> */}
         <meta
           property="og:image:alt"
           content="Screenshot of the homepage of ResearchEquals.com, including the description and a sign up button for release updates."
