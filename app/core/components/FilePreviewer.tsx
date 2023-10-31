@@ -59,10 +59,8 @@ const MainFileViewer = ({ mainFile, module }) => {
           {isMarkdown && (
             <div className="coc">
               <ReactMarkdown
-                // remarkPlugins={[remarkGfm, remarkMath]}
-                remarkPlugins={[remarkGfm]}
-                // rehypePlugins={[rehypeKatex as any]}
-                rehypePlugins={[[rehypeExternalLinks, { rel: ["nofollow"] }]]}
+                remarkPlugins={[remarkGfm, remarkMath]}
+                rehypePlugins={[rehypeKatex, [rehypeExternalLinks, { rel: ["nofollow"] }]]}
                 components={{
                   code({ node, className, children, ...props }) {
                     const match = /language-(\w+)/.exec(className || "")
