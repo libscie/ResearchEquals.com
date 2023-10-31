@@ -16,11 +16,15 @@
           "cpu": 0.5,
           "memory": 1024,
           "domain": "www.researchequals.com",
+          "buildType": "nixpacks",
           "minInstances": 1,
           "maxInstances": 1,
           "buildCommand": "npx blitz prisma migrate deploy && npx blitz db seed && npm run build",
           "startCommand": "quirrel ci && npm run start:production",
           "envVariables": {
+            "NIXPACKS_VERSION": "1.18.0",
+            "NIXPACKS_PKGS": "python39,gnumake,gcc9",
+            "NIXPACKS_PYTHON_VERSION": "3.9",
             "ALGOLIA_API_ADMIN_KEY": {
               "fromParameterStore": "ALGOLIA_API_ADMIN_KEY"
             },
@@ -100,7 +104,7 @@
           "type": "rds",
           "engine": "postgres",
           "engineVersion": "13",
-          "instanceSize": "db.t3.small",
+          "instanceSize": "db.t4g.small",
           "storage": 100,
           "maxStorage": 1000,
           "private": false,

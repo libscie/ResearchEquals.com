@@ -68,7 +68,7 @@ const ModuleEdit = ({
   const [moduleEdit, { refetch, setQueryData }] = useQuery(
     useCurrentModule,
     { suffix: module.suffix! },
-    { refetchOnWindowFocus: false }
+    { refetchOnWindowFocus: false },
   )
 
   const mainFile = moduleEdit!.main as Prisma.JsonObject
@@ -96,7 +96,7 @@ const ModuleEdit = ({
         title: z.string().max(300),
         description: z.string(),
         license: z.string().min(1),
-      })
+      }),
     ),
     onSubmit: async (values) => {
       const updatedModule = await editModuleScreenMutation({
@@ -122,7 +122,7 @@ const ModuleEdit = ({
   }, [moduleEdit])
 
   const ownAuthorship = moduleEdit?.authors.find(
-    (author) => author.workspace?.handle === workspace?.handle
+    (author) => author.workspace?.handle === workspace?.handle,
   )
 
   return (
@@ -183,7 +183,7 @@ const ModuleEdit = ({
                               loading: "Loading",
                               success: "Version approved for publication",
                               error: "Uh-oh something went wrong.",
-                            }
+                            },
                           )
                           .then(async (data) => await setQueryData(data))
                       }}
@@ -268,7 +268,7 @@ const ModuleEdit = ({
                             loading: "Adding link...",
                             success: `Linked to: "${item.name}"`,
                             error: "Failed to add link...",
-                          }
+                          },
                         )
                         .then((data) => setQueryData(data))
                     },
@@ -310,7 +310,7 @@ const ModuleEdit = ({
                                           loading: "Searching...",
                                           success: "Record added to database",
                                           error: "Could not add record.",
-                                        }
+                                        },
                                       )
                                       .then(async (data) => {
                                         await toast
@@ -323,7 +323,7 @@ const ModuleEdit = ({
                                               loading: "Adding link...",
                                               success: `Linked to: "${data.title}"`,
                                               error: "Failed to add link...",
-                                            }
+                                            },
                                           )
                                           .then((info) => setQueryData(info))
                                       })
@@ -477,7 +477,7 @@ const ModuleEdit = ({
                             loading: "Adding reference...",
                             success: "Added reference!",
                             error: "Failed to add reference...",
-                          }
+                          },
                         )
                         .then((data) => setQueryData(data))
                     }
@@ -527,7 +527,7 @@ const ModuleEdit = ({
                                         loading: "Searching...",
                                         success: "Reference added to database",
                                         error: "Could not add reference.",
-                                      }
+                                      },
                                     )
                                     .then(async (data) => {
                                       await toast
@@ -540,7 +540,7 @@ const ModuleEdit = ({
                                             loading: "Adding reference...",
                                             success: "Added reference!",
                                             error: "Failed to add reference...",
-                                          }
+                                          },
                                         )
                                         .then(async (data) => {
                                           await setQueryData(data)
@@ -566,7 +566,7 @@ const ModuleEdit = ({
             />
           </div>
           <ol className="text-normal my-4 list-outside list-decimal pl-4">
-            {moduleEdit?.references!.map((reference) => (
+            {moduleEdit?.references.map((reference) => (
               <>
                 <li>
                   <button className="mx-2">
@@ -584,7 +584,7 @@ const ModuleEdit = ({
                               loading: "Deleting reference...",
                               success: `Removed reference: "${reference.title}"`,
                               error: "Failed to delete reference...",
-                            }
+                            },
                           )
                           .then((data) => setQueryData(data))
                       }}

@@ -4,6 +4,7 @@ import remarkGfm from "remark-gfm"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { prism, a11yDark } from "react-syntax-highlighter/dist/cjs/styles/prism"
 import { useMediaPredicate } from "react-media-hook"
+import rehypeExternalLinks from "rehype-external-links"
 
 import "@react-pdf-viewer/core/lib/styles/index.css"
 import remarkMath from "remark-math"
@@ -59,12 +60,11 @@ const MainFileViewer = ({ mainFile, module }) => {
             <div className="coc">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm, remarkMath]}
-                rehypePlugins={[rehypeKatex]}
-                linkTarget="_blank"
+                rehypePlugins={[rehypeKatex, [rehypeExternalLinks, { rel: ["nofollow"] }]]}
                 components={{
-                  code({ node, inline, className, children, ...props }) {
+                  code({ node, className, children, ...props }) {
                     const match = /language-(\w+)/.exec(className || "")
-                    return !inline && match ? (
+                    return match ? (
                       <SyntaxHighlighter
                         style={prefersDarkMode ? a11yDark : prism}
                         language={match[1]}
@@ -94,13 +94,13 @@ const MainFileViewer = ({ mainFile, module }) => {
           {/* Preview Office files */}
           {(mainFile.mimeType.startsWith("application/vnd.ms-excel") ||
             mainFile.mimeType.startsWith(
-              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             ) ||
             mainFile.mimeType.startsWith(
-              "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             ) ||
             mainFile.mimeType.startsWith(
-              "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+              "application/vnd.openxmlformats-officedocument.presentationml.presentation",
             )) && (
             <iframe
               src={`https://view.officeapps.live.com/op/embed.aspx?src=${mainFile.cdnUrl}`}
