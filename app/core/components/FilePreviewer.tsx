@@ -60,6 +60,7 @@ const MainFileViewer = ({ mainFile, module }) => {
             <div className="coc">
               <ReactMarkdown
                 // remarkPlugins={[remarkGfm, remarkMath]}
+                remarkPlugins={[remarkGfm]}
                 // rehypePlugins={[rehypeKatex as any]}
                 rehypePlugins={[[rehypeExternalLinks, { rel: ["nofollow"] }]]}
                 components={{
