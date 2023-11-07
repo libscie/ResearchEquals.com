@@ -113,6 +113,9 @@
       ]
     },
     {
+      "id": "preview-envs",
+      "name": "Preview environments for ResearchEquals",
+      "region": "eu-central-1",
       "source": {
         "pr": true,
         "filter": {
@@ -204,6 +207,7 @@
         },
         {
           "id": "preview-db",
+          "name": "researchequals-preview-db",
           "type": "rds",
           "engine": "postgres",
           "engineVersion": "13",
