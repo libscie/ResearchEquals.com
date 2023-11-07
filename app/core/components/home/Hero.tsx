@@ -20,7 +20,7 @@ export const Hero = () => {
       <div className="flex flex-col items-center gap-4 px-7">
         <h1 className="max-w-5xl text-4xl font-bold text-slate-800 dark:text-white md:text-7xl md:font-extrabold">
           {/* {t("hero")} */}
-          Your research journey made visible & accessible
+          Testing Flightcontrol Preview
         </h1>
         <p className="max-w-[800px] text-base text-slate-600 dark:text-slate-300 md:text-xl">
           {/* {t("hero_subtitle")} */}
