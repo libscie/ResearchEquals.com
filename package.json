@@ -80,7 +80,7 @@
     "react-syntax-highlighter": "15.5.0",
     "react-use": "17.4.0",
     "react-xarrows": "2.0.2",
-    "recharts": "2.9.1",
+    "recharts": "2.9.3",
     "recoil": "0.7.7",
     "recoil-persist": "5.1.0",
     "rehype-external-links": "3.0.0",
