@@ -113,6 +113,8 @@ Internal coordinators are always available, external coordinators are available 
 |-------------------|-------------------|
 | Chris Hartgerink  | They/them           |
 | Vinodh Ilangovan  | They/them, he/him |
+| Maya Anderson-González  | She/her           |
+| Andrew Pua  | He/his/him |
 
 To achieve a space where everyone can be present and contribute, our protocol is set up to, if reasonably possible, grow past the issues that occur *if people are willing to*.
 
