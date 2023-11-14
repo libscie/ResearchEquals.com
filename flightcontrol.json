@@ -214,7 +214,7 @@
           "instanceSize": "db.t4g.small",
           "storage": 20,
           "maxStorage": 20,
-          "private": false,
+          "private": true,
           "deletionProtection": false
         }
       ]
