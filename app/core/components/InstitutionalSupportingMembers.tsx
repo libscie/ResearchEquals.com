@@ -3,6 +3,7 @@ import Tiu from "../icons/tiu"
 import KuLeuven from "public/images/kuleuven.png"
 import Image from "next/image"
 import Link from "next/link"
+import Vua from "../icons/vua"
 
 const InstitutionalSupportingMembers = () => {
   return (
@@ -28,6 +29,11 @@ const InstitutionalSupportingMembers = () => {
               <Tiu />
             </Link>
           </span>
+          <span className="mx-auto max-h-12">
+            <Link href="https://libscie.org/p/22f6a775-ecdd-4c21-88fc-454b3ab04582/">
+              <Vua />
+            </Link>
+          </span>
         </div>
         <div className="mt-8 flex justify-center">
           <p className="relative rounded-full bg-gray-50 px-4 py-1.5 text-sm leading-6 text-gray-600 ring-1  ring-inset ring-gray-900/5 dark:bg-gray-800 dark:text-white">
@@ -38,7 +44,7 @@ const InstitutionalSupportingMembers = () => {
               onClick={() => {
                 Crisp.chat.open()
                 Crisp.message.showText(
-                  "What would you like to know about institutional memberships?"
+                  "What would you like to know about institutional memberships?",
                 )
               }}
               className="mx-2 font-semibold text-indigo-600 dark:text-indigo-400"
