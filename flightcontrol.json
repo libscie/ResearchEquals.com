@@ -105,7 +105,7 @@
           "engine": "postgres",
           "engineVersion": "13",
           "instanceSize": "db.t4g.small",
-          "storage": 100,
+          "storage": 50,
           "maxStorage": 1000,
           "private": false,
           "deletionProtection": true
