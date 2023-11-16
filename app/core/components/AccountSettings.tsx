@@ -28,7 +28,7 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
         currentPassword: z.string(),
         newPassword: z.string(),
         newRepeat: z.string(),
-      })
+      }),
     ),
     onSubmit: async (values) => {
       if (user!.email! !== values.email) {
@@ -145,7 +145,7 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
             <input
               id="currentPassword"
               type="password"
-              autoComplete="password"
+              autoComplete="current-password"
               className="placeholder-font-normal block w-11/12 appearance-none rounded-md border border-gray-300 bg-transparent  px-3 py-2 text-sm font-normal text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500  dark:border-gray-600 dark:text-gray-200 "
               {...formik.getFieldProps("currentPassword")}
             />
@@ -168,6 +168,7 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
             <input
               id="newPassword"
               type="password"
+              autoComplete="new-password"
               className="placeholder-font-normal block w-11/12 appearance-none rounded-md border border-gray-300 bg-transparent  px-2 py-2  text-sm font-normal text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500  dark:border-gray-600 dark:text-gray-200 "
               {...formik.getFieldProps("newPassword")}
             />
