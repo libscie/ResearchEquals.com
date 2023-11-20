@@ -1,7 +1,9 @@
 # ResearchEquals.com <img src="https://ucarecdn.com/6b429a46-7b66-4f4a-9f8c-13338fb438c2/RBadgegh.png" align="right" height="64" />
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-35-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Discord online](https://img.shields.io/discord/933331539276759070?label=discord&style=flat-square)](https://discord.gg/SefsGJWWSw)
@@ -12,7 +14,7 @@ ResearchEquals is deployed on a continuous basis using [Flightcontrol](https://f
 
 ## Code of Conduct
 
-You're welcome to our house in good faith – read our [code of conduct](https://www.notion.so/libscie/Code-of-Conduct-580ab64832a2478fad7d9dfad9d3da15) for the house rules applicable to all contributions. Good intent does not excuse behavior in violation of these house rules ([read more about why here](https://thebias.com/2017/09/26/how-good-intent-undermines-diversity-and-inclusion/)).
+You're welcome to our house in good faith – read our [code of conduct](https://researchequals.com/coc) for the house rules applicable to all contributions. Good intent does not excuse behavior in violation of these house rules ([read more about why here](https://thebias.com/2017/09/26/how-good-intent-undermines-diversity-and-inclusion/)).
 
 Our house may be different from yours, and if you find any of this unagreeable, that's perfectly okay, and we ask you respectfully to not contribute.
 
