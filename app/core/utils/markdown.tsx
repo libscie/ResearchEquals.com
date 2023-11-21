@@ -4,7 +4,7 @@ export default function termsPoison() {
 
 ## 1. Scope and Applicability
 
-Liberate Science GmbH, Ebertystraße 44, 10249 Berlin, Germany ("LibScie" or "we/us/our") provides an online publishing platform for Research Modules that is accessible under [https://researchequals.com](https://researchequals.com) (the "Platform"). The ResearchEquals logo is a [Pentagram](https://pentagram.de/de/projekte/) design.
+Liberate Science GmbH (c/o ImpactHub), Rollbergstraße 28A, 12053 Berlin, Germany ("LibScie" or "we/us/our") provides an online publishing platform for Research Modules that is accessible under [https://researchequals.com](https://researchequals.com) (the "Platform"). The ResearchEquals logo is a [Pentagram](https://pentagram.de/de/projekte/) design.
 
 These Terms of Use ("the Terms") guide the legal relationship between LibScie and the User ("the Agreement") and apply to all (especially legal binding) actions of the User and LibScie on or in connection with the Platform, including the registration of a User Account on the Platform.
 
@@ -290,13 +290,13 @@ If the user acts as a Consumer, the User has a fourteen-day right of withdrawal.
 
 5. Information about LibScie:
 
-   Liberate Science GmbH Ebertystraße 44, 10249 Berlin, Germany, info@libscie.org;
+Liberate Science GmbH (c/o ImpactHub), Rollbergstraße 28A, 12053 Berlin, Germany, info@libscie.org;
 
    Registered at Amtsgericht Charlottenburg (Berlin), HRB 211 450, VAT ID DE326772207, EORI DE804962659955787;
 
    Legal Representative: Chris Hartgerink
 
-Berlin, February 2023
+Berlin, December 2023
 
 # Poison Pill Agreement
 
@@ -306,7 +306,7 @@ the Supporting Member signing up for the Supporting Membership (the “Supportin
 
 and
 
-Liberate Science GmbH, Ebertystraße 44, 10249 Berlin, Germany (“LibScie”)
+Liberate Science GmbH (c/o ImpactHub), Rollbergstraße 28A, 12053 Berlin, Germany (“LibScie”)
 
 and
 
@@ -358,6 +358,6 @@ Each new Shareholder shall enter into this Agreement in the role of a Shareholde
 
 This Agreement enters in force with the conclusion of the Agreement between LibScie and the Supporting Member under the Terms and remains in force until the Supporting Member or LibScie terminates the Agreement.
 
-Berlin, February 2023
+Berlin, December 2023
 `
 }

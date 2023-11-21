@@ -21,7 +21,7 @@ the Supporting Member signing up for the Supporting Membership (the “Supportin
 
 and
 
-Liberate Science GmbH, Ebertystraße 44, 10249 Berlin, Germany (“LibScie”)
+Liberate Science GmbH (c/o ImpactHub), Rollbergstraße 28A, 12053 Berlin, Germany (“LibScie”)
 
 and
 
@@ -73,7 +73,7 @@ Each new Shareholder shall enter into this Agreement in the role of a Shareholde
 
 This Agreement enters in force with the conclusion of the Agreement between LibScie and the Supporting Member under the Terms and remains in force until the Supporting Member or LibScie terminates the Agreement.
 
-Berlin, February 2023
+Berlin, December 2023
 `
 
 const md = new Markdown()
