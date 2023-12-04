@@ -21,7 +21,7 @@ You have the right to withdraw from this contract within 14 days without giving 
 
 The withdrawal period is 14 days from the day of the conclusion of the contract.
 
-In order to exercise your right of withdrawal, you must inform us (Liberate Science GmbH, Ebertystraße 44, 10249 Berlin , Germany, info@libscie.org) by means of a clear declaration (e.g. a letter sent by post, fax or e-mail) of your decision to withdraw from this contract. For this purpose, you may use the enclosed sample withdrawal form, which, however, is not mandatory.
+In order to exercise your right of withdrawal, you must inform us (Liberate Science GmbH (c/o ImpactHub), Rollbergstraße 28A, 12053 Berlin, Germany, info@libscie.org) by means of a clear declaration (e.g. a letter sent by post, fax or e-mail) of your decision to withdraw from this contract. For this purpose, you may use the enclosed sample withdrawal form, which, however, is not mandatory.
 
 In order to comply with the withdrawal period, it is sufficient that you send the notification of the exercise of the right of withdrawal before the expiry of the withdrawal period.
 
@@ -39,7 +39,7 @@ Your right to revoke the contract exists independently of any warranty claims in
 
 (If you wish to withdraw from the contract, please fill out and return this form).
 
-- To Liberate Science GmbH, Ebertystraße 44, 10249 Berlin , Germany, info@libscie.org:
+- To Liberate Science GmbH (c/o ImpactHub), Rollbergstraße 28A, 12053 Berlin, Germany, info@libscie.org:
 - I/we (+) hereby withdraw the contract concluded by me/us (+) for the purchase of the following goods (+)/the provision of the following service (+):
 - Ordered on (+)/received on (+):
 - Name of the consumer(s):

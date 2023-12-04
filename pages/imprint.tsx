@@ -46,8 +46,9 @@ const Imprint: BlitzPage = () => {
                       Liberate Science GmbH
                     </Link>
                   </p>
-                  <p>Ebertystraße 44</p>
-                  <p>10249 Berlin (Germany)</p>
+                  <p>c/o ImpactHub</p>
+                  <p>Rollbergstraße 28A</p>
+                  <p>12053 Berlin (Germany)</p>
                 </>
               </div>
             </article>

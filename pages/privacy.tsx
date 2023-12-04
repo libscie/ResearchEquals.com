@@ -15,15 +15,17 @@ import getInvitedModules from "app/workspaces/queries/getInvitedModules"
 const privacyMarkdown = `
 # Privacy policy
 
-Liberate Science GmbH, Ebertystraße 44, 10249 Berlin (Germany) (“we”), operates the website ”ResearchEquals” (the “Platform or the “Site”), accessible at [https://researchequals.com](https://researchequals.com/). With this privacy policy, we inform you about the personal data we collect when you visit our Site and how we process it. Thereby, we also fulfil our obligation to inform you pursuant to Article 13 General Data Protection Regulation (GDPR).
+Liberate Science GmbH (c/o ImpactHub), Rollbergstraße 28A, 12053 Berlin, Germany (“we”), operates the website ”ResearchEquals” (the “Platform or the “Site”), accessible at [https://researchequals.com](https://researchequals.com/). With this privacy policy, we inform you about the personal data we collect when you visit our Site and how we process it. Thereby, we also fulfil our obligation to inform you pursuant to Article 13 General Data Protection Regulation (GDPR).
 
 ## I. Identity of the controller
 
 Liberate Science GmbH
 
-Ebertystraße 44
+c/o ImpactHub
 
-10249 Berlin (Germany)
+Rollbergstraße 28A
+
+12053 Berlin, Germany
 
 [info@libscie.org](mailto:info@libscie.org)
 
