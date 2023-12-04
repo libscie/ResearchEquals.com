@@ -88,7 +88,7 @@
     "remark-gfm": "4.0.0",
     "remark-math": "6.0.0",
     "secure-password": "4.0.0",
-    "stripe": "14.4.0",
+    "stripe": "14.7.0",
     "tailwindcss": "3.3.5",
     "typescript": "~5.2",
     "xast-util-to-xml": "4.0.0",
