@@ -45,6 +45,7 @@
     "autoprefixer": "10.4.16",
     "axios": "1.6.1",
     "blitz": "2.0.0-beta.35",
+    "classnames": "2.3.2",
     "concurrently": "8.2.2",
     "crisp-sdk-web": "1.0.21",
     "dagre": "0.8.5",
