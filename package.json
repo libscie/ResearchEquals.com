@@ -99,7 +99,7 @@
     "@testing-library/jest-dom": "6.1.4",
     "@testing-library/react": "14.1.2",
     "@testing-library/react-hooks": "8.0.1",
-    "@types/jest": "29.5.8",
+    "@types/jest": "29.5.10",
     "@types/node": "20.10.3",
     "@types/react": "18.2.41",
     "@types/unist": "3.0.2",
