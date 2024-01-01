@@ -41,7 +41,7 @@
     "@react-pdf-viewer/core": "3.12.0",
     "@tailwindcss/forms": "0.5.7",
     "@uploadcare/react-widget": "2.4.5",
-    "algoliasearch": "4.20.0",
+    "algoliasearch": "4.22.0",
     "autoprefixer": "10.4.16",
     "axios": "1.6.2",
     "blitz": "2.0.0-beta.36",
