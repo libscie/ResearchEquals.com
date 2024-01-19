@@ -1,13 +1,10 @@
 import { gSSP } from "app/blitz-server"
-import Link from "next/link"
-import { Routes } from "@blitzjs/next"
 import { useRouter } from "next/router"
 import { useQuery, useInfiniteQuery, useMutation } from "@blitzjs/rpc"
 import { useSession } from "@blitzjs/auth"
 import Layout from "app/core/layouts/Layout"
 import React, { useEffect, useState } from "react"
 import toast from "react-hot-toast"
-import { ArrowUp, ArrowDown } from "@carbon/icons-react"
 import useWindowSize from "react-use/lib/useWindowSize"
 import Confetti from "react-confetti"
 import Image from "next/image"
@@ -17,7 +14,6 @@ import Navbar from "app/core/components/Navbar"
 import OnboardingQuests from "app/core/components/OnboardingQuests"
 import getFeed from "app/workspaces/queries/getFeed"
 import generateSignature from "app/signature"
-import WhoToFollow from "app/core/components/WhoToFollow"
 import LayoutLoader from "app/core/components/LayoutLoader"
 import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
@@ -63,32 +59,6 @@ const DashboardContent = ({
   const [celebrate, setCelebrate] = useState(false)
   const [upgradeSupportingMutation] = useMutation(upgradeSupporting)
   const session = useSession()
-
-  const stats = [
-    {
-      name: "Drafts",
-      stat: data.draftModules.length,
-      change: data.draftPercentage,
-      to: Routes.DraftsPage(),
-    },
-    {
-      name: "Invitations",
-      stat: data.invitedModules.length,
-      change: data.invitedPercentage,
-      to: Routes.InvitationsPage(),
-    },
-    {
-      name: "My Modules",
-      stat: data.myPublishedModules.length,
-      change: data.modulesPercentage,
-      to: Routes.HandlePage({ handle: ownWorkspace.handle }),
-    },
-    {
-      name: "Followers",
-      stat: data.workspace.followers.length,
-      to: "#",
-    },
-  ]
 
   useEffect(() => {
     if (query.authError) {
@@ -165,109 +135,6 @@ const DashboardContent = ({
                 refetch={refetchAll}
               />
             </div>
-            <dl className="mt-2 flex divide-x divide-gray-100  overflow-hidden rounded border-gray-100 text-gray-900 shadow dark:divide-gray-600 dark:border dark:border-gray-600 dark:text-gray-200 md:grid-cols-3">
-              {stats.map((item) => {
-                if (item.name === "Followers") {
-                  return (
-                    <button
-                      key={item.name}
-                      className="flex-grow px-4 py-5 text-left hover:bg-gray-50 disabled:opacity-50 dark:hover:bg-gray-800 sm:p-6"
-                      disabled={item.stat === 0}
-                      onClick={() => {
-                        setViewFollowers(true)
-                      }}
-                    >
-                      <dt className="text-base font-normal">{item.name}</dt>
-                      <dd className="mt-1 flex items-baseline justify-between md:block lg:flex">
-                        <div className="flex items-baseline text-2xl font-semibold text-indigo-600 dark:text-indigo-200">
-                          {item.stat}
-                          {item.change ? (
-                            <p
-                              className={classNames(
-                                item.change === Infinity
-                                  ? "hidden"
-                                  : item.change > 0
-                                  ? "text-emerald-700 dark:text-emerald-500"
-                                  : "text-red-700 dark:text-red-500",
-                                "ml-2 flex items-baseline text-sm font-semibold"
-                              )}
-                            >
-                              {item.change > 0 ? (
-                                <ArrowUp
-                                  size={32}
-                                  className="h-5 w-5 shrink-0 self-center text-emerald-500"
-                                  aria-hidden="true"
-                                />
-                              ) : (
-                                <ArrowDown
-                                  size={32}
-                                  className="h-5 w-5 shrink-0 self-center text-red-500"
-                                  aria-hidden="true"
-                                />
-                              )}
-                              <span className="sr-only">
-                                {item.change > 0 ? "Increased" : "Decreased"} by
-                              </span>
-                              {item.change}%
-                            </p>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </dd>
-                    </button>
-                  )
-                } else {
-                  return (
-                    <Link key={item.name} href={item.to} legacyBehavior>
-                      <button
-                        className="flex-grow px-4 py-5 text-left hover:bg-gray-50 disabled:opacity-50 dark:hover:bg-gray-800 sm:p-6"
-                        disabled={item.stat === 0}
-                      >
-                        <dt className="text-base font-normal">{item.name}</dt>
-                        <dd className="mt-1 flex items-baseline justify-between md:block lg:flex">
-                          <div className="flex items-baseline text-2xl font-semibold text-indigo-600 dark:text-indigo-200">
-                            {item.stat}
-                            {item.change ? (
-                              <p
-                                className={classNames(
-                                  item.change === Infinity
-                                    ? "hidden"
-                                    : item.change > 0
-                                    ? "text-emerald-700 dark:text-emerald-500"
-                                    : "text-red-700 dark:text-red-500",
-                                  "ml-2 flex items-baseline text-sm font-semibold"
-                                )}
-                              >
-                                {item.change > 0 ? (
-                                  <ArrowUp
-                                    size={32}
-                                    className="h-5 w-5 shrink-0 self-center text-emerald-500"
-                                    aria-hidden="true"
-                                  />
-                                ) : (
-                                  <ArrowDown
-                                    size={32}
-                                    className="h-5 w-5 shrink-0 self-center text-red-500"
-                                    aria-hidden="true"
-                                  />
-                                )}
-                                <span className="sr-only">
-                                  {item.change > 0 ? "Increased" : "Decreased"} by
-                                </span>
-                                {item.change}%
-                              </p>
-                            ) : (
-                              ""
-                            )}
-                          </div>
-                        </dd>
-                      </button>
-                    </Link>
-                  )
-                }
-              })}
-            </dl>
           </div>
           <ViewFollowers
             viewAuthorsOpen={viewFollowers}
@@ -286,18 +153,6 @@ const DashboardContent = ({
                 isFetchingNextPage={isFetchingNextPage}
               />
             </div>
-            {data.followableWorkspaces.length > 0 ? (
-              <div className="mb-16">
-                <WhoToFollow
-                  data={data}
-                  workspace={ownWorkspace}
-                  refetch={refetch}
-                  refetchFeed={refetchWorkspace}
-                />
-              </div>
-            ) : (
-              ""
-            )}
           </div>
         </div>
       </>
@@ -316,7 +171,6 @@ const Dashboard = ({ expire, signature }) => {
   // TODO: Add user select
   const [data, { refetch }] = useQuery(getDashboardData, {
     session: session.userId ? session : { ...session, userId: undefined },
-    changeDays: 7,
   })
 
   return (
