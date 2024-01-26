@@ -168,10 +168,7 @@ export default CronJob(
           await sendDigest(
             {
               title: "ResearchEquals weekly",
-              name:
-                workspace.name ||
-                `${workspace.firstName} ${workspace.lastName}` ||
-                `@${workspace.handle}`,
+              name: workspace.name || workspace.firstName || `@${workspace.handle}`,
               week: getWeekNumber(datetime),
               year: datetime.getFullYear(),
               modules: newModules.map((module) => {
@@ -203,10 +200,10 @@ export default CronJob(
               product_name: "ResearchEquals",
               company_name: "Liberate Science GmbH",
             },
-            member.user!.email
+            member.user!.email,
           )
         }
       })
     })
-  }
+  },
 )
