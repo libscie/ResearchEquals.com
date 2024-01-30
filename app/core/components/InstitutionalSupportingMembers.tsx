@@ -1,6 +1,7 @@
 import { Crisp } from "crisp-sdk-web"
 import Tiu from "../icons/tiu"
 import KuLeuven from "public/images/kuleuven.png"
+import Oscl from "public/images/oscl.png"
 import Image from "next/image"
 import Link from "next/link"
 import Vua from "../icons/vua"
@@ -17,7 +18,7 @@ const InstitutionalSupportingMembers = () => {
             <Link href="https://libscie.org/p/07ea9ef1-2a67-4cb3-b034-2f19bc18eae2/">
               <Image
                 src={KuLeuven}
-                alt="A diagram showing connections among research modules"
+                alt="The KU Leuven logo"
                 // layout="responsive"
                 width={136}
                 height={100}
@@ -32,6 +33,17 @@ const InstitutionalSupportingMembers = () => {
           <span className="mx-auto max-h-12">
             <Link href="https://libscie.org/p/22f6a775-ecdd-4c21-88fc-454b3ab04582/">
               <Vua />
+            </Link>
+          </span>
+          <span className="mx-auto max-h-12 dark:invert">
+            <Link href="https://libscie.org/open-science-community-leiden/">
+              <Image
+                src={Oscl}
+                alt="The Open Science Community Leiden logo"
+                // layout="responsive"
+                width={136}
+                height={100}
+              />
             </Link>
           </span>
         </div>
