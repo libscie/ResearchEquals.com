@@ -43,7 +43,7 @@
     "@uploadcare/react-widget": "2.4.5",
     "algoliasearch": "4.20.0",
     "autoprefixer": "10.4.16",
-    "axios": "1.6.2",
+    "axios": "1.6.7",
     "blitz": "2.0.0-beta.36",
     "classnames": "2.3.2",
     "concurrently": "8.2.2",
