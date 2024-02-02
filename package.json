@@ -36,7 +36,7 @@
     "@blitzjs/rpc": "2.0.0-beta.36",
     "@carbon/icons-react": "11.34.1",
     "@faker-js/faker": "8.4.0",
-    "@headlessui/react": "1.7.17",
+    "@headlessui/react": "1.7.18",
     "@prisma/client": "5.6.0",
     "@react-pdf-viewer/core": "3.12.0",
     "@tailwindcss/forms": "0.5.7",
