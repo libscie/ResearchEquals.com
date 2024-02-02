@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import { sendInvitation } from "app/postmark"
 import { Queue } from "quirrel/next"
 import db from "../../db"
