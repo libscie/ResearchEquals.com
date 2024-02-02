@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+
 import { acceptSubmission, rejectSubmission } from "app/postmark"
 import { Queue } from "quirrel/next"
 import db from "../../db"
@@ -71,7 +73,7 @@ export default Queue("api/collection-rejected-mailer", async (submissionId: numb
           product_name: "ResearchEquals",
           company_name: "Liberate Science GmbH",
         },
-        member.user?.email
+        member.user?.email,
       )
     }
   })

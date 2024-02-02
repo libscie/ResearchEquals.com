@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import algoliasearch from "algoliasearch"
@@ -43,5 +44,5 @@ export default resolver.pipe(
     } else {
       return false
     }
-  }
+  },
 )

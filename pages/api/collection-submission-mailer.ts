@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import { sendCollectionSubmission } from "app/postmark"
 import { Queue } from "quirrel/next"
 import db from "../../db"
@@ -55,7 +56,7 @@ export default Queue("api/collection-submission-mailer", async (submissionId: nu
             product_name: "ResearchEquals",
             company_name: "Liberate Science GmbH",
           },
-          member.user?.email
+          member.user?.email,
         )
       }
     })

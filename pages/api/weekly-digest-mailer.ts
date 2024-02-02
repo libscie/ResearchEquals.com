@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import db from "db"
 import { CronJob } from "quirrel/blitz"
 import { sendDigest } from "app/postmark"
