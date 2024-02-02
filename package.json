@@ -101,7 +101,7 @@
     "@testing-library/react": "14.1.2",
     "@testing-library/react-hooks": "8.0.1",
     "@types/jest": "29.5.11",
-    "@types/node": "20.10.3",
+    "@types/node": "20.11.16",
     "@types/react": "18.2.41",
     "@types/unist": "3.0.2",
     "@types/xast": "2.0.3",
