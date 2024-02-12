@@ -20,7 +20,7 @@ Our house may be different from yours, and if you find any of this unagreeable, 
 
 ## Development
 
-Development for this project uses `node` version 16. Please make sure you are using this version.
+Development for this project uses `node` version 18. Please make sure you are using this version.
 
 Please clone the repository and make sure you have [BlitzJS](https://www.blitzjs.com/) installed:
 
