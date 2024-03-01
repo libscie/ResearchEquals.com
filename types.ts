@@ -11,7 +11,7 @@ declare module "@blitzjs/auth" {
     isAuthorized: SimpleRolesIsAuthorized<Role>
     PublicData: {
       userId: User["id"]
-      roles: Array<Role>
+      role: Role
       workspaceId?: Workspace["id"]
     }
   }

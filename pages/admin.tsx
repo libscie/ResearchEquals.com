@@ -112,7 +112,7 @@ const Admin: BlitzPage = () => {
                 actionIdx === actions.length - 1
                   ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
                   : "",
-                "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500"
+                "group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500",
               )}
             >
               <div>
@@ -120,7 +120,7 @@ const Admin: BlitzPage = () => {
                   className={classNames(
                     action.iconBackground,
                     action.iconForeground,
-                    "inline-flex rounded-lg p-3 ring-4 ring-white"
+                    "inline-flex rounded-lg p-3 ring-4 ring-white",
                   )}
                 >
                   <action.icon className="h-6 w-6" aria-hidden="true" />
