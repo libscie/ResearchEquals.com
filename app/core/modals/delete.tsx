@@ -22,7 +22,7 @@ export default function DeleteModal() {
   return (
     <>
       <h3 className="text-sm font-medium text-gray-900 dark:text-gray-200">Delete your account</h3>
-      <div className="flex w-11/12">
+      <div className="flex">
         <div className="">
           <div className="my-2 text-xs text-gray-900 dark:text-gray-200">
             <p>

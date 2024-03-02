@@ -233,7 +233,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               id="firstName"
               type="firstName"
               autoComplete="firstName"
-              className="placeholder-font-normal block w-11/12 appearance-none rounded border border-gray-300 bg-transparent px-3 py-2 text-sm font-normal placeholder-gray-400 focus:border-indigo-500 focus:outline-none  focus:ring-indigo-500 dark:border-gray-600 "
+              className="placeholder-font-normal block w-full appearance-none rounded border border-gray-300 bg-transparent px-3 py-2 text-sm font-normal placeholder-gray-400 focus:border-indigo-500 focus:outline-none  focus:ring-indigo-500 dark:border-gray-600 "
               defaultValue={workspaceFirstName}
               onChange={(data) => {
                 setWorkspaceFirstName(data.target.value)
@@ -253,7 +253,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               id="lastName"
               type="lastName"
               autoComplete="lastName"
-              className="placeholder-font-normal block w-11/12 appearance-none rounded border border-gray-300 bg-transparent px-3 py-2 text-sm font-normal placeholder-gray-400 focus:border-indigo-500 focus:outline-none  focus:ring-indigo-500 dark:border-gray-600 "
+              className="placeholder-font-normal block w-full appearance-none rounded border border-gray-300 bg-transparent px-3 py-2 text-sm font-normal placeholder-gray-400 focus:border-indigo-500 focus:outline-none  focus:ring-indigo-500 dark:border-gray-600 "
               defaultValue={workspaceLastName}
               onChange={(data) => {
                 setWorkspaceLastName(data.target.value)
@@ -268,7 +268,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               ? " - " + formik.errors.affiliation
               : null}
           </label>
-          <div className="mt-1 w-11/12 text-sm  font-normal text-gray-900 dark:text-gray-200">
+          <div className="mt-1 w-full text-sm  font-normal text-gray-900 dark:text-gray-200">
             {JSON.stringify(affiliations) != "[]" ? (
               <>
                 {affiliations.map((affiliation) => {
@@ -365,7 +365,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
             <textarea
               rows={4}
               id="bio"
-              className="block w-11/12 rounded border border-gray-300 bg-transparent text-gray-900 focus:border-indigo-500 focus:ring-indigo-500  dark:border-gray-600 dark:text-gray-200 sm:text-sm"
+              className="block w-full rounded border border-gray-300 bg-transparent text-gray-900 focus:border-indigo-500 focus:ring-indigo-500  dark:border-gray-600 dark:text-gray-200 sm:text-sm"
               defaultValue={workspaceBio}
               onChange={(data) => {
                 setWorkspaceBio(data.target.value)
@@ -386,7 +386,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               type="pronouns"
               autoComplete="pronouns"
               placeholder="they/them"
-              className="placeholder-font-normal block w-11/12 appearance-none rounded border border-gray-300 bg-transparent px-3 py-2 text-sm font-normal placeholder-gray-400 focus:border-indigo-500 focus:outline-none  focus:ring-indigo-500 dark:border-gray-600 "
+              className="placeholder-font-normal block w-full appearance-none rounded border border-gray-300 bg-transparent px-3 py-2 text-sm font-normal placeholder-gray-400 focus:border-indigo-500 focus:outline-none  focus:ring-indigo-500 dark:border-gray-600 "
               defaultValue={workspacePronouns}
               onChange={(data) => {
                 setWorkspacePronouns(data.target.value)
@@ -407,7 +407,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
               type="url"
               autoComplete="profileUrl"
               placeholder="https://yourname.com"
-              className=" placeholder-font-normal block w-11/12 appearance-none rounded border border-gray-300 bg-transparent px-3 py-2  text-sm font-normal placeholder-gray-400 focus:border-indigo-500 focus:outline-none  focus:ring-indigo-500 dark:border-gray-600 "
+              className=" placeholder-font-normal block w-full appearance-none rounded border border-gray-300 bg-transparent px-3 py-2  text-sm font-normal placeholder-gray-400 focus:border-indigo-500 focus:outline-none  focus:ring-indigo-500 dark:border-gray-600 "
               defaultValue={workspaceUrl}
               onChange={(data) => {
                 setWorkspaceUrl(data.target.value)

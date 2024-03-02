@@ -226,7 +226,7 @@ const NavbarDropdown = ({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="my-0 inline-block w-full transform overflow-hidden border-b bg-white text-left align-middle shadow-xl transition-all dark:border-gray-600 dark:bg-gray-900">
+              <div className="my-0 inline-block w-full transform border-b bg-white text-left align-middle shadow-xl transition-all dark:border-gray-600 dark:bg-gray-900">
                 <Dialog.Title as="h1" className="m-5 text-lg font-medium leading-6 text-gray-900">
                   <div className="px-0 pt-0 pb-0">
                     <div className="flex items-center justify-between">

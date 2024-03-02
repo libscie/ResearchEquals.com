@@ -39,6 +39,12 @@ const settingsModalAtom = atom({
   effects_UNSTABLE: [persistAtom],
 })
 
+const settingsTabAtom = atom({
+  key: "settingsTab",
+  default: ["Workspace", "Account", "Email"],
+  effects_UNSTABLE: [persistAtom],
+})
+
 const userDiscordAtom = atom({
   key: "userDiscord",
   default: true,
@@ -58,6 +64,7 @@ export {
   workspacePronounsAtom,
   workspaceUrlAtom,
   settingsModalAtom,
+  settingsTabAtom,
   userDiscordAtom,
   emailNotificationsAtom,
 }

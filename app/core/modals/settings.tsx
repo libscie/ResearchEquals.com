@@ -1,8 +1,8 @@
-import { Dialog, Transition, Tab } from "@headlessui/react"
-import { Fragment, useEffect, useState } from "react"
+import { Tab } from "@headlessui/react"
+import { useEffect, useRef } from "react"
 import { Close } from "@carbon/icons-react"
 import { useRecoilState } from "recoil"
-import { emailNotificationsAtom, settingsModalAtom } from "../utils/Atoms"
+import { emailNotificationsAtom, settingsTabAtom } from "../utils/Atoms"
 
 import WorkspaceSettings from "../components/WorkspaceSettings"
 import AccountSettings from "../components/AccountSettings"
@@ -13,8 +13,7 @@ function classNames(...classes) {
 }
 
 export default function SettingsModal({ button, styling, user, workspace }) {
-  let [isOpen, setIsOpen] = useRecoilState(settingsModalAtom)
-  let [categories] = useState(["Workspace", "Account", "Emails"])
+  let [categories] = useRecoilState(settingsTabAtom)
   const [emailNotifications, setEmailNotifications] = useRecoilState(emailNotificationsAtom)
   let x = user.memberships.map((membership) => {
     return {
@@ -33,115 +32,79 @@ export default function SettingsModal({ button, styling, user, workspace }) {
         ...x,
       })
     }
-  }, [])
+  }, [setEmailNotifications, emailNotifications, x])
+
+  const dialogRef = useRef<HTMLDialogElement | null>(null)
+  const showModal = (value) => {
+    if (value) {
+      return dialogRef?.current?.showModal()
+    }
+    if (!value) {
+      return dialogRef?.current?.close()
+    }
+  }
+
   return (
     <>
-      <button
-        type="button"
-        onClick={() => {
-          setIsOpen(true)
-        }}
-        className={styling}
-      >
+      <button type="button" onClick={() => showModal(true)} className={styling}>
         {button}
       </button>
-
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog
-          as="div"
-          className="fixed inset-0 z-10 overflow-y-auto"
-          onClose={() => {
-            setIsOpen(false)
-          }}
+      <dialog
+        ref={dialogRef}
+        className="fixed inset-0 z-10 bg-transparent border-gray-300 w-full sm:w-max"
+        onMouseDown={(e) => {
+          e.target == dialogRef.current && showModal(false)
+        }}
+      >
+        <div
+          id="dialog-container"
+          className="fixed sm:relative top-0 sm:top-auto w-full inset-0 sm:inset-auto sm:min-w-120 sm:max-w-120
+              inline-block min-h-screen rounded border border-gray-300 bg-white text-left align-middle text-gray-900 shadow dark:border-gray-600 dark:bg-gray-900 sm:min-h-full sm:w-auto"
         >
-          <div className="min-h-screen text-center">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <Dialog.Overlay className="fixed inset-0 bg-gray-900 bg-opacity-25 transition-opacity" />
-            </Transition.Child>
-
-            {/* This element is to trick the browser into centering the modal contents. */}
-            <span
-              className="hidden h-screen max-h-screen align-middle sm:inline-block"
-              aria-hidden="true"
-            >
-              &#8203;
-            </span>
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
-            >
-              <div className="sm:min-w-120 sm:max-w-120 inline-block min-h-screen  w-full transform rounded  border border-gray-300 bg-white text-left align-middle text-gray-900 shadow transition-all dark:border-gray-600 dark:bg-gray-900 sm:min-h-full sm:w-auto">
-                <div className="sm:w-120">
-                  <Tab.Group>
-                    <Dialog.Title
-                      as="div"
-                      className="sticky top-0 rounded-t border-b border-gray-300 bg-white text-sm font-normal leading-5 text-gray-900 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-200"
-                    >
-                      <h1 className="p-2 px-2 text-lg font-medium leading-7 text-gray-900 dark:text-gray-200 sm:hidden">
-                        Settings
-                      </h1>
-                      <Tab.List className="z-10 flex space-x-1 rounded-t bg-white p-1 dark:bg-gray-900">
-                        {categories.map((category) => (
-                          <Tab
-                            key={category}
-                            className={({ selected }) =>
-                              classNames(
-                                "w-full py-2",
-                                "rounded ring-transparent ring-opacity-60 ring-offset-2 ring-offset-indigo-400 focus:outline-none focus:ring-2",
-                                selected
-                                  ? "bg-gray-100 dark:bg-gray-800"
-                                  : "hover:bg-gray-100 dark:hover:bg-gray-800"
-                              )
-                            }
-                          >
-                            {category}
-                          </Tab>
-                        ))}
-                        <button className="inline-flex items-center justify-center  rounded-md p-2 text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 dark:text-gray-500 dark:hover:text-gray-300">
-                          <span className="sr-only">Close menu</span>
-                          <Close
-                            size={32}
-                            className="h-6 w-6"
-                            aria-hidden="true"
-                            onClick={() => {
-                              setIsOpen(false)
-                            }}
-                          />
-                        </button>
-                      </Tab.List>
-                    </Dialog.Title>
-
-                    <Tab.Panels className="mt-2 mb-0">
-                      <Tab.Panel key="workspace-panel" className="">
-                        <WorkspaceSettings workspace={workspace} setIsOpen={setIsOpen} />
-                      </Tab.Panel>
-                      <Tab.Panel key="account-panel" className="">
-                        <AccountSettings user={user} setIsOpen={setIsOpen} />
-                      </Tab.Panel>
-                      <Tab.Panel key="emails-panel" className="">
-                        <EmailSettings user={user} setIsOpen={setIsOpen} />
-                      </Tab.Panel>
-                    </Tab.Panels>
-                  </Tab.Group>
-                </div>
-              </div>
-            </Transition.Child>
-          </div>
-        </Dialog>
-      </Transition>
+          <Tab.Group>
+            <div className="sticky top-0 rounded-t border-b border-gray-300 bg-white text-sm font-normal leading-5 text-gray-900 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-200">
+              <Tab.List className="z-10 flex space-x-1 rounded-t bg-white p-1 dark:bg-gray-900">
+                {categories.map((category) => (
+                  <Tab
+                    key={category}
+                    className={({ selected }) =>
+                      classNames(
+                        "w-full py-2",
+                        "rounded ring-transparent ring-opacity-60 ring-offset-2 ring-offset-indigo-400 focus:outline-none focus:ring-2",
+                        selected
+                          ? "bg-gray-100 dark:bg-gray-800"
+                          : "hover:bg-gray-100 dark:hover:bg-gray-800",
+                      )
+                    }
+                  >
+                    {category}
+                  </Tab>
+                ))}
+                <button className="inline-flex items-center justify-center  rounded-md p-2 text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 dark:text-gray-500 dark:hover:text-gray-300">
+                  <span className="sr-only">Close menu</span>
+                  <Close
+                    size={32}
+                    className="h-6 w-6"
+                    aria-hidden="true"
+                    onClick={() => showModal(false)}
+                  />
+                </button>
+              </Tab.List>
+            </div>
+            <Tab.Panels className="mt-2 mb-0 px-2">
+              <Tab.Panel key="workspace-panel">
+                <WorkspaceSettings workspace={workspace} setIsOpen={showModal} />
+              </Tab.Panel>
+              <Tab.Panel key="account-panel">
+                <AccountSettings user={user} setIsOpen={showModal} />
+              </Tab.Panel>
+              <Tab.Panel key="emails-panel">
+                <EmailSettings user={user} setIsOpen={showModal} />
+              </Tab.Panel>
+            </Tab.Panels>
+          </Tab.Group>
+        </div>
+      </dialog>
     </>
   )
 }

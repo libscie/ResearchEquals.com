@@ -58,7 +58,7 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
         <h3 className="text-sm font-medium text-gray-900 dark:text-gray-200">
           Supporting membership
         </h3>
-        <div className="flex w-11/12">
+        <div className="flex w-full">
           <div className="">
             <div className="my-2 text-xs text-gray-900 dark:text-gray-200">
               <p>
@@ -119,10 +119,10 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
             Email address{" "}
             {formik.touched.email && formik.errors.email ? " - " + formik.errors.email : null}
           </label>
-          <div className="max-w-11/12 mt-1">
+          <div className="max-w-full mt-1">
             <input
               id="email"
-              className="placeholder-font-normal block w-11/12 appearance-none rounded-md border border-gray-300 bg-transparent  px-3 py-2 text-sm font-normal text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500  dark:border-gray-600 dark:text-gray-200 "
+              className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-300 bg-transparent  px-3 py-2 text-sm font-normal text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500  dark:border-gray-600 dark:text-gray-200 "
               {...formik.getFieldProps("email")}
             />
             <p className="my-1 text-xs text-gray-900 dark:text-gray-200">
@@ -146,7 +146,7 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
               id="currentPassword"
               type="password"
               autoComplete="current-password"
-              className="placeholder-font-normal block w-11/12 appearance-none rounded-md border border-gray-300 bg-transparent  px-3 py-2 text-sm font-normal text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500  dark:border-gray-600 dark:text-gray-200 "
+              className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-300 bg-transparent  px-3 py-2 text-sm font-normal text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500  dark:border-gray-600 dark:text-gray-200 "
               {...formik.getFieldProps("currentPassword")}
             />
           </div>
@@ -169,7 +169,7 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
               id="newPassword"
               type="password"
               autoComplete="new-password"
-              className="placeholder-font-normal block w-11/12 appearance-none rounded-md border border-gray-300 bg-transparent  px-2 py-2  text-sm font-normal text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500  dark:border-gray-600 dark:text-gray-200 "
+              className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-300 bg-transparent  px-2 py-2  text-sm font-normal text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500  dark:border-gray-600 dark:text-gray-200 "
               {...formik.getFieldProps("newPassword")}
             />
           </div>
@@ -188,7 +188,7 @@ const WorkspaceSettings = ({ user, setIsOpen }) => {
             <input
               id="newRepeat"
               type="password"
-              className="placeholder-font-normal block w-11/12 appearance-none rounded-md border border-gray-300 bg-transparent  px-3 py-2 text-sm font-normal text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500  dark:border-gray-600 dark:text-gray-200 "
+              className="placeholder-font-normal block w-full appearance-none rounded-md border border-gray-300 bg-transparent  px-3 py-2 text-sm font-normal text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500  dark:border-gray-600 dark:text-gray-200 "
               {...formik.getFieldProps("newRepeat")}
             />
           </div>
