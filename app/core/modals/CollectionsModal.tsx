@@ -116,7 +116,7 @@ export default function CollectionsModal({ button, styling, user, workspace }) {
                     }}
                   />
                 </button>
-                <section className="mx-auto grid grid-cols-1 overflow-hidden py-32 2xl:grid-cols-3">
+                <section className="mx-auto grid grid-cols-1 overflow-hidden py-32">
                   <div className="container col-span-1 mx-auto px-4">
                     <div className=" flex flex-wrap items-center">
                       <div className="max-w-lg pb-5 lg:p-5">
