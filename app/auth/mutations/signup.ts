@@ -85,11 +85,11 @@ export default resolver.pipe(
       }),
       ctx.session.$create({
         userId: user.id,
-        roles: [user.role, user.memberships[0]!.role],
+        role: user.role,
         workspaceId: user.memberships[0]!.workspaceId,
       }),
     ])
 
     return user
-  }
+  },
 )

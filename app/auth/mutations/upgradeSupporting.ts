@@ -15,7 +15,7 @@ const upgradeSupporting = async (input: any, ctx: Ctx) => {
   if (!user) throw new AuthenticationError()
 
   await ctx.session.$setPublicData({
-    roles: [user.role],
+    role: user.role,
   })
 
   return user

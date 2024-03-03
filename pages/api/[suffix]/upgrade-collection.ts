@@ -6,7 +6,7 @@ import db from "../../../db"
 const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession(req, res)
 
-  if (session.$publicData.roles![0] != "SUPERADMIN") {
+  if (session.$publicData.role != "SUPERADMIN") {
     return res.status(403).json({ error: `Forbidden` })
   }
 
@@ -31,7 +31,7 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
   res.end(
     JSON.stringify({
       message: `Collection ${req.query.suffix} successfully upgraded to ${type.type}`,
-    })
+    }),
   )
 }
 
