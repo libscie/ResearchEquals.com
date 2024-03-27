@@ -1,5 +1,8 @@
 {
     "translation": {
-        "hero": "Je onderzoeksreis, zichtbaar en toegankelijk"
+        "hero": "Je onderzoeksreis, zichtbaar en toegankelijk",
+        "hero_subtitle": "Sluit je aan bij een gemeenschap van onderzoekers die werken aan een nieuwe onderzoeksbeweging: open toegang, collaboratief en procesgestuurd.",
+        "secondary_cta": "Meld je aan voor ResearchEquals",
+        "primary_cta": "Publiceer openlijk met ResearchEquals"
     }
 }
