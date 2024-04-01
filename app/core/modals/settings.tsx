@@ -13,7 +13,7 @@ function classNames(...classes) {
 }
 
 export default function SettingsModal({ button, styling, user, workspace }) {
-  let [isOpen, setIsOpen] = useRecoilState(settingsModalAtom)
+  let [isOpen, setIsOpen] = useState(false)
   let [categories] = useState(["Workspace", "Account", "Emails"])
   const [emailNotifications, setEmailNotifications] = useRecoilState(emailNotificationsAtom)
   let x = user.memberships.map((membership) => {
