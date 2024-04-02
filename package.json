@@ -42,7 +42,7 @@
     "@tailwindcss/forms": "0.5.7",
     "@uploadcare/react-widget": "2.4.5",
     "algoliasearch": "4.22.1",
-    "autoprefixer": "10.4.17",
+    "autoprefixer": "10.4.19",
     "axios": "1.6.8",
     "blitz": "2.0.3",
     "classnames": "2.5.1",
