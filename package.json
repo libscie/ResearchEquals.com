@@ -22,7 +22,8 @@
   },
   "prettier": {
     "semi": false,
-    "printWidth": 100
+    "printWidth": 100,
+    "trailingComma": "es5"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
