@@ -139,12 +139,12 @@ const CollectionCard = ({ collection, isAdmin }) => {
           </div>
           {collection.type.type === "COMMUNITY" && (
             <div className="flex p-4">
-              <p className="flex-grow text-xs line-clamp-2">
+              <p className="flex-grow text-xs">
                 <span
                   dangerouslySetInnerHTML={{
                     __html: collection.description as string,
                   }}
-                  className="quilljs-collection text-gray-900 dark:text-white"
+                  className="quilljs-collection line-clamp-6 text-gray-900 dark:text-white"
                 />
               </p>
               <div className="scale-90">
