@@ -148,7 +148,7 @@ export default CronJob(
         }
         const js = {
           name: collection.title,
-          url: `https://doi.org/${process.env.DOI_PREFIX}/collections/${collection.suffix}`,
+          url: `https://doi.org/${process.env.DOI_PREFIX}/${collection.suffix}`,
           submissions,
         }
         if (js.submissions.length > 0) {
