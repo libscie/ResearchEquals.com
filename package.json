@@ -48,7 +48,7 @@
     "blitz": "2.0.3",
     "classnames": "2.5.1",
     "concurrently": "8.2.2",
-    "crisp-sdk-web": "1.0.21",
+    "crisp-sdk-web": "1.0.25",
     "dagre": "0.8.5",
     "feed": "4.2.2",
     "filesize": "10.1.1",
