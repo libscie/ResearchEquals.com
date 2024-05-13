@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { useMutation, useQuery } from "@blitzjs/rpc"
 import { Widget } from "@uploadcare/react-widget"
-import { useRef, useState } from "react"
+import { useMemo, useRef, useState } from "react"
 import { Formik, Form } from "formik"
 import {
   Building,
@@ -15,26 +15,20 @@ import {
   WatsonHealthStackedScrolling_1,
   Sprout,
 } from "@carbon/icons-react"
-import { useRecoilValue, useRecoilState } from "recoil"
+import { useRecoilState } from "recoil"
 import { smallFile } from "../utils/fileTypeLimit"
 
 import changeAvatar from "../../workspaces/mutations/changeAvatar"
 import getSignature from "../../auth/queries/getSignature"
 import QuickDraft from "../../modules/components/QuickDraft"
 import resendVerification from "../../auth/mutations/resendVerification"
-import {
-  workspaceFirstNameAtom,
-  workspaceLastNameAtom,
-  workspaceBioAtom,
-  workspacePronounsAtom,
-  workspaceUrlAtom,
-  settingsModalAtom,
-  userDiscordAtom,
-  emailNotificationsAtom,
-} from "../utils/Atoms"
+import { settingsModalAtom, userDiscordAtom, emailNotificationsAtom } from "../utils/Atoms"
 import changeEmailConsent from "../../users/mutations/changeEmailConsent"
 import CollectionsModal from "../modals/CollectionsModal"
 import SupportingMemberSignupModal from "../modals/SupportingMemberSignupModal"
+import SettingsModal from "../modals/settings"
+import { useCurrentUser } from "../hooks/useCurrentUser"
+import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
 
 const validators = [smallFile]
 
@@ -242,23 +236,23 @@ const OnboardingOrcid = ({ data }) => {
   )
 }
 
-const OnboardingProfile = ({ data }) => {
-  // State management
-  const workspaceFirstName = useRecoilValue(workspaceFirstNameAtom)
-  const workspaceLastName = useRecoilValue(workspaceLastNameAtom)
-  const workspaceBio = useRecoilValue(workspaceBioAtom)
-  const workspacePronouns = useRecoilValue(workspacePronounsAtom)
-  const workspaceUrl = useRecoilValue(workspaceUrlAtom)
-  const [settingsModal, setSettingsModal] = useRecoilState(settingsModalAtom)
+const OnboardingProfile = () => {
+  const currentUser = useCurrentUser()
+  const currentWorkspace = useCurrentWorkspace()
+
+  const isInfoMissing = useMemo(() => {
+    return (
+      !currentWorkspace.firstName ||
+      !currentWorkspace.lastName ||
+      !currentWorkspace.bio ||
+      !currentWorkspace.pronouns ||
+      !currentWorkspace.url
+    )
+  }, [currentWorkspace])
 
   return (
     <>
-      {!data.workspace.bio ||
-      !workspaceFirstName ||
-      !workspaceLastName ||
-      !workspaceBio ||
-      !workspacePronouns ||
-      !workspaceUrl ? (
+      {isInfoMissing ? (
         <div
           key="onboarding profile-onboarding-quest"
           className="onboarding my-2 flex w-full flex-col rounded-r border-l-4 border-pink-400 bg-pink-50 p-4 dark:border-pink-200 dark:bg-pink-900 lg:my-0"
@@ -282,16 +276,17 @@ const OnboardingProfile = ({ data }) => {
             </div>
           </div>
           <div className="block text-right text-pink-700 dark:text-pink-200">
-            <button
-              className="mt-3 whitespace-nowrap text-sm font-medium underline hover:text-blue-600 md:ml-6 md:mt-0"
-              onClick={() => {
-                setSettingsModal(!settingsModal)
-              }}
-            >
-              <>
-                Add information <span aria-hidden="true">&rarr;</span>
-              </>
-            </button>
+            {
+              <SettingsModal
+                button={
+                  <button className="mt-3 whitespace-nowrap text-sm font-medium underline hover:text-blue-600 md:ml-6 md:mt-0">
+                    Add information <span aria-hidden="true">&rarr;</span>
+                  </button>
+                }
+                user={currentUser}
+                workspace={currentWorkspace}
+              />
+            }
           </div>
         </div>
       ) : (

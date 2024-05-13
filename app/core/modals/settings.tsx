@@ -2,7 +2,7 @@ import { Dialog, Transition, Tab } from "@headlessui/react"
 import { Fragment, useEffect, useState } from "react"
 import { Close } from "@carbon/icons-react"
 import { useRecoilState } from "recoil"
-import { emailNotificationsAtom, settingsModalAtom } from "../utils/Atoms"
+import { emailNotificationsAtom } from "../utils/Atoms"
 
 import WorkspaceSettings from "../components/WorkspaceSettings"
 import AccountSettings from "../components/AccountSettings"
@@ -13,7 +13,7 @@ function classNames(...classes) {
 }
 
 export default function SettingsModal({ button, styling, user, workspace }) {
-  let [isOpen, setIsOpen] = useRecoilState(settingsModalAtom)
+  let [isOpen, setIsOpen] = useState(false)
   let [categories] = useState(["Workspace", "Account", "Emails"])
   const [emailNotifications, setEmailNotifications] = useRecoilState(emailNotificationsAtom)
   let x = user.memberships.map((membership) => {
