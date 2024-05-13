@@ -73,7 +73,7 @@ const WorkComment = ({ submission, index, editorIdSelf, refetchFn, editorIsAdmin
 
   return (
     <div id={`submission-comment-${submission.id}-${index}`}>
-      {submission.editor!.id === editorIdSelf && submission.comment === null && (
+      {submission.editor && submission.editor!.id === editorIdSelf && submission.comment === null && (
         <>
           <Formik
             initialValues={{
@@ -137,7 +137,7 @@ const WorkComment = ({ submission, index, editorIdSelf, refetchFn, editorIsAdmin
           <blockquote className="my-1 border-l-2 border-indigo-600 bg-indigo-100 p-2 font-serif text-xl italic dark:border-indigo-500 dark:bg-indigo-800">
             {submission.comment}
           </blockquote>
-          <div className="my-2 flex w-full">
+          {submission.editor && (<div className="my-2 flex w-full">
             <span className="flex">
               <img
                 src={submission.editor!.workspace!.avatar!}
@@ -156,7 +156,7 @@ const WorkComment = ({ submission, index, editorIdSelf, refetchFn, editorIsAdmin
               </div>
             </span>
             <span className="flex-grow"></span>
-          </div>
+          </div>)}
         </>
       )}
 

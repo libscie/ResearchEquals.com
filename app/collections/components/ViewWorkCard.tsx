@@ -62,6 +62,7 @@ const WorkComment = ({ submission, index }) => {
           <blockquote className="my-4 border-l-2 border-indigo-600 bg-indigo-100 p-2 font-serif text-xl italic dark:border-indigo-500 dark:bg-indigo-800 sm:my-1">
             {submission.comment}
           </blockquote>
+          {submission.editor && (
           <div className="my-2 flex w-full">
             <span className="flex">
               <img
@@ -81,7 +82,7 @@ const WorkComment = ({ submission, index }) => {
               </div>
             </span>
             <span className="flex-grow"></span>
-          </div>
+          </div>)}
         </>
       )}
 
