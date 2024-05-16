@@ -1,6 +1,6 @@
 import db from "db"
 
-export default async function getCurrentWorkspace({ suffix }: { suffix: string }) {
+export default async function useCurrentModule({ suffix }: { suffix: string }) {
   const currentModule = await db.module.findFirst({
     where: { suffix },
     include: {
