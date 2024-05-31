@@ -31,7 +31,6 @@ import { useCurrentUser } from "../hooks/useCurrentUser"
 import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
 import getDashboardData from "../queries/getDashboardData"
 
-import { useSession } from "@blitzjs/auth"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
 
