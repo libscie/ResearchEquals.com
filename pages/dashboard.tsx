@@ -18,14 +18,9 @@ import LayoutLoader from "app/core/components/LayoutLoader"
 import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import ModuleBoxFeed from "app/core/components/ModuleBoxFeed"
-import ViewFollowers from "app/modules/components/ViewFollowers"
 
 import { Modal } from "../app/core/modals/Modal"
 import upgradeSupporting from "../app/auth/mutations/upgradeSupporting"
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ")
-}
 
 export const getServerSideProps = gSSP(async function getServerSideProps(context) {
   // Expires in 30 minutes
@@ -44,7 +39,6 @@ const DashboardContent = ({
   expire,
   signature,
   query,
-  ownWorkspace,
   router,
   data,
   refetch,
@@ -54,11 +48,9 @@ const DashboardContent = ({
     useInfiniteQuery(getFeed, (page = { take: 20, skip: 0 }) => page, {
       getNextPageParam: (lastPage) => lastPage.nextPage,
     })
-  const [viewFollowers, setViewFollowers] = useState(false)
   const { width, height } = useWindowSize()
   const [celebrate, setCelebrate] = useState(false)
   const [upgradeSupportingMutation] = useMutation(upgradeSupporting)
-  const session = useSession()
 
   useEffect(() => {
     if (query.authError) {
@@ -101,8 +93,6 @@ const DashboardContent = ({
                 <p>Thank you so much!</p>
                 <p>If you have issues accessing the Membership Area, please log out and back in.</p>
                 <p>We look forward to seeing you at our next General Assembly.</p>
-                {/* This would be the perfect place to add a badge for folk */}
-                {/* {query.badgeUrl} */}
               </div>
             </>
           }
@@ -116,7 +106,6 @@ const DashboardContent = ({
           }}
         />
         <div className="text-gray-900 dark:text-gray-200">
-          {/* Column 1 */}
           <div className="p-4">
             <div className="my-0">
               <h1 className="text-center text-4xl font-medium">
@@ -136,14 +125,6 @@ const DashboardContent = ({
               />
             </div>
           </div>
-          <ViewFollowers
-            viewAuthorsOpen={viewFollowers}
-            setViewAuthorsOpen={setViewFollowers}
-            followers={data.workspace.followers}
-            ownWorkspace={ownWorkspace}
-            refetch={refetchWorkspace}
-          />
-          {/* Column 2 */}
           <div className="flex w-full flex-col px-4">
             <div className="my-2">
               <ModuleBoxFeed
@@ -189,7 +170,6 @@ const Dashboard = ({ expire, signature }) => {
           expire={expire}
           signature={signature}
           query={query}
-          ownWorkspace={ownWorkspace}
           router={router}
           data={data}
           refetch={refetch}
