@@ -29,10 +29,18 @@ import SupportingMemberSignupModal from "../modals/SupportingMemberSignupModal"
 import SettingsModal from "../modals/settings"
 import { useCurrentUser } from "../hooks/useCurrentUser"
 import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
+import getDashboardData from "../queries/getDashboardData"
+
+import { useSession } from "@blitzjs/auth"
 
 const validators = [smallFile]
 
-const OnboardingQuests = ({ data, expire, signature, refetch }) => {
+const OnboardingQuests = ({ expire, signature }) => {
+  const session = useSession()
+  const [data, { refetch }] = useQuery(getDashboardData, {
+    session: session.userId ? session : { ...session, userId: undefined },
+  })
+
   return (
     <>
       <OnboardingSupporting data={data.user} />
@@ -48,7 +56,7 @@ const OnboardingQuests = ({ data, expire, signature, refetch }) => {
       <OnboardingDraft data={data.workspace} refetch={refetch} />
       <OnboardingCollection data={data} refetch={refetch} />
       <OnboardingAffiliation data={data} />
-      <OnboardingDiscord data={data.workspace} refetch={refetch} />
+      <OnboardingDiscord />
     </>
   )
 }
