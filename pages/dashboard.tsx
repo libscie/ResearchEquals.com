@@ -128,6 +128,12 @@ const Dashboard = ({ expire, signature }) => {
     }
   }, [query.authError])
 
+  useEffect(() => {
+    if (query.authError) {
+      toast.error("ORCID connection failed.")
+    }
+  }, [query.authError])
+
   return (
     <>
     <Suspense fallback="Loading...">
