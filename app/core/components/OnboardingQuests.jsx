@@ -38,7 +38,6 @@ const OnboardingQuests = ({ data, expire, signature, refetch }) => {
       <OnboardingSupporting data={data.user} />
       <OnboardingEmail data={data.user.emailIsVerified} />
       <OnboardingEmailAccept data={data.user} />
-      {/* <OnboardingOrcid data={data.workspace.orcid} /> */}
       <OnboardingAvatar
         data={data.workspace}
         expire={expire}
