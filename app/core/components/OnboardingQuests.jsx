@@ -32,30 +32,29 @@ import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
 import getDashboardData from "../queries/getDashboardData"
 
 import { useSession } from "@blitzjs/auth"
+import { useCurrentUser } from "app/core/hooks/useCurrentUser"
+import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
 
 const validators = [smallFile]
 
 const OnboardingQuests = ({ expire, signature }) => {
-  const session = useSession()
-  const [data, { refetch }] = useQuery(getDashboardData, {
-    session: session.userId ? session : { ...session, userId: undefined },
-  })
+  const currentUser = useCurrentUser()
+  const currentWorkspace = useCurrentWorkspace()
 
   return (
     <>
-      <OnboardingSupporting data={data.user} />
-      <OnboardingEmail data={data.user.emailIsVerified} />
-      <OnboardingEmailAccept data={data.user} />
+      <OnboardingSupporting data={currentUser.supporting} />
+      <OnboardingEmail data={currentUser.emailIsVerified} />
+      <OnboardingEmailAccept data={currentUser} />
       <OnboardingAvatar
-        data={data.workspace}
+        data={currentWorkspace}
         expire={expire}
         signature={signature}
-        refetch={refetch}
       />
-      <OnboardingProfile data={data} />
-      <OnboardingDraft data={data.workspace} refetch={refetch} />
-      <OnboardingCollection data={data} refetch={refetch} />
-      <OnboardingAffiliation data={data} />
+      <OnboardingProfile data={currentWorkspace} />
+      <OnboardingDraft data={currentWorkspace} />
+      <OnboardingCollection data={currentWorkspace} />
+      <OnboardingAffiliation data={currentWorkspace} />
       <OnboardingDiscord />
     </>
   )
@@ -309,7 +308,7 @@ const OnboardingAffiliation = ({ data }) => {
 
   return (
     <>
-      {data.workspace.affiliations.length === 0 ? (
+      {data.affiliations.length === 0 ? (
         <div
           key="onboarding profile-onboarding-quest"
           className="onboarding my-2 flex w-full flex-col rounded-r border-l-4 border-teal-400 bg-teal-50 p-4 dark:border-teal-200 dark:bg-teal-900 lg:my-0"
@@ -467,10 +466,10 @@ const OnboardingDraft = ({ data, refetch }) => {
   )
 }
 
-const OnboardingCollection = ({ data, refetch }) => {
+const OnboardingCollection = ({ data }) => {
   return (
     <>
-      {data.workspace.editorships.length === 0 ? (
+      {data.editorships.length === 0 ? (
         <div
           key="draft-onboarding-quest"
           className="onboarding my-2 flex w-full flex-col rounded-r border-l-4 border-orange-400 bg-orange-50 p-4 dark:border-orange-200 dark:bg-orange-900 lg:my-0"
@@ -503,7 +502,7 @@ const OnboardingCollection = ({ data, refetch }) => {
                 }
                 styling="whitespace-nowrap font-medium hover:text-blue-600 underline"
                 user={data.user}
-                workspace={data.workspace}
+                workspace={data}
               />
             </p>
           </div>
@@ -568,7 +567,7 @@ const OnboardingDiscord = () => {
 const OnboardingSupporting = ({ data }) => {
   return (
     <>
-      {!data.supportingMember ? (
+      {!data ? (
         <div
           key="supporting-onboarding-quest"
           className="onboarding my-2 flex w-full flex-col rounded-r border-l-4 border-green-400 bg-green-50 p-4 dark:border-green-200 dark:bg-green-900 lg:my-0"

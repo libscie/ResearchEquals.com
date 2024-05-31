@@ -39,8 +39,6 @@ const DashboardContent = ({
   signature,
   query,
   router,
-  refetch,
-  refetchWorkspace,
 }) => {
 
   const { width, height } = useWindowSize()
@@ -48,10 +46,6 @@ const DashboardContent = ({
   const [upgradeSupportingMutation] = useMutation(upgradeSupporting)
 
   useEffect(() => {
-    if (query.authError) {
-      toast.error("ORCID connection failed.")
-    }
-
     if (query.supporting) {
       upgradeSupportingMutation()
         .then(() => {
@@ -61,12 +55,7 @@ const DashboardContent = ({
           console.log(e)
         })
     }
-  }, [])
-
-  const refetchAll = () => {
-    refetch()
-    refetchWorkspace()
-  }
+  }, [upgradeSupportingMutation, query.supporting])
 
     return (
       <>
@@ -102,10 +91,13 @@ const DashboardContent = ({
         <div className="text-gray-900 dark:text-gray-200">
           <div className="p-4">
             <div className="mt-4 w-full gap-2 lg:flex">
+            <Suspense fallback="Loading...">
+
               <OnboardingQuests
                 expire={expire}
                 signature={signature}
               />
+              </Suspense>
             </div>
           </div>
           <div className="flex w-full flex-col px-4">
@@ -124,12 +116,17 @@ const Dashboard = ({ expire, signature }) => {
   const currentUser = useCurrentUser()
   const session = useSession()
   const query = useRouter().query
-  const [ownWorkspace, { refetch: refetchWorkspace }] = useQuery(getCurrentWorkspace, null)
+  const [ownWorkspace] = useQuery(getCurrentWorkspace, null)
   const router = useRouter()
-  // TODO: Add user select
   const [data, { refetch }] = useQuery(getDashboardData, {
     session: session.userId ? session : { ...session, userId: undefined },
   })
+
+  useEffect(() => {
+    if (query.authError) {
+      toast.error("ORCID connection failed.")
+    }
+  }, [query.authError])
 
   return (
     <>
@@ -148,9 +145,6 @@ const Dashboard = ({ expire, signature }) => {
           signature={signature}
           query={query}
           router={router}
-          data={data}
-          refetch={refetch}
-          refetchWorkspace={refetchWorkspace}
         />
       </main>
     </>
