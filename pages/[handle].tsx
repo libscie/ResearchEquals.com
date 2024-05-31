@@ -72,15 +72,7 @@ const Handle = ({ workspace, expire, signature }) => {
 
   return (
     <div className="h-full bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-200">
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetchDrafts}
-      />
+        <Navbar />
       <div className="mx-4 max-w-full lg:flex">
         <div className="w-full lg:w-1/2 xl:w-1/3">
           <div className="lg:sticky lg:top-8">

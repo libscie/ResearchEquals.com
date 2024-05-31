@@ -1,7 +1,6 @@
 import { gSSP } from "app/blitz-server"
 import { useRouter } from "next/router"
-import { useQuery, useMutation } from "@blitzjs/rpc"
-import { useSession } from "@blitzjs/auth"
+import { useMutation } from "@blitzjs/rpc"
 import Layout from "app/core/layouts/Layout"
 import React, { Suspense, useEffect, useState } from "react"
 import toast from "react-hot-toast"

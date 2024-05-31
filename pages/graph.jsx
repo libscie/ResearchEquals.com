@@ -101,15 +101,8 @@ const Graph = () => {
 
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+        <Navbar />
+
       <div className="h-[85vh] w-full">
         <ReactFlow
           nodes={nodes}

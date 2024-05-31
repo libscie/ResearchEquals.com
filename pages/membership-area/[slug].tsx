@@ -42,15 +42,8 @@ const SupportingEventPage = ({ currentEvent }) => {
 
   return (
     <Layout title={`${currentEvent!.title} | Membership Area`}>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+        <Navbar />
+
       <main className="bg-white dark:bg-gray-900 lg:relative">
         <div className="mx-4 my-8 max-w-3xl text-black dark:text-white lg:mx-auto">
           <h1 className="mx-auto my-8 text-center text-5xl font-black">{currentEvent!.title}</h1>

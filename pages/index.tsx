@@ -68,15 +68,8 @@ const Home: BlitzPage<{ licenses: TLicenses }> = ({
 
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+        <Navbar />
+
       <main className="bg-white dark:bg-gray-900 lg:relative">
         <Hero />
         <ModuleDiagram />

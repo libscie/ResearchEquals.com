@@ -59,15 +59,8 @@ const CollectionsAdmin = ({ expire, signature }, context) => {
 
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+        <Navbar />
+
       <main className="relative">
         {!collection?.public && (
           <MakeCollectionPublicModal

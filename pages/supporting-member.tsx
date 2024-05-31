@@ -36,15 +36,8 @@ const SupportingMemberPage: BlitzPage = () => {
 
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+        <Navbar />
+
       <main className="bg-white dark:bg-gray-900 lg:relative">
         <section id="hero" className="py-10 dark:bg-transparent md:py-28 md:text-center">
           <div className="flex flex-col items-center gap-4 px-7">

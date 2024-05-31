@@ -32,15 +32,8 @@ const CollectionsPage: BlitzPage = () => {
 
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+        <Navbar />
+
       <main className="w-full p-8">
         {session.workspaceId && draftCollections.length > 0 && (
           <>

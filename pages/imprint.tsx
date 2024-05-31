@@ -23,15 +23,8 @@ const Imprint: BlitzPage = () => {
 
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+        <Navbar />
+
       <main className="bg-white dark:bg-gray-900 lg:relative">
         <div className="mx-4">
           <div className="mx-auto max-w-7xl pt-10 text-black dark:text-white md:p-0 md:pt-10">
