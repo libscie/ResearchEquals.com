@@ -1,9 +1,9 @@
 import { gSSP } from "app/blitz-server"
 import { useRouter } from "next/router"
-import { useQuery, useInfiniteQuery, useMutation } from "@blitzjs/rpc"
+import { useQuery, useMutation } from "@blitzjs/rpc"
 import { useSession } from "@blitzjs/auth"
 import Layout from "app/core/layouts/Layout"
-import React, { useEffect, useState } from "react"
+import React, { Suspense, useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import useWindowSize from "react-use/lib/useWindowSize"
 import Confetti from "react-confetti"
@@ -12,7 +12,6 @@ import Image from "next/image"
 import getDashboardData from "app/core/queries/getDashboardData"
 import Navbar from "app/core/components/Navbar"
 import OnboardingQuests from "app/core/components/OnboardingQuests"
-import getFeed from "app/workspaces/queries/getFeed"
 import generateSignature from "app/signature"
 import LayoutLoader from "app/core/components/LayoutLoader"
 import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
@@ -44,10 +43,7 @@ const DashboardContent = ({
   refetch,
   refetchWorkspace,
 }) => {
-  const [modules, { isFetching, isFetchingNextPage, fetchNextPage, hasNextPage }] =
-    useInfiniteQuery(getFeed, (page = { take: 20, skip: 0 }) => page, {
-      getNextPageParam: (lastPage) => lastPage.nextPage,
-    })
+
   const { width, height } = useWindowSize()
   const [celebrate, setCelebrate] = useState(false)
   const [upgradeSupportingMutation] = useMutation(upgradeSupporting)
@@ -127,12 +123,9 @@ const DashboardContent = ({
           </div>
           <div className="flex w-full flex-col px-4">
             <div className="my-2">
-              <ModuleBoxFeed
-                modules={modules}
-                fetchNextPage={fetchNextPage}
-                hasNextPage={hasNextPage}
-                isFetchingNextPage={isFetchingNextPage}
-              />
+              <Suspense fallback="Loading...">
+                <ModuleBoxFeed />
+              </Suspense>
             </div>
           </div>
         </div>
