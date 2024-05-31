@@ -9,17 +9,15 @@ import useWindowSize from "react-use/lib/useWindowSize"
 import Confetti from "react-confetti"
 import Image from "next/image"
 
-import getDashboardData from "app/core/queries/getDashboardData"
 import Navbar from "app/core/components/Navbar"
 import OnboardingQuests from "app/core/components/OnboardingQuests"
 import generateSignature from "app/signature"
 import LayoutLoader from "app/core/components/LayoutLoader"
-import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
-import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import ModuleBoxFeed from "app/core/components/ModuleBoxFeed"
 
 import { Modal } from "../app/core/modals/Modal"
 import upgradeSupporting from "../app/auth/mutations/upgradeSupporting"
+import {useCurrentWorkspace} from "../app/core/hooks/useCurrentWorkspace"
 
 export const getServerSideProps = gSSP(async function getServerSideProps(context) {
   // Expires in 30 minutes
@@ -40,6 +38,7 @@ const DashboardContent = ({
   query,
   router,
 }) => {
+  const currentWorkspace = useCurrentWorkspace()
 
   const { width, height } = useWindowSize()
   const [celebrate, setCelebrate] = useState(false)
@@ -90,9 +89,17 @@ const DashboardContent = ({
         />
         <div className="text-gray-900 dark:text-gray-200">
           <div className="p-4">
+          <div className="my-0">
+              <h1 className="text-center text-4xl font-medium">
+                Welcome,{" "}
+                {currentWorkspace!.firstName && currentWorkspace!.lastName
+                  ? `${currentWorkspace!.firstName} ${currentWorkspace!.lastName}`
+                  : `@${currentWorkspace!.handle}`}
+                !
+              </h1>
+            </div>
             <div className="mt-4 w-full gap-2 lg:flex">
             <Suspense fallback="Loading...">
-
               <OnboardingQuests
                 expire={expire}
                 signature={signature}
@@ -113,14 +120,8 @@ const DashboardContent = ({
 }
 
 const Dashboard = ({ expire, signature }) => {
-  const currentUser = useCurrentUser()
-  const session = useSession()
   const query = useRouter().query
-  const [ownWorkspace] = useQuery(getCurrentWorkspace, null)
   const router = useRouter()
-  const [data, { refetch }] = useQuery(getDashboardData, {
-    session: session.userId ? session : { ...session, userId: undefined },
-  })
 
   useEffect(() => {
     if (query.authError) {
@@ -130,22 +131,20 @@ const Dashboard = ({ expire, signature }) => {
 
   return (
     <>
+    <Suspense fallback="Loading...">
+
       <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={ownWorkspace}
-        router={router}
-        drafts={data.draftModules}
-        invitations={data.invitedModules}
-        refetchFn={refetch}
       />
+      </Suspense>
       <main className="mx-auto w-full max-w-7xl">
-        <DashboardContent
-          expire={expire}
-          signature={signature}
-          query={query}
-          router={router}
-        />
+        <Suspense fallback="Loading...">
+          <DashboardContent
+            expire={expire}
+            signature={signature}
+            query={query}
+            router={router}
+            />
+        </Suspense>
       </main>
     </>
   )
