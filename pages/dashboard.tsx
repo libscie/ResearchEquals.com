@@ -39,7 +39,6 @@ const DashboardContent = ({
   signature,
   query,
   router,
-  data,
   refetch,
   refetchWorkspace,
 }) => {
@@ -69,7 +68,6 @@ const DashboardContent = ({
     refetchWorkspace()
   }
 
-  if (data) {
     return (
       <>
         <Modal
@@ -103,21 +101,10 @@ const DashboardContent = ({
         />
         <div className="text-gray-900 dark:text-gray-200">
           <div className="p-4">
-            <div className="my-0">
-              <h1 className="text-center text-4xl font-medium">
-                Welcome,{" "}
-                {data.workspace.firstName && data.workspace.lastName
-                  ? `${data.workspace.firstName} ${data.workspace.lastName}`
-                  : `@${data.workspace!.handle}`}
-                !
-              </h1>
-            </div>
             <div className="mt-4 w-full gap-2 lg:flex">
               <OnboardingQuests
-                data={data}
                 expire={expire}
                 signature={signature}
-                refetch={refetchAll}
               />
             </div>
           </div>
@@ -131,9 +118,6 @@ const DashboardContent = ({
         </div>
       </>
     )
-  } else {
-    return <></>
-  }
 }
 
 const Dashboard = ({ expire, signature }) => {
