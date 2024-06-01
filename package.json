@@ -51,7 +51,7 @@
     "crisp-sdk-web": "1.0.25",
     "dagre": "0.8.5",
     "feed": "4.2.2",
-    "filesize": "10.1.1",
+    "filesize": "10.1.2",
     "form-data": "4.0.0",
     "formik": "2.4.5",
     "he": "1.2.0",
