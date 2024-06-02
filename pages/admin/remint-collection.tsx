@@ -29,15 +29,8 @@ const RemintCollection: BlitzPage = () => {
 
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+        <Navbar />
+
       <main className="my-8 bg-white dark:bg-gray-900 lg:relative">
         <div>
           <h1 className="mx-auto my-8 text-center text-6xl font-black">

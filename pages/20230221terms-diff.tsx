@@ -24,15 +24,8 @@ const TermsDiffPage20230221: BlitzPage = () => {
 
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+        <Navbar />
+
       <main className="bg-white dark:bg-gray-900 lg:relative">
         <div className="coc terms-diff mx-4 my-8 max-w-3xl text-black dark:text-white lg:mx-auto">
           <h1 id="terms-of-use">Terms of use</h1>

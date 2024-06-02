@@ -297,15 +297,8 @@ const Stats = () => {
 
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+        <Navbar />
+
       <h1 className="mx-auto my-8 max-w-7xl text-center text-5xl font-black sm:text-6xl">
         Real-time statistics
       </h1>

@@ -135,15 +135,8 @@ const InvitationsPage: BlitzPage = () => {
 
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+        <Navbar />
+
       <main className="relative flex">
         <Invitations currentWorkspace={currentWorkspace} />
       </main>

@@ -28,15 +28,8 @@ const RemintModule: BlitzPage = () => {
 
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+        <Navbar />
+
       <main className="my-8 bg-white dark:bg-gray-900 lg:relative">
         <div>
           <h1 className="my-2 mx-auto text-center text-6xl font-black">Remint module metadata</h1>

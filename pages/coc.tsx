@@ -192,15 +192,8 @@ const CodeOfConduct: BlitzPage = () => {
 
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+        <Navbar />
+
       <main className="bg-white dark:bg-gray-900 lg:relative">
         <div className="mx-4 my-8 max-w-3xl text-black dark:text-white lg:mx-auto">
           <div className="onboarding my-2 flex w-full flex-col rounded-r border-l-4 border-amber-400 bg-amber-50 p-4 dark:border-amber-200 dark:bg-amber-900 lg:my-0">

@@ -147,15 +147,8 @@ const DraftsPage = ({ expire, signature }) => {
 
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+        <Navbar />
+
       <main className="relative flex flex-grow">
         <DraftsContents
           expire={expire}

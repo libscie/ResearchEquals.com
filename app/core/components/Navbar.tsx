@@ -1,30 +1,39 @@
 import Link from "next/link"
-import { useRouter } from "next/router"
-import { useSession } from "@blitzjs/auth"
-import { useQuery } from "@blitzjs/rpc"
 import { Routes } from "@blitzjs/next"
 import { getAlgoliaResults } from "@algolia/autocomplete-js"
 import algoliasearch from "algoliasearch"
 import SearchResultWorkspace from "./SearchResultWorkspace"
 import SearchResultModule from "./SearchResultModule"
 import ResearchEqualsLogo from "./ResearchEqualsLogo"
+import { useQuery } from "@blitzjs/rpc"
 
 import Autocomplete from "./Autocomplete"
 import NavbarFullwidthMenu from "./NavbarFullwidthMenu"
 import NavbarDropdown from "./NavbarDropdown"
 import NavbarTabs from "./NavbarTabs"
+import { useCurrentUser } from "app/core/hooks/useCurrentUser"
+import { useCurrentWorkspace } from "../hooks/useCurrentWorkspace"
+import { useRouter } from "next/router"
+import getDrafts from "app/core/queries/getDrafts"
+import getInvitedModules from "app/workspaces/queries/getInvitedModules"
+import { useSession } from "@blitzjs/auth"
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID!, process.env.ALGOLIA_API_SEARCH_KEY!)
 
-const Navbar = ({
-  currentUser,
-  session,
-  currentWorkspace,
-  router,
-  drafts,
-  invitations,
-  refetchFn,
-}) => {
+const Navbar = () => {
+  const currentUser = useCurrentUser()
+  const currentWorkspace = useCurrentWorkspace()
+  const router = useRouter()
+  const session = useSession()
+
+  const [drafts, { refetch }] = useQuery(getDrafts, {
+    session: session.userId ? session : { ...session, userId: undefined }
+})
+  const [invitations] = useQuery(getInvitedModules, {
+    session: session.userId ? session : { ...session, userId: undefined }
+})
+
+
   return (
     <>
       <div className="z-10 mx-auto w-full border-b border-gray-100 bg-white px-4 dark:border-gray-600 dark:bg-gray-900 sm:px-6 lg:px-8">
@@ -53,10 +62,10 @@ const Navbar = ({
                       async onSelect(params) {
                         const { item, setQuery } = params
                         if (item.handle) {
-                          router.push(`/${item.handle}`)
+                         await router.push(`/${item.handle}`)
                         }
                         if (item.suffix) {
-                          router.push(`/modules/${item.suffix}`)
+                         await router.push(`/modules/${item.suffix}`)
                         }
                       },
                       getItems() {
@@ -106,7 +115,7 @@ const Navbar = ({
               router={router}
               invitedModules={invitations}
               drafts={drafts}
-              refetchFn={refetchFn}
+              refetchFn={refetch}
             />
           </div>
           <NavbarFullwidthMenu
@@ -115,7 +124,7 @@ const Navbar = ({
             router={router}
             currentWorkspace={currentWorkspace}
             invitedModules={invitations}
-            refetchFn={refetchFn}
+            refetchFn={refetch}
           />
         </div>
       </div>

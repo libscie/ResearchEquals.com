@@ -1,11 +1,18 @@
 import Link from "next/link"
 import { Routes } from "@blitzjs/next"
 import AuthorAvatarsNew from "app/modules/components/AuthorAvatarsNew"
+import getFeed from "app/workspaces/queries/getFeed"
+import { useInfiniteQuery } from "@blitzjs/rpc"
 
-const ModuleBoxFeed = ({ modules, fetchNextPage, hasNextPage, isFetchingNextPage }) => {
+const ModuleBoxFeed = () => {
+  const [modules, { isFetching, isFetchingNextPage, fetchNextPage, hasNextPage }] =
+  useInfiniteQuery(getFeed, (page = { take: 20, skip: 0 }) => page, {
+    getNextPageParam: (lastPage) => lastPage.nextPage,
+  })
+
   return (
     <>
-      {modules[0].count === 0 ? (
+      {modules[0]!.count === 0 ? (
         <div className="border-gray-1000 relative my-4 flex h-auto w-full flex-grow flex-col rounded-lg border-2 border-dashed text-center focus:outline-none focus:ring-2  focus:ring-indigo-500 focus:ring-offset-2">
           <div className="table w-full flex-grow">
             <div className="h-28 w-1/4 sm:table-cell"></div>
@@ -25,7 +32,7 @@ const ModuleBoxFeed = ({ modules, fetchNextPage, hasNextPage, isFetchingNextPage
               {page.modules.map((module) => (
                 <Link
                   key={module.suffix}
-                  href={Routes.ModulePage({ suffix: module.suffix })}
+                  href={Routes.ModulePage({ suffix: module.suffix as string})}
                   className="module flex cursor-pointer flex-col p-4 text-white"
                   style={{ backgroundColor: module.displayColor }}
                 >

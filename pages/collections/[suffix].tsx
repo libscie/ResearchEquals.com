@@ -107,15 +107,8 @@ const Collection: BlitzPage = () => {
   console.log(currentWorkspace === null)
   return (
     <>
-      <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={currentWorkspace}
-        router={router}
-        drafts={drafts}
-        invitations={invitations}
-        refetchFn={refetch}
-      />
+        <Navbar />
+
       <main className="relative">
         {isAdmin && <AdminBanner suffix={router.query.suffix} />}
         <ViewHeaderImage collection={collection} />

@@ -1,31 +1,22 @@
 import { gSSP } from "app/blitz-server"
 import { useRouter } from "next/router"
-import { useQuery, useInfiniteQuery, useMutation } from "@blitzjs/rpc"
-import { useSession } from "@blitzjs/auth"
+import { useMutation } from "@blitzjs/rpc"
 import Layout from "app/core/layouts/Layout"
-import React, { useEffect, useState } from "react"
+import React, { Suspense, useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import useWindowSize from "react-use/lib/useWindowSize"
 import Confetti from "react-confetti"
 import Image from "next/image"
 
-import getDashboardData from "app/core/queries/getDashboardData"
 import Navbar from "app/core/components/Navbar"
 import OnboardingQuests from "app/core/components/OnboardingQuests"
-import getFeed from "app/workspaces/queries/getFeed"
 import generateSignature from "app/signature"
 import LayoutLoader from "app/core/components/LayoutLoader"
-import getCurrentWorkspace from "app/workspaces/queries/getCurrentWorkspace"
-import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import ModuleBoxFeed from "app/core/components/ModuleBoxFeed"
-import ViewFollowers from "app/modules/components/ViewFollowers"
 
 import { Modal } from "../app/core/modals/Modal"
 import upgradeSupporting from "../app/auth/mutations/upgradeSupporting"
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ")
-}
+import {useCurrentWorkspace} from "../app/core/hooks/useCurrentWorkspace"
 
 export const getServerSideProps = gSSP(async function getServerSideProps(context) {
   // Expires in 30 minutes
@@ -44,27 +35,15 @@ const DashboardContent = ({
   expire,
   signature,
   query,
-  ownWorkspace,
   router,
-  data,
-  refetch,
-  refetchWorkspace,
 }) => {
-  const [modules, { isFetching, isFetchingNextPage, fetchNextPage, hasNextPage }] =
-    useInfiniteQuery(getFeed, (page = { take: 20, skip: 0 }) => page, {
-      getNextPageParam: (lastPage) => lastPage.nextPage,
-    })
-  const [viewFollowers, setViewFollowers] = useState(false)
+  const currentWorkspace = useCurrentWorkspace()
+
   const { width, height } = useWindowSize()
   const [celebrate, setCelebrate] = useState(false)
   const [upgradeSupportingMutation] = useMutation(upgradeSupporting)
-  const session = useSession()
 
   useEffect(() => {
-    if (query.authError) {
-      toast.error("ORCID connection failed.")
-    }
-
     if (query.supporting) {
       upgradeSupportingMutation()
         .then(() => {
@@ -74,14 +53,8 @@ const DashboardContent = ({
           console.log(e)
         })
     }
-  }, [])
+  }, [upgradeSupportingMutation, query.supporting])
 
-  const refetchAll = () => {
-    refetch()
-    refetchWorkspace()
-  }
-
-  if (data) {
     return (
       <>
         <Modal
@@ -101,8 +74,6 @@ const DashboardContent = ({
                 <p>Thank you so much!</p>
                 <p>If you have issues accessing the Membership Area, please log out and back in.</p>
                 <p>We look forward to seeing you at our next General Assembly.</p>
-                {/* This would be the perfect place to add a badge for folk */}
-                {/* {query.badgeUrl} */}
               </div>
             </>
           }
@@ -116,85 +87,69 @@ const DashboardContent = ({
           }}
         />
         <div className="text-gray-900 dark:text-gray-200">
-          {/* Column 1 */}
           <div className="p-4">
-            <div className="my-0">
+          <div className="my-0">
               <h1 className="text-center text-4xl font-medium">
                 Welcome,{" "}
-                {data.workspace.firstName && data.workspace.lastName
-                  ? `${data.workspace.firstName} ${data.workspace.lastName}`
-                  : `@${data.workspace!.handle}`}
+                {currentWorkspace!.firstName && currentWorkspace!.lastName
+                  ? `${currentWorkspace!.firstName} ${currentWorkspace!.lastName}`
+                  : `@${currentWorkspace!.handle}`}
                 !
               </h1>
             </div>
             <div className="mt-4 w-full gap-2 lg:flex">
+            <Suspense fallback="Loading...">
               <OnboardingQuests
-                data={data}
                 expire={expire}
                 signature={signature}
-                refetch={refetchAll}
               />
+              </Suspense>
             </div>
           </div>
-          <ViewFollowers
-            viewAuthorsOpen={viewFollowers}
-            setViewAuthorsOpen={setViewFollowers}
-            followers={data.workspace.followers}
-            ownWorkspace={ownWorkspace}
-            refetch={refetchWorkspace}
-          />
-          {/* Column 2 */}
           <div className="flex w-full flex-col px-4">
             <div className="my-2">
-              <ModuleBoxFeed
-                modules={modules}
-                fetchNextPage={fetchNextPage}
-                hasNextPage={hasNextPage}
-                isFetchingNextPage={isFetchingNextPage}
-              />
+              <Suspense fallback="Loading...">
+                <ModuleBoxFeed />
+              </Suspense>
             </div>
           </div>
         </div>
       </>
     )
-  } else {
-    return <></>
-  }
 }
 
 const Dashboard = ({ expire, signature }) => {
-  const currentUser = useCurrentUser()
-  const session = useSession()
   const query = useRouter().query
-  const [ownWorkspace, { refetch: refetchWorkspace }] = useQuery(getCurrentWorkspace, null)
   const router = useRouter()
-  // TODO: Add user select
-  const [data, { refetch }] = useQuery(getDashboardData, {
-    session: session.userId ? session : { ...session, userId: undefined },
-  })
+
+  useEffect(() => {
+    if (query.authError) {
+      toast.error("ORCID connection failed.")
+    }
+  }, [query.authError])
+
+  useEffect(() => {
+    if (query.authError) {
+      toast.error("ORCID connection failed.")
+    }
+  }, [query.authError])
 
   return (
     <>
+    <Suspense fallback="Loading...">
+
       <Navbar
-        currentUser={currentUser}
-        session={session}
-        currentWorkspace={ownWorkspace}
-        router={router}
-        drafts={data.draftModules}
-        invitations={data.invitedModules}
-        refetchFn={refetch}
       />
+      </Suspense>
       <main className="mx-auto w-full max-w-7xl">
-        <DashboardContent
-          expire={expire}
-          signature={signature}
-          query={query}
-          ownWorkspace={ownWorkspace}
-          router={router}
-          data={data}
-          refetch={refetch}
-          refetchWorkspace={refetchWorkspace}
-        />
+        <Suspense fallback="Loading...">
+          <DashboardContent
+            expire={expire}
+            signature={signature}
+            query={query}
+            router={router}
+            />
+        </Suspense>
       </main>
     </>
   )
