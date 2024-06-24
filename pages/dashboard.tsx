@@ -16,6 +16,7 @@ import ModuleBoxFeed from "app/core/components/ModuleBoxFeed"
 
 import { Modal } from "../app/core/modals/Modal"
 import upgradeSupporting from "../app/auth/mutations/upgradeSupporting"
+import { useCurrentWorkspace } from "../app/core/hooks/useCurrentWorkspace"
 import { BlitzPage } from "@blitzjs/auth"
 
 export const getServerSideProps = gSSP(async function getServerSideProps(context) {
@@ -31,12 +32,7 @@ export const getServerSideProps = gSSP(async function getServerSideProps(context
   }
 })
 
-const DashboardContent = ({
-  expire,
-  signature,
-  query,
-  router,
-}) => {
+const DashboardContent = ({ expire, signature, query, router }) => {
   const currentWorkspace = useCurrentWorkspace()
 
   const { width, height } = useWindowSize()
@@ -138,19 +134,12 @@ const Dashboard: BlitzPage = ({ expire, signature }: DashBoardProps) => {
 
   return (
     <>
-    <Suspense fallback="Loading...">
-
-      <Navbar
-      />
+      <Suspense fallback="Loading...">
+        <Navbar />
       </Suspense>
       <main className="mx-auto w-full max-w-7xl">
         <Suspense fallback="Loading...">
-          <DashboardContent
-            expire={expire}
-            signature={signature}
-            query={query}
-            router={router}
-            />
+          <DashboardContent expire={expire} signature={signature} query={query} router={router} />
         </Suspense>
       </main>
     </>
