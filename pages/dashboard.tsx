@@ -155,7 +155,7 @@ const Dashboard = ({ expire, signature }) => {
   )
 }
 
-Dashboard.authenticate = true
+Dashboard.authenticate = { redirectTo: "/login" }
 Dashboard.suppressFirstRenderFlicker = true
 Dashboard.getLayout = (page) => (
   <Layout title="Dashboard">
