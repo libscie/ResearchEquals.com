@@ -16,7 +16,7 @@ import ModuleBoxFeed from "app/core/components/ModuleBoxFeed"
 
 import { Modal } from "../app/core/modals/Modal"
 import upgradeSupporting from "../app/auth/mutations/upgradeSupporting"
-import {useCurrentWorkspace} from "../app/core/hooks/useCurrentWorkspace"
+import { BlitzPage } from "@blitzjs/auth"
 
 export const getServerSideProps = gSSP(async function getServerSideProps(context) {
   // Expires in 30 minutes
@@ -115,7 +115,12 @@ const DashboardContent = ({
   )
 }
 
-const Dashboard = ({ expire, signature }) => {
+type DashBoardProps = {
+  expire: number
+  signature: string
+}
+
+const Dashboard: BlitzPage = ({ expire, signature }: DashBoardProps) => {
   const query = useRouter().query
   const router = useRouter()
 
