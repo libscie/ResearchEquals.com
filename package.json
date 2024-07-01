@@ -106,7 +106,7 @@
     "@types/react": "18.2.51",
     "@types/unist": "3.0.2",
     "@types/xast": "2.0.4",
-    "@typescript-eslint/eslint-plugin": "6.20.0",
+    "@typescript-eslint/eslint-plugin": "7.14.1",
     "@typescript-eslint/parser": "6.20.0",
     "eslint": "8.55.0",
     "eslint-config-next": "14.1.0",
