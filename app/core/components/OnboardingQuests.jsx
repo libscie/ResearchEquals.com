@@ -38,19 +38,19 @@ const OnboardingQuests = ({ expire, signature }) => {
 
   return (
     <>
-      <OnboardingSupporting data={currentUser.supporting} />
-      <OnboardingEmail data={currentUser.emailIsVerified} />
-      <OnboardingEmailAccept data={currentUser} />
-      <OnboardingAvatar
-        data={currentWorkspace}
-        expire={expire}
-        signature={signature}
-      />
-      <OnboardingProfile data={currentWorkspace} />
-      <OnboardingDraft data={currentWorkspace} />
-      <OnboardingCollection data={currentWorkspace} />
-      <OnboardingAffiliation data={currentWorkspace} />
-      <OnboardingDiscord />
+      {currentUser && (
+        <>
+          <OnboardingSupporting data={currentUser.supporting} />
+          <OnboardingEmail data={currentUser.emailIsVerified} />
+          <OnboardingEmailAccept data={currentUser} />
+          <OnboardingAvatar data={currentWorkspace} expire={expire} signature={signature} />
+          <OnboardingProfile data={currentWorkspace} />
+          <OnboardingDraft data={currentWorkspace} />
+          <OnboardingCollection data={currentWorkspace} />
+          <OnboardingAffiliation data={currentWorkspace} />
+          <OnboardingDiscord />
+        </>
+      )}
     </>
   )
 }
