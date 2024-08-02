@@ -113,9 +113,13 @@ export default function PublishModule({
                   <>
                     <div className="mt-2">
                       <p className="text-base text-gray-500 dark:text-gray-300">
-                        Once you publish this module, you cannot delete it.
+                      Once you publish this module:
+                      <ul className="ml-2 list-decimal list-inside">
+                        <li>you cannot edit or delete the contents</li>
+                        <li>you cannot add links to previous research output</li>
+                      </ul>
                       </p>
-                      <p className="text-base text-gray-500 dark:text-gray-300">
+                      <p className="text-base text-gray-500 dark:text-gray-300 mt-2">
                         You can publish this module for free or support us with an amount of your
                         choice (incl. VAT).
                       </p>
