@@ -342,6 +342,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "dvanravenzwaaij",
+      "name": "dvanravenzwaaij",
+      "avatar_url": "https://avatars.githubusercontent.com/u/55192243?v=4",
+      "profile": "https://github.com/dvanravenzwaaij",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 7,
