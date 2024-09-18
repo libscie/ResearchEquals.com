@@ -62,7 +62,7 @@
     "moment": "2.30.1",
     "next": "14.2.12",
     "passport-orcid": "0.0.4",
-    "pdfjs-dist": "3.11.174",
+    "pdfjs-dist": "4.2.67",
     "postcss": "8.4.33",
     "postmark": "3.11.0",
     "prisma": "5.11.0",
