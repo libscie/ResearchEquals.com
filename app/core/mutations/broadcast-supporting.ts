@@ -1,7 +1,7 @@
 import { ServerClient, TemplatedMessage } from "postmark"
 import db from "db"
 
-const from = process.env.MAIL_FROM ?? "Chris Hartgerink <ceo@libscie.org>"
+const from = "Chris Hartgerink <ceo@libscie.org>"
 
 const postmark = () => new ServerClient(process.env.POSTMARK_TOKEN ?? "")
 
