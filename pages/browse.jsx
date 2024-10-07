@@ -136,6 +136,7 @@ const Browse = () => {
   )
 }
 
+Browse.authenticate = false
 Browse.suppressFirstRenderFlicker = true
 Browse.getLayout = (page) => (
   <Layout
