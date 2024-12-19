@@ -145,7 +145,7 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
             language: publishedModule.language,
           })
           console.log(
-            `[STRIPE WEBHOOK]: Publication complete; type ${event.type}, id: ${event.id}.`,
+            `[STRIPE WEBHOOK]: Publication complete; type ${event.type}, id: ${event.id}.`
           )
           break
       }
@@ -166,7 +166,7 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
           customerId: event.data.object.customer,
         },
       })
-      await supportingSignup(event.data.object.customer_email)
+      // await supportingSignup(event.data.object.customer_email)
       // If it's a sponsored supporter, make sure to cancel the subscription immediately
       // Sponsored memberships last only for a year
       const isSponsored = event.data.object.lines.data[0].metadata.subType === "sponsored"
@@ -190,11 +190,11 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
         })
         await supportingCancel(
           { cancelAt: moment(event.data.object.cancel_at * 1000).format("MMMM Do YYYY") },
-          user!.email,
+          user!.email
         )
       } else {
         await cancelSupportingMembership.delete(
-          event.data.object.customer, // this is the same ID we set above
+          event.data.object.customer // this is the same ID we set above
         )
       }
 
