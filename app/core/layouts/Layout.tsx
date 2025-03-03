@@ -46,11 +46,6 @@ const Layout = ({ title, children, headChildren }: LayoutProps) => {
       <Head>
         <title>{title || "ResearchEquals"}</title>
         <link rel="icon" href="/favicon-32.png" />
-        <script
-          defer
-          data-domain="researchequals.com"
-          src="https://plausible.io/js/script.js"
-        ></script>
         {cookie}
         {/* {cookie ? <script type="text/javascript">{crispCode}</script> : ""} */}
         {/* <script type="text/javascript">{cookie ? crispCode : false}</script> */}
