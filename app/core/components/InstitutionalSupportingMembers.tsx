@@ -1,4 +1,3 @@
-import { Crisp } from "crisp-sdk-web"
 import Tiu from "../icons/tiu"
 import KuLeuven from "public/images/kuleuven.png"
 import Oscl from "public/images/oscl.png"
@@ -52,18 +51,13 @@ const InstitutionalSupportingMembers = () => {
             <span className="hidden md:inline">
               Institutional supporting memberships start at €2,500 per year.
             </span>
-            <button
-              onClick={() => {
-                Crisp.chat.open()
-                Crisp.message.showText(
-                  "What would you like to know about institutional memberships?",
-                )
-              }}
+            <a
+              href="mailto:info@libscie.org"
               className="mx-2 font-semibold text-indigo-600 dark:text-indigo-400"
             >
               <span className="absolute inset-0" aria-hidden="true" /> Talk to us{" "}
               <span aria-hidden="true">&rarr;</span>
-            </button>
+            </a>
           </p>
         </div>
       </div>
