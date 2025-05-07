@@ -26,6 +26,7 @@ export default resolver.pipe(
           ...paginateArgs,
           where: {
             published: true,
+            publishedWhere: "ResearchEquals",
           },
           orderBy: [
             {
