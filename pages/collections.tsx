@@ -32,7 +32,7 @@ const CollectionsPage: BlitzPage = () => {
 
   return (
     <>
-        <Navbar />
+      <Navbar />
 
       <main className="w-full p-8">
         {session.workspaceId && draftCollections.length > 0 && (
@@ -98,12 +98,12 @@ const CollectionCard = ({ collection, isAdmin }) => {
                 collection.submissions.length > 4 ? "4" : collection.submissions.length
               }`
             : collection.type.type === "COLLABORATIVE"
-            ? `col-span-2 row-span-2 bg-teal-200 text-lg dark:bg-teal-600 collection-${
-                collection.submissions.length > 4 ? "4" : collection.submissions.length
-              }-teal`
-            : `col-span-1 bg-amber-200 text-base dark:bg-amber-600 md:col-span-1 collection-${
-                collection.submissions.length > 4 ? "4" : collection.submissions.length
-              }-amber`
+              ? `col-span-2 row-span-2 bg-teal-200 text-lg dark:bg-teal-600 collection-${
+                  collection.submissions.length > 4 ? "4" : collection.submissions.length
+                }-teal`
+              : `col-span-1 bg-amber-200 text-base dark:bg-amber-600 md:col-span-1 collection-${
+                  collection.submissions.length > 4 ? "4" : collection.submissions.length
+                }-amber`
         }  cursor-pointer rounded-md bg-cover bg-center`}
         key={collection.id}
       >
@@ -130,7 +130,7 @@ const CollectionCard = ({ collection, isAdmin }) => {
               </h2>
             )}
           </div>
-          {collection.type.type === "COMMUNITY" && (
+          {collection.type.type != "INDIVIDUAL" && (
             <div className="flex p-4">
               <p className="flex-grow text-xs">
                 <span
