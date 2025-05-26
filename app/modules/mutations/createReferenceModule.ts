@@ -107,8 +107,7 @@ export default resolver.pipe(resolver.authorize(), async ({ doi }: Input, ctx) =
           data: {
             published: true,
             publishedAt: new Date(
-              metadata.data.attributes.publicationYear.toString() ||
-                metadata.data.attributes.published
+              metadata.data.attributes.registered || metadata.data.attributes.created
             ),
             publishedWhere: metadata.data.attributes.publisher,
             originMetadata: "DataCite",
