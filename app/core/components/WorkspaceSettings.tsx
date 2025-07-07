@@ -340,7 +340,7 @@ const WorkspaceSettings = ({ workspace, setIsOpen }) => {
                       },
                       async getItems(query) {
                         const results = await axios.get(
-                          `https://api.ror.org/organizations?query.advanced=${query.query}`
+                          `https://api.ror.org/v1/organizations?query.advanced=${query.query}`
                         )
 
                         return results.data.items.slice(0, 5)
