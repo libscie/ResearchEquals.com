@@ -26,13 +26,20 @@ const Navbar = () => {
   const router = useRouter()
   const session = useSession()
 
-  const [drafts, { refetch }] = useQuery(getDrafts, {
-    session: session.userId ? session : { ...session, userId: undefined }
-})
-  const [invitations] = useQuery(getInvitedModules, {
-    session: session.userId ? session : { ...session, userId: undefined }
-})
-
+  const [drafts, { refetch }] = useQuery(
+    getDrafts,
+    {
+      session: session.userId ? session : { ...session, userId: undefined },
+    },
+    { enabled: !!session.userId }
+  )
+  const [invitations] = useQuery(
+    getInvitedModules,
+    {
+      session: session.userId ? session : { ...session, userId: undefined },
+    },
+    { enabled: !!session.userId }
+  )
 
   return (
     <>
@@ -62,10 +69,10 @@ const Navbar = () => {
                       async onSelect(params) {
                         const { item, setQuery } = params
                         if (item.handle) {
-                         await router.push(`/${item.handle}`)
+                          await router.push(`/${item.handle}`)
                         }
                         if (item.suffix) {
-                         await router.push(`/modules/${item.suffix}`)
+                          await router.push(`/modules/${item.suffix}`)
                         }
                       },
                       getItems() {
