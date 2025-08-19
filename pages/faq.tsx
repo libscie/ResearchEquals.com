@@ -89,7 +89,7 @@ If you are publishing under a restrictive license, the publication will be immed
 
 ### Why are you building ResearchEquals?
 
-The following quote is from [our manifesto](https://libscie.org/blog/liberate-science-manifesto)
+The following quote is from [our manifesto](https://libscie.org/liberate-science-manifesto)
 
 > We seek to distribute knowledge, such that what it enables becomes distributed too.
 
@@ -113,7 +113,7 @@ const FaqPage: BlitzPage = () => {
 
   return (
     <>
-        <Navbar />
+      <Navbar />
 
       <main className="bg-white dark:bg-gray-900 lg:relative">
         <div className="mx-4 my-8 max-w-3xl text-black dark:text-white lg:mx-auto">
